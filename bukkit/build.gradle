@@ -3,6 +3,12 @@ plugins {
     id 'com.github.johnrengelman.shadow' version '5.2.0'
 }
 
+compileJava.options.encoding = 'UTF-8'
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
 group 'es.angelillo15'
 version '1.0-SNAPSHOT'
 
@@ -28,6 +34,7 @@ repositories {
 
 dependencies {
     compileOnly 'org.spigotmc:spigot-api:1.8-R0.1-SNAPSHOT'
+    compileOnly project(":common")
 }
 
 test {

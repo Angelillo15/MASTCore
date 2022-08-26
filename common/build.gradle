@@ -3,8 +3,14 @@ plugins {
     id 'com.github.johnrengelman.shadow' version '5.2.0'
 }
 
+compileJava.options.encoding = 'UTF-8'
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
 group 'es.angelillo15'
-version '1.0-SNAPSHOT'
+version parent.version
 
 repositories {
     mavenCentral()
@@ -16,4 +22,13 @@ dependencies {
 
 test {
     useJUnitPlatform()
+}
+
+processResources {
+    def props = [version: version]
+    inputs.properties props
+    filteringCharset 'UTF-8'
+    filesMatching('plugin.yml') {
+        expand props
+    }
 }

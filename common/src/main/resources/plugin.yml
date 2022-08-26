@@ -1,4 +1,4 @@
-name: zAngelTags
+name: MASTCore
 version: '${version}'
 main: es.angelillo15.mast.MASTBukkit
 api-version: 1.16

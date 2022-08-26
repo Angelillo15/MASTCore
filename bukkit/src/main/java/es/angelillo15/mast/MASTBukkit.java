@@ -6,7 +6,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 public class MASTBukkit extends MASTBukkitManager {
     @Override
     public void onEnable() {
-        Bukkit.getConsoleSender().sendMessage("xd");
+        drawLogo();
     }
     @Override
     public void onDisable() {
