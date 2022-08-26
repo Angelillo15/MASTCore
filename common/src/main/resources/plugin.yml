@@ -1,0 +1,9 @@
+name: zAngelTags
+version: '${version}'
+main: es.angelillo15.mast.MASTBukkit
+api-version: 1.16
+prefix: MASTCore
+authors: [ Angelillo15 ]
+description: Staff Core of Minearte
+website: angelillo15.es
+softdepend: [PlaceholderAPI]
