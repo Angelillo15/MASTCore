@@ -1,6 +1,6 @@
 name: MASTCore
 version: '${version}'
-main: es.angelillo15.mast.MASTBukkit
+main: es.angelillo15.mast.bukkit.MASTBukkit
 api-version: 1.16
 prefix: MASTCore
 authors: [ Angelillo15 ]

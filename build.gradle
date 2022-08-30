@@ -14,16 +14,23 @@ version '1.0'
 
 repositories {
     mavenCentral()
+    maven { url 'https://jitpack.io' }
+
+
 }
 
 shadowJar {
     archiveFileName = "MASTCore.jar"
+    relocate 'org.simpleyaml', 'es.angelillo15.libs.simpleyaml'
+    relocate 'org.yaml.snakeyaml', 'es.angelillo15.libs.snakeyaml'
 }
 
 dependencies {
     implementation project(":common")
     implementation project(":bukkit")
     implementation project(":bungee")
+    implementation 'me.carleslc.Simple-YAML:Simple-Configuration:1.8.1'
+    implementation 'org.yaml:snakeyaml:1.30'
 
 }
 
@@ -33,5 +40,13 @@ processResources {
     filteringCharset 'UTF-8'
     filesMatching('plugin.yml') {
         expand props
+    }
+}
+
+allprojects {
+    compileJava.options.encoding = 'UTF-8'
+
+    tasks.withType(JavaCompile) {
+        options.encoding = 'UTF-8'
     }
 }

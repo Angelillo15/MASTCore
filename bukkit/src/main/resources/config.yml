@@ -1,0 +1,26 @@
+#  ███▄ ▄███▓ ▄▄▄        ██████ ▄▄▄█████▓ ▄████▄   ▒█████   ██▀███  ▓█████
+# ▓██▒▀█▀ ██▒▒████▄    ▒██    ▒ ▓  ██▒ ▓▒▒██▀ ▀█  ▒██▒  ██▒▓██ ▒ ██▒▓█   ▀
+# ▓██    ▓██░▒██  ▀█▄  ░ ▓██▄   ▒ ▓██░ ▒░▒▓█    ▄ ▒██░  ██▒▓██ ░▄█ ▒▒███
+# ▒██    ▒██ ░██▄▄▄▄██   ▒   ██▒░ ▓██▓ ░ ▒▓▓▄ ▄██▒▒██   ██░▒██▀▀█▄  ▒▓█  ▄
+# ▒██▒   ░██▒ ▓█   ▓██▒▒██████▒▒  ▒██▒ ░ ▒ ▓███▀ ░░ ████▓▒░░██▓ ▒██▒░▒████▒
+# ░ ▒░   ░  ░ ▒▒   ▓▒█░▒ ▒▓▒ ▒ ░  ▒ ░░   ░ ░▒ ▒  ░░ ▒░▒░▒░ ░ ▒▓ ░▒▓░░░ ▒░ ░
+# ░  ░      ░  ▒   ▒▒ ░░ ░▒  ░ ░    ░      ░  ▒     ░ ▒ ▒░   ░▒ ░ ▒░ ░ ░  ░
+# ░      ░     ░   ▒   ░  ░  ░    ░      ░        ░ ░ ░ ▒    ░░   ░    ░
+#        ░         ░  ░      ░           ░ ░          ░ ░     ░        ░  ░
+#                                        ░
+#
+# This is the Config file por MASTCore,
+# where you can modify and customize the plugin.
+#
+# Remember to join my Discord server if you need help:
+# https://discord.angelillo15.es/
+#
+Config:
+  language: "english.yml"
+Database:
+  enabled: false
+  host: '127.0.0.1' # host of your database
+  port: '3306' # default port for MariaDB and MySQL
+  database: 'zangeltags' # name of your database. A database server can contain multiple databases
+  user: 'root'
+  password: ''

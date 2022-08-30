@@ -1,0 +1,3 @@
+name: MASTCore
+version: '${version}'
+main: es.angelillo15.mast.MAST
