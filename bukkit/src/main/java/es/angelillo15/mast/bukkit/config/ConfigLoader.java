@@ -13,8 +13,8 @@ import java.nio.file.Paths;
 
 public class ConfigLoader {
     private MASTBukkitManager plugin;
-    private ConfigManager config;
-    private ConfigManager messages;
+    private static ConfigManager config;
+    private static ConfigManager messages;
     private String language;
 
     public ConfigLoader(MASTBukkitManager plugin) {
@@ -54,5 +54,11 @@ public class ConfigLoader {
 
     }
 
+    public static ConfigManager getConfig() {
+        return config;
+    }
 
+    public static ConfigManager getMessages() {
+        return messages;
+    }
 }

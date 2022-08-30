@@ -18,9 +18,9 @@
 Config:
   language: "english.yml"
 Database:
-  enabled: false
+  type: 'SQLite' # Avaible types: SQLite and MySQL | MySQL Driver also works with MariaDB
   host: '127.0.0.1' # host of your database
   port: '3306' # default port for MariaDB and MySQL
-  database: 'zangeltags' # name of your database. A database server can contain multiple databases
+  database: 'mast-core' # name of your database. A database server can contain multiple databases
   user: 'root'
   password: ''

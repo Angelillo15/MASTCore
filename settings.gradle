@@ -2,5 +2,5 @@ rootProject.name = 'MASTCore'
 include 'bukkit'
 include 'bungee'
 include 'common'
-
+include 'api'
 
