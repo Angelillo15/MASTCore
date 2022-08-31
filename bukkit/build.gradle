@@ -37,6 +37,7 @@ dependencies {
     implementation 'org.yaml:snakeyaml:1.30'
     compileOnly 'org.spigotmc:spigot-api:1.8-R0.1-SNAPSHOT'
     compileOnly project(":common")
+    compileOnly project(":api")
 }
 
 group = 'es.angelillo15'

@@ -1,4 +1,4 @@
-package es.angelillo15.mast.api.events;
+package es.angelillo15.mast.api.events.staff;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
