@@ -4,6 +4,7 @@ import es.angelillo15.mast.api.BStaffPlayer;
 import es.angelillo15.mast.bukkit.cmd.StaffCMD;
 import es.angelillo15.mast.bukkit.config.ConfigLoader;
 import es.angelillo15.mast.database.PluginConnection;
+import es.angelillo15.mast.database.SQLQueries;
 import es.angelillo15.mast.utils.PLUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -57,6 +58,18 @@ public class MASTBukkitManager extends JavaPlugin {
         String type = config.getString("Database.type");
 
         PluginConnection pluginConnection = new PluginConnection(host, port,database, user, password, type, this.getDataFolder().getAbsolutePath(), this.getLogger());
+
+        if(!(SQLQueries.staffDataCreate(pluginConnection.getConnection()))){
+            this.getLogger().severe("StaffData table isn't created, creating....");
+            this.getLogger().info("Type: "+type);
+            if(type.equalsIgnoreCase("SQLite")) {
+                SQLQueries.createStaffDataTableSQLite(pluginConnection.getConnection());
+                this.getLogger().info("StaffData table created!");
+            }else {
+                SQLQueries.createStaffDataTableMySQL(pluginConnection.getConnection());
+                this.getLogger().info("StaffData table created!");
+            }
+        }
     }
     public static MASTBukkitManager getInstance() {
         return instance;
