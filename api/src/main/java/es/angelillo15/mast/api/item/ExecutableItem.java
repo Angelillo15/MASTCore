@@ -1,14 +1,15 @@
 package es.angelillo15.mast.api.item;
 
 import org.bukkit.Material;
+import org.bukkit.entity.Player;
 
 public abstract class ExecutableItem {
-    public abstract int slot();
+    public abstract int getSlot();
 
-    public abstract void click();
+    public abstract void click(Player player);
 
-    public abstract Material material();
+    public abstract Material getMaterial();
 
-    public abstract int sfid();
+    public abstract int getSfid();
 
 }

@@ -7,3 +7,11 @@ authors: [ Angelillo15 ]
 description: Staff Core of Minearte
 website: angelillo15.es
 softdepend: [PlaceholderAPI]
+commands:
+  staff:
+    description: Staff command
+    usage: /staff
+    aliases: [staff]
+    permission: mast.staff
+    permission-message: "&cYou don't have permission to use this command"
+    default: op
