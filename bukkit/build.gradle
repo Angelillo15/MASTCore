@@ -30,6 +30,7 @@ repositories {
         url = uri('https://repo.maven.apache.org/maven2/')
     }
     mavenCentral()
+    maven { url "https://repo.dmulloy2.net/repository/public/" }
 }
 
 dependencies {
@@ -37,12 +38,12 @@ dependencies {
     implementation 'org.yaml:snakeyaml:1.30'
     compileOnly 'org.spigotmc:spigot-api:1.8-R0.1-SNAPSHOT'
     compileOnly project(":common")
-    compileOnly project(":api")
+    compileOnly group: "com.comphenix.protocol", name: "ProtocolLib", version: "4.8.0";
 }
 
 group = 'es.angelillo15'
-version = '4.3'
-description = 'ZAngelTags'
+version = parent.version
+description = 'MASTCore'
 java.sourceCompatibility = JavaVersion.VERSION_1_8
 
 processResources {

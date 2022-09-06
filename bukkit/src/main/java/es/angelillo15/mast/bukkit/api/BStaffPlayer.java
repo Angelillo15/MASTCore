@@ -1,4 +1,4 @@
-package es.angelillo15.mast.api;
+package es.angelillo15.mast.bukkit.api;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;

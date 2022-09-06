@@ -1,4 +1,4 @@
-package es.angelillo15.mast.api.item;
+package es.angelillo15.mast.bukkit.api.item;
 
 import java.util.List;
 

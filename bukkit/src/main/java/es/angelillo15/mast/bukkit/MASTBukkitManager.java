@@ -1,6 +1,6 @@
 package es.angelillo15.mast.bukkit;
 
-import es.angelillo15.mast.api.BStaffPlayer;
+import es.angelillo15.mast.bukkit.api.BStaffPlayer;
 import es.angelillo15.mast.bukkit.cmd.StaffCMD;
 import es.angelillo15.mast.bukkit.config.ConfigLoader;
 import es.angelillo15.mast.database.PluginConnection;
@@ -20,6 +20,7 @@ import java.util.logging.Logger;
 public class MASTBukkitManager extends JavaPlugin {
     private static MASTBukkitManager instance;
     private HashMap<UUID, BStaffPlayer> staffPlayers = new HashMap<UUID, BStaffPlayer>();
+    private HashMap<UUID, BStaffPlayer> vanishedPlayers = new HashMap<UUID, BStaffPlayer>();
     private static Logger Logger;
     private PluginDescriptionFile pdf = this.getDescription();
     private String version = pdf.getVersion();
@@ -82,6 +83,15 @@ public class MASTBukkitManager extends JavaPlugin {
     }
     public void removeStaffPlayer(BStaffPlayer staffPlayer){
         staffPlayers.remove(staffPlayer.getPlayer().getUniqueId());
+    }
+    public HashMap<UUID, BStaffPlayer> getVanishedPlayers() {
+        return vanishedPlayers;
+    }
+    public void addVanishedPlayer(BStaffPlayer staffPlayer){
+        vanishedPlayers.put(staffPlayer.getPlayer().getUniqueId(), staffPlayer);
+    }
+    public void removeVanishedPlayer(BStaffPlayer staffPlayer){
+        vanishedPlayers.remove(staffPlayer.getPlayer().getUniqueId());
     }
     public BStaffPlayer getSStaffPlayer(UUID uuid){
         return staffPlayers.get(uuid);

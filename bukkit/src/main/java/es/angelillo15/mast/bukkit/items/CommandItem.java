@@ -1,7 +1,7 @@
 package es.angelillo15.mast.bukkit.items;
 
-import es.angelillo15.mast.api.item.ExecutableItem;
-import es.angelillo15.mast.api.item.ICommandItem;
+import es.angelillo15.mast.bukkit.api.item.ExecutableItem;
+import es.angelillo15.mast.bukkit.api.item.ICommandItem;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;

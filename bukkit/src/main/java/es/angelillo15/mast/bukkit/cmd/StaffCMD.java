@@ -1,6 +1,6 @@
 package es.angelillo15.mast.bukkit.cmd;
 
-import es.angelillo15.mast.api.BStaffPlayer;
+import es.angelillo15.mast.bukkit.api.BStaffPlayer;
 import es.angelillo15.mast.bukkit.MASTBukkitManager;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;

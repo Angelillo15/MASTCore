@@ -40,8 +40,8 @@ dependencies {
 }
 
 group = 'es.angelillo15'
-version = '4.3'
-description = 'ZAngelTags'
+version = parent.version
+description = 'MASTCore'
 java.sourceCompatibility = JavaVersion.VERSION_1_8
 
 processResources {
