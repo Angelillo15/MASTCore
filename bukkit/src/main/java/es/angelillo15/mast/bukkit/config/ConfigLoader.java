@@ -5,6 +5,7 @@ import es.angelillo15.mast.config.ConfigManager;
 import org.apache.commons.lang.text.StrTokenizer;
 import org.bukkit.Bukkit;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URI;
 import java.nio.file.Path;
@@ -33,16 +34,21 @@ public class ConfigLoader {
     }
 
     public void loadLanguages() {
-        ConfigManager en = new ConfigManager(plugin.getDataFolder().toPath(), "lang/english.yml", "lang/english.yml");
-        ConfigManager es = new ConfigManager(plugin.getDataFolder().toPath(), "lang/spanish.yml", "lang/spanish.yml");
-        en.registerConfig();
+        File file = new File(plugin.getDataFolder().toPath().toString() + File.separator + "lang");
+        if (!file.exists()) {
+            file.mkdir();
+        }
+
+        ConfigManager es = new ConfigManager(plugin.getDataFolder().toPath(), "lang/spanish.yml", "/lang/spanish.yml");
+        ConfigManager en = new ConfigManager(plugin.getDataFolder().toPath(), "lang/english.yml", "/lang/english.yml");
         es.registerConfig();
+        en.registerConfig();
 
     }
 
     public void loadMessage() {
         language = config.getConfig().getString("Config.language");
-        String lang = "lang/" + language;
+        String lang = "/lang/" + language;
 
         messages = new ConfigManager(plugin.getDataFolder().toPath(), lang, lang);
         messages.registerConfig();

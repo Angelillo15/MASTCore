@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Objects;
 
 
 public class ConfigManager {
@@ -46,7 +47,7 @@ public class ConfigManager {
         File configFile = new File(dataDirectoryFile, newFileName);
         try {
             if (!configFile.exists()){
-                Files.copy(this.getClass().getClassLoader().getResourceAsStream(originalFileName), configFile.toPath());
+                Files.copy(Objects.requireNonNull(this.getClass().getClassLoader().getResourceAsStream(originalFileName)), configFile.toPath());
             }
         } catch (IOException e) {
             e.printStackTrace();

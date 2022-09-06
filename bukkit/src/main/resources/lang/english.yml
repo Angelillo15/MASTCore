@@ -1,2 +1,54 @@
-Messages:
-  start: "Hello"
+#
+# This is the English language file por MASTCore,
+# where you can modify and customize the plugin messages.
+# 
+# Remember to join my Discord server if you need help:
+# https://discord.angelillo15.es/
+#
+
+Prefix: '&8[Staff&a&8]' # This will appear before all the plugin messages.
+
+General:
+  reloaded: '{prefix} &7The plugin has been reloaded!'
+  noPermission: '{permission} &7You do not have permission to execute this command.'
+StaffChat:
+  format: '{prefix} &7(&a{server}&7) &a{player} &7&l» &7{message}' # The format for sent messages on Staff Chat.
+  toggledOn: '{prefix} &7Staff chat has been &aenabled&7.' # Message sent after enabling the Staff Chat.
+  toggledOff: '{prefix} &7Staff chat has been &adisabled&7.' # Message sent after disabling the Staff Chat.
+  correctUse: '{prefix} &7You must use &a/sc <message/on/off>&7.' # Message sent when the command is not used correctly.
+Vanish:
+  enabled: '{prefix} &7Vanish has been &aenabled&7.' # Message sent after enabling Vanish.
+  enabledOther: '{prefix} &7Vanish has been &aenabled &7for &a{player}&7.' # Message sent after enabling Vanish for other player.
+  disabled: '{prefix} &7Vanish has been &adisabled&7.' # Message sent after enabling Vanish.
+  disabledOther: '{prefix} &7Vanish has been &adisabled &7for &a{player}&7.' # Message sent after enabling Vanish for other player.
+StaffMode:
+  toggledOn: '{prefix} &7Staff mode has been &aenabled&7.' # Message sent after enabling Staff Mode.
+  toggledOff: '{prefix} &7Staff mode has been &adisabled&7.' # Message sent after disabling Staff Mode.
+#
+# Staff Mode Internal Modules
+# Here you can edit the default modules that come with
+# the plugin, remember that you can add custom modules
+# at the config.yml file.
+#
+InternalModules:
+  randomTpModule:
+    teleported: '{prefix} &7You have been teleported to a random player!' # Message sent when a Staff is succesfully teleported to a random player.
+    noPlayers: '{prefix} &7There are no players to teleport' # Message sent when there are not enough players to teleport to a random player.
+    itemName: '&aRandomTP &7(Right Click)' # The name that will be displayed at the Staff Mode item.
+    itemLore:
+      - '&7Right click this item'
+      - '&7to teleport to a random'
+      - '&7player.'
+  freezeModule:
+    freezed: '{prefix} &7You have freezed &a{player}&7.' # Message sent to a Staff when freezing a player.
+    unfreezed: '{prefix} &7You have unfreezed &a{player}&7.' # Message sent to a Staff when unfreezing a player.
+    freezedPlayerAlert:
+      - '&a&lWARNING'
+      - '&7You have been freezed by a Staff. Follow'
+      - '&7the instructions and do not disconnect, or you'
+      - '&7will be banned.'
+    itemName: '&aFreeze &7(Right Click)' # The name that will be displayed at the Staff Mode item.
+    itemLore:
+      - '&7Right click this item'
+      - '&7to freeze the player you'
+      - '&7are looking at.'

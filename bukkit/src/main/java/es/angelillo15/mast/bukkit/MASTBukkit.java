@@ -7,6 +7,7 @@ public class MASTBukkit extends MASTBukkitManager {
         loadConfig();
         databaseConnection();
         registerCommands();
+        registerEvents();
     }
     @Override
     public void onDisable() {
