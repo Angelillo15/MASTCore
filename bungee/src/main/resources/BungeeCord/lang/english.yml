@@ -1,0 +1,11 @@
+#
+# This is the English language file por MASTCore,
+# where you can modify and customize the plugin messages.
+#
+# Remember to join my Discord server if you need help:
+# https://discord.angelillo15.es/
+#
+Messages:
+  Prefix: '&8[Staff&a&8]' # This will appear before all the plugin messages.
+  playerStaffModeEnabled: '{prefix} &a{player} &7has been &eenabled &7staff mode.'
+  playerStaffModeDisabled: '{prefix} &a{player} &7has been &edisabled &7staff mode.'

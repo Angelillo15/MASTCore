@@ -1,5 +1,7 @@
 package es.angelillo15.mast.bukkit.utils;
 
+import com.google.common.io.ByteArrayDataOutput;
+import com.google.common.io.ByteStreams;
 import es.angelillo15.mast.bukkit.MASTBukkitManager;
 import es.angelillo15.mast.bukkit.api.BStaffPlayer;
 import es.angelillo15.mast.bukkit.api.events.vanish.PlayerVanishDisableEvent;
@@ -24,6 +26,7 @@ public class StaffUtils {
         } else {
             disableStaff(player);
         }
+
     }
 
     public static void enableStaff(Player player){
@@ -37,6 +40,8 @@ public class StaffUtils {
             pm.callEvent(new PlayerVanishEnableEvent(player));
         }
 
+        sendStaffData(player, true);
+
         player.sendMessage(Messages.GET_STAFF_MODE_ENABLE_MESSAGE());
     }
 
@@ -49,6 +54,18 @@ public class StaffUtils {
             pm.callEvent(new PlayerVanishDisableEvent(player));
         }
 
+        sendStaffData(player, false);
+
+
         player.sendMessage(Messages.GET_STAFF_MODE_DISABLE_MESSAGE());
+    }
+
+    public static void sendStaffData(Player player, Boolean state){
+        ByteArrayDataOutput out = ByteStreams.newDataOutput();
+        out.writeUTF("mast");
+        out.writeUTF(player.getName());
+        out.writeUTF(state.toString());
+
+        player.sendPluginMessage(MASTBukkitManager.getInstance(), "BungeeCord", out.toByteArray());
     }
 }

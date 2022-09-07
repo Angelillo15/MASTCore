@@ -86,6 +86,14 @@ public class MASTBukkitManager extends JavaPlugin {
 
     }
 
+    public void setupMessenger(){
+        this.getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
+    }
+
+    public void disconnectDatabase() {
+        SQLQueries.closeConnection(pluginConnection.getConnection());
+    }
+
     public static MASTBukkitManager getInstance() {
         return instance;
     }

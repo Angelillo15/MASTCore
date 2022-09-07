@@ -4,6 +4,8 @@ public class MASTBungee extends MASTBungeeManager {
     @Override
     public void onEnable() {
         drawLogo();
+        registerEvents();
+        registerConfig();
     }
 
     @Override
