@@ -41,7 +41,7 @@ InternalModules:
       - '&7player.'
   freezeModule:
     freezed: '{prefix} &7You have freezed &a{player}&7.' # Message sent to a Staff when freezing a player.
-    unfreezed: '{prefix} &7You have unfreezed &a{player}&7.' # Message sent to a Staff when unfreezing a player.
+    unFreezed: '{prefix} &7You have unfreezed &a{player}&7.' # Message sent to a Staff when unfreezing a player.
     freezedPlayerAlert:
       - '&a&lWARNING'
       - '&7You have been freezed by a Staff. Follow'

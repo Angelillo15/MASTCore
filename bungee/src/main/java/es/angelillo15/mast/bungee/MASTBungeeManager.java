@@ -10,7 +10,7 @@ import net.md_5.bungee.api.plugin.Plugin;
 import java.util.logging.Logger;
 
 public class MASTBungeeManager extends Plugin {
-    private MASTBungeeManager instance;
+    private static MASTBungeeManager instance;
     private static ConfigLoader configLoader;
     private static Logger logger;
     public void drawLogo(){

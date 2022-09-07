@@ -1,0 +1,13 @@
+StaffItems:
+  randomTeleport:
+    enabled: true
+    name: '&6Random Teleport'
+    sfid: '1'
+    material: 'EYE_OF_ENDER'
+    slot: '0'
+  freeze:
+    enabled: true
+    name: '&bFreeze'
+    sfid: '2'
+    material: 'BLAZE_ROD'
+    slot: '2'

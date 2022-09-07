@@ -2,20 +2,17 @@ package es.angelillo15.mast.bukkit.config;
 
 import es.angelillo15.mast.bukkit.MASTBukkitManager;
 import es.angelillo15.mast.config.ConfigManager;
-import org.apache.commons.lang.text.StrTokenizer;
-import org.bukkit.Bukkit;
+
 
 import java.io.File;
 import java.io.IOException;
-import java.net.URI;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 
 
 public class ConfigLoader {
     private MASTBukkitManager plugin;
     private static ConfigManager config;
     private static ConfigManager messages;
+    private static ConfigManager staffItems;
     private String language;
 
     public ConfigLoader(MASTBukkitManager plugin) {
@@ -31,6 +28,10 @@ public class ConfigLoader {
     public void loadConfig() {
         config = new ConfigManager(plugin.getDataFolder().toPath(), "config.yml", "config.yml");
         config.registerConfig();
+        staffItems = new ConfigManager(plugin.getDataFolder().toPath(), "config.yml", "config.yml");
+        staffItems.registerConfig();
+
+
     }
 
     public void loadLanguages() {
@@ -66,5 +67,9 @@ public class ConfigLoader {
 
     public static ConfigManager getMessages() {
         return messages;
+    }
+
+    public static ConfigManager getStaffItems() {
+        return staffItems;
     }
 }

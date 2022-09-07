@@ -2,6 +2,8 @@ package es.angelillo15.mast.bungee.listener;
 
 import es.angelillo15.mast.bungee.MASTBungee;
 import es.angelillo15.mast.bungee.MASTBungeeManager;
+import es.angelillo15.mast.bungee.config.Messages;
+import es.angelillo15.mast.bungee.utils.TextUtils;
 import net.md_5.bungee.api.event.PluginMessageEvent;
 import net.md_5.bungee.api.plugin.Listener;
 import net.md_5.bungee.event.EventHandler;
@@ -22,7 +24,16 @@ public class StaffChangeEvent implements Listener {
                 String player = in.readUTF();
                 String state = in.readUTF();
 
-                MASTBungeeManager
+                if (state.equals("true")) {
+                    MASTBungeeManager.getInstance().getLogger().info(TextUtils.colorize(
+                            Messages.getPlayerStaffModeEnabled().replace("{player}", player)
+                    ));
+                } else {
+                    MASTBungeeManager.getInstance().getLogger().info(TextUtils.colorize(
+                            Messages.getPlayerStaffModeDisabled().replace("{player}", player)
+                    ));
+                }
+
 
             }
         } catch (IOException ignored) {
@@ -30,7 +41,6 @@ public class StaffChangeEvent implements Listener {
         }
 
     }
-
 
 
 }
