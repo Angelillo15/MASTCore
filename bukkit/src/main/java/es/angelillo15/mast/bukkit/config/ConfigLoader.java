@@ -12,7 +12,7 @@ public class ConfigLoader {
     private MASTBukkitManager plugin;
     private static ConfigManager config;
     private static ConfigManager messages;
-    private static ConfigManager staffItems;
+    private static ConfigManager internalStaffItems;
     private String language;
 
     public ConfigLoader(MASTBukkitManager plugin) {
@@ -28,8 +28,8 @@ public class ConfigLoader {
     public void loadConfig() {
         config = new ConfigManager(plugin.getDataFolder().toPath(), "config.yml", "config.yml");
         config.registerConfig();
-        staffItems = new ConfigManager(plugin.getDataFolder().toPath(), "config.yml", "config.yml");
-        staffItems.registerConfig();
+        internalStaffItems = new ConfigManager(plugin.getDataFolder().toPath(), "modules/internal.yml", "/modules/internal.yml");
+        internalStaffItems.registerConfig();
 
 
     }
@@ -69,7 +69,7 @@ public class ConfigLoader {
         return messages;
     }
 
-    public static ConfigManager getStaffItems() {
-        return staffItems;
+    public static ConfigManager getInternalStaffItems() {
+        return internalStaffItems;
     }
 }

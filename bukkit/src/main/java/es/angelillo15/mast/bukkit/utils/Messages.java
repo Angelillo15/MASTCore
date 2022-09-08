@@ -15,6 +15,15 @@ public class Messages {
         return TextUtils.parseMessage(messages.getString("StaffMode.toggledOff"));
     }
 
+    public static String GET_VANISH_ENABLE_MESSAGE() {
+        return TextUtils.parseMessage(messages.getString("Vanish.enabled"));
+    }
+
+    public static String GET_VANISH_DISABLE_MESSAGE() {
+        return TextUtils.parseMessage(messages.getString("Vanish.disabled"));
+    }
+
+
     public static String PREFIX(){
         return messages.getString("Prefix");
     }

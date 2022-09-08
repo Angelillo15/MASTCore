@@ -6,7 +6,9 @@ import es.angelillo15.mast.bukkit.MASTBukkitManager;
 import es.angelillo15.mast.bukkit.api.BStaffPlayer;
 import es.angelillo15.mast.bukkit.api.events.vanish.PlayerVanishDisableEvent;
 import es.angelillo15.mast.bukkit.api.events.vanish.PlayerVanishEnableEvent;
+import es.angelillo15.mast.bukkit.api.item.StaffItem;
 import es.angelillo15.mast.bukkit.config.ConfigLoader;
+import es.angelillo15.mast.bukkit.utils.items.InternalModules;
 import es.angelillo15.mast.database.SQLQueries;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
@@ -43,6 +45,12 @@ public class StaffUtils {
             pm.callEvent(new PlayerVanishEnableEvent(player));
         }
 
+
+
+        Inventory.saveInventory(player);
+
+        StaffUtils.loadItems(player);
+
         sendStaffData(player, true);
 
         player.sendMessage(Messages.GET_STAFF_MODE_ENABLE_MESSAGE());
@@ -57,9 +65,11 @@ public class StaffUtils {
             pm.callEvent(new PlayerVanishDisableEvent(player));
         }
 
+
+
         sendStaffData(player, false);
 
-
+        Inventory.restoreInventory(player);
         player.sendMessage(Messages.GET_STAFF_MODE_DISABLE_MESSAGE());
     }
 
@@ -72,11 +82,11 @@ public class StaffUtils {
         player.sendPluginMessage(MASTBukkitManager.getInstance(), "BungeeCord", out.toByteArray());
     }
 
-    public void loadItems(Player player) {
-        YamlFile items = ConfigLoader.getStaffItems().getConfig();
+    public static void loadItems(Player player) {
+        InternalModules internalModules = new InternalModules(player);
 
-        for (String item : items.getConfigurationSection("staffmodeitems.items").getKeys(false)) {
-
+        for (StaffItem item : internalModules.getItems()) {
+            item.set();
         }
     }
 }

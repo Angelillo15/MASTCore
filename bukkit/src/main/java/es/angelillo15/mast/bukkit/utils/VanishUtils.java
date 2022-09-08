@@ -47,13 +47,14 @@ public class VanishUtils {
 
     public static void toggle(Player player){
         PluginManager pm = plugin.getServer().getPluginManager();
+        BStaffPlayer staffPlayer = plugin.getSStaffPlayer(player.getUniqueId());
+
         if(plugin.getVanishedPlayers().containsKey(player.getUniqueId())){
             pm.callEvent(new PlayerVanishDisableEvent(player));
-            Bukkit.getConsoleSender().sendMessage("Vanish desactivado");
+            staffPlayer.setVanished(false);
         } else {
             pm.callEvent(new PlayerVanishEnableEvent(player));
-            Bukkit.getConsoleSender().sendMessage("Vanish activado");
-
+            staffPlayer.setVanished(true);
         }
     }
 

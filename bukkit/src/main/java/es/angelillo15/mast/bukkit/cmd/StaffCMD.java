@@ -18,6 +18,7 @@ public class StaffCMD implements CommandExecutor {
             Player p = (Player) sender;
             if(p.hasPermission("mast.staff")){
                 StaffUtils.toggleStaff(p);
+
                 return true;
             }else{
                 return false;
