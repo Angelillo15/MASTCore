@@ -1,13 +1,15 @@
 StaffItems:
-  randomTeleport:
+  VANISH:
     enabled: true
-    name: '&6Random Teleport'
-    sfid: '1'
-    material: 'EYE_OF_ENDER'
-    slot: '0'
-  freeze:
+    name: '&bVanish'
+    material: 'SLIME_BALL'
+    slot: 5
+    lore:
+    - '&7Click to toggle vanish'
+  FREEZE:
     enabled: true
     name: '&bFreeze'
-    sfid: '2'
     material: 'BLAZE_ROD'
-    slot: '2'
+    slot: 2
+    lore:
+      - '&7Click to toggle vanish'

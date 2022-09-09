@@ -1,5 +1,6 @@
 package es.angelillo15.mast.bukkit.utils.items;
 
+import com.cryptomorin.xseries.XMaterial;
 import es.angelillo15.mast.bukkit.api.item.CommandItem;
 import es.angelillo15.mast.bukkit.api.item.ItemTypes;
 import es.angelillo15.mast.bukkit.api.item.StaffItem;
@@ -15,6 +16,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.simpleyaml.configuration.file.YamlFile;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 
 public class InternalModules {
@@ -29,10 +31,11 @@ public class InternalModules {
     public ArrayList<StaffItem> getItems() {
         for (String s : config.getConfigurationSection("StaffItems").getKeys(false)) {
             if (config.getBoolean("StaffItems." + s + ".enabled")) {
-                Material material = Material.getMaterial(config.getString("StaffItems." + s + ".material"));
+                String material = config.getString("StaffItems." + s + ".material");
+                XMaterial xMaterial = XMaterial.valueOf(material);
                 int slot = config.getInt("StaffItems." + s + ".slot");
                 Bukkit.getConsoleSender().sendMessage(String.valueOf(slot));
-                ItemStack itemStack = new ItemStack(material);
+                ItemStack itemStack = new ItemStack(Objects.requireNonNull((xMaterial).parseMaterial()));
                 ItemMeta meta = itemStack.getItemMeta();
 
                 meta.setDisplayName(TextUtils.parseMessage(config.getString("StaffItems." + s + ".name")));

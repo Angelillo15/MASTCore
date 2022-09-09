@@ -1,7 +1,7 @@
 name: MASTCore
 version: '${version}'
 main: es.angelillo15.mast.bukkit.MASTBukkit
-api-version: 1.16
+api-version: 1.13
 prefix: MASTCore
 authors: [ Angelillo15 ]
 description: Staff Core of Minearte
