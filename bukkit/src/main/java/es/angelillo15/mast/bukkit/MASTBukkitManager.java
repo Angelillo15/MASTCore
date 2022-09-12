@@ -3,6 +3,7 @@ package es.angelillo15.mast.bukkit;
 import es.angelillo15.mast.bukkit.api.BStaffPlayer;
 import es.angelillo15.mast.bukkit.cmd.StaffCMD;
 import es.angelillo15.mast.bukkit.config.ConfigLoader;
+import es.angelillo15.mast.bukkit.listeners.ItemClickEvent;
 import es.angelillo15.mast.bukkit.listeners.VanishEvents;
 import es.angelillo15.mast.bukkit.utils.VanishUtils;
 import es.angelillo15.mast.database.PluginConnection;
@@ -54,6 +55,7 @@ public class MASTBukkitManager extends JavaPlugin {
         PluginManager pm = this.getServer().getPluginManager();
         pm.registerEvents(new VanishEvents(), this);
         VanishUtils.checkForStaffPlayers();
+        pm.registerEvents(new ItemClickEvent(), this);
     }
 
     public static Logger getPluginLogger() {

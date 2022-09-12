@@ -10,9 +10,16 @@ import es.angelillo15.mast.bukkit.api.item.StaffItem;
 import es.angelillo15.mast.bukkit.config.ConfigLoader;
 import es.angelillo15.mast.bukkit.utils.items.InternalModules;
 import es.angelillo15.mast.database.SQLQueries;
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 import org.simpleyaml.configuration.file.YamlFile;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Random;
 
 public class StaffUtils {
     private static PluginManager pm = MASTBukkitManager.getInstance().getServer().getPluginManager();
@@ -88,5 +95,19 @@ public class StaffUtils {
         for (StaffItem item : internalModules.getItems()) {
             item.set();
         }
+    }
+
+    public static Location getRandomPlayerLocation(){
+        ArrayList<Player> players = new ArrayList<>();
+        Bukkit.getOnlinePlayers().forEach(player -> {
+            if (!player.hasPermission("mast.staff")) {
+                players.add(player);
+            }
+        });
+        if(players.isEmpty()){
+            return null;
+        }
+        final Random random = new Random();
+        return players.get(random.nextInt(players.size())).getLocation();
     }
 }

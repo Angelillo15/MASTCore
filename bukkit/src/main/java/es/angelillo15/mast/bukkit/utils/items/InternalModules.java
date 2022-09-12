@@ -21,6 +21,7 @@ import java.util.Objects;
 
 public class InternalModules {
     private ArrayList<StaffItem> items = new ArrayList<>();
+    private static ArrayList<String> itemsNames = new ArrayList<>();
     YamlFile config = ConfigLoader.getInternalStaffItems().getConfig();
     private Player player;
 
@@ -54,6 +55,8 @@ public class InternalModules {
                     case FREEZE:
                         items.add(new CommandItem(player, itemStack, slot, "freeze"));
                         break;
+                    case RANDOM_PLAYER_TELEPORT:
+                        items.add(new VanishItem(player, itemStack, slot));
                     default:
                         Bukkit.getConsoleSender().sendMessage("Not found: " + s);
                 }
@@ -62,5 +65,8 @@ public class InternalModules {
         return items;
     }
 
-
+    public static ArrayList<StaffItem> getInternalModules(Player player){
+        InternalModules modules = new InternalModules(player);
+        return modules.getItems();
+    }
 }

@@ -3,15 +3,18 @@ package es.angelillo15.mast.bukkit.api.item;
 import es.angelillo15.mast.bukkit.MASTBukkitManager;
 import es.angelillo15.mast.bukkit.api.BStaffPlayer;
 import es.angelillo15.mast.bukkit.utils.Messages;
+import es.angelillo15.mast.bukkit.utils.StaffUtils;
 import es.angelillo15.mast.bukkit.utils.TextUtils;
 import es.angelillo15.mast.bukkit.utils.VanishUtils;
-import org.bukkit.Material;
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
 
-public class VanishItem implements StaffItem{
+public class PlayerRandomTPItem implements StaffItem{
+
     private int slot;
     private ItemStack itemStack;
     private Player player;
@@ -33,14 +36,15 @@ public class VanishItem implements StaffItem{
 
     @Override
     public void click() {
-        VanishUtils.toggle(player);
-        BStaffPlayer staffPlayer = MASTBukkitManager.getInstance().getSStaffPlayer(player.getUniqueId());
-        if (staffPlayer.isVanished()){
-            player.sendMessage(TextUtils.parseMessage(Messages.GET_VANISH_ENABLE_MESSAGE()));
-        } else {
-            player.sendMessage(TextUtils.parseMessage(Messages.GET_VANISH_DISABLE_MESSAGE()));
-        }
-
+        Bukkit.getScheduler().runTaskAsynchronously(MASTBukkitManager.getInstance(), () -> {
+            Location location = StaffUtils.getRandomPlayerLocation();
+            if(location == null){
+                player.sendMessage("Null");
+            }else{
+                player.teleport(location);
+                player.sendMessage("Teleported");
+            }
+        });
     }
 
     @Override
@@ -48,10 +52,9 @@ public class VanishItem implements StaffItem{
         player.getInventory().setItem(slot, this.getItem());
     }
 
-    public VanishItem(Player player, ItemStack itemStack, int slot){
+    public PlayerRandomTPItem(Player player, ItemStack itemStack, int slot){
         this.player = player;
         this.itemStack = itemStack;
         this.slot = slot;
     }
-
 }
