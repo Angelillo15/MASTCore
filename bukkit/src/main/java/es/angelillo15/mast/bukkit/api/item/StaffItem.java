@@ -8,10 +8,7 @@ import java.util.ArrayList;
 
 public interface StaffItem {
     int getSlot();
-    Player getPlayer();
     ItemStack getItem();
-
-    void click();
-    void set();
+    void set(Player player);
 
 }

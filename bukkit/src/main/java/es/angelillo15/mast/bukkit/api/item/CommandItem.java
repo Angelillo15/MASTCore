@@ -4,10 +4,9 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-public class CommandItem implements StaffItem{
+public class CommandItem implements StaffItem, StaffCommandItem{
     private int slot;
     private ItemStack itemStack;
-    private Player player;
     private String command;
 
     @Override
@@ -16,30 +15,29 @@ public class CommandItem implements StaffItem{
     }
 
     @Override
-    public Player getPlayer() {
-        return player;
-    }
-
-    @Override
     public ItemStack getItem() {
         return itemStack;
     }
 
-    @Override
-    public void click() {
-        Bukkit.dispatchCommand(player, command);
-    }
 
     @Override
-    public void set() {
+    public void set(Player player) {
         player.getInventory().setItem(slot, this.getItem());
     }
 
-    public CommandItem(Player player, ItemStack itemStack, int slot, String command){
-        this.player = player;
+    public CommandItem(ItemStack itemStack, int slot, String command){
         this.itemStack = itemStack;
         this.slot = slot;
         this.command = command;
     }
 
+    @Override
+    public void click(Player player, String command) {
+        player.performCommand(command);
+    }
+
+    @Override
+    public String getCommand() {
+        return command;
+    }
 }

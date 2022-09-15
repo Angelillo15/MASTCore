@@ -13,20 +13,14 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
 
-public class PlayerRandomTPItem implements StaffItem{
+public class PlayerRandomTPItem implements StaffItem, ExecutableItem{
 
     private int slot;
     private ItemStack itemStack;
-    private Player player;
 
     @Override
     public int getSlot() {
         return slot;
-    }
-
-    @Override
-    public Player getPlayer() {
-        return player;
     }
 
     @Override
@@ -35,20 +29,19 @@ public class PlayerRandomTPItem implements StaffItem{
     }
 
     @Override
-    public void click() {
+    public void click(Player player) {
         Bukkit.getScheduler().runTaskAsynchronously(MASTBukkitManager.getInstance(), () -> {
             StaffUtils.playerRandomTeleport(player);
         });
     }
 
     @Override
-    public void set() {
+    public void set(Player player) {
         player.getInventory().setItem(slot, this.getItem());
     }
 
 
-    public PlayerRandomTPItem(Player player, ItemStack itemStack, int slot){
-        this.player = player;
+    public PlayerRandomTPItem(ItemStack itemStack, int slot){
         this.itemStack = itemStack;
         this.slot = slot;
     }

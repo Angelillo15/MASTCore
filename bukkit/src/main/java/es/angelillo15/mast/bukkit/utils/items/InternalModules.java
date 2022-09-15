@@ -47,13 +47,13 @@ public class InternalModules {
                 if (!(plugin.containsPlayerStaffItems(player.getUniqueId()))) {
                     switch (ItemTypes.valueOf(s)) {
                         case ENTITY_INTERACT:
-                            items.add(new EnderchestItem(player, itemStack, slot));
+                            items.add(new EnderchestItem(itemStack, slot));
                             break;
                         case FREEZE:
-                            items.add(new CommandItem(player, itemStack, slot, "freeze"));
+                            items.add(new CommandItem(itemStack, slot, "freeze"));
                             break;
                         case RANDOM_PLAYER_TELEPORT:
-                            items.add(new PlayerRandomTPItem(player, itemStack, slot));
+                            items.add(new PlayerRandomTPItem(itemStack, slot));
                             break;
                         default:
                             Bukkit.getConsoleSender().sendMessage("Not found: " + s);

@@ -5,7 +5,6 @@ import org.bukkit.inventory.ItemStack;
 
 public class EnderchestItem implements StaffItem, EntityInteractItem {
     private int slot;
-    private Player player;
     private ItemStack itemStack;
     private Player target;
     @Override
@@ -13,23 +12,15 @@ public class EnderchestItem implements StaffItem, EntityInteractItem {
         return slot;
     }
 
-    @Override
-    public Player getPlayer() {
-        return player;
-    }
 
     @Override
     public ItemStack getItem() {
         return itemStack;
     }
 
-    @Override
-    public void click() {
-
-    }
 
     @Override
-    public void set() {
+    public void set(Player player) {
         player.getInventory().setItem(slot, this.getItem());
     }
 
@@ -43,9 +34,13 @@ public class EnderchestItem implements StaffItem, EntityInteractItem {
         this.target = target;
     }
 
+    @Override
+    public void click(Player player) {
 
-    public EnderchestItem(Player player, ItemStack itemStack, int slot) {
-        this.player = player;
+    }
+
+
+    public EnderchestItem(ItemStack itemStack, int slot) {
         this.itemStack = itemStack;
         this.slot = slot;
     }
