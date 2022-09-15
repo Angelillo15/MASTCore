@@ -90,7 +90,7 @@ public class StaffUtils {
     }
 
     public static void loadItems(Player player) {
-        InternalModules internalModules = new InternalModules(player);
+        InternalModules internalModules = new InternalModules();
 
         for (StaffItem item : internalModules.getItems()) {
             item.set(player);

@@ -21,11 +21,7 @@ public class InternalModules {
     private static MASTBukkitManager plugin = MASTBukkitManager.getInstance();
     private static ArrayList<String> itemsNames = new ArrayList<>();
     YamlFile config = ConfigLoader.getInternalStaffItems().getConfig();
-    private Player player;
 
-    public InternalModules(Player player) {
-        this.player = player;
-    }
 
     public ArrayList<StaffItem> getItems() {
 
@@ -44,32 +40,23 @@ public class InternalModules {
                 }
                 meta.setLore(lore);
                 itemStack.setItemMeta(meta);
-                if (!(plugin.containsPlayerStaffItems(player.getUniqueId()))) {
-                    switch (ItemTypes.valueOf(s)) {
-                        case ENTITY_INTERACT:
-                            items.add(new EnderchestItem(itemStack, slot));
-                            break;
-                        case FREEZE:
-                            items.add(new CommandItem(itemStack, slot, "freeze"));
-                            break;
-                        case RANDOM_PLAYER_TELEPORT:
-                            items.add(new PlayerRandomTPItem(itemStack, slot));
-                            break;
-                        default:
-                            Bukkit.getConsoleSender().sendMessage("Not found: " + s);
-                    }
-
-                } else {
-                    items = plugin.getPlayerStaffItems(player.getUniqueId());
+                switch (ItemTypes.valueOf(s)) {
+                    case ENTITY_INTERACT:
+                        items.add(new EnderchestItem(itemStack, slot));
+                        break;
+                    case FREEZE:
+                        items.add(new CommandItem(itemStack, slot, "freeze"));
+                        break;
+                    case RANDOM_PLAYER_TELEPORT:
+                        items.add(new PlayerRandomTPItem(itemStack, slot));
+                        break;
+                    default:
+                        Bukkit.getConsoleSender().sendMessage("Not found: " + s);
                 }
+
             }
         }
-        plugin.addPlayerStaffItems(player.getUniqueId(), items);
         return items;
     }
 
-    public static ArrayList<StaffItem> getInternalModules(Player player) {
-        InternalModules modules = new InternalModules(player);
-        return modules.getItems();
-    }
 }

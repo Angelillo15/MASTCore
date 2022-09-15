@@ -1,0 +1,9 @@
+StaffItems:
+  COMMAND:
+    enabled: true
+    name: '&bFly'
+    material: 'SLIME_BALL'
+    slot: 5
+    command: fly
+    lore:
+      - '&7Click to toggle fly'

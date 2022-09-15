@@ -4,9 +4,9 @@ import es.angelillo15.mast.bukkit.api.BStaffPlayer;
 import es.angelillo15.mast.bukkit.api.item.StaffItem;
 import es.angelillo15.mast.bukkit.cmd.StaffCMD;
 import es.angelillo15.mast.bukkit.config.ConfigLoader;
-import es.angelillo15.mast.bukkit.listeners.ItemClickEvent;
-import es.angelillo15.mast.bukkit.listeners.VanishEvents;
+import es.angelillo15.mast.bukkit.listeners.*;
 import es.angelillo15.mast.bukkit.utils.VanishUtils;
+import es.angelillo15.mast.bukkit.utils.items.InternalModules;
 import es.angelillo15.mast.database.PluginConnection;
 import es.angelillo15.mast.database.SQLQueries;
 import es.angelillo15.mast.utils.PLUtils;
@@ -33,6 +33,7 @@ public class MASTBukkitManager extends JavaPlugin {
     private String version = pdf.getVersion();
     private ConfigLoader configLoader;
     private PluginConnection pluginConnection;
+    private static ArrayList<StaffItem> internalModules;
 
     public void initLogger() {
         MASTBukkitManager.Logger = this.getLogger();
@@ -50,6 +51,11 @@ public class MASTBukkitManager extends JavaPlugin {
         instance = this;
     }
 
+    public void setupModules(){
+        InternalModules modules = new InternalModules();
+        internalModules = modules.getItems();
+    }
+
     public void registerCommands() {
         this.getCommand("staff").setExecutor(new StaffCMD());
     }
@@ -59,6 +65,10 @@ public class MASTBukkitManager extends JavaPlugin {
         pm.registerEvents(new VanishEvents(), this);
         VanishUtils.checkForStaffPlayers();
         pm.registerEvents(new ItemClickEvent(), this);
+        pm.registerEvents(new ItemDropEvent(), this);
+        pm.registerEvents(new VanishEvents(), this);
+        pm.registerEvents(new StaffInventoryClickEvent(), this);
+        pm.registerEvents(new StaffItemPickup(), this);
     }
 
     public static Logger getPluginLogger() {
@@ -153,5 +163,9 @@ public class MASTBukkitManager extends JavaPlugin {
     }
     public boolean containsPlayerStaffItems(UUID uuid) {
         return playersStaffItems.containsKey(uuid);
+    }
+
+    public static ArrayList<StaffItem> getInternalModules(){
+        return internalModules;
     }
 }

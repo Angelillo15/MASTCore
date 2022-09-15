@@ -9,6 +9,7 @@ public class MASTBukkit extends MASTBukkitManager {
         registerCommands();
         registerEvents();
         setupMessenger();
+        setupModules();
 
     }
     @Override
