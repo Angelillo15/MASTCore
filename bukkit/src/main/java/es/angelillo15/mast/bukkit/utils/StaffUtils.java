@@ -6,19 +6,14 @@ import es.angelillo15.mast.bukkit.MASTBukkitManager;
 import es.angelillo15.mast.bukkit.api.BStaffPlayer;
 import es.angelillo15.mast.bukkit.api.events.vanish.PlayerVanishDisableEvent;
 import es.angelillo15.mast.bukkit.api.events.vanish.PlayerVanishEnableEvent;
-import es.angelillo15.mast.bukkit.api.item.StaffItem;
-import es.angelillo15.mast.bukkit.config.ConfigLoader;
+import es.angelillo15.mast.bukkit.api.item.types.StaffItem;
 import es.angelillo15.mast.bukkit.utils.items.InternalModules;
 import es.angelillo15.mast.database.SQLQueries;
 import org.bukkit.Bukkit;
-import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
-import org.simpleyaml.configuration.file.YamlFile;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Random;
 
 public class StaffUtils {

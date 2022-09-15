@@ -1,11 +1,11 @@
 StaffItems:
-  VANISH:
+  RANDOM_PLAYER_TELEPORT:
     enabled: true
-    name: '&bVanish'
-    material: 'SLIME_BALL'
-    slot: 5
+    name: '&bRandom Teleport'
+    material: 'ENDER_PEARL'
+    slot: 0
     lore:
-    - '&7Click to toggle vanish'
+      - '&7Click to toggle vanish'
   FREEZE:
     enabled: true
     name: '&bFreeze'
@@ -13,3 +13,10 @@ StaffItems:
     slot: 2
     lore:
       - '&7Click to toggle vanish'
+  ENDER_CHEST:
+    enabled: true
+    name: '&bEnder Chest'
+    material: 'ENDER_CHEST'
+    slot: 4
+    lore:
+      - '&7Click to view player enderchest'

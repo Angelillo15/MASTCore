@@ -1,4 +1,4 @@
-package es.angelillo15.mast.bukkit.api.item;
+package es.angelillo15.mast.bukkit.api.item.types;
 
 import org.bukkit.Material;
 import org.bukkit.entity.Player;

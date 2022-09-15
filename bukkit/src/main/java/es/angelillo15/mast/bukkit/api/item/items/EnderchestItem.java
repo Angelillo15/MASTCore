@@ -1,7 +1,11 @@
-package es.angelillo15.mast.bukkit.api.item;
+package es.angelillo15.mast.bukkit.api.item.items;
 
+import es.angelillo15.mast.bukkit.api.item.types.EntityInteractItem;
+import es.angelillo15.mast.bukkit.api.item.types.StaffItem;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+
+import java.lang.annotation.Target;
 
 public class EnderchestItem implements StaffItem, EntityInteractItem {
     private int slot;
@@ -35,8 +39,8 @@ public class EnderchestItem implements StaffItem, EntityInteractItem {
     }
 
     @Override
-    public void click(Player player) {
-
+    public void click(Player player, Player target) {
+        player.openInventory(target.getEnderChest());
     }
 
 

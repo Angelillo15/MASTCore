@@ -1,10 +1,11 @@
-package es.angelillo15.mast.bukkit.api.item;
+package es.angelillo15.mast.bukkit.api.item.items;
 
-import org.bukkit.Bukkit;
+import es.angelillo15.mast.bukkit.api.item.types.StaffCommandItem;
+import es.angelillo15.mast.bukkit.api.item.types.StaffItem;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-public class CommandItem implements StaffItem, StaffCommandItem{
+public class CommandItem implements StaffItem, StaffCommandItem {
     private int slot;
     private ItemStack itemStack;
     private String command;

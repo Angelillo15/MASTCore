@@ -1,12 +1,15 @@
 package es.angelillo15.mast.bukkit.listeners;
 
 import es.angelillo15.mast.bukkit.MASTBukkitManager;
-import es.angelillo15.mast.bukkit.api.item.*;
-import es.angelillo15.mast.bukkit.utils.items.InternalModules;
+import es.angelillo15.mast.bukkit.api.item.types.EntityInteractItem;
+import es.angelillo15.mast.bukkit.api.item.types.ExecutableItem;
+import es.angelillo15.mast.bukkit.api.item.types.StaffCommandItem;
+import es.angelillo15.mast.bukkit.api.item.types.StaffItem;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -24,6 +27,7 @@ public class ItemClickEvent implements Listener {
         if(MASTBukkitManager.getInstance().containsStaffPlayer(player.getUniqueId())){
             ItemMeta meta = e.getItem().getItemMeta();
             ArrayList<StaffItem> internalModules = MASTBukkitManager.getInternalModules();
+
             internalModules.forEach(staffItem -> {
                 if (staffItem.getItem().getItemMeta().getDisplayName().equals(meta.getDisplayName())) {
                     if (!(staffItem instanceof EntityInteractItem)) {
@@ -42,7 +46,25 @@ public class ItemClickEvent implements Listener {
             });
             e.setCancelled(true);
         }
+    }
 
+    @EventHandler
+    public void onEntityInteract(PlayerInteractEntityEvent e){
+        if(MASTBukkitManager.getInstance().containsStaffPlayer(e.getPlayer().getUniqueId())){
+            if(e.getRightClicked() instanceof Player){
+                if(e.getPlayer().getItemInHand() == null || e.getPlayer().getItemInHand().getType() == Material.AIR){
+                    return;
+                }
+                MASTBukkitManager.getInternalModules().forEach(staffItem -> {
+                    if (staffItem.getItem().getItemMeta().getDisplayName().equals(e.getPlayer().getItemInHand().getItemMeta().getDisplayName())) {
+                        if(staffItem instanceof EntityInteractItem){
+                            EntityInteractItem entityInteractItem = (EntityInteractItem) staffItem;
+                            entityInteractItem.click(e.getPlayer(), (Player) e.getRightClicked());
+                        }
+                    }
+                });
+            }
+        }
 
     }
 }

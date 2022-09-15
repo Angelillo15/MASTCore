@@ -1,7 +1,7 @@
 package es.angelillo15.mast.bukkit;
 
 import es.angelillo15.mast.bukkit.api.BStaffPlayer;
-import es.angelillo15.mast.bukkit.api.item.StaffItem;
+import es.angelillo15.mast.bukkit.api.item.types.StaffItem;
 import es.angelillo15.mast.bukkit.cmd.StaffCMD;
 import es.angelillo15.mast.bukkit.config.ConfigLoader;
 import es.angelillo15.mast.bukkit.listeners.*;
@@ -17,7 +17,6 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.simpleyaml.configuration.file.YamlFile;
 
-import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.UUID;

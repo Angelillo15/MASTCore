@@ -64,7 +64,9 @@ public class VanishEvents implements Listener {
         Player player = event.getPlayer();
         if(player.hasPermission("mast.staff.use")){
             if(SQLQueries.getVanished(MASTBukkitManager.getInstance().getPluginConnection().getConnection(), player.getUniqueId()) == 1){
-                MASTBukkitManager.getInstance().removeStaffPlayer(MASTBukkitManager.getInstance().getSStaffPlayer(player.getUniqueId()));
+                if(MASTBukkitManager.getInstance().containsStaffPlayer(player.getUniqueId())){
+                    MASTBukkitManager.getInstance().removeStaffPlayer(MASTBukkitManager.getInstance().getSStaffPlayer(player.getUniqueId()));
+                }
                 event.setQuitMessage("");
             }
         }

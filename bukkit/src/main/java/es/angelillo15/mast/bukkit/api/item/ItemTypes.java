@@ -6,4 +6,5 @@ public enum ItemTypes {
     COMMAND,
     ENTITY_INTERACT,
     RANDOM_PLAYER_TELEPORT,
+    ENDER_CHEST,
 }
