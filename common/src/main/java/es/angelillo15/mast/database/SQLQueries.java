@@ -131,4 +131,17 @@ public class SQLQueries {
         return false;
     }
 
+    // check if the player is vanished
+    public static boolean isVanished(Connection connection, UUID uuid) {
+        try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM `staffdata` WHERE `UUID` = ?;")) {
+            statement.setString(1, uuid.toString());
+            ResultSet result = statement.executeQuery();
+            result.next();
+            return result.getInt("vanished") == 1;
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return false;
+    }
+
 }

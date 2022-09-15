@@ -1,6 +1,7 @@
 package es.angelillo15.mast.bukkit;
 
 import es.angelillo15.mast.bukkit.api.BStaffPlayer;
+import es.angelillo15.mast.bukkit.api.item.StaffItem;
 import es.angelillo15.mast.bukkit.cmd.StaffCMD;
 import es.angelillo15.mast.bukkit.config.ConfigLoader;
 import es.angelillo15.mast.bukkit.listeners.ItemClickEvent;
@@ -17,6 +18,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.simpleyaml.configuration.file.YamlFile;
 
 import java.sql.Connection;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.UUID;
 import java.util.logging.Logger;
@@ -25,6 +27,7 @@ public class MASTBukkitManager extends JavaPlugin {
     private static MASTBukkitManager instance;
     private HashMap<UUID, BStaffPlayer> staffPlayers = new HashMap<UUID, BStaffPlayer>();
     private HashMap<UUID, BStaffPlayer> vanishedPlayers = new HashMap<UUID, BStaffPlayer>();
+    private HashMap<UUID, ArrayList<StaffItem>> playersStaffItems = new HashMap<UUID, ArrayList<StaffItem>>();
     private static Logger Logger;
     private PluginDescriptionFile pdf = this.getDescription();
     private String version = pdf.getVersion();
@@ -85,7 +88,7 @@ public class MASTBukkitManager extends JavaPlugin {
         }
         this.getLogger().info("Type: " + type);
 
-
+        
     }
 
     public void setupMessenger(){
@@ -134,5 +137,21 @@ public class MASTBukkitManager extends JavaPlugin {
 
     public PluginConnection getPluginConnection() {
         return pluginConnection;
+    }
+
+    public HashMap<UUID, ArrayList<StaffItem>> getPlayersStaffItems() {
+        return playersStaffItems;
+    }
+    public void addPlayerStaffItems(UUID uuid, ArrayList<StaffItem> staffItems) {
+        playersStaffItems.put(uuid, staffItems);
+    }
+    public void removePlayerStaffItems(UUID uuid) {
+        playersStaffItems.remove(uuid);
+    }
+    public ArrayList<StaffItem> getPlayerStaffItems(UUID uuid) {
+        return playersStaffItems.get(uuid);
+    }
+    public boolean containsPlayerStaffItems(UUID uuid) {
+        return playersStaffItems.containsKey(uuid);
     }
 }

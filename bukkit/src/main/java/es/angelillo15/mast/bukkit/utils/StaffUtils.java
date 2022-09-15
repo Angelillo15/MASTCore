@@ -97,17 +97,20 @@ public class StaffUtils {
         }
     }
 
-    public static Location getRandomPlayerLocation(){
+
+    public static void playerRandomTeleport(Player player){
         ArrayList<Player> players = new ArrayList<>();
-        Bukkit.getOnlinePlayers().forEach(player -> {
-            if (!player.hasPermission("mast.staff")) {
-                players.add(player);
+        Bukkit.getOnlinePlayers().forEach(p -> {
+            if (!(p.hasPermission("mast.staff")) || !(p.equals(player))) {
+                players.add(p);
             }
         });
         if(players.isEmpty()){
-            return null;
+            player.sendMessage("Messages.GET_RANDOM_TELEPORT_NO_PLAYERS()");
+            return;
         }
         final Random random = new Random();
-        return players.get(random.nextInt(players.size())).getLocation();
+        player.teleport(players.get(random.nextInt(players.size())).getLocation());
+
     }
 }

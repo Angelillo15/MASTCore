@@ -37,13 +37,7 @@ public class PlayerRandomTPItem implements StaffItem{
     @Override
     public void click() {
         Bukkit.getScheduler().runTaskAsynchronously(MASTBukkitManager.getInstance(), () -> {
-            Location location = StaffUtils.getRandomPlayerLocation();
-            if(location == null){
-                player.sendMessage("Null");
-            }else{
-                player.teleport(location);
-                player.sendMessage("Teleported");
-            }
+            StaffUtils.playerRandomTeleport(player);
         });
     }
 
@@ -51,6 +45,7 @@ public class PlayerRandomTPItem implements StaffItem{
     public void set() {
         player.getInventory().setItem(slot, this.getItem());
     }
+
 
     public PlayerRandomTPItem(Player player, ItemStack itemStack, int slot){
         this.player = player;
