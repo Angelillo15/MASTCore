@@ -7,4 +7,5 @@ public enum ItemTypes {
     ENTITY_INTERACT,
     RANDOM_PLAYER_TELEPORT,
     ENDER_CHEST,
+    THRU,
 }

@@ -3,9 +3,7 @@ package es.angelillo15.mast.bukkit.utils.items;
 import com.cryptomorin.xseries.XMaterial;
 import es.angelillo15.mast.bukkit.MASTBukkitManager;
 import es.angelillo15.mast.bukkit.api.item.*;
-import es.angelillo15.mast.bukkit.api.item.items.CommandItem;
-import es.angelillo15.mast.bukkit.api.item.items.EnderchestItem;
-import es.angelillo15.mast.bukkit.api.item.items.PlayerRandomTPItem;
+import es.angelillo15.mast.bukkit.api.item.items.*;
 import es.angelillo15.mast.bukkit.api.item.types.StaffItem;
 import es.angelillo15.mast.bukkit.config.ConfigLoader;
 
@@ -45,7 +43,7 @@ public class InternalModules {
                 itemStack.setItemMeta(meta);
                 switch (ItemTypes.valueOf(s)) {
                     case FREEZE:
-                        items.add(new CommandItem(itemStack, slot, "freeze {player}"));
+                        items.add(new CommandInteractionItem(itemStack, slot, "freeze {target}"));
                         break;
                     case RANDOM_PLAYER_TELEPORT:
                         items.add(new PlayerRandomTPItem(itemStack, slot));
@@ -53,7 +51,9 @@ public class InternalModules {
                     case ENDER_CHEST:
                         items.add(new EnderchestItem(itemStack, slot));
                         break;
-
+                    case THRU:
+                        items.add(new ThruItem(itemStack, slot));
+                        break;
                     default:
                         Bukkit.getConsoleSender().sendMessage("Not found: " + s);
                 }
