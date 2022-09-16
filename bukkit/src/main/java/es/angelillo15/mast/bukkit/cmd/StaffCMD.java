@@ -22,9 +22,6 @@ public class StaffCMD implements CommandExecutor {
             }else{
                 return false;
             }
-
-
-
         }
         return false;
     }

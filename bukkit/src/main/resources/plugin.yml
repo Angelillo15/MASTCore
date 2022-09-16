@@ -15,3 +15,16 @@ commands:
     permission: mast.staff
     permission-message: "&cYou don't have permission to use this command"
     default: op
+  freeze:
+    description: Freeze command
+    aliases: [freeze]
+    permission: mast.freeze
+    permission-message: "&cYou don't have permission to use this command"
+    default: op
+permissions:
+  mast.staff:
+    description: Staff command
+    default: op
+  mast.staff.see:
+    description: Permission to view vanished players
+    default: op

@@ -96,9 +96,13 @@ public class ItemClickEvent implements Listener {
                 return;
             }
             MASTBukkitManager.getInternalModules().forEach(staffItem -> {
+
                 if (staffItem.getItem().getItemMeta().getDisplayName().equals(e.getPlayer().getItemInHand().getItemMeta().getDisplayName())) {
                     if(staffItem instanceof ThruItem){
                         ThruItem thruItem = (ThruItem) staffItem;
+                        if(e.getClickedBlock() == null){
+                            return;
+                        }
                         thruItem.click(e.getPlayer(), e.getClickedBlock().getLocation());
                     }
                 }

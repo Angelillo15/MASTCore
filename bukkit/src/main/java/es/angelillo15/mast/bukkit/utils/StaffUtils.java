@@ -106,6 +106,15 @@ public class StaffUtils {
         }
         final Random random = new Random();
         player.teleport(players.get(random.nextInt(players.size())).getLocation());
+    }
 
+    public static void asyncStaffBroadcastMessage(String message){
+        Bukkit.getScheduler().runTaskAsynchronously(MASTBukkitManager.getInstance(), () -> {
+            Bukkit.getOnlinePlayers().forEach(p -> {
+                if(p.hasPermission("mast.staff")){
+                    p.sendMessage(message);
+                }
+            });
+        });
     }
 }

@@ -2,6 +2,7 @@ package es.angelillo15.mast.bukkit.config;
 
 import es.angelillo15.mast.bukkit.MASTBukkitManager;
 import es.angelillo15.mast.config.ConfigManager;
+import org.bukkit.Bukkit;
 
 
 import java.io.File;
@@ -23,15 +24,20 @@ public class ConfigLoader {
         loadConfig();
         loadLanguages();
         loadMessage();
+        loadInternal();
     }
 
     public void loadConfig() {
         config = new ConfigManager(plugin.getDataFolder().toPath(), "config.yml", "config.yml");
         config.registerConfig();
+
+
+
+    }
+
+    public void loadInternal (){
         internalStaffItems = new ConfigManager(plugin.getDataFolder().toPath(), "modules/internal.yml", "/modules/internal.yml");
         internalStaffItems.registerConfig();
-
-
     }
 
     public void loadLanguages() {

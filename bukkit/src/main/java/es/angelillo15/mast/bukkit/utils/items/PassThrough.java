@@ -9,9 +9,11 @@ public class PassThrough {
 
     public static boolean passThrough(Player player, Location clickedLocation) {
         Vector direction = player.getLocation().getDirection().normalize();
+        int distance = 0;
         do {
             clickedLocation.add(direction);
-        } while (clickedLocation.getBlock().getType().equals(Material.AIR));
+            distance++;
+        } while (clickedLocation.getBlock().getType().equals(Material.AIR) && distance < 6);
         player.teleport(clickedLocation);
         return true;
     }

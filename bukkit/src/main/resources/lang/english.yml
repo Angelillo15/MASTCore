@@ -7,6 +7,7 @@
 #
 
 Prefix: '&8[Staff&a&8]' # This will appear before all the plugin messages.
+NoPermission: "&cYou don't have permission to use this command" # This will appear when a player without permission tries to use a command.
 
 General:
   reloaded: '{prefix} &7The plugin has been reloaded!'
@@ -24,6 +25,22 @@ Vanish:
 StaffMode:
   toggledOn: '{prefix} &7Staff mode has been &aenabled&7.' # Message sent after enabling Staff Mode.
   toggledOff: '{prefix} &7Staff mode has been &adisabled&7.' # Message sent after disabling Staff Mode.
+Freeze:
+  correctUse: '{prefix} &7You must use &a/freeze <player>&7.' # Message sent when the command is not used correctly.
+  correctUseOther: '{prefix} &7You must use &a/freeze <player> &7.' # Message sent when the command is not used correctly.
+  frozen: '{prefix} &7You have been &afrozen&7.' # Message sent when the player is frozen.
+  unfrozen: '{prefix} &7You have been &aunfrozen&7.' # Message sent when the player is unfrozen.
+  unfrozenBy: '{prefix} &7The player &a{player} &7has been &aunfrozen &7 by &a{staff}&7.' # Message sent when the player is unfrozen by a staff.
+  frozenByOther: '{prefix} &7The player &a{player} &7has been &afrozen &7 by &a{staff}&7.' # Message sent when the player is frozen by a staff.
+  playerSpamMessage:
+    - '&7████&c█&7████'
+    - '&7███&c█&6█&c█&7███'
+    - '&7██&c█&6█&0█&6█&c█&7██'
+    - '&7██&c█&6█&0█&6█&c█&7██   You have been frozen!'
+    - '&7█&c█&6██&0█&6██&c█&7█  join our discord server'
+    - '&7█&c█&6█████&c█&7█  http:/discord.example.com'
+    - '&c█&6███&0█&6███&c█'
+    - '&c█████████'
 #
 # Staff Mode Internal Modules
 # Here you can edit the default modules that come with
@@ -35,20 +52,3 @@ InternalModules:
     teleported: '{prefix} &7You have been teleported to a random player!' # Message sent when a Staff is succesfully teleported to a random player.
     noPlayers: '{prefix} &7There are no players to teleport' # Message sent when there are not enough players to teleport to a random player.
     itemName: '&aRandomTP &7(Right Click)' # The name that will be displayed at the Staff Mode item.
-    itemLore:
-      - '&7Right click this item'
-      - '&7to teleport to a random'
-      - '&7player.'
-  freezeModule:
-    freezed: '{prefix} &7You have freezed &a{player}&7.' # Message sent to a Staff when freezing a player.
-    unFreezed: '{prefix} &7You have unfreezed &a{player}&7.' # Message sent to a Staff when unfreezing a player.
-    freezedPlayerAlert:
-      - '&a&lWARNING'
-      - '&7You have been freezed by a Staff. Follow'
-      - '&7the instructions and do not disconnect, or you'
-      - '&7will be banned.'
-    itemName: '&aFreeze &7(Right Click)' # The name that will be displayed at the Staff Mode item.
-    itemLore:
-      - '&7Right click this item'
-      - '&7to freeze the player you'
-      - '&7are looking at.'

@@ -8,4 +8,5 @@ public enum ItemTypes {
     RANDOM_PLAYER_TELEPORT,
     ENDER_CHEST,
     THRU,
+    CHEST,
 }

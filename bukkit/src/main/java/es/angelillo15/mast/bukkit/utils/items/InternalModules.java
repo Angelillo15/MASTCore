@@ -54,6 +54,9 @@ public class InternalModules {
                     case THRU:
                         items.add(new ThruItem(itemStack, slot));
                         break;
+                    case CHEST:
+                        items.add(new ChestItem(itemStack, slot));
+                        break;
                     default:
                         Bukkit.getConsoleSender().sendMessage("Not found: " + s);
                 }
