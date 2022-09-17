@@ -21,7 +21,7 @@ public class FreezeUtils {
         if(MASTBukkitManager.getInstance().containsFreezePlayer(target.getUniqueId())){
             MASTBukkitManager.getInstance().removeFreezePlayer(target.getUniqueId());
             target.sendMessage(Messages.GET_FREEZE_UNFROZEN_MESSAGE());
-            StaffUtils.asyncStaffBroadcastMessage(Messages.GET_FREEZE_UNFROZEN_BY_MESSAGE().replace("{target}", target.getName()).replace("{staff}", staff.getName()));
+            StaffUtils.asyncStaffBroadcastMessage(Messages.GET_FREEZE_UNFROZEN_BY_MESSAGE().replace("{player}", target.getName()).replace("{staff}", staff.getName()));
         }else{
             MASTBukkitManager.getInstance().addFreezePlayer(target.getUniqueId(), target);
             target.sendMessage(Messages.GET_FREEZE_FROZEN_MESSAGE());

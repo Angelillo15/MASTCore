@@ -31,7 +31,11 @@ public class ItemClickEvent implements Listener {
         if(MASTBukkitManager.getInstance().containsStaffPlayer(player.getUniqueId())){
             ItemMeta meta = e.getItem().getItemMeta();
             ArrayList<StaffItem> internalModules = MASTBukkitManager.getInternalModules();
-
+            if(!clicked){
+                clicked = true;
+                e.setCancelled(true);
+                return;
+            }
             internalModules.forEach(staffItem -> {
                 if (staffItem.getItem().getItemMeta().getDisplayName().equals(meta.getDisplayName())) {
                     if (!(staffItem instanceof EntityInteractItem)) {
@@ -48,6 +52,7 @@ public class ItemClickEvent implements Listener {
                     }
                 }
             });
+            clicked = false;
             e.setCancelled(true);
         }
     }
@@ -62,6 +67,7 @@ public class ItemClickEvent implements Listener {
 
                 if(!clicked){
                     clicked = true;
+                    e.setCancelled(true);
                     return;
                 }
                 MASTBukkitManager.getInternalModules().forEach(staffItem -> {

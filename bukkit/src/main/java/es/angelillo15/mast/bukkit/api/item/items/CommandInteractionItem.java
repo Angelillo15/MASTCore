@@ -13,7 +13,6 @@ public class CommandInteractionItem implements StaffItem, ExecutableInteractionI
     @Override
     public void click(Player player, Player target) {
         player.performCommand(command.replace("{target}", target.getName()));
-        player.sendMessage(command.replace("{target}", target.getName()));
     }
 
     @Override

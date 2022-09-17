@@ -115,6 +115,7 @@ public class StaffUtils {
                     p.sendMessage(message);
                 }
             });
+            MASTBukkitManager.getInstance().getLogger().info(message);
         });
     }
 }
