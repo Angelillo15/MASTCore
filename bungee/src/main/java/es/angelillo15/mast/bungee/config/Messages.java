@@ -1,5 +1,6 @@
 package es.angelillo15.mast.bungee.config;
 
+import es.angelillo15.mast.bungee.utils.TextUtils;
 import es.angelillo15.mast.config.ConfigManager;
 import net.md_5.bungee.api.ChatColor;
 
@@ -17,4 +18,17 @@ public class Messages {
     public static String getPlayerStaffModeDisabled() {
         return messages.getConfig().getString("Messages.playerStaffModeDisabled");
     }
+
+    public static String GET_STAFF_CHAT_FORMAT() {
+        return TextUtils.colorize(messages.getConfig().getString("StaffChat.format"));
+    }
+
+    public static String GET_RELOADED_MESSAGE() {
+        return TextUtils.colorize(messages.getConfig().getString("Reloaded"));
+    }
+
+    public static void reload() {
+        messages = ConfigLoader.getMessages();
+    }
+
 }

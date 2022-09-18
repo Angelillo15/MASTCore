@@ -8,20 +8,16 @@
 
 Prefix: '&8[Staff&a&8]' # This will appear before all the plugin messages.
 NoPermission: "&cYou don't have permission to use this command" # This will appear when a player without permission tries to use a command.
+Reloaded: "{prefix} &aThe plugin has been successfully reloaded" # This will appear when the plugin is reloaded.
 
 General:
   reloaded: '{prefix} &7The plugin has been reloaded!'
   noPermission: '{permission} &7You do not have permission to execute this command.'
+  noPlayerOnline: '{prefix} &7There is no player online.'
+  noPlayerFound: '{prefix} &7No player found with that name.'
 StaffChat:
-  format: '{prefix} &7(&a{server}&7) &a{player} &7&l» &7{message}' # The format for sent messages on Staff Chat.
-  toggledOn: '{prefix} &7Staff chat has been &aenabled&7.' # Message sent after enabling the Staff Chat.
-  toggledOff: '{prefix} &7Staff chat has been &adisabled&7.' # Message sent after disabling the Staff Chat.
-  correctUse: '{prefix} &7You must use &a/sc <message/on/off>&7.' # Message sent when the command is not used correctly.
-Vanish:
-  enabled: '{prefix} &7Vanish has been &aenabled&7.' # Message sent after enabling Vanish.
-  enabledOther: '{prefix} &7Vanish has been &aenabled &7for &a{player}&7.' # Message sent after enabling Vanish for other player.
-  disabled: '{prefix} &7Vanish has been &adisabled&7.' # Message sent after enabling Vanish.
-  disabledOther: '{prefix} &7Vanish has been &adisabled &7for &a{player}&7.' # Message sent after enabling Vanish for other player.
+  format: '{prefix} &a{player} &7&l» &7{message}' # The format for sent messages on Staff Chat.
+  correctUse: '{prefix} &7You must use &a/sc <message>&7.' # Message sent when the command is not used correctly.
 StaffMode:
   toggledOn: '{prefix} &7Staff mode has been &aenabled&7.' # Message sent after enabling Staff Mode.
   toggledOff: '{prefix} &7Staff mode has been &adisabled&7.' # Message sent after disabling Staff Mode.
@@ -33,6 +29,7 @@ Freeze:
   unfrozenBy: '{prefix} &7The player &a{player} &7has been &aunfrozen &7 by &a{staff}&7.' # Message sent when the player is unfrozen by a staff.
   frozenByOther: '{prefix} &7The player &a{player} &7has been &afrozen &7 by &a{staff}&7.' # Message sent when the player is frozen by a staff.
   playerSpamMessage:
+    - ''
     - '&7████&c█&7████'
     - '&7███&c█&6█&c█&7███'
     - '&7██&c█&6█&0█&6█&c█&7██'

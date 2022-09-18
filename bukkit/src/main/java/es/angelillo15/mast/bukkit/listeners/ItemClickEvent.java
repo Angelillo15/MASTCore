@@ -24,11 +24,18 @@ public class ItemClickEvent implements Listener {
     public void onItemClickEvent(PlayerInteractEvent e){
         Player player = e.getPlayer();
 
-        if(e.getItem() == null) return;
-        if(e.getItem().getType() == Material.AIR) return;
-        if(!e.getItem().hasItemMeta()) return;
+
+
+
 
         if(MASTBukkitManager.getInstance().containsStaffPlayer(player.getUniqueId())){
+            if(!e.getPlayer().hasPermission("mast.break")){
+                e.setCancelled(true);
+            }
+            if(e.getItem() == null) return;
+            if(e.getItem().getType() == Material.AIR) return;
+            if(!e.getItem().hasItemMeta()) return;
+
             ItemMeta meta = e.getItem().getItemMeta();
             ArrayList<StaffItem> internalModules = MASTBukkitManager.getInternalModules();
             if(!clicked){

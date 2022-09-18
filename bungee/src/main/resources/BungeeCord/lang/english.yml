@@ -5,7 +5,11 @@
 # Remember to join my Discord server if you need help:
 # https://discord.angelillo15.es/
 #
+Reloaded: '{prefix} &aThe plugin has been reloaded correctly.'
 Messages:
   prefix: '&8[Staff&a&8]' # This will appear before all the plugin messages.
   playerStaffModeEnabled: '{prefix} &a{player} &7has been &eenabled &7staff mode.'
   playerStaffModeDisabled: '{prefix} &a{player} &7has been &edisabled &7staff mode.'
+StaffChat:
+  format: '{prefix} &7(&a{server}&7) &a{player} &7&l» &7{message}' # The format for sent messages on Staff Chat.
+  correctUse: '{prefix} &7You must use &a/sc <message>&7.' # Message sent when the command is not used correctly.

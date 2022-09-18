@@ -13,13 +13,21 @@ commands:
     usage: /staff
     aliases: [staff]
     permission: mast.staff
-    permission-message: "&cYou don't have permission to use this command"
     default: op
   freeze:
     description: Freeze command
     aliases: [freeze]
     permission: mast.freeze
-    permission-message: "&cYou don't have permission to use this command"
+    default: op
+  staffchat:
+    description: Staff chat command
+    aliases: [staffchat, sc]
+    permission: mast.staffchat
+    default: op
+  mastcore:
+    description: MASTCore command
+    aliases: [mastcore, mast]
+    permission: mast.admin
     default: op
 permissions:
   mast.staff:

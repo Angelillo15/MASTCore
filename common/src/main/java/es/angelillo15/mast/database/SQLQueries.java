@@ -22,8 +22,8 @@ public class SQLQueries {
     public static void createStaffDataTableSQLite(Connection connection) {
         try (PreparedStatement statement = connection.prepareStatement("CREATE TABLE \"staffdata\" (\"ID\"    INTEGER, \"UUID\"    TEXT, \"state\"    INTEGER, \"vanished\"    INTEGER, PRIMARY KEY(\"ID\" AUTOINCREMENT) );")) {
             statement.executeUpdate();
-        } catch (SQLException e) {
-            System.out.println(e);
+        } catch (SQLException ignored) {
+
         }
     }
 

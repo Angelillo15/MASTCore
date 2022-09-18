@@ -3,10 +3,13 @@ package es.angelillo15.mast.bukkit;
 import es.angelillo15.mast.bukkit.api.BStaffPlayer;
 import es.angelillo15.mast.bukkit.api.item.types.StaffItem;
 import es.angelillo15.mast.bukkit.cmd.FreezeCMD;
+import es.angelillo15.mast.bukkit.cmd.MASTCoreCMD;
 import es.angelillo15.mast.bukkit.cmd.StaffCMD;
+import es.angelillo15.mast.bukkit.cmd.StaffChatCMD;
 import es.angelillo15.mast.bukkit.config.ConfigLoader;
 import es.angelillo15.mast.bukkit.listeners.*;
 import es.angelillo15.mast.bukkit.utils.FreezeUtils;
+import es.angelillo15.mast.bukkit.utils.Messages;
 import es.angelillo15.mast.bukkit.utils.VanishUtils;
 import es.angelillo15.mast.bukkit.utils.items.InternalModules;
 import es.angelillo15.mast.database.PluginConnection;
@@ -62,6 +65,8 @@ public class MASTBukkitManager extends JavaPlugin {
     public void registerCommands() {
         this.getCommand("staff").setExecutor(new StaffCMD());
         this.getCommand("freeze").setExecutor(new FreezeCMD());
+        this.getCommand("staffchat").setExecutor(new StaffChatCMD());
+        this.getCommand("mastcore").setExecutor(new MASTCoreCMD());
     }
 
     public void registerEvents(){
@@ -105,6 +110,15 @@ public class MASTBukkitManager extends JavaPlugin {
         this.getLogger().info("Type: " + type);
 
         
+    }
+
+    public void reload(){
+        SQLQueries.closeConnection(pluginConnection.getConnection());
+        databaseConnection();
+        configLoader.load();
+        internalModules.clear();
+        setupModules();
+        Messages.reload();
     }
 
     public void setupMessenger(){

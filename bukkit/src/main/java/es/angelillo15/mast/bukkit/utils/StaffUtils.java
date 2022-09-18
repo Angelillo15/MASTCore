@@ -101,7 +101,7 @@ public class StaffUtils {
             }
         });
         if(players.isEmpty()){
-            player.sendMessage("Messages.GET_RANDOM_TELEPORT_NO_PLAYERS()");
+            player.sendMessage(Messages.GET_NO_PLAYER_ONLINE_MESSAGE());
             return;
         }
         final Random random = new Random();
@@ -112,6 +112,17 @@ public class StaffUtils {
         Bukkit.getScheduler().runTaskAsynchronously(MASTBukkitManager.getInstance(), () -> {
             Bukkit.getOnlinePlayers().forEach(p -> {
                 if(p.hasPermission("mast.staff")){
+                    p.sendMessage(message);
+                }
+            });
+            MASTBukkitManager.getInstance().getLogger().info(message);
+        });
+    }
+
+    public static void asyncStaffChatMessage(String message){
+        Bukkit.getScheduler().runTaskAsynchronously(MASTBukkitManager.getInstance(), () -> {
+            Bukkit.getOnlinePlayers().forEach(p -> {
+                if(p.hasPermission("mast.staffchat")){
                     p.sendMessage(message);
                 }
             });

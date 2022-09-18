@@ -6,6 +6,7 @@ public class MASTBungee extends MASTBungeeManager {
         drawLogo();
         registerEvents();
         registerConfig();
+        registerCommands();
     }
 
     @Override
