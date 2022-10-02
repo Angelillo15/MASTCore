@@ -1,11 +1,7 @@
 package es.angelillo15.mast.bukkit.cmd;
 
-import es.angelillo15.mast.bukkit.api.BStaffPlayer;
-import es.angelillo15.mast.bukkit.MASTBukkitManager;
 import es.angelillo15.mast.bukkit.utils.Messages;
 import es.angelillo15.mast.bukkit.utils.StaffUtils;
-import es.angelillo15.mast.bukkit.utils.VanishUtils;
-import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -20,6 +16,7 @@ public class StaffCMD implements CommandExecutor {
                 StaffUtils.toggleStaff(p);
                 return true;
             }else{
+                p.sendMessage(Messages.GET_NO_PERMISSION_MESSAGE());
                 return false;
             }
         }

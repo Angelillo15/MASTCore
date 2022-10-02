@@ -1,7 +1,21 @@
 #
-# This is the English language file por MASTCore,
-# where you can modify and customize the plugin messages.
+# Este es el archivo de idioma Español para MAStaff Bungee,
+# donde puedes modificar y personalizar los mensajes del plugin.
 #
 # Remember to join my Discord server if you need help:
 # https://discord.angelillo15.es/
 #
+Reloaded: '{prefix} &7MAStaff ha sido recargado exitosamente.'
+Messages:
+  prefix: '&a&lSTAFF &8&l»' # This will appear before all the plugin messages.
+  playerStaffModeEnabled: '{prefix} &a{player} &7ha &aactivado &7el modo staff.'
+  playerStaffModeDisabled: '{prefix} &a{player} &7ha &adesactivado &7el modo staff.'
+StaffChat:
+  format: '{prefix} &7({server}) &a{player} &8&l» &7{message}' # The format for sent messages on Staff Chat.
+  correctUse: '{prefix} &7Debes de utilizar &a/sc <mensaje>&7.' # Message sent when the command is not used correctly.
+StaffJoin:
+  message: '{prefix} &a{player} &7ha entrado al servidor.'
+StaffChangeServer:
+  message: '{prefix} &a{player} &7ha cambiado de &a{fromServer} &7a &a{fromServer}&7.'
+StaffLeave:
+  message: '{prefix} &a{player} &7ha salido del servidor.'

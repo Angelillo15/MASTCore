@@ -32,9 +32,26 @@ public class Messages {
         return TextUtils.parseMessage(messages.getString("Reloaded"));
     }
 
-    /*
-    * Freeze Messages
-    */
+    /**
+     * Get the message when a player is vanished
+     * @return The message
+     */
+
+    public static String GET_VANISH_JOIN_MESSAGE() {
+        return TextUtils.parseMessage(messages.getString("Vanish.joinMessage"));
+    }
+
+    public static String GET_VANISH_LEAVE_MESSAGE() {
+        return TextUtils.parseMessage(messages.getString("Vanish.leaveMessage"));
+    }
+
+    public static String GET_STAFF_VANISH_JOIN_MESSAGE() {
+        return TextUtils.parseMessage(messages.getString("Vanish.staffJoinMessage"));
+    }
+
+    public static String GET_STAFF_VANISH_LEAVE_MESSAGE() {
+        return TextUtils.parseMessage(messages.getString("Vanish.staffLeaveMessage"));
+    }
 
     public static String GET_FREEZE_FROZEN_MESSAGE() {
         return TextUtils.parseMessage(messages.getString("Freeze.frozen"));

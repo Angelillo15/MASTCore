@@ -35,6 +35,9 @@ public class Messages {
     public static String getStaffLeave(){
         return messages.getConfig().getString("StaffLeave.message");
     }
+    public static String getStaffChatUssage(){
+        return messages.getConfig().getString("StaffChat.correctUse");
+    }
 
     public static void reload() {
         messages = ConfigLoader.getMessages();

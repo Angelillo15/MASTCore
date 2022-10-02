@@ -18,7 +18,7 @@ public class StaffChat extends Command {
             ProxiedPlayer p = (ProxiedPlayer) sender;
             if(p.hasPermission("mast.staffchat")){
                 if(args.length < 1){
-                    p.sendMessage(new TextComponent("§cUsage: /sc <message>"));
+                    p.sendMessage(new TextComponent(Messages.getStaffChatUssage()));
                     return;
                 } else {
                     StringBuilder sb = new StringBuilder();

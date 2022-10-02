@@ -31,8 +31,18 @@ public class StaffUtils {
 
         if (SQLQueries.getState(plugin.getPluginConnection().getConnection(), player.getUniqueId()) == 0) {
             enableStaff(player);
+            MASTBukkitManager.getInstance().getServer().getScheduler().runTaskAsynchronously(MASTBukkitManager.getInstance(), () -> {
+                Bukkit.getOnlinePlayers().forEach(p -> {
+                    p.sendMessage(Messages.GET_VANISH_LEAVE_MESSAGE().replace("{player}", player.getName()));
+                });
+            });
         } else {
             disableStaff(player);
+            MASTBukkitManager.getInstance().getServer().getScheduler().runTaskAsynchronously(MASTBukkitManager.getInstance(), () -> {
+                Bukkit.getOnlinePlayers().forEach(p -> {
+                    p.sendMessage(Messages.GET_VANISH_JOIN_MESSAGE().replace("{player}", player.getName()));
+                });
+            });
         }
 
     }

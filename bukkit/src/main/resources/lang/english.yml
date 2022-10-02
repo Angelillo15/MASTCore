@@ -11,10 +11,13 @@ NoPermission: "&cYou don't have permission to use this command" # This will appe
 Reloaded: "{prefix} &aThe plugin has been successfully reloaded" # This will appear when the plugin is reloaded.
 
 General:
-  reloaded: '{prefix} &7The plugin has been reloaded!'
-  noPermission: '{permission} &7You do not have permission to execute this command.'
   noPlayerOnline: '{prefix} &7There is no player online.'
   noPlayerFound: '{prefix} &7No player found with that name.'
+Vanish:
+  joinMessage: '&7{player} &7has joined the game'
+  leaveMessage: '&7{player} &7has left the game'
+  staffJoinMessage: '&7{player} &7has joined the game silently'
+  staffLeaveMessage: '&7{player} &7has left the game silently'
 StaffChat:
   format: '{prefix} &a{player} &7&l» &7{message}' # The format for sent messages on Staff Chat.
   correctUse: '{prefix} &7You must use &a/sc <message>&7.' # Message sent when the command is not used correctly.

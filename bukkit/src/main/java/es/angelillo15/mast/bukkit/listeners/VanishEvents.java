@@ -4,6 +4,7 @@ import es.angelillo15.mast.bukkit.MASTBukkitManager;
 import es.angelillo15.mast.bukkit.api.BStaffPlayer;
 import es.angelillo15.mast.bukkit.api.events.vanish.PlayerVanishDisableEvent;
 import es.angelillo15.mast.bukkit.api.events.vanish.PlayerVanishEnableEvent;
+import es.angelillo15.mast.bukkit.utils.Messages;
 import es.angelillo15.mast.bukkit.utils.StaffUtils;
 import es.angelillo15.mast.bukkit.utils.VanishUtils;
 import es.angelillo15.mast.database.SQLQueries;
@@ -46,6 +47,7 @@ public class VanishEvents implements Listener {
             if(SQLQueries.getVanished(MASTBukkitManager.getInstance().getPluginConnection().getConnection(), player.getUniqueId()) == 1){
                 VanishUtils.enableVanish(player);
                 event.setJoinMessage("");
+                StaffUtils.asyncStaffBroadcastMessage(Messages.GET_STAFF_VANISH_JOIN_MESSAGE().replace("{player}", player.getName()));
             }
 
             if(SQLQueries.existsData(plugin.getPluginConnection().getConnection(), player.getUniqueId())){
@@ -82,6 +84,7 @@ public class VanishEvents implements Listener {
                 }
                 StaffUtils.sendStaffData(event.getPlayer(), false);
                 event.setQuitMessage("");
+                StaffUtils.asyncStaffBroadcastMessage(Messages.GET_STAFF_VANISH_LEAVE_MESSAGE().replace("{player}", player.getName()));
             }
         }
     }
