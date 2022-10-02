@@ -14,6 +14,11 @@ public class StaffChatCMD implements CommandExecutor {
             Player p = (Player) sender;
             if(p.hasPermission("mast.staffchat")){
 
+                if(args.length < 1){
+                    p.sendMessage(Messages.GET_STAFFCHAT_CORRECT_USE());
+                    return true;
+                }
+
                 StaffUtils.asyncStaffChatMessage(Messages.GET_STAFF_CHAT_FORMAT().replace("{player}", p.getDisplayName()).replace("{message}", String.join(" ", args)));
                 return true;
             }else{

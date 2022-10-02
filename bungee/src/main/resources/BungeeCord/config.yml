@@ -17,3 +17,10 @@
 #
 Config:
   language: "english.yml"
+# In  bungeecord you can only use MariaDB or MySQL
+Database:
+  host: '127.0.0.1' # host of your database
+  port: '3306' # default port for MariaDB and MySQL
+  database: 'mast-core' # name of your database. A database server can contain multiple databases
+  user: 'root'
+  password: ''

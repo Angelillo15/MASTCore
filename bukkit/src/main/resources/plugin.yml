@@ -1,4 +1,4 @@
-name: MASTCore
+name: MAStaff
 version: '${version}'
 main: es.angelillo15.mast.bukkit.MASTBukkit
 api-version: 1.13
@@ -26,7 +26,7 @@ commands:
     default: op
   mastcore:
     description: MASTCore command
-    aliases: [mastcore, mast]
+    aliases: [mastaff, mast]
     permission: mast.admin
     default: op
 permissions:

@@ -26,6 +26,15 @@ public class Messages {
     public static String GET_RELOADED_MESSAGE() {
         return TextUtils.colorize(messages.getConfig().getString("Reloaded"));
     }
+    public static String getStaffChangeServer(){
+        return messages.getConfig().getString("StaffChangeServer.message");
+    }
+    public static String getStaffJoin(){
+        return messages.getConfig().getString("StaffJoin.message");
+    }
+    public static String getStaffLeave(){
+        return messages.getConfig().getString("StaffLeave.message");
+    }
 
     public static void reload() {
         messages = ConfigLoader.getMessages();

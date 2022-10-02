@@ -88,7 +88,6 @@ public class SQLQueries {
             statement.setString(1, uuid.toString());
             ResultSet result = statement.executeQuery();
             result.next();
-            //statement.close();
             return result.getInt("state");
         } catch (SQLException e) {
             System.out.println(e);
@@ -102,7 +101,6 @@ public class SQLQueries {
             statement.setString(1, uuid.toString());
             ResultSet result = statement.executeQuery();
             result.next();
-            //statement.close();
             return result.getInt("vanished");
         } catch (SQLException e) {
             System.out.println(e);
@@ -142,6 +140,21 @@ public class SQLQueries {
             System.out.println(e);
         }
         return false;
+    }
+
+    // Get staff players count
+    public static int getStaffCount(Connection connection) {
+        try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM `staffdata` WHERE `state` = 1;")) {
+            ResultSet result = statement.executeQuery();
+            int count = 0;
+            while (result.next()) {
+                count++;
+            }
+            return count;
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return 0;
     }
 
 }

@@ -10,13 +10,27 @@ StaffItems:
     enabled: true
     name: '&bFreeze'
     material: 'BLAZE_ROD'
-    slot: 2
+    slot: 1
     lore:
       - '&7Click to toggle vanish'
   ENDER_CHEST:
     enabled: true
     name: '&bEnder Chest'
     material: 'ENDER_CHEST'
-    slot: 4
+    slot: 3
     lore:
       - '&7Click to view player enderchest'
+  CHEST:
+    enabled: true
+    name: '&bChest'
+    material: 'CHEST'
+    slot: 5
+    lore:
+      - '&7Click to view player chest'
+  THRU:
+    enabled: true
+    name: '&bTHRU'
+    material: 'COMPASS'
+    slot: 8
+    lore:
+      - '&7Click to passthroug a wall'

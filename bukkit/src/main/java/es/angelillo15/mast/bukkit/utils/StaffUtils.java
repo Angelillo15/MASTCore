@@ -10,6 +10,7 @@ import es.angelillo15.mast.bukkit.api.item.types.StaffItem;
 import es.angelillo15.mast.bukkit.utils.items.InternalModules;
 import es.angelillo15.mast.database.SQLQueries;
 import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 
@@ -47,7 +48,8 @@ public class StaffUtils {
             pm.callEvent(new PlayerVanishEnableEvent(player));
         }
 
-
+        player.setGameMode(GameMode.CREATIVE);
+        player.setAllowFlight(true);
 
         Inventory.saveInventory(player);
 
@@ -67,7 +69,7 @@ public class StaffUtils {
             pm.callEvent(new PlayerVanishDisableEvent(player));
         }
 
-
+        player.setGameMode(GameMode.SURVIVAL);
 
         sendStaffData(player, false);
 
@@ -128,5 +130,14 @@ public class StaffUtils {
             });
             MASTBukkitManager.getInstance().getLogger().info(message);
         });
+    }
+
+    public static String getPlayerCount(Player player){
+        Boolean type = MASTBukkitManager.getInstance().getConfig().getBoolean("Config.bungeecord");
+        if(!type){
+            return String.valueOf(Bukkit.getOnlinePlayers().size());
+        } else {
+            return MASTBukkitManager.getOnlinePlayers().toString();
+        }
     }
 }

@@ -40,6 +40,7 @@ public class MASTBukkitManager extends JavaPlugin {
     private ConfigLoader configLoader;
     private PluginConnection pluginConnection;
     private static ArrayList<StaffItem> internalModules;
+    private static Integer onlinePlayers;
 
     public void initLogger() {
         MASTBukkitManager.Logger = this.getLogger();
@@ -200,7 +201,12 @@ public class MASTBukkitManager extends JavaPlugin {
     public boolean containsFreezePlayer(UUID uuid) {
         return freezePlayers.containsKey(uuid);
     }
-
+    public static Integer getOnlinePlayers() {
+        return onlinePlayers;
+    }
+    public static void setOnlinePlayers(Integer onlinePlayers) {
+        MASTBukkitManager.onlinePlayers = onlinePlayers;
+    }
 
     public static ArrayList<StaffItem> getInternalModules(){
         return internalModules;

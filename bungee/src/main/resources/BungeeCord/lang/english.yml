@@ -1,5 +1,5 @@
 #
-# This is the English language file por MASTCore,
+# This is the English language file for MAStaff Bungee,
 # where you can modify and customize the plugin messages.
 #
 # Remember to join my Discord server if you need help:
@@ -13,3 +13,9 @@ Messages:
 StaffChat:
   format: '{prefix} &7(&a{server}&7) &a{player} &7&l» &7{message}' # The format for sent messages on Staff Chat.
   correctUse: '{prefix} &7You must use &a/sc <message>&7.' # Message sent when the command is not used correctly.
+StaffJoin:
+  message: '{prefix} &a{player} &7has joined the server.'
+StaffChangeServer:
+  message: '{prefix} &a{player} &7has joined the server &a{server}&7 from &a{fromServer}&7.'
+StaffLeave:
+  message: '{prefix} &a{player} &7has left the server.'

@@ -21,6 +21,8 @@ public class OnStaffJoin implements Listener {
                 MASTBukkitManager.getInstance().addStaffPlayer(new BStaffPlayer(player));
             }
         }
+
+
     }
 }
 

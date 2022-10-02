@@ -17,6 +17,7 @@
 #
 Config:
   language: "english.yml"
+  bungeecord: false
 Database:
   type: 'SQLite' # Available types: SQLite and MySQL | MySQL Driver also works with MariaDB
   host: '127.0.0.1' # host of your database

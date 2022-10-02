@@ -1,19 +1,20 @@
 package es.angelillo15.mast.bukkit.listeners;
 
 import es.angelillo15.mast.bukkit.MASTBukkitManager;
+import es.angelillo15.mast.bukkit.api.BStaffPlayer;
 import es.angelillo15.mast.bukkit.api.events.vanish.PlayerVanishDisableEvent;
 import es.angelillo15.mast.bukkit.api.events.vanish.PlayerVanishEnableEvent;
+import es.angelillo15.mast.bukkit.utils.StaffUtils;
 import es.angelillo15.mast.bukkit.utils.VanishUtils;
 import es.angelillo15.mast.database.SQLQueries;
-import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerChangedWorldEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
-
-import java.nio.Buffer;
 
 public class VanishEvents implements Listener {
     @EventHandler(priority = EventPriority.HIGHEST)
@@ -43,9 +44,14 @@ public class VanishEvents implements Listener {
         Player player = event.getPlayer();
         if(player.hasPermission("mast.staff.use")){
             if(SQLQueries.getVanished(MASTBukkitManager.getInstance().getPluginConnection().getConnection(), player.getUniqueId()) == 1){
-
                 VanishUtils.enableVanish(player);
                 event.setJoinMessage("");
+            }
+
+            if(SQLQueries.existsData(plugin.getPluginConnection().getConnection(), player.getUniqueId())){
+                if(SQLQueries.getState(plugin.getPluginConnection().getConnection(), player.getUniqueId()) == 1){
+                    MASTBukkitManager.getInstance().addStaffPlayer(new BStaffPlayer(player));
+                }
             }
         }
 
@@ -60,6 +66,13 @@ public class VanishEvents implements Listener {
     }
 
     @EventHandler
+    public void onWorldChange(PlayerChangedWorldEvent event){
+        if(MASTBukkitManager.getInstance().containsStaffPlayer(event.getPlayer().getUniqueId())){
+            event.getPlayer().setGameMode(GameMode.CREATIVE);
+        }
+    }
+
+    @EventHandler
     public void onPlayerQuit(PlayerQuitEvent event) {
         Player player = event.getPlayer();
         if(player.hasPermission("mast.staff.use")){
@@ -67,6 +80,7 @@ public class VanishEvents implements Listener {
                 if(MASTBukkitManager.getInstance().containsStaffPlayer(player.getUniqueId())){
                     MASTBukkitManager.getInstance().removeStaffPlayer(MASTBukkitManager.getInstance().getSStaffPlayer(player.getUniqueId()));
                 }
+                StaffUtils.sendStaffData(event.getPlayer(), false);
                 event.setQuitMessage("");
             }
         }

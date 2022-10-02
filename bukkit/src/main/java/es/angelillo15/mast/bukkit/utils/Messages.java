@@ -61,6 +61,15 @@ public class Messages {
         return spam;
     }
 
+    /*
+    * StaffChat Messages
+     */
+
+    public static String GET_STAFFCHAT_CORRECT_USE(){
+        return TextUtils.parseMessage(messages.getString("StaffChat.correctUse"));
+    }
+
+
 
     /*
     * General
