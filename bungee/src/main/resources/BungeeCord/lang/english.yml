@@ -5,17 +5,17 @@
 # Remember to join my Discord server if you need help:
 # https://discord.angelillo15.es/
 #
-Reloaded: '{prefix} &aThe plugin has been reloaded correctly.'
+Reloaded: '{prefix} &7MAStaff has been reloaded succesfully.'
 Messages:
-  prefix: '&8[Staff&a&8]' # This will appear before all the plugin messages.
-  playerStaffModeEnabled: '{prefix} &a{player} &7has been &eenabled &7staff mode.'
-  playerStaffModeDisabled: '{prefix} &a{player} &7has been &edisabled &7staff mode.'
+  prefix: '&a&lSTAFF &8&l»' # This will appear before all the plugin messages.
+  playerStaffModeEnabled: '{prefix} &a{player} &7has &aenabled &7staff mode.'
+  playerStaffModeDisabled: '{prefix} &a{player} &7has &adisabled &7staff mode.'
 StaffChat:
-  format: '{prefix} &7(&a{server}&7) &a{player} &7&l» &7{message}' # The format for sent messages on Staff Chat.
+  format: '{prefix} &7({server}) &a{player} &8&l» &7{message}' # The format for sent messages on Staff Chat.
   correctUse: '{prefix} &7You must use &a/sc <message>&7.' # Message sent when the command is not used correctly.
 StaffJoin:
   message: '{prefix} &a{player} &7has joined the server.'
 StaffChangeServer:
-  message: '{prefix} &a{player} &7has joined the server &a{server}&7 from &a{fromServer}&7.'
+  message: '{prefix} &a{player} &7has switched from &a{fromServer} &7to &a{server}&7.'
 StaffLeave:
   message: '{prefix} &a{player} &7has left the server.'

@@ -1,14 +1,13 @@
 #
 # This is the English language file for MAStaff Spigot,
 # where you can modify and customize the plugin messages.
-# 
+#
 # Remember to join my Discord server if you need help:
 # https://discord.angelillo15.es/
 #
-
-Prefix: '&8[Staff&a&8]' # This will appear before all the plugin messages.
-NoPermission: "&cYou don't have permission to use this command" # This will appear when a player without permission tries to use a command.
-Reloaded: "{prefix} &aThe plugin has been successfully reloaded" # This will appear when the plugin is reloaded.
+Prefix: '&a&lSTAFF &8&l»' # This will appear before all the plugin messages.
+NoPermission: "&7You don't have permission to use this command." # This will appear when a player without permission tries to use a command.
+Reloaded: "{prefix} &7MAStaff has been reloaded succesfully." # This will appear when the plugin is reloaded.
 
 General:
   noPlayerOnline: '{prefix} &7There is no player online.'

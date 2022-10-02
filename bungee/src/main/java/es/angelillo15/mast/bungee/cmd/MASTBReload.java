@@ -17,7 +17,7 @@ public class MASTBReload extends Command {
         if(sender instanceof ProxiedPlayer){
             if(sender.hasPermission("mast.admin")){
                 if(args.length < 1){
-                    sender.sendMessage(new TextComponent("§cUsage: /MASTB <reload>"));
+                    sender.sendMessage(new TextComponent("§7To reload the plugin, use §a/mastb reload"));
                     return;
                 }
 
@@ -30,7 +30,7 @@ public class MASTBReload extends Command {
         } else{
 
             if(args.length < 1){
-                sender.sendMessage(new TextComponent("§cUsage: /MASTB <reload>"));
+                sender.sendMessage(new TextComponent("§7To reload the plugin, use §a/mastb reload"));
                 return;
             }
 
