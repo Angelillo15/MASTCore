@@ -1,5 +1,7 @@
 package es.angelillo15.mast.bungee;
 
+import es.angelillo15.mast.bungee.metrics.Metrics;
+
 public class MASTBungee extends MASTBungeeManager {
     @Override
     public void onEnable() {
@@ -7,10 +9,11 @@ public class MASTBungee extends MASTBungeeManager {
         registerEvents();
         registerConfig();
         registerCommands();
+        new Metrics(this, 16550);
     }
 
     @Override
     public void onDisable() {
-        super.onDisable();
+
     }
 }
