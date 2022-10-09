@@ -2,7 +2,7 @@ StaffItems:
   COMMAND:
     fly:
       enabled: true
-      name: '&bFly'
+      name: '&aToggle Fly'
       material: 'SLIME_BALL'
       slot: 5
       command: fly

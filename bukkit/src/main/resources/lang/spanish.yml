@@ -5,49 +5,38 @@
 # Recuerda unirte a mi servidor de Discord si necesitas ayuda:
 # https://discord.angelillo15.es/
 #
-Prefix: '&8[Staff&a&8]' # This will appear before all the plugin messages.
-NoPermission: "&cNo tienes permiso para ejecutar esta acción" # This will appear when a player without permission tries to use a command.
-Reloaded: "{prefix} &aEl plugin se ha recargado correctamente" # This will appear when the plugin is reloaded.
+Prefix: '&a&lSTAFF &8&l»' # Esto aparecerá delante de todos los mensajes.
+NoPermission: "&7No tienes permiso para ejecutar este comando." # Esto aparecerá cuando un jugador que no tenga permisos utilice un comando.
+Reloaded: "{prefix} &7MAStaff ha sido recargado exitosamente." # Esto aparecerá cuando el plugin sea recargado.
 
 General:
-  noPlayerOnline: '{prefix} &7No hay ningun jugador en linea.'
-  noPlayerFound: '{prefix} &7No se ha encontrado ningun jugador con ese nombre.'
+  noPlayerFound: '{prefix} &7Ese jugador está desconectado.' # Mensaje enviado cuando el jugador mencionado no está conectado.
 Vanish:
-  joinMessage: '&7{player} &7Se ha unido al juego'
-  leaveMessage: '&7{player} &7Ha abandonado el Juego'
-  staffJoinMessage: '&7{player} &7Se ha unido sileciosamente'
-  staffLeaveMessage: '&7{player} &7ha abandonado el juego sileciosamente'
+  joinMessage: '&a{player} &7ha entrado' # Mensaje enviado cuando un jugador desactiva el vanish.
+  leaveMessage: '&a{player} &7ha salido' # Mensaje enviado cuando un jugador activa el vanish.
+  staffJoinMessage: '&a{player} &7ha entrado silenciosamente' # Mensaje enviado al Staff cuando otro Staff entra en vanish.
+  staffLeaveMessage: '&a{player} &7ha salido silenciosamente' # Mensaje enviado al Staff cuando otro Staff sale en vanish.
 StaffChat:
-  format: '{prefix} &a{player} &7&l» &7{message}' # The format for sent messages on Staff Chat.
-  correctUse: '{prefix} &7Tienes que usar &a/sc <message>&7.' # Message sent when the command is not used correctly.
+  format: '{prefix} &7({server}) &a{player} &8&l» &7{message}' # El formato para mensajes enviados mediante Chat de Staff.
+  correctUse: '{prefix} &7Debes de usar &a/sc <mensaje>&7.' # Mensaje enviado cuando el comando no se utiliza correctamente.
 StaffMode:
-  toggledOn: '{prefix} &7Staff mode &aactivadp&7.' # Message sent after enabling Staff Mode.
-  toggledOff: '{prefix} &7Staff mode &adesactivado&7.' # Message sent after disabling Staff Mode.
+  toggledOn: '{prefix} &7Modo de staff &aactivado&7.' # Mensaje enviado al activar el Modo de Staff.
+  toggledOff: '{prefix} &7Modo de staff &adesactivado&7.' # Mensaje enviado al desactivar el Modo de Staff.
 Freeze:
-  correctUse: '{prefix} &7Debes de usar: &a/freeze <player>&7.' # Message sent when the command is not used correctly.
-  frozen: '{prefix} &7YHas sido &aCongelado&7.' # Message sent when the player is frozen.
-  unfrozen: '{prefix} &7You have been &aunfrozen&7.' # Message sent when the player is unfrozen.
-  unfrozenBy: '{prefix} &7The player &a{player} &7has been &aunfrozen &7 by &a{staff}&7.' # Message sent when the player is unfrozen by a staff.
-  frozenByOther: '{prefix} &7The player &a{player} &7has been &afrozen &7 by &a{staff}&7.' # Message sent when the player is frozen by a staff.
+  correctUse: '{prefix} &7Debes de usar &a/freeze <jugador>&7.' # Mensaje enviado cuando el comando no se utiliza correctamente.
+  correctUseOther: '{prefix} &7Debes de usar &a/freeze <jugador>&7.' # Mensaje enviado cuando el comando no se utiliza correctamente.
+  frozen: '{prefix} &7Has sido &acongelado&7.' # Mensaje enviado cuando el jugador es congelado.
+  unfrozen: '{prefix} &7Has sido &adescongelado&7.' # Mensaje enviado cuando el jugador es descongelado.
+  unfrozenBy: '{prefix} &7El jugador &a{player} &7ha sido &adescongelado &7por &a{staff}&7.' # Mensaje enviado cuando un jugador es descongelado por un staff.
+  frozenByOther: '{prefix} &7El jugador &a{player} &7ha sido &afrozen &7por &a{staff}&7.' # Mensaje enviado cuando un jugador es congelado por un staff.
   playerSpamMessage:
     - ''
     - '&7████&c█&7████'
     - '&7███&c█&6█&c█&7███'
     - '&7██&c█&6█&0█&6█&c█&7██'
-    - '&7██&c█&6█&0█&6█&c█&7██   You have been frozen!'
-    - '&7█&c█&6██&0█&6██&c█&7█  join our discord server'
+    - '&7██&c█&6█&0█&6█&c█&7██   ¡Has sido congelado!'
+    - '&7█&c█&6██&0█&6██&c█&7█  Entra a nuestro Discord:'
     - '&7█&c█&6█████&c█&7█  http:/discord.example.com'
     - '&c█&6███&0█&6███&c█'
     - '&c█████████'
     - ''
-#
-# Staff Mode Internal Modules
-# Here you can edit the default modules that come with
-# the plugin, remember that you can add custom modules
-# at the config.yml file.
-#
-InternalModules:
-  randomTpModule:
-    teleported: '{prefix} &7You have been teleported to a random player!' # Message sent when a Staff is succesfully teleported to a random player.
-    noPlayers: '{prefix} &7There are no players to teleport' # Message sent when there are not enough players to teleport to a random player.
-    itemName: '&aRandomTP &7(Right Click)' # The name that will be displayed at the Staff Mode item.

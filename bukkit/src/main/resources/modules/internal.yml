@@ -5,32 +5,36 @@ StaffItems:
     material: 'ENDER_PEARL'
     slot: 0
     lore:
-      - '&7Click to toggle vanish'
+      - '&7Click to teleport'
+      - '&7to a random player.'
   FREEZE:
     enabled: true
     name: '&bFreeze'
     material: 'BLAZE_ROD'
     slot: 1
     lore:
-      - '&7Click to toggle vanish'
+      - '&7Click to freeze'
+      - '&7the player you are looking at.'
   ENDER_CHEST:
     enabled: true
     name: '&bEnder Chest'
     material: 'ENDER_CHEST'
     slot: 3
     lore:
-      - '&7Click to view player enderchest'
+      - '&7Click to view the enderchest of'
+      - '&7the player you are looking at.'
   CHEST:
     enabled: true
     name: '&bChest'
     material: 'CHEST'
     slot: 5
     lore:
-      - '&7Click to view player chest'
+      - '&7Click to view the inventory of'
+      - '&7the player you are looking at.'
   THRU:
     enabled: true
     name: '&bTHRU'
     material: 'COMPASS'
     slot: 8
     lore:
-      - '&7Click to passthroug a wall'
+      - '&7Click to passthrough a wall.'

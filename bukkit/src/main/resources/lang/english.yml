@@ -10,45 +10,33 @@ NoPermission: "&7You don't have permission to use this command." # This will app
 Reloaded: "{prefix} &7MAStaff has been reloaded succesfully." # This will appear when the plugin is reloaded.
 
 General:
-  noPlayerOnline: '{prefix} &7There is no player online.'
-  noPlayerFound: '{prefix} &7No player found with that name.'
+  noPlayerFound: '{prefix} &7That player is offline.' # Message sent when the player specified is offline.
 Vanish:
-  joinMessage: '&7{player} &7has joined the game'
-  leaveMessage: '&7{player} &7has left the game'
-  staffJoinMessage: '&7{player} &7has joined the game silently'
-  staffLeaveMessage: '&7{player} &7has left the game silently'
+  joinMessage: '&a{player} &7has joined the game' # Message sent when a player toggles off vanish.
+  leaveMessage: '&a{player} &7has left the game' # Message sent when a player toggles on vanish.
+  staffJoinMessage: '&a{player} &7has joined the game silently' # Message sent to Staff when another staff joins in vanish.
+  staffLeaveMessage: '&a{player} &7has left the game silently' # Message sent to Staff when another staff leaves in vanish.
 StaffChat:
-  format: '{prefix} &a{player} &7&l» &7{message}' # The format for sent messages on Staff Chat.
+  format: '{prefix} &7({server}) &a{player} &8&l» &7{message}' # The format for sent messages on Staff Chat.
   correctUse: '{prefix} &7You must use &a/sc <message>&7.' # Message sent when the command is not used correctly.
 StaffMode:
   toggledOn: '{prefix} &7Staff mode has been &aenabled&7.' # Message sent after enabling Staff Mode.
   toggledOff: '{prefix} &7Staff mode has been &adisabled&7.' # Message sent after disabling Staff Mode.
 Freeze:
   correctUse: '{prefix} &7You must use &a/freeze <player>&7.' # Message sent when the command is not used correctly.
-  correctUseOther: '{prefix} &7You must use &a/freeze <player> &7.' # Message sent when the command is not used correctly.
+  correctUseOther: '{prefix} &7You must use &a/freeze <player>&7.' # Message sent when the command is not used correctly.
   frozen: '{prefix} &7You have been &afrozen&7.' # Message sent when the player is frozen.
   unfrozen: '{prefix} &7You have been &aunfrozen&7.' # Message sent when the player is unfrozen.
-  unfrozenBy: '{prefix} &7The player &a{player} &7has been &aunfrozen &7 by &a{staff}&7.' # Message sent when the player is unfrozen by a staff.
-  frozenByOther: '{prefix} &7The player &a{player} &7has been &afrozen &7 by &a{staff}&7.' # Message sent when the player is frozen by a staff.
+  unfrozenBy: '{prefix} &7The player &a{player} &7has been &aunfrozen &7by &a{staff}&7.' # Message sent when the player is unfrozen by a staff.
+  frozenByOther: '{prefix} &7The player &a{player} &7has been &afrozen &7by &a{staff}&7.' # Message sent when the player is frozen by a staff.
   playerSpamMessage:
     - ''
     - '&7████&c█&7████'
     - '&7███&c█&6█&c█&7███'
     - '&7██&c█&6█&0█&6█&c█&7██'
     - '&7██&c█&6█&0█&6█&c█&7██   You have been frozen!'
-    - '&7█&c█&6██&0█&6██&c█&7█  join our discord server'
+    - '&7█&c█&6██&0█&6██&c█&7█  Join our discord server:'
     - '&7█&c█&6█████&c█&7█  http:/discord.example.com'
     - '&c█&6███&0█&6███&c█'
     - '&c█████████'
     - ''
-#
-# Staff Mode Internal Modules
-# Here you can edit the default modules that come with
-# the plugin, remember that you can add custom modules
-# at the config.yml file.
-#
-InternalModules:
-  randomTpModule:
-    teleported: '{prefix} &7You have been teleported to a random player!' # Message sent when a Staff is succesfully teleported to a random player.
-    noPlayers: '{prefix} &7There are no players to teleport' # Message sent when there are not enough players to teleport to a random player.
-    itemName: '&aRandomTP &7(Right Click)' # The name that will be displayed at the Staff Mode item.
