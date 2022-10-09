@@ -21,7 +21,7 @@ repositories {
 }
 
 shadowJar {
-    archiveFileName = "MAStaff.jar"
+    archiveFileName = "MAStaff-${version}.jar"
     relocate 'org.simpleyaml', 'es.angelillo15.libs.simpleyaml'
     relocate 'org.yaml.snakeyaml', 'es.angelillo15.libs.snakeyaml'
     relocate 'com.cryptomorin.xseries', 'es.angelillo15.libs.xseries'
