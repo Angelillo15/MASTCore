@@ -18,12 +18,9 @@ repositories {
 }
 
 dependencies {
-    implementation 'me.carleslc.Simple-YAML:Simple-Yaml:1.8.1'
-    implementation 'org.yaml:snakeyaml:1.30'
+    compileOnly 'me.carleslc.Simple-YAML:Simple-Yaml:1.8.1'
+    compileOnly 'org.yaml:snakeyaml:1.30'
     compileOnly 'net.md-5:bungeecord-chat:1.16-R0.4'
-}
-test {
-    useJUnitPlatform()
 }
 
 processResources {
@@ -34,3 +31,6 @@ processResources {
         expand props
     }
 }
+
+sourceCompatibility = 8
+targetCompatibility = 8

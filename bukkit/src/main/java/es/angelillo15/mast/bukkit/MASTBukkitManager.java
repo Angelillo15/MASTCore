@@ -80,6 +80,7 @@ public class MASTBukkitManager extends JavaPlugin {
         pm.registerEvents(new StaffInventoryClickEvent(), this);
         pm.registerEvents(new StaffItemPickup(), this);
         pm.registerEvents(new FreezeEvent(), this);
+        pm.registerEvents(new StaffWorldChangeEvent(), this);
         FreezeUtils.setupMessageSender();
     }
 
