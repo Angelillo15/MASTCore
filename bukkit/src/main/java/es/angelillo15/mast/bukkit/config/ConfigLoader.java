@@ -15,6 +15,7 @@ public class ConfigLoader {
     private static ConfigManager messages;
     private static ConfigManager internalStaffItems;
     private String language;
+    private static ConfigManager glow;
 
     public ConfigLoader(MASTBukkitManager plugin) {
         this.plugin = plugin;
@@ -25,13 +26,12 @@ public class ConfigLoader {
         loadLanguages();
         loadMessage();
         loadInternal();
+        loadGlowModule();
     }
 
     public void loadConfig() {
         config = new ConfigManager(plugin.getDataFolder().toPath(), "config.yml", "config.yml");
         config.registerConfig();
-
-
 
     }
 
@@ -64,7 +64,11 @@ public class ConfigLoader {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
 
+    public void loadGlowModule(){
+        glow = new ConfigManager(plugin.getDataFolder().toPath(), "modules/glow.yml", "/modules/glow.yml");
+        glow.registerConfig();
     }
 
     public static ConfigManager getConfig() {
@@ -77,5 +81,9 @@ public class ConfigLoader {
 
     public static ConfigManager getInternalStaffItems() {
         return internalStaffItems;
+    }
+
+    public static ConfigManager getGlowModule(){
+        return glow;
     }
 }

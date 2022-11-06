@@ -1,0 +1,27 @@
+# Welcome to MAStaff glow configuration!
+# This is the configuration file for the glow effect.
+# You can modify the glow effect for the staff members.
+# Remember to join my Discord server if you need help:
+# https://discord.angelillo15.es/
+#
+# Glow configuration for the plugin.
+Config:
+  enabled: true
+  # If you want to use the permission mode, you must set the permission for each group.
+  # If you want to use the vault mode, you must have installed a vault compatible permissions plugin.
+  # The plugin will get the groups from the vault plugin.
+  mode: 'permission' # permission or vault
+  # Color per group.
+  groups:
+    helper:
+      color: 'GREEN'
+      permission: 'mast.glow.helper'
+    moderator:
+      color: 'YELLOW'
+      permission: 'mast.glow.moderator'
+    administrator:
+      color: 'RED'
+      permission: 'mast.glow.administrator'
+    owner:
+      color: 'DARK_RED'
+      permission: 'mast.glow.owner'

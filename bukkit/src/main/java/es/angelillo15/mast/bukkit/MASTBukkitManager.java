@@ -12,14 +12,17 @@ import es.angelillo15.mast.bukkit.utils.FreezeUtils;
 import es.angelillo15.mast.bukkit.utils.Messages;
 import es.angelillo15.mast.bukkit.utils.VanishUtils;
 import es.angelillo15.mast.bukkit.utils.items.InternalModules;
+import es.angelillo15.mast.bukkit.utils.scoreBoard.TeamManager;
 import es.angelillo15.mast.database.PluginConnection;
 import es.angelillo15.mast.database.SQLQueries;
 import es.angelillo15.mast.utils.PLUtils;
+import net.milkbowl.vault.permission.Permission;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginManager;
+import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.simpleyaml.configuration.file.YamlFile;
 
@@ -29,6 +32,8 @@ import java.util.UUID;
 import java.util.logging.Logger;
 
 public class MASTBukkitManager extends JavaPlugin {
+    public static final int serverVersion = Integer.parseInt(Bukkit.getBukkitVersion().split("-")[0].split("\\.")[1]);
+    private static Permission perms = null;
     private static MASTBukkitManager instance;
     private HashMap<UUID, BStaffPlayer> staffPlayers = new HashMap<UUID, BStaffPlayer>();
     private HashMap<UUID, BStaffPlayer> vanishedPlayers = new HashMap<UUID, BStaffPlayer>();
@@ -41,6 +46,7 @@ public class MASTBukkitManager extends JavaPlugin {
     private PluginConnection pluginConnection;
     private static ArrayList<StaffItem> internalModules;
     private static Integer onlinePlayers;
+    private static TeamManager teamManager;
 
     public void initLogger() {
         MASTBukkitManager.Logger = this.getLogger();
@@ -68,6 +74,14 @@ public class MASTBukkitManager extends JavaPlugin {
         this.getCommand("freeze").setExecutor(new FreezeCMD());
         this.getCommand("staffchat").setExecutor(new StaffChatCMD());
         this.getCommand("mastcore").setExecutor(new MASTCoreCMD());
+    }
+
+    public void setupPermissions() {
+        if(Bukkit.getPluginManager().getPlugin("Vault") == null) {
+            return;
+        }
+        RegisteredServiceProvider<Permission> rsp = getServer().getServicesManager().getRegistration(Permission.class);
+        perms = rsp.getProvider();
     }
 
     public void registerEvents(){
@@ -121,6 +135,12 @@ public class MASTBukkitManager extends JavaPlugin {
         internalModules.clear();
         setupModules();
         Messages.reload();
+    }
+
+    public void initializeGlowSupport(){
+        if(serverVersion >= 9){
+            teamManager = new TeamManager();
+        }
     }
 
     public void setupMessenger(){
@@ -208,8 +228,13 @@ public class MASTBukkitManager extends JavaPlugin {
     public static void setOnlinePlayers(Integer onlinePlayers) {
         MASTBukkitManager.onlinePlayers = onlinePlayers;
     }
-
     public static ArrayList<StaffItem> getInternalModules(){
         return internalModules;
+    }
+    public static Permission getPerms() {
+        return perms;
+    }
+    public static TeamManager getTeamManager(){
+        return teamManager;
     }
 }

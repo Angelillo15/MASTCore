@@ -2,14 +2,19 @@ package es.angelillo15.mast.bukkit.utils;
 
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
+import es.angelillo15.mast.bukkit.MASTBukkit;
 import es.angelillo15.mast.bukkit.MASTBukkitManager;
 import es.angelillo15.mast.bukkit.api.BStaffPlayer;
 import es.angelillo15.mast.bukkit.api.events.vanish.PlayerVanishDisableEvent;
 import es.angelillo15.mast.bukkit.api.events.vanish.PlayerVanishEnableEvent;
 import es.angelillo15.mast.bukkit.api.item.types.StaffItem;
+import es.angelillo15.mast.bukkit.config.ConfigLoader;
 import es.angelillo15.mast.bukkit.utils.items.InternalModules;
 import es.angelillo15.mast.database.SQLQueries;
+import net.milkbowl.vault.chat.Chat;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.Color;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
@@ -45,6 +50,8 @@ public class StaffUtils {
             });
         }
 
+
+
     }
 
     public static void enableStaff(Player player) {
@@ -68,6 +75,21 @@ public class StaffUtils {
         sendStaffData(player, true);
 
         player.sendMessage(Messages.GET_STAFF_MODE_ENABLE_MESSAGE());
+
+        if(MASTBukkit.serverVersion >= 9){
+            if(ConfigLoader.getGlowModule().getConfig().getString("mode").equalsIgnoreCase("vault")){
+                String group = MASTBukkitManager.getPerms().getPrimaryGroup(player);
+                ChatColor color = ChatColor.BLUE;
+                String colorStr = ConfigLoader.getGlowModule().getConfig().getString("Config.groups." + group + ".color");
+
+                if(colorStr != null){
+                    color = ChatColor.valueOf(colorStr);
+                }
+
+                MASTBukkitManager.getTeamManager().addPlayer(player.getName(), color);
+                MASTBukkitManager.getTeamManager().enableGlow(player);
+            }
+        }
     }
 
     public static void disableStaff(Player player) {
