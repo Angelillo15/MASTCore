@@ -140,6 +140,7 @@ public class MASTBukkitManager extends JavaPlugin {
     public void initializeGlowSupport(){
         if(serverVersion >= 9){
             teamManager = new TeamManager();
+            getLogger().severe("Glow support enabled!");
         }
     }
 
