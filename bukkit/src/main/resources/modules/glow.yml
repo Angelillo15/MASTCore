@@ -1,0 +1,20 @@
+# Welcome to MAStaff glow configuration!
+# This is the configuration file for the glow effect.
+# You can modify the glow effect for the staff members.
+# Remember to join my Discord server if you need help:
+# https://discord.angelillo15.es/
+#
+# Glow configuration for the plugin.
+Config:
+  enabled: true
+  # The plugin will get the groups from the vault plugin.
+  # Color per group.
+  groups:
+    helper:
+      color: 'GREEN'
+    moderator:
+      color: 'YELLOW'
+    administrator:
+      color: 'RED'
+    owner:
+      color: 'DARK_RED'

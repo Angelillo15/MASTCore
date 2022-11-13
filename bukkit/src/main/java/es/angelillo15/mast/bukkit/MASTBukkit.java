@@ -12,6 +12,8 @@ public class MASTBukkit extends MASTBukkitManager {
         registerEvents();
         setupMessenger();
         setupModules();
+        initializeGlowSupport();
+        setupPermissions();
         new Metrics(this, 16548);
     }
     @Override
