@@ -9,4 +9,5 @@ public enum ItemTypes {
     ENDER_CHEST,
     THRU,
     CHEST,
+    VANISH,
 }

@@ -57,6 +57,9 @@ public class InternalModules {
                     case CHEST:
                         items.add(new ChestItem(itemStack, slot));
                         break;
+                    case VANISH:
+                        items.add(new VanishItem(itemStack, slot));
+                        break;
                     default:
                         Bukkit.getConsoleSender().sendMessage("Not found: " + s);
                 }

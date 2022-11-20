@@ -23,6 +23,14 @@ StaffItems:
     lore:
       - '&7Click to view the enderchest of'
       - '&7the player you are looking at.'
+  VANISH:
+    enabled: true
+    name: '&bVanish'
+    material: 'ENDER_EYE'
+    slot: 4
+    lore:
+      - '&7Click to view the enderchest of'
+      - '&7the player you are looking at.'
   CHEST:
     enabled: true
     name: '&bChest'

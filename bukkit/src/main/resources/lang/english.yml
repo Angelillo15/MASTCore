@@ -8,9 +8,9 @@
 Prefix: '&a&lSTAFF &8&l»' # This will appear before all the plugin messages.
 NoPermission: "&7You don't have permission to use this command." # This will appear when a player without permission tries to use a command.
 Reloaded: "{prefix} &7MAStaff has been reloaded succesfully." # This will appear when the plugin is reloaded.
-
 General:
   noPlayerFound: '{prefix} &7That player is offline.' # Message sent when the player specified is offline.
+  noPlayerOnline: '{prefix} &7There are no players online.' # Message sent when there are no players online.
 Vanish:
   joinMessage: '&a{player} &7has joined the game' # Message sent when a player toggles off vanish.
   leaveMessage: '&a{player} &7has left the game' # Message sent when a player toggles on vanish.

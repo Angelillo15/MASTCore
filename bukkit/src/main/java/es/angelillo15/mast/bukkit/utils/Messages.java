@@ -53,6 +53,14 @@ public class Messages {
         return TextUtils.parseMessage(messages.getString("Vanish.staffLeaveMessage"));
     }
 
+    public static String GET_VANISH_ENABLE_MESSAGE() {
+        return TextUtils.parseMessage(messages.getString("Vanish.enable"));
+    }
+
+    public static String GET_VANISH_DISABLE_MESSAGE() {
+        return TextUtils.parseMessage(messages.getString("Vanish.disable"));
+    }
+
     public static String GET_FREEZE_FROZEN_MESSAGE() {
         return TextUtils.parseMessage(messages.getString("Freeze.frozen"));
     }

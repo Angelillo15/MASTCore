@@ -11,6 +11,7 @@ Reloaded: "{prefix} &7MAStaff ha sido recargado exitosamente." # Esto aparecerá
 
 General:
   noPlayerFound: '{prefix} &7Ese jugador está desconectado.' # Mensaje enviado cuando el jugador mencionado no está conectado.
+  noPlayerOnline: '{prefix} &7No hay jugadores conectados.' # Mensaje enviado cuando no hay jugadores conectados.
 Vanish:
   joinMessage: '&a{player} &7ha entrado' # Mensaje enviado cuando un jugador desactiva el vanish.
   leaveMessage: '&a{player} &7ha salido' # Mensaje enviado cuando un jugador activa el vanish.

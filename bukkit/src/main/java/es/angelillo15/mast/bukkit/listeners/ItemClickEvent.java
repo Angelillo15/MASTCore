@@ -3,10 +3,12 @@ package es.angelillo15.mast.bukkit.listeners;
 import es.angelillo15.mast.bukkit.MASTBukkitManager;
 import es.angelillo15.mast.bukkit.api.item.items.CommandInteractionItem;
 import es.angelillo15.mast.bukkit.api.item.items.ThruItem;
+import es.angelillo15.mast.bukkit.api.item.items.VanishItem;
 import es.angelillo15.mast.bukkit.api.item.types.EntityInteractItem;
 import es.angelillo15.mast.bukkit.api.item.types.ExecutableItem;
 import es.angelillo15.mast.bukkit.api.item.types.StaffCommandItem;
 import es.angelillo15.mast.bukkit.api.item.types.StaffItem;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -56,6 +58,9 @@ public class ItemClickEvent implements Listener {
                             StaffCommandItem staffCommandItem = (StaffCommandItem) staffItem;
                             staffCommandItem.click(player, staffCommandItem.getCommand());
                         }
+
+                        Bukkit.getConsoleSender().sendMessage("Clicked on " + staffItem.getItem().getItemMeta().getDisplayName());
+
                     }
                 }
             });
@@ -117,6 +122,11 @@ public class ItemClickEvent implements Listener {
                             return;
                         }
                         thruItem.click(e.getPlayer(), e.getClickedBlock().getLocation());
+                    }
+
+                    if(staffItem instanceof VanishItem){
+                        VanishItem vanishItem = (VanishItem) staffItem;
+                        vanishItem.click(e.getPlayer());
                     }
                 }
             });
