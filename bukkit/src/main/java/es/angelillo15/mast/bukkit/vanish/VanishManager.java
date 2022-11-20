@@ -32,8 +32,9 @@ public class VanishManager {
     }
 
     public static void toggleVanish(Player player) {
+        Bukkit.getConsoleSender().sendMessage(isVanished(player.getUniqueId()) ? "true" : "false");
         if (!isVanished(player.getUniqueId())) {
-            setVanished(player.getUniqueId(), false);
+            setVanished(player.getUniqueId(), true);
             Bukkit.getOnlinePlayers().forEach(people -> {
                 if (!people.hasPermission("mast.vanish.see")) {
                     people.showPlayer(player);
@@ -41,7 +42,7 @@ public class VanishManager {
             });
             player.sendMessage(Messages.GET_VANISH_DISABLE_MESSAGE());
         } else {
-            setVanished(player.getUniqueId(), true);
+            setVanished(player.getUniqueId(), false);
             Bukkit.getOnlinePlayers().forEach(people -> {
                 if (people.hasPermission("mast.vanish.see")) {
                     people.showPlayer(player);
@@ -49,7 +50,7 @@ public class VanishManager {
                     people.hidePlayer(player);
                 }
             });
-            player.sendMessage(Messages.GET_VANISH_DISABLE_MESSAGE());
+            player.sendMessage(Messages.GET_VANISH_ENABLE_MESSAGE());
         }
     }
 }

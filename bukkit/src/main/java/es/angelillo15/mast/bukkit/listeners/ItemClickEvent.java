@@ -58,9 +58,6 @@ public class ItemClickEvent implements Listener {
                             StaffCommandItem staffCommandItem = (StaffCommandItem) staffItem;
                             staffCommandItem.click(player, staffCommandItem.getCommand());
                         }
-
-                        Bukkit.getConsoleSender().sendMessage("Clicked on " + staffItem.getItem().getItemMeta().getDisplayName());
-
                     }
                 }
             });
