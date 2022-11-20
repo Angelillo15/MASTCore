@@ -1,7 +1,9 @@
 package es.angelillo15.mast.bungee.cmd;
 
+import es.angelillo15.mast.bungee.MASTBungee;
 import es.angelillo15.mast.bungee.config.Messages;
 import es.angelillo15.mast.bungee.utils.StaffUtils;
+import es.angelillo15.mast.utils.StaffChatManager;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
@@ -18,8 +20,13 @@ public class StaffChat extends Command {
             ProxiedPlayer p = (ProxiedPlayer) sender;
             if(p.hasPermission("mast.staffchat")){
                 if(args.length < 1){
-                    p.sendMessage(new TextComponent(Messages.getStaffChatUssage()));
-                    return;
+                    if(StaffChatManager.isStaffChatEnable(p.getUniqueId().toString())){
+                        p.sendMessage(new TextComponent(Messages.getStaffChatDisabled()));
+                        StaffChatManager.setStaffChatEnable(p.getUniqueId().toString(), false);
+                    } else{
+                        p.sendMessage(new TextComponent(Messages.getStaffChatEnabled()));
+                        StaffChatManager.setStaffChatEnable(p.getUniqueId().toString(), true);
+                    }
                 } else {
                     StringBuilder sb = new StringBuilder();
                     for (String arg : args) {

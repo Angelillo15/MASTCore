@@ -39,6 +39,14 @@ public class Messages {
         return messages.getConfig().getString("StaffChat.correctUse");
     }
 
+    public static String getStaffChatEnabled(){
+        return TextUtils.colorize(messages.getConfig().getString("StaffChat.enabled"));
+    }
+
+    public static String getStaffChatDisabled(){
+        return TextUtils.colorize(messages.getConfig().getString("StaffChat.disabled")) ;
+    }
+
     public static void reload() {
         messages = ConfigLoader.getMessages();
     }

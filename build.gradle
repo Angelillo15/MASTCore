@@ -13,7 +13,7 @@ tasks.withType(JavaCompile) {
 mainClassName = 'es.angelillo15.mast.Runnable'
 
 group 'es.angelillo15'
-version '1.0'
+version '1.2'
 
 repositories {
     mavenCentral()
@@ -37,7 +37,19 @@ dependencies {
     implementation 'me.carleslc.Simple-YAML:Simple-Yaml:1.8.1'
     implementation 'com.zaxxer:HikariCP:5.0.1'
     implementation 'org.yaml:snakeyaml:1.32'
+    compileOnly 'net.sf.proguard:proguard-gradle:5.2.1'
+}
 
+if(System.getenv("PROGUARD") != null) {
+    task proguard(type: proguard.gradle.ProGuardTask) {
+        injars "${jar.archivePath}"
+        outjars "${jar.archivePath}-obf.jar"
+
+        libraryjars configurations.compileOnly
+        libraryjars configurations.compile
+
+        ignorewarnings
+    }
 }
 
 processResources {

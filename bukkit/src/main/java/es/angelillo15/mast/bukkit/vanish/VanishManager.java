@@ -1,12 +1,10 @@
 package es.angelillo15.mast.bukkit.vanish;
 
 import es.angelillo15.mast.bukkit.utils.Messages;
-import es.angelillo15.mast.bukkit.utils.VanishUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.UUID;
 
 public class VanishManager {
@@ -32,7 +30,6 @@ public class VanishManager {
     }
 
     public static void toggleVanish(Player player) {
-        Bukkit.getConsoleSender().sendMessage(isVanished(player.getUniqueId()) ? "true" : "false");
         if (!isVanished(player.getUniqueId())) {
             setVanished(player.getUniqueId(), true);
             Bukkit.getOnlinePlayers().forEach(people -> {

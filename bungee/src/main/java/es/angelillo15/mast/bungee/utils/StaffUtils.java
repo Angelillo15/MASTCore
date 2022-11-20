@@ -8,7 +8,7 @@ public class StaffUtils {
         MASTBungeeManager.getInstance().getProxy().getScheduler().runAsync(MASTBungeeManager.getInstance(), () -> {
             MASTBungeeManager.getInstance().getProxy().getPlayers().forEach(player -> {
                 if(player.hasPermission("mast.staffchat")){
-                    player.sendMessage(message);
+                    player.sendMessage(new TextComponent(message));
                 }
             });
         });

@@ -1,8 +1,16 @@
+#
+# This is the player glow configuration
+# file for MAStaff Spigot, where you can create and
+# customize custom staff mode items.
+#
+# Remember to join my Discord server if you need help:
+# https://discord.angelillo15.es/
+#
 StaffItems:
   COMMAND:
     fly:
       enabled: true
-      name: '&aToggle Fly'
+      name: '&bToggle Fly'
       material: 'SLIME_BALL'
       slot: 5
       command: fly

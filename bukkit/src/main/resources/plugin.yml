@@ -2,7 +2,7 @@ name: MAStaff
 version: '${version}'
 main: es.angelillo15.mast.bukkit.MASTBukkit
 api-version: 1.13
-prefix: MASTCore
+prefix: MAStaff
 authors: [ Angelillo15 ]
 description: Simple and optimised Staff Core
 website: angelillo15.es

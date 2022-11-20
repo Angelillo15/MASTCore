@@ -18,7 +18,7 @@ Vanish:
   staffJoinMessage: '&a{player} &7ha entrado silenciosamente' # Mensaje enviado al Staff cuando otro Staff entra en vanish.
   staffLeaveMessage: '&a{player} &7ha salido silenciosamente' # Mensaje enviado al Staff cuando otro Staff sale en vanish.
 StaffChat:
-  format: '{prefix} &7({server}) &a{player} &8&l» &7{message}' # El formato para mensajes enviados mediante Chat de Staff.
+  format: '{prefix} &a{player} &8&l» &7{message}' # El formato para mensajes enviados mediante Chat de Staff.
   correctUse: '{prefix} &7Debes de usar &a/sc <mensaje>&7.' # Mensaje enviado cuando el comando no se utiliza correctamente.
 StaffMode:
   toggledOn: '{prefix} &7Modo de staff &aactivado&7.' # Mensaje enviado al activar el Modo de Staff.

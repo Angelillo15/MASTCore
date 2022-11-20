@@ -16,6 +16,7 @@
 # https://discord.angelillo15.es/
 #
 # General configuration for the plugin.
+#
 Config:
   # The language file you want to use for the plugin messages.
   # Included locales: english.yml and spanish.yml

@@ -17,7 +17,7 @@ Vanish:
   staffJoinMessage: '&a{player} &7has joined the game silently' # Message sent to Staff when another staff joins in vanish.
   staffLeaveMessage: '&a{player} &7has left the game silently' # Message sent to Staff when another staff leaves in vanish.
 StaffChat:
-  format: '{prefix} &7({server}) &a{player} &8&l» &7{message}' # The format for sent messages on Staff Chat.
+  format: '{prefix} &a{player} &8&l» &7{message}' # The format for sent messages on Staff Chat.
   correctUse: '{prefix} &7You must use &a/sc <message>&7.' # Message sent when the command is not used correctly.
 StaffMode:
   toggledOn: '{prefix} &7Staff mode has been &aenabled&7.' # Message sent after enabling Staff Mode.

@@ -1,3 +1,11 @@
+#
+# This is the internal modules configuration file for
+# MAStaff Spigot, where you can modify and customize
+# staff mode items.
+#
+# Remember to join my Discord server if you need help:
+# https://discord.angelillo15.es/
+#
 StaffItems:
   RANDOM_PLAYER_TELEPORT:
     enabled: true
@@ -29,8 +37,8 @@ StaffItems:
     material: 'ENDER_EYE'
     slot: 4
     lore:
-      - '&7Click to view the enderchest of'
-      - '&7the player you are looking at.'
+      - '&7Click to enable or disable'
+      - '&7the vanish.'
   CHEST:
     enabled: true
     name: '&bChest'

@@ -6,6 +6,7 @@ import es.angelillo15.mast.bungee.config.ConfigLoader;
 import es.angelillo15.mast.bungee.config.Messages;
 import es.angelillo15.mast.bungee.listener.StaffChangeEvent;
 import es.angelillo15.mast.bungee.listener.StaffJoinChange;
+import es.angelillo15.mast.bungee.listener.StaffTalkEvent;
 import es.angelillo15.mast.utils.PLUtils;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.plugin.Plugin;
@@ -51,6 +52,7 @@ public class MASTBungeeManager extends Plugin {
     public void registerEvents(){
         getProxy().getPluginManager().registerListener(this, new StaffChangeEvent());
         getProxy().getPluginManager().registerListener(this, new StaffJoinChange());
+        getProxy().getPluginManager().registerListener(this, new StaffTalkEvent());
     }
     public static int getStaffCount() {
         return staffCount;
