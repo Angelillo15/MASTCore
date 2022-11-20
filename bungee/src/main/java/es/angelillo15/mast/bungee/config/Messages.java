@@ -47,6 +47,22 @@ public class Messages {
         return TextUtils.colorize(messages.getConfig().getString("StaffChat.disabled")) ;
     }
 
+    public static String getHelpopMessage(){
+        return messages.getConfig().getString("Helpop.message");
+    }
+
+    public static String getHelpopFormat(){
+        return messages.getConfig().getString("Helpop.format");
+    }
+
+    public static String getHelpopCorrectUse(){
+        return messages.getConfig().getString("Helpop.correctUse");
+    }
+
+    public static String getHelpopCooldown(){
+        return messages.getConfig().getString("Helpop.cooldown");
+    }
+
     public static void reload() {
         messages = ConfigLoader.getMessages();
     }

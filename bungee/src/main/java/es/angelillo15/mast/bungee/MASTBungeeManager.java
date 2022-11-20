@@ -1,5 +1,6 @@
 package es.angelillo15.mast.bungee;
 
+import es.angelillo15.mast.bungee.cmd.HelpopCMD;
 import es.angelillo15.mast.bungee.cmd.MASTBReload;
 import es.angelillo15.mast.bungee.cmd.StaffChat;
 import es.angelillo15.mast.bungee.config.ConfigLoader;
@@ -43,6 +44,7 @@ public class MASTBungeeManager extends Plugin {
     public void registerCommands(){
         getProxy().getPluginManager().registerCommand(this, new StaffChat());
         getProxy().getPluginManager().registerCommand(this, new MASTBReload());
+        getProxy().getPluginManager().registerCommand(this, new HelpopCMD());
     }
 
     public static MASTBungeeManager getInstance(){
