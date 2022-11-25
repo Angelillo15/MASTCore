@@ -7,6 +7,7 @@ public class MASTBukkit extends MASTBukkitManager {
     @Override
     public void onEnable() {
         drawLogo();
+        new ConfigUpdater().update();
         loadConfig();
         databaseConnection();
         registerCommands();
@@ -16,7 +17,6 @@ public class MASTBukkit extends MASTBukkitManager {
         initializeGlowSupport();
         setupPermissions();
         new Metrics(this, 16548);
-        new ConfigUpdater().update();
     }
     @Override
     public void onDisable() {

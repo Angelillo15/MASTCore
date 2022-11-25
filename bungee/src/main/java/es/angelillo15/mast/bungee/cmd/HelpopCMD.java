@@ -29,19 +29,18 @@ public class HelpopCMD extends Command {
             }
 
             if(cooldowns.containsKey(p.getName())){
-
                 int timeLeft = cooldownTime + (int) ((cooldowns.get(p.getName()) - System.currentTimeMillis() / 1000));
 
-                if(cooldowns.get(p.getName()) - System.currentTimeMillis() <= 0){
+                if(timeLeft <= 0){
                     cooldowns.remove(p.getName());
                 } else {
-
                     p.sendMessage(new TextComponent(TextUtils.colorize(Messages.getHelpopCooldown().replace("{time}", String.valueOf(timeLeft)))));
                     return;
                 }
             }
 
             p.sendMessage(new TextComponent(TextUtils.colorize(Messages.getHelpopMessage())));
+
 
             cooldowns.put(p.getName(), System.currentTimeMillis() / 1000);
 

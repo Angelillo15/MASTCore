@@ -53,6 +53,7 @@ public class MASTBukkitManager extends JavaPlugin {
     }
 
     public void drawLogo() {
+        instance = this;
         Logger = this.getLogger();
         MASTBukkitManager plugin = this;
         Bukkit.getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', PLUtils.Logo.replace("{version}", version)));
@@ -61,7 +62,6 @@ public class MASTBukkitManager extends JavaPlugin {
     public void loadConfig() {
         configLoader = new ConfigLoader(this);
         configLoader.load();
-        instance = this;
     }
 
     public void setupModules(){

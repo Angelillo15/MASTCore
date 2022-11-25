@@ -7,11 +7,11 @@ public class MASTBungee extends MASTBungeeManager {
     @Override
     public void onEnable() {
         drawLogo();
+        new ConfigUpdater().update();
         registerEvents();
         registerConfig();
         registerCommands();
         new Metrics(this, 16550);
-        new ConfigUpdater().update();
     }
 
     @Override

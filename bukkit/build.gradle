@@ -40,7 +40,10 @@ dependencies {
     implementation group: 'com.github.cryptomorin', name: 'XSeries', version: '9.0.0'
     compileOnly project(":common")
     compileOnly group: "com.comphenix.protocol", name: "ProtocolLib", version: "4.8.0";
+    compileOnly 'org.projectlombok:lombok:1.18.24'
     compileOnly 'com.github.MilkBowl:VaultAPI:1.7'
+    compileOnly 'ru.vyarus:yaml-config-updater:1.4.2'
+    annotationProcessor 'org.projectlombok:lombok:1.18.24'
 }
 
 group = 'es.angelillo15'

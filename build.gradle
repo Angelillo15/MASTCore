@@ -27,6 +27,7 @@ shadowJar {
     relocate 'com.cryptomorin.xseries', 'es.angelillo15.libs.xseries'
     relocate 'com.zaxxer.hikari', 'es.angelillo15.libs.hikari'
     relocate 'org.slf4j', 'es.angelillo15.libs.slf4j'
+    relocate 'ru.vyarus.yaml.updater', 'es.angelillo15.libs.yaml.updater'
 
 }
 
@@ -36,7 +37,9 @@ dependencies {
     implementation project(":bungee")
     implementation 'me.carleslc.Simple-YAML:Simple-Yaml:1.8.1'
     implementation 'com.zaxxer:HikariCP:5.0.1'
-    implementation 'org.yaml:snakeyaml:1.32'
+    implementation 'org.yaml:snakeyaml:1.33'
+    implementation 'ru.vyarus:yaml-config-updater:1.4.2'
+    compileOnly 'org.projectlombok:lombok:1.18.24'
     compileOnly 'net.sf.proguard:proguard-gradle:5.2.1'
 }
 

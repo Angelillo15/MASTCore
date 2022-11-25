@@ -2,6 +2,7 @@ package es.angelillo15.mast.bungee.config;
 
 import es.angelillo15.mast.bungee.MASTBungeeManager;
 import es.angelillo15.mast.config.ConfigManager;
+import lombok.Getter;
 
 import java.io.File;
 import java.io.IOException;
@@ -11,6 +12,10 @@ public class ConfigLoader {
     private static ConfigManager config;
     private static ConfigManager messages;
     private String language;
+    @Getter
+    private static ConfigManager es;
+    @Getter
+    private static ConfigManager en;
 
     public ConfigLoader(MASTBungeeManager plugin) {
         this.plugin = plugin;
@@ -33,8 +38,8 @@ public class ConfigLoader {
             file.mkdir();
         }
 
-        ConfigManager es = new ConfigManager(plugin.getDataFolder().toPath(), "BungeeCord/lang/spanish.yml", "/lang/spanish.yml");
-        ConfigManager en = new ConfigManager(plugin.getDataFolder().toPath(), "BungeeCord/lang/english.yml", "/lang/english.yml");
+        es = new ConfigManager(plugin.getDataFolder().toPath(), "BungeeCord/lang/spanish.yml", "/lang/spanish.yml");
+        en = new ConfigManager(plugin.getDataFolder().toPath(), "BungeeCord/lang/english.yml", "/lang/english.yml");
         en.registerConfig();
         es.registerConfig();
 

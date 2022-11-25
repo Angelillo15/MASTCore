@@ -33,10 +33,14 @@ repositories {
 }
 
 dependencies {
-    implementation 'me.carleslc.Simple-YAML:Simple-Yaml:1.8.1'
-    implementation 'org.yaml:snakeyaml:1.30'
+    compileOnly 'me.carleslc.Simple-YAML:Simple-Yaml:1.8.1'
+    compileOnly 'org.yaml:snakeyaml:1.33'
     compileOnly 'net.md-5:bungeecord-api:1.19-R0.1-SNAPSHOT'
     compileOnly project(":common")
+    compileOnly 'ru.vyarus:yaml-config-updater:1.4.2'
+    compileOnly 'org.projectlombok:lombok:1.18.24'
+    annotationProcessor 'org.projectlombok:lombok:1.18.24'
+
 }
 
 group = 'es.angelillo15'

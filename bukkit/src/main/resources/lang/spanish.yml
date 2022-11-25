@@ -17,6 +17,8 @@ Vanish:
   leaveMessage: '&a{player} &7ha salido' # Mensaje enviado cuando un jugador activa el vanish.
   staffJoinMessage: '&a{player} &7ha entrado silenciosamente' # Mensaje enviado al Staff cuando otro Staff entra en vanish.
   staffLeaveMessage: '&a{player} &7ha salido silenciosamente' # Mensaje enviado al Staff cuando otro Staff sale en vanish.
+  enable: '{prefix} &7Has activado el &b&lVanish&7.' # Mensaje enviado cuando un jugador activa el vanish.
+  disable: '{prefix} &7Has desactivado el &b&lVanish&7.' # Mensaje enviado cuando un jugador desactiva el vanish.
 StaffChat:
   format: '{prefix} &a{player} &8&l» &7{message}' # El formato para mensajes enviados mediante Chat de Staff.
   correctUse: '{prefix} &7Debes de usar &a/sc <mensaje>&7.' # Mensaje enviado cuando el comando no se utiliza correctamente.

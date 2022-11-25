@@ -2,9 +2,7 @@ package es.angelillo15.mast.bukkit.config;
 
 import es.angelillo15.mast.bukkit.MASTBukkitManager;
 import es.angelillo15.mast.config.ConfigManager;
-import org.bukkit.Bukkit;
-
-
+import lombok.Getter;
 import java.io.File;
 import java.io.IOException;
 
@@ -15,7 +13,12 @@ public class ConfigLoader {
     private static ConfigManager messages;
     private static ConfigManager internalStaffItems;
     private String language;
+    @Getter
     private static ConfigManager glow;
+    @Getter
+    private static ConfigManager es;
+    @Getter
+    private static ConfigManager en;
 
     public ConfigLoader(MASTBukkitManager plugin) {
         this.plugin = plugin;
@@ -43,11 +46,11 @@ public class ConfigLoader {
     public void loadLanguages() {
         File file = new File(plugin.getDataFolder().toPath().toString() + File.separator + "lang");
         if (!file.exists()) {
-            file.mkdir();
+            file.mkdirs();
         }
 
-        ConfigManager es = new ConfigManager(plugin.getDataFolder().toPath(), "lang/spanish.yml", "/lang/spanish.yml");
-        ConfigManager en = new ConfigManager(plugin.getDataFolder().toPath(), "lang/english.yml", "/lang/english.yml");
+        es = new ConfigManager(plugin.getDataFolder().toPath(), "lang/spanish.yml", "/lang/spanish.yml");
+        en = new ConfigManager(plugin.getDataFolder().toPath(), "lang/english.yml", "/lang/english.yml");
         es.registerConfig();
         en.registerConfig();
 

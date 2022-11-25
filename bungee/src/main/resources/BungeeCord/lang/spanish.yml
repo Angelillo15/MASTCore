@@ -13,9 +13,16 @@ Messages:
 StaffChat:
   format: '{prefix} &7({server}) &a{player} &8&l» &7{message}' # The format for sent messages on Staff Chat.
   correctUse: '{prefix} &7Debes de utilizar &a/sc <mensaje>&7.' # Message sent when the command is not used correctly.
+  enabled: '{prefix} &7Has &aactivado &7el chat de staff.' # Message sent when the player enables Staff Chat.
+  disabled: '{prefix} &7Has &adesactivado &7el chat de staff.' # Message sent when the player disables Staff Chat.
 StaffJoin:
   message: '{prefix} &a{player} &7ha entrado al servidor.'
 StaffChangeServer:
   message: '{prefix} &a{player} &7ha cambiado de &a{fromServer} &7a &a{fromServer}&7.'
 StaffLeave:
   message: '{prefix} &a{player} &7ha salido del servidor.'
+Helpop:
+  message: '{prefix} &7Tu mensaje ha sido enviado a la staff.' # The message sent when the player sends a helpop message.
+  correctUse: '{prefix} &7Debes de utilizar &a/helpop <mensaje>&7.' # Message sent when the command is not used correctly.
+  format: '{prefix} &7({server}) &a{player} &8&l» &7{message}' # The format for sent messages on Helpop.
+  cooldown: '{prefix} &7Debes de esperar &a{cooldown} &7segundos para enviar otro mensaje de ayuda.' # The message sent when the player is on cooldown.

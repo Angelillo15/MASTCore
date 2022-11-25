@@ -34,3 +34,6 @@ Database:
   user: 'mastaff'
   # Your database host password.
   password: 'mastaff'
+Helpop:
+  # Cooldown in seconds
+  cooldown: 30
