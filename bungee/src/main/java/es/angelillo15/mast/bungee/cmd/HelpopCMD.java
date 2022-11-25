@@ -2,6 +2,7 @@ package es.angelillo15.mast.bungee.cmd;
 
 import es.angelillo15.mast.bungee.config.ConfigLoader;
 import es.angelillo15.mast.bungee.config.Messages;
+import es.angelillo15.mast.bungee.utils.StaffUtils;
 import es.angelillo15.mast.bungee.utils.TextUtils;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.chat.TextComponent;
@@ -28,16 +29,33 @@ public class HelpopCMD extends Command {
                 return;
             }
 
+            if(args.length < 1){
+                p.sendMessage(new TextComponent(TextUtils.colorize(Messages.getHelpopCorrectUse())));
+                return;
+            }
+
             if(cooldowns.containsKey(p.getName())){
                 int timeLeft = cooldownTime + (int) ((cooldowns.get(p.getName()) - System.currentTimeMillis() / 1000));
 
                 if(timeLeft <= 0){
                     cooldowns.remove(p.getName());
+
                 } else {
-                    p.sendMessage(new TextComponent(TextUtils.colorize(Messages.getHelpopCooldown().replace("{time}", String.valueOf(timeLeft)))));
+                    p.sendMessage(new TextComponent(TextUtils.colorize(Messages.getHelpopCooldown().replace("{cooldown}", String.valueOf(timeLeft)))));
                     return;
                 }
             }
+            StringBuilder sb = new StringBuilder();
+            for (String arg : args) {
+                sb.append(arg).append(" ");
+            }
+            StaffUtils.sendBroadcastPermissionMessage(
+                    TextUtils.colorize(Messages.getHelpopFormat()
+                            .replace("{player}", p.getName())
+                            .replace("{message}", sb.toString())
+                            .replace("{server}", p.getServer().getInfo().getName() == null ? "null" : p.getServer().getInfo().getName()))
+                    , "mast.helpop.receive"
+            );
 
             p.sendMessage(new TextComponent(TextUtils.colorize(Messages.getHelpopMessage())));
 
