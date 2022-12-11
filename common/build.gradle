@@ -21,6 +21,7 @@ dependencies {
     compileOnly 'me.carleslc.Simple-YAML:Simple-Yaml:1.8.1'
     compileOnly 'org.yaml:snakeyaml:1.30'
     compileOnly 'net.md-5:bungeecord-chat:1.16-R0.4'
+    compileOnly 'com.zaxxer:HikariCP:5.0.1'
 }
 
 processResources {

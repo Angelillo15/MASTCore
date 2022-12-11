@@ -17,7 +17,6 @@ public class StaffTalkEvent implements Listener {
         if(e.getMessage().startsWith("/")) return;
 
         if(!(player.hasPermission("mast.staffchat"))){
-            MASTBungeeManager.getInstance().getLogger().info("Player " + player.getName() + " tried to use staff chat without permission.");
             return;
         }
 

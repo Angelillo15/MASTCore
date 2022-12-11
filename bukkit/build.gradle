@@ -36,6 +36,7 @@ repositories {
 dependencies {
     implementation 'me.carleslc.Simple-YAML:Simple-Yaml:1.8.1'
     implementation 'org.yaml:snakeyaml:1.30'
+    implementation 'org.jetbrains:annotations:20.1.0'
     compileOnly 'org.spigotmc:spigot-api:1.13-R0.1-SNAPSHOT'
     implementation group: 'com.github.cryptomorin', name: 'XSeries', version: '9.0.0'
     compileOnly project(":common")

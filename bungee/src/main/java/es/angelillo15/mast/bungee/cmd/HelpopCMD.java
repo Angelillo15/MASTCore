@@ -52,7 +52,7 @@ public class HelpopCMD extends Command {
             StaffUtils.sendBroadcastPermissionMessage(
                     TextUtils.colorize(Messages.getHelpopFormat()
                             .replace("{player}", p.getName())
-                            .replace("{message}", sb.toString())
+                            .replace("{msg}", sb.toString())
                             .replace("{server}", p.getServer().getInfo().getName() == null ? "null" : p.getServer().getInfo().getName()))
                     , "mast.helpop.receive"
             );

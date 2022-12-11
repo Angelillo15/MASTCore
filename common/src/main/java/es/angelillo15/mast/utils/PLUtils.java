@@ -13,5 +13,5 @@ public class PLUtils {
             "&a  ░      ░     ░   ▒   ░  ░  ░    ░        ░   ▒    ░ ░    ░ ░\n" +
             "&a  ░         ░  ░      ░                 ░  ░\n" +
             ""+
-            "&a                                                             version: {version}";
+            "&a                                                     version: {version}";
 }

@@ -80,9 +80,7 @@ public class MASTBungeeManager extends Plugin {
     }
 
     public void removePreviousServer(UUID uuid) {
-        if(previousServer.containsKey(uuid)){
-            previousServer.remove(uuid);
-        }
+        previousServer.remove(uuid);
     }
 
 }

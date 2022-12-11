@@ -24,8 +24,10 @@ import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.jetbrains.annotations.NotNull;
 import org.simpleyaml.configuration.file.YamlFile;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.UUID;
@@ -47,10 +49,6 @@ public class MASTBukkitManager extends JavaPlugin {
     private static ArrayList<StaffItem> internalModules;
     private static Integer onlinePlayers;
     private static TeamManager teamManager;
-
-    public void initLogger() {
-        MASTBukkitManager.Logger = this.getLogger();
-    }
 
     public void drawLogo() {
         instance = this;
@@ -164,7 +162,7 @@ public class MASTBukkitManager extends JavaPlugin {
         staffPlayers.put(staffPlayer.getPlayer().getUniqueId(), staffPlayer);
     }
 
-    public void removeStaffPlayer(BStaffPlayer staffPlayer) {
+    public void removeStaffPlayer(@NotNull BStaffPlayer staffPlayer) {
         staffPlayers.remove(staffPlayer.getPlayer().getUniqueId());
     }
 

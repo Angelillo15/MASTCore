@@ -24,5 +24,5 @@ StaffLeave:
 Helpop:
   message: '{prefix} &7Your message has been sent to the staff team.' # The message sent when the player sends a helpop message.
   correctUse: '{prefix} &7You must use &a/helpop <message>&7.' # Message sent when the command is not used correctly.
-  format: '{prefix} &7({server}) &a{player} &8&l» &7{message}' # The format for sent messages on Helpop.
-  cooldown: '{prefix} &7You must wait &a{cooldown} &7seconds to send another helpop message.' # The message sent when the player is on cooldown.
+  format: '&a&lHelpop &8&l» &7({server}) &a{player} &8&l» &7{msg}' # The format for sent messages on Helpop.
+  cooldown: '&a&lHelpop &8&l» &7You must wait &a{cooldown} &7seconds to send another helpop message.' # The message sent when the player is on cooldown.
