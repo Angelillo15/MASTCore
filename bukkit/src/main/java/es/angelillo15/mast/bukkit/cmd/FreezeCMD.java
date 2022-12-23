@@ -1,6 +1,5 @@
 package es.angelillo15.mast.bukkit.cmd;
 
-import es.angelillo15.mast.bukkit.MASTBukkitManager;
 import es.angelillo15.mast.bukkit.utils.FreezeUtils;
 import es.angelillo15.mast.bukkit.utils.Messages;
 import org.bukkit.Bukkit;

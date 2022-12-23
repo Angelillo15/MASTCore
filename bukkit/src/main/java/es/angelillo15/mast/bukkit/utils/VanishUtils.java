@@ -1,7 +1,7 @@
 package es.angelillo15.mast.bukkit.utils;
 
 
-import es.angelillo15.mast.bukkit.MASTBukkitManager;
+import es.angelillo15.mast.bukkit.MAStaffBukkitManager;
 import es.angelillo15.mast.bukkit.api.BStaffPlayer;
 import es.angelillo15.mast.bukkit.api.events.vanish.PlayerVanishDisableEvent;
 import es.angelillo15.mast.bukkit.api.events.vanish.PlayerVanishEnableEvent;
@@ -11,7 +11,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 
 public class VanishUtils {
-    private static MASTBukkitManager plugin = MASTBukkitManager.getInstance();
+    private static MAStaffBukkitManager plugin = MAStaffBukkitManager.getInstance();
 
     public static void enableVanish(Player player){
         BStaffPlayer staffPlayer;
@@ -59,10 +59,10 @@ public class VanishUtils {
     }
 
     public static void checkForStaffPlayers(){
-        Bukkit.getServer().getScheduler().runTaskAsynchronously(MASTBukkitManager.getInstance(), () ->{
+        Bukkit.getServer().getScheduler().runTaskAsynchronously(MAStaffBukkitManager.getInstance(), () ->{
            for (Player player : Bukkit.getOnlinePlayers()){
                if(player.hasPermission("mast.staff.use")){
-                   if(SQLQueries.getState(MASTBukkitManager.getInstance().getPluginConnection().getConnection(), player.getUniqueId()) == 1){
+                   if(SQLQueries.getState(MAStaffBukkitManager.getInstance().getPluginConnection().getConnection(), player.getUniqueId()) == 1){
                        if (!plugin.getStaffPlayers().containsKey(player.getUniqueId())){
                            plugin.addStaffPlayer(new BStaffPlayer(player));
                        }

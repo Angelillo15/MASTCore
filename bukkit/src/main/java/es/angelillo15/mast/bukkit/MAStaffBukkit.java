@@ -3,7 +3,7 @@ package es.angelillo15.mast.bukkit;
 import es.angelillo15.mast.bukkit.config.ConfigUpdater;
 import es.angelillo15.mast.bukkit.metrics.Metrics;
 
-public class MASTBukkit extends MASTBukkitManager {
+public class MAStaffBukkit extends MAStaffBukkitManager {
     @Override
     public void onEnable() {
         drawLogo();

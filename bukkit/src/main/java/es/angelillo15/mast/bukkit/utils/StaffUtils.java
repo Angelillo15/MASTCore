@@ -2,8 +2,8 @@ package es.angelillo15.mast.bukkit.utils;
 
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
-import es.angelillo15.mast.bukkit.MASTBukkit;
-import es.angelillo15.mast.bukkit.MASTBukkitManager;
+import es.angelillo15.mast.bukkit.MAStaffBukkit;
+import es.angelillo15.mast.bukkit.MAStaffBukkitManager;
 import es.angelillo15.mast.bukkit.api.BStaffPlayer;
 import es.angelillo15.mast.bukkit.api.events.vanish.PlayerVanishDisableEvent;
 import es.angelillo15.mast.bukkit.api.events.vanish.PlayerVanishEnableEvent;
@@ -11,10 +11,8 @@ import es.angelillo15.mast.bukkit.api.item.types.StaffItem;
 import es.angelillo15.mast.bukkit.config.ConfigLoader;
 import es.angelillo15.mast.bukkit.utils.items.InternalModules;
 import es.angelillo15.mast.database.SQLQueries;
-import net.milkbowl.vault.chat.Chat;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.Color;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
@@ -23,27 +21,27 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class StaffUtils {
-    private static PluginManager pm = MASTBukkitManager.getInstance().getServer().getPluginManager();
+    private static PluginManager pm = MAStaffBukkitManager.getInstance().getServer().getPluginManager();
 
     public static void toggleStaff(Player player) {
-        MASTBukkitManager plugin = MASTBukkitManager.getInstance();
+        MAStaffBukkitManager plugin = MAStaffBukkitManager.getInstance();
 
-        if (!(SQLQueries.existsData(MASTBukkitManager.getInstance().getPluginConnection().getConnection(),
+        if (!(SQLQueries.existsData(MAStaffBukkitManager.getInstance().getPluginConnection().getConnection(),
                 player.getUniqueId()))) {
-            SQLQueries.insertData(MASTBukkitManager.getInstance().getPluginConnection().getConnection()
+            SQLQueries.insertData(MAStaffBukkitManager.getInstance().getPluginConnection().getConnection()
                     , player.getUniqueId(), 0, 0);
         }
 
         if (SQLQueries.getState(plugin.getPluginConnection().getConnection(), player.getUniqueId()) == 0) {
             enableStaff(player);
-            MASTBukkitManager.getInstance().getServer().getScheduler().runTaskAsynchronously(MASTBukkitManager.getInstance(), () -> {
+            MAStaffBukkitManager.getInstance().getServer().getScheduler().runTaskAsynchronously(MAStaffBukkitManager.getInstance(), () -> {
                 Bukkit.getOnlinePlayers().forEach(p -> {
                     p.sendMessage(Messages.GET_VANISH_LEAVE_MESSAGE().replace("{player}", player.getName()));
                 });
             });
         } else {
             disableStaff(player);
-            MASTBukkitManager.getInstance().getServer().getScheduler().runTaskAsynchronously(MASTBukkitManager.getInstance(), () -> {
+            MAStaffBukkitManager.getInstance().getServer().getScheduler().runTaskAsynchronously(MAStaffBukkitManager.getInstance(), () -> {
                 Bukkit.getOnlinePlayers().forEach(p -> {
                     p.sendMessage(Messages.GET_VANISH_JOIN_MESSAGE().replace("{player}", player.getName()));
                 });
@@ -54,7 +52,7 @@ public class StaffUtils {
     }
 
     public static void enableStaff(Player player) {
-        MASTBukkitManager plugin = MASTBukkitManager.getInstance();
+        MAStaffBukkitManager plugin = MAStaffBukkitManager.getInstance();
         plugin.addStaffPlayer(new BStaffPlayer(player));
         if (!(plugin.containsStaffPlayer(player.getUniqueId()))) {
             plugin.addStaffPlayer(new BStaffPlayer(player));
@@ -75,9 +73,9 @@ public class StaffUtils {
 
         player.sendMessage(Messages.GET_STAFF_MODE_ENABLE_MESSAGE());
 
-        if (MASTBukkit.serverVersion >= 9) {
+        if (MAStaffBukkit.serverVersion >= 9) {
             if (ConfigLoader.getGlowModule().getConfig().getBoolean("Config.enabled")) {
-                String group = MASTBukkitManager.getPerms().getPrimaryGroup(player);
+                String group = MAStaffBukkitManager.getPerms().getPrimaryGroup(player);
                 ChatColor color = ChatColor.BLUE;
                 String colorStr = ConfigLoader.getGlowModule().getConfig().getString("Config.groups." + group + ".color");
 
@@ -85,14 +83,14 @@ public class StaffUtils {
                     color = ChatColor.valueOf(colorStr);
                 }
 
-                MASTBukkitManager.getTeamManager().addPlayer(player.getName(), color);
-                MASTBukkitManager.getTeamManager().enableGlow(player);
+                MAStaffBukkitManager.getTeamManager().addPlayer(player.getName(), color);
+                MAStaffBukkitManager.getTeamManager().enableGlow(player);
             }
         }
     }
 
     public static void disableStaff(Player player) {
-        MASTBukkitManager plugin = MASTBukkitManager.getInstance();
+        MAStaffBukkitManager plugin = MAStaffBukkitManager.getInstance();
         if (plugin.containsStaffPlayer(player.getUniqueId())) {
             plugin.removeStaffPlayer(plugin.getSStaffPlayer(player.getUniqueId()));
         }
@@ -107,10 +105,10 @@ public class StaffUtils {
         Inventory.restoreInventory(player);
         player.sendMessage(Messages.GET_STAFF_MODE_DISABLE_MESSAGE());
 
-        if (MASTBukkit.serverVersion >= 9) {
+        if (MAStaffBukkit.serverVersion >= 9) {
             if (ConfigLoader.getGlowModule().getConfig().getBoolean("Config.enabled")) {
                 player.setGlowing(false);
-                MASTBukkitManager.getTeamManager().removePlayer(player.getName());
+                MAStaffBukkitManager.getTeamManager().removePlayer(player.getName());
             }
         }
     }
@@ -121,7 +119,7 @@ public class StaffUtils {
         out.writeUTF(player.getName());
         out.writeUTF(state.toString());
 
-        player.sendPluginMessage(MASTBukkitManager.getInstance(), "BungeeCord", out.toByteArray());
+        player.sendPluginMessage(MAStaffBukkitManager.getInstance(), "BungeeCord", out.toByteArray());
     }
 
     public static void loadItems(Player player) {
@@ -149,33 +147,33 @@ public class StaffUtils {
     }
 
     public static void asyncStaffBroadcastMessage(String message) {
-        Bukkit.getScheduler().runTaskAsynchronously(MASTBukkitManager.getInstance(), () -> {
+        Bukkit.getScheduler().runTaskAsynchronously(MAStaffBukkitManager.getInstance(), () -> {
             Bukkit.getOnlinePlayers().forEach(p -> {
                 if (p.hasPermission("mast.staff")) {
                     p.sendMessage(message);
                 }
             });
-            MASTBukkitManager.getInstance().getLogger().info(message);
+            MAStaffBukkitManager.getInstance().getLogger().info(message);
         });
     }
 
     public static void asyncStaffChatMessage(String message) {
-        Bukkit.getScheduler().runTaskAsynchronously(MASTBukkitManager.getInstance(), () -> {
+        Bukkit.getScheduler().runTaskAsynchronously(MAStaffBukkitManager.getInstance(), () -> {
             Bukkit.getOnlinePlayers().forEach(p -> {
                 if (p.hasPermission("mast.staffchat")) {
                     p.sendMessage(message);
                 }
             });
-            MASTBukkitManager.getInstance().getLogger().info(message);
+            MAStaffBukkitManager.getInstance().getLogger().info(message);
         });
     }
 
     public static String getPlayerCount(Player player) {
-        Boolean type = MASTBukkitManager.getInstance().getConfig().getBoolean("Config.bungeecord");
+        Boolean type = MAStaffBukkitManager.getInstance().getConfig().getBoolean("Config.bungeecord");
         if (!type) {
             return String.valueOf(Bukkit.getOnlinePlayers().size());
         } else {
-            return MASTBukkitManager.getOnlinePlayers().toString();
+            return MAStaffBukkitManager.getOnlinePlayers().toString();
         }
     }
 }

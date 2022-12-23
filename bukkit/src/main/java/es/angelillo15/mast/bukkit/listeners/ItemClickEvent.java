@@ -1,6 +1,6 @@
 package es.angelillo15.mast.bukkit.listeners;
 
-import es.angelillo15.mast.bukkit.MASTBukkitManager;
+import es.angelillo15.mast.bukkit.MAStaffBukkitManager;
 import es.angelillo15.mast.bukkit.api.item.items.CommandInteractionItem;
 import es.angelillo15.mast.bukkit.api.item.items.ThruItem;
 import es.angelillo15.mast.bukkit.api.item.items.VanishItem;
@@ -8,7 +8,6 @@ import es.angelillo15.mast.bukkit.api.item.types.EntityInteractItem;
 import es.angelillo15.mast.bukkit.api.item.types.ExecutableItem;
 import es.angelillo15.mast.bukkit.api.item.types.StaffCommandItem;
 import es.angelillo15.mast.bukkit.api.item.types.StaffItem;
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -30,7 +29,7 @@ public class ItemClickEvent implements Listener {
 
 
 
-        if(MASTBukkitManager.getInstance().containsStaffPlayer(player.getUniqueId())){
+        if(MAStaffBukkitManager.getInstance().containsStaffPlayer(player.getUniqueId())){
             if(!e.getPlayer().hasPermission("mast.break")){
                 e.setCancelled(true);
             }
@@ -39,7 +38,7 @@ public class ItemClickEvent implements Listener {
             if(!e.getItem().hasItemMeta()) return;
 
             ItemMeta meta = e.getItem().getItemMeta();
-            ArrayList<StaffItem> internalModules = MASTBukkitManager.getInternalModules();
+            ArrayList<StaffItem> internalModules = MAStaffBukkitManager.getInternalModules();
             if(!clicked){
                 clicked = true;
                 e.setCancelled(true);
@@ -68,7 +67,7 @@ public class ItemClickEvent implements Listener {
 
     @EventHandler
     public void onEntityInteract(PlayerInteractEntityEvent e){
-        if(MASTBukkitManager.getInstance().containsStaffPlayer(e.getPlayer().getUniqueId())){
+        if(MAStaffBukkitManager.getInstance().containsStaffPlayer(e.getPlayer().getUniqueId())){
             if(e.getRightClicked() instanceof Player){
                 if(e.getPlayer().getItemInHand() == null || e.getPlayer().getItemInHand().getType() == Material.AIR){
                     return;
@@ -79,7 +78,7 @@ public class ItemClickEvent implements Listener {
                     e.setCancelled(true);
                     return;
                 }
-                MASTBukkitManager.getInternalModules().forEach(staffItem -> {
+                MAStaffBukkitManager.getInternalModules().forEach(staffItem -> {
                     if (staffItem.getItem().getItemMeta().getDisplayName().equals(e.getPlayer().getItemInHand().getItemMeta().getDisplayName())) {
                         if(staffItem instanceof EntityInteractItem){
                             EntityInteractItem entityInteractItem = (EntityInteractItem) staffItem;
@@ -101,7 +100,7 @@ public class ItemClickEvent implements Listener {
 
     @EventHandler
     public void onInteraction(PlayerInteractEvent e){
-        if(MASTBukkitManager.getInstance().containsStaffPlayer(e.getPlayer().getUniqueId())){
+        if(MAStaffBukkitManager.getInstance().containsStaffPlayer(e.getPlayer().getUniqueId())){
             if(e.getPlayer().getItemInHand() == null || e.getPlayer().getItemInHand().getType() == Material.AIR){
                 return;
             }
@@ -110,7 +109,7 @@ public class ItemClickEvent implements Listener {
                 clicked = true;
                 return;
             }
-            MASTBukkitManager.getInternalModules().forEach(staffItem -> {
+            MAStaffBukkitManager.getInternalModules().forEach(staffItem -> {
 
                 if (staffItem.getItem().getItemMeta().getDisplayName().equals(e.getPlayer().getItemInHand().getItemMeta().getDisplayName())) {
                     if(staffItem instanceof ThruItem){

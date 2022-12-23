@@ -1,8 +1,7 @@
 package es.angelillo15.mast.bukkit.listeners;
 
-import es.angelillo15.mast.bukkit.MASTBukkitManager;
+import es.angelillo15.mast.bukkit.MAStaffBukkitManager;
 import org.bukkit.Bukkit;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -13,10 +12,10 @@ public class ItemDropEvent implements Listener {
     public void onDrop(PlayerDropItemEvent e){
         Player player = e.getPlayer();
 
-        if(MASTBukkitManager.getInstance().containsStaffPlayer(player.getUniqueId())){
-            Bukkit.getScheduler().runTaskAsynchronously(MASTBukkitManager.getInstance(), () -> {
+        if(MAStaffBukkitManager.getInstance().containsStaffPlayer(player.getUniqueId())){
+            Bukkit.getScheduler().runTaskAsynchronously(MAStaffBukkitManager.getInstance(), () -> {
                 player.getInventory().clear();
-                MASTBukkitManager.getInternalModules().forEach(staffItem -> {
+                MAStaffBukkitManager.getInternalModules().forEach(staffItem -> {
                     staffItem.set(player);
                 });
             });

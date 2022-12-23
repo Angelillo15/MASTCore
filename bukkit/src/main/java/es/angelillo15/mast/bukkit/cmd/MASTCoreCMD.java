@@ -1,6 +1,6 @@
 package es.angelillo15.mast.bukkit.cmd;
 
-import es.angelillo15.mast.bukkit.MASTBukkitManager;
+import es.angelillo15.mast.bukkit.MAStaffBukkitManager;
 import es.angelillo15.mast.bukkit.utils.Messages;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -20,9 +20,9 @@ public class MASTCoreCMD implements CommandExecutor {
                 }
 
                 if(args[0].equalsIgnoreCase("reload")){
-                    MASTBukkitManager.getInstance().reload();
+                    MAStaffBukkitManager.getInstance().reload();
                     p.sendMessage(Messages.GET_RELOADED_MESSAGE());
-                    MASTBukkitManager.getInstance().getLogger().info(Messages.GET_RELOADED_MESSAGE());
+                    MAStaffBukkitManager.getInstance().getLogger().info(Messages.GET_RELOADED_MESSAGE());
                 }
             }
         } else {
@@ -32,7 +32,7 @@ public class MASTCoreCMD implements CommandExecutor {
             }
 
             if(args[0].equalsIgnoreCase("reload")){
-                MASTBukkitManager.getInstance().reload();
+                MAStaffBukkitManager.getInstance().reload();
                 sender.sendMessage(Messages.GET_RELOADED_MESSAGE());
             }
         }

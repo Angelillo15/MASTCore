@@ -27,16 +27,15 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 import org.simpleyaml.configuration.file.YamlFile;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.UUID;
 import java.util.logging.Logger;
 
-public class MASTBukkitManager extends JavaPlugin {
+public class MAStaffBukkitManager extends JavaPlugin {
     public static final int serverVersion = Integer.parseInt(Bukkit.getBukkitVersion().split("-")[0].split("\\.")[1]);
     private static Permission perms = null;
-    private static MASTBukkitManager instance;
+    private static MAStaffBukkitManager instance;
     private HashMap<UUID, BStaffPlayer> staffPlayers = new HashMap<UUID, BStaffPlayer>();
     private HashMap<UUID, BStaffPlayer> vanishedPlayers = new HashMap<UUID, BStaffPlayer>();
     private HashMap<UUID, ArrayList<StaffItem>> playersStaffItems = new HashMap<UUID, ArrayList<StaffItem>>();
@@ -53,7 +52,7 @@ public class MASTBukkitManager extends JavaPlugin {
     public void drawLogo() {
         instance = this;
         Logger = this.getLogger();
-        MASTBukkitManager plugin = this;
+        MAStaffBukkitManager plugin = this;
         Bukkit.getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', PLUtils.Logo.replace("{version}", version)));
     }
 
@@ -150,7 +149,7 @@ public class MASTBukkitManager extends JavaPlugin {
         SQLQueries.closeConnection(pluginConnection.getConnection());
     }
 
-    public static MASTBukkitManager getInstance() {
+    public static MAStaffBukkitManager getInstance() {
         return instance;
     }
 
@@ -225,7 +224,7 @@ public class MASTBukkitManager extends JavaPlugin {
         return onlinePlayers;
     }
     public static void setOnlinePlayers(Integer onlinePlayers) {
-        MASTBukkitManager.onlinePlayers = onlinePlayers;
+        MAStaffBukkitManager.onlinePlayers = onlinePlayers;
     }
     public static ArrayList<StaffItem> getInternalModules(){
         return internalModules;

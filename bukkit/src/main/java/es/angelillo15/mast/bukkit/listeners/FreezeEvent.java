@@ -1,6 +1,6 @@
 package es.angelillo15.mast.bukkit.listeners;
 
-import es.angelillo15.mast.bukkit.MASTBukkitManager;
+import es.angelillo15.mast.bukkit.MAStaffBukkitManager;
 import es.angelillo15.mast.bukkit.api.events.staff.FreezeMessageEvent;
 import es.angelillo15.mast.bukkit.utils.Messages;
 import org.bukkit.Location;
@@ -13,7 +13,7 @@ import org.bukkit.event.player.PlayerMoveEvent;
 public class FreezeEvent implements Listener {
     @EventHandler
     public void onFreezeEvent(PlayerMoveEvent event) {
-        if(MASTBukkitManager.getInstance().containsFreezePlayer(event.getPlayer().getUniqueId())){
+        if(MAStaffBukkitManager.getInstance().containsFreezePlayer(event.getPlayer().getUniqueId())){
             if (event.getFrom().getX() != event.getTo().getX() || event.getFrom().getY() != event.getTo().getY() || event.getFrom().getZ() != event.getTo().getZ()) {
                 Location loc = event.getFrom();
                 event.getPlayer().teleport(loc.setDirection(event.getTo().getDirection()));
@@ -31,7 +31,7 @@ public class FreezeEvent implements Listener {
 
     @EventHandler
     public void onInteract(PlayerInteractEvent event){
-        if(MASTBukkitManager.getInstance().containsFreezePlayer(event.getPlayer().getUniqueId())){
+        if(MAStaffBukkitManager.getInstance().containsFreezePlayer(event.getPlayer().getUniqueId())){
             event.setCancelled(true);
         }
     }

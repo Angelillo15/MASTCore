@@ -1,7 +1,7 @@
 package es.angelillo15.mast.bukkit.utils.items;
 
 import com.cryptomorin.xseries.XMaterial;
-import es.angelillo15.mast.bukkit.MASTBukkitManager;
+import es.angelillo15.mast.bukkit.MAStaffBukkitManager;
 import es.angelillo15.mast.bukkit.api.item.*;
 import es.angelillo15.mast.bukkit.api.item.items.*;
 import es.angelillo15.mast.bukkit.api.item.types.StaffItem;
@@ -19,7 +19,7 @@ import java.util.Objects;
 
 public class InternalModules {
     private ArrayList<StaffItem> items = new ArrayList<>();
-    private static MASTBukkitManager plugin = MASTBukkitManager.getInstance();
+    private static MAStaffBukkitManager plugin = MAStaffBukkitManager.getInstance();
     private static ArrayList<String> itemsNames = new ArrayList<>();
     YamlFile config = ConfigLoader.getInternalStaffItems().getConfig();
 

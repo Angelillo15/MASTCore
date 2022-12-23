@@ -1,6 +1,6 @@
 package es.angelillo15.mast.bukkit.config;
 
-import es.angelillo15.mast.bukkit.MASTBukkitManager;
+import es.angelillo15.mast.bukkit.MAStaffBukkitManager;
 import es.angelillo15.mast.config.ConfigManager;
 import lombok.Getter;
 import java.io.File;
@@ -8,7 +8,7 @@ import java.io.IOException;
 
 
 public class ConfigLoader {
-    private MASTBukkitManager plugin;
+    private MAStaffBukkitManager plugin;
     private static ConfigManager config;
     private static ConfigManager messages;
     private static ConfigManager internalStaffItems;
@@ -20,7 +20,7 @@ public class ConfigLoader {
     @Getter
     private static ConfigManager en;
 
-    public ConfigLoader(MASTBukkitManager plugin) {
+    public ConfigLoader(MAStaffBukkitManager plugin) {
         this.plugin = plugin;
     }
 
