@@ -64,28 +64,12 @@ public class VanishEvents implements Listener {
                 player.hidePlayer(bStaffPlayer.getPlayer());
             }
         });
-
     }
 
     @EventHandler
     public void onWorldChange(PlayerChangedWorldEvent event){
         if(MAStaffBukkitManager.getInstance().containsStaffPlayer(event.getPlayer().getUniqueId())){
             event.getPlayer().setGameMode(GameMode.CREATIVE);
-        }
-    }
-
-    @EventHandler
-    public void onPlayerQuit(PlayerQuitEvent event) {
-        Player player = event.getPlayer();
-        if(player.hasPermission("mast.staff.use")){
-            if(SQLQueries.getVanished(MAStaffBukkitManager.getInstance().getPluginConnection().getConnection(), player.getUniqueId()) == 1){
-                if(MAStaffBukkitManager.getInstance().containsStaffPlayer(player.getUniqueId())){
-                    MAStaffBukkitManager.getInstance().removeStaffPlayer(MAStaffBukkitManager.getInstance().getSStaffPlayer(player.getUniqueId()));
-                }
-                StaffUtils.sendStaffData(event.getPlayer(), false);
-                event.setQuitMessage("");
-                StaffUtils.asyncStaffBroadcastMessage(Messages.GET_STAFF_VANISH_LEAVE_MESSAGE().replace("{player}", player.getName()));
-            }
         }
     }
 

@@ -92,6 +92,7 @@ public class MAStaffBukkitManager extends JavaPlugin {
         pm.registerEvents(new StaffItemPickup(), this);
         pm.registerEvents(new FreezeEvent(), this);
         pm.registerEvents(new StaffWorldChangeEvent(), this);
+        pm.registerEvents(new OnStaffJoin(), this);
         FreezeUtils.setupMessageSender();
     }
 
