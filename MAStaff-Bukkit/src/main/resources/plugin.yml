@@ -1,6 +1,6 @@
 name: MAStaff
 version: '${version}'
-main: es.angelillo15.mast.bukkit.MAStaffBukkit
+main: es.angelillo15.mast.bukkit.MAStaff
 api-version: 1.13
 prefix: MAStaff
 authors: [ Angelillo15 ]
