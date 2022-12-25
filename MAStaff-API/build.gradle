@@ -34,7 +34,9 @@ repositories {
 }
 
 dependencies {
-
+    compileOnly 'org.projectlombok:lombok:1.18.24'
+    compileOnly 'org.spigotmc:spigot-api:1.13-R0.1-SNAPSHOT'
+    annotationProcessor 'org.projectlombok:lombok:1.18.24'
 }
 
 group = 'es.angelillo15'
