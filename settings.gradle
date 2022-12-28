@@ -1,7 +1,0 @@
-rootProject.name = 'MAStaff'
-include 'bukkit'
-include 'bungee'
-include 'common'
-include 'MAStaff-API'
-include 'MAStaff-Bukkit'
-
