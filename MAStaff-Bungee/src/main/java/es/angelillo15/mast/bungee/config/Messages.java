@@ -1,7 +1,7 @@
 package es.angelillo15.mast.bungee.config;
 
+import es.angelillo15.configmanager.ConfigManager;
 import es.angelillo15.mast.bungee.utils.TextUtils;
-import es.angelillo15.mast.config.ConfigManager;
 import net.md_5.bungee.api.ChatColor;
 
 public class Messages {

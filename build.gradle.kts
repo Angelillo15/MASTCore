@@ -28,9 +28,12 @@ tasks.shadowJar {
 dependencies {
     implementation(project(":MAStaff-API"))
     implementation(project(":MAStaff-Bukkit"))
+    implementation(project(":MAStaff-Bungee"))
+    implementation(project(":MAStaff-Common"))
     implementation("org.yaml:snakeyaml:1.33")
     implementation("com.github.Carleslc.Simple-YAML:Simple-Yaml:1.8.3")
     implementation("com.github.Angelillo15:ConfigManager:1.4")
+    implementation("com.zaxxer:HikariCP:5.0.1")
 }
 
 tasks.withType<JavaCompile> {

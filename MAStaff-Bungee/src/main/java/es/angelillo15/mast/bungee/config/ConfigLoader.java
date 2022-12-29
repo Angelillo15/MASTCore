@@ -1,7 +1,7 @@
 package es.angelillo15.mast.bungee.config;
 
+import es.angelillo15.configmanager.ConfigManager;
 import es.angelillo15.mast.bungee.MASTBungeeManager;
-import es.angelillo15.mast.config.ConfigManager;
 import lombok.Getter;
 
 import java.io.File;

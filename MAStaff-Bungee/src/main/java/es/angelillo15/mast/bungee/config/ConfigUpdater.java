@@ -1,13 +1,13 @@
 package es.angelillo15.mast.bungee.config;
 
 import es.angelillo15.mast.bungee.MASTBungeeManager;
-import ru.vyarus.yaml.updater.YamlUpdater;
 
 import java.io.File;
 import java.util.Objects;
 
 public class ConfigUpdater {
     public void update() {
+        /*
         YamlUpdater.create(
                         new File(MASTBungeeManager.getInstance().getDataFolder() + File.separator + "config.yml"),
                         Objects.requireNonNull(getClass().getResourceAsStream("/BungeeCord/config.yml")))
@@ -25,5 +25,7 @@ public class ConfigUpdater {
                 Objects.requireNonNull(getClass().getResourceAsStream("/BungeeCord/lang/english.yml")))
                 .update()
         ;
+
+         */
     }
 }

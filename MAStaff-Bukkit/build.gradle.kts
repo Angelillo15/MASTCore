@@ -18,6 +18,7 @@ dependencies {
     compileOnly("org.yaml:snakeyaml:1.33")
     compileOnly("com.github.Carleslc.Simple-YAML:Simple-Yaml:1.8.3")
     compileOnly("com.github.Angelillo15:ConfigManager:1.4")
+    compileOnly("com.zaxxer:HikariCP:5.0.1")
 }
 
 tasks.processResources {
