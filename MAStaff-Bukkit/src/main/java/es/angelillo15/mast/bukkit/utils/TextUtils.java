@@ -1,11 +1,15 @@
 package es.angelillo15.mast.bukkit.utils;
 
 import es.angelillo15.mast.bukkit.config.Messages;
-import org.bukkit.ChatColor;
+import net.md_5.bungee.api.ChatColor;
 
 public class TextUtils {
     public static String parseMessage(String messages){
         return ChatColor.translateAlternateColorCodes('&', messages.replace("{prefix}", Messages.PREFIX())
         );
+    }
+
+    public static String colorize(String message){
+        return ChatColor.translateAlternateColorCodes('&', message);
     }
 }

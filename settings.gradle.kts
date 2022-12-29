@@ -11,3 +11,4 @@ rootProject.name = "MAStaff"
 include("MAStaff-API")
 include("MAStaff-Bukkit")
 include("MAStaff-Bungee")
+include("MAStaff-Common")

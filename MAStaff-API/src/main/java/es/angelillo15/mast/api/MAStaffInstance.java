@@ -12,6 +12,8 @@ public interface MAStaffInstance {
         }
         return instance;
     }
+    public ILogger getPLogger();
+    public boolean isDebug();
     public void drawLogo();
     public void loadConfig();
     public void registerCommands();

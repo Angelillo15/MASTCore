@@ -21,7 +21,9 @@ Config:
   # The language file you want to use for the plugin messages.
   # Included locales: english.yml and spanish.yml
   language: "english.yml"
-
+  # Enable or disable the debug mode.
+  # If enabled, the plugin will send more information about the plugin status.
+  debug: false
 # Database configuration for the plugin. With the Bungee version, you must use MariaDB or MySQL.
 Database:
   # The type of database you want to use, you can choose between SQLite or MySQL.
