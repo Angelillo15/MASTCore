@@ -8,7 +8,6 @@
  */
 
 rootProject.name = "MAStaff"
-include("app", "list", "utilities")
 include("MAStaff-API")
 include("MAStaff-Bukkit")
 include("MAStaff-Bungee")

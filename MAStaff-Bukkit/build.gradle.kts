@@ -2,18 +2,23 @@ plugins {
     id("java")
 }
 
-group = "org.example"
-version = "unspecified"
+group = parent?.group ?: "es.angelillo15"
+version = parent?.version ?: "undefined"
 
 repositories {
     mavenCentral()
+    maven("https://hub.spigotmc.org/nexus/content/repositories/snapshots/")
+    maven("https://oss.sonatype.org/content/repositories/snapshots")
+    maven("https://oss.sonatype.org/content/repositories/central")
 }
 
 dependencies {
-    testImplementation("org.junit.jupiter:junit-jupiter-api:5.8.1")
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.8.1")
+    implementation(project(":MAStaff-API"))
+    compileOnly("org.spigotmc:spigot-api:1.13-R0.1-SNAPSHOT")
 }
 
-tasks.getByName<Test>("test") {
-    useJUnitPlatform()
+tasks.processResources {
+    filesMatching("plugin.yml") {
+        expand("version" to (parent?.version ?: project.version))
+    }
 }
