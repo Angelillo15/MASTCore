@@ -7,12 +7,14 @@ import es.angelillo15.mast.bukkit.config.ConfigLoader;
 import es.angelillo15.mast.bukkit.utils.Logger;
 import es.angelillo15.mast.bukkit.utils.TextUtils;
 import lombok.Getter;
+import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.java.JavaPlugin;
 import es.angelillo15.mast.bukkit.data.PluginConnection;
 import org.simpleyaml.configuration.file.YamlFile;
 
 import java.nio.file.Path;
 import java.sql.Connection;
+import java.sql.SQLException;
 
 public class MAStaff extends JavaPlugin implements MAStaffInstance {
     @Getter
@@ -130,21 +132,31 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance {
 
     @Override
     public void unregisterCommands() {
-
     }
 
     @Override
     public void unregisterListeners() {
-
+        HandlerList.unregisterAll(this);
     }
 
     @Override
     public void unloadDatabase() {
-
+        try {
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        logger.info(TextUtils.colorize("&aDisconnected from the {type} database successfully.")
+                .replace("{type}", PluginConnection.getDataProvider().name())
+        );
     }
 
     @Override
     public void reload() {
-
+        unloadDatabase();
+        loadConfig();
+        loadDatabase();
+        unregisterCommands();
+        unregisterListeners();
     }
 }
