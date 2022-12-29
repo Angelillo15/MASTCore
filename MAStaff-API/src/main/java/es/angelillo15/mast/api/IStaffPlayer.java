@@ -1,4 +1,4 @@
-package es.angelillo15.mast.api.player;
+package es.angelillo15.mast.api;
 
 import es.angelillo15.mast.api.exceptions.AlreadyDisableException;
 import es.angelillo15.mast.api.exceptions.AlreadyEnableException;
@@ -21,6 +21,9 @@ public interface IStaffPlayer {
      */
     void setStaffMode(@NonNull boolean staffMode) throws AlreadyEnableException, AlreadyDisableException;
 
+    /**
+     * @return the player
+     */
     Player getPlayer();
 
 

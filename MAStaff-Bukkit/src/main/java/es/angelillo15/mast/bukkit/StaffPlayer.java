@@ -1,11 +1,12 @@
-package es.angelillo15.mast.api.player;
+package es.angelillo15.mast.bukkit;
 
+import es.angelillo15.mast.api.IStaffPlayer;
 import es.angelillo15.mast.api.exceptions.AlreadyDisableException;
 import es.angelillo15.mast.api.exceptions.AlreadyEnableException;
 import lombok.NonNull;
 import org.bukkit.entity.Player;
 
-public class StaffPlayer implements IStaffPlayer{
+public class StaffPlayer implements IStaffPlayer {
     private boolean staffMode;
     private Player player;
 
