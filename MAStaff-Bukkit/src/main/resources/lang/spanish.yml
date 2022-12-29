@@ -1,0 +1,44 @@
+#
+# Este es el archivo de idioma Español para MAStaff Spigot,
+# donde puedes modificar y personalizar los mensajes del plugin.
+#
+# Recuerda unirte a mi servidor de Discord si necesitas ayuda:
+# https://discord.angelillo15.es/
+#
+Prefix: '&a&lSTAFF &8&l»' # Esto aparecerá delante de todos los mensajes.
+NoPermission: "&7No tienes permiso para ejecutar este comando." # Esto aparecerá cuando un jugador que no tenga permisos utilice un comando.
+Reloaded: "{prefix} &7MAStaff ha sido recargado exitosamente." # Esto aparecerá cuando el plugin sea recargado.
+General:
+  noPlayerFound: '{prefix} &7Ese jugador está desconectado.' # Mensaje enviado cuando el jugador mencionado no está conectado.
+  noPlayerOnline: '{prefix} &7No hay jugadores conectados.' # Mensaje enviado cuando no hay jugadores conectados.
+Vanish:
+  joinMessage: '&a{player} &7ha entrado' # Mensaje enviado cuando un jugador desactiva el vanish.
+  leaveMessage: '&a{player} &7ha salido' # Mensaje enviado cuando un jugador activa el vanish.
+  staffJoinMessage: '&a{player} &7ha entrado silenciosamente' # Mensaje enviado al Staff cuando otro Staff entra en vanish.
+  staffLeaveMessage: '&a{player} &7ha salido silenciosamente' # Mensaje enviado al Staff cuando otro Staff sale en vanish.
+  enable: '{prefix} &7Has activado el &b&lVanish&7.' # Mensaje enviado cuando un jugador activa el vanish.
+  disable: '{prefix} &7Has desactivado el &b&lVanish&7.' # Mensaje enviado cuando un jugador desactiva el vanish.
+StaffChat:
+  format: '{prefix} &a{player} &8&l» &7{message}' # El formato para mensajes enviados mediante Chat de Staff.
+  correctUse: '{prefix} &7Debes de usar &a/sc <mensaje>&7.' # Mensaje enviado cuando el comando no se utiliza correctamente.
+StaffMode:
+  toggledOn: '{prefix} &7Modo de staff &aactivado&7.' # Mensaje enviado al activar el Modo de Staff.
+  toggledOff: '{prefix} &7Modo de staff &adesactivado&7.' # Mensaje enviado al desactivar el Modo de Staff.
+Freeze:
+  correctUse: '{prefix} &7Debes de usar &a/freeze <jugador>&7.' # Mensaje enviado cuando el comando no se utiliza correctamente.
+  correctUseOther: '{prefix} &7Debes de usar &a/freeze <jugador>&7.' # Mensaje enviado cuando el comando no se utiliza correctamente.
+  frozen: '{prefix} &7Has sido &acongelado&7.' # Mensaje enviado cuando el jugador es congelado.
+  unfrozen: '{prefix} &7Has sido &adescongelado&7.' # Mensaje enviado cuando el jugador es descongelado.
+  unfrozenBy: '{prefix} &7El jugador &a{player} &7ha sido &adescongelado &7por &a{staff}&7.' # Mensaje enviado cuando un jugador es descongelado por un staff.
+  frozenByOther: '{prefix} &7El jugador &a{player} &7ha sido &afrozen &7por &a{staff}&7.' # Mensaje enviado cuando un jugador es congelado por un staff.
+  playerSpamMessage:
+    - ''
+    - '&7████&c█&7████'
+    - '&7███&c█&6█&c█&7███'
+    - '&7██&c█&6█&0█&6█&c█&7██'
+    - '&7██&c█&6█&0█&6█&c█&7██   ¡Has sido congelado!'
+    - '&7█&c█&6██&0█&6██&c█&7█  Entra a nuestro Discord:'
+    - '&7█&c█&6█████&c█&7█  http:/discord.example.com'
+    - '&c█&6███&0█&6███&c█'
+    - '&c█████████'
+    - ''
