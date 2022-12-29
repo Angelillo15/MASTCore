@@ -23,7 +23,7 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance {
 
     @Override
     public void loadConfig() {
-        ConfigLoader.loadConfig();
+        new ConfigLoader().load();
     }
 
     @Override
