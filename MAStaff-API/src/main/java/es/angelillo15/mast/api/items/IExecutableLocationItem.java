@@ -3,6 +3,6 @@ package es.angelillo15.mast.api.items;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
-public interface ExecutableLocationItem {
+public interface IExecutableLocationItem {
     void click(Player player, Location location);
 }

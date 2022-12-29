@@ -1,0 +1,110 @@
+package es.angelillo15.mast.bukkit.config;
+
+import es.angelillo15.mast.bukkit.utils.TextUtils;
+import org.simpleyaml.configuration.file.YamlFile;
+
+import java.util.ArrayList;
+
+public class Messages {
+    private static YamlFile messages = ConfigLoader.getMessages().getConfig();
+
+    public static String GET_STAFF_MODE_ENABLE_MESSAGE() {
+        return TextUtils.parseMessage(messages.getString("StaffMode.toggledOn"));
+    }
+
+    public static String GET_STAFF_MODE_DISABLE_MESSAGE() {
+        return TextUtils.parseMessage(messages.getString("StaffMode.toggledOff"));
+    }
+
+    public static String GET_NO_PLAYER_ONLINE_MESSAGE() {
+        return TextUtils.parseMessage(messages.getString("General.noPlayerOnline"));
+    }
+
+    public static String GET_NO_PLAYER_FOUND_MESSAGE() {
+        return TextUtils.parseMessage(messages.getString("General.noPlayerFound"));
+    }
+
+    public static String GET_STAFF_CHAT_FORMAT() {
+        return TextUtils.parseMessage(messages.getString("StaffChat.format"));
+    }
+
+    public static String GET_RELOADED_MESSAGE() {
+        return TextUtils.parseMessage(messages.getString("Reloaded"));
+    }
+
+    /**
+     * Get the message when a player is vanished
+     * @return The message
+     */
+
+    public static String GET_VANISH_JOIN_MESSAGE() {
+        return TextUtils.parseMessage(messages.getString("Vanish.joinMessage"));
+    }
+
+    public static String GET_VANISH_LEAVE_MESSAGE() {
+        return TextUtils.parseMessage(messages.getString("Vanish.leaveMessage"));
+    }
+
+    public static String GET_STAFF_VANISH_JOIN_MESSAGE() {
+        return TextUtils.parseMessage(messages.getString("Vanish.staffJoinMessage"));
+    }
+
+    public static String GET_STAFF_VANISH_LEAVE_MESSAGE() {
+        return TextUtils.parseMessage(messages.getString("Vanish.staffLeaveMessage"));
+    }
+
+    public static String GET_VANISH_ENABLE_MESSAGE() {
+        return TextUtils.parseMessage(messages.getString("Vanish.enable"));
+    }
+
+    public static String GET_VANISH_DISABLE_MESSAGE() {
+        return TextUtils.parseMessage(messages.getString("Vanish.disable"));
+    }
+
+    public static String GET_FREEZE_FROZEN_MESSAGE() {
+        return TextUtils.parseMessage(messages.getString("Freeze.frozen"));
+    }
+
+    public static String GET_FREEZE_UNFROZEN_MESSAGE() {
+        return TextUtils.parseMessage(messages.getString("Freeze.unfrozen"));
+    }
+
+
+    public static String GET_FREEZE_FROZEN_BY_MESSAGE() {
+        return TextUtils.parseMessage(messages.getString("Freeze.frozenByOther"));
+    }
+
+    public static String GET_FREEZE_UNFROZEN_BY_MESSAGE() {
+        return TextUtils.parseMessage(messages.getString("Freeze.unfrozenBy"));
+    }
+
+    public static ArrayList<String> spamMessage() {
+        ArrayList<String> spam = new ArrayList<String>();
+        for (String s : messages.getStringList("Freeze.playerSpamMessage")) {
+            spam.add(TextUtils.parseMessage(s));
+        }
+        return spam;
+    }
+
+    /*
+     * StaffChat Messages
+     */
+
+    public static String GET_STAFFCHAT_CORRECT_USE(){
+        return TextUtils.parseMessage(messages.getString("StaffChat.correctUse"));
+    }
+
+
+
+    /*
+     * General
+     */
+    public static String GET_NO_PERMISSION_MESSAGE() {
+        return TextUtils.parseMessage(messages.getString("NoPermission"));
+    }
+
+    public static String PREFIX(){
+        return messages.getString("Prefix");
+    }
+
+}
