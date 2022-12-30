@@ -113,7 +113,6 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance {
                 pluginConnection = new PluginConnection(
                         Path.of(getPlugin().getDataFolder().getAbsolutePath())
                 );
-
             } catch (Exception e1) {
                 e1.printStackTrace();
             }
@@ -122,7 +121,6 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance {
         logger.info(TextUtils.colorize("&aConnected to the {type} database successfully.")
                 .replace("{type}", PluginConnection.getDataProvider().name())
         );
-
     }
 
     @Override

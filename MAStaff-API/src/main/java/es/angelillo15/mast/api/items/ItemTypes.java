@@ -1,6 +1,6 @@
 package es.angelillo15.mast.api.items;
 
-public enum Types {
+public enum ItemTypes {
     FREEZE,
     FLY,
     COMMAND,
