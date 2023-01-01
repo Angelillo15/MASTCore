@@ -2,8 +2,11 @@ package es.angelillo15.mast.api;
 
 import es.angelillo15.mast.api.exceptions.AlreadyDisableException;
 import es.angelillo15.mast.api.exceptions.AlreadyEnableException;
+import es.angelillo15.mast.api.items.StaffItem;
 import lombok.NonNull;
 import org.bukkit.entity.Player;
+
+import java.util.ArrayList;
 
 public interface IStaffPlayer {
     /**
@@ -26,6 +29,18 @@ public interface IStaffPlayer {
      */
     Player getPlayer();
 
+    /**
+     * Set staff items to the player
+     */
+    public void setItems();
 
+    /**
+     * Get staff items
+     */
+    public ArrayList<StaffItem> getItems();
 
+    /**
+     * Send plugin message to the bungee
+     */
+    public void sendPluginMessage();
 }

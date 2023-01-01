@@ -8,9 +8,11 @@ import org.bukkit.inventory.ItemStack;
 public class ChestItem extends StaffItem implements IPlayerInteractItem {
     private ItemStack item;
     private int slot;
-    public ChestItem(ItemStack item, int slot) {
+    private String permission;
+    public ChestItem(ItemStack item, int slot, String permission) {
         this.item = item;
         this.slot = slot;
+        this.permission = permission;
     }
 
     @Override
@@ -26,6 +28,11 @@ public class ChestItem extends StaffItem implements IPlayerInteractItem {
     @Override
     public ItemStack getItem() {
         return this.item;
+    }
+
+    @Override
+    public String getPermission() {
+        return null;
     }
 
     @Override

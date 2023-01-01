@@ -9,10 +9,12 @@ import org.bukkit.inventory.ItemStack;
 public class FreezeItem extends StaffItem implements IExecutableItem {
     private ItemStack item;
     private int slot;
+    private String permission;
 
-    public FreezeItem(ItemStack item, int slot) {
+    public FreezeItem(ItemStack item, int slot, String permission) {
         this.item = item;
         this.slot = slot;
+        this.permission = permission;
     }
 
     @Override
@@ -23,6 +25,11 @@ public class FreezeItem extends StaffItem implements IExecutableItem {
     @Override
     public ItemStack getItem() {
         return item;
+    }
+
+    @Override
+    public String getPermission() {
+        return permission;
     }
 
     @Override

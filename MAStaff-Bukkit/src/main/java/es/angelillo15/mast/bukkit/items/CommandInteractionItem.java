@@ -9,11 +9,13 @@ public class CommandInteractionItem extends StaffItem implements IPlayerInteract
     private int slot;
     private ItemStack item;
     private String command;
+    private String permission;
 
-    public CommandInteractionItem(ItemStack item, int slot, String command) {
+    public CommandInteractionItem(ItemStack item, int slot, String command, String permission) {
         this.item = item;
         this.slot = slot;
         this.command = command;
+        this.permission = permission;
     }
 
     @Override
@@ -29,6 +31,11 @@ public class CommandInteractionItem extends StaffItem implements IPlayerInteract
     @Override
     public ItemStack getItem() {
         return item;
+    }
+
+    @Override
+    public String getPermission() {
+        return permission;
     }
 
     @Override

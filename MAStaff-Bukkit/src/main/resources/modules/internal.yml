@@ -9,6 +9,7 @@
 StaffItems:
   RANDOM_PLAYER_TELEPORT:
     enabled: true
+    permission: 'mast.item.rtp'
     name: '&bRandom Teleport'
     material: 'ENDER_PEARL'
     slot: 0
@@ -17,6 +18,7 @@ StaffItems:
       - '&7to a random player.'
   FREEZE:
     enabled: true
+    permission: 'mast.item.freeze'
     name: '&bFreeze'
     material: 'BLAZE_ROD'
     slot: 1
@@ -25,6 +27,7 @@ StaffItems:
       - '&7the player you are looking at.'
   ENDER_CHEST:
     enabled: true
+    permission: 'mast.item.enderchest'
     name: '&bEnder Chest'
     material: 'ENDER_CHEST'
     slot: 3
@@ -33,6 +36,7 @@ StaffItems:
       - '&7the player you are looking at.'
   VANISH:
     enabled: true
+    permission: 'mast.item.vanish'
     name: '&bVanish'
     material: 'ENDER_EYE'
     slot: 4
@@ -41,6 +45,7 @@ StaffItems:
       - '&7the vanish.'
   CHEST:
     enabled: true
+    permission: 'mast.item.chest'
     name: '&bChest'
     material: 'CHEST'
     slot: 5
@@ -49,6 +54,7 @@ StaffItems:
       - '&7the player you are looking at.'
   THRU:
     enabled: true
+    permission: 'mast.item.thru'
     name: '&bTHRU'
     material: 'COMPASS'
     slot: 8

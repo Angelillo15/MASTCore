@@ -8,10 +8,12 @@ import org.bukkit.inventory.ItemStack;
 public class VanishItem extends StaffItem implements IExecutableItem {
     private ItemStack item;
     private int slot;
+    private String permission;
 
-    public VanishItem(ItemStack item, int slot) {
+    public VanishItem(ItemStack item, int slot, String permission) {
         this.item = item;
         this.slot = slot;
+        this.permission = permission;
     }
 
     @Override
@@ -22,6 +24,11 @@ public class VanishItem extends StaffItem implements IExecutableItem {
     @Override
     public ItemStack getItem() {
         return item;
+    }
+
+    @Override
+    public String getPermission() {
+        return permission;
     }
 
     @Override
