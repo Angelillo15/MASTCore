@@ -1,12 +1,16 @@
 package es.angelillo15.mast.bukkit;
 
+import es.angelillo15.glow.GlowAPI;
 import es.angelillo15.mast.api.ILogger;
 import es.angelillo15.mast.api.MAStaffInstance;
 import es.angelillo15.mast.api.database.DataProvider;
 import es.angelillo15.mast.bukkit.config.ConfigLoader;
+import es.angelillo15.mast.bukkit.loaders.ItemsLoader;
 import es.angelillo15.mast.bukkit.utils.Logger;
 import es.angelillo15.mast.bukkit.utils.TextUtils;
 import lombok.Getter;
+import lombok.SneakyThrows;
+import org.bukkit.Bukkit;
 import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.java.JavaPlugin;
 import es.angelillo15.mast.bukkit.data.PluginConnection;
@@ -17,6 +21,8 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 public class MAStaff extends JavaPlugin implements MAStaffInstance {
+    @Getter
+    static final int version = Integer.parseInt(Bukkit.getBukkitVersion().split("-")[0].split("\\.")[1]);
     @Getter
     private static MAStaff plugin;
     private boolean debug = false;
@@ -123,9 +129,19 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance {
         );
     }
 
+    @SneakyThrows
     @Override
     public void loadModules() {
+        ItemsLoader.load();
 
+        if(version > 9){
+            if(this.getServer().getPluginManager().getPlugin("Protocolib") != null){
+                new GlowAPI(this);
+            } else {
+                logger.warn(TextUtils.colorize("ProtocolLib not found!"));
+                logger.warn(TextUtils.colorize("The glow module will be disabled."));
+            }
+        }
     }
 
     @Override

@@ -10,6 +10,8 @@ repositories {
     maven("https://hub.spigotmc.org/nexus/content/repositories/snapshots/")
     maven("https://oss.sonatype.org/content/repositories/snapshots")
     maven("https://oss.sonatype.org/content/repositories/central")
+    maven("https://repo.dmulloy2.net/repository/public/")
+
 }
 
 dependencies {
@@ -19,6 +21,8 @@ dependencies {
     compileOnly("com.github.Carleslc.Simple-YAML:Simple-Yaml:1.8.3")
     compileOnly("com.github.Angelillo15:ConfigManager:1.4")
     compileOnly("com.zaxxer:HikariCP:5.0.1")
+    compileOnly("com.comphenix.protocol:ProtocolLib:4.8.0")
+    compileOnly("com.github.Nookure:GlowAPI:d991aebd15")
 }
 
 tasks.processResources {

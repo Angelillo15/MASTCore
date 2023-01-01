@@ -12,6 +12,8 @@ repositories {
     maven("https://hub.spigotmc.org/nexus/content/repositories/snapshots/")
     maven("https://oss.sonatype.org/content/repositories/snapshots")
     maven("https://oss.sonatype.org/content/repositories/central")
+    maven("https://repo.dmulloy2.net/repository/public/")
+
 }
 
 java {
@@ -23,6 +25,7 @@ tasks.shadowJar {
     relocate("es.angelillo15.configmanager", "es.angelillo15.mast.libs.config.manager")
     relocate("org.yaml.snakeyaml", "es.angelillo15.mast.libs.snakeyaml")
     relocate("org.simpleyaml", "es.angelillo15.mast.libs.simpleyaml")
+    relocate("es.angelillo15.glow", "es.angelillo15.mast.libs.glow")
 }
 
 dependencies {
@@ -34,6 +37,8 @@ dependencies {
     implementation("com.github.Carleslc.Simple-YAML:Simple-Yaml:1.8.3")
     implementation("com.github.Angelillo15:ConfigManager:1.4")
     implementation("com.zaxxer:HikariCP:5.0.1")
+    implementation("com.github.Nookure:GlowAPI:d991aebd15")
+
 }
 
 tasks.withType<JavaCompile> {

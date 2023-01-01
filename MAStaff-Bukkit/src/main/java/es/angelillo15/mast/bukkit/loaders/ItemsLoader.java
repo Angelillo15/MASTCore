@@ -3,10 +3,9 @@ package es.angelillo15.mast.bukkit.loaders;
 import es.angelillo15.mast.api.items.ItemTypes;
 import es.angelillo15.mast.api.managers.ItemManager;
 import es.angelillo15.mast.api.material.XMaterial;
+import es.angelillo15.mast.bukkit.MAStaff;
 import es.angelillo15.mast.bukkit.config.ConfigLoader;
-import es.angelillo15.mast.bukkit.items.ChestItem;
-import es.angelillo15.mast.bukkit.items.CommandItem;
-import es.angelillo15.mast.bukkit.items.EnderChestItem;
+import es.angelillo15.mast.bukkit.items.*;
 import es.angelillo15.mast.bukkit.utils.TextUtils;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -47,10 +46,10 @@ public class ItemsLoader {
 
             switch (ItemTypes.valueOf(s)){
                 case FREEZE:
-                    manager.addItem(new CommandItem(itemStack, slot, "freeze"));
+                    manager.addItem(new FreezeItem(itemStack, slot));
                     break;
                 case VANISH:
-                    manager.addItem(new CommandItem(itemStack, slot, "vanish"));
+                    manager.addItem(new VanishItem(itemStack, slot));
                     break;
                 case ENDER_CHEST:
                     manager.addItem(new EnderChestItem(itemStack, slot));
@@ -59,14 +58,16 @@ public class ItemsLoader {
                     manager.addItem(new ChestItem(itemStack, slot));
                     break;
                 case THRU:
-                    manager.addItem(new CommandItem(itemStack, slot, "thru"));
+                    manager.addItem(new ThruItem(itemStack, slot));
                     break;
                 case RANDOM_PLAYER_TELEPORT:
-                    manager.addItem(new CommandItem(itemStack, slot, "rtp"));
+                    manager.addItem(new RTPItem(itemStack, slot));
                     break;
                 default:
                     throw new TypeNotPresentException("Item type not found", null);
             }
         }
+
+        manager.getItems().forEach(item -> MAStaff.getPlugin().getPLogger().debug("Item loaded: " + item.getName()));
     }
 }
