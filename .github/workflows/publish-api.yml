@@ -22,7 +22,7 @@ jobs:
         username: admin
         password: ${{ secrets.NEXUS_PASSWORD }}
         format: maven2
-        repository: maven-public
+        repository: MAStaffAPI
         coordinates: groupId=es.angelillo15 artifactId=mast-api version=2.0.0
         assets: extension=jar
         filename: ./MAStaff-API/build/libs/MAStaff-API.jar
