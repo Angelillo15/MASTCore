@@ -45,7 +45,7 @@ jobs:
           rm -r javadocs/javadocs/mastaff/
           ls javadocs/javadocs/
         
-          cp -r MAStaff/MAStaff-API/build/docs/ javadocs/javadocs/mastaff/
+          cp -r MAStaff/MAStaff-API/build/docs/javadoc javadocs/javadocs/mastaff/
           ls javadocs/javadocs/mastaff
           cd javadocs
           git config --global user.email angelrizosrubios@gmail.com
