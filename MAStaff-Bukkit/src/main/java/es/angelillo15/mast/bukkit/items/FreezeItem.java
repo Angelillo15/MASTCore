@@ -3,10 +3,11 @@ package es.angelillo15.mast.bukkit.items;
 import es.angelillo15.mast.api.items.IExecutableItem;
 import es.angelillo15.mast.api.items.IPlayerInteractItem;
 import es.angelillo15.mast.api.items.StaffItem;
+import es.angelillo15.mast.bukkit.StaffPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-public class FreezeItem extends StaffItem implements IExecutableItem {
+public class FreezeItem extends StaffItem implements IPlayerInteractItem {
     private ItemStack item;
     private int slot;
     private String permission;
@@ -42,8 +43,9 @@ public class FreezeItem extends StaffItem implements IExecutableItem {
         player.getInventory().setItem(getSlot(), getItem());
     }
 
+
     @Override
-    public void click(Player player) {
+    public void interact(Player player, Player target) {
 
     }
 }

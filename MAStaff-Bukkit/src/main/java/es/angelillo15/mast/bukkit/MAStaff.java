@@ -8,7 +8,11 @@ import es.angelillo15.mast.api.database.DataProvider;
 import es.angelillo15.mast.bukkit.cmd.staff.StaffCMD;
 import es.angelillo15.mast.bukkit.config.ConfigLoader;
 import es.angelillo15.mast.bukkit.config.Messages;
+import es.angelillo15.mast.bukkit.listener.VanishListener;
+import es.angelillo15.mast.bukkit.listener.clickListeners.OnItemClick;
 import es.angelillo15.mast.bukkit.listener.OnJoin;
+import es.angelillo15.mast.bukkit.listener.staffmode.OnInventoryClick;
+import es.angelillo15.mast.bukkit.listener.staffmode.OnItemDrop;
 import es.angelillo15.mast.bukkit.loaders.ItemsLoader;
 import es.angelillo15.mast.bukkit.utils.Logger;
 import es.angelillo15.mast.api.TextUtils;
@@ -94,8 +98,11 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance {
     @Override
     public void registerListeners() {
         PluginManager pm = Bukkit.getPluginManager();
-
         pm.registerEvents(new OnJoin(), this);
+        pm.registerEvents(new OnItemClick(), this);
+        pm.registerEvents(new OnItemDrop(), this);
+        pm.registerEvents(new VanishListener(), this);
+        pm.registerEvents(new OnInventoryClick(), this);
     }
 
     @Override
@@ -154,7 +161,7 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance {
         ItemsLoader.load();
 
         if(version > 9){
-            if(this.getServer().getPluginManager().getPlugin("Protocolib") != null){
+            if(this.getServer().getPluginManager().getPlugin("ProtocolLib") != null){
                 new GlowAPI(this);
             } else {
                 logger.warn(TextUtils.colorize("ProtocolLib not found!"));

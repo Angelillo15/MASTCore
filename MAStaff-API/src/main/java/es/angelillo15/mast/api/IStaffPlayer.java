@@ -25,6 +25,15 @@ public interface IStaffPlayer {
      * @param staffMode enable or disable the staff mode
      */
     void setStaffMode(@NonNull boolean staffMode) throws AlreadyEnableException, AlreadyDisableException;
+    /**
+     * Toggle the vanish mode
+     */
+    void toggleVanish();
+
+    /**
+     * @return true if the player is vanished or false if not
+     */
+    boolean isVanished();
 
     /**
      * @return the player

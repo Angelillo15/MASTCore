@@ -2,6 +2,7 @@ package es.angelillo15.mast.bukkit.items;
 
 import es.angelillo15.mast.api.items.IExecutableItem;
 import es.angelillo15.mast.api.items.StaffItem;
+import es.angelillo15.mast.bukkit.utils.StaffUtils;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -43,6 +44,6 @@ public class RTPItem extends StaffItem implements IExecutableItem {
 
     @Override
     public void click(Player player) {
-
+        StaffUtils.playerRandomTeleport(player);
     }
 }

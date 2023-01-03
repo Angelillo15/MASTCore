@@ -1,9 +1,9 @@
 package es.angelillo15.mast.bukkit;
 
 import es.angelillo15.mast.api.IStaffPlayer;
-import es.angelillo15.mast.api.exceptions.AlreadyDisableException;
-import es.angelillo15.mast.api.exceptions.AlreadyEnableException;
+import es.angelillo15.mast.api.Permissions;
 import es.angelillo15.mast.api.items.StaffItem;
+import es.angelillo15.mast.api.managers.VanishedPlayers;
 import es.angelillo15.mast.bukkit.config.Messages;
 import es.angelillo15.mast.bukkit.loaders.ItemsLoader;
 import lombok.NonNull;
@@ -27,6 +27,7 @@ public class StaffPlayer implements IStaffPlayer {
     }
     private boolean staffMode;
     private Player player;
+    private boolean vanished;
     private ArrayList<StaffItem> items = new ArrayList<>();
 
     @SneakyThrows
@@ -37,7 +38,7 @@ public class StaffPlayer implements IStaffPlayer {
 
     @Override
     public boolean isStaffMode() {
-        return false;
+        return staffMode;
     }
 
     @Override
@@ -46,6 +47,38 @@ public class StaffPlayer implements IStaffPlayer {
         // if(!staffMode && !this.staffMode) throw new AlreadyDisableException("The staff mode is already disable");
         if(staffMode) disableStaffMode();
         else enableStaffMode();
+    }
+
+    @Override
+    public void toggleVanish() {
+        setVanish(!isVanished());
+    }
+
+    @Override
+    public boolean isVanished() {
+        return vanished;
+    }
+
+    public void setVanish(boolean vanish){
+        if(vanish) enableVanish();
+        else disableVanish();
+    }
+
+    public void enableVanish(){
+        VanishedPlayers.addPlayer(player);
+        vanished = true;
+        player.sendMessage(Messages.GET_VANISH_ENABLE_MESSAGE());
+        Bukkit.getOnlinePlayers().forEach(p -> {
+            if(!p.hasPermission(Permissions.STAFF_VANISH_SEE.getPermission()))
+                p.hidePlayer(MAStaff.getPlugin(), player);
+        });
+    }
+
+    public void disableVanish(){
+        VanishedPlayers.removePlayer(player);
+        vanished = false;
+        player.sendMessage(Messages.GET_VANISH_DISABLE_MESSAGE());
+        Bukkit.getOnlinePlayers().forEach(p -> p.showPlayer(MAStaff.getPlugin(), player));
     }
 
     public void disableStaffMode(){
@@ -74,6 +107,7 @@ public class StaffPlayer implements IStaffPlayer {
             ItemsLoader.getManager().getItems().forEach(item -> {
                 if(player.hasPermission(item.getPermission())) {
                     item.setItem(player);
+                    items.add(item);
                 }
             });
         }
@@ -95,7 +129,7 @@ public class StaffPlayer implements IStaffPlayer {
         playerInventoryConfig.set("inventory.content", player.getInventory().getContents());
         playerInventoryConfig.set("inventory.armor", player.getInventory().getArmorContents());
         playerInventoryConfig.save(playerInventoryFile);
-
+        playerInventoryConfig = YamlConfiguration.loadConfiguration(playerInventoryFile);
         clearInventory();
     }
 

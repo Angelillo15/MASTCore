@@ -1,7 +1,9 @@
 package es.angelillo15.mast.bukkit.items;
 
+import es.angelillo15.mast.api.IStaffPlayer;
 import es.angelillo15.mast.api.items.IExecutableItem;
 import es.angelillo15.mast.api.items.StaffItem;
+import es.angelillo15.mast.api.managers.StaffPlayersManagers;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -43,6 +45,7 @@ public class VanishItem extends StaffItem implements IExecutableItem {
 
     @Override
     public void click(Player player) {
-
+        IStaffPlayer staffPlayer = StaffPlayersManagers.getStaffPlayer(player);
+        staffPlayer.toggleVanish();
     }
 }
