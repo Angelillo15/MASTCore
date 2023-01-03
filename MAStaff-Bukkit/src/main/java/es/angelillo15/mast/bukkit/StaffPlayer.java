@@ -194,7 +194,7 @@ public class StaffPlayer implements IStaffPlayer {
 
     @Override
     public void setGlowing(boolean status) {
-        if (status)
+
     }
 
     public void enableGlowing() {
