@@ -4,11 +4,13 @@ import es.angelillo15.mast.api.exceptions.AlreadyDisableException;
 import es.angelillo15.mast.api.exceptions.AlreadyEnableException;
 import es.angelillo15.mast.api.items.StaffItem;
 import lombok.NonNull;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 
 public interface IStaffPlayer {
+
     /**
      * toggle the staff mode
      */
@@ -43,4 +45,20 @@ public interface IStaffPlayer {
      * Send plugin message to the bungee
      */
     public void sendPluginMessage();
+
+    /**
+     * Save inventory
+     */
+    public void saveInventory();
+
+    /**
+     * Clear inventory
+     */
+    public void clearInventory();
+
+    /**
+     * Restore inventory
+     */
+    public void restoreInventory();
+
 }

@@ -11,6 +11,7 @@ repositories {
     maven("https://oss.sonatype.org/content/repositories/snapshots")
     maven("https://oss.sonatype.org/content/repositories/central")
     maven("https://repo.dmulloy2.net/repository/public/")
+    maven("https://repo.extendedclip.com/content/repositories/placeholderapi/")
 
 }
 
@@ -23,6 +24,13 @@ dependencies {
     compileOnly("com.zaxxer:HikariCP:5.0.1")
     compileOnly("com.comphenix.protocol:ProtocolLib:4.8.0")
     compileOnly("com.github.Nookure:GlowAPI:d991aebd15")
+    compileOnly("com.github.hamza-cskn.obliviate-invs:core:4.1.10")
+    compileOnly("com.github.hamza-cskn.obliviate-invs:configurablegui:4.1.10")
+    compileOnly("com.github.hamza-cskn.obliviate-invs:advancedslot:4.1.10")
+    compileOnly("com.github.hamza-cskn.obliviate-invs:pagination:4.1.10")
+    compileOnly("net.md-5:bungeecord-chat:1.16-R0.4")
+    compileOnly("me.clip:placeholderapi:2.11.2")
+
 }
 
 tasks.processResources {

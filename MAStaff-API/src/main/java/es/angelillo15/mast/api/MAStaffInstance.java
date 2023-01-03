@@ -5,6 +5,8 @@ import org.bukkit.Bukkit;
 
 
 public interface MAStaffInstance {
+    public static final int version = Integer.parseInt(Bukkit.getBukkitVersion().split("-")[0].split("\\.")[1]);
+
     public static MAStaffInstance getInstance(){
         MAStaffInstance instance = (MAStaffInstance) Bukkit.getPluginManager().getPlugin("MAStaff");
         if(instance == null){
@@ -12,6 +14,11 @@ public interface MAStaffInstance {
         }
         return instance;
     }
+
+    public static boolean placeholderCheck() {
+        return Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null;
+    }
+
     public ILogger getPLogger();
     public boolean isDebug();
     public void drawLogo();

@@ -42,3 +42,11 @@ Freeze:
     - '&c█&6███&0█&6███&c█'
     - '&c█████████'
     - ''
+StaffList:
+  title: '&a&lSTAFF &8&l» &7Online Staff' # Title of the Staff List GUI.
+  staffLore:
+    - ""
+    - "&6&l» &7Name: &a%player_name%"
+    - "&6&l» &7Rank: &a%vault_prefix%"
+    - "&6&l» &7Vanish: &a%mast_vanish_status%"
+    - ""

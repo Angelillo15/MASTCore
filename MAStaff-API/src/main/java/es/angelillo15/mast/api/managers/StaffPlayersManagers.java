@@ -26,6 +26,13 @@ public class StaffPlayersManagers {
     }
 
     /**
+     * @param name The name of the staff player to remove
+     */
+    public static void removeStaffPlayer(@NonNull String name) {
+        staffPlayers.remove(name);
+    }
+
+    /**
      * @param player The player to get the staff player
      * @return The staff player
      */

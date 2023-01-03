@@ -1,6 +1,7 @@
 package es.angelillo15.mast.bukkit.config;
 
-import es.angelillo15.mast.bukkit.utils.TextUtils;
+import es.angelillo15.mast.api.TextUtils;
+import es.angelillo15.mast.bukkit.MAStaff;
 import org.simpleyaml.configuration.file.YamlFile;
 
 import java.util.ArrayList;
@@ -9,27 +10,27 @@ public class Messages {
     private static YamlFile messages = ConfigLoader.getMessages().getConfig();
 
     public static String GET_STAFF_MODE_ENABLE_MESSAGE() {
-        return TextUtils.parseMessage(messages.getString("StaffMode.toggledOn"));
+        return MAStaff.parseMessage(messages.getString("StaffMode.toggledOn"));
     }
 
     public static String GET_STAFF_MODE_DISABLE_MESSAGE() {
-        return TextUtils.parseMessage(messages.getString("StaffMode.toggledOff"));
+        return MAStaff.parseMessage(messages.getString("StaffMode.toggledOff"));
     }
 
     public static String GET_NO_PLAYER_ONLINE_MESSAGE() {
-        return TextUtils.parseMessage(messages.getString("General.noPlayerOnline"));
+        return MAStaff.parseMessage(messages.getString("General.noPlayerOnline"));
     }
 
     public static String GET_NO_PLAYER_FOUND_MESSAGE() {
-        return TextUtils.parseMessage(messages.getString("General.noPlayerFound"));
+        return MAStaff.parseMessage(messages.getString("General.noPlayerFound"));
     }
 
     public static String GET_STAFF_CHAT_FORMAT() {
-        return TextUtils.parseMessage(messages.getString("StaffChat.format"));
+        return MAStaff.parseMessage(messages.getString("StaffChat.format"));
     }
 
     public static String GET_RELOADED_MESSAGE() {
-        return TextUtils.parseMessage(messages.getString("Reloaded"));
+        return MAStaff.parseMessage(messages.getString("Reloaded"));
     }
 
     /**
@@ -38,50 +39,50 @@ public class Messages {
      */
 
     public static String GET_VANISH_JOIN_MESSAGE() {
-        return TextUtils.parseMessage(messages.getString("Vanish.joinMessage"));
+        return MAStaff.parseMessage(messages.getString("Vanish.joinMessage"));
     }
 
     public static String GET_VANISH_LEAVE_MESSAGE() {
-        return TextUtils.parseMessage(messages.getString("Vanish.leaveMessage"));
+        return MAStaff.parseMessage(messages.getString("Vanish.leaveMessage"));
     }
 
     public static String GET_STAFF_VANISH_JOIN_MESSAGE() {
-        return TextUtils.parseMessage(messages.getString("Vanish.staffJoinMessage"));
+        return MAStaff.parseMessage(messages.getString("Vanish.staffJoinMessage"));
     }
 
     public static String GET_STAFF_VANISH_LEAVE_MESSAGE() {
-        return TextUtils.parseMessage(messages.getString("Vanish.staffLeaveMessage"));
+        return MAStaff.parseMessage(messages.getString("Vanish.staffLeaveMessage"));
     }
 
     public static String GET_VANISH_ENABLE_MESSAGE() {
-        return TextUtils.parseMessage(messages.getString("Vanish.enable"));
+        return MAStaff.parseMessage(messages.getString("Vanish.enable"));
     }
 
     public static String GET_VANISH_DISABLE_MESSAGE() {
-        return TextUtils.parseMessage(messages.getString("Vanish.disable"));
+        return MAStaff.parseMessage(messages.getString("Vanish.disable"));
     }
 
     public static String GET_FREEZE_FROZEN_MESSAGE() {
-        return TextUtils.parseMessage(messages.getString("Freeze.frozen"));
+        return MAStaff.parseMessage(messages.getString("Freeze.frozen"));
     }
 
     public static String GET_FREEZE_UNFROZEN_MESSAGE() {
-        return TextUtils.parseMessage(messages.getString("Freeze.unfrozen"));
+        return MAStaff.parseMessage(messages.getString("Freeze.unfrozen"));
     }
 
 
     public static String GET_FREEZE_FROZEN_BY_MESSAGE() {
-        return TextUtils.parseMessage(messages.getString("Freeze.frozenByOther"));
+        return MAStaff.parseMessage(messages.getString("Freeze.frozenByOther"));
     }
 
     public static String GET_FREEZE_UNFROZEN_BY_MESSAGE() {
-        return TextUtils.parseMessage(messages.getString("Freeze.unfrozenBy"));
+        return MAStaff.parseMessage(messages.getString("Freeze.unfrozenBy"));
     }
 
     public static ArrayList<String> spamMessage() {
         ArrayList<String> spam = new ArrayList<String>();
         for (String s : messages.getStringList("Freeze.playerSpamMessage")) {
-            spam.add(TextUtils.parseMessage(s));
+            spam.add(MAStaff.parseMessage(s));
         }
         return spam;
     }
@@ -91,7 +92,7 @@ public class Messages {
      */
 
     public static String GET_STAFFCHAT_CORRECT_USE(){
-        return TextUtils.parseMessage(messages.getString("StaffChat.correctUse"));
+        return MAStaff.parseMessage(messages.getString("StaffChat.correctUse"));
     }
 
 
@@ -100,7 +101,14 @@ public class Messages {
      * General
      */
     public static String GET_NO_PERMISSION_MESSAGE() {
-        return TextUtils.parseMessage(messages.getString("NoPermission"));
+        return MAStaff.parseMessage(messages.getString("NoPermission"));
+    }
+
+    /*
+     * StaffList
+     */
+    public static String GET_STAFFLIST_TITLE() {
+        return MAStaff.parseMessage(messages.getString("StaffList.header"));
     }
 
     public static String PREFIX(){

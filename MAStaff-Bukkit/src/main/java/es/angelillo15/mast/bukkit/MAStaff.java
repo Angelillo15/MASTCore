@@ -5,9 +5,10 @@ import es.angelillo15.mast.api.ILogger;
 import es.angelillo15.mast.api.MAStaffInstance;
 import es.angelillo15.mast.api.database.DataProvider;
 import es.angelillo15.mast.bukkit.config.ConfigLoader;
+import es.angelillo15.mast.bukkit.config.Messages;
 import es.angelillo15.mast.bukkit.loaders.ItemsLoader;
 import es.angelillo15.mast.bukkit.utils.Logger;
-import es.angelillo15.mast.bukkit.utils.TextUtils;
+import es.angelillo15.mast.api.TextUtils;
 import lombok.Getter;
 import lombok.SneakyThrows;
 import org.bukkit.Bukkit;
@@ -31,6 +32,11 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance {
     private static PluginConnection pluginConnection;
     @Getter
     private static Connection connection;
+
+    public static String parseMessage(String messages){
+        return TextUtils.colorize(messages.replace("{prefix}", Messages.PREFIX())
+        );
+    }
 
     @Override
     public void onEnable() {
@@ -72,6 +78,10 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance {
     @Override
     public void registerCommands() {
 
+    }
+
+    public boolean placeholderCheck() {
+        return Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null;
     }
 
     @Override

@@ -6,7 +6,7 @@ import es.angelillo15.mast.api.material.XMaterial;
 import es.angelillo15.mast.bukkit.MAStaff;
 import es.angelillo15.mast.bukkit.config.ConfigLoader;
 import es.angelillo15.mast.bukkit.items.*;
-import es.angelillo15.mast.bukkit.utils.TextUtils;
+import es.angelillo15.mast.api.TextUtils;
 import lombok.Getter;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -36,11 +36,11 @@ public class ItemsLoader {
 
             ItemMeta meta = itemStack.getItemMeta();
 
-            meta.setDisplayName(TextUtils.parseMessage(items.getString("StaffItems." + s + ".name")));
+            meta.setDisplayName(TextUtils.colorize(items.getString("StaffItems." + s + ".name")));
 
             ArrayList<String> lore = new ArrayList<>();
             for (String l : items.getStringList("StaffItems." + s + ".lore")) {
-                lore.add(TextUtils.parseMessage(l));
+                lore.add(TextUtils.colorize(l));
             }
 
             meta.setLore(lore);

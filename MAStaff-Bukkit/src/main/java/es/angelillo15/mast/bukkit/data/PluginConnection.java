@@ -4,7 +4,7 @@ import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import es.angelillo15.mast.api.database.DataProvider;
 import es.angelillo15.mast.bukkit.MAStaff;
-import es.angelillo15.mast.bukkit.utils.TextUtils;
+import es.angelillo15.mast.api.TextUtils;
 import lombok.Getter;
 
 import java.nio.file.Path;
