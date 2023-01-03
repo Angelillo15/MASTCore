@@ -5,6 +5,7 @@ import es.angelillo15.mast.bukkit.MAStaff;
 import org.simpleyaml.configuration.file.YamlFile;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Messages {
     private static YamlFile messages = ConfigLoader.getMessages().getConfig();
@@ -108,7 +109,19 @@ public class Messages {
      * StaffList
      */
     public static String GET_STAFFLIST_TITLE() {
-        return MAStaff.parseMessage(messages.getString("StaffList.header"));
+        return MAStaff.parseMessage(messages.getString("StaffList.title"));
+    }
+
+    public static List<String> GET_STAFFLIST_LORE() {
+        return messages.getStringList("StaffList.staffLore");
+    }
+
+    public static String GET_STAFFLIST_PREVIUS(){
+        return MAStaff.parseMessage(messages.getString("StaffList.previusPage"));
+    }
+
+    public static String GET_STAFFLIST_NEXT(){
+        return MAStaff.parseMessage(messages.getString("StaffList.nextPage"));
     }
 
     public static String PREFIX(){

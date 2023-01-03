@@ -4,6 +4,7 @@ import es.angelillo15.mast.api.IStaffPlayer;
 import es.angelillo15.mast.api.exceptions.AlreadyDisableException;
 import es.angelillo15.mast.api.exceptions.AlreadyEnableException;
 import es.angelillo15.mast.api.items.StaffItem;
+import es.angelillo15.mast.bukkit.config.Messages;
 import es.angelillo15.mast.bukkit.loaders.ItemsLoader;
 import lombok.NonNull;
 import lombok.SneakyThrows;
@@ -27,9 +28,10 @@ public class StaffPlayer implements IStaffPlayer {
     private Player player;
     private ArrayList<StaffItem> items = new ArrayList<>();
 
+    @SneakyThrows
     @Override
     public void toggleStaffMode() {
-        staffMode = !staffMode;
+        setStaffMode(staffMode);
     }
 
     @Override
@@ -38,9 +40,9 @@ public class StaffPlayer implements IStaffPlayer {
     }
 
     @Override
-    public void setStaffMode(@NonNull boolean staffMode) throws AlreadyEnableException, AlreadyDisableException {
-        if(staffMode && this.staffMode) throw new AlreadyEnableException("The staff mode is already enable");
-        if(!staffMode && !this.staffMode) throw new AlreadyDisableException("The staff mode is already disable");
+    public void setStaffMode(@NonNull boolean staffMode){
+        // if(staffMode && this.staffMode) throw new AlreadyEnableException("The staff mode is already enable");
+        // if(!staffMode && !this.staffMode) throw new AlreadyDisableException("The staff mode is already disable");
         if(staffMode) disableStaffMode();
         else enableStaffMode();
     }
@@ -48,6 +50,7 @@ public class StaffPlayer implements IStaffPlayer {
     public void disableStaffMode(){
         clearInventory();
         restoreInventory();
+        player.sendMessage(Messages.GET_STAFF_MODE_DISABLE_MESSAGE());
         staffMode = false;
     }
 
@@ -55,6 +58,7 @@ public class StaffPlayer implements IStaffPlayer {
         saveInventory();
         clearInventory();
         setItems();
+        player.sendMessage(Messages.GET_STAFF_MODE_ENABLE_MESSAGE());
         staffMode = true;
     }
 

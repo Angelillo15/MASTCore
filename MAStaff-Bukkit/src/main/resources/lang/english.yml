@@ -48,5 +48,6 @@ StaffList:
     - ""
     - "&6&l» &7Name: &a%player_name%"
     - "&6&l» &7Rank: &a%vault_prefix%"
-    - "&6&l» &7Vanish: &a%mast_vanish_status%"
     - ""
+  previusPage: '&a&l« &7Previous Page' # Previous Page button name.
+  nextPage: '&a&l» &7Next Page' # Next Page button name.

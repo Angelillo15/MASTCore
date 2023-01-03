@@ -1,13 +1,17 @@
 package es.angelillo15.mast.api.managers;
 
 import es.angelillo15.mast.api.IStaffPlayer;
+import es.angelillo15.mast.api.MAStaffInstance;
+import es.angelillo15.mast.api.Permissions;
 import es.angelillo15.mast.api.exceptions.AlreadyInTheMapException;
+import lombok.Getter;
 import lombok.NonNull;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
 
 public class StaffPlayersManagers {
+    @Getter
     private static HashMap<String, IStaffPlayer> staffPlayers = new HashMap<>();
 
     /**
@@ -15,6 +19,7 @@ public class StaffPlayersManagers {
      */
     public static void addStaffPlayer(@NonNull IStaffPlayer staffPlayer) throws AlreadyInTheMapException {
         if(staffPlayers.containsKey(staffPlayer.getPlayer().getName())) throw new AlreadyInTheMapException("The player is already in the map");
+        MAStaffInstance.getInstance().getPLogger().debug("Added " + staffPlayer.getPlayer().getName() + " to the map");
         staffPlayers.put(staffPlayer.getPlayer().getName(), staffPlayer);
     }
 
@@ -37,7 +42,14 @@ public class StaffPlayersManagers {
      * @return The staff player
      */
     public static IStaffPlayer getStaffPlayer(@NonNull Player player) {
-        return staffPlayers.get(player.getName());
+        IStaffPlayer staffPlayer = staffPlayers.get(player.getName());
+        if (staffPlayer == null && player.isOnline() && player.hasPermission(Permissions.STAFF.getPermission())) {
+            staffPlayer = MAStaffInstance.getInstance().createStaffPlayer(player);
+            staffPlayers.put(player.getName(), staffPlayer);
+            staffPlayer = staffPlayers.get(player.getName());
+        }
+
+        return staffPlayer;
     }
 
     /**
@@ -63,4 +75,5 @@ public class StaffPlayersManagers {
     public static boolean isStaffPlayer(@NonNull String name) {
         return staffPlayers.containsKey(name);
     }
+
 }

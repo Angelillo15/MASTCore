@@ -32,7 +32,7 @@ public class ChestItem extends StaffItem implements IPlayerInteractItem {
 
     @Override
     public String getPermission() {
-        return null;
+        return this.permission;
     }
 
     @Override

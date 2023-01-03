@@ -2,17 +2,23 @@ package es.angelillo15.mast.bukkit;
 
 import es.angelillo15.glow.GlowAPI;
 import es.angelillo15.mast.api.ILogger;
+import es.angelillo15.mast.api.IStaffPlayer;
 import es.angelillo15.mast.api.MAStaffInstance;
 import es.angelillo15.mast.api.database.DataProvider;
+import es.angelillo15.mast.bukkit.cmd.staff.StaffCMD;
 import es.angelillo15.mast.bukkit.config.ConfigLoader;
 import es.angelillo15.mast.bukkit.config.Messages;
+import es.angelillo15.mast.bukkit.listener.OnJoin;
 import es.angelillo15.mast.bukkit.loaders.ItemsLoader;
 import es.angelillo15.mast.bukkit.utils.Logger;
 import es.angelillo15.mast.api.TextUtils;
 import lombok.Getter;
 import lombok.SneakyThrows;
+import mc.obliviate.inventory.InventoryAPI;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.bukkit.event.HandlerList;
+import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import es.angelillo15.mast.bukkit.data.PluginConnection;
 import org.simpleyaml.configuration.file.YamlFile;
@@ -26,7 +32,7 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance {
     static final int version = Integer.parseInt(Bukkit.getBukkitVersion().split("-")[0].split("\\.")[1]);
     @Getter
     private static MAStaff plugin;
-    private boolean debug = false;
+    private boolean debug = true;
     private static ILogger logger;
     @Getter
     private static PluginConnection pluginConnection;
@@ -56,6 +62,7 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance {
     @Override
     public void drawLogo() {
         logger = new Logger();
+        new InventoryAPI(this).init();
         logger.info(TextUtils.colorize("&a"));
         logger.info(TextUtils.colorize("&a ███▄ ▄███▓ ▄▄▄        ██████ ▄▄▄█████▓ ▄▄▄        █████▒ █████▒"));
         logger.info(TextUtils.colorize("&a ▓██▒▀█▀ ██▒▒████▄    ▒██    ▒ ▓  ██▒ ▓▒▒████▄    ▓██   ▒▓██   ▒"));
@@ -77,7 +84,7 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance {
 
     @Override
     public void registerCommands() {
-
+        getCommand("staff").setExecutor(new StaffCMD());
     }
 
     public boolean placeholderCheck() {
@@ -86,7 +93,9 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance {
 
     @Override
     public void registerListeners() {
+        PluginManager pm = Bukkit.getPluginManager();
 
+        pm.registerEvents(new OnJoin(), this);
     }
 
     @Override
@@ -182,5 +191,10 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance {
         loadDatabase();
         unregisterCommands();
         unregisterListeners();
+    }
+
+    @Override
+    public IStaffPlayer createStaffPlayer(Player player) {
+        return new StaffPlayer(player);
     }
 }

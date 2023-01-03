@@ -2,6 +2,7 @@ package es.angelillo15.mast.api;
 
 import es.angelillo15.mast.api.exceptions.PluginNotLoadedException;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 
 
 public interface MAStaffInstance {
@@ -31,5 +32,6 @@ public interface MAStaffInstance {
     public void unregisterListeners();
     public void unloadDatabase();
     public void reload();
+    public IStaffPlayer createStaffPlayer(Player player);
 
 }
