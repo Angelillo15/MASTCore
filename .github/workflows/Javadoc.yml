@@ -36,23 +36,16 @@ jobs:
       - name: Execute Gradle build
         run: |
           chmod +x gradlew
-          ./gradlew MAStaff-API:javadocJar
+          ./gradlew MAStaff-API:javadoc
       - name: clone JavaDoc
         run: |
-          cd ..
           ls
-          cd MAStaff-API
-          cd build
-          cd libs
-          unzip api-javadoc.jar -d ./javadoc
           cd ..
-          cd ..
-          cd ..
-          cd ..
-          ls
-          ls javadocs/javadocs/
+          git clone https://github.com/Angelillo15/javadoc
           rm -r javadocs/javadocs/mastaff/
-          cp -r MAStaff-API/build/libs/javadoc/ javadocs/javadocs/mastaff/
+          ls javadocs/javadocs/
+        
+          cp -r MAStaff/MAStaff-API/build/docs/ javadocs/javadocs/mastaff/
           ls javadocs/javadocs/mastaff
           cd javadocs
           git config --global user.email angelrizosrubios@gmail.com
