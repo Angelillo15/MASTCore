@@ -34,7 +34,7 @@ public class GlowLoader {
 
     private static void generateGlow(ChatColor... color){
         for(ChatColor c : color){
-            GlowManager.addGlow(c.toString(), generateGlow(c));
+            GlowManager.addGlow(c, generateGlow(c));
         }
     }
 }

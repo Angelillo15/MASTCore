@@ -8,6 +8,7 @@ import es.angelillo15.mast.api.IStaffPlayer;
 import es.angelillo15.mast.api.Permissions;
 import es.angelillo15.mast.api.database.sql.CommonQueries;
 import es.angelillo15.mast.api.items.StaffItem;
+import es.angelillo15.mast.api.managers.GlowManager;
 import es.angelillo15.mast.api.managers.VanishedPlayers;
 import es.angelillo15.mast.bukkit.config.Messages;
 import es.angelillo15.mast.bukkit.loaders.ItemsLoader;
@@ -194,10 +195,15 @@ public class StaffPlayer implements IStaffPlayer {
 
     @Override
     public void setGlowing(boolean status) {
-
+        if(status) enableGlowing();
+        else disableGlowing();
     }
 
     public void enableGlowing() {
+        GlowManager.getGlow(getGlowColor()).addHolders(player);
+    }
 
+    public void disableGlowing() {
+        GlowManager.getGlow(getGlowColor()).removeHolders(player);
     }
 }

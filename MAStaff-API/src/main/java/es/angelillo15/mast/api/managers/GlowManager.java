@@ -2,28 +2,29 @@ package es.angelillo15.mast.api.managers;
 
 import es.angelillo15.glow.data.glow.Glow;
 import lombok.Getter;
+import org.bukkit.ChatColor;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class GlowManager {
     @Getter
-    private static HashMap<String, Glow> glows = new HashMap<>();
+    private static HashMap<ChatColor, Glow> glows = new HashMap<>();
 
     /**
-     * @param name the name of the glow
+     * @param color the color
      * @param glow the glow
      */
-    public static void addGlow(String name, Glow glow){
-        glows.put(name, glow);
+    public static void addGlow(ChatColor color, Glow glow){
+        glows.put(color, glow);
     }
 
     /**
      * @param name the name of the glow to get
      * @return the glow
      */
-    public static Glow getGlow(String name){
-        return glows.get(name);
+    public static Glow getGlow(ChatColor color){
+        return glows.get(color);
     }
 
     /**
