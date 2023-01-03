@@ -108,7 +108,7 @@ public class StaffPlayer implements IStaffPlayer {
     public void restoreInventory() {
         ItemStack[] content = ((List<ItemStack>) playerInventoryConfig.get("inventory.armor")).toArray(new ItemStack[0]);
         player.getInventory().setArmorContents(content);
-        content = ((List<ItemStack>) playerInventoryConfig.get("inventory.content")).toArray(new ItemStack[0]);
+        content = ((List<ItemStack>) playerInventoryConfig.get("inventory.armor")).toArray(new ItemStack[0]);
         player.getInventory().setContents(content);
     }
 }
