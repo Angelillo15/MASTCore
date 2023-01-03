@@ -52,7 +52,7 @@ jobs:
           ls
           ls javadocs/javadocs/
           rm -r javadocs/javadocs/mastaff/
-          cp -r MAStaff-API/build/libs/javadoc/ javadocs/javadocs/ram-limit-restart/
+          cp -r MAStaff-API/build/libs/javadoc/ javadocs/javadocs/mastaff/
           ls javadocs/javadocs/mastaff
           cd javadocs
           git config --global user.email angelrizosrubios@gmail.com
