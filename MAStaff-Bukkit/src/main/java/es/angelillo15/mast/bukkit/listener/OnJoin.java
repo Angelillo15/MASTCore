@@ -15,7 +15,6 @@ public class OnJoin implements Listener {
         Player player = e.getPlayer();
 
         if(!(player.hasPermission("mast.staff"))){
-            MAStaff.getPlugin().getPLogger().debug("Not added " + player.getName() + " to the map");
             return;
         }
 
@@ -25,16 +24,5 @@ public class OnJoin implements Listener {
         } catch (AlreadyInTheMapException ex) {
             throw new RuntimeException(ex);
         }
-    }
-
-    @EventHandler
-    public void onPlayerQuit(PlayerJoinEvent e){
-        Player player = e.getPlayer();
-
-        if(!(player.hasPermission("mast.staff"))){
-            return;
-        }
-
-        StaffPlayersManagers.removeStaffPlayer(player.getName());
     }
 }

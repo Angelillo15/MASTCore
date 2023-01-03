@@ -1,7 +1,10 @@
 package es.angelillo15.mast.api.database.sql;
 
+import es.angelillo15.mast.api.MAStaffInstance;
 import lombok.Getter;
 import lombok.Setter;
+import org.bukkit.Bukkit;
+import org.bukkit.plugin.Plugin;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -88,6 +91,12 @@ public class CommonQueries {
         } catch (SQLException e) {
             System.out.println(e);
         }
+    }
+
+    public static void updateAsync(UUID uuid, int state) {
+        Bukkit.getScheduler().runTaskAsynchronously((Plugin) MAStaffInstance.getInstance(), () -> {
+            changeData(uuid, state);
+        });
     }
 
 }

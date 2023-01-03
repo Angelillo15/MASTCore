@@ -1,0 +1,4 @@
+name: MAStaff
+version: '$version'
+main: es.angelillo15.mast.bungee.MASTBungee
+author: Angelillo15

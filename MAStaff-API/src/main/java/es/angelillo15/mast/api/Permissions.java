@@ -6,6 +6,7 @@ public enum Permissions {
     STAFF_STAFFCHAT("mast.staffchat"),
     STAFF_VANISH_SEE("mast.vanish.see"),
     STAFF_BUILD("mast.build"),
+    STAFF_LIST("mast.staff.stafflist"),
     STAFF_FREEZE("mast.freeze"),
     STAFF_FREEZE_BYPASS("mast.freeze.bypass"),
     STAFF_ANNOUCER_JOIN("mast.staff.join"),

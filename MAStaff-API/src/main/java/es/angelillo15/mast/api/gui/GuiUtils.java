@@ -15,14 +15,15 @@ public class GuiUtils {
      * @param player The player to get the head of
      * @return The head of the player
      */
+    @SuppressWarnings("deprecation")
     public static ItemStack getPlayerHead(Player player) {
-        ItemStack item = new ItemStack(XMaterial.PLAYER_HEAD.parseMaterial());
+        ItemStack item = new ItemStack(XMaterial.PLAYER_HEAD.parseMaterial(), 1, (short) 3);
 
         SkullMeta meta = (SkullMeta) item.getItemMeta();
 
         meta.setDisplayName(player.getDisplayName());
 
-        meta.setOwningPlayer(player);
+        meta.setOwner(player.getName());
 
         item.setItemMeta(meta);
 

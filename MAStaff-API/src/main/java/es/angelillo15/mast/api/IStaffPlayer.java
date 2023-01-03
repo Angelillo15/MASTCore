@@ -4,7 +4,7 @@ import es.angelillo15.mast.api.exceptions.AlreadyDisableException;
 import es.angelillo15.mast.api.exceptions.AlreadyEnableException;
 import es.angelillo15.mast.api.items.StaffItem;
 import lombok.NonNull;
-import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
@@ -69,5 +69,17 @@ public interface IStaffPlayer {
      * Restore inventory
      */
     public void restoreInventory();
+
+    /**
+     * Exists data
+     * @return true if exists or false if not
+     */
+    public boolean existsData();
+
+    /**
+     * Change gamemode
+     * @param gamemode gamemode to change
+     */
+    public void changeGamemode(GameMode gamemode);
 
 }

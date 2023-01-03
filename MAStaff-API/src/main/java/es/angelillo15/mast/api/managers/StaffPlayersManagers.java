@@ -19,7 +19,6 @@ public class StaffPlayersManagers {
      */
     public static void addStaffPlayer(@NonNull IStaffPlayer staffPlayer) throws AlreadyInTheMapException {
         if(staffPlayers.containsKey(staffPlayer.getPlayer().getName())) throw new AlreadyInTheMapException("The player is already in the map");
-        MAStaffInstance.getInstance().getPLogger().debug("Added " + staffPlayer.getPlayer().getName() + " to the map");
         staffPlayers.put(staffPlayer.getPlayer().getName(), staffPlayer);
     }
 

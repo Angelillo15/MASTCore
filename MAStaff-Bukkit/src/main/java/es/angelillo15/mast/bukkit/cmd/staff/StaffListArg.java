@@ -1,31 +1,35 @@
 package es.angelillo15.mast.bukkit.cmd.staff;
 
+import es.angelillo15.mast.api.Permissions;
 import es.angelillo15.mast.api.cmd.SubCommand;
+import es.angelillo15.mast.bukkit.gui.StaffListGUI;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 public class StaffListArg extends SubCommand {
     @Override
     public String getName() {
-        return null;
+        return "stafflist";
     }
 
     @Override
     public String getDescription() {
-        return null;
+        return "Shows the staff list";
     }
 
     @Override
     public String getSyntax() {
-        return null;
+        return "/staff stafflist";
     }
 
     @Override
     public String getPermission() {
-        return null;
+        return Permissions.STAFF_LIST.getPermission();
     }
 
     @Override
     public void execute(CommandSender sender, String[] args) {
-
+        if(!(sender instanceof Player)) return;
+        new StaffListGUI((Player) sender).open();
     }
 }

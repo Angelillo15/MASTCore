@@ -31,19 +31,15 @@ public class PluginConnection {
         config.setJdbcUrl("jdbc:mysql://" + host + ":" + port + "/" + database + "?autoReconnect=true&useUnicode=yes");
         config.setUsername(user);
         config.setPassword(password);
-        config.setMaximumPoolSize(10);
-        config.setConnectionTimeout(5000);
-        config.setLeakDetectionThreshold(5000);
-        config.addDataSourceProperty("cachePrepStmts", "true");
-        config.addDataSourceProperty("prepStmtCacheSize", "250");
-        config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");
+        config.addDataSourceProperty( "cachePrepStmts" , "true" );
+        config.addDataSourceProperty( "prepStmtCacheSize" , "250" );
+        config.addDataSourceProperty( "prepStmtCacheSqlLimit" , "2048" );
+        dataSource = new HikariDataSource(config);
         try {
             connection = dataSource.getConnection();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        dataSource = new HikariDataSource(config);
-
         CommonQueries.setConnection(connection);
         queries = new MySQLQueries();
     }

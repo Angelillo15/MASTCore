@@ -10,6 +10,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 
 public class VanishListener implements Listener {
     @EventHandler
+    @SuppressWarnings("deprecation")
     public void onJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
 
@@ -18,7 +19,7 @@ public class VanishListener implements Listener {
         }
 
         VanishedPlayers.getVanishedPlayers().forEach(vanishedPlayer -> {
-            player.hidePlayer( MAStaff.getPlugin(), vanishedPlayer);
+            player.hidePlayer(vanishedPlayer);
         });
     }
 

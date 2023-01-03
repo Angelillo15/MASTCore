@@ -14,6 +14,7 @@ import es.angelillo15.mast.bukkit.listener.OnJoin;
 import es.angelillo15.mast.bukkit.listener.clickListeners.OnItemClickInteract;
 import es.angelillo15.mast.bukkit.listener.staffmode.OnInventoryClick;
 import es.angelillo15.mast.bukkit.listener.staffmode.OnItemDrop;
+import es.angelillo15.mast.bukkit.listener.staffmode.OnJoinLeave;
 import es.angelillo15.mast.bukkit.loaders.ItemsLoader;
 import es.angelillo15.mast.bukkit.utils.Logger;
 import es.angelillo15.mast.api.TextUtils;
@@ -105,6 +106,10 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance {
         pm.registerEvents(new VanishListener(), this);
         pm.registerEvents(new OnInventoryClick(), this);
         pm.registerEvents(new OnItemClickInteract(), this);
+        pm.registerEvents(new OnJoinLeave(), this);
+        pm.registerEvents(new OnItemDrop(), this);
+        this.getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
+
     }
 
     @Override
@@ -120,7 +125,7 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance {
                             config.getString("Database.host"),
                             config.getInt("Database.port"),
                             config.getString("Database.database"),
-                            config.getString("Database.username"),
+                            config.getString("Database.user"),
                             config.getString("Database.password")
                     );
                     break;
@@ -150,6 +155,7 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance {
             } catch (Exception e1) {
                 e1.printStackTrace();
             }
+            throw new RuntimeException(e);
         }
         PluginConnection.getQueries().createTables();
 

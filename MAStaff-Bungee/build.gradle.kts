@@ -2,8 +2,8 @@ plugins {
     id("java")
 }
 
-group = "org.example"
-version = "unspecified"
+group = "es.angelillo15"
+version = "2.0.0"
 
 repositories {
     mavenCentral()
@@ -16,4 +16,10 @@ dependencies {
     compileOnly("org.yaml:snakeyaml:1.33")
     compileOnly("com.github.Carleslc.Simple-YAML:Simple-Yaml:1.8.3")
     compileOnly("com.github.Angelillo15:ConfigManager:1.4")
+}
+
+tasks.processResources {
+    filesMatching("bungee.yml") {
+        expand("version" to (parent?.version ?: project.version))
+    }
 }

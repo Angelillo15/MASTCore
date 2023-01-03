@@ -1,7 +1,10 @@
 package es.angelillo15.mast.bukkit;
 
+import com.google.common.io.ByteArrayDataOutput;
+import com.google.common.io.ByteStreams;
 import es.angelillo15.mast.api.IStaffPlayer;
 import es.angelillo15.mast.api.Permissions;
+import es.angelillo15.mast.api.database.sql.CommonQueries;
 import es.angelillo15.mast.api.items.StaffItem;
 import es.angelillo15.mast.api.managers.VanishedPlayers;
 import es.angelillo15.mast.bukkit.config.Messages;
@@ -9,11 +12,13 @@ import es.angelillo15.mast.bukkit.loaders.ItemsLoader;
 import lombok.NonNull;
 import lombok.SneakyThrows;
 import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,6 +41,7 @@ public class StaffPlayer implements IStaffPlayer {
         setStaffMode(staffMode);
     }
 
+
     @Override
     public boolean isStaffMode() {
         return staffMode;
@@ -43,10 +49,9 @@ public class StaffPlayer implements IStaffPlayer {
 
     @Override
     public void setStaffMode(@NonNull boolean staffMode){
-        // if(staffMode && this.staffMode) throw new AlreadyEnableException("The staff mode is already enable");
-        // if(!staffMode && !this.staffMode) throw new AlreadyDisableException("The staff mode is already disable");
         if(staffMode) disableStaffMode();
         else enableStaffMode();
+        sendPluginMessage();
     }
 
     @Override
@@ -70,30 +75,37 @@ public class StaffPlayer implements IStaffPlayer {
         player.sendMessage(Messages.GET_VANISH_ENABLE_MESSAGE());
         Bukkit.getOnlinePlayers().forEach(p -> {
             if(!p.hasPermission(Permissions.STAFF_VANISH_SEE.getPermission()))
-                p.hidePlayer(MAStaff.getPlugin(), player);
+                p.hidePlayer(player);
         });
+
     }
 
     public void disableVanish(){
         VanishedPlayers.removePlayer(player);
         vanished = false;
         player.sendMessage(Messages.GET_VANISH_DISABLE_MESSAGE());
-        Bukkit.getOnlinePlayers().forEach(p -> p.showPlayer(MAStaff.getPlugin(), player));
+        Bukkit.getOnlinePlayers().forEach(p -> p.showPlayer(player));
     }
 
     public void disableStaffMode(){
-        clearInventory();
-        restoreInventory();
         player.sendMessage(Messages.GET_STAFF_MODE_DISABLE_MESSAGE());
+        clearInventory();
+        CommonQueries.updateAsync(player.getUniqueId(), 0);
         staffMode = false;
+        restoreInventory();
+        disableVanish();
+        changeGamemode(GameMode.SURVIVAL);
     }
 
     public void enableStaffMode(){
+        player.sendMessage(Messages.GET_STAFF_MODE_ENABLE_MESSAGE());
         saveInventory();
+        enableVanish();
         clearInventory();
         setItems();
-        player.sendMessage(Messages.GET_STAFF_MODE_ENABLE_MESSAGE());
+        CommonQueries.updateAsync(player.getUniqueId(), 1);
         staffMode = true;
+        changeGamemode(GameMode.CREATIVE);
     }
 
     @Override
@@ -110,7 +122,12 @@ public class StaffPlayer implements IStaffPlayer {
                     items.add(item);
                 }
             });
+            return;
         }
+
+        items.forEach(item -> {
+            item.setItem(player);
+        });
     }
 
     @Override
@@ -120,17 +137,21 @@ public class StaffPlayer implements IStaffPlayer {
 
     @Override
     public void sendPluginMessage() {
+        ByteArrayDataOutput out = ByteStreams.newDataOutput();
+        out.writeUTF("mast");
+        out.writeUTF(player.getName());
+        out.writeUTF(String.valueOf(isStaffMode()));
 
+        player.sendPluginMessage(MAStaff.getPlugin(), "BungeeCord", out.toByteArray());
     }
 
     @SneakyThrows
     @Override
     public void saveInventory() {
+        playerInventoryConfig.set("inventory", null);
         playerInventoryConfig.set("inventory.content", player.getInventory().getContents());
         playerInventoryConfig.set("inventory.armor", player.getInventory().getArmorContents());
         playerInventoryConfig.save(playerInventoryFile);
-        playerInventoryConfig = YamlConfiguration.loadConfiguration(playerInventoryFile);
-        clearInventory();
     }
 
     @Override
@@ -141,9 +162,20 @@ public class StaffPlayer implements IStaffPlayer {
 
     @Override
     public void restoreInventory() {
+        playerInventoryConfig = YamlConfiguration.loadConfiguration(playerInventoryFile);
         ItemStack[] content = ((List<ItemStack>) playerInventoryConfig.get("inventory.armor")).toArray(new ItemStack[0]);
         player.getInventory().setArmorContents(content);
-        content = ((List<ItemStack>) playerInventoryConfig.get("inventory.armor")).toArray(new ItemStack[0]);
+        content = ((List<ItemStack>) playerInventoryConfig.get("inventory.content")).toArray(new ItemStack[0]);
         player.getInventory().setContents(content);
+    }
+
+    @Override
+    public boolean existsData() {
+        return playerInventoryFile.exists();
+    }
+
+    @Override
+    public void changeGamemode(GameMode gamemode) {
+        player.setGameMode(gamemode);
     }
 }

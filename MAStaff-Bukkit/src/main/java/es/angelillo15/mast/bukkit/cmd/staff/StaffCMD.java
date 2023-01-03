@@ -4,6 +4,7 @@ import es.angelillo15.mast.api.IStaffPlayer;
 import es.angelillo15.mast.api.cmd.SubCommand;
 import es.angelillo15.mast.api.TextUtils;
 import es.angelillo15.mast.api.managers.StaffPlayersManagers;
+import es.angelillo15.mast.bukkit.config.Messages;
 import es.angelillo15.mast.bukkit.gui.StaffListGUI;
 import lombok.Getter;
 import org.bukkit.command.Command;
@@ -19,16 +20,32 @@ public class StaffCMD implements CommandExecutor {
 
     public StaffCMD(){
         subCommands.add(new StaffListArg());
+        subCommands.add(new StaffHelpArg());
     }
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if(!(sender instanceof Player)) return true;
+        if(args.length == 0){
+            Player player = (Player) sender;
+            IStaffPlayer staffPlayer = StaffPlayersManagers.getStaffPlayer(player);
 
-        Player player = (Player) sender;
-        IStaffPlayer staffPlayer = StaffPlayersManagers.getStaffPlayer(player);
+            staffPlayer.toggleStaffMode();
+            return true;
+        }
 
-        staffPlayer.toggleStaffMode();
+        for (SubCommand subCommand : subCommands) {
+            if(args[0].equalsIgnoreCase(subCommand.getName())){
+                if(!sender.hasPermission(subCommand.getPermission())){
+                    sender.sendMessage(TextUtils.colorize(Messages.GET_NO_PERMISSION_MESSAGE()));
+                    return true;
+                }
+                subCommand.execute(sender, args);
+                return true;
+            } else {
+                sendHelp(sender);
+            }
+        }
 
         return true;
     }
