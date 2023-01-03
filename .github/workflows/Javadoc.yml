@@ -56,6 +56,6 @@ jobs:
         uses: ad-m/github-push-action@master
         with:
           github_token: ${{ secrets.TOKEN }}
-          branch: ${{ github.ref }}
+          branch: master
           directory: /home/runner/work/MAStaff/javadocs
           repository: Angelillo15/javadocs
