@@ -41,7 +41,7 @@ jobs:
         run: |
           ls
           cd ..
-          git clone https://github.com/Angelillo15/javadoc
+          git clone https://github.com/Angelillo15/javadocs.git
           rm -r javadocs/javadocs/mastaff/
           ls javadocs/javadocs/
         
