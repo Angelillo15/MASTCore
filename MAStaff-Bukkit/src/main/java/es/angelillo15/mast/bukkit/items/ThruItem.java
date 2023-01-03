@@ -2,6 +2,7 @@ package es.angelillo15.mast.bukkit.items;
 
 import es.angelillo15.mast.api.items.IExecutableLocationItem;
 import es.angelillo15.mast.api.items.StaffItem;
+import es.angelillo15.mast.bukkit.utils.StaffUtils;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -44,6 +45,6 @@ public class ThruItem extends StaffItem implements IExecutableLocationItem {
 
     @Override
     public void click(Player player, Location location) {
-
+        StaffUtils.passThrough(player, location);
     }
 }

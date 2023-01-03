@@ -3,6 +3,9 @@ package es.angelillo15.mast.bukkit.data;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import es.angelillo15.mast.api.database.DataProvider;
+import es.angelillo15.mast.api.database.sql.CommonQueries;
+import es.angelillo15.mast.api.database.sql.MySQLQueries;
+import es.angelillo15.mast.api.database.sql.SQLiteQueries;
 import es.angelillo15.mast.bukkit.MAStaff;
 import es.angelillo15.mast.api.TextUtils;
 import lombok.Getter;
@@ -17,6 +20,8 @@ public class PluginConnection {
     private static Connection connection;
     @Getter
     private static DataProvider dataProvider;
+    @Getter
+    private static CommonQueries queries;
     private static HikariConfig config;
     private static HikariDataSource dataSource;
 
@@ -39,6 +44,8 @@ public class PluginConnection {
         }
         dataSource = new HikariDataSource(config);
 
+        CommonQueries.setConnection(connection);
+        queries = new MySQLQueries();
     }
 
     public PluginConnection(Path pluginPath){
@@ -57,6 +64,9 @@ public class PluginConnection {
             String dataPath = pluginPath + "/database.db";
             String url = "jdbc:sqlite:" + dataPath;
             connection = DriverManager.getConnection(url);
+
+            CommonQueries.setConnection(connection);
+            queries = new SQLiteQueries();
         } catch (SQLException e) {
             MAStaff.getPlugin().getPLogger().error("An error ocurred while trying to connect to the SQLite database: " + e.getMessage());
         }

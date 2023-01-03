@@ -11,6 +11,7 @@ import es.angelillo15.mast.bukkit.config.Messages;
 import es.angelillo15.mast.bukkit.listener.VanishListener;
 import es.angelillo15.mast.bukkit.listener.clickListeners.OnItemClick;
 import es.angelillo15.mast.bukkit.listener.OnJoin;
+import es.angelillo15.mast.bukkit.listener.clickListeners.OnItemClickInteract;
 import es.angelillo15.mast.bukkit.listener.staffmode.OnInventoryClick;
 import es.angelillo15.mast.bukkit.listener.staffmode.OnItemDrop;
 import es.angelillo15.mast.bukkit.loaders.ItemsLoader;
@@ -103,6 +104,7 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance {
         pm.registerEvents(new OnItemDrop(), this);
         pm.registerEvents(new VanishListener(), this);
         pm.registerEvents(new OnInventoryClick(), this);
+        pm.registerEvents(new OnItemClickInteract(), this);
     }
 
     @Override
@@ -149,6 +151,7 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance {
                 e1.printStackTrace();
             }
         }
+        PluginConnection.getQueries().createTables();
 
         logger.info(TextUtils.colorize("&aConnected to the {type} database successfully.")
                 .replace("{type}", PluginConnection.getDataProvider().name())

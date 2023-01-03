@@ -2,7 +2,10 @@ package es.angelillo15.mast.bukkit.utils;
 
 import es.angelillo15.mast.bukkit.config.Messages;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.util.Vector;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -22,4 +25,16 @@ public class StaffUtils {
         final Random random = new Random();
         player.teleport(players.get(random.nextInt(players.size())).getLocation());
     }
+
+    public static boolean passThrough(Player player, Location clickedLocation) {
+        Vector direction = player.getLocation().getDirection().normalize();
+        int distance = 0;
+        do {
+            clickedLocation.add(direction);
+            distance++;
+        } while (clickedLocation.getBlock().getType().equals(Material.AIR) && distance < 6);
+        player.teleport(clickedLocation);
+        return true;
+    }
 }
+

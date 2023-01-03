@@ -22,12 +22,14 @@ public class OnItemClick implements Listener {
 
         if(!player.hasPermission(Permissions.STAFF.getPermission())){
             MAStaff.getPlugin().getPLogger().debug("Player " + player.getName() + " has no permission to use staff items.");
+            event.setCancelled(false);
             return;
         }
 
         IStaffPlayer staffPlayer = StaffPlayersManagers.getStaffPlayer(player);
 
         if(!staffPlayer.isStaffMode()){
+            event.setCancelled(false);
             return;
         }
 
@@ -51,6 +53,8 @@ public class OnItemClick implements Listener {
                 }
 
                 if(item instanceof IExecutableLocationItem){
+                    if(event.getClickedBlock() == null) return;
+
                     MAStaff.getPlugin().getPLogger().debug("Executing item " +
                             item.getItem().getItemMeta().getDisplayName() +
                             " for player " + player.getName()
