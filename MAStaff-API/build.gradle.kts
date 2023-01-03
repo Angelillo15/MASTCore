@@ -26,4 +26,5 @@ dependencies {
     compileOnly("org.spigotmc:spigot-api:1.13-R0.1-SNAPSHOT")
     compileOnly("me.clip:placeholderapi:2.11.2")
     compileOnly("net.md-5:bungeecord-chat:1.16-R0.4")
+    compileOnly("com.github.Nookure:GlowAPI:d991aebd15")
 }

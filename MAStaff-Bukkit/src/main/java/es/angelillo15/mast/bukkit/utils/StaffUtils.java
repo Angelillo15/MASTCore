@@ -1,5 +1,6 @@
 package es.angelillo15.mast.bukkit.utils;
 
+import es.angelillo15.mast.bukkit.MAStaff;
 import es.angelillo15.mast.bukkit.config.Messages;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -35,6 +36,28 @@ public class StaffUtils {
         } while (clickedLocation.getBlock().getType().equals(Material.AIR) && distance < 6);
         player.teleport(clickedLocation);
         return true;
+    }
+
+    public static void asyncStaffBroadcastMessage(String message) {
+        Bukkit.getScheduler().runTaskAsynchronously(MAStaff.getPlugin(), () -> {
+            Bukkit.getOnlinePlayers().forEach(p -> {
+                if (p.hasPermission("mast.staff")) {
+                    p.sendMessage(message);
+                }
+            });
+            MAStaff.getPlugin().getPLogger().info(message);
+        });
+    }
+
+    public static void asyncStaffChatMessage(String message) {
+        Bukkit.getScheduler().runTaskAsynchronously(MAStaff.getPlugin(), () -> {
+            Bukkit.getOnlinePlayers().forEach(p -> {
+                if (p.hasPermission("mast.staffchat")) {
+                    p.sendMessage(message);
+                }
+            });
+            MAStaff.getPlugin().getPLogger().info(message);
+        });
     }
 }
 

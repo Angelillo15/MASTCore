@@ -4,6 +4,7 @@ import es.angelillo15.mast.api.exceptions.AlreadyDisableException;
 import es.angelillo15.mast.api.exceptions.AlreadyEnableException;
 import es.angelillo15.mast.api.items.StaffItem;
 import lombok.NonNull;
+import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 
@@ -82,4 +83,21 @@ public interface IStaffPlayer {
      */
     public void changeGamemode(GameMode gamemode);
 
+    /**
+     * Set a glow color
+     * @param color color to set
+     */
+    public void setGlowColor(ChatColor color);
+
+    /**
+     * Get the glow color
+     * @return the glow color
+     */
+    public ChatColor getGlowColor();
+
+    /**
+     * enable / disable glow
+     * @param status status to set
+     */
+    public void setGlowing(boolean status);
 }

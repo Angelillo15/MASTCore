@@ -2,6 +2,8 @@ package es.angelillo15.mast.bukkit;
 
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
+import es.angelillo15.glow.GlowAPI;
+import es.angelillo15.glow.data.glow.Glow;
 import es.angelillo15.mast.api.IStaffPlayer;
 import es.angelillo15.mast.api.Permissions;
 import es.angelillo15.mast.api.database.sql.CommonQueries;
@@ -12,19 +14,20 @@ import es.angelillo15.mast.bukkit.loaders.ItemsLoader;
 import lombok.NonNull;
 import lombok.SneakyThrows;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class StaffPlayer implements IStaffPlayer {
     private File playerInventoryFile;
     private FileConfiguration playerInventoryConfig;
+    private ChatColor glowColor;
     public StaffPlayer(Player player){
         this.player = player;
         playerInventoryFile = new File(MAStaff.getPlugin().getDataFolder().getAbsoluteFile() + "/data/inventories/" + player.getUniqueId() + ".yml");
@@ -177,5 +180,24 @@ public class StaffPlayer implements IStaffPlayer {
     @Override
     public void changeGamemode(GameMode gamemode) {
         player.setGameMode(gamemode);
+    }
+
+    @Override
+    public void setGlowColor(ChatColor color) {
+        this.glowColor = color;
+    }
+
+    @Override
+    public ChatColor getGlowColor() {
+        return this.glowColor;
+    }
+
+    @Override
+    public void setGlowing(boolean status) {
+        if (status)
+    }
+
+    public void enableGlowing() {
+
     }
 }

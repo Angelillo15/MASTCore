@@ -5,9 +5,12 @@ import es.angelillo15.mast.api.ILogger;
 import es.angelillo15.mast.api.IStaffPlayer;
 import es.angelillo15.mast.api.MAStaffInstance;
 import es.angelillo15.mast.api.database.DataProvider;
+import es.angelillo15.mast.api.event.FreezeMessageEvent;
+import es.angelillo15.mast.bukkit.cmd.FreezeCMD;
 import es.angelillo15.mast.bukkit.cmd.staff.StaffCMD;
 import es.angelillo15.mast.bukkit.config.ConfigLoader;
 import es.angelillo15.mast.bukkit.config.Messages;
+import es.angelillo15.mast.bukkit.listener.FreezeListener;
 import es.angelillo15.mast.bukkit.listener.VanishListener;
 import es.angelillo15.mast.bukkit.listener.clickListeners.OnItemClick;
 import es.angelillo15.mast.bukkit.listener.OnJoin;
@@ -15,7 +18,9 @@ import es.angelillo15.mast.bukkit.listener.clickListeners.OnItemClickInteract;
 import es.angelillo15.mast.bukkit.listener.staffmode.OnInventoryClick;
 import es.angelillo15.mast.bukkit.listener.staffmode.OnItemDrop;
 import es.angelillo15.mast.bukkit.listener.staffmode.OnJoinLeave;
+import es.angelillo15.mast.bukkit.loaders.GlowLoader;
 import es.angelillo15.mast.bukkit.loaders.ItemsLoader;
+import es.angelillo15.mast.bukkit.utils.FreezeUtils;
 import es.angelillo15.mast.bukkit.utils.Logger;
 import es.angelillo15.mast.api.TextUtils;
 import lombok.Getter;
@@ -91,6 +96,7 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance {
     @Override
     public void registerCommands() {
         getCommand("staff").setExecutor(new StaffCMD());
+        getCommand("freeze").setExecutor(new FreezeCMD());
     }
 
     public boolean placeholderCheck() {
@@ -108,6 +114,8 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance {
         pm.registerEvents(new OnItemClickInteract(), this);
         pm.registerEvents(new OnJoinLeave(), this);
         pm.registerEvents(new OnItemDrop(), this);
+        pm.registerEvents(new FreezeListener(), this);
+        FreezeUtils.setupMessageSender();
         this.getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
 
     }
@@ -172,6 +180,7 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance {
         if(version > 9){
             if(this.getServer().getPluginManager().getPlugin("ProtocolLib") != null){
                 new GlowAPI(this);
+                GlowLoader.loadGlow();
             } else {
                 logger.warn(TextUtils.colorize("ProtocolLib not found!"));
                 logger.warn(TextUtils.colorize("The glow module will be disabled."));
