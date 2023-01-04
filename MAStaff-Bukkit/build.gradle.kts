@@ -30,6 +30,7 @@ dependencies {
     compileOnly("com.github.hamza-cskn.obliviate-invs:pagination:4.1.10")
     compileOnly("net.md-5:bungeecord-chat:1.16-R0.4")
     compileOnly("me.clip:placeholderapi:2.11.2")
+    compileOnly("com.github.MilkBowl:VaultAPI:1.7.1")
 
 }
 

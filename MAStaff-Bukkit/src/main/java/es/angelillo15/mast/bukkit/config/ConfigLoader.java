@@ -32,7 +32,7 @@ public class ConfigLoader {
         loadLanguages();
         loadMessage();
         loadInternal();
-        //  loadGlowModule();
+        loadGlowModule();
     }
 
     public void loadConfig() {

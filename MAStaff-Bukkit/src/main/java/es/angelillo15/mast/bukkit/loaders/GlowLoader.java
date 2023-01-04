@@ -37,4 +37,5 @@ public class GlowLoader {
             GlowManager.addGlow(c, generateGlow(c));
         }
     }
+
 }

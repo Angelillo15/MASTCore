@@ -20,7 +20,7 @@ public class GlowManager {
     }
 
     /**
-     * @param name the name of the glow to get
+     * @param color the name of the glow to get
      * @return the glow
      */
     public static Glow getGlow(ChatColor color){
@@ -29,18 +29,10 @@ public class GlowManager {
 
     /**
      * Get all glows
-     * @return ArrayList<Glow>
+     * @return ArrayList of glows
      */
     public static ArrayList<Glow> getGlowList(){
         return new ArrayList<>(glows.values());
-    }
-
-    /**
-     * Remove a glow from the list
-     * @param name the name of the glow
-     */
-    public static void removeGlow(String name){
-        glows.remove(name);
     }
 
     /**
@@ -51,10 +43,50 @@ public class GlowManager {
     }
 
     /**
-     * @param name the name of the glow
-     * @return true if the glow exists or false if not
+     * @param color to delete
      */
-    public static boolean containsGlow(String name){
-        return glows.containsKey(name);
+    public static void removeGlow(ChatColor color) {
+        glows.remove(color);
+    }
+
+    @Getter
+    private static HashMap<String, ChatColor> colors = new HashMap<>();
+
+    /**
+     * @param group the name of the color
+     * @param color the color
+     */
+    public static void addColor(String group, ChatColor color) {
+        colors.put(group, color);
+    }
+
+    /**
+     * @param group the name of the color to get
+     * @return the color
+     */
+    public static ChatColor getColor(String group) {
+        return colors.get(group);
+    }
+
+    /**
+     * Get all colors
+     * @return ArrayList
+     */
+    public static ArrayList<ChatColor> getColorList() {
+        return new ArrayList<>(colors.values());
+    }
+
+    /**
+     * clear all colors
+     */
+    public static void clearColorList() {
+        colors.clear();
+    }
+
+    /**
+     * @param group to delete
+     */
+    public static void removeColor(String group) {
+        colors.remove(group);
     }
 }

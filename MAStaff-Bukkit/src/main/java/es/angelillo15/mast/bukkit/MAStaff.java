@@ -11,6 +11,7 @@ import es.angelillo15.mast.bukkit.cmd.staff.StaffCMD;
 import es.angelillo15.mast.bukkit.config.ConfigLoader;
 import es.angelillo15.mast.bukkit.config.Messages;
 import es.angelillo15.mast.bukkit.listener.FreezeListener;
+import es.angelillo15.mast.bukkit.listener.GlowJoin;
 import es.angelillo15.mast.bukkit.listener.VanishListener;
 import es.angelillo15.mast.bukkit.listener.clickListeners.OnItemClick;
 import es.angelillo15.mast.bukkit.listener.OnJoin;
@@ -23,6 +24,7 @@ import es.angelillo15.mast.bukkit.loaders.ItemsLoader;
 import es.angelillo15.mast.bukkit.utils.FreezeUtils;
 import es.angelillo15.mast.bukkit.utils.Logger;
 import es.angelillo15.mast.api.TextUtils;
+import es.angelillo15.mast.bukkit.utils.PermsUtils;
 import lombok.Getter;
 import lombok.SneakyThrows;
 import mc.obliviate.inventory.InventoryAPI;
@@ -43,6 +45,8 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance {
     static final int version = Integer.parseInt(Bukkit.getBukkitVersion().split("-")[0].split("\\.")[1]);
     @Getter
     private static MAStaff plugin;
+    @Getter
+    private static boolean glowEnabled = false;
     private boolean debug = true;
     private static ILogger logger;
     @Getter
@@ -180,7 +184,16 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance {
         if(version > 9){
             if(this.getServer().getPluginManager().getPlugin("ProtocolLib") != null){
                 new GlowAPI(this);
+                glowEnabled = true;
+                getServer().getPluginManager().registerEvents(new GlowJoin(), this);
                 GlowLoader.loadGlow();
+
+                if (getServer().getPluginManager().getPlugin("Vault") == null) {
+                    return;
+                }
+
+                PermsUtils.isVaultEnabled();
+
             } else {
                 logger.warn(TextUtils.colorize("ProtocolLib not found!"));
                 logger.warn(TextUtils.colorize("The glow module will be disabled."));

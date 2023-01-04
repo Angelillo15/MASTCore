@@ -12,6 +12,7 @@ import es.angelillo15.mast.api.managers.GlowManager;
 import es.angelillo15.mast.api.managers.VanishedPlayers;
 import es.angelillo15.mast.bukkit.config.Messages;
 import es.angelillo15.mast.bukkit.loaders.ItemsLoader;
+import lombok.Getter;
 import lombok.NonNull;
 import lombok.SneakyThrows;
 import org.bukkit.Bukkit;
@@ -28,16 +29,19 @@ import java.util.List;
 public class StaffPlayer implements IStaffPlayer {
     private File playerInventoryFile;
     private FileConfiguration playerInventoryConfig;
-    private ChatColor glowColor;
+    private ChatColor glowColor = ChatColor.GREEN;
+    private boolean staffMode;
+    private Player player;
+    private boolean vanished;
+    private ArrayList<StaffItem> items = new ArrayList<>();
+    @Getter
+    private Glow glow;
+
     public StaffPlayer(Player player){
         this.player = player;
         playerInventoryFile = new File(MAStaff.getPlugin().getDataFolder().getAbsoluteFile() + "/data/inventories/" + player.getUniqueId() + ".yml");
         playerInventoryConfig = YamlConfiguration.loadConfiguration(playerInventoryFile);
     }
-    private boolean staffMode;
-    private Player player;
-    private boolean vanished;
-    private ArrayList<StaffItem> items = new ArrayList<>();
 
     @SneakyThrows
     @Override
@@ -99,6 +103,7 @@ public class StaffPlayer implements IStaffPlayer {
         restoreInventory();
         disableVanish();
         changeGamemode(GameMode.SURVIVAL);
+        setGlowing(false);
     }
 
     public void enableStaffMode(){
@@ -110,6 +115,7 @@ public class StaffPlayer implements IStaffPlayer {
         CommonQueries.updateAsync(player.getUniqueId(), 1);
         staffMode = true;
         changeGamemode(GameMode.CREATIVE);
+        setGlowing(true);
     }
 
     @Override
@@ -200,10 +206,20 @@ public class StaffPlayer implements IStaffPlayer {
     }
 
     public void enableGlowing() {
-        GlowManager.getGlow(getGlowColor()).addHolders(player);
+        if(!MAStaff.isGlowEnabled()) return;
+        this.glow = GlowManager.getGlow(getGlowColor());
+        glow.addHolders(player);
+        Bukkit.getScheduler().runTaskAsynchronously(MAStaff.getPlugin(), () -> {
+            for (Player p : Bukkit.getOnlinePlayers()) {
+                glow.display(p);
+            }
+        });
+        GlowManager.getGlow(getGlowColor()).display(player);
     }
 
     public void disableGlowing() {
-        GlowManager.getGlow(getGlowColor()).removeHolders(player);
+        if(!MAStaff.isGlowEnabled()) return;
+        this.glow = GlowManager.getGlow(getGlowColor());
+        this.glow.removeHolders(player);
     }
 }
