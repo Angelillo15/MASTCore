@@ -65,7 +65,7 @@ public class GlowManager {
      * @return the color
      */
     public static ChatColor getColor(String group) {
-        return colors.get(group);
+        return colors.get(group) == null ? ChatColor.GREEN : colors.get(group);
     }
 
     /**

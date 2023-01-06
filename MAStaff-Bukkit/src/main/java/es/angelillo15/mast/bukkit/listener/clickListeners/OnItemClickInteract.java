@@ -11,6 +11,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 
 public class OnItemClickInteract implements Listener {
+    static boolean clicked = false;
     @EventHandler
     public void onEntityInteract(PlayerInteractEntityEvent event) {
         Player player = event.getPlayer();
@@ -38,10 +39,16 @@ public class OnItemClickInteract implements Listener {
                             item.getItem().getItemMeta().getDisplayName() +
                             " for player " + player.getName()
                     );
+                    if(clicked) {
+                        clicked = false;
+                        return;
+                    }
 
                     IPlayerInteractItem interactItem = (IPlayerInteractItem) item;
 
                     interactItem.interact(player, target);
+
+                    clicked = true;
                 }
 
             }

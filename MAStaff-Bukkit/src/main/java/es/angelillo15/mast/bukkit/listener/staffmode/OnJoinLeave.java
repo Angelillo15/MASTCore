@@ -26,7 +26,7 @@ public class OnJoinLeave implements Listener {
 
         IStaffPlayer staffPlayer = StaffPlayersManagers.getStaffPlayer(player);
 
-        if(CommonQueries.isInStaffMode(player.getUniqueId())) staffPlayer.toggleStaffMode();
+        if(CommonQueries.isInStaffMode(player.getUniqueId())) staffPlayer.toggleStaffMode(false);
     }
 
     @EventHandler

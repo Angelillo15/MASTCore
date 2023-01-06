@@ -1,5 +1,6 @@
 package es.angelillo15.mast.bukkit.utils;
 
+import es.angelillo15.mast.api.Permissions;
 import es.angelillo15.mast.bukkit.MAStaff;
 import es.angelillo15.mast.bukkit.config.Messages;
 import org.bukkit.Bukkit;
@@ -15,7 +16,7 @@ public class StaffUtils {
     public static void playerRandomTeleport(Player player) {
         ArrayList<Player> players = new ArrayList<>();
         Bukkit.getOnlinePlayers().forEach(p -> {
-            if (!(p.hasPermission("mast.staff")) || !(p.equals(player))) {
+            if (!(p.hasPermission(Permissions.STAFF.getPermission()) || !(p.equals(player)))) {
                 players.add(p);
             }
         });

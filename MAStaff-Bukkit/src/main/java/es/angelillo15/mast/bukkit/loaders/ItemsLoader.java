@@ -23,6 +23,8 @@ public class ItemsLoader {
 
         YamlFile items = ConfigLoader.getInternalStaffItems().getConfig();
 
+        manager.clearItems();
+
         for (String s : items.getConfigurationSection("StaffItems").getKeys(false)) {
 
             if (!(items.getBoolean("StaffItems." + s + ".enabled"))) {

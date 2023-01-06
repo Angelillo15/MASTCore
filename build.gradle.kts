@@ -31,10 +31,6 @@ tasks.shadowJar {
     relocate("mc.obliviate", "es.angelillo15.mast.libs.obliviate")
     relocate("com.zaxxer.hikari", "es.angelillo15.mast.libs.hikari")
     relocate("org.slf4j", "es.angelillo15.mast.libs.slf4j")
-    relocate("net.md_5.bungee.chat", "es.angelillo15.mast.libs.bungee.chat")
-    relocate("net.md_5.bungee.api.chat", "es.angelillo15.mast.libs.bungee.api.chat")
-    relocate("net.md_5.bungee.api.ChatColor", "es.angelillo15.mast.libs.bungee.api.ChatColor")
-    relocate("net.md_5.bungee.api.ChatMessageType", "es.angelillo15.mast.libs.bungee.api.ChatMessageType")
     relocate("com.google.common", "es.angelillo15.mast.libs.google.common")
     relocate("com.google.gson", "es.angelillo15.mast.libs.google.gson")
     relocate("com.google.thirdparty", "es.angelillo15.mast.libs.google.thirdparty")
@@ -54,7 +50,6 @@ dependencies {
     implementation("com.github.hamza-cskn.obliviate-invs:configurablegui:4.1.10")
     implementation("com.github.hamza-cskn.obliviate-invs:advancedslot:4.1.10")
     implementation("com.github.hamza-cskn.obliviate-invs:pagination:4.1.10")
-    implementation("net.md-5:bungeecord-chat:1.16-R0.4")
 }
 
 tasks.withType<JavaCompile> {

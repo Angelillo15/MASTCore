@@ -11,7 +11,7 @@ commands:
   staff:
     description: Staff Command
     usage: /staff
-    aliases: [staff]
+    aliases: [staff, staffmode, sm]
     permission: mast.staff
     default: op
   freeze:
@@ -24,9 +24,9 @@ commands:
     aliases: [staffchat, sc]
     permission: mast.staffchat
     default: op
-  mastcore:
+  mast:
     description: MAStaff Command
-    aliases: [mastaff, mast]
+    aliases: [mastaff, mastcore]
     permission: mast.admin
     default: op
 permissions:

@@ -18,6 +18,11 @@ public interface IStaffPlayer {
     void toggleStaffMode();
 
     /**
+     * toggle the staff mode
+     */
+    void toggleStaffMode(boolean saveInventory);
+
+    /**
      * @return true if the player is in staff mode or false if not
      */
     boolean isStaffMode();
@@ -25,7 +30,7 @@ public interface IStaffPlayer {
     /**
      * @param staffMode enable or disable the staff mode
      */
-    void setStaffMode(@NonNull boolean staffMode) throws AlreadyEnableException, AlreadyDisableException;
+    void setStaffMode(@NonNull boolean staffMode, boolean saveInventory) throws AlreadyEnableException, AlreadyDisableException;
     /**
      * Toggle the vanish mode
      */

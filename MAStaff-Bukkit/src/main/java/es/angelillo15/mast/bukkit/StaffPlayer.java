@@ -12,6 +12,7 @@ import es.angelillo15.mast.api.managers.GlowManager;
 import es.angelillo15.mast.api.managers.VanishedPlayers;
 import es.angelillo15.mast.bukkit.config.Messages;
 import es.angelillo15.mast.bukkit.loaders.ItemsLoader;
+import es.angelillo15.mast.bukkit.utils.PermsUtils;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.SneakyThrows;
@@ -46,20 +47,24 @@ public class StaffPlayer implements IStaffPlayer {
     @SneakyThrows
     @Override
     public void toggleStaffMode() {
-        setStaffMode(staffMode);
+        setStaffMode(staffMode, true);
     }
-
-
     @Override
     public boolean isStaffMode() {
         return staffMode;
     }
 
+
     @Override
-    public void setStaffMode(@NonNull boolean staffMode){
+    public void setStaffMode(@NonNull boolean staffMode, boolean saveInventory){
         if(staffMode) disableStaffMode();
-        else enableStaffMode();
+        else enableStaffMode(saveInventory);
         sendPluginMessage();
+    }
+
+    @Override
+    public void toggleStaffMode(boolean saveInventory) {
+        setStaffMode(staffMode, saveInventory);
     }
 
     @Override
@@ -106,9 +111,9 @@ public class StaffPlayer implements IStaffPlayer {
         setGlowing(false);
     }
 
-    public void enableStaffMode(){
+    public void enableStaffMode(boolean saveInventory){
         player.sendMessage(Messages.GET_STAFF_MODE_ENABLE_MESSAGE());
-        saveInventory();
+        if(saveInventory) saveInventory();
         enableVanish();
         clearInventory();
         setItems();
@@ -207,6 +212,7 @@ public class StaffPlayer implements IStaffPlayer {
 
     public void enableGlowing() {
         if(!MAStaff.isGlowEnabled()) return;
+        this.glowColor = GlowManager.getColor(PermsUtils.getGroup(player));
         this.glow = GlowManager.getGlow(getGlowColor());
         glow.addHolders(player);
         Bukkit.getScheduler().runTaskAsynchronously(MAStaff.getPlugin(), () -> {
@@ -219,7 +225,9 @@ public class StaffPlayer implements IStaffPlayer {
 
     public void disableGlowing() {
         if(!MAStaff.isGlowEnabled()) return;
-        this.glow = GlowManager.getGlow(getGlowColor());
+        this.glow.removeHolders(player);
+        this.glow = GlowManager.getGlow(ChatColor.WHITE);
+        this.glow.addHolders(player);
         this.glow.removeHolders(player);
     }
 }

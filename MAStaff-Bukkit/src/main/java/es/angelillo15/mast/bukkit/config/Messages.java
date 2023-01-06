@@ -117,7 +117,7 @@ public class Messages {
     }
 
     public static String GET_STAFFLIST_PREVIUS(){
-        return MAStaff.parseMessage(messages.getString("StaffList.previusPage"));
+        return MAStaff.parseMessage(messages.getString("StaffList.previousPage"));
     }
 
     public static String GET_STAFFLIST_NEXT(){

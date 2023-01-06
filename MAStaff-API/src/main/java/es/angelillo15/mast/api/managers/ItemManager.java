@@ -33,4 +33,11 @@ public class ItemManager {
         }
         return null;
     }
+
+    /**
+     * Clear all items
+     */
+    public void clearItems() {
+        items.clear();
+    }
 }

@@ -46,6 +46,8 @@ public class FreezeItem extends StaffItem implements IPlayerInteractItem {
 
     @Override
     public void interact(Player player, Player target) {
-
+        if (target != null) {
+            player.performCommand("freeze " + target.getName());
+        }
     }
 }

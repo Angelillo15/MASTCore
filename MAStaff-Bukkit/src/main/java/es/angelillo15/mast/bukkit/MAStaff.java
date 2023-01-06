@@ -1,12 +1,15 @@
 package es.angelillo15.mast.bukkit;
 
 import es.angelillo15.glow.GlowAPI;
+import es.angelillo15.glow.data.glow.Glow;
 import es.angelillo15.mast.api.ILogger;
 import es.angelillo15.mast.api.IStaffPlayer;
 import es.angelillo15.mast.api.MAStaffInstance;
 import es.angelillo15.mast.api.database.DataProvider;
 import es.angelillo15.mast.api.event.FreezeMessageEvent;
 import es.angelillo15.mast.bukkit.cmd.FreezeCMD;
+import es.angelillo15.mast.bukkit.cmd.StaffChatCMD;
+import es.angelillo15.mast.bukkit.cmd.mast.MAStaffCMD;
 import es.angelillo15.mast.bukkit.cmd.staff.StaffCMD;
 import es.angelillo15.mast.bukkit.config.ConfigLoader;
 import es.angelillo15.mast.bukkit.config.Messages;
@@ -18,6 +21,7 @@ import es.angelillo15.mast.bukkit.listener.OnJoin;
 import es.angelillo15.mast.bukkit.listener.clickListeners.OnItemClickInteract;
 import es.angelillo15.mast.bukkit.listener.staffmode.OnInventoryClick;
 import es.angelillo15.mast.bukkit.listener.staffmode.OnItemDrop;
+import es.angelillo15.mast.bukkit.listener.staffmode.OnItemGet;
 import es.angelillo15.mast.bukkit.listener.staffmode.OnJoinLeave;
 import es.angelillo15.mast.bukkit.loaders.GlowLoader;
 import es.angelillo15.mast.bukkit.loaders.ItemsLoader;
@@ -101,6 +105,8 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance {
     public void registerCommands() {
         getCommand("staff").setExecutor(new StaffCMD());
         getCommand("freeze").setExecutor(new FreezeCMD());
+        getCommand("mast").setExecutor(new MAStaffCMD());
+        getCommand("staffchat").setExecutor(new StaffChatCMD());
     }
 
     public boolean placeholderCheck() {
@@ -119,6 +125,7 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance {
         pm.registerEvents(new OnJoinLeave(), this);
         pm.registerEvents(new OnItemDrop(), this);
         pm.registerEvents(new FreezeListener(), this);
+        pm.registerEvents(new OnItemGet(), this);
         FreezeUtils.setupMessageSender();
         this.getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
 
@@ -182,7 +189,8 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance {
         ItemsLoader.load();
 
         if(version > 9){
-            if(this.getServer().getPluginManager().getPlugin("ProtocolLib") != null){
+            if(this.getServer().getPluginManager().getPlugin("ProtocolLib") != null && ConfigLoader.getGlow()
+                    .getConfig().getBoolean("Config.enabled")){
                 new GlowAPI(this);
                 glowEnabled = true;
                 getServer().getPluginManager().registerEvents(new GlowJoin(), this);
@@ -192,10 +200,10 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance {
                     return;
                 }
 
-                PermsUtils.isVaultEnabled();
+                PermsUtils.setupPermissions();
 
             } else {
-                logger.warn(TextUtils.colorize("ProtocolLib not found!"));
+                logger.warn(TextUtils.colorize("ProtocolLib not found! or Glow disabled in config.yml"));
                 logger.warn(TextUtils.colorize("The glow module will be disabled."));
             }
         }
@@ -203,6 +211,10 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance {
 
     @Override
     public void unregisterCommands() {
+        getCommand("staff").setExecutor(null);
+        getCommand("freeze").setExecutor(null);
+        getCommand("mast").setExecutor(null);
+        getCommand("staffchat").setExecutor(null);
     }
 
     @Override
@@ -224,11 +236,25 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance {
 
     @Override
     public void reload() {
+        logger.debug("Unloading Database...");
         unloadDatabase();
-        loadConfig();
-        loadDatabase();
+        logger.debug("Unregistering Commands...");
         unregisterCommands();
+        logger.debug("Unregistering Listeners...");
         unregisterListeners();
+        logger.debug("Reloading Config...");
+        loadConfig();
+        logger.debug("Loading Database...");
+        loadDatabase();
+        logger.debug("Loading Glow...");
+        GlowLoader.loadGlow();
+        logger.debug("Loading items...");
+        ItemsLoader.load();
+        logger.debug("Registering Commands...");
+        registerCommands();
+        logger.debug("Registering Listeners...");
+        registerListeners();
+        logger.debug("Reloaded successfully ✔️");
     }
 
     @Override

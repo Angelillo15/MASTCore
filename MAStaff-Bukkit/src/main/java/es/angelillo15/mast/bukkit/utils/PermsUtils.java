@@ -12,7 +12,7 @@ public class PermsUtils {
     @Getter
     private static boolean vaultEnabled = false;
 
-    private static boolean setupPermissions() {
+    public static boolean setupPermissions() {
         RegisteredServiceProvider<Permission> rsp = MAStaff.getPlugin().getServer().getServicesManager().getRegistration(Permission.class);
         perms = rsp.getProvider();
         vaultEnabled = true;
