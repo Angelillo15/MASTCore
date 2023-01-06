@@ -2,7 +2,6 @@ package es.angelillo15.mast.bukkit;
 
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
-import es.angelillo15.glow.GlowAPI;
 import es.angelillo15.glow.data.glow.Glow;
 import es.angelillo15.mast.api.IStaffPlayer;
 import es.angelillo15.mast.api.Permissions;
@@ -40,7 +39,7 @@ public class StaffPlayer implements IStaffPlayer {
 
     public StaffPlayer(Player player){
         this.player = player;
-        playerInventoryFile = new File(MAStaff.getPlugin().getDataFolder().getAbsoluteFile() + "/data/inventories/" + player.getUniqueId() + ".yml");
+        playerInventoryFile = new File(MAStaff.getPlugin().getDataFolder().getAbsoluteFile() + "/data/staffMode/" + player.getUniqueId() + ".yml");
         playerInventoryConfig = YamlConfiguration.loadConfiguration(playerInventoryFile);
     }
 
@@ -56,7 +55,7 @@ public class StaffPlayer implements IStaffPlayer {
 
 
     @Override
-    public void setStaffMode(@NonNull boolean staffMode, boolean saveInventory){
+    public void setStaffMode(boolean staffMode, boolean saveInventory){
         if(staffMode) disableStaffMode();
         else enableStaffMode(saveInventory);
         sendPluginMessage();
@@ -65,6 +64,7 @@ public class StaffPlayer implements IStaffPlayer {
     @Override
     public void toggleStaffMode(boolean saveInventory) {
         setStaffMode(staffMode, saveInventory);
+        MAStaff.getPlugin().getPLogger().debug("Toggling staff mode for " + player.getName() + " with saveInventory = " + saveInventory);
     }
 
     @Override
@@ -102,6 +102,7 @@ public class StaffPlayer implements IStaffPlayer {
 
     public void disableStaffMode(){
         player.sendMessage(Messages.GET_STAFF_MODE_DISABLE_MESSAGE());
+        setModeData(false);
         clearInventory();
         CommonQueries.updateAsync(player.getUniqueId(), 0);
         staffMode = false;
@@ -113,6 +114,7 @@ public class StaffPlayer implements IStaffPlayer {
 
     public void enableStaffMode(boolean saveInventory){
         player.sendMessage(Messages.GET_STAFF_MODE_ENABLE_MESSAGE());
+        setModeData(true);
         if(saveInventory) saveInventory();
         enableVanish();
         clearInventory();
@@ -163,6 +165,7 @@ public class StaffPlayer implements IStaffPlayer {
     @SneakyThrows
     @Override
     public void saveInventory() {
+        MAStaff.getPlugin().getPLogger().debug("Saving inventory for " + player.getName());
         playerInventoryConfig.set("inventory", null);
         playerInventoryConfig.set("inventory.content", player.getInventory().getContents());
         playerInventoryConfig.set("inventory.armor", player.getInventory().getArmorContents());
@@ -177,6 +180,7 @@ public class StaffPlayer implements IStaffPlayer {
 
     @Override
     public void restoreInventory() {
+        MAStaff.getPlugin().getPLogger().debug("Restoring inventory for " + player.getName());
         playerInventoryConfig = YamlConfiguration.loadConfiguration(playerInventoryFile);
         ItemStack[] content = ((List<ItemStack>) playerInventoryConfig.get("inventory.armor")).toArray(new ItemStack[0]);
         player.getInventory().setArmorContents(content);
@@ -229,5 +233,17 @@ public class StaffPlayer implements IStaffPlayer {
         this.glow = GlowManager.getGlow(ChatColor.WHITE);
         this.glow.addHolders(player);
         this.glow.removeHolders(player);
+    }
+
+    @SneakyThrows
+    public void setModeData(boolean staffMode){
+        this.playerInventoryConfig.set("Status.staffMode", staffMode);
+        MAStaff.getPlugin().getPLogger().debug("Saving staff mode data for player " + player.getName() + " with value " + staffMode);
+        this.playerInventoryConfig.save(playerInventoryFile);
+    }
+
+    @Override
+    public boolean wasInStaffMode() {
+        return playerInventoryConfig.getBoolean("Status.staffMode");
     }
 }

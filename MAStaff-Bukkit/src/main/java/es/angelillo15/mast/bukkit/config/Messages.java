@@ -2,12 +2,14 @@ package es.angelillo15.mast.bukkit.config;
 
 import es.angelillo15.mast.api.TextUtils;
 import es.angelillo15.mast.bukkit.MAStaff;
+import lombok.Setter;
 import org.simpleyaml.configuration.file.YamlFile;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Messages {
+    @Setter
     private static YamlFile messages = ConfigLoader.getMessages().getConfig();
 
     public static String GET_STAFF_MODE_ENABLE_MESSAGE() {

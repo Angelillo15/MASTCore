@@ -105,4 +105,10 @@ public interface IStaffPlayer {
      * @param status status to set
      */
     public void setGlowing(boolean status);
+
+    /**
+     * Get the staff mode previus status
+     * @return the staff mode previus status
+     */
+    public boolean wasInStaffMode();
 }

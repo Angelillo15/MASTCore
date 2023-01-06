@@ -18,10 +18,7 @@ public class OnItemClick implements Listener {
 
         Player player = event.getPlayer();
 
-        MAStaff.getPlugin().getPLogger().debug("PlayerInteractEvent: " + player.getName());
-
         if(!player.hasPermission(Permissions.STAFF.getPermission())){
-            MAStaff.getPlugin().getPLogger().debug("Player " + player.getName() + " has no permission to use staff items.");
             event.setCancelled(false);
             return;
         }

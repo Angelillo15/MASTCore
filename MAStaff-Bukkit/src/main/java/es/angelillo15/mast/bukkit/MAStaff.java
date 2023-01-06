@@ -244,6 +244,7 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance {
         unregisterListeners();
         logger.debug("Reloading Config...");
         loadConfig();
+        Messages.setMessages(ConfigLoader.getMessages().getConfig());
         logger.debug("Loading Database...");
         loadDatabase();
         logger.debug("Loading Glow...");

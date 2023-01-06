@@ -26,7 +26,11 @@ public class OnJoinLeave implements Listener {
 
         IStaffPlayer staffPlayer = StaffPlayersManagers.getStaffPlayer(player);
 
-        if(CommonQueries.isInStaffMode(player.getUniqueId())) staffPlayer.toggleStaffMode(false);
+        if(CommonQueries.isInStaffMode(player.getUniqueId())){
+            MAStaff.getPlugin().getPLogger().debug("Player " + player.getName() + " previous state: " + staffPlayer.wasInStaffMode());
+            if(!staffPlayer.wasInStaffMode()) staffPlayer.toggleStaffMode(true);
+            else staffPlayer.toggleStaffMode(false);
+        }
     }
 
     @EventHandler
@@ -40,7 +44,6 @@ public class OnJoinLeave implements Listener {
         IStaffPlayer staffPlayer = StaffPlayersManagers.getStaffPlayer(player);
 
         if(staffPlayer.existsData()){
-            MAStaff.getPlugin().getPLogger().debug("Restoring inventory for player " + player.getName());
             staffPlayer.clearInventory();
             staffPlayer.restoreInventory();
         }
