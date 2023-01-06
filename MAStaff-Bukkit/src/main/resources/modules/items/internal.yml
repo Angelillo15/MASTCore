@@ -1,10 +1,10 @@
 #
 # This is the internal modules configuration file for
 # MAStaff Spigot, where you can modify and customize
-# staff mode items.
+# staff mode plugin items.
 #
 # Remember to join my Discord server if you need help:
-# https://discord.angelillo15.es/
+# https://discord.nookure.com/
 #
 StaffItems:
   RANDOM_PLAYER_TELEPORT:

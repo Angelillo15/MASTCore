@@ -21,6 +21,8 @@ public class ConfigLoader {
     private static ConfigManager es;
     @Getter
     private static ConfigManager en;
+    @Getter
+    private static ConfigManager customItems;
     private String language;
 
     public ConfigLoader() {
@@ -33,6 +35,7 @@ public class ConfigLoader {
         loadMessage();
         loadInternal();
         loadGlowModule();
+        loadCustomItems();
     }
 
     public void loadConfig() {
@@ -41,7 +44,7 @@ public class ConfigLoader {
     }
 
     public void loadInternal (){
-        internalStaffItems = new ConfigManager(plugin.getDataFolder().toPath(), "modules/internal.yml", "/modules/internal.yml");
+        internalStaffItems = new ConfigManager(plugin.getDataFolder().toPath(), "modules/items/internal.yml", "/modules/items/internal.yml");
         internalStaffItems.registerConfig();
     }
 
@@ -69,6 +72,11 @@ public class ConfigLoader {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public void loadCustomItems() {
+        customItems = new ConfigManager(plugin.getDataFolder().toPath(), "modules/items/custom.yml", "/modules/items/custom.yml");
+        customItems.registerConfig();
     }
 
     public void loadGlowModule(){

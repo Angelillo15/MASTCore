@@ -1,0 +1,30 @@
+#
+# Here you can add custom items to the game.
+# You can add as many items as you want.
+#
+# Remember to join my Discord server if you need help:
+# https://discord.nookure.com/
+#
+StaffItems:
+  staffList:
+    enabled: true
+    permission: 'mast.item.stafflist'
+    name: '&bStaff List'
+    type: 'COMMAND'
+    command: 'staff staffList'
+    material: 'CLOCK'
+    slot: 7
+    lore:
+      - '&7Click to open the'
+      - '&7staff list.'
+  banTarget:
+    enabled: true
+    permission: 'mast.item.kick'
+    name: '&bKick Target'
+    type: 'COMMAND_TARGET'
+    command: 'kick {target} kicked by {player}'
+    material: 'REDSTONE_BLOCK'
+    slot: 2
+    lore:
+      - '&7Click to ban the'
+      - '&7player you are looking at.'

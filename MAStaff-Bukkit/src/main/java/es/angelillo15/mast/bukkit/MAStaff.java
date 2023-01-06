@@ -19,10 +19,8 @@ import es.angelillo15.mast.bukkit.listener.VanishListener;
 import es.angelillo15.mast.bukkit.listener.clickListeners.OnItemClick;
 import es.angelillo15.mast.bukkit.listener.OnJoin;
 import es.angelillo15.mast.bukkit.listener.clickListeners.OnItemClickInteract;
-import es.angelillo15.mast.bukkit.listener.staffmode.OnInventoryClick;
-import es.angelillo15.mast.bukkit.listener.staffmode.OnItemDrop;
-import es.angelillo15.mast.bukkit.listener.staffmode.OnItemGet;
-import es.angelillo15.mast.bukkit.listener.staffmode.OnJoinLeave;
+import es.angelillo15.mast.bukkit.listener.staffmode.*;
+import es.angelillo15.mast.bukkit.loaders.CustomItemsLoader;
 import es.angelillo15.mast.bukkit.loaders.GlowLoader;
 import es.angelillo15.mast.bukkit.loaders.ItemsLoader;
 import es.angelillo15.mast.bukkit.utils.FreezeUtils;
@@ -126,6 +124,7 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance {
         pm.registerEvents(new OnItemDrop(), this);
         pm.registerEvents(new FreezeListener(), this);
         pm.registerEvents(new OnItemGet(), this);
+        pm.registerEvents(new OnSwapHand(), this);
         FreezeUtils.setupMessageSender();
         this.getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
 
@@ -187,6 +186,7 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance {
     @Override
     public void loadModules() {
         ItemsLoader.load();
+        CustomItemsLoader.load();
 
         if(version > 9){
             if(this.getServer().getPluginManager().getPlugin("ProtocolLib") != null && ConfigLoader.getGlow()
@@ -251,6 +251,7 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance {
         GlowLoader.loadGlow();
         logger.debug("Loading items...");
         ItemsLoader.load();
+        CustomItemsLoader.load();
         logger.debug("Registering Commands...");
         registerCommands();
         logger.debug("Registering Listeners...");
