@@ -16,13 +16,6 @@ repositories {
 
 }
 
-tasks.shadowJar {
-    relocate("net.md_5.bungee.chat", "es.angelillo15.mast.libs.bungee.chat")
-    relocate("net.md_5.bungee.api.chat", "es.angelillo15.mast.libs.bungee.api.chat")
-    relocate("net.md_5.bungee.api.ChatColor", "es.angelillo15.mast.libs.bungee.api.ChatColor")
-    relocate("net.md_5.bungee.api.ChatMessageType", "es.angelillo15.mast.libs.bungee.api.ChatMessageType")
-}
-
 dependencies {
     compileOnly(project(":MAStaff-API"))
     compileOnly("org.spigotmc:spigot-api:1.13-R0.1-SNAPSHOT")
@@ -38,7 +31,6 @@ dependencies {
     compileOnly("com.github.hamza-cskn.obliviate-invs:pagination:4.1.10")
     compileOnly("me.clip:placeholderapi:2.11.2")
     compileOnly("com.github.MilkBowl:VaultAPI:1.7.1")
-    implementation("net.md-5:bungeecord-chat:1.16-R0.4")
 }
 
 tasks.processResources {

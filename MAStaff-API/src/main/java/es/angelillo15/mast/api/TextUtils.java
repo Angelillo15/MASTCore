@@ -1,7 +1,7 @@
 package es.angelillo15.mast.api;
 
+import es.angelillo15.mast.api.chat.api.ChatColor;
 import me.clip.placeholderapi.PlaceholderAPI;
-import net.md_5.bungee.api.ChatColor;
 import org.bukkit.entity.Player;
 
 import java.util.regex.Matcher;
