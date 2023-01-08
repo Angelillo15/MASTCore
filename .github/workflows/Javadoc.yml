@@ -42,7 +42,7 @@ jobs:
           ls
           cd ..
           git clone https://github.com/Angelillo15/javadocs.git
-          cd javadocd
+          cd javadocs
           git checkout master
           cd ..
           rm -r javadocs/javadocs/mastaff/
