@@ -5,9 +5,9 @@ name: MAStaff build
 
 on:
   push:
-    branches: [ master ]
+    branches: [ 2.x ]
   pull_request:
-    branches: [ master ]
+    branches: [ 2.x ]
 jobs:
 
   build-on-ubuntu:
