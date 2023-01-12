@@ -42,3 +42,12 @@ Freeze:
     - '&c█&6███&0█&6███&c█'
     - '&c█████████'
     - ''
+StaffList:
+  title: '&a&lSTAFF &8&l» &7Online Staff' # El título de la lista de Staff.
+  staffLore:
+    - ""
+    - "&6&l» &7Nombre: &a%player_name%"
+    - "&6&l» &7Rango: &a%vault_prefix%"
+    - ""
+  previousPage: '&a&l« &7Pagina Anterior' # Nombre del botón de la página anterior.
+  nextPage: '&a&l» &7Pagina siguiente' # Nombre del botón de la página siguiente.

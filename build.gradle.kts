@@ -34,6 +34,10 @@ tasks.shadowJar {
     relocate("com.google.common", "es.angelillo15.mast.libs.google.common")
     relocate("com.google.gson", "es.angelillo15.mast.libs.google.gson")
     relocate("com.google.thirdparty", "es.angelillo15.mast.libs.google.thirdparty")
+    relocate("com.google.errorprone", "es.angelillo15.mast.libs.google.errorprone")
+    relocate("com.google.j2objc", "es.angelillo15.mast.libs.google.j2objc")
+    relocate("javax.annotation", "es.angelillo15.mast.libs.javax.annotation")
+    relocate("org.checkerframework", "es.angelillo15.mast.libs.checkerframework")
 }
 
 dependencies {
@@ -48,8 +52,10 @@ dependencies {
     implementation("com.github.Nookure:GlowAPI:1.0.0")
     implementation("com.github.hamza-cskn.obliviate-invs:core:4.1.10")
     implementation("com.github.hamza-cskn.obliviate-invs:configurablegui:4.1.10")
+    implementation("com.google.code.gson:gson:2.10.1")
     implementation("com.github.hamza-cskn.obliviate-invs:advancedslot:4.1.10")
     implementation("com.github.hamza-cskn.obliviate-invs:pagination:4.1.10")
+    implementation("com.google.guava:guava:31.1-jre")
 }
 
 tasks.withType<JavaCompile> {

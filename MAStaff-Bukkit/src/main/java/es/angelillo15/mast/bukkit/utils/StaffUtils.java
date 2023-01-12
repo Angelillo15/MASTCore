@@ -50,6 +50,15 @@ public class StaffUtils {
         });
     }
 
+    public static void asyncBroadcastMessage(String message) {
+        Bukkit.getScheduler().runTaskAsynchronously(MAStaff.getPlugin(), () -> {
+            Bukkit.getOnlinePlayers().forEach(p -> {
+                p.sendMessage(message);
+            });
+            MAStaff.getPlugin().getPLogger().info(message);
+        });
+    }
+
     public static void asyncStaffChatMessage(String message) {
         Bukkit.getScheduler().runTaskAsynchronously(MAStaff.getPlugin(), () -> {
             Bukkit.getOnlinePlayers().forEach(p -> {

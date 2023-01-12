@@ -19,6 +19,7 @@ public class StaffCMD implements CommandExecutor {
     private static ArrayList<SubCommand> subCommands = new ArrayList<>();
 
     public StaffCMD(){
+        subCommands.clear();
         subCommands.add(new StaffListArg());
         subCommands.add(new StaffHelpArg());
     }

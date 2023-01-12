@@ -15,6 +15,7 @@ public class MAStaffCMD implements CommandExecutor {
     private static ArrayList<SubCommand> subCommands = new ArrayList<>();
 
     public MAStaffCMD(){
+        subCommands.clear();
         subCommands.add(new ReloadARG());
         subCommands.add(new HelpARG());
     }

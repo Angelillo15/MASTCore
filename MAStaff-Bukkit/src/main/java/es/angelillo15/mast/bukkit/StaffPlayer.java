@@ -12,6 +12,7 @@ import es.angelillo15.mast.api.managers.VanishedPlayers;
 import es.angelillo15.mast.bukkit.config.Messages;
 import es.angelillo15.mast.bukkit.loaders.ItemsLoader;
 import es.angelillo15.mast.bukkit.utils.PermsUtils;
+import es.angelillo15.mast.bukkit.utils.StaffUtils;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.SneakyThrows;
@@ -109,6 +110,8 @@ public class StaffPlayer implements IStaffPlayer {
         restoreInventory();
         disableVanish();
         changeGamemode(GameMode.SURVIVAL);
+        StaffUtils.asyncBroadcastMessage(Messages.GET_VANISH_JOIN_MESSAGE()
+                .replace("{player}", player.getName()));
         setGlowing(false);
     }
 
@@ -122,6 +125,8 @@ public class StaffPlayer implements IStaffPlayer {
         CommonQueries.updateAsync(player.getUniqueId(), 1);
         staffMode = true;
         changeGamemode(GameMode.CREATIVE);
+        if(saveInventory) StaffUtils.asyncBroadcastMessage(Messages.GET_VANISH_LEAVE_MESSAGE()
+                .replace("{player}", player.getName()));
         setGlowing(true);
     }
 

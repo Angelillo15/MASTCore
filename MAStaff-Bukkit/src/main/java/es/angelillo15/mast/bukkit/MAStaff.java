@@ -56,7 +56,7 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance {
     @Getter
     private static Connection connection;
 
-    public static String parseMessage(String messages){
+    public static String parseMessage(String messages) {
         return TextUtils.colorize(messages.replace("{prefix}", Messages.PREFIX())
         );
     }
@@ -71,6 +71,7 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance {
     public ILogger getPLogger() {
         return logger;
     }
+
     @Override
     public boolean isDebug() {
         return debug;
@@ -127,7 +128,6 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance {
         pm.registerEvents(new OnSwapHand(), this);
         FreezeUtils.setupMessageSender();
         this.getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
-
     }
 
     @Override
@@ -137,7 +137,7 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance {
                 .getString("Database.type").toUpperCase()
         );
         try {
-            switch (dataProvider){
+            switch (dataProvider) {
                 case MYSQL:
                     pluginConnection = new PluginConnection(
                             config.getString("Database.host"),
@@ -188,9 +188,9 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance {
         ItemsLoader.load();
         CustomItemsLoader.load();
 
-        if(version > 9){
-            if(this.getServer().getPluginManager().getPlugin("ProtocolLib") != null && ConfigLoader.getGlow()
-                    .getConfig().getBoolean("Config.enabled")){
+        if (version > 9) {
+            if (this.getServer().getPluginManager().getPlugin("ProtocolLib") != null && ConfigLoader.getGlow()
+                    .getConfig().getBoolean("Config.enabled")) {
                 new GlowAPI(this);
                 glowEnabled = true;
                 getServer().getPluginManager().registerEvents(new GlowJoin(), this);
