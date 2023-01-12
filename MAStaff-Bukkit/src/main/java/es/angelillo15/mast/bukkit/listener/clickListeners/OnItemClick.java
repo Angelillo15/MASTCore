@@ -19,7 +19,6 @@ public class OnItemClick implements Listener {
         Player player = event.getPlayer();
 
         if(!player.hasPermission(Permissions.STAFF.getPermission())){
-            event.setCancelled(false);
             return;
         }
 
