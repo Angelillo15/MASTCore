@@ -26,7 +26,6 @@ public class OnItemClick implements Listener {
         IStaffPlayer staffPlayer = StaffPlayersManagers.getStaffPlayer(player);
 
         if(!staffPlayer.isStaffMode()){
-            event.setCancelled(false);
             return;
         }
 
