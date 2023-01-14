@@ -11,7 +11,7 @@ public class MASTBungee extends MASTBungeeManager {
         registerEvents();
         registerConfig();
         registerCommands();
-        new Metrics(this, 16550);
+        new Metrics(this, 16548);
     }
 
     @Override

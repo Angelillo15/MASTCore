@@ -23,6 +23,7 @@ import es.angelillo15.mast.bukkit.loaders.ItemsLoader;
 import es.angelillo15.mast.bukkit.utils.FreezeUtils;
 import es.angelillo15.mast.bukkit.utils.Logger;
 import es.angelillo15.mast.api.TextUtils;
+import es.angelillo15.mast.bukkit.utils.Metrics;
 import es.angelillo15.mast.bukkit.utils.PermsUtils;
 import lombok.Getter;
 import lombok.SneakyThrows;
@@ -76,6 +77,7 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance {
 
     @Override
     public void drawLogo() {
+        new Metrics(this, 	16548);
         logger = new Logger();
         logger.info(TextUtils.colorize("&a"));
         logger.info(TextUtils.colorize("&a ███▄ ▄███▓ ▄▄▄        ██████ ▄▄▄█████▓ ▄▄▄        █████▒ █████▒"));
