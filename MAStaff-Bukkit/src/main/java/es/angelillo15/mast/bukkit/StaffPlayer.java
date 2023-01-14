@@ -2,7 +2,6 @@ package es.angelillo15.mast.bukkit;
 
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
-import es.angelillo15.glow.data.glow.Glow;
 import es.angelillo15.mast.api.IStaffPlayer;
 import es.angelillo15.mast.api.Permissions;
 import es.angelillo15.mast.api.database.sql.CommonQueries;
@@ -13,9 +12,10 @@ import es.angelillo15.mast.bukkit.config.Messages;
 import es.angelillo15.mast.bukkit.loaders.ItemsLoader;
 import es.angelillo15.mast.bukkit.utils.PermsUtils;
 import es.angelillo15.mast.bukkit.utils.StaffUtils;
-import lombok.Getter;
-import lombok.NonNull;
 import lombok.SneakyThrows;
+import me.MrGraycat.eGlow.API.Enum.EGlowColor;
+import me.MrGraycat.eGlow.EGlow;
+import me.MrGraycat.eGlow.Manager.Interface.IEGlowPlayer;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
@@ -35,8 +35,6 @@ public class StaffPlayer implements IStaffPlayer {
     private Player player;
     private boolean vanished;
     private ArrayList<StaffItem> items = new ArrayList<>();
-    @Getter
-    private Glow glow;
 
     public StaffPlayer(Player player){
         this.player = player;
@@ -222,22 +220,20 @@ public class StaffPlayer implements IStaffPlayer {
     public void enableGlowing() {
         if(!MAStaff.isGlowEnabled()) return;
         this.glowColor = GlowManager.getColor(PermsUtils.getGroup(player));
-        this.glow = GlowManager.getGlow(getGlowColor());
-        glow.addHolders(player);
-        Bukkit.getScheduler().runTaskAsynchronously(MAStaff.getPlugin(), () -> {
-            for (Player p : Bukkit.getOnlinePlayers()) {
-                glow.display(p);
-            }
-        });
-        GlowManager.getGlow(getGlowColor()).display(player);
+        this.glowColor = GlowManager.getColor(PermsUtils.getGroup(player));
+        IEGlowPlayer iegp = EGlow.getAPI().getEGlowPlayer(player);
+        EGlow.getAPI().enableGlow(
+                iegp,
+                EGlowColor.valueOf(glowColor.name())
+        );
+
+        EGlow.getAPI().resetCustomGlowReceivers(iegp);
     }
 
     public void disableGlowing() {
         if(!MAStaff.isGlowEnabled()) return;
-        this.glow.removeHolders(player);
-        this.glow = GlowManager.getGlow(ChatColor.WHITE);
-        this.glow.addHolders(player);
-        this.glow.removeHolders(player);
+        IEGlowPlayer iegp = EGlow.getAPI().getEGlowPlayer(player);
+        EGlow.getAPI().disableGlow(iegp);
     }
 
     @SneakyThrows

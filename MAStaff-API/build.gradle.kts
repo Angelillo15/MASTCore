@@ -25,5 +25,5 @@ publishing {
 dependencies {
     compileOnly("org.spigotmc:spigot-api:1.13-R0.1-SNAPSHOT")
     compileOnly("me.clip:placeholderapi:2.11.2")
-    compileOnly("com.github.Nookure:GlowAPI:d991aebd15")
+    compileOnly("com.github.mrgraycat:eGlow:-SNAPSHOT")
 }

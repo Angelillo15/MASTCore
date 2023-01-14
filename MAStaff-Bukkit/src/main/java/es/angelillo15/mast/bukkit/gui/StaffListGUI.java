@@ -1,23 +1,17 @@
 package es.angelillo15.mast.bukkit.gui;
 
 import es.angelillo15.mast.api.gui.GuiUtils;
-import es.angelillo15.mast.api.managers.StaffPlayersManagers;
 import es.angelillo15.mast.api.material.XMaterial;
-import es.angelillo15.mast.bukkit.MAStaff;
-import es.angelillo15.mast.bukkit.cmd.staff.StaffCMD;
 import es.angelillo15.mast.bukkit.config.Messages;
 import mc.obliviate.inventory.Gui;
 import mc.obliviate.inventory.Icon;
 import mc.obliviate.inventory.pagination.PaginationManager;
 import org.bukkit.Bukkit;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-
-import java.util.BitSet;
 
 public class StaffListGUI extends Gui {
     private final PaginationManager pagination = new PaginationManager(this);

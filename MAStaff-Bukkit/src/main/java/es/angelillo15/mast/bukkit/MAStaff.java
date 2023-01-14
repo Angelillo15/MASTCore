@@ -1,12 +1,9 @@
 package es.angelillo15.mast.bukkit;
 
-import es.angelillo15.glow.GlowAPI;
-import es.angelillo15.glow.data.glow.Glow;
 import es.angelillo15.mast.api.ILogger;
 import es.angelillo15.mast.api.IStaffPlayer;
 import es.angelillo15.mast.api.MAStaffInstance;
 import es.angelillo15.mast.api.database.DataProvider;
-import es.angelillo15.mast.api.event.FreezeMessageEvent;
 import es.angelillo15.mast.bukkit.cmd.FreezeCMD;
 import es.angelillo15.mast.bukkit.cmd.StaffChatCMD;
 import es.angelillo15.mast.bukkit.cmd.mast.MAStaffCMD;
@@ -189,9 +186,8 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance {
         CustomItemsLoader.load();
 
         if (version > 9) {
-            if (this.getServer().getPluginManager().getPlugin("ProtocolLib") != null && ConfigLoader.getGlow()
+            if (this.getServer().getPluginManager().getPlugin("eGlow") != null && ConfigLoader.getGlow()
                     .getConfig().getBoolean("Config.enabled")) {
-                new GlowAPI(this);
                 glowEnabled = true;
                 getServer().getPluginManager().registerEvents(new GlowJoin(), this);
                 GlowLoader.loadGlow();
@@ -203,7 +199,7 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance {
                 PermsUtils.setupPermissions();
 
             } else {
-                logger.warn(TextUtils.colorize("ProtocolLib not found! or Glow disabled in config.yml"));
+                logger.warn(TextUtils.colorize("eGlow not found! or Glow disabled in config.yml"));
                 logger.warn(TextUtils.colorize("The glow module will be disabled."));
             }
         }

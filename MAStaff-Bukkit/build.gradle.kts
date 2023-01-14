@@ -24,13 +24,13 @@ dependencies {
     compileOnly("com.github.Angelillo15:ConfigManager:1.4")
     compileOnly("com.zaxxer:HikariCP:5.0.1")
     compileOnly("com.comphenix.protocol:ProtocolLib:4.8.0")
-    compileOnly("com.github.Nookure:GlowAPI:d991aebd15")
     compileOnly("com.github.hamza-cskn.obliviate-invs:core:4.1.10")
     compileOnly("com.github.hamza-cskn.obliviate-invs:configurablegui:4.1.10")
     compileOnly("com.github.hamza-cskn.obliviate-invs:advancedslot:4.1.10")
     compileOnly("com.github.hamza-cskn.obliviate-invs:pagination:4.1.10")
     compileOnly("me.clip:placeholderapi:2.11.2")
     compileOnly("com.github.MilkBowl:VaultAPI:1.7.1")
+    compileOnly("com.github.MrGraycat:eGlow:-SNAPSHOT")
 }
 
 tasks.processResources {

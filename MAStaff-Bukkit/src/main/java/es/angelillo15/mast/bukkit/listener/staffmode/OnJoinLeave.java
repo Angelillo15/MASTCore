@@ -57,7 +57,7 @@ public class OnJoinLeave implements Listener {
             event.setQuitMessage("");
         }
 
-        if(staffPlayer.existsData()){
+        if(staffPlayer.existsData() && staffPlayer.isStaffMode()){
             staffPlayer.clearInventory();
             staffPlayer.restoreInventory();
         }
