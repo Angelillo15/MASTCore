@@ -77,7 +77,6 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance {
     @Override
     public void drawLogo() {
         logger = new Logger();
-        new InventoryAPI(this).init();
         logger.info(TextUtils.colorize("&a"));
         logger.info(TextUtils.colorize("&a ███▄ ▄███▓ ▄▄▄        ██████ ▄▄▄█████▓ ▄▄▄        █████▒ █████▒"));
         logger.info(TextUtils.colorize("&a ▓██▒▀█▀ ██▒▒████▄    ▒██    ▒ ▓  ██▒ ▓▒▒████▄    ▓██   ▒▓██   ▒"));
@@ -184,6 +183,7 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance {
     public void loadModules() {
         ItemsLoader.load();
         CustomItemsLoader.load();
+        new InventoryAPI(this).init();
 
         if (version > 9) {
             if (this.getServer().getPluginManager().getPlugin("eGlow") != null && ConfigLoader.getGlow()
@@ -243,6 +243,8 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance {
         Messages.setMessages(ConfigLoader.getMessages().getConfig());
         logger.debug("Loading Database...");
         loadDatabase();
+        logger.debug("Loading inventory API...");
+        new InventoryAPI(this).init();
         logger.debug("Loading Glow...");
         GlowLoader.loadGlow();
         logger.debug("Loading items...");

@@ -2,6 +2,7 @@ package es.angelillo15.mast.bukkit.gui;
 
 import es.angelillo15.mast.api.gui.GuiUtils;
 import es.angelillo15.mast.api.material.XMaterial;
+import es.angelillo15.mast.bukkit.MAStaff;
 import es.angelillo15.mast.bukkit.config.Messages;
 import mc.obliviate.inventory.Gui;
 import mc.obliviate.inventory.Icon;
@@ -22,6 +23,7 @@ public class StaffListGUI extends Gui {
 
     @Override
     public void onOpen(InventoryOpenEvent event) {
+        MAStaff.getPlugin().getPLogger().debug("StaffListGUI opened");
         for (Player people : Bukkit.getOnlinePlayers()){
             if(people.hasPermission("mast.staff")){
                 ItemStack item = GuiUtils.getPlayerHead(people, Messages.GET_STAFFLIST_LORE());
@@ -49,6 +51,8 @@ public class StaffListGUI extends Gui {
 
         addItem(45, previousPage);
         addItem(53, nextPage);
+
+        MAStaff.getPlugin().getPLogger().debug("StaffListGUI items added");
     }
 
     @Override
@@ -75,6 +79,8 @@ public class StaffListGUI extends Gui {
             pagination.update();
             return false;
         }
+
+        MAStaff.getPlugin().getPLogger().debug("StaffListGUI clicked");
 
         return false;
     }
