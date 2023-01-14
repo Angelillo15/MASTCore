@@ -187,7 +187,8 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance {
 
         if (version > 9) {
             if (this.getServer().getPluginManager().getPlugin("eGlow") != null && ConfigLoader.getGlow()
-                    .getConfig().getBoolean("Config.enabled")) {
+                    .getConfig().getBoolean("Config.enabled") &&
+            this.getServer().getPluginManager().getPlugin("Vault") != null) {
                 glowEnabled = true;
                 getServer().getPluginManager().registerEvents(new GlowJoin(), this);
                 GlowLoader.loadGlow();
@@ -199,8 +200,17 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance {
                 PermsUtils.setupPermissions();
 
             } else {
-                logger.warn(TextUtils.colorize("eGlow not found! or Glow disabled in config.yml"));
-                logger.warn(TextUtils.colorize("The glow module will be disabled."));
+                if(getServer().getPluginManager().getPlugin("Vault") == null) {
+                    logger.warn(TextUtils.colorize("&cVault not found! Glow will not work!"));
+                }
+
+                if (this.getServer().getPluginManager().getPlugin("eGlow") == null) {
+                    logger.warn(TextUtils.colorize("&ceGlow not found! Glow will not work!"));
+                }
+
+                if (!ConfigLoader.getGlow().getConfig().getBoolean("Config.enabled")) {
+                    logger.warn(TextUtils.colorize("&cGlow is disabled! Glow will not work!"));
+                }
             }
         }
     }
