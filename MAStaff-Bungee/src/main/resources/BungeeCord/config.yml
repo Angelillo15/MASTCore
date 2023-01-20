@@ -21,19 +21,6 @@ Config:
   # The language file you want to use for the plugin messages.
   # Included locales: english.yml and spanish.yml
   language: "english.yml"
-
-# Database configuration for the plugin. With the Bungee version, you must use MariaDB or MySQL.
-Database:
-  # Your database host IP address.
-  host: '127.0.0.1'
-  # Your database host connection port. Default for MariaDB and MySQL is 3306.
-  port: '3306'
-  # Name of your database. A database server can contain multiple databases.
-  database: 'mastaff'
-  # Your database host username.
-  user: 'mastaff'
-  # Your database host password.
-  password: 'mastaff'
 Helpop:
   # Cooldown in seconds
   cooldown: 30

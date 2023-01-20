@@ -123,7 +123,7 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance {
         pm.registerEvents(new OnItemDrop(), this);
         pm.registerEvents(new FreezeListener(), this);
         pm.registerEvents(new OnItemGet(), this);
-        pm.registerEvents(new OnSwapHand(), this);
+        if(version >= 9) pm.registerEvents(new OnSwapHand(), this);
         FreezeUtils.setupMessageSender();
         this.getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
     }
@@ -244,6 +244,8 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance {
 
     @Override
     public void reload() {
+        long start = System.currentTimeMillis();
+
         logger.debug("Unloading Database...");
         unloadDatabase();
         logger.debug("Unregistering Commands...");
@@ -266,7 +268,11 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance {
         registerCommands();
         logger.debug("Registering Listeners...");
         registerListeners();
-        logger.debug("Reloaded successfully ✔️");
+
+        long end = System.currentTimeMillis();
+        logger.debug("Reloaded successfully in {time}ms ✔️"
+                .replace("{time}", String.valueOf(end - start))
+        );
     }
 
     @Override
