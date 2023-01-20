@@ -275,6 +275,14 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance {
         );
     }
 
+    public void debugInfo(){
+        logger.debug("Debug info:");
+        logger.debug("Server version: 1." + version);
+        logger.debug("Plugin version: " + getDescription().getVersion());
+        logger.debug("Glow enabled: " + glowEnabled);
+        logger.debug("Plugin connection: " + PluginConnection.getDataProvider().name());
+    }
+
     @Override
     public IStaffPlayer createStaffPlayer(Player player) {
         return new StaffPlayer(player);

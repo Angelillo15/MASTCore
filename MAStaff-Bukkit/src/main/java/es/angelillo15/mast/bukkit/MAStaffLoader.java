@@ -10,6 +10,7 @@ public class MAStaffLoader extends MAStaff {
         registerListeners();
         loadDatabase();
         loadModules();
+        debugInfo();
     }
 
     @Override
