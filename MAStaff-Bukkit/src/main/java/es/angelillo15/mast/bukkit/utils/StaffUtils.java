@@ -16,7 +16,7 @@ public class StaffUtils {
     public static void playerRandomTeleport(Player player) {
         ArrayList<Player> players = new ArrayList<>();
         Bukkit.getOnlinePlayers().forEach(p -> {
-            if (!(p.hasPermission(Permissions.STAFF.getPermission()) || !(p.equals(player)))) {
+            if (!(p.hasPermission(Permissions.STAFF.getPermission()))) {
                 players.add(p);
             }
         });
