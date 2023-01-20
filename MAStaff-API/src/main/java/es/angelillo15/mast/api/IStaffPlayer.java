@@ -9,7 +9,9 @@ import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
-
+/**
+* This interface allows to you to interact with the staff players
+*/
 public interface IStaffPlayer {
 
     /**
@@ -23,26 +25,31 @@ public interface IStaffPlayer {
     void toggleStaffMode(boolean saveInventory);
 
     /**
-     * @return true if the player is in staff mode or false if not
+     * @return boolean
+     * Returns true if the player is in StaffMode
      */
     boolean isStaffMode();
 
     /**
      * @param staffMode enable or disable the staff mode
+     * Method to enable or disable the StaffMode,
+     * ths method can throws exceptions
      */
-    void setStaffMode(@NonNull boolean staffMode, boolean saveInventory) throws AlreadyEnableException, AlreadyDisableException;
+    void setStaffMode(boolean staffMode, boolean saveInventory) throws AlreadyEnableException, AlreadyDisableException;
     /**
      * Toggle the vanish mode
      */
     void toggleVanish();
 
     /**
-     * @return true if the player is vanished or false if not
+     * @return boolean
+     * Returns true if the p
      */
     boolean isVanished();
 
     /**
      * @return the player
+     * Method to get the Player under StaffPlayer
      */
     Player getPlayer();
 
