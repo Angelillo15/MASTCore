@@ -1,6 +1,6 @@
 package es.angelillo15.mast.bukkit.listener;
 
-import es.angelillo15.mast.api.event.FreezeMessageEvent;
+import es.angelillo15.mast.api.event.bukkit.FreezeMessageEvent;
 import es.angelillo15.mast.api.managers.FreezeManager;
 import es.angelillo15.mast.bukkit.config.Messages;
 import org.bukkit.Location;
