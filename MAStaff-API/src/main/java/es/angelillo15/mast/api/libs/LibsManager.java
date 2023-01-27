@@ -35,6 +35,14 @@ public class LibsManager {
         libs.add(getLib("org{}slf4j", "slf4j-api", "2.0.6", "es{}angelillo15{}mast{}libs{}slf4j"));
     }
 
+    /**
+     * Get a library from Maven Central or JitPack
+     * @param groupID The group ID of the library
+     * @param artifact The artifact ID of the library
+     * @param version The version of the library
+     * @param relocate The package to relocate the library to
+     * @return The library
+     */
     public static Library getLib(String groupID, String artifact, String version, String relocate) {
         Library lib = Library.builder()
                 .groupId(groupID)
@@ -46,6 +54,28 @@ public class LibsManager {
         return lib;
     }
 
+    /**
+     * @param groupID The groupID of the library
+     * @param artifact The artifact of the library
+     * @param version The version of the library
+     * @return The library
+     */
+    public static Library getLib(String groupID, String artifact, String version) {
+        Library lib = Library.builder()
+                .groupId(groupID)
+                .artifactId(artifact)
+                .version(version)
+                .isolatedLoad(false)
+                .build();
+        return lib;
+    }
+
+    /**
+     * Get a library by its ID
+     * @param lib The ID of the library
+     * @param relocation The relocation of the library
+     * @return The library
+     */
     public static Library getLib(String lib, String relocation){
         String[] libInfo = lib.split(":");
         Library library = getLib(
@@ -56,7 +86,4 @@ public class LibsManager {
         );
         return library;
     }
-
-
-
 }
