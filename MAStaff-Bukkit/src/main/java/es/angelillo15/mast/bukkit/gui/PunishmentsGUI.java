@@ -17,13 +17,14 @@ public class PunishmentsGUI extends TargetGUI {
     }
 
     @Override
+    public void onOpen(InventoryOpenEvent event) {
+
+    }
+
+    @Override
     public boolean onClick(InventoryClickEvent event) {
         addItem(GuiUtils.getPlayerHead(target));
         return false;
     }
 
-    @Override
-    public void onOpen(InventoryOpenEvent event) {
-        super.onOpen(event);
-    }
 }
