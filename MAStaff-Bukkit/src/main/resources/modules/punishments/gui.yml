@@ -1,0 +1,28 @@
+Gui:
+  enable: true
+  title: '&c&lPunishments for %player_name% &7&l» {page_title}'
+  pages:
+    bans_page:
+      title: 'bans'
+      items:
+        ban_hacks:
+          slot: 10
+          material: 'REDSTONE_BLOCK'
+          name: '&c&lBan Hacks'
+          lore:
+            - '&7Click to ban the player for hacks. &c&l(Permanent)'
+            - '&7Reason: &c&lHacking'
+            - '&7Duration: &c&lPermanent'
+          command: 'ban %player_name% Hacking'
+    warns_page:
+      title: 'warns'
+      items:
+        ban_hacks:
+          slot: 10
+          material: 'WATCH'
+          name: '&c&lWarn Hacks'
+          lore:
+            - '&7Click to ban the player for hacks. &c&l(Permanent)'
+            - '&7Reason: &c&lHacking'
+            - '&7Duration: &c&lPermanent'
+          command: 'ban %player_name% Hacking'

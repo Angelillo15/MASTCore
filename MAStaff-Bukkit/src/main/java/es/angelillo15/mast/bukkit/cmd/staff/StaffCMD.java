@@ -22,6 +22,7 @@ public class StaffCMD implements CommandExecutor {
         subCommands.clear();
         subCommands.add(new StaffListArg());
         subCommands.add(new StaffHelpArg());
+        subCommands.add(new StaffPunishmentsGUIArg());
     }
 
     @Override

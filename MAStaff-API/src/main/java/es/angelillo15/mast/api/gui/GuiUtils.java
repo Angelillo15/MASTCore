@@ -21,7 +21,7 @@ public class GuiUtils {
 
         SkullMeta meta = (SkullMeta) item.getItemMeta();
 
-        meta.setDisplayName(player.getDisplayName());
+        meta.setDisplayName(player.getName());
 
         meta.setOwner(player.getName());
 

@@ -5,7 +5,7 @@ plugins {
 }
 
 group = "es.angelillo15"
-version = "2.0.0"
+version = "2.1.0"
 
 repositories {
     mavenCentral()
@@ -52,6 +52,8 @@ dependencies {
     implementation("com.zaxxer:HikariCP:5.0.1")
     compileOnly("com.github.Nookure:GlowAPI:1.0.0")
     implementation("com.github.hamza-cskn.obliviate-invs:core:4.1.10")
+    implementation("com.github.hamza-cskn.obliviate-invs:advancedslot:4.1.10")
+    implementation("com.github.hamza-cskn.obliviate-invs:pagination:4.1.10")
     implementation("com.github.hamza-cskn.obliviate-invs:configurablegui:4.1.10")
     implementation("com.google.code.gson:gson:2.10.1")
     implementation("net.byteflux:libby-bukkit:1.1.5")

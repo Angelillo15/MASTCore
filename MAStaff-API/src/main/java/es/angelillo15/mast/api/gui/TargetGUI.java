@@ -9,7 +9,7 @@ import org.bukkit.event.inventory.InventoryType;
 public class TargetGUI extends Gui {
     @Getter
     @Setter
-    private Player target;
+    public Player target;
 
     public TargetGUI(Player player, String id, String title, int rows) {
         super(player, id, title, rows);
