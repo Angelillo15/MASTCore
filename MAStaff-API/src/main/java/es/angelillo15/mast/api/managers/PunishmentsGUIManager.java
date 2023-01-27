@@ -2,11 +2,10 @@ package es.angelillo15.mast.api.managers;
 
 import es.angelillo15.mast.api.gui.Page;
 import lombok.Getter;
-import org.bukkit.inventory.ItemStack;
 
 import java.util.HashMap;
 
-public class PunishmentsGUILoader {
+public class PunishmentsGUIManager {
     @Getter
     private static HashMap<Integer, Page> punishmentsGUIS = new HashMap<>();
 
