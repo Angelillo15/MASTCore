@@ -8,6 +8,8 @@ version = "2.0.0"
 repositories {
     mavenCentral()
     maven("https://papermc.io/repo/repository/maven-public/")
+    maven("https://repo.alessiodp.com/releases/")
+
 }
 
 dependencies {
@@ -17,7 +19,8 @@ dependencies {
     compileOnly("com.github.Carleslc.Simple-YAML:Simple-Yaml:1.8.3")
     compileOnly("com.github.Angelillo15:ConfigManager:1.4")
     compileOnly("net.md-5:bungeecord-chat:1.16-R0.4")
-
+    implementation("net.byteflux:libby-bungee:1.1.5")
+    implementation(project(":MAStaff-API"))
 }
 
 tasks.processResources {

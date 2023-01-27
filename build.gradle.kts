@@ -14,7 +14,7 @@ repositories {
     maven("https://oss.sonatype.org/content/repositories/snapshots")
     maven("https://oss.sonatype.org/content/repositories/central")
     maven("https://repo.dmulloy2.net/repository/public/")
-
+    maven("https://repo.alessiodp.com/releases/")
 }
 
 java {
@@ -38,6 +38,7 @@ tasks.shadowJar {
     relocate("com.google.j2objc", "es.angelillo15.mast.libs.google.j2objc")
     relocate("javax.annotation", "es.angelillo15.mast.libs.javax.annotation")
     relocate("org.checkerframework", "es.angelillo15.mast.libs.checkerframework")
+    relocate("net.byteflux.libby", "es.angelillo15.mast.libs.libby")
 }
 
 dependencies {
@@ -49,13 +50,11 @@ dependencies {
     implementation("com.github.Carleslc.Simple-YAML:Simple-Yaml:1.8.3")
     implementation("com.github.Angelillo15:ConfigManager:1.4")
     implementation("com.zaxxer:HikariCP:5.0.1")
-    implementation("com.github.Nookure:GlowAPI:1.0.0")
+    compileOnly("com.github.Nookure:GlowAPI:1.0.0")
     implementation("com.github.hamza-cskn.obliviate-invs:core:4.1.10")
     implementation("com.github.hamza-cskn.obliviate-invs:configurablegui:4.1.10")
     implementation("com.google.code.gson:gson:2.10.1")
-    implementation("com.github.hamza-cskn.obliviate-invs:advancedslot:4.1.10")
-    implementation("com.github.hamza-cskn.obliviate-invs:pagination:4.1.10")
-    implementation("com.google.guava:guava:31.1-jre")
+    implementation("net.byteflux:libby-bukkit:1.1.5")
 }
 
 tasks.withType<JavaCompile> {

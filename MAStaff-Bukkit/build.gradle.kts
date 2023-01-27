@@ -13,7 +13,7 @@ repositories {
     maven("https://oss.sonatype.org/content/repositories/central")
     maven("https://repo.dmulloy2.net/repository/public/")
     maven("https://repo.extendedclip.com/content/repositories/placeholderapi/")
-
+    maven("https://repo.alessiodp.com/releases/")
 }
 
 dependencies {
@@ -31,6 +31,7 @@ dependencies {
     compileOnly("me.clip:placeholderapi:2.11.2")
     compileOnly("com.github.MilkBowl:VaultAPI:1.7.1")
     compileOnly("com.github.MrGraycat:eGlow:-SNAPSHOT")
+    implementation("net.byteflux:libby-bukkit:1.1.5")
 }
 
 tasks.processResources {
