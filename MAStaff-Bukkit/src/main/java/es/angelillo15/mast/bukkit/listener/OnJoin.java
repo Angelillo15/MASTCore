@@ -18,6 +18,10 @@ public class OnJoin implements Listener {
             return;
         }
 
+        if(StaffPlayersManagers.getStaffPlayers().containsKey(player.getUniqueId())){
+            return;
+        }
+
         try {
             StaffPlayersManagers.addStaffPlayer(new StaffPlayer(player));
             MAStaff.getPlugin().getPLogger().debug("Added " + player.getName() + " to the map");
