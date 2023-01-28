@@ -91,6 +91,20 @@ public class SelectTargetGUI extends Gui {
 
         this.targetPlayer = target;
 
+        String clickedItemDisplayName = clickedItemMeta.getDisplayName();
+
+        if(clickedItemDisplayName.equals(Messages.GET_STAFFLIST_NEXT())) {
+            this.pagination.goNextPage();
+            pagination.update();
+            return false;
+        }
+
+        if(clickedItemDisplayName.equals(Messages.GET_STAFFLIST_PREVIUS())) {
+            this.pagination.goPreviousPage();
+            pagination.update();
+            return false;
+        }
+
         if(this.callbackType == CallbackType.RUNNABLE){
             this.callback.accept(target);
             return false;
