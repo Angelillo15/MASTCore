@@ -11,7 +11,6 @@ import es.angelillo15.mast.bukkit.cmd.staff.StaffCMD;
 import es.angelillo15.mast.bukkit.config.ConfigLoader;
 import es.angelillo15.mast.bukkit.config.Messages;
 import es.angelillo15.mast.bukkit.listener.FreezeListener;
-import es.angelillo15.mast.bukkit.listener.GlowJoin;
 import es.angelillo15.mast.bukkit.listener.VanishListener;
 import es.angelillo15.mast.bukkit.listener.clickListeners.OnItemClick;
 import es.angelillo15.mast.bukkit.listener.OnJoin;
@@ -194,7 +193,6 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance {
                     .getConfig().getBoolean("Config.enabled") &&
             this.getServer().getPluginManager().getPlugin("Vault") != null) {
                 glowEnabled = true;
-                getServer().getPluginManager().registerEvents(new GlowJoin(), this);
                 GlowLoader.loadGlow();
 
                 if (getServer().getPluginManager().getPlugin("Vault") == null) {
