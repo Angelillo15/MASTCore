@@ -44,11 +44,9 @@ public class StaffCMD implements CommandExecutor {
                 }
                 subCommand.execute(sender, args);
                 return true;
-            } else {
-                sendHelp(sender);
             }
         }
-
+        sendHelp(sender);
         return true;
     }
 

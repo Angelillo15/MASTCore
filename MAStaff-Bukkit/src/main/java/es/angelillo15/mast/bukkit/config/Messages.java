@@ -130,4 +130,12 @@ public class Messages {
         return messages.getString("Prefix");
     }
 
+
+    /*
+     * Gui
+     */
+    public static String GET_GUI_TITLE(){
+        return MAStaff.parseMessage(ConfigLoader.getPunishmentsGUI().getConfig().getString("Gui.title"));
+    }
+
 }

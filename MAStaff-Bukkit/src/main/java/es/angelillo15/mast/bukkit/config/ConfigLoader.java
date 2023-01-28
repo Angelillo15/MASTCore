@@ -1,6 +1,7 @@
 package es.angelillo15.mast.bukkit.config;
 
 import es.angelillo15.configmanager.ConfigManager;
+import es.angelillo15.mast.api.ILogger;
 import es.angelillo15.mast.bukkit.MAStaff;
 import lombok.Getter;
 
@@ -23,6 +24,8 @@ public class ConfigLoader {
     private static ConfigManager en;
     @Getter
     private static ConfigManager customItems;
+    @Getter
+    private static ConfigManager punishmentsGUI;
     private String language;
 
     public ConfigLoader() {
@@ -30,12 +33,22 @@ public class ConfigLoader {
     }
 
     public void load() {
+        ILogger logger = MAStaff.getPlugin().getPLogger();
+        logger.debug("Loading config...");
         loadConfig();
+        logger.debug("Loading languages...");
         loadLanguages();
+        logger.debug("Loading messages...");
         loadMessage();
+        logger.debug("Loading internal staff items...");
         loadInternal();
+        logger.debug("Loading glow module...");
         loadGlowModule();
+        logger.debug("Loading custom items...");
         loadCustomItems();
+        logger.debug("Loading punishments GUI...");
+        loadPunishmentsGUI();
+        logger.debug("Configs loaded!");
     }
 
     public void loadConfig() {
@@ -72,6 +85,11 @@ public class ConfigLoader {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public void loadPunishmentsGUI(){
+        punishmentsGUI = new ConfigManager(plugin.getDataFolder().toPath(), "modules/punishments/gui.yml", "/modules/punishments/gui.yml");
+        punishmentsGUI.registerConfig();
     }
 
     public void loadCustomItems() {

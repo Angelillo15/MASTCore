@@ -1,9 +1,8 @@
 Gui:
   enable: true
-  title: '&c&lPunishments for %player_name% &7&l» {page_title}'
+  title: '&c&lPunishments for {target}'
   pages:
     bans_page:
-      title: 'bans'
       items:
         ban_hacks:
           slot: 10
@@ -13,16 +12,15 @@ Gui:
             - '&7Click to ban the player for hacks. &c&l(Permanent)'
             - '&7Reason: &c&lHacking'
             - '&7Duration: &c&lPermanent'
-          command: 'ban %player_name% Hacking'
+          command: 'ban {target} Hacking by {sender}'
     warns_page:
-      title: 'warns'
       items:
         ban_hacks:
           slot: 10
-          material: 'WATCH'
+          material: 'CLOCK'
           name: '&c&lWarn Hacks'
           lore:
             - '&7Click to ban the player for hacks. &c&l(Permanent)'
             - '&7Reason: &c&lHacking'
             - '&7Duration: &c&lPermanent'
-          command: 'ban %player_name% Hacking'
+          command: 'ban {target} Hacking by {sender}'

@@ -7,6 +7,8 @@ import es.angelillo15.mast.bukkit.gui.SelectTargetGUI;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import java.util.ArrayList;
+
 public class StaffPunishmentsGUIArg extends SubCommand {
     @Override
     public String getName() {
@@ -34,6 +36,7 @@ public class StaffPunishmentsGUIArg extends SubCommand {
             if(!sender.hasPermission(getPermission())) return;
             Player player = (Player) sender;
             PunishmentsGUI gui = new PunishmentsGUI(player);
+
             new SelectTargetGUI(player, gui).open();
         }
     }

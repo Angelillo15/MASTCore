@@ -20,6 +20,7 @@ import es.angelillo15.mast.bukkit.listener.staffmode.*;
 import es.angelillo15.mast.bukkit.loaders.CustomItemsLoader;
 import es.angelillo15.mast.bukkit.loaders.GlowLoader;
 import es.angelillo15.mast.bukkit.loaders.ItemsLoader;
+import es.angelillo15.mast.bukkit.loaders.PunishmentGUILoader;
 import es.angelillo15.mast.bukkit.utils.FreezeUtils;
 import es.angelillo15.mast.bukkit.utils.Logger;
 import es.angelillo15.mast.api.TextUtils;
@@ -185,6 +186,7 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance {
     public void loadModules() {
         ItemsLoader.load();
         CustomItemsLoader.load();
+        PunishmentGUILoader.load();
         new InventoryAPI(this).init();
 
         if (version > 9) {

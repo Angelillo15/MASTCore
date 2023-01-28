@@ -1,27 +1,31 @@
 package es.angelillo15.mast.api.gui;
 
 import lombok.Getter;
+import lombok.Setter;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.HashMap;
 
 public class Page {
     @Getter
-    private HashMap<Integer, ItemStack> items = new HashMap<>();
+    private HashMap<Integer, CommandItem> items = new HashMap<>();
+    @Getter
+    @Setter
+    private String title;
 
-    public Page(HashMap<Integer, ItemStack> items){
+    public Page(HashMap<Integer, CommandItem> items){
         this.items = items;
     }
 
-    public void addItem(int slot, ItemStack itemStack){
-        items.put(slot, itemStack);
+    public void addItem(int slot, CommandItem CommandItem){
+        items.put(slot, CommandItem);
     }
 
     public void removeItem(int slot){
         items.remove(slot);
     }
 
-    public ItemStack getItem(int slot){
+    public CommandItem getItem(int slot){
         return items.get(slot);
     }
 

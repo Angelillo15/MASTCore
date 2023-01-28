@@ -5,6 +5,7 @@ import es.angelillo15.mast.api.gui.TargetGUI;
 import es.angelillo15.mast.api.material.XMaterial;
 import es.angelillo15.mast.bukkit.MAStaff;
 import es.angelillo15.mast.bukkit.config.Messages;
+import lombok.Getter;
 import mc.obliviate.inventory.Gui;
 import mc.obliviate.inventory.Icon;
 import mc.obliviate.inventory.pagination.PaginationManager;
@@ -16,16 +17,32 @@ import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.function.Consumer;
+
 public class SelectTargetGUI extends Gui {
+    enum CallbackType {
+        GUI,
+        RUNNABLE
+    }
+
+    private CallbackType callbackType;
+    private Consumer<Player> callback;
     private TargetGUI targetGui;
+    @Getter
+    private Player targetPlayer;
     private final PaginationManager pagination = new PaginationManager(this);
 
     public SelectTargetGUI(Player player, TargetGUI targetGUI) {
         super(player, "select-target", "Select a target", 6);
         this.targetGui = targetGUI;
+        this.callbackType = CallbackType.GUI;
     }
 
-
+    public SelectTargetGUI(Player player, Consumer<Player> callback) {
+        super(player, "select-target", "Select a target", 6);
+        this.callback = callback;
+        this.callbackType = CallbackType.RUNNABLE;
+    }
 
     @Override
     public void onOpen(InventoryOpenEvent event) {
@@ -72,10 +89,21 @@ public class SelectTargetGUI extends Gui {
 
         if (target == null) return false;
 
-        targetGui.setTarget(target);
-        player.closeInventory();
+        this.targetPlayer = target;
 
-        targetGui.open();
+        if(this.callbackType == CallbackType.RUNNABLE){
+            this.callback.accept(target);
+            return false;
+        }
+
+        if(this.callbackType == CallbackType.GUI){
+            targetGui.setTarget(target);
+            player.closeInventory();
+
+            targetGui.open();
+            return false;
+        }
+
         return false;
     }
     @Override
