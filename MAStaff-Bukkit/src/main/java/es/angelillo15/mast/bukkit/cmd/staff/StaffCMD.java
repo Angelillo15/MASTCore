@@ -4,6 +4,8 @@ import es.angelillo15.mast.api.IStaffPlayer;
 import es.angelillo15.mast.api.cmd.SubCommand;
 import es.angelillo15.mast.api.TextUtils;
 import es.angelillo15.mast.api.managers.StaffPlayersManagers;
+import es.angelillo15.mast.bukkit.MAStaff;
+import es.angelillo15.mast.bukkit.config.ConfigLoader;
 import es.angelillo15.mast.bukkit.config.Messages;
 import es.angelillo15.mast.bukkit.gui.StaffListGUI;
 import lombok.Getter;
@@ -22,7 +24,7 @@ public class StaffCMD implements CommandExecutor {
         subCommands.clear();
         subCommands.add(new StaffListArg());
         subCommands.add(new StaffHelpArg());
-        subCommands.add(new StaffPunishmentsGUIArg());
+        if(ConfigLoader.getPunishmentsGUI().getConfig().getBoolean("Gui.enable")) subCommands.add(new StaffPunishmentsGUIArg());
     }
 
     @Override
