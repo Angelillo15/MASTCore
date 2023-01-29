@@ -15,13 +15,11 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 public class PunishmentsGUI extends TargetGUI {
-    public PunishmentsGUI(Player player, Player target) {
-        super(player, target, "punishments", Messages.GET_GUI_TITLE(), 6);
-    }
     private int page = 1;
     public PunishmentsGUI(Player player, Player target, int page){
         super(player, target, "punishments", Messages.GET_GUI_TITLE()
-                .replace("{page_title}", PunishmentsGUIManager.getPage(page).getTitle()),
+                .replace("{page_title}", PunishmentsGUIManager.getPage(page).getTitle())
+                        .replace("{player}", target.getName()),
                 6);
         this.page = page;
     }

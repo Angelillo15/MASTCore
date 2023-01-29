@@ -2,6 +2,7 @@ package es.angelillo15.mast.bukkit.config;
 
 import es.angelillo15.configmanager.ConfigManager;
 import es.angelillo15.mast.api.ILogger;
+import es.angelillo15.mast.api.managers.ConfigMerge;
 import es.angelillo15.mast.bukkit.MAStaff;
 import lombok.Getter;
 
@@ -34,8 +35,8 @@ public class ConfigLoader {
 
     public void load() {
         ILogger logger = MAStaff.getPlugin().getPLogger();
-        logger.debug("Loading config...");
         loadConfig();
+        logger.debug("Loaded config");
         logger.debug("Loading languages...");
         loadLanguages();
         logger.debug("Loading messages...");
@@ -52,8 +53,14 @@ public class ConfigLoader {
     }
 
     public void loadConfig() {
+        ConfigMerge.merge(new File(plugin.getDataFolder().toPath().toString() + File.separator + "config.yml"),
+                plugin.getResource("config.yml")
+        );
+
         config = new ConfigManager(plugin.getDataFolder().toPath(), "config.yml", "config.yml");
         config.registerConfig();
+
+        MAStaff.getPlugin().setDebug(config.getConfig().getBoolean("Config.debug"));
     }
 
     public void loadInternal (){

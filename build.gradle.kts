@@ -39,6 +39,7 @@ tasks.shadowJar {
     relocate("javax.annotation", "es.angelillo15.mast.libs.javax.annotation")
     relocate("org.checkerframework", "es.angelillo15.mast.libs.checkerframework")
     relocate("net.byteflux.libby", "es.angelillo15.mast.libs.libby")
+    relocate("ru.vyarus.yaml.updater", "es.angelillo15.mast.libs.yaml-config-updater")
 }
 
 dependencies {
@@ -57,6 +58,7 @@ dependencies {
     implementation("com.github.hamza-cskn.obliviate-invs:configurablegui:4.1.10")
     implementation("com.google.code.gson:gson:2.10.1")
     implementation("net.byteflux:libby-bukkit:1.1.5")
+
 }
 
 tasks.withType<JavaCompile> {

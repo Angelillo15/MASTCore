@@ -8,9 +8,12 @@
 #
 Gui:
   enable: true
-  title: '&c&lPunishments for {target}'
+  title: '&cPunishments &7({player}) &7&l» &r{page_title}'
   pages:
     bans_page:
+      # The title of the page. You can use color codes.
+      title: 'bans'
+      # The items of the page.
       items:
         ban_hacks:
           # The slot of the item. The first slot is 0.
@@ -30,6 +33,9 @@ Gui:
           # {sender} - The sender player name.
           command: 'ban {target} Hacking, banned by {sender}'
     warns_page:
+      # The title of the page. You can use color codes.
+      title: 'warns'
+      # The items of the page.
       items:
         ban_hacks:
           # The slot of the item. The first slot is 0.

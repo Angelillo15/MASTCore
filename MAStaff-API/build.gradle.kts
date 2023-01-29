@@ -28,9 +28,10 @@ dependencies {
     compileOnly("org.spigotmc:spigot-api:1.13-R0.1-SNAPSHOT")
     compileOnly("me.clip:placeholderapi:2.11.2")
     compileOnly("com.github.mrgraycat:eGlow:-SNAPSHOT")
-    implementation("net.byteflux:libby-bukkit:1.1.5")
+    compileOnly("net.byteflux:libby-bukkit:1.1.5")
     compileOnly("com.github.hamza-cskn.obliviate-invs:core:4.1.10")
     compileOnly("com.github.hamza-cskn.obliviate-invs:configurablegui:4.1.10")
     compileOnly("com.github.hamza-cskn.obliviate-invs:advancedslot:4.1.10")
     compileOnly("com.github.hamza-cskn.obliviate-invs:pagination:4.1.10")
+    compileOnly("ru.vyarus:yaml-config-updater:1.4.2")
 }

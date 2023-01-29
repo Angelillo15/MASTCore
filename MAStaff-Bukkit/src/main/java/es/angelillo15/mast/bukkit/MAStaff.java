@@ -26,6 +26,7 @@ import es.angelillo15.mast.api.TextUtils;
 import es.angelillo15.mast.bukkit.utils.Metrics;
 import es.angelillo15.mast.bukkit.utils.PermsUtils;
 import lombok.Getter;
+import lombok.Setter;
 import lombok.SneakyThrows;
 import mc.obliviate.inventory.InventoryAPI;
 import org.bukkit.Bukkit;
@@ -47,7 +48,8 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance {
     private static MAStaff plugin;
     @Getter
     private static boolean glowEnabled = false;
-    private boolean debug = true;
+    @Setter
+    private boolean debug = false;
     private static ILogger logger;
     @Getter
     private static PluginConnection pluginConnection;
@@ -95,7 +97,6 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance {
     @Override
     public void loadConfig() {
         new ConfigLoader().load();
-        debug = ConfigLoader.getConfig().getConfig().getBoolean("Config.debug");
     }
 
     @Override

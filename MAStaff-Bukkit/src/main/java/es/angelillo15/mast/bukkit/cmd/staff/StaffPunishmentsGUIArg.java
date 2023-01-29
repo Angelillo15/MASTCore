@@ -35,9 +35,10 @@ public class StaffPunishmentsGUIArg extends SubCommand {
         if (sender instanceof Player) {
             if(!sender.hasPermission(getPermission())) return;
             Player player = (Player) sender;
-            PunishmentsGUI gui = new PunishmentsGUI(player);
 
-            new SelectTargetGUI(player, gui).open();
+            new SelectTargetGUI(player, (target) -> {
+                new PunishmentsGUI(player, target, 1).open();
+            }).open();
         }
     }
 }

@@ -30,8 +30,19 @@ public class LibsManager {
                 .relocate("com{}google{}thirdparty", "es{}angelillo15{}mast{}libs{}google{}thirdparty")
                 .build();
 
+        Library yamlMerge = Library.builder()
+                        .groupId("ru{}vyarus")
+                        .artifactId("yaml-config-updater")
+                        .version("1.4.2")
+                        .isolatedLoad(false)
+                        .relocate("ru{}vyarus{}yaml{}updater", "es{}angelillo15{}mast{}libs{}yaml-config-updater")
+                        .relocate("org{}slf4j", "es{}angelillo15{}mast{}libs{}slf4j")
+                        .relocate("org{}yaml{}snakeyaml", "es{}angelillo15{}mast{}libs{}snakeyaml")
+                        .build();
+
         libs.add(hikariCP);
         libs.add(guava);
+        libs.add(yamlMerge);
         libs.add(getLib("org{}slf4j", "slf4j-api", "2.0.6", "es{}angelillo15{}mast{}libs{}slf4j"));
     }
 
