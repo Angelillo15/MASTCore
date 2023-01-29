@@ -1,6 +1,7 @@
 package es.angelillo15.mast.bukkit.utils;
 
 import es.angelillo15.mast.api.Permissions;
+import es.angelillo15.mast.api.event.bukkit.staff.StaffChatTalkEvent;
 import es.angelillo15.mast.bukkit.MAStaff;
 import es.angelillo15.mast.bukkit.config.Messages;
 import org.bukkit.Bukkit;

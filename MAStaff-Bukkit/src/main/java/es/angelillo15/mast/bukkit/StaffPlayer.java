@@ -5,6 +5,7 @@ import com.google.common.io.ByteStreams;
 import es.angelillo15.mast.api.IStaffPlayer;
 import es.angelillo15.mast.api.Permissions;
 import es.angelillo15.mast.api.database.sql.CommonQueries;
+import es.angelillo15.mast.api.event.bukkit.staff.StaffEnableEvent;
 import es.angelillo15.mast.api.items.StaffItem;
 import es.angelillo15.mast.api.managers.GlowManager;
 import es.angelillo15.mast.api.managers.VanishedPlayers;
@@ -111,6 +112,7 @@ public class StaffPlayer implements IStaffPlayer {
         StaffUtils.asyncBroadcastMessage(Messages.GET_VANISH_JOIN_MESSAGE()
                 .replace("{player}", player.getName()));
         setGlowing(false);
+        Bukkit.getPluginManager().callEvent(new StaffEnableEvent(this));
     }
 
     public void enableStaffMode(boolean saveInventory){
@@ -126,6 +128,7 @@ public class StaffPlayer implements IStaffPlayer {
         if(saveInventory) StaffUtils.asyncBroadcastMessage(Messages.GET_VANISH_LEAVE_MESSAGE()
                 .replace("{player}", player.getName()));
         setGlowing(true);
+        Bukkit.getPluginManager().callEvent(new StaffEnableEvent(this));
     }
 
     @Override
