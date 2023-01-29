@@ -1,4 +1,4 @@
-package es.angelillo15.mast.api.event.bukkit;
+package es.angelillo15.mast.api.event.bukkit.freeze;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
