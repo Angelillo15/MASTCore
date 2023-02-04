@@ -1,9 +1,11 @@
 package es.angelillo15.mast.bungee.cmd;
 
+import es.angelillo15.mast.api.event.bungee.staffchat.StaffChatTalkEvent;
 import es.angelillo15.mast.bungee.config.Messages;
 import es.angelillo15.mast.bungee.utils.StaffUtils;
 import es.angelillo15.mast.api.managers.StaffChatManager;
 import net.md_5.bungee.api.CommandSender;
+import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.plugin.Command;
@@ -37,6 +39,8 @@ public class StaffChat extends Command {
                             .replace("{message}", sb.toString()
                             );
                     StaffUtils.sendStaffChatMessage(message);
+
+                    ProxyServer.getInstance().getPluginManager().callEvent(new StaffChatTalkEvent(p, sb.toString()));
                 }
             }
         }
