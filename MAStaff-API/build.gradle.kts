@@ -8,6 +8,8 @@ version = parent?.version ?: "2.0.0"
 
 repositories {
     mavenCentral()
+    maven("https://papermc.io/repo/repository/maven-public/")
+    maven("https://papermc.io/repo/repository/maven-public/")
     maven("https://hub.spigotmc.org/nexus/content/repositories/snapshots/")
     maven("https://oss.sonatype.org/content/repositories/snapshots")
     maven("https://oss.sonatype.org/content/repositories/central")
@@ -25,6 +27,7 @@ publishing {
 }
 
 dependencies {
+    compileOnly("io.github.waterfallmc:waterfall-api:1.19-R0.1-SNAPSHOT")
     compileOnly("org.spigotmc:spigot-api:1.13-R0.1-SNAPSHOT")
     compileOnly("me.clip:placeholderapi:2.11.2")
     compileOnly("com.github.mrgraycat:eGlow:-SNAPSHOT")
