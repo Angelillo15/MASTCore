@@ -26,47 +26,46 @@ public class AddonsLoader {
 
         for (File file : addonsFolder.listFiles()) {
             MAStaff.getPlugin().getPLogger().debug("Loading addon " + file.getName() + "...");
-            if(!file.getName().endsWith(".jar")) return;
-            URL[] urls = new URL[]{file.toURI().toURL()};
-            AddonDescription addonDescription = new AddonDescription();
 
-            if(file.getName().contains(" ")) return;
-            JarFile jarFile = new JarFile(file);
-            Properties properties = new Properties();
-            InputStream propertiesFile;
+            if(file.isFile() && file.getName().endsWith(".jar")) {
+                URL[] urls = new URL[]{file.toURI().toURL()};
+                AddonDescription addonDescription = new AddonDescription();
 
-            JarEntry jarEntry = jarFile.getJarEntry("addon.properties");
+                JarFile jarFile = new JarFile(file);
+                Properties properties = new Properties();
+                InputStream propertiesFile;
 
-            if (jarEntry == null) {
-                MAStaff.getPlugin().getPLogger().error("Addon " + file.getName() + " doesn't have a addon.properties file!");
-                return;
+                JarEntry jarEntry = jarFile.getJarEntry("addon.properties");
+
+                if (jarEntry == null) {
+                    MAStaff.getPlugin().getPLogger().error("Addon " + file.getName() + " doesn't have a addon.properties file!");
+                    return;
+                }
+
+                propertiesFile = jarFile.getInputStream(jarEntry);
+
+                if (propertiesFile == null) {
+                    MAStaff.getPlugin().getPLogger().error("Addon " + file.getName() + " doesn't have a addon.properties file!");
+                }
+
+                properties.load(propertiesFile);
+
+                addonDescription.setName(properties.getProperty("name"));
+                addonDescription.setMain(properties.getProperty("main"));
+                addonDescription.setVersion(properties.getProperty("version"));
+                addonDescription.setAuthor(properties.getProperty("author"));
+
+                Class cls = new URLClassLoader(urls, MAStaff.getPlugin().getClass().getClassLoader())
+                        .loadClass(addonDescription.getMain());
+
+                MAStaffAddon addon = (MAStaffAddon) cls.newInstance();
+
+                addon.init(new File(file.getParentFile() + File.separator + addonDescription.getName()), addonDescription, MAStaff.getPlugin());
+                addon.onEnable();
+
+                AddonsManager.registerAddon(addon);
+                MAStaff.getPlugin().getPLogger().debug("Addon " + addonDescription.getName() + " Version: " + addonDescription.getVersion() + " loaded!");
             }
-
-            propertiesFile = jarFile.getInputStream(jarEntry);
-
-            if (propertiesFile == null) {
-                MAStaff.getPlugin().getPLogger().error("Addon " + file.getName() + " doesn't have a addon.properties file!");
-                return;
-            }
-
-            properties.load(propertiesFile);
-
-            addonDescription.setName(properties.getProperty("name"));
-            addonDescription.setMain(properties.getProperty("main"));
-            addonDescription.setVersion(properties.getProperty("version"));
-            addonDescription.setAuthor(properties.getProperty("author"));
-
-            Class cls = new URLClassLoader(urls, MAStaff.getPlugin().getClass().getClassLoader())
-                    .loadClass(addonDescription.getMain());
-
-            MAStaffAddon addon = (MAStaffAddon) cls.newInstance();
-
-            addon.init(new File(file.getParentFile() + File.separator + addonDescription.getName()), addonDescription, MAStaff.getPlugin());
-            addon.onEnable();
-
-            AddonsManager.registerAddon(addon);
-            MAStaff.getPlugin().getPLogger().debug("Addon " + addonDescription.getName() + " Version: " + addonDescription.getVersion() + " loaded!");
-
         }
         MAStaff.getPlugin().getPLogger().debug("Addons loaded!");
     }
