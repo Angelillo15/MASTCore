@@ -30,7 +30,7 @@ tasks.shadowJar {
     relocate("net.kyori.adventure", "es.angelillo15.mast.libs.adventure")
     relocate("mc.obliviate", "es.angelillo15.mast.libs.obliviate")
     relocate("com.zaxxer.hikari", "es.angelillo15.mast.libs.hikari")
-    relocate("org.slf4j", "es.angelillo15.mast.libs.slf4j")
+    // relocate("org.slf4j", "es.angelillo15.mast.libs.slf4j")
     relocate("com.google.common", "es.angelillo15.mast.libs.google.common")
     relocate("com.google.gson", "es.angelillo15.mast.libs.google.gson")
     relocate("com.google.thirdparty", "es.angelillo15.mast.libs.google.thirdparty")
@@ -47,6 +47,7 @@ dependencies {
     implementation(project(":MAStaff-Bukkit"))
     implementation(project(":MAStaff-Bungee"))
     implementation(project(":MAStaff-Common"))
+    implementation(project(":MAStaff-Velocity"))
     implementation("org.yaml:snakeyaml:1.33")
     implementation("com.github.Carleslc.Simple-YAML:Simple-Yaml:1.8.3")
     implementation("com.github.Angelillo15:ConfigManager:1.4")
@@ -58,7 +59,6 @@ dependencies {
     implementation("com.github.hamza-cskn.obliviate-invs:configurablegui:4.1.10")
     implementation("com.google.code.gson:gson:2.10.1")
     implementation("net.byteflux:libby-bukkit:1.1.5")
-
 }
 
 tasks.withType<JavaCompile> {
