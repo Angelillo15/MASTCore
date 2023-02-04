@@ -54,7 +54,7 @@ public class ConfigManager {
             if (!configFile.exists()){
                 configFile.mkdirs();
                 Files.copy(Objects.requireNonNull(addon.getClass().getClassLoader()
-                        .getResourceAsStream(addon.getDescriptionFile().getName() + File.separator +originalFileName))
+                        .getResourceAsStream(originalFileName))
                         , configFile.toPath()
                         , StandardCopyOption.REPLACE_EXISTING);
             }
