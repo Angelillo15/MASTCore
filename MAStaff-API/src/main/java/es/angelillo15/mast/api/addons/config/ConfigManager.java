@@ -2,6 +2,7 @@ package es.angelillo15.mast.api.addons.config;
 
 
 import es.angelillo15.mast.api.addons.MAStaffAddon;
+import es.angelillo15.mast.api.addons.bungee.MAStaffBungeeAddon;
 import org.simpleyaml.configuration.file.YamlFile;
 
 import java.io.File;
@@ -19,14 +20,22 @@ public class ConfigManager {
     private Path dataDirectoryPath;
     private String originalFileName;
     private String newFileName;
-    private MAStaffAddon addon;
+    private ClassLoader classLoader;
 
     public ConfigManager(Path dataDirectoryPath, String originalFileName, String newFileName, MAStaffAddon addon) {
         this.dataDirectoryPath = dataDirectoryPath;
         this.originalFileName = originalFileName;
         this.newFileName = newFileName;
-        this.addon = addon;
+        this.classLoader = addon.getClass().getClassLoader();
     }
+
+    public ConfigManager(Path dataDirectoryPath, String originalFileName, String newFileName, MAStaffBungeeAddon addon) {
+        this.dataDirectoryPath = dataDirectoryPath;
+        this.originalFileName = originalFileName;
+        this.newFileName = newFileName;
+        this.classLoader = addon.getClass().getClassLoader();
+    }
+
 
     public void registerConfig() {
         String path = dataDirectoryPath+File.separator+newFileName;
@@ -53,7 +62,7 @@ public class ConfigManager {
         try {
             if (!configFile.exists()){
                 configFile.mkdirs();
-                Files.copy(Objects.requireNonNull(addon.getClass().getClassLoader()
+                Files.copy(Objects.requireNonNull(classLoader
                         .getResourceAsStream(originalFileName))
                         , configFile.toPath()
                         , StandardCopyOption.REPLACE_EXISTING);
