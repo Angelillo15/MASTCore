@@ -6,6 +6,7 @@ import es.angelillo15.mast.api.addons.MAStaffAddon;
 import es.angelillo15.mast.api.addons.bungee.BungeeAddonsManager;
 import es.angelillo15.mast.api.addons.bungee.MAStaffBungeeAddon;
 import es.angelillo15.mast.bungee.MASTBungee;
+import es.angelillo15.mast.bungee.MASTBungeeManager;
 import lombok.SneakyThrows;
 
 import java.io.File;
@@ -67,7 +68,7 @@ public class AddonsLoader {
     }
 
     public static void unloadAddons() {
-        for (MAStaffAddon addon : AddonsManager.getAddons().values()) {
+        for (MAStaffBungeeAddon addon : BungeeAddonsManager.getAddons().values()) {
             addon.onDisable();
         }
     }
