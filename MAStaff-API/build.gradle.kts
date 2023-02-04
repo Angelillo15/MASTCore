@@ -34,4 +34,6 @@ dependencies {
     compileOnly("com.github.hamza-cskn.obliviate-invs:advancedslot:4.1.10")
     compileOnly("com.github.hamza-cskn.obliviate-invs:pagination:4.1.10")
     compileOnly("ru.vyarus:yaml-config-updater:1.4.2")
+    compileOnly("org.yaml:snakeyaml:1.33")
+    compileOnly("com.github.Carleslc.Simple-YAML:Simple-Yaml:1.8.3")
 }

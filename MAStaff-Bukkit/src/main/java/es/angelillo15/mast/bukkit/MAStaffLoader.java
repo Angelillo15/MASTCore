@@ -1,5 +1,6 @@
 package es.angelillo15.mast.bukkit;
 
+import es.angelillo15.mast.bukkit.addons.AddonsLoader;
 import es.angelillo15.mast.bukkit.utils.LibsLoader;
 
 public class MAStaffLoader extends MAStaff {
@@ -13,11 +14,14 @@ public class MAStaffLoader extends MAStaff {
         registerListeners();
         loadDatabase();
         loadModules();
+        AddonsLoader.loadAddons();
         debugInfo();
+
     }
 
     @Override
     public void onDisable() {
+        AddonsLoader.disableAddons();
         super.onDisable();
     }
 }
