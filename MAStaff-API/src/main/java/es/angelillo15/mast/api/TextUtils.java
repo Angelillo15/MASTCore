@@ -58,4 +58,8 @@ public class TextUtils {
         }
         return colorize(text);
     }
+
+    public static String simpleColorize(String text) {
+        return ChatColor.translateAlternateColorCodes('&', text);
+    }
 }
