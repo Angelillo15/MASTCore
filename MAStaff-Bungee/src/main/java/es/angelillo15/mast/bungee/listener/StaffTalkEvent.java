@@ -1,9 +1,8 @@
 package es.angelillo15.mast.bungee.listener;
 
-import es.angelillo15.mast.bungee.MASTBungeeManager;
 import es.angelillo15.mast.bungee.config.Messages;
 import es.angelillo15.mast.bungee.utils.StaffUtils;
-import es.angelillo15.mast.utils.StaffChatManager;
+import es.angelillo15.mast.api.managers.StaffChatManager;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.event.ChatEvent;
 import net.md_5.bungee.api.plugin.Listener;

@@ -1,5 +1,6 @@
 package es.angelillo15.mast.bungee;
 
+import es.angelillo15.mast.api.TextUtils;
 import es.angelillo15.mast.bungee.cmd.HelpopCMD;
 import es.angelillo15.mast.bungee.cmd.MASTBReload;
 import es.angelillo15.mast.bungee.cmd.StaffChat;
@@ -8,8 +9,6 @@ import es.angelillo15.mast.bungee.config.Messages;
 import es.angelillo15.mast.bungee.listener.StaffChangeEvent;
 import es.angelillo15.mast.bungee.listener.StaffJoinChange;
 import es.angelillo15.mast.bungee.listener.StaffTalkEvent;
-import es.angelillo15.mast.utils.PLUtils;
-import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.plugin.Plugin;
 
 import java.util.HashMap;
@@ -23,11 +22,20 @@ public class MASTBungeeManager extends Plugin {
     private static Logger logger;
     private HashMap<UUID, String> previousServer = new HashMap<>();
     public void drawLogo(){
-        getLogger().info(ChatColor.translateAlternateColorCodes('&' ,PLUtils.Logo.replace(
-                "{version}", getDescription().getVersion()))
-        );
         logger = this.getLogger();
         instance = this;
+
+        logger.info(TextUtils.colorize("&a"));
+        logger.info(TextUtils.colorize("&a ███▄ ▄███▓ ▄▄▄        ██████ ▄▄▄█████▓ ▄▄▄        █████▒ █████▒"));
+        logger.info(TextUtils.colorize("&a ▓██▒▀█▀ ██▒▒████▄    ▒██    ▒ ▓  ██▒ ▓▒▒████▄    ▓██   ▒▓██   ▒"));
+        logger.info(TextUtils.colorize("&a ▓██    ▓██░▒██  ▀█▄  ░ ▓██▄   ▒ ▓██░ ▒░▒██  ▀█▄  ▒████ ░▒████ ░"));
+        logger.info(TextUtils.colorize("&a ▒██    ▒██ ░██▄▄▄▄██   ▒   ██▒░ ▓██▓ ░ ░██▄▄▄▄██ ░▓█▒  ░░▓█▒  ░"));
+        logger.info(TextUtils.colorize("&a ▒██▒   ░██▒ ▓█   ▓██▒▒██████▒▒  ▒██▒ ░  ▓█   ▓██▒░▒█░   ░▒█░"));
+        logger.info(TextUtils.colorize("&a ░ ▒░   ░  ░ ▒▒   ▓▒█░▒ ▒▓▒ ▒ ░  ▒ ░░    ▒▒   ▓▒█░ ▒ ░    ▒ ░"));
+        logger.info(TextUtils.colorize("&a ░  ░      ░  ▒   ▒▒ ░░ ░▒  ░ ░    ░      ▒   ▒▒ ░ ░      ░"));
+        logger.info(TextUtils.colorize("&a ░      ░     ░   ▒   ░  ░  ░    ░        ░   ▒    ░ ░    ░ ░"));
+        logger.info(TextUtils.colorize("&a ░         ░  ░      ░                 ░  ░"));
+        logger.info(TextUtils.colorize("&a                                                version: " + getDescription().getVersion()));
     }
 
     public void registerConfig(){

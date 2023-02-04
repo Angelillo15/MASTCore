@@ -46,7 +46,6 @@ dependencies {
     implementation(project(":MAStaff-API"))
     implementation(project(":MAStaff-Bukkit"))
     implementation(project(":MAStaff-Bungee"))
-    implementation(project(":MAStaff-Common"))
     implementation(project(":MAStaff-Velocity"))
     implementation("org.yaml:snakeyaml:1.33")
     implementation("com.github.Carleslc.Simple-YAML:Simple-Yaml:1.8.3")

@@ -1,9 +1,8 @@
 package es.angelillo15.mast.bungee.cmd;
 
-import es.angelillo15.mast.bungee.MASTBungee;
 import es.angelillo15.mast.bungee.config.Messages;
 import es.angelillo15.mast.bungee.utils.StaffUtils;
-import es.angelillo15.mast.utils.StaffChatManager;
+import es.angelillo15.mast.api.managers.StaffChatManager;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
