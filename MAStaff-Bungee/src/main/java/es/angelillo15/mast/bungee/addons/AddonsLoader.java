@@ -33,17 +33,17 @@ public class AddonsLoader {
                 Properties properties = new Properties();
                 InputStream propertiesFile;
 
-                JarEntry jarEntry = jarFile.getJarEntry("addon.properties");
+                JarEntry jarEntry = jarFile.getJarEntry("addon-bungee.properties");
 
                 if (jarEntry == null) {
-                    MASTBungee.getInstance().getLogger().severe("Addon " + file.getName() + " doesn't have a addon.properties file!");
+                    MASTBungee.getInstance().getLogger().severe("Addon " + file.getName() + " doesn't have a addon-bungee.properties file!");
                     return;
                 }
 
                 propertiesFile = jarFile.getInputStream(jarEntry);
 
                 if (propertiesFile == null) {
-                    MASTBungee.getInstance().getLogger().severe("Addon " + file.getName() + " doesn't have a addon.properties file!");
+                    MASTBungee.getInstance().getLogger().severe("Addon " + file.getName() + " doesn't have a addon-bungee.properties file!");
                 }
 
                 properties.load(propertiesFile);
