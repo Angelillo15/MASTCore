@@ -1,5 +1,6 @@
 package es.angelillo15.mast.bungee;
 
+import es.angelillo15.mast.bungee.addons.AddonsLoader;
 import es.angelillo15.mast.bungee.config.ConfigUpdater;
 import es.angelillo15.mast.bungee.metrics.Metrics;
 import es.angelillo15.mast.bungee.utils.LibsLoader;
@@ -13,11 +14,12 @@ public class MASTBungee extends MASTBungeeManager {
         registerEvents();
         registerConfig();
         registerCommands();
+        AddonsLoader.loadAddons();
         new Metrics(this, 16548);
     }
 
     @Override
     public void onDisable() {
-
+        AddonsLoader.unloadAddons();
     }
 }

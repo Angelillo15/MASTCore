@@ -65,4 +65,10 @@ public class AddonsLoader {
             }
         }
     }
+
+    public static void unloadAddons() {
+        for (MAStaffAddon addon : AddonsManager.getAddons().values()) {
+            addon.onDisable();
+        }
+    }
 }
