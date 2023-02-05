@@ -126,6 +126,7 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance {
         pm.registerEvents(new OnItemGet(), this);
         pm.registerEvents(new OnPlayerInteractAtEntityEvent(), this);
         pm.registerEvents(new OnAttack(), this);
+        if(version >= 19) pm.registerEvents(new OnBlockReceiveGameEvent(), this);
         if(version >= 9) pm.registerEvents(new OnSwapHand(), this);
         FreezeUtils.setupMessageSender();
         this.getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");

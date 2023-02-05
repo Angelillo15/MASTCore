@@ -18,7 +18,7 @@ repositories {
 
 dependencies {
     compileOnly(project(":MAStaff-API"))
-    compileOnly("org.spigotmc:spigot-api:1.13-R0.1-SNAPSHOT")
+    compileOnly("org.spigotmc:spigot-api:1.19-R0.1-SNAPSHOT")
     compileOnly("org.yaml:snakeyaml:1.33")
     compileOnly("com.github.Carleslc.Simple-YAML:Simple-Yaml:1.8.3")
     compileOnly("com.github.Angelillo15:ConfigManager:1.4")
