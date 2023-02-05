@@ -266,6 +266,8 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance {
         logger.debug("Loading items...");
         ItemsLoader.load();
         CustomItemsLoader.load();
+        logger.debug("Loading punishments GUI...");
+        PunishmentGUILoader.load();
         logger.debug("Registering Commands...");
         registerCommands();
         logger.debug("Registering Listeners...");
