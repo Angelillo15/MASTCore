@@ -27,15 +27,17 @@ import org.bukkit.inventory.ItemStack;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
+@SuppressWarnings({"deprecation", "UnstableApiUsage", "unchecked"})
 public class StaffPlayer implements IStaffPlayer {
-    private File playerInventoryFile;
+    private final File playerInventoryFile;
     private FileConfiguration playerInventoryConfig;
     private ChatColor glowColor = ChatColor.GREEN;
     private boolean staffMode;
-    private Player player;
+    private final Player player;
     private boolean vanished;
-    private ArrayList<StaffItem> items = new ArrayList<>();
+    private final ArrayList<StaffItem> items = new ArrayList<>();
 
     public StaffPlayer(Player player){
         this.player = player;
@@ -86,18 +88,22 @@ public class StaffPlayer implements IStaffPlayer {
         VanishedPlayers.addPlayer(player);
         vanished = true;
         player.sendMessage(Messages.GET_VANISH_ENABLE_MESSAGE());
-        Bukkit.getOnlinePlayers().forEach(p -> {
-            if(!p.hasPermission(Permissions.STAFF_VANISH_SEE.getPermission()))
-                p.hidePlayer(player);
-        });
 
+        new Thread(() -> Bukkit.getOnlinePlayers().forEach(p ->{
+            if(p == player) return;
+            if(p.hasPermission(Permissions.STAFF_VANISH_SEE.getPermission())) return;
+            p.hidePlayer(player);
+        })).start();
     }
 
     public void disableVanish(){
         VanishedPlayers.removePlayer(player);
         vanished = false;
         player.sendMessage(Messages.GET_VANISH_DISABLE_MESSAGE());
-        Bukkit.getOnlinePlayers().forEach(p -> p.showPlayer(player));
+        new Thread(() -> Bukkit.getOnlinePlayers().forEach(p -> {
+            if(p == player) return;
+            p.showPlayer(player);
+        }));
     }
 
     public void disableStaffMode(){
@@ -148,9 +154,7 @@ public class StaffPlayer implements IStaffPlayer {
             return;
         }
 
-        items.forEach(item -> {
-            item.setItem(player);
-        });
+        items.forEach(item -> item.setItem(player));
     }
 
     @Override
@@ -188,9 +192,13 @@ public class StaffPlayer implements IStaffPlayer {
     public void restoreInventory() {
         MAStaff.getPlugin().getPLogger().debug("Restoring inventory for " + player.getName());
         playerInventoryConfig = YamlConfiguration.loadConfiguration(playerInventoryFile);
-        ItemStack[] content = ((List<ItemStack>) playerInventoryConfig.get("inventory.armor")).toArray(new ItemStack[0]);
+        ItemStack[] content = ((List<ItemStack>) Objects.requireNonNull(
+                playerInventoryConfig.get("inventory.armor")
+        )).toArray(new ItemStack[0]);
         player.getInventory().setArmorContents(content);
-        content = ((List<ItemStack>) playerInventoryConfig.get("inventory.content")).toArray(new ItemStack[0]);
+        content = ((List<ItemStack>) Objects.requireNonNull(
+                playerInventoryConfig.get("inventory.content"))
+        ).toArray(new ItemStack[0]);
         player.getInventory().setContents(content);
     }
 
