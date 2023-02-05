@@ -16,7 +16,6 @@ public class LibsManager {
                 .version("5.0.1")
                 .id("hikariCP")
                 .relocate("com{}zaxxer", "es{}angelillo15{}mast{}libs")
-                .relocate("org{}slf4j", "es{}angelillo15{}mast{}libs{}slf4j")
                 .isolatedLoad(false)
                 .build();
 
