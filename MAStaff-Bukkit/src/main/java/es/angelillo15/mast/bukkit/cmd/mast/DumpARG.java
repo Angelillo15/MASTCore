@@ -92,6 +92,7 @@ public class DumpARG extends SubCommand {
             pluginJson.addProperty("description", plugin.getDescription().getDescription() == null ?
                     "No description" : plugin.getDescription().getDescription()
             );
+            pluginJson.addProperty("main", plugin.getDescription().getMain());
             plugins.add(pluginJson);
         }
 
