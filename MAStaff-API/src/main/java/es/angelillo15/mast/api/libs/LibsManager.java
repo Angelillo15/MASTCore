@@ -39,9 +39,70 @@ public class LibsManager {
                         .relocate("org{}yaml{}snakeyaml", "es{}angelillo15{}mast{}libs{}snakeyaml")
                         .build();
 
+        Library unirest = Library.builder()
+                        .groupId("com.konghq")
+                        .artifactId("unirest-java")
+                        .version("3.14.1")
+                        .isolatedLoad(false)
+                        .relocate("kong{}unirest", "es{}angelillo15{}mast{}libs{}unirest")
+                        .relocate("org{}apache{}http", "es{}angelillo15{}mast{}libs{}http")
+                        //.relocate("org{}apache{}commons{}logging", "es{}angelillo15{}mast{}libs{}commons-logging")
+                        .build();
+
+        Library apacheHttp = Library.builder()
+                        .groupId("org{}apache{}httpcomponents")
+                        .artifactId("httpcore")
+                        .version("4.4.16")
+                        .isolatedLoad(false)
+                        .relocate("org{}apache{}http", "es{}angelillo15{}mast{}libs{}http")
+                        //.relocate("org{}apache{}commons{}logging", "es{}angelillo15{}mast{}libs{}commons-logging")
+                        .build();
+
+        Library apacheClient = Library.builder()
+                .groupId("org{}apache{}httpcomponents")
+                .artifactId("httpclient")
+                .version("4.5.14")
+                .isolatedLoad(false)
+                .relocate("org{}apache{}http", "es{}angelillo15{}mast{}libs{}http")
+                //.relocate("org{}apache{}commons{}logging", "es{}angelillo15{}mast{}libs{}commons-logging")
+                .build();
+
+        Library apacheHttpNio = Library.builder()
+                .groupId("org{}apache{}httpcomponents")
+                .artifactId("httpcore-nio")
+                .version("4.4.16")
+                .isolatedLoad(false)
+                .relocate("org{}apache{}http", "es{}angelillo15{}mast{}libs{}http")
+                //.relocate("org{}apache{}commons{}logging", "es{}angelillo15{}mast{}libs{}commons-logging")
+                .build();
+
+        Library apacheHttpMime = Library.builder()
+                .groupId("org{}apache{}httpcomponents")
+                .artifactId("httpmime")
+                .version("4.5.14")
+                .isolatedLoad(false)
+                .relocate("org{}apache{}http", "es{}angelillo15{}mast{}libs{}http")
+                //.relocate("org{}apache{}commons{}logging", "es{}angelillo15{}mast{}libs{}commons-logging")
+                .build();
+
+        Library apacheLogger = Library.builder()
+                        .groupId("commons-logging")
+                        .artifactId("commons-logging")
+                        .version("1.2")
+                        .isolatedLoad(false)
+                        //.relocate("org{}apache{}commons{}logging", "es{}angelillo15{}mast{}libs{}commons-logging")
+                        .build();
+
+
+        libs.add(apacheHttp);
         libs.add(hikariCP);
         libs.add(guava);
         libs.add(yamlMerge);
+        libs.add(unirest);
+        libs.add(apacheHttpNio);
+        libs.add(apacheClient);
+        libs.add(apacheHttpMime);
+        libs.add(apacheLogger);
         libs.add(getLib("org{}slf4j", "slf4j-api", "2.0.6"));
     }
 
