@@ -1,4 +1,4 @@
-package es.angelillo15.mast.api;
+package es.angelillo15.mast.api.player;
 
 import es.angelillo15.mast.api.report.Report;
 import org.bukkit.entity.Player;
@@ -6,11 +6,12 @@ import org.bukkit.entity.Player;
 import java.util.ArrayList;
 
 public interface IMastPlayer {
+
     /**
-     * Get the player
-     * @return Player
+     * Get the player's type
+     * @return PlayerType
      */
-    public Player getPlayer();
+    public PlayerType getPlayerType();
 
     /**
      * Get the player's name
@@ -23,6 +24,21 @@ public interface IMastPlayer {
      * @return String
      */
     public String getUUID();
+
+    /**
+     * Send a message to the player
+     * @param message String
+     */
+    public void sendMessage(String message);
+
+    /**
+     * Send messages to the player
+     * @param message String
+     */
+    public void sendMessages(String... message);
+
+
+
 
     /**
      * Get reports

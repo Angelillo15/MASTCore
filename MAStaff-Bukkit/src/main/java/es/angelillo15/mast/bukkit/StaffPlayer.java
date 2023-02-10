@@ -24,6 +24,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -39,7 +40,7 @@ public class StaffPlayer implements IStaffPlayer {
     private boolean vanished;
     private final ArrayList<StaffItem> items = new ArrayList<>();
 
-    public StaffPlayer(Player player){
+    public StaffPlayer(Player player) {
         this.player = player;
         playerInventoryFile = new File(MAStaff.getPlugin().getDataFolder().getAbsoluteFile() + "/data/staffMode/" + player.getUniqueId() + ".yml");
         playerInventoryConfig = YamlConfiguration.loadConfiguration(playerInventoryFile);
@@ -50,6 +51,7 @@ public class StaffPlayer implements IStaffPlayer {
     public void toggleStaffMode() {
         setStaffMode(staffMode, true);
     }
+
     @Override
     public boolean isStaffMode() {
         return staffMode;
@@ -57,8 +59,8 @@ public class StaffPlayer implements IStaffPlayer {
 
 
     @Override
-    public void setStaffMode(boolean staffMode, boolean saveInventory){
-        if(staffMode) disableStaffMode();
+    public void setStaffMode(boolean staffMode, boolean saveInventory) {
+        if (staffMode) disableStaffMode();
         else enableStaffMode(saveInventory);
         sendPluginMessage();
     }
@@ -79,34 +81,33 @@ public class StaffPlayer implements IStaffPlayer {
         return vanished;
     }
 
-    public void setVanish(boolean vanish){
-        if(vanish) enableVanish();
+    public void setVanish(boolean vanish) {
+        if (vanish) enableVanish();
         else disableVanish();
     }
 
-    public void enableVanish(){
+    public void enableVanish() {
         VanishedPlayers.addPlayer(player);
         vanished = true;
         player.sendMessage(Messages.GET_VANISH_ENABLE_MESSAGE());
 
-        new Thread(() -> Bukkit.getOnlinePlayers().forEach(p ->{
-            if(p == player) return;
-            if(p.hasPermission(Permissions.STAFF_VANISH_SEE.getPermission())) return;
-            p.hidePlayer(player);
+        new Thread(() -> Bukkit.getOnlinePlayers().forEach(p -> {
+            if( !(p == player) && (p.hasPermission(Permissions.STAFF_VANISH_SEE.getPermission()))){
+                p.hidePlayer(player);
+            }
         })).start();
     }
 
-    public void disableVanish(){
+    public void disableVanish() {
         VanishedPlayers.removePlayer(player);
         vanished = false;
         player.sendMessage(Messages.GET_VANISH_DISABLE_MESSAGE());
         new Thread(() -> Bukkit.getOnlinePlayers().forEach(p -> {
-            if(p == player) return;
-            p.showPlayer(player);
+            if (!(p == player)) p.showPlayer(player);
         }));
     }
 
-    public void disableStaffMode(){
+    public void disableStaffMode() {
         player.sendMessage(Messages.GET_STAFF_MODE_DISABLE_MESSAGE());
         setModeData(false);
         clearInventory();
@@ -121,17 +122,17 @@ public class StaffPlayer implements IStaffPlayer {
         Bukkit.getPluginManager().callEvent(new StaffEnableEvent(this));
     }
 
-    public void enableStaffMode(boolean saveInventory){
+    public void enableStaffMode(boolean saveInventory) {
         player.sendMessage(Messages.GET_STAFF_MODE_ENABLE_MESSAGE());
         setModeData(true);
-        if(saveInventory) saveInventory();
+        if (saveInventory) saveInventory();
         enableVanish();
         clearInventory();
         setItems();
         CommonQueries.updateAsync(player.getUniqueId(), 1);
         staffMode = true;
         changeGamemode(GameMode.CREATIVE);
-        if(saveInventory) StaffUtils.asyncBroadcastMessage(Messages.GET_VANISH_LEAVE_MESSAGE()
+        if (saveInventory) StaffUtils.asyncBroadcastMessage(Messages.GET_VANISH_LEAVE_MESSAGE()
                 .replace("{player}", player.getName()));
         setGlowing(true);
         Bukkit.getPluginManager().callEvent(new StaffEnableEvent(this));
@@ -144,9 +145,9 @@ public class StaffPlayer implements IStaffPlayer {
 
     @Override
     public void setItems() {
-        if(items.isEmpty()) {
+        if (items.isEmpty()) {
             ItemsLoader.getManager().getItems().forEach(item -> {
-                if(player.hasPermission(item.getPermission())) {
+                if (player.hasPermission(item.getPermission())) {
                     item.setItem(player);
                     items.add(item);
                 }
@@ -224,12 +225,12 @@ public class StaffPlayer implements IStaffPlayer {
 
     @Override
     public void setGlowing(boolean status) {
-        if(status) enableGlowing();
+        if (status) enableGlowing();
         else disableGlowing();
     }
 
     public void enableGlowing() {
-        if(!MAStaff.isGlowEnabled()) return;
+        if (!MAStaff.isGlowEnabled()) return;
         this.glowColor = GlowManager.getColor(PermsUtils.getGroup(player));
         this.glowColor = GlowManager.getColor(PermsUtils.getGroup(player));
         IEGlowPlayer iegp = EGlow.getAPI().getEGlowPlayer(player);
@@ -242,13 +243,13 @@ public class StaffPlayer implements IStaffPlayer {
     }
 
     public void disableGlowing() {
-        if(!MAStaff.isGlowEnabled()) return;
+        if (!MAStaff.isGlowEnabled()) return;
         IEGlowPlayer iegp = EGlow.getAPI().getEGlowPlayer(player);
         EGlow.getAPI().disableGlow(iegp);
     }
 
     @SneakyThrows
-    public void setModeData(boolean staffMode){
+    public void setModeData(boolean staffMode) {
         this.playerInventoryConfig.set("Status.staffMode", staffMode);
         MAStaff.getPlugin().getPLogger().debug("Saving staff mode data for player " + player.getName() + " with value " + staffMode);
         this.playerInventoryConfig.save(playerInventoryFile);

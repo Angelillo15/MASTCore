@@ -1,6 +1,6 @@
 package es.angelillo15.mast.api.report;
 
-import es.angelillo15.mast.api.IMastPlayer;
+import es.angelillo15.mast.api.player.IMastPlayer;
 import lombok.Getter;
 
 public class Report {
