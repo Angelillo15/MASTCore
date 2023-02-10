@@ -10,6 +10,10 @@ import java.util.regex.Pattern;
 public class TextUtils {
     private static final String WITH_DELIMITER = "((?<=%1$s)|(?=%1$s))";
     private static final Pattern HEX_PATTERN = Pattern.compile("#[a-fA-F0-9]{6}}");
+    private static final long SECOND = 1000;
+    private static final long MINUTE = 60 * SECOND;
+    private static final long HOUR = 60 * MINUTE;
+    private static final long DAY = 24 * HOUR;
 
     public static String colorize(String text) {
         if (MAStaffInstance.version < 16) {
@@ -57,6 +61,51 @@ public class TextUtils {
             return colorize(PlaceholderAPI.setPlaceholders(player, text));
         }
         return colorize(text);
+    }
+
+    public static String formatUptime(long uptime) {
+        StringBuilder buf = new StringBuilder();
+        if (uptime > DAY) {
+            long days = (uptime - uptime % DAY) / DAY;
+            buf.append(days);
+            buf.append(" Days");
+            uptime = uptime % DAY;
+        }
+        if (uptime > HOUR) {
+            long hours = (uptime - uptime % HOUR) / HOUR;
+            if (buf.length() > 0) {
+                buf.append(", ");
+            }
+            buf.append(hours);
+            buf.append(" Hours");
+            uptime = uptime % HOUR;
+        }
+        if (uptime > MINUTE) {
+            long minutes = (uptime - uptime % MINUTE) / MINUTE;
+            if (buf.length() > 0) {
+                buf.append(", ");
+            }
+            buf.append(minutes);
+            buf.append(" Minutes");
+            uptime = uptime % MINUTE;
+        }
+        if (uptime > SECOND) {
+            long seconds = (uptime - uptime % SECOND) / SECOND;
+            if (buf.length() > 0) {
+                buf.append(", ");
+            }
+            buf.append(seconds);
+            buf.append(" Seconds");
+            uptime = uptime % SECOND;
+        }
+        if (uptime > 0) {
+            if (buf.length() > 0) {
+                buf.append(", ");
+            }
+            buf.append(uptime);
+            buf.append(" Milliseconds");
+        }
+        return buf.toString();
     }
 
     public static String simpleColorize(String text) {
