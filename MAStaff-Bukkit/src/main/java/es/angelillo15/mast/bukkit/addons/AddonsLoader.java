@@ -54,6 +54,10 @@ public class AddonsLoader {
                 addonDescription.setMain(properties.getProperty("main"));
                 addonDescription.setVersion(properties.getProperty("version"));
                 addonDescription.setAuthor(properties.getProperty("author"));
+                addonDescription.setDescription(
+                        properties.getProperty("description") == null ? "No description"
+                                : properties.getProperty("description")
+                );
 
                 @SuppressWarnings("resource")
                 Class<?> cls = new URLClassLoader(urls, MAStaff.getPlugin().getClass().getClassLoader())
