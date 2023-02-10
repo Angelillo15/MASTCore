@@ -24,4 +24,9 @@ public class AddonDescription {
      * Plugin author.
      */
     private String author;
+
+    /**
+     * Plugin description.
+     */
+    private String description;
 }
