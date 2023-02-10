@@ -39,6 +39,9 @@ tasks.shadowJar {
     relocate("org.checkerframework", "es.angelillo15.mast.libs.checkerframework")
     relocate("net.byteflux.libby", "es.angelillo15.mast.libs.libby")
     relocate("ru.vyarus.yaml.updater", "es.angelillo15.mast.libs.yaml-config-updater")
+    relocate("kong.unirest", "es.angelillo15.mast.libs.unirest")
+    relocate("org.apache.http", "es.angelillo15.mast.libs.apache.http")
+    relocate("org.apache.commons.logging", "es.angelillo15.mast.libs.commons-logging")
 }
 
 dependencies {

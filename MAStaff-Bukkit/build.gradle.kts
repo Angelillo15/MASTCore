@@ -30,6 +30,7 @@ dependencies {
     compileOnly("com.github.hamza-cskn.obliviate-invs:pagination:4.1.10")
     compileOnly("me.clip:placeholderapi:2.11.2")
     compileOnly("com.github.MilkBowl:VaultAPI:1.7.1")
+    compileOnly("com.konghq:unirest-java:3.11.09")
     compileOnly("com.github.MrGraycat:eGlow:-SNAPSHOT")
     implementation("net.byteflux:libby-bukkit:1.1.5")
 }

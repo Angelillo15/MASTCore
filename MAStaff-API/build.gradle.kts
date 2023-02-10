@@ -1,6 +1,11 @@
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+
 plugins {
     id("java")
     `maven-publish`
+    id("net.kyori.blossom") version "1.3.1"
+    id("org.ajoberstar.grgit") version "4.1.0"
 }
 
 group = "es.angelillo15"
@@ -39,4 +44,17 @@ dependencies {
     compileOnly("ru.vyarus:yaml-config-updater:1.4.2")
     compileOnly("org.yaml:snakeyaml:1.33")
     compileOnly("com.github.Carleslc.Simple-YAML:Simple-Yaml:1.8.3")
+}
+
+blossom {
+    val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")
+    val current = LocalDateTime.now().format(formatter)
+
+
+    replaceTokenIn("src/main/java/es/angelillo15/mast/api/Constants.java")
+    replaceToken("{version}", project.version)
+    replaceToken("{git-commit}",  grgit.head().abbreviatedId ?: "undefined")
+    replaceToken("{git-user}", grgit.head().committer.name ?: "undefined")
+    replaceToken("{git-date}", current ?: "undefined")
+    replaceToken("{git-branch}", grgit.branch.current().name ?: "undefined")
 }
