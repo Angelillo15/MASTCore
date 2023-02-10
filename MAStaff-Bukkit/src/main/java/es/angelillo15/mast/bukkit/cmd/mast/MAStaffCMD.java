@@ -18,6 +18,7 @@ public class MAStaffCMD implements CommandExecutor {
         subCommands.clear();
         subCommands.add(new ReloadARG());
         subCommands.add(new HelpARG());
+        subCommands.add(new DumpARG());
     }
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
