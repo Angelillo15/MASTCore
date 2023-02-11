@@ -30,7 +30,7 @@ public class OnJoinLeave implements Listener {
 
         IStaffPlayer staffPlayer = StaffPlayersManagers.getStaffPlayer(player);
 
-        MAStaff.getPlugin().getServer().getPluginManager().callEvent(new StaffJoinEvent(player));
+        // MAStaff.getPlugin().getServer().getPluginManager().callEvent(new StaffJoinEvent(player));
 
         if(CommonQueries.isInStaffMode(player.getUniqueId())){
             MAStaff.getPlugin().getPLogger().debug("Player " + player.getName() + " previous state: " + staffPlayer.wasInStaffMode());
@@ -53,7 +53,7 @@ public class OnJoinLeave implements Listener {
             return;
         }
 
-        MAStaff.getPlugin().getServer().getPluginManager().callEvent(new StaffLeaveEvent(player));
+        //MAStaff.getPlugin().getServer().getPluginManager().callEvent(new StaffLeaveEvent(player));
 
         IStaffPlayer staffPlayer = StaffPlayersManagers.getStaffPlayer(player);
 
