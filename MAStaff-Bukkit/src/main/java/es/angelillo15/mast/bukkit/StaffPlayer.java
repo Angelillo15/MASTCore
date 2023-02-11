@@ -91,20 +91,26 @@ public class StaffPlayer implements IStaffPlayer {
         vanished = true;
         player.sendMessage(Messages.GET_VANISH_ENABLE_MESSAGE());
 
-        new Thread(() -> Bukkit.getOnlinePlayers().forEach(p -> {
-            if( !(p == player) && (p.hasPermission(Permissions.STAFF_VANISH_SEE.getPermission()))){
-                p.hidePlayer(player);
-            }
-        })).start();
+
+        for (Player p : Bukkit.getOnlinePlayers()) {
+            if (p == player) continue;
+            if (p.hasPermission(Permissions.STAFF_VANISH_SEE.getPermission())) continue;
+
+            p.hidePlayer(player);
+        }
+
     }
 
     public void disableVanish() {
         VanishedPlayers.removePlayer(player);
         vanished = false;
         player.sendMessage(Messages.GET_VANISH_DISABLE_MESSAGE());
-        new Thread(() -> Bukkit.getOnlinePlayers().forEach(p -> {
-            if (!(p == player)) p.showPlayer(player);
-        }));
+
+        for (Player p : Bukkit.getOnlinePlayers()) {
+            if (p == player) continue;
+            if (p.hasPermission(Permissions.STAFF_VANISH_SEE.getPermission())) continue;
+            p.showPlayer(player);
+        }
     }
 
     public void disableStaffMode() {
