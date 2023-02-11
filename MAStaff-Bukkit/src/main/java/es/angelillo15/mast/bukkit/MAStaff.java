@@ -25,6 +25,8 @@ import es.angelillo15.mast.bukkit.utils.Logger;
 import es.angelillo15.mast.api.TextUtils;
 import es.angelillo15.mast.bukkit.utils.Metrics;
 import es.angelillo15.mast.bukkit.utils.PermsUtils;
+import kong.unirest.HttpResponse;
+import kong.unirest.Unirest;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.SneakyThrows;
@@ -55,6 +57,10 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance {
     private static PluginConnection pluginConnection;
     @Getter
     private static Connection connection;
+    @Getter
+    private static int currentVersion;
+    @Getter
+    private static int spiVersion;
 
     public static String parseMessage(String messages) {
         return TextUtils.colorize(messages.replace("{prefix}", Messages.PREFIX())
@@ -79,7 +85,7 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance {
 
     @Override
     public void drawLogo() {
-        new Metrics(this, 	16548);
+        new Metrics(this, 16548);
         logger = new Logger();
         logger.info(TextUtils.colorize("&a"));
         logger.info(TextUtils.colorize("&a ███▄ ▄███▓ ▄▄▄        ██████ ▄▄▄█████▓ ▄▄▄        █████▒ █████▒"));
@@ -126,8 +132,8 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance {
         pm.registerEvents(new OnItemGet(), this);
         pm.registerEvents(new OnPlayerInteractAtEntityEvent(), this);
         pm.registerEvents(new OnAttack(), this);
-        if(version >= 19) pm.registerEvents(new OnBlockReceiveGameEvent(), this);
-        if(version >= 9) pm.registerEvents(new OnSwapHand(), this);
+        if (version >= 19) pm.registerEvents(new OnBlockReceiveGameEvent(), this);
+        if (version >= 9) pm.registerEvents(new OnSwapHand(), this);
         FreezeUtils.setupMessageSender();
         this.getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
     }
@@ -195,7 +201,7 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance {
         if (version > 9) {
             if (this.getServer().getPluginManager().getPlugin("eGlow") != null && ConfigLoader.getGlow()
                     .getConfig().getBoolean("Config.enabled") &&
-            this.getServer().getPluginManager().getPlugin("Vault") != null) {
+                    this.getServer().getPluginManager().getPlugin("Vault") != null) {
                 glowEnabled = true;
                 GlowLoader.loadGlow();
 
@@ -206,7 +212,7 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance {
                 PermsUtils.setupPermissions();
 
             } else {
-                if(getServer().getPluginManager().getPlugin("Vault") == null) {
+                if (getServer().getPluginManager().getPlugin("Vault") == null) {
                     logger.warn(TextUtils.colorize("&cVault not found! Glow will not work!"));
                 }
 
@@ -274,6 +280,8 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance {
         registerCommands();
         logger.debug("Registering Listeners...");
         registerListeners();
+        logger.debug("Checking for updates...");
+        checkUpdates();
 
         long end = System.currentTimeMillis();
         logger.debug("Reloaded successfully in {time}ms ✔️"
@@ -281,12 +289,48 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance {
         );
     }
 
-    public void debugInfo(){
+    public void debugInfo() {
         logger.debug("Debug info:");
         logger.debug("Server version: 1." + version);
         logger.debug("Plugin version: " + getDescription().getVersion());
         logger.debug("Glow enabled: " + glowEnabled);
         logger.debug("Plugin connection: " + PluginConnection.getDataProvider().name());
+    }
+
+    public void checkUpdates() {
+
+        HttpResponse<String> response = Unirest.get("https://api.spigotmc.org/legacy/update.php?resource=105713")
+                .asString();
+
+
+        currentVersion = Integer.parseInt(getDescription().getVersion().replace(".", "")
+                .replace("v", "")
+                .replace("V", "")
+                .replace("b", "")
+                .replace("B", "")
+                .replace("-snapshot", "")
+        );
+
+        spiVersion = Integer.parseInt(response.getBody()
+                .replace(".", "")
+                .replace("v", "")
+        );
+
+        logger.debug("Current version: " + currentVersion);
+        logger.debug("Spigot version: " + spiVersion);
+
+        if (spiVersion > currentVersion) {
+            logger.warn(TextUtils.colorize("&cThere is a new version available!"));
+            return;
+        }
+
+        if (spiVersion == currentVersion) {
+            logger.info(TextUtils.colorize("&aYou are using the latest version!"));
+            return;
+        }
+
+        logger.warn(TextUtils.colorize("You are using a development version!"));
+
     }
 
     @Override

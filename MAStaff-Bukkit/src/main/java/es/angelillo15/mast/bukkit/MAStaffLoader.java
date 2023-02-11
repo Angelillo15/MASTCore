@@ -15,8 +15,8 @@ public class MAStaffLoader extends MAStaff {
         loadDatabase();
         loadModules();
         AddonsLoader.loadAddons();
+        checkUpdates();
         debugInfo();
-
     }
 
     @Override
