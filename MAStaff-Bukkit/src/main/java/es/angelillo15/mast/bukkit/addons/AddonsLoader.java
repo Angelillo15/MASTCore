@@ -14,6 +14,7 @@ import java.util.Properties;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
+@SuppressWarnings("resource")
 public class AddonsLoader {
     @SneakyThrows
     public static void loadAddons() {
@@ -39,13 +40,14 @@ public class AddonsLoader {
 
                 if (jarEntry == null) {
                     MAStaff.getPlugin().getPLogger().error("Addon " + file.getName() + " doesn't have a addon.properties file!");
-                    return;
+                    continue;
                 }
 
                 propertiesFile = jarFile.getInputStream(jarEntry);
 
                 if (propertiesFile == null) {
                     MAStaff.getPlugin().getPLogger().error("Addon " + file.getName() + " doesn't have a addon.properties file!");
+                    continue;
                 }
 
                 properties.load(propertiesFile);
@@ -59,7 +61,6 @@ public class AddonsLoader {
                                 : properties.getProperty("description")
                 );
 
-                @SuppressWarnings("resource")
                 Class<?> cls = new URLClassLoader(urls, MAStaff.getPlugin().getClass().getClassLoader())
                         .loadClass(addonDescription.getMain());
 
