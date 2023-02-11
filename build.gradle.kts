@@ -5,7 +5,7 @@ plugins {
 }
 
 group = "es.angelillo15"
-version = "2.2.0b"
+version = "2.1.1"
 
 repositories {
     mavenCentral()

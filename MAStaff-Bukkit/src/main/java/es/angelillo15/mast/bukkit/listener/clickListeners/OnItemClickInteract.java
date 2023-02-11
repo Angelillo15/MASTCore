@@ -16,7 +16,7 @@ public class OnItemClickInteract implements Listener {
     public void onEntityInteract(PlayerInteractEntityEvent event) {
         Player player = event.getPlayer();
 
-        if(!StaffPlayersManagers.getStaffPlayers().containsKey(player.getUniqueId())) return;
+        if(!StaffPlayersManagers.getStaffPlayers().containsKey(player.getName())) return;
         if(!player.hasPermission(Permissions.STAFF.getPermission())) return;
 
         IStaffPlayer staffPlayer = StaffPlayersManagers.getStaffPlayer(player);
