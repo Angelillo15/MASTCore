@@ -5,13 +5,19 @@ import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 
-public interface IMastPlayer {
+public interface IMastPlayer<T> {
 
     /**
      * Get the player's type
      * @return PlayerType
      */
     public PlayerType getPlayerType();
+
+    /**
+     * Get the player
+     * @return T It can be Player or ProxiedPlayer
+     */
+    public T getPlayer();
 
     /**
      * Get the player's name
@@ -36,8 +42,6 @@ public interface IMastPlayer {
      * @param message String
      */
     public void sendMessages(String... message);
-
-
 
 
     /**
