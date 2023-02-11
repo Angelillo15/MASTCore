@@ -68,7 +68,7 @@ public class TextUtils {
         if (uptime > DAY) {
             long days = (uptime - uptime % DAY) / DAY;
             buf.append(days);
-            buf.append(" Days");
+            buf.append("d");
             uptime = uptime % DAY;
         }
         if (uptime > HOUR) {
@@ -77,7 +77,7 @@ public class TextUtils {
                 buf.append(", ");
             }
             buf.append(hours);
-            buf.append(" Hours");
+            buf.append("h");
             uptime = uptime % HOUR;
         }
         if (uptime > MINUTE) {
@@ -86,7 +86,7 @@ public class TextUtils {
                 buf.append(", ");
             }
             buf.append(minutes);
-            buf.append(" Minutes");
+            buf.append("m");
             uptime = uptime % MINUTE;
         }
         if (uptime > SECOND) {
@@ -95,7 +95,7 @@ public class TextUtils {
                 buf.append(", ");
             }
             buf.append(seconds);
-            buf.append(" Seconds");
+            buf.append("s");
             uptime = uptime % SECOND;
         }
         if (uptime > 0) {
@@ -103,7 +103,7 @@ public class TextUtils {
                 buf.append(", ");
             }
             buf.append(uptime);
-            buf.append(" Milliseconds");
+            buf.append("ms");
         }
         return buf.toString();
     }
