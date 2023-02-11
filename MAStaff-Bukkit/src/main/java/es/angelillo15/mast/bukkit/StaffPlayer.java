@@ -10,6 +10,7 @@ import es.angelillo15.mast.api.event.bukkit.staff.StaffEnableEvent;
 import es.angelillo15.mast.api.items.StaffItem;
 import es.angelillo15.mast.api.managers.GlowManager;
 import es.angelillo15.mast.api.managers.VanishedPlayers;
+import es.angelillo15.mast.bukkit.config.ConfigLoader;
 import es.angelillo15.mast.bukkit.config.Messages;
 import es.angelillo15.mast.bukkit.loaders.ItemsLoader;
 import es.angelillo15.mast.bukkit.utils.PermsUtils;
@@ -18,9 +19,7 @@ import lombok.SneakyThrows;
 import me.MrGraycat.eGlow.API.Enum.EGlowColor;
 import me.MrGraycat.eGlow.EGlow;
 import me.MrGraycat.eGlow.Manager.Interface.IEGlowPlayer;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.GameMode;
+import org.bukkit.*;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
@@ -126,6 +125,7 @@ public class StaffPlayer implements IStaffPlayer {
         StaffUtils.asyncBroadcastMessage(Messages.GET_VANISH_JOIN_MESSAGE()
                 .replace("{player}", player.getName()));
         setGlowing(false);
+        restoreLocation();
         Bukkit.getPluginManager().callEvent(new StaffDisableEvent(this));
     }
 
@@ -142,6 +142,7 @@ public class StaffPlayer implements IStaffPlayer {
         if (saveInventory) StaffUtils.asyncBroadcastMessage(Messages.GET_VANISH_LEAVE_MESSAGE()
                 .replace("{player}", player.getName()));
         setGlowing(true);
+        saveLocation();
         Bukkit.getPluginManager().callEvent(new StaffEnableEvent(this));
     }
 
@@ -260,6 +261,38 @@ public class StaffPlayer implements IStaffPlayer {
         this.playerInventoryConfig.set("Status.staffMode", staffMode);
         MAStaff.getPlugin().getPLogger().debug("Saving staff mode data for player " + player.getName() + " with value " + staffMode);
         this.playerInventoryConfig.save(playerInventoryFile);
+    }
+
+    @SneakyThrows
+    public void saveLocation(){
+        playerInventoryConfig.set("Location.world", player.getLocation().getWorld().getName());
+        playerInventoryConfig.set("Location.x", player.getLocation().getX());
+        playerInventoryConfig.set("Location.y", player.getLocation().getY());
+        playerInventoryConfig.set("Location.z", player.getLocation().getZ());
+        playerInventoryConfig.set("Location.yaw", player.getLocation().getYaw());
+        playerInventoryConfig.set("Location.pitch", player.getLocation().getPitch());
+        playerInventoryConfig.save(playerInventoryFile);
+    }
+
+    public boolean restoreLocation(){
+        if(!(ConfigLoader.getConfig().getConfig().getBoolean("Config.teleportBack"))) return false;
+        if(!playerInventoryConfig.contains("Location.world")) return false;
+        World world = Bukkit.getWorld(Objects.requireNonNull(playerInventoryConfig.getString("Location.world")));
+        if (world == null) return false;
+        double x = playerInventoryConfig.getDouble("Location.x");
+        double y = playerInventoryConfig.getDouble("Location.y");
+        double z = playerInventoryConfig.getDouble("Location.z");
+        float yaw = (float) playerInventoryConfig.getDouble("Location.yaw");
+        float pitch = (float) playerInventoryConfig.getDouble("Location.pitch");
+        Location location = new Location(world, x, y, z, yaw, pitch);
+        switch (world.getEnvironment()) {
+            case NETHER:
+                player.teleport(location);
+                return true;
+            default:
+                player.teleport(world.getHighestBlockAt(location).getLocation().add(0, 1, 0));
+                return true;
+        }
     }
 
     @Override
