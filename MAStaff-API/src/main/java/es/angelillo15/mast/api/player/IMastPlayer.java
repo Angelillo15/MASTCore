@@ -66,5 +66,5 @@ public interface IMastPlayer<T> {
      * @param playerToReport IMastPlayer
      * @param reason String
      */
-    public void reportPlayer(IMastPlayer playerToReport, String reason);
+    public void reportPlayer(IMastPlayer<T> playerToReport, String reason);
 }
