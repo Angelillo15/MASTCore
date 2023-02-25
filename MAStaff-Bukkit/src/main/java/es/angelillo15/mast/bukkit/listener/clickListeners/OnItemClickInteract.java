@@ -10,6 +10,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 
+@SuppressWarnings({"deprecation", "ConstantValue"})
 public class OnItemClickInteract implements Listener {
     static boolean clicked = false;
     @EventHandler
