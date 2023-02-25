@@ -5,6 +5,8 @@ import es.angelillo15.mast.api.addons.AddonsManager;
 import es.angelillo15.mast.api.addons.MAStaffAddon;
 import es.angelillo15.mast.bukkit.MAStaff;
 import lombok.SneakyThrows;
+import org.bukkit.plugin.java.JavaPlugin;
+
 import java.io.File;
 import java.io.InputStream;
 import java.net.URL;
@@ -64,7 +66,7 @@ public class AddonsLoader {
                 Class<?> cls = new URLClassLoader(urls, MAStaff.getPlugin().getClass().getClassLoader())
                         .loadClass(addonDescription.getMain());
 
-                MAStaffAddon addon = (MAStaffAddon) cls.getDeclaredConstructor().newInstance();
+                MAStaffAddon<JavaPlugin> addon = (MAStaffAddon<JavaPlugin>) cls.getDeclaredConstructor().newInstance();
 
                 addon.init(new File(file.getParentFile() + File.separator + addonDescription.getName()), addonDescription, MAStaff.getPlugin());
                 addon.onEnable();

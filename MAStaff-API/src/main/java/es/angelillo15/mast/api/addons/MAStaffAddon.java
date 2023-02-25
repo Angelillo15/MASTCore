@@ -8,19 +8,19 @@ import org.bukkit.plugin.Plugin;
 
 import java.io.File;
 
-public class MAStaffAddon {
+public class MAStaffAddon<T> {
     @Getter
     private File addonFolder;
     @Getter
     private AddonDescription descriptionFile;
     @Getter
-    private Plugin mastaffInstance;
+    private T mastaffInstance;
     @Getter
     private ILogger logger;
     @Getter
     private ConfigManager config;
 
-    public void init(File addonFolder, AddonDescription descriptionFile, Plugin mastaffInstance) {
+    public void init(File addonFolder, AddonDescription descriptionFile, T mastaffInstance) {
         this.addonFolder = addonFolder;
         this.descriptionFile = descriptionFile;
         this.mastaffInstance = mastaffInstance;
