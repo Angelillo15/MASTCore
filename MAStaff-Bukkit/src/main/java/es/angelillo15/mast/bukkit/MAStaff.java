@@ -4,6 +4,7 @@ import es.angelillo15.mast.api.ILogger;
 import es.angelillo15.mast.api.IStaffPlayer;
 import es.angelillo15.mast.api.MAStaffInstance;
 import es.angelillo15.mast.api.database.DataProvider;
+import es.angelillo15.mast.bukkit.addons.AddonsLoader;
 import es.angelillo15.mast.bukkit.cmd.FreezeCMD;
 import es.angelillo15.mast.bukkit.cmd.StaffChatCMD;
 import es.angelillo15.mast.bukkit.cmd.mast.MAStaffCMD;
@@ -280,6 +281,8 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance {
         registerCommands();
         logger.debug("Registering Listeners...");
         registerListeners();
+        logger.debug("reloading addons...");
+        AddonsLoader.reload();
         logger.debug("Checking for updates...");
         checkUpdates();
 

@@ -35,6 +35,10 @@ public class MAStaffAddon<T> {
 
     }
 
+    public void reload(){
+
+    }
+
     public void loadConfig() {
         if(!this.addonFolder.exists()) this.addonFolder.mkdirs();
         config = new ConfigManager(this.addonFolder.toPath(), "config.yml", "config.yml", this);

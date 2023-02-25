@@ -88,4 +88,14 @@ public class AddonsLoader {
         }
         MAStaff.getPlugin().getPLogger().debug("Addons disabled!");
     }
+
+    public static void reload(){
+        MAStaff.getPlugin().getPLogger().debug("Reloading addons...");
+        for(MAStaffAddon addon : AddonsManager.getAddons().values()){
+            MAStaff.getPlugin().getPLogger().debug("Reloading addon " + addon.getDescriptionFile().getName() + "...");
+            addon.reload();
+            MAStaff.getPlugin().getPLogger().debug("Addon " + addon.getDescriptionFile().getName() + " reloaded!");
+        }
+        MAStaff.getPlugin().getPLogger().debug("Addons reloaded!");
+    }
 }
