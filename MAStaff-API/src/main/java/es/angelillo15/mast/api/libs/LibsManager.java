@@ -13,7 +13,7 @@ public class LibsManager {
         Library hikariCP = Library.builder()
                 .groupId("com{}zaxxer")
                 .artifactId("HikariCP")
-                .version("5.0.1")
+                .version("4.0.3")
                 .id("hikariCP")
                 .relocate("com{}zaxxer", "es{}angelillo15{}mast{}libs")
                 .isolatedLoad(false)
