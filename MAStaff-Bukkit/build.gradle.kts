@@ -31,7 +31,7 @@ dependencies {
     compileOnly("me.clip:placeholderapi:2.11.2")
     compileOnly("com.github.MilkBowl:VaultAPI:1.7.1")
     compileOnly("com.konghq:unirest-java:3.11.09")
-    compileOnly("com.github.MrGraycat:eGlow:-SNAPSHOT")
+    compileOnly("com.github.MrGraycat:eGlow:master-SNAPSHOT")
     implementation("net.byteflux:libby-bukkit:1.1.5")
 }
 
