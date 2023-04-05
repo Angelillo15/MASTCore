@@ -158,7 +158,7 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance {
                     break;
                 case SQLITE:
                     pluginConnection = new PluginConnection(
-                            Path.of(getPlugin().getDataFolder().getAbsolutePath())
+                            getPlugin().getDataFolder().getAbsolutePath()
                     );
                     break;
 
@@ -177,7 +177,7 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance {
             logger.error((TextUtils.colorize("&c┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛")));
             try {
                 pluginConnection = new PluginConnection(
-                        Path.of(getPlugin().getDataFolder().getAbsolutePath())
+                        getPlugin().getDataFolder().getAbsolutePath()
                 );
             } catch (Exception e1) {
                 e1.printStackTrace();
