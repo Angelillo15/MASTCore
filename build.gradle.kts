@@ -42,6 +42,7 @@ tasks.shadowJar {
     relocate("kong.unirest", "es.angelillo15.mast.libs.unirest")
     relocate("org.apache.http", "es.angelillo15.mast.libs.apache.http")
     relocate("org.apache.commons.logging", "es.angelillo15.mast.libs.commons-logging")
+    relocate("org.reflections", "es.angelillo15.mast.libs.reflections")
 }
 
 dependencies {
@@ -60,6 +61,7 @@ dependencies {
     implementation("com.github.hamza-cskn.obliviate-invs:configurablegui:4.1.10")
     implementation("com.google.code.gson:gson:2.10.1")
     implementation("net.byteflux:libby-bukkit:1.1.5")
+    implementation("org.reflections:reflections:0.10.2")
 }
 
 tasks.withType<JavaCompile> {
@@ -86,5 +88,6 @@ allprojects {
     dependencies {
         compileOnly("org.projectlombok:lombok:1.18.24")
         annotationProcessor("org.projectlombok:lombok:1.18.24")
+        compileOnly("org.reflections:reflections:0.10.2")
     }
 }
