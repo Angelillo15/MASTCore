@@ -8,11 +8,11 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.Set;
 
 public class ReflectionLoader {
-    public static void loadAll(Class<?> clazz){
+    public static void loadAll() {
         Reflections reflections = new Reflections("es.angelillo15.mast");
-        Set<Class<?>> anottated = reflections.getTypesAnnotatedWith(Manager.class);
+        Set<Class<?>> annotated = reflections.getTypesAnnotatedWith(Manager.class);
 
-        for (Class<?> c : anottated) {
+        for (Class<?> c : annotated) {
             try {
                 ManagerExecutor executor = (ManagerExecutor) c.getDeclaredConstructors()[0].newInstance();
                 executor.load();
