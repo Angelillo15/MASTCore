@@ -19,6 +19,7 @@ public class MAStaffLoader extends MAStaff {
         checkUpdates();
         debugInfo();
         ReflectionLoader.loadAll();
+        ReflectionLoader.loadBukkit();
     }
 
     @Override
