@@ -42,8 +42,6 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import es.angelillo15.mast.bukkit.data.PluginConnection;
 import org.simpleyaml.configuration.file.YamlFile;
-
-import java.nio.file.Path;
 import java.sql.Connection;
 import java.sql.SQLException;
 
