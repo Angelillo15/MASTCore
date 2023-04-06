@@ -6,6 +6,7 @@ plugins {
 
 group = "es.angelillo15"
 version = "2.2.0"
+val javaVersion = JavaVersion.VERSION_1_8
 
 repositories {
     mavenCentral()
@@ -18,8 +19,8 @@ repositories {
 }
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_1_8
-    targetCompatibility = JavaVersion.VERSION_1_8
+    sourceCompatibility = javaVersion
+    targetCompatibility = javaVersion
 }
 
 tasks.shadowJar {
@@ -49,6 +50,7 @@ dependencies {
     implementation(project(":MAStaff-API"))
     implementation(project(":MAStaff-Bukkit"))
     implementation(project(":MAStaff-Bungee"))
+    implementation(project("MAStaff-Legacy"))
     compileOnly("org.yaml:snakeyaml:1.33")
     implementation("com.github.Carleslc.Simple-YAML:Simple-Yaml:1.8.3")
     implementation("com.github.Angelillo15:ConfigManager:1.4")
@@ -80,8 +82,8 @@ allprojects {
     }
 
     java {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = javaVersion
+        targetCompatibility = javaVersion
     }
 
     dependencies {

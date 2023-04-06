@@ -133,11 +133,11 @@ public class StaffPlayer implements IStaffPlayer {
         player.sendMessage(Messages.GET_STAFF_MODE_ENABLE_MESSAGE());
         setModeData(true);
         if (saveInventory) saveInventory();
+        staffMode = true;
         enableVanish();
         clearInventory();
         setItems();
         CommonQueries.updateAsync(player.getUniqueId(), 1);
-        staffMode = true;
         changeGamemode(GameMode.CREATIVE);
         if (saveInventory) StaffUtils.asyncBroadcastMessage(Messages.GET_VANISH_LEAVE_MESSAGE()
                 .replace("{player}", player.getName()));
