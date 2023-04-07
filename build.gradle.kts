@@ -44,6 +44,7 @@ tasks.shadowJar {
     relocate("org.apache.http", "es.angelillo15.mast.libs.apache.http")
     relocate("org.apache.commons.logging", "es.angelillo15.mast.libs.commons-logging")
     relocate("org.reflections", "es.angelillo15.mast.libs.reflections")
+    relocate("redis.clients.jedis", "es.angelillo15.mast.libs.jedis")
 }
 
 dependencies {
