@@ -2,39 +2,39 @@ package es.angelillo15.mast.bungee.config;
 
 public class Config {
     public static class Redis {
-        public boolean isEnabled() {
+        public static boolean isEnabled() {
             return ConfigLoader.getConfig().getConfig().getBoolean("Redis.enabled");
         }
 
-        public String getHost() {
+        public static String getHost() {
             return ConfigLoader.getConfig().getConfig().getString("Redis.host");
         }
 
-        public int getPort() {
+        public static int getPort() {
             return ConfigLoader.getConfig().getConfig().getInt("Redis.port");
         }
 
-        public String getPassword() {
+        public static String getPassword() {
             return ConfigLoader.getConfig().getConfig().getString("Redis.password");
         }
 
-        public int getDatabase() {
+        public static int getDatabase() {
             return ConfigLoader.getConfig().getConfig().getInt("Redis.database");
         }
 
-        public int getTimeout() {
+        public static int getTimeout() {
             return ConfigLoader.getConfig().getConfig().getInt("Redis.timeout");
         }
 
-        public int getPoolSize() {
+        public static int getPoolSize() {
             return ConfigLoader.getConfig().getConfig().getInt("Redis.poolSize");
         }
 
-        public String getPrefix() {
+        public static String getPrefix() {
             return ConfigLoader.getConfig().getConfig().getString("Redis.prefix");
         }
 
-        public String getChannel() {
+        public static String getChannel() {
             return ConfigLoader.getConfig().getConfig().getString("Redis.channel");
         }
     }
