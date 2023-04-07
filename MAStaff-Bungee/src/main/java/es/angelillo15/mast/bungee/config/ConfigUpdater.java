@@ -9,19 +9,19 @@ public class ConfigUpdater {
     public void update() {
         /*
         YamlUpdater.create(
-                        new File(MASTBungeeManager.getInstance().getDataFolder() + File.separator + "config.yml"),
+                        new File(MAStaff.getInstance().getDataFolder() + File.separator + "config.yml"),
                         Objects.requireNonNull(getClass().getResourceAsStream("/BungeeCord/config.yml")))
                 .update()
         ;
 
         YamlUpdater.create(
-                new File(MASTBungeeManager.getInstance().getDataFolder() + File.separator + "lang/spanish.yml"),
+                new File(MAStaff.getInstance().getDataFolder() + File.separator + "lang/spanish.yml"),
                 Objects.requireNonNull(getClass().getResourceAsStream("/BungeeCord/lang/spanish.yml")))
                 .update()
         ;
 
         YamlUpdater.create(
-                new File(MASTBungeeManager.getInstance().getDataFolder() + File.separator + "lang/english.yml"),
+                new File(MAStaff.getInstance().getDataFolder() + File.separator + "lang/english.yml"),
                 Objects.requireNonNull(getClass().getResourceAsStream("/BungeeCord/lang/english.yml")))
                 .update()
         ;
