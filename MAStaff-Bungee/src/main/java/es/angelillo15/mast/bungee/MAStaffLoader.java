@@ -5,14 +5,14 @@ import es.angelillo15.mast.bungee.config.ConfigUpdater;
 import es.angelillo15.mast.bungee.metrics.Metrics;
 import es.angelillo15.mast.bungee.utils.LibsLoader;
 
-public class MASTBungee extends MASTBungeeManager {
+public class MAStaffLoader extends MAStaff {
     @Override
     public void onEnable() {
+        super.onEnable();
         drawLogo();
         LibsLoader.loadLibs();
         new ConfigUpdater().update();
-        registerEvents();
-        registerConfig();
+        registerListeners();
         registerCommands();
         AddonsLoader.loadAddons();
         new Metrics(this, 16548);
@@ -20,6 +20,7 @@ public class MASTBungee extends MASTBungeeManager {
 
     @Override
     public void onDisable() {
+        super.onDisable();
         AddonsLoader.unloadAddons();
     }
 }

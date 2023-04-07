@@ -1,4 +1,4 @@
 name: MAStaff
 version: '$version'
-main: es.angelillo15.mast.bungee.MASTBungee
+main: es.angelillo15.mast.bungee.MAStaffLoader
 author: Angelillo15

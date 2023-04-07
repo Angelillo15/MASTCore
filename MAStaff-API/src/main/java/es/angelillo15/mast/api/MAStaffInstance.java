@@ -44,7 +44,9 @@ public interface MAStaffInstance<P> {
     public void unregisterListeners();
     public void unloadDatabase();
     public void reload();
-    public IStaffPlayer createStaffPlayer(Player player);
+    public default IStaffPlayer createStaffPlayer(Player player) {
+        return null;
+    }
     public P getPluginInstance();
 
 }
