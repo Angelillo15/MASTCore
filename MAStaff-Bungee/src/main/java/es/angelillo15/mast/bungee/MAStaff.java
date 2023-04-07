@@ -10,6 +10,7 @@ import es.angelillo15.mast.bungee.config.ConfigLoader;
 import es.angelillo15.mast.bungee.listener.StaffChangeEvent;
 import es.angelillo15.mast.bungee.listener.StaffJoinChange;
 import es.angelillo15.mast.bungee.listener.StaffTalkEvent;
+import es.angelillo15.mast.bungee.manager.RedisManager;
 import es.angelillo15.mast.bungee.utils.Logger;
 import lombok.Getter;
 import lombok.Setter;
@@ -70,7 +71,7 @@ public class MAStaff extends Plugin implements MAStaffInstance<Plugin> {
 
     @Override
     public void loadDatabase() {
-
+        new RedisManager().load();
     }
 
     @Override
