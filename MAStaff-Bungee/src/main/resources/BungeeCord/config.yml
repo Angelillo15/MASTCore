@@ -24,3 +24,28 @@ Config:
 Helpop:
   # Cooldown in seconds
   cooldown: 30
+#
+# Server synchronization configuration for the plugin.
+# This is used to synchronize the staff mode between bungeecord servers.
+# If you don't want to use this feature, you can disable it.
+# This feature requires a Redis server and Redis Bungee.
+#
+Redis:
+  # Enable or disable the Redis synchronization.
+  enabled: false
+  # The host of your Redis server.
+  host: "localhost"
+  # The port of your Redis server.
+  port: 6379
+  # The password of your Redis server.
+  password: ""
+  # The database of your Redis server.
+  database: 0
+  # The timeout of your Redis server.
+  timeout: 2000
+  # The pool size of your Redis server.
+  poolSize: 8
+  # The prefix of your Redis server.
+  prefix: "MAStaff"
+  # The channel of your Redis server.
+  channel: "MAStaff"
