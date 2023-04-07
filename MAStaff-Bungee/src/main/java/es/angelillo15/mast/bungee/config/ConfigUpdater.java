@@ -1,10 +1,5 @@
 package es.angelillo15.mast.bungee.config;
 
-import es.angelillo15.mast.bungee.MASTBungeeManager;
-
-import java.io.File;
-import java.util.Objects;
-
 public class ConfigUpdater {
     public void update() {
         /*

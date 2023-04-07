@@ -1,14 +1,14 @@
 package es.angelillo15.mast.bungee.config;
 
 import es.angelillo15.configmanager.ConfigManager;
-import es.angelillo15.mast.bungee.MASTBungeeManager;
+import es.angelillo15.mast.bungee.MAStaff;
 import lombok.Getter;
 
 import java.io.File;
 import java.io.IOException;
 
 public class ConfigLoader {
-    private MASTBungeeManager plugin;
+    private MAStaff plugin;
     private static ConfigManager config;
     private static ConfigManager messages;
     private String language;
@@ -17,7 +17,7 @@ public class ConfigLoader {
     @Getter
     private static ConfigManager en;
 
-    public ConfigLoader(MASTBungeeManager plugin) {
+    public ConfigLoader(MAStaff plugin) {
         this.plugin = plugin;
     }
 
