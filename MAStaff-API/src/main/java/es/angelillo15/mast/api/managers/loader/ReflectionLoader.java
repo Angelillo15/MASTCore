@@ -36,4 +36,18 @@ public class ReflectionLoader {
             }
         }
     }
+
+    public static void loadBungee(){
+        Reflections reflections = new Reflections("es.angelillo15.mast.bungee");
+        Set<Class<?>> annotated = reflections.getTypesAnnotatedWith(BukkitManagerExecutor.class);
+
+        for (Class<?> c : annotated) {
+            try {
+                ManagerExecutor executor = (ManagerExecutor) c.getDeclaredConstructors()[0].newInstance();
+                executor.load();
+            } catch (InstantiationException | IllegalAccessException | InvocationTargetException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 }
