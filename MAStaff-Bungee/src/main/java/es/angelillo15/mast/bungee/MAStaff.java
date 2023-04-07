@@ -33,8 +33,8 @@ public class MAStaff extends Plugin implements MAStaffInstance<Plugin> {
 
     @Override
     public void drawLogo() {
-        logger = new Logger();
         instance = this;
+        logger = new Logger();
 
         logger.info(TextUtils.simpleColorize("&a"));
         logger.info(TextUtils.simpleColorize("&a ███▄ ▄███▓ ▄▄▄        ██████ ▄▄▄█████▓ ▄▄▄        █████▒ █████▒"));
