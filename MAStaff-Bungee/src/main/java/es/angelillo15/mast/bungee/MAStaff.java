@@ -6,17 +6,20 @@ import es.angelillo15.mast.api.TextUtils;
 import es.angelillo15.mast.bungee.cmd.HelpopCMD;
 import es.angelillo15.mast.bungee.cmd.MASTBReload;
 import es.angelillo15.mast.bungee.cmd.StaffChat;
+import es.angelillo15.mast.bungee.config.ConfigLoader;
 import es.angelillo15.mast.bungee.listener.StaffChangeEvent;
 import es.angelillo15.mast.bungee.listener.StaffJoinChange;
 import es.angelillo15.mast.bungee.listener.StaffTalkEvent;
 import es.angelillo15.mast.bungee.utils.Logger;
 import lombok.Getter;
+import lombok.Setter;
 import net.md_5.bungee.api.plugin.Plugin;
 
 public class MAStaff extends Plugin implements MAStaffInstance<Plugin> {
     @Getter
     private static MAStaff instance;
     private ILogger logger;
+    @Setter
     private boolean debug;
     @Override
     public ILogger getPLogger() {
@@ -48,7 +51,7 @@ public class MAStaff extends Plugin implements MAStaffInstance<Plugin> {
 
     @Override
     public void loadConfig() {
-
+        new ConfigLoader(this).load();
     }
 
     @Override
