@@ -16,7 +16,7 @@ public class TextUtils {
     private static final long DAY = 24 * HOUR;
 
     public static String colorize(String text) {
-        if (MAStaffInstance.version < 16) {
+        if (MAStaffInstance.version() < 16) {
             return ChatColor.translateAlternateColorCodes('&', text);
         }
 
