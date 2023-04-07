@@ -38,7 +38,7 @@ public class ConfigLoader {
 
     public void loadConfig() {
         ConfigMerge.merge(new File(plugin.getDataFolder().toPath().toString() + File.separator + "config.yml"),
-                plugin.getResourceAsStream("Bukkit/config.yml")
+                plugin.getResourceAsStream("BungeeCord/config.yml")
         );
 
         config = new ConfigManager(plugin.getDataFolder().toPath(), "BungeeCord/config.yml", "config.yml");
