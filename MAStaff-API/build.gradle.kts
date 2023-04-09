@@ -44,6 +44,7 @@ dependencies {
     compileOnly("ru.vyarus:yaml-config-updater:1.4.2")
     compileOnly("org.yaml:snakeyaml:1.33")
     compileOnly("com.github.Carleslc.Simple-YAML:Simple-Yaml:1.8.3")
+    compileOnly("redis.clients:jedis:4.4.0-m2")
 }
 
 blossom {
