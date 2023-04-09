@@ -52,3 +52,5 @@ Redis:
   prefix: "MAStaff"
   # The channel of your Redis server.
   channel: "MAStaff"
+  # Identify the server.
+  serverID: "p1"

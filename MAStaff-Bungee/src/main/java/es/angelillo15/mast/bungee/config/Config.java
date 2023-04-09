@@ -37,5 +37,9 @@ public class Config {
         public static String getChannel() {
             return ConfigLoader.getConfig().getConfig().getString("Redis.channel");
         }
+
+        public static String getServerName() {
+            return ConfigLoader.getConfig().getConfig().getString("Redis.serverID");
+        }
     }
 }
