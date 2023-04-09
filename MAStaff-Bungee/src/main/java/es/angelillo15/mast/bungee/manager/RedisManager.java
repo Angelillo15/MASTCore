@@ -36,11 +36,23 @@ public class RedisManager implements ManagerExecutor {
 
         MAStaff.getInstance().getPLogger().info(TextUtils.simpleColorize("&aConnected to Redis server"));
         new RedisSubscriber().load();
-        new Thread(() -> {
-            MAStaff.getInstance().getPLogger().info(TextUtils.simpleColorize("&aSending message to Redis server"));
-            jedis.publish(Config.Redis.getChannel(), "Hello world!");
-        }).start();
+        sendMessage("ServerStarted");
+    }
 
-        MAStaff.getInstance().getPLogger().info(TextUtils.simpleColorize("&aSent message to Redis server"));
+    /**
+     * Send a message to the Redis server
+     * @param message Message to send
+     */
+    public static void sendMessage(String message) {
+        new Thread(() -> jedis.publish(Config.Redis.getChannel(), Config.Redis.getServerName() + ":" + message)).start();
+    }
+
+    /**
+     * Send a message to the Redis server
+     * @param message Message to send
+     * @param args Arguments to send
+     */
+    public static void sendMessage(String message, String... args) {
+        sendMessage(message + ":" + String.join(":", args));
     }
 }
