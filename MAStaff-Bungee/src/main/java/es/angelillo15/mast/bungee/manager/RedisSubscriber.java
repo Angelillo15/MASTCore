@@ -26,6 +26,7 @@ public class RedisSubscriber implements ManagerExecutor {
                     String messageWithoutServerName = message.split(":")[1];
 
                     if (!EventManager.getInstance().eventExists(messageWithoutServerName)) {
+                        MAStaff.getInstance().getPLogger().debug("Event " + messageWithoutServerName + " doesn't exists");
                         return;
                     }
 
@@ -36,6 +37,8 @@ public class RedisSubscriber implements ManagerExecutor {
                             );
 
                     EventManager.getInstance().fireEvent(event);
+
+                    MAStaff.getInstance().getPLogger().debug("Event " + messageWithoutServerName + " fired");
                 }
             }, Config.Redis.getChannel());
 
