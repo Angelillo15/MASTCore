@@ -11,10 +11,10 @@ public class MAStaffLoader extends MAStaff {
         super.onEnable();
         drawLogo();
         LibsLoader.loadLibs();
-        registerListeners();
         loadConfig();
-        registerCommands();
         loadDatabase();
+        registerListeners();
+        registerCommands();
         ReflectionLoader.loadBungee();
         ReflectionLoader.loadAll();
         AddonsLoader.loadAddons();
