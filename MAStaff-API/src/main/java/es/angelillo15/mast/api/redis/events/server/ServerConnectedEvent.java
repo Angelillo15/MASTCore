@@ -9,6 +9,6 @@ public class ServerConnectedEvent extends RedisEvent {
     }
 
     public ServerConnectedEvent(String serverName) {
-        super(Events.SERVER_CONNECTED.getEvent(), serverName);
+        super(Events.SERVER_CONNECTED.getEventName(), serverName);
     }
 }
