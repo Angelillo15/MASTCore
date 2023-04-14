@@ -10,13 +10,14 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 
+@SuppressWarnings({"deprecation", "ConstantValue"})
 public class OnItemClickInteract implements Listener {
     static boolean clicked = false;
     @EventHandler
     public void onEntityInteract(PlayerInteractEntityEvent event) {
         Player player = event.getPlayer();
 
-        if(!StaffPlayersManagers.getStaffPlayers().containsKey(player.getUniqueId())) return;
+        if(!StaffPlayersManagers.getStaffPlayers().containsKey(player.getName())) return;
         if(!player.hasPermission(Permissions.STAFF.getPermission())) return;
 
         IStaffPlayer staffPlayer = StaffPlayersManagers.getStaffPlayer(player);

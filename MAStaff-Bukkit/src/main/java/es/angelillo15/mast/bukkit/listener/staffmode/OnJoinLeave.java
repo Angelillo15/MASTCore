@@ -3,6 +3,8 @@ package es.angelillo15.mast.bukkit.listener.staffmode;
 import es.angelillo15.mast.api.IStaffPlayer;
 import es.angelillo15.mast.api.Permissions;
 import es.angelillo15.mast.api.database.sql.CommonQueries;
+import es.angelillo15.mast.api.event.bukkit.staff.server.StaffJoinEvent;
+import es.angelillo15.mast.api.event.bukkit.staff.server.StaffLeaveEvent;
 import es.angelillo15.mast.api.managers.StaffPlayersManagers;
 import es.angelillo15.mast.bukkit.MAStaff;
 import es.angelillo15.mast.bukkit.config.Messages;
@@ -28,6 +30,8 @@ public class OnJoinLeave implements Listener {
 
         IStaffPlayer staffPlayer = StaffPlayersManagers.getStaffPlayer(player);
 
+        // MAStaff.getPlugin().getServer().getPluginManager().callEvent(new StaffJoinEvent(player));
+
         if(CommonQueries.isInStaffMode(player.getUniqueId())){
             MAStaff.getPlugin().getPLogger().debug("Player " + player.getName() + " previous state: " + staffPlayer.wasInStaffMode());
             if(!staffPlayer.wasInStaffMode()) staffPlayer.toggleStaffMode(true);
@@ -48,6 +52,8 @@ public class OnJoinLeave implements Listener {
         if(!player.hasPermission(Permissions.STAFF.getPermission())){
             return;
         }
+
+        //MAStaff.getPlugin().getServer().getPluginManager().callEvent(new StaffLeaveEvent(player));
 
         IStaffPlayer staffPlayer = StaffPlayersManagers.getStaffPlayer(player);
 

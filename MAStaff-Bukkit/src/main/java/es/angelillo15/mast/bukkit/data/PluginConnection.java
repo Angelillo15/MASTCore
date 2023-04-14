@@ -44,7 +44,7 @@ public class PluginConnection {
         queries = new MySQLQueries();
     }
 
-    public PluginConnection(Path pluginPath){
+    public PluginConnection(String pluginPath){
         dataProvider = DataProvider.SQLITE;
         try {
             Class.forName("org.sqlite.JDBC");

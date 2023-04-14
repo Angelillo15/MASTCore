@@ -26,7 +26,8 @@ public class StaffChatCMD implements CommandExecutor {
 
                 StaffUtils.asyncStaffChatMessage(message);
 
-                Bukkit.getPluginManager().callEvent(new StaffChatTalkEvent((Player) sender, message));
+
+                Bukkit.getPluginManager().callEvent(new StaffChatTalkEvent((Player) sender, String.join(" ", args)));
 
                 return true;
             }else{

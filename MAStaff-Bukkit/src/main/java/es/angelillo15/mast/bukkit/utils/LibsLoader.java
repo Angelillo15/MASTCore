@@ -11,6 +11,8 @@ public class LibsLoader {
 
         manager.addMavenCentral();
         manager.addJitPack();
+        manager.addSonatype();
+        manager.addRepository("https://jitpack.io");
 
         LibsManager.load();
         LibsManager.getLibs().forEach((Library lib) -> {

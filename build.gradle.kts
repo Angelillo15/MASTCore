@@ -5,7 +5,8 @@ plugins {
 }
 
 group = "es.angelillo15"
-version = "2.1.0"
+version = "2.2.0"
+val javaVersion = JavaVersion.VERSION_1_8
 
 repositories {
     mavenCentral()
@@ -18,8 +19,8 @@ repositories {
 }
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_11
-    targetCompatibility = JavaVersion.VERSION_11
+    sourceCompatibility = javaVersion
+    targetCompatibility = javaVersion
 }
 
 tasks.shadowJar {
@@ -30,7 +31,6 @@ tasks.shadowJar {
     relocate("net.kyori.adventure", "es.angelillo15.mast.libs.adventure")
     relocate("mc.obliviate", "es.angelillo15.mast.libs.obliviate")
     relocate("com.zaxxer.hikari", "es.angelillo15.mast.libs.hikari")
-    // relocate("org.slf4j", "es.angelillo15.mast.libs.slf4j")
     relocate("com.google.common", "es.angelillo15.mast.libs.google.common")
     relocate("com.google.gson", "es.angelillo15.mast.libs.google.gson")
     relocate("com.google.thirdparty", "es.angelillo15.mast.libs.google.thirdparty")
@@ -40,18 +40,21 @@ tasks.shadowJar {
     relocate("org.checkerframework", "es.angelillo15.mast.libs.checkerframework")
     relocate("net.byteflux.libby", "es.angelillo15.mast.libs.libby")
     relocate("ru.vyarus.yaml.updater", "es.angelillo15.mast.libs.yaml-config-updater")
+    relocate("kong.unirest", "es.angelillo15.mast.libs.unirest")
+    relocate("org.apache.http", "es.angelillo15.mast.libs.apache.http")
+    relocate("org.apache.commons.logging", "es.angelillo15.mast.libs.commons-logging")
+    relocate("org.reflections", "es.angelillo15.mast.libs.reflections")
 }
 
 dependencies {
     implementation(project(":MAStaff-API"))
     implementation(project(":MAStaff-Bukkit"))
     implementation(project(":MAStaff-Bungee"))
-    implementation(project(":MAStaff-Common"))
-    implementation(project(":MAStaff-Velocity"))
-    implementation("org.yaml:snakeyaml:1.33")
+    implementation(project("MAStaff-Legacy"))
+    compileOnly("org.yaml:snakeyaml:1.33")
     implementation("com.github.Carleslc.Simple-YAML:Simple-Yaml:1.8.3")
     implementation("com.github.Angelillo15:ConfigManager:1.4")
-    implementation("com.zaxxer:HikariCP:5.0.1")
+    compileOnly("com.zaxxer:HikariCP:5.0.1")
     compileOnly("com.github.Nookure:GlowAPI:1.0.0")
     implementation("com.github.hamza-cskn.obliviate-invs:core:4.1.10")
     implementation("com.github.hamza-cskn.obliviate-invs:advancedslot:4.1.10")
@@ -59,6 +62,7 @@ dependencies {
     implementation("com.github.hamza-cskn.obliviate-invs:configurablegui:4.1.10")
     implementation("com.google.code.gson:gson:2.10.1")
     implementation("net.byteflux:libby-bukkit:1.1.5")
+    implementation("org.reflections:reflections:0.10.2")
 }
 
 tasks.withType<JavaCompile> {
@@ -78,12 +82,13 @@ allprojects {
     }
 
     java {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = javaVersion
+        targetCompatibility = javaVersion
     }
 
     dependencies {
         compileOnly("org.projectlombok:lombok:1.18.24")
         annotationProcessor("org.projectlombok:lombok:1.18.24")
+        compileOnly("org.reflections:reflections:0.10.2")
     }
 }
