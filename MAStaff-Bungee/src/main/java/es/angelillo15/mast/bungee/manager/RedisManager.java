@@ -2,6 +2,7 @@ package es.angelillo15.mast.bungee.manager;
 
 import es.angelillo15.mast.api.TextUtils;
 import es.angelillo15.mast.api.managers.ManagerExecutor;
+import es.angelillo15.mast.api.redis.RedisEvent;
 import es.angelillo15.mast.bungee.MAStaff;
 import es.angelillo15.mast.bungee.config.Config;
 import lombok.Getter;
@@ -55,4 +56,14 @@ public class RedisManager implements ManagerExecutor {
     public static void sendMessage(String message, String... args) {
         sendMessage(message + ":" + String.join(":", args));
     }
+
+    /**
+     * Send a RedisEvent to the Redis server
+     * @param event Event to send
+     */
+    public static void sendEvent(RedisEvent event) {
+        sendMessage(event.getServerName() + ":" + event.getMessage());
+    }
+
+
 }
