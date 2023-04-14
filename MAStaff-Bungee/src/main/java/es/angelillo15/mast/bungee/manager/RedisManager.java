@@ -36,8 +36,8 @@ public class RedisManager implements ManagerExecutor {
         jedisSubscriber.select(Config.Redis.getDatabase());
 
         MAStaff.getInstance().getPLogger().info(TextUtils.simpleColorize("&aConnected to Redis server"));
+        RedisEventRegister.registerEvents();
         new RedisSubscriber().load();
-        sendMessage("ServerStarted");
     }
 
     /**
@@ -62,7 +62,7 @@ public class RedisManager implements ManagerExecutor {
      * @param event Event to send
      */
     public static void sendEvent(RedisEvent event) {
-        sendMessage(event.getServerName() + ":" + event.getMessage());
+        sendMessage(event.getMessage());
     }
 
 
