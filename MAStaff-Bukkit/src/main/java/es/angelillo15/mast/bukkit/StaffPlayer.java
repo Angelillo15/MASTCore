@@ -287,14 +287,10 @@ public class StaffPlayer implements IStaffPlayer {
         Location location = new Location(world, x, y, z, yaw, pitch);
         switch (world.getEnvironment()) {
             case NETHER:
-                new Thread(() -> {
-                    player.teleport(location);
-                }).start();
+                player.teleport(location);
                 return true;
             default:
-                new Thread(() -> {
-                    player.teleport(world.getHighestBlockAt(location).getLocation().add(0, 1, 0));
-                }).start();
+                player.teleport(world.getHighestBlockAt(location).getLocation().add(0, 1, 0));
                 return true;
         }
     }

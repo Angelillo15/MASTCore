@@ -52,7 +52,6 @@ dependencies {
     implementation(project(":MAStaff-Bukkit"))
     implementation(project(":MAStaff-Bungee"))
     implementation(project("MAStaff-Legacy"))
-    implementation(project(":MAStaff-Folia"))
     compileOnly("org.yaml:snakeyaml:1.33")
     implementation("com.github.Carleslc.Simple-YAML:Simple-Yaml:1.8.3")
     implementation("com.github.Angelillo15:ConfigManager:1.4")
@@ -83,12 +82,10 @@ allprojects {
         options.encoding = "UTF-8"
     }
 
-    /*
     java {
         sourceCompatibility = javaVersion
         targetCompatibility = javaVersion
     }
-    */
 
     dependencies {
         compileOnly("org.projectlombok:lombok:1.18.24")

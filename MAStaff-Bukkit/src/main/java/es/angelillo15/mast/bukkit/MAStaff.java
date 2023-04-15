@@ -28,7 +28,6 @@ import es.angelillo15.mast.bukkit.utils.Logger;
 import es.angelillo15.mast.api.TextUtils;
 import es.angelillo15.mast.bukkit.utils.Metrics;
 import es.angelillo15.mast.bukkit.utils.PermsUtils;
-import es.angelillo15.mast.bukkit.utils.scheduler.Scheduler;
 import kong.unirest.HttpResponse;
 import kong.unirest.Unirest;
 import lombok.Getter;
@@ -73,7 +72,6 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance<Plugin> {
     @Override
     public void onEnable() {
         plugin = this;
-        new Scheduler();
         super.onEnable();
     }
 

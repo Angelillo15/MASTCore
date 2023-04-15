@@ -7,7 +7,6 @@ authors: [ Angelillo15 ]
 description: Simple and optimised Staff Core
 website: angelillo15.es
 softdepend: [PlaceholderAPI, Vault, eGlow]
-folia-supported: true
 commands:
   staff:
     description: Staff Command
