@@ -12,6 +12,8 @@ public class StaffUtils {
                 }
             });
         });
+
+        MAStaff.getInstance().getPLogger().info(message);
     }
 
     public static void sendBroadcastPermissionMessage(String message, String permission){
