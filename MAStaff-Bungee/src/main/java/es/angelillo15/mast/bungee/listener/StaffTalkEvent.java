@@ -1,7 +1,10 @@
 package es.angelillo15.mast.bungee.listener;
 
 import es.angelillo15.mast.api.event.bungee.staffchat.StaffChatTalkEvent;
+import es.angelillo15.mast.api.redis.events.staff.StaffChatMessageEvent;
+import es.angelillo15.mast.bungee.config.Config;
 import es.angelillo15.mast.bungee.config.Messages;
+import es.angelillo15.mast.bungee.manager.RedisManager;
 import es.angelillo15.mast.bungee.utils.StaffUtils;
 import es.angelillo15.mast.api.managers.StaffChatManager;
 import net.md_5.bungee.api.ProxyServer;
@@ -38,6 +41,15 @@ public class StaffTalkEvent implements Listener {
 
             ProxyServer.getInstance().getPluginManager().callEvent(new StaffChatTalkEvent(player, text));
 
+            if (Config.Redis.isEnabled()) {
+                StaffChatMessageEvent staffChatMessageEvent = new StaffChatMessageEvent(Config.Redis.getServerName(),
+                        player.getDisplayName(),
+                        text,
+                        player.getServer().getInfo().getName()
+                );
+
+                RedisManager.sendEvent(staffChatMessageEvent);
+            }
         }
 
     }
