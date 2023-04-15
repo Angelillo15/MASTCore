@@ -17,6 +17,7 @@ import es.angelillo15.mast.bungee.listener.StaffTalkEvent;
 import es.angelillo15.mast.bungee.listener.redis.server.OnServer;
 import es.angelillo15.mast.bungee.listener.redis.staff.OnStaffJoinLeave;
 import es.angelillo15.mast.bungee.listener.redis.staff.OnStaffSwitch;
+import es.angelillo15.mast.bungee.listener.redis.staff.OnStaffTalk;
 import es.angelillo15.mast.bungee.manager.RedisManager;
 import es.angelillo15.mast.bungee.utils.Logger;
 import lombok.Getter;
@@ -84,6 +85,7 @@ public class MAStaff extends Plugin implements MAStaffInstance<Plugin> {
         em.registerListener(new OnServer());
         em.registerListener(new OnStaffJoinLeave());
         em.registerListener(new OnStaffSwitch());
+        em.registerListener(new OnStaffTalk());
         ServerConnectedEvent event = new ServerConnectedEvent(Config.Redis.getServerName());
         RedisManager.sendEvent(event);
     }
