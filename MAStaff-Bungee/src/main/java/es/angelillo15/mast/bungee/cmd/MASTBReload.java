@@ -1,6 +1,6 @@
 package es.angelillo15.mast.bungee.cmd;
 
-import es.angelillo15.mast.bungee.MASTBungeeManager;
+import es.angelillo15.mast.bungee.MAStaff;
 import es.angelillo15.mast.bungee.config.Messages;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.chat.TextComponent;
@@ -22,9 +22,9 @@ public class MASTBReload extends Command {
                 }
 
                 if(args[0].equalsIgnoreCase("reload")){
-                    MASTBungeeManager.getInstance().reload();
+                    MAStaff.getInstance().reload();
                     sender.sendMessage(new TextComponent(Messages.GET_RELOADED_MESSAGE()));
-                    MASTBungeeManager.getInstance().getLogger().info(Messages.GET_RELOADED_MESSAGE());
+                    MAStaff.getInstance().getLogger().info(Messages.GET_RELOADED_MESSAGE());
                 }
             }
         } else{
@@ -35,8 +35,8 @@ public class MASTBReload extends Command {
             }
 
             if(args[0].equalsIgnoreCase("reload")){
-                MASTBungeeManager.getInstance().reload();
-                MASTBungeeManager.getInstance().getLogger().info(Messages.GET_RELOADED_MESSAGE());
+                MAStaff.getInstance().reload();
+                MAStaff.getInstance().getLogger().info(Messages.GET_RELOADED_MESSAGE());
             }
 
         }

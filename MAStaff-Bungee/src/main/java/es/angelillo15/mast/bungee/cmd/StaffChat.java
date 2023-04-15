@@ -1,7 +1,10 @@
 package es.angelillo15.mast.bungee.cmd;
 
 import es.angelillo15.mast.api.event.bungee.staffchat.StaffChatTalkEvent;
+import es.angelillo15.mast.api.redis.events.staff.StaffChatMessageEvent;
+import es.angelillo15.mast.bungee.config.Config;
 import es.angelillo15.mast.bungee.config.Messages;
+import es.angelillo15.mast.bungee.manager.RedisManager;
 import es.angelillo15.mast.bungee.utils.StaffUtils;
 import es.angelillo15.mast.api.managers.StaffChatManager;
 import net.md_5.bungee.api.CommandSender;
@@ -39,6 +42,16 @@ public class StaffChat extends Command {
                             .replace("{message}", sb.toString()
                             );
                     StaffUtils.sendStaffChatMessage(message);
+
+                    if (Config.Redis.isEnabled()) {
+                        StaffChatMessageEvent staffChatMessageEvent = new StaffChatMessageEvent(Config.Redis.getServerName(),
+                                p.getDisplayName(),
+                                message,
+                                p.getServer().getInfo().getName()
+                        );
+
+                        RedisManager.sendEvent(staffChatMessageEvent);
+                    }
 
                     ProxyServer.getInstance().getPluginManager().callEvent(new StaffChatTalkEvent(p, sb.toString()));
                 }

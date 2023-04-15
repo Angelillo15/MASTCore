@@ -1,6 +1,7 @@
 package es.angelillo15.mast.api;
 
 import es.angelillo15.mast.api.exceptions.PluginNotLoadedException;
+import es.angelillo15.mast.api.utils.VersionUtils;
 import net.md_5.bungee.api.ProxyServer;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -8,7 +9,9 @@ import org.bukkit.plugin.Plugin;
 
 
 public interface MAStaffInstance<P> {
-    public static final int version = Integer.parseInt(Bukkit.getBukkitVersion().split("-")[0].split("\\.")[1]);
+    public static int version() {
+        return VersionUtils.getBukkitVersion();
+    }
 
     public static MAStaffInstance<Plugin> getInstance(){
         MAStaffInstance<Plugin> instance = (MAStaffInstance<Plugin>) Bukkit.getPluginManager().getPlugin("MAStaff");
@@ -44,7 +47,7 @@ public interface MAStaffInstance<P> {
     public void unregisterListeners();
     public void unloadDatabase();
     public void reload();
-    public IStaffPlayer createStaffPlayer(Player player);
+    public default IStaffPlayer createStaffPlayer(Player player) { return null; }
     public P getPluginInstance();
 
 }
