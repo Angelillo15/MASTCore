@@ -24,8 +24,34 @@ repositories {
 }
 
 publishing {
+    repositories {
+        maven {
+            name = "MASStaff-API"
+            url = uri("https://maven.pkg.github.com/Angelillo15/Angelillo15") // Github Package
+            credentials {
+                //Fetch these details from the properties file or from Environment variables
+                username = properties.get("gpr.usr") as String? ?: System.getenv("GPR_USER")
+                password = properties.get("gpr.key") as String? ?: System.getenv("GPR_API_KEY")
+            }
+        }
+
+        maven {
+            name = "MASStaff-API"
+            url = uri("https://maven.pkg.github.com/Nookure/MAStaff") // Github Package
+            credentials {
+                //Fetch these details from the properties file or from Environment variables
+                username = properties.get("gpr.usr") as String? ?: System.getenv("GPR_USER")
+                password = properties.get("gpr.key") as String? ?: System.getenv("GPR_API_KEY")
+            }
+        }
+    }
+
     publications {
-        create<MavenPublication>("mavenJava") {
+        create<MavenPublication>("maven") {
+            groupId = "es.angelillo15"
+            artifactId = "mast"
+            version = project.version.toString()
+
             from(components["java"])
         }
     }
@@ -35,7 +61,7 @@ dependencies {
     compileOnly("io.github.waterfallmc:waterfall-api:1.19-R0.1-SNAPSHOT")
     compileOnly("org.spigotmc:spigot-api:1.13-R0.1-SNAPSHOT")
     compileOnly("me.clip:placeholderapi:2.11.2")
-    compileOnly("com.github.mrgraycat:eGlow:-SNAPSHOT")
+    compileOnly("com.github.mrgraycat:eGlow:master-SNAPSHOT")
     compileOnly("net.byteflux:libby-bukkit:1.1.5")
     compileOnly("com.github.hamza-cskn.obliviate-invs:core:4.1.10")
     compileOnly("com.github.hamza-cskn.obliviate-invs:configurablegui:4.1.10")
