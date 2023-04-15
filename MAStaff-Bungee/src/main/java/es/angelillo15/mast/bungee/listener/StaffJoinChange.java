@@ -3,7 +3,9 @@ package es.angelillo15.mast.bungee.listener;
 import es.angelillo15.mast.api.event.bungee.staff.StaffJoinEvent;
 import es.angelillo15.mast.api.event.bungee.staff.StaffLeaveEvent;
 import es.angelillo15.mast.api.event.bungee.staff.StaffSwitchServerEvent;
+import es.angelillo15.mast.bungee.config.Config;
 import es.angelillo15.mast.bungee.config.Messages;
+import es.angelillo15.mast.bungee.manager.RedisManager;
 import es.angelillo15.mast.bungee.utils.PreviousServerManager;
 import es.angelillo15.mast.bungee.utils.StaffUtils;
 import net.md_5.bungee.api.ProxyServer;
@@ -26,6 +28,16 @@ public class StaffJoinChange implements Listener {
 
             ProxyServer.getInstance().getPluginManager().callEvent(new StaffJoinEvent(player));
         }
+
+        if (!Config.Redis.isEnabled()) {
+            return;
+        }
+
+        es.angelillo15.mast.api.redis.events.staff.join.StaffJoinEvent staffJoinEvent =
+                new es.angelillo15.mast.api.redis.events.staff.join.StaffJoinEvent(Config.Redis.getServerName(), player
+                );
+
+        RedisManager.sendEvent(staffJoinEvent);
     }
 
     @EventHandler
@@ -72,5 +84,15 @@ public class StaffJoinChange implements Listener {
         ProxyServer.getInstance().getPluginManager().callEvent(new StaffLeaveEvent(player));
 
         PreviousServerManager.removePreviousServer(player.getUniqueId());
+
+        if (!Config.Redis.isEnabled()) {
+            return;
+        }
+
+        es.angelillo15.mast.api.redis.events.staff.join.StaffLeaveEvent staffLeaveEvent =
+                new es.angelillo15.mast.api.redis.events.staff.join.StaffLeaveEvent(Config.Redis.getServerName(), player
+                );
+
+        RedisManager.sendEvent(staffLeaveEvent);
     }
 }
