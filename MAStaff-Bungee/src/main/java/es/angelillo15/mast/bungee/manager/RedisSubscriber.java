@@ -23,7 +23,7 @@ public class RedisSubscriber implements ManagerExecutor {
 
                     MAStaff.getInstance().getPLogger().debug("Received message: " + message);
 
-                    String messageWithoutServerName = message.split(":")[1];
+                    String messageWithoutServerName = message.split(":")[1].split(">")[0];
 
                     if (!EventManager.getInstance().eventExists(messageWithoutServerName)) {
                         MAStaff.getInstance().getPLogger().debug("Event " + messageWithoutServerName + " doesn't exists");
@@ -32,7 +32,7 @@ public class RedisSubscriber implements ManagerExecutor {
 
                     Event event = EventManager.getInstance().getEvent(messageWithoutServerName)
                             .getDeclaredConstructor(String.class, String.class)
-                            .newInstance(messageWithoutServerName,
+                            .newInstance(message.split(":")[1],
                                     message.split(":")[0]
                             );
 
