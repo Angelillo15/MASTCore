@@ -18,7 +18,7 @@ public class EventManager {
 
     private Map<String, Class<? extends Event>> events = new HashMap<>();
 
-    private Map<Class<? extends Event>, List<Method>> listeners = new HashMap<>();
+    private Map<Class<? extends Event>, List<EventVector>> listeners = new HashMap<>();
 
     public static EventManager getInstance() {
         if (instance == null) {
@@ -56,7 +56,7 @@ public class EventManager {
                     listeners.put(eventClass, new ArrayList<>());
                 }
 
-                listeners.get(eventClass).add(method);
+                listeners.get(eventClass).add(new EventVector(method, listener));
             }
         }
     }
@@ -125,12 +125,13 @@ public class EventManager {
      */
     @SneakyThrows
     public void fireEvent(Event event) {
-        List<Method> eventListeners = listeners.get(event.getClass());
+        List<EventVector> eventListeners = listeners.get(event.getClass());
         Listener listener = null;
         if (eventListeners != null) {
-            for (Method method : eventListeners) {
+            for (EventVector vector : eventListeners) {
 
-                listener = (Listener) method.getDeclaringClass().getDeclaredConstructor().newInstance();
+                listener = vector.getListener();
+                Method method = vector.getMethod();
 
                 try {
                     Class<?> eventClass = method.getParameterTypes()[0];
