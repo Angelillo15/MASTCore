@@ -56,7 +56,7 @@ public class RedisManager implements ManagerExecutor {
      * @param args Arguments to send
      */
     public static void sendMessage(String message, String... args) {
-        sendMessage(message + ":" + String.join(":", args));
+        sendMessage(message + ":" + String.join(">", args));
     }
 
     /**
