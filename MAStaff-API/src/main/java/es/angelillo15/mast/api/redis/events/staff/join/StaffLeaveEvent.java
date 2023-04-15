@@ -1,4 +1,4 @@
-package es.angelillo15.mast.api.redis.events.staff;
+package es.angelillo15.mast.api.redis.events.staff.join;
 
 import es.angelillo15.mast.api.redis.Events;
 import es.angelillo15.mast.api.redis.RedisEvent;
@@ -8,11 +8,11 @@ public class StaffLeaveEvent extends RedisEvent {
     private String staffName;
     public StaffLeaveEvent(String message, String serverName) {
         super(message, serverName);
-        this.staffName = message.split(":")[2];
+        this.staffName = message.split(">")[0];
     }
 
     public StaffLeaveEvent(String serverName, ProxiedPlayer staff) {
-        super(Events.STAFF_LEAVE.getEventName() + ":" + staff.getName(), serverName);
+        super(Events.STAFF_LEAVE.getEventName() + ">" + staff.getName(), serverName);
     }
 
     /**
