@@ -45,7 +45,9 @@ public class RedisManager implements ManagerExecutor {
      * @param message Message to send
      */
     public static void sendMessage(String message) {
-        new Thread(() -> jedis.publish(Config.Redis.getChannel(), Config.Redis.getServerName() + ":" + message)).start();
+        String messageToSend = Config.Redis.getServerName() + ":" + message;
+        new Thread(() -> jedis.publish(Config.Redis.getChannel(), messageToSend)).start();
+        MAStaff.getInstance().getPLogger().debug("Sent message: " + messageToSend);
     }
 
     /**
