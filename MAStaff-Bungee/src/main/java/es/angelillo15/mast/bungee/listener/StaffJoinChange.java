@@ -20,14 +20,17 @@ public class StaffJoinChange implements Listener {
     @EventHandler
     public void onJoin(PostLoginEvent event) {
         ProxiedPlayer player = event.getPlayer();
-        if (player.hasPermission("mast.staff.join")) {
-            StaffUtils.sendBroadcastPermissionMessage(Messages.getStaffJoin()
-                            .replace("{player}", player.getName())
-                            .replace("{server}", "Proxy")
-                    , "mast.staff.notify.join");
 
-            ProxyServer.getInstance().getPluginManager().callEvent(new StaffJoinEvent(player));
+        if (!player.hasPermission("mast.staff.join")) {
+            return;
         }
+
+        StaffUtils.sendBroadcastPermissionMessage(Messages.getStaffJoin()
+                        .replace("{player}", player.getName())
+                        .replace("{server}", "Proxy")
+                , "mast.staff.notify.join");
+
+        ProxyServer.getInstance().getPluginManager().callEvent(new StaffJoinEvent(player));
 
         if (!Config.Redis.isEnabled()) {
             return;
@@ -46,30 +49,49 @@ public class StaffJoinChange implements Listener {
         if (player.getServer() == null) {
             return;
         }
-        String fromServer;
-        if (player.hasPermission("mast.staff.change")) {
-            fromServer = "Proxy";
 
-            if (PreviousServerManager.hasPreviousServer(player.getUniqueId())) {
-                fromServer = PreviousServerManager.getPreviousServer(player.getUniqueId());
-            } else {
-                PreviousServerManager.setPreviousServer(player.getUniqueId(), "Proxy");
-            }
-
-            StaffUtils.sendBroadcastPermissionMessage(Messages.getStaffChangeServer()
-                            .replace("{player}", player.getDisplayName())
-                            .replace("{server}", player.getServer().getInfo().getName())
-                            .replace("{fromServer}", PreviousServerManager.getPreviousServer(player.getUniqueId())),
-                    "mast.staff.notify.change");
-
-            ProxyServer.getInstance().getPluginManager().callEvent(new StaffSwitchServerEvent(event.getPlayer(),
-                    fromServer,
-                    player.getServer().getInfo().getName())
-            );
+        if (!player.hasPermission("mast.staff.change")) {
+            return;
         }
 
-        PreviousServerManager.setPreviousServer(player.getUniqueId(), player.getServer().getInfo().getName());
+        String fromServer;
+
+        fromServer = "Proxy";
+
+        if (PreviousServerManager.hasPreviousServer(player.getUniqueId())) {
+            fromServer = PreviousServerManager.getPreviousServer(player.getUniqueId());
+        } else {
+            PreviousServerManager.setPreviousServer(player.getUniqueId(), "Proxy");
+        }
+
+        StaffUtils.sendBroadcastPermissionMessage(Messages.getStaffChangeServer()
+                        .replace("{player}", player.getDisplayName())
+                        .replace("{server}", player.getServer().getInfo().getName())
+                        .replace("{fromServer}", PreviousServerManager.getPreviousServer(player.getUniqueId())),
+                "mast.staff.notify.change");
+
+        ProxyServer.getInstance().getPluginManager().callEvent(new StaffSwitchServerEvent(event.getPlayer(),
+                fromServer,
+                player.getServer().getInfo().getName())
+        );
+
+        if (Config.Redis.isEnabled()) {
+            es.angelillo15.mast.api.redis.events.staff.StaffSwitchServerEvent staffSwitchServerEvent =
+                    new es.angelillo15.mast.api.redis.events.staff.StaffSwitchServerEvent(Config.Redis.getServerName(),
+                            player.getDisplayName(),
+                            fromServer,
+                            player.getServer().getInfo().getName()
+                    );
+
+            RedisManager.sendEvent(staffSwitchServerEvent);
+        }
+
+        PreviousServerManager.setPreviousServer(player.getUniqueId(), player.getServer().
+                getInfo().
+                getName()
+        );
     }
+
 
     @EventHandler
     public void leaveServer(PlayerDisconnectEvent event) {
