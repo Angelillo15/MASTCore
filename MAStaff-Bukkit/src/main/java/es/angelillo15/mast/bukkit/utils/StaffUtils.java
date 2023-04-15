@@ -4,6 +4,7 @@ import es.angelillo15.mast.api.Permissions;
 import es.angelillo15.mast.api.event.bukkit.staff.StaffChatTalkEvent;
 import es.angelillo15.mast.bukkit.MAStaff;
 import es.angelillo15.mast.bukkit.config.Messages;
+import es.angelillo15.mast.bukkit.utils.scheduler.Scheduler;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -41,7 +42,7 @@ public class StaffUtils {
     }
 
     public static void asyncStaffBroadcastMessage(String message) {
-        Bukkit.getScheduler().runTaskAsynchronously(MAStaff.getPlugin(), () -> {
+        Scheduler.executeAsync(() -> {
             Bukkit.getOnlinePlayers().forEach(p -> {
                 if (p.hasPermission("mast.staff")) {
                     p.sendMessage(message);
@@ -52,7 +53,7 @@ public class StaffUtils {
     }
 
     public static void asyncBroadcastMessage(String message) {
-        Bukkit.getScheduler().runTaskAsynchronously(MAStaff.getPlugin(), () -> {
+        Scheduler.executeAsync(() -> {
             Bukkit.getOnlinePlayers().forEach(p -> {
                 p.sendMessage(message);
             });
@@ -61,7 +62,7 @@ public class StaffUtils {
     }
 
     public static void asyncStaffChatMessage(String message) {
-        Bukkit.getScheduler().runTaskAsynchronously(MAStaff.getPlugin(), () -> {
+        Scheduler.executeAsync(() -> {
             Bukkit.getOnlinePlayers().forEach(p -> {
                 if (p.hasPermission("mast.staffchat")) {
                     p.sendMessage(message);

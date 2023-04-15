@@ -20,6 +20,7 @@ repositories {
 dependencies {
     compileOnly(project(":MAStaff-API"))
     compileOnly(project(":MAStaff-Legacy"))
+    compileOnly(project(":MAStaff-Folia"))
     compileOnly("org.spigotmc:spigot-api:1.19-R0.1-SNAPSHOT")
     compileOnly("com.destroystokyo.paper:paper-api:1.16.5-R0.1-SNAPSHOT")
     compileOnly("org.yaml:snakeyaml:1.33")
@@ -42,4 +43,9 @@ tasks.processResources {
     filesMatching("plugin.yml") {
         expand("version" to (parent?.version ?: project.version))
     }
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
 }

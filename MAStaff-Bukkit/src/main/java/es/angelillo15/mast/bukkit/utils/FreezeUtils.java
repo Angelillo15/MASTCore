@@ -6,12 +6,13 @@ import es.angelillo15.mast.api.event.bukkit.freeze.UnFreezePlayerEvent;
 import es.angelillo15.mast.api.managers.FreezeManager;
 import es.angelillo15.mast.bukkit.MAStaff;
 import es.angelillo15.mast.bukkit.config.Messages;
+import es.angelillo15.mast.bukkit.utils.scheduler.Scheduler;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 public class FreezeUtils {
     public static void setupMessageSender(){
-        Bukkit.getScheduler().runTaskTimerAsynchronously(MAStaff.getPlugin(), () -> {
+        Scheduler.executeTimerAsync(() -> {
             FreezeManager.getFrozenPlayers().forEach(player -> {
                 Bukkit.getPluginManager().callEvent(new FreezeMessageEvent(player));
             });
