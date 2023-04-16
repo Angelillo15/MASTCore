@@ -3,6 +3,7 @@ package es.angelillo15.mast.bukkit.listener;
 import es.angelillo15.mast.api.event.bukkit.freeze.FreezeMessageEvent;
 import es.angelillo15.mast.api.managers.FreezeManager;
 import es.angelillo15.mast.bukkit.config.Messages;
+import io.papermc.lib.PaperLib;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -16,7 +17,8 @@ public class FreezeListener implements Listener {
         if(FreezeManager.isFrozen(event.getPlayer())) {
             if (event.getFrom().getX() != event.getTo().getX() || event.getFrom().getY() != event.getTo().getY() || event.getFrom().getZ() != event.getTo().getZ()) {
                 Location loc = event.getFrom();
-                event.getPlayer().teleport(loc.setDirection(event.getTo().getDirection()));
+
+                PaperLib.teleportAsync(event.getPlayer(), loc.setDirection(event.getTo().getDirection()));
             }
         }
     }
