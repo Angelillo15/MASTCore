@@ -42,7 +42,7 @@ public class FoliaScheduler implements IScheduler {
             while (true) {
                 runnable.run();
                 try {
-                    Thread.sleep(period);
+                    Thread.sleep(period * 50);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
