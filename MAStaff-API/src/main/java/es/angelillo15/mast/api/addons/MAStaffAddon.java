@@ -20,11 +20,15 @@ public class MAStaffAddon<P> {
     @Getter
     private ConfigManager config;
 
-    public void init(File addonFolder, AddonDescription descriptionFile, P mastaffInstance) {
+    public void init(File addonFolder, AddonDescription descriptionFile, P mastaffInstance, boolean bukkit) {
         this.addonFolder = addonFolder;
         this.descriptionFile = descriptionFile;
         this.mastaffInstance = mastaffInstance;
-        this.logger = new AddonLogger(this, MAStaffInstance.getInstance().getPLogger());
+        this.logger = new AddonLogger(this,
+                bukkit ?
+                        MAStaffInstance.getInstance().getPLogger() :
+                        MAStaffInstance.getBungeeInstance().getPLogger()
+        );
     }
 
     /**
