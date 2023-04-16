@@ -33,7 +33,7 @@ public interface IStaffPlayer {
     /**
      * @param staffMode enable or disable the staff mode
      * Method to enable or disable the StaffMode,
-     * ths method can throws exceptions
+     * ths method can throw exceptions
      */
     void setStaffMode(boolean staffMode, boolean saveInventory) throws AlreadyEnableException, AlreadyDisableException;
     /**
