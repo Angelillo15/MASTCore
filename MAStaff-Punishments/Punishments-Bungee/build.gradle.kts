@@ -7,13 +7,11 @@ version = "2.2.0"
 
 repositories {
     mavenCentral()
+    maven("https://papermc.io/repo/repository/maven-public/")
+
 }
 
 dependencies {
-    testImplementation(platform("org.junit:junit-bom:5.9.1"))
-    testImplementation("org.junit.jupiter:junit-jupiter")
-}
-
-tasks.test {
-    useJUnitPlatform()
+    compileOnly("io.github.waterfallmc:waterfall-api:1.19-R0.1-SNAPSHOT")
+    compileOnly(project(":MAStaff-Punishments:Punishments-API"))
 }

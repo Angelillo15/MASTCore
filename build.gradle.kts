@@ -48,6 +48,7 @@ tasks.shadowJar {
     relocate("redis.clients.jedis", "es.angelillo15.mast.libs.jedis")
     relocate("net.kyori", "es.angelillo15.mast.libs.kyori")
     relocate("io.papermc.lib", "es.angelillo15.mast.libs.paperlib")
+    relocate("com.github.benmanes.caffeine", "es.angelillo15.mast.libs.caffeine")
 }
 
 dependencies {
@@ -55,6 +56,7 @@ dependencies {
     implementation(project(":MAStaff-Bukkit"))
     implementation(project(":MAStaff-Bungee"))
     implementation(project("MAStaff-Legacy"))
+    implementation(project(":MAStaff-Punishments"))
     compileOnly("org.yaml:snakeyaml:1.33")
     implementation("com.github.Carleslc.Simple-YAML:Simple-Yaml:1.8.3")
     implementation("com.github.Angelillo15:ConfigManager:1.4")
@@ -68,6 +70,7 @@ dependencies {
     implementation("net.byteflux:libby-bukkit:1.1.5")
     implementation("org.reflections:reflections:0.10.2")
     implementation("io.papermc:paperlib:1.0.7")
+    implementation("com.github.ben-manes.caffeine:caffeine:2.9.2")
 }
 
 tasks.withType<JavaCompile> {

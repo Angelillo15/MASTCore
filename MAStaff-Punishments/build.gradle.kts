@@ -2,18 +2,29 @@ plugins {
     id("java")
 }
 
-group = "es.angelillo15"
-version = "2.2.0"
+group = parent?.group ?: "es.angelillo15"
+version = parent?.version ?: "undefined"
 
 repositories {
     mavenCentral()
 }
 
 dependencies {
-    testImplementation(platform("org.junit:junit-bom:5.9.1"))
-    testImplementation("org.junit.jupiter:junit-jupiter")
+    implementation(project(":MAStaff-Punishments:Punishments-API"))
+    implementation(project(":MAStaff-Punishments:Punishments-Bungee"))
+    implementation(project(":MAStaff-Punishments:Punishments-Bukkit"))
 }
 
-tasks.test {
-    useJUnitPlatform()
+subprojects {
+    apply(plugin = "java")
+    group = parent?.group ?: "es.angelillo15"
+    version = parent?.version ?: "undefined"
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        compileOnly(project(":MAStaff-API"))
+        compileOnly("com.github.ben-manes.caffeine:caffeine:2.9.2")
+    }
 }
