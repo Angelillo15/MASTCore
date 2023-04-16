@@ -296,8 +296,7 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance<Plugin> {
         AddonsLoader.reload();
         logger.debug("Checking for updates...");
         debugInfo();
-        checkUpdates();
-
+        new Thread(this::checkUpdates);
         long end = System.currentTimeMillis();
         logger.debug("Reloaded successfully in {time}ms ✔️"
                 .replace("{time}", String.valueOf(end - start))
