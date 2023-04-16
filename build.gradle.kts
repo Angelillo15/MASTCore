@@ -67,7 +67,6 @@ dependencies {
     implementation("com.google.code.gson:gson:2.10.1")
     implementation("net.byteflux:libby-bukkit:1.1.5")
     implementation("org.reflections:reflections:0.10.2")
-    // implementation("net.kyori:adventure-text-minimessage:4.13.1")
     implementation("io.papermc:paperlib:1.0.7")
 }
 
