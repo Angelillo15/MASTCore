@@ -4,9 +4,10 @@
 
 ## ✨ Introduction
 
-* [Databases](introduction/databases.md)
 * [Let's get started](introduction/lets-get-started.md)
+* [Databases](introduction/databases.md)
+* [Permissions](introduction/permissions.md)
 
-## Group 1
+## 🪣 Bukkit
 
-* [Page 1](group-1/page-1.md)
+* [Config](bukkit/config.md)
