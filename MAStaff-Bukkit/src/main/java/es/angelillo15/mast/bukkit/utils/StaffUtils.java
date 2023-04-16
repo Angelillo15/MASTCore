@@ -4,6 +4,8 @@ import es.angelillo15.mast.api.Permissions;
 import es.angelillo15.mast.api.event.bukkit.staff.StaffChatTalkEvent;
 import es.angelillo15.mast.bukkit.MAStaff;
 import es.angelillo15.mast.bukkit.config.Messages;
+import es.angelillo15.mast.bukkit.utils.scheduler.Scheduler;
+import io.papermc.lib.PaperLib;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -26,7 +28,7 @@ public class StaffUtils {
             return;
         }
         final Random random = new Random();
-        player.teleport(players.get(random.nextInt(players.size())).getLocation());
+        PaperLib.teleportAsync(player, players.get(random.nextInt(players.size())).getLocation());
     }
 
     public static boolean passThrough(Player player, Location clickedLocation) {
@@ -36,12 +38,12 @@ public class StaffUtils {
             clickedLocation.add(direction);
             distance++;
         } while (clickedLocation.getBlock().getType().equals(Material.AIR) && distance < 6);
-        player.teleport(clickedLocation);
+        PaperLib.teleportAsync(player, clickedLocation);
         return true;
     }
 
     public static void asyncStaffBroadcastMessage(String message) {
-        Bukkit.getScheduler().runTaskAsynchronously(MAStaff.getPlugin(), () -> {
+        Scheduler.executeAsync(() -> {
             Bukkit.getOnlinePlayers().forEach(p -> {
                 if (p.hasPermission("mast.staff")) {
                     p.sendMessage(message);
@@ -52,7 +54,7 @@ public class StaffUtils {
     }
 
     public static void asyncBroadcastMessage(String message) {
-        Bukkit.getScheduler().runTaskAsynchronously(MAStaff.getPlugin(), () -> {
+        Scheduler.executeAsync(() -> {
             Bukkit.getOnlinePlayers().forEach(p -> {
                 p.sendMessage(message);
             });
@@ -61,7 +63,7 @@ public class StaffUtils {
     }
 
     public static void asyncStaffChatMessage(String message) {
-        Bukkit.getScheduler().runTaskAsynchronously(MAStaff.getPlugin(), () -> {
+        Scheduler.executeAsync(() -> {
             Bukkit.getOnlinePlayers().forEach(p -> {
                 if (p.hasPermission("mast.staffchat")) {
                     p.sendMessage(message);

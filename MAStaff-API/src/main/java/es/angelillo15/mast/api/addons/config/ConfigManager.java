@@ -2,7 +2,6 @@ package es.angelillo15.mast.api.addons.config;
 
 
 import es.angelillo15.mast.api.addons.MAStaffAddon;
-import es.angelillo15.mast.api.addons.bungee.MAStaffBungeeAddon;
 import org.simpleyaml.configuration.file.YamlFile;
 
 import java.io.File;
@@ -28,14 +27,6 @@ public class ConfigManager {
         this.newFileName = newFileName;
         this.classLoader = addon.getClass().getClassLoader();
     }
-
-    public ConfigManager(Path dataDirectoryPath, String originalFileName, String newFileName, MAStaffBungeeAddon addon) {
-        this.dataDirectoryPath = dataDirectoryPath;
-        this.originalFileName = originalFileName;
-        this.newFileName = newFileName;
-        this.classLoader = addon.getClass().getClassLoader();
-    }
-
 
     public void registerConfig() {
         String path = dataDirectoryPath+File.separator+newFileName;

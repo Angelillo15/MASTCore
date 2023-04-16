@@ -15,6 +15,9 @@ import es.angelillo15.mast.bukkit.config.Messages;
 import es.angelillo15.mast.bukkit.loaders.ItemsLoader;
 import es.angelillo15.mast.bukkit.utils.PermsUtils;
 import es.angelillo15.mast.bukkit.utils.StaffUtils;
+import io.papermc.lib.PaperLib;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.SneakyThrows;
 import me.MrGraycat.eGlow.API.Enum.EGlowColor;
 import me.MrGraycat.eGlow.EGlow;
@@ -26,19 +29,20 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 @SuppressWarnings({"deprecation", "UnstableApiUsage", "unchecked"})
 public class StaffPlayer implements IStaffPlayer {
+    @Getter
+    @Setter
+    private boolean quit;
     private final File playerInventoryFile;
     private FileConfiguration playerInventoryConfig;
     private ChatColor glowColor = ChatColor.GREEN;
     private boolean staffMode;
     private final Player player;
     private boolean vanished;
-    private final ArrayList<StaffItem> items = new ArrayList<>();
+    private final Map<String, StaffItem> items = new HashMap<>();
 
     public StaffPlayer(Player player) {
         this.player = player;
@@ -122,7 +126,7 @@ public class StaffPlayer implements IStaffPlayer {
         restoreInventory();
         disableVanish();
         changeGamemode(GameMode.SURVIVAL);
-        StaffUtils.asyncBroadcastMessage(Messages.GET_VANISH_JOIN_MESSAGE()
+        if (!quit) StaffUtils.asyncBroadcastMessage(Messages.GET_VANISH_JOIN_MESSAGE()
                 .replace("{player}", player.getName()));
         setGlowing(false);
         restoreLocation();
@@ -133,11 +137,11 @@ public class StaffPlayer implements IStaffPlayer {
         player.sendMessage(Messages.GET_STAFF_MODE_ENABLE_MESSAGE());
         setModeData(true);
         if (saveInventory) saveInventory();
+        staffMode = true;
         enableVanish();
         clearInventory();
         setItems();
         CommonQueries.updateAsync(player.getUniqueId(), 1);
-        staffMode = true;
         changeGamemode(GameMode.CREATIVE);
         if (saveInventory) StaffUtils.asyncBroadcastMessage(Messages.GET_VANISH_LEAVE_MESSAGE()
                 .replace("{player}", player.getName()));
@@ -157,17 +161,17 @@ public class StaffPlayer implements IStaffPlayer {
             ItemsLoader.getManager().getItems().forEach(item -> {
                 if (player.hasPermission(item.getPermission())) {
                     item.setItem(player);
-                    items.add(item);
+                    items.put(item.getItem().getItemMeta().getDisplayName(), item);
                 }
             });
             return;
         }
 
-        items.forEach(item -> item.setItem(player));
+        items.forEach((key, item) -> item.setItem(player));
     }
 
     @Override
-    public ArrayList<StaffItem> getItems() {
+    public Map<String, StaffItem> getItems() {
         return items;
     }
 
@@ -287,10 +291,10 @@ public class StaffPlayer implements IStaffPlayer {
         Location location = new Location(world, x, y, z, yaw, pitch);
         switch (world.getEnvironment()) {
             case NETHER:
-                player.teleport(location);
+                PaperLib.teleportAsync(player, location);
                 return true;
             default:
-                player.teleport(world.getHighestBlockAt(location).getLocation().add(0, 1, 0));
+                PaperLib.teleportAsync(player, world.getHighestBlockAt(location).getLocation().add(0, 1, 0));
                 return true;
         }
     }

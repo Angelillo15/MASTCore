@@ -13,7 +13,7 @@ public class LibsManager {
         Library hikariCP = Library.builder()
                 .groupId("com{}zaxxer")
                 .artifactId("HikariCP")
-                .version("5.0.1")
+                .version("4.0.3")
                 .id("hikariCP")
                 .relocate("com{}zaxxer", "es{}angelillo15{}mast{}libs")
                 .isolatedLoad(false)
@@ -92,6 +92,13 @@ public class LibsManager {
                         .isolatedLoad(false)
                         //.relocate("org{}apache{}commons{}logging", "es{}angelillo15{}mast{}libs{}commons-logging")
                         .build();
+        Library jedis = Library.builder()
+                        .groupId("redis{}clients")
+                        .artifactId("jedis")
+                        .version("4.4.0-m2")
+                        .isolatedLoad(false)
+                        .relocate("redis{}clients{}jedis", "es{}angelillo15{}mast{}libs{}jedis")
+                        .build();
 
 
         libs.add(apacheHttp);
@@ -103,6 +110,7 @@ public class LibsManager {
         libs.add(apacheClient);
         libs.add(apacheHttpMime);
         libs.add(apacheLogger);
+        libs.add(jedis);
         libs.add(getLib("org{}slf4j", "slf4j-api", "2.0.6"));
     }
 

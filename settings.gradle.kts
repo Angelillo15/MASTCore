@@ -11,4 +11,4 @@ rootProject.name = "MAStaff"
 include("MAStaff-API")
 include("MAStaff-Bukkit")
 include("MAStaff-Bungee")
-include("MAStaff-Velocity")
+include("MAStaff-Legacy")

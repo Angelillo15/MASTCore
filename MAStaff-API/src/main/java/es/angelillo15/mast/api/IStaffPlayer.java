@@ -3,12 +3,11 @@ package es.angelillo15.mast.api;
 import es.angelillo15.mast.api.exceptions.AlreadyDisableException;
 import es.angelillo15.mast.api.exceptions.AlreadyEnableException;
 import es.angelillo15.mast.api.items.StaffItem;
-import lombok.NonNull;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
+import java.util.Map;
 
-import java.util.ArrayList;
 /**
 * This interface allows to you to interact with the staff players
 */
@@ -33,7 +32,7 @@ public interface IStaffPlayer {
     /**
      * @param staffMode enable or disable the staff mode
      * Method to enable or disable the StaffMode,
-     * ths method can throws exceptions
+     * ths method can throw exceptions
      */
     void setStaffMode(boolean staffMode, boolean saveInventory) throws AlreadyEnableException, AlreadyDisableException;
     /**
@@ -61,7 +60,7 @@ public interface IStaffPlayer {
     /**
      * Get staff items
      */
-    public ArrayList<StaffItem> getItems();
+    public Map<String, StaffItem> getItems();
 
     /**
      * Send plugin message to the bungee

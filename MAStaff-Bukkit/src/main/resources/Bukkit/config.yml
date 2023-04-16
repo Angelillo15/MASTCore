@@ -26,6 +26,10 @@ Config:
   debug: false
   # Teleport to the previous location when the player leaves the staff mode.
   teleportBack: true
+  # Disable the staff mode on exit.
+  disableStaffModeOnExit: false
+  # Silent chest opening.
+  silentChestOpening: true
 # Database configuration for the plugin. With the Bungee version, you must use MariaDB or MySQL.
 Database:
   # The type of database you want to use, you can choose between SQLite or MySQL.
