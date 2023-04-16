@@ -45,6 +45,7 @@ tasks.shadowJar {
     relocate("org.apache.commons.logging", "es.angelillo15.mast.libs.commons-logging")
     relocate("org.reflections", "es.angelillo15.mast.libs.reflections")
     relocate("redis.clients.jedis", "es.angelillo15.mast.libs.jedis")
+    relocate("net.kyori", "es.angelillo15.mast.libs.kyori")
 }
 
 dependencies {
@@ -64,6 +65,7 @@ dependencies {
     implementation("com.google.code.gson:gson:2.10.1")
     implementation("net.byteflux:libby-bukkit:1.1.5")
     implementation("org.reflections:reflections:0.10.2")
+    implementation("net.kyori:adventure-text-minimessage:4.13.1")
 }
 
 tasks.withType<JavaCompile> {
