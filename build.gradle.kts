@@ -5,7 +5,7 @@ plugins {
 }
 
 group = "es.angelillo15"
-version = "2.2.0"
+version = "2.3.0"
 val javaVersion = JavaVersion.VERSION_1_8
 
 repositories {
