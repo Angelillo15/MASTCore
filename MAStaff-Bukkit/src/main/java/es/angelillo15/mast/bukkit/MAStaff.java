@@ -42,7 +42,7 @@ import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
-import es.angelillo15.mast.bukkit.data.PluginConnection;
+import es.angelillo15.mast.api.database.PluginConnection;
 import org.simpleyaml.configuration.file.YamlFile;
 import java.sql.Connection;
 import java.sql.SQLException;

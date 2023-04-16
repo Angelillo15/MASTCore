@@ -3,6 +3,7 @@ package es.angelillo15.mast.bungee;
 import es.angelillo15.mast.api.ILogger;
 import es.angelillo15.mast.api.MAStaffInstance;
 import es.angelillo15.mast.api.TextUtils;
+import es.angelillo15.mast.api.database.PluginConnection;
 import es.angelillo15.mast.api.redis.EventHandler;
 import es.angelillo15.mast.api.redis.EventManager;
 import es.angelillo15.mast.api.redis.events.server.ServerConnectedEvent;
@@ -93,6 +94,14 @@ public class MAStaff extends Plugin implements MAStaffInstance<Plugin> {
     @Override
     public void loadDatabase() {
         new RedisManager().load();
+
+        if (Config.Database.type().equalsIgnoreCase("MYSQL")) {
+            new PluginConnection(Config.Database.host(), Config.Database.port(), Config.Database.database(), Config.Database.username(), Config.Database.password());
+        } else {
+            new PluginConnection(getDataFolder().getPath());
+        }
+
+        MAStaff.getInstance().getPLogger().info("Database loaded!");
     }
 
     @Override
