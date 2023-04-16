@@ -54,3 +54,17 @@ Redis:
   channel: "MAStaff"
   # Identify the server.
   serverID: "p1"
+Database:
+  # The type of database you want to use, you can choose between SQLite or MySQL.
+  # The MySQL driver also works with MariaDB
+  type: 'SQLite'
+  # Your database host IP address.
+  host: '127.0.0.1'
+  # Your database host connection port. Default for MariaDB and MySQL is 3306.
+  port: 3306
+  # Name of your database. A database server can contain multiple databases.
+  database: 'mastaff'
+  # Your database host username.
+  user: 'mastaff'
+  # Your database host password.
+  password: 'mastaff'
