@@ -16,6 +16,10 @@ public class Config {
     public static boolean disableStaffModeOnExit() {
         return ConfigLoader.getConfig().getConfig().getBoolean("Config.disableStaffModeOnExit");
     }
+
+    public static boolean silentOpenChest() {
+        return ConfigLoader.getConfig().getConfig().getBoolean("Config.silentChestOpening");
+    }
     public static class Database {
         public static String type() {
             return ConfigLoader.getConfig().getConfig().getString("Database.type");

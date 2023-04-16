@@ -9,6 +9,7 @@ import es.angelillo15.mast.bukkit.cmd.FreezeCMD;
 import es.angelillo15.mast.bukkit.cmd.StaffChatCMD;
 import es.angelillo15.mast.bukkit.cmd.mast.MAStaffCMD;
 import es.angelillo15.mast.bukkit.cmd.staff.StaffCMD;
+import es.angelillo15.mast.bukkit.config.Config;
 import es.angelillo15.mast.bukkit.config.ConfigLoader;
 import es.angelillo15.mast.bukkit.config.Messages;
 import es.angelillo15.mast.bukkit.legacy.BukkitLegacyLoader;
@@ -136,6 +137,7 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance<Plugin> {
         pm.registerEvents(new OnItemGet(), this);
         pm.registerEvents(new OnPlayerInteractAtEntityEvent(), this);
         pm.registerEvents(new OnAttack(), this);
+        if (Config.silentOpenChest()) pm.registerEvents(new OnOpenChest(), this);
         if (version >= 19) pm.registerEvents(new OnBlockReceiveGameEvent(), this);
         if (version >= 9) pm.registerEvents(new OnSwapHand(), this);
         if (version >= 9) pm.registerEvents(new OnAchievement(), this);
