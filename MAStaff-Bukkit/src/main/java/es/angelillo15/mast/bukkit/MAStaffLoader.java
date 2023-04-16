@@ -3,6 +3,7 @@ package es.angelillo15.mast.bukkit;
 import es.angelillo15.mast.api.managers.loader.ReflectionLoader;
 import es.angelillo15.mast.bukkit.addons.AddonsLoader;
 import es.angelillo15.mast.bukkit.utils.LibsLoader;
+import io.papermc.lib.PaperLib;
 
 public class MAStaffLoader extends MAStaff {
     @Override
@@ -20,6 +21,7 @@ public class MAStaffLoader extends MAStaff {
         debugInfo();
         ReflectionLoader.loadAll();
         ReflectionLoader.loadBukkit();
+        PaperLib.suggestPaper(this);
     }
 
     @Override

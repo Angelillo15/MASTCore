@@ -16,6 +16,8 @@ import es.angelillo15.mast.bukkit.loaders.ItemsLoader;
 import es.angelillo15.mast.bukkit.utils.PermsUtils;
 import es.angelillo15.mast.bukkit.utils.StaffUtils;
 import io.papermc.lib.PaperLib;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.SneakyThrows;
 import me.MrGraycat.eGlow.API.Enum.EGlowColor;
 import me.MrGraycat.eGlow.EGlow;
@@ -33,6 +35,9 @@ import java.util.Objects;
 
 @SuppressWarnings({"deprecation", "UnstableApiUsage", "unchecked"})
 public class StaffPlayer implements IStaffPlayer {
+    @Getter
+    @Setter
+    private boolean quit;
     private final File playerInventoryFile;
     private FileConfiguration playerInventoryConfig;
     private ChatColor glowColor = ChatColor.GREEN;
@@ -123,7 +128,7 @@ public class StaffPlayer implements IStaffPlayer {
         restoreInventory();
         disableVanish();
         changeGamemode(GameMode.SURVIVAL);
-        StaffUtils.asyncBroadcastMessage(Messages.GET_VANISH_JOIN_MESSAGE()
+        if (!quit) StaffUtils.asyncBroadcastMessage(Messages.GET_VANISH_JOIN_MESSAGE()
                 .replace("{player}", player.getName()));
         setGlowing(false);
         restoreLocation();
