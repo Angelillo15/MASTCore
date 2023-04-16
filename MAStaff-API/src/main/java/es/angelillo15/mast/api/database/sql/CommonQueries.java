@@ -93,9 +93,9 @@ public class CommonQueries {
     }
 
     public static void updateAsync(UUID uuid, int state) {
-        Bukkit.getScheduler().runTaskAsynchronously((Plugin) MAStaffInstance.getInstance(), () -> {
+        new Thread(() -> {
             changeData(uuid, state);
-        });
+        }).start();
     }
 
 }

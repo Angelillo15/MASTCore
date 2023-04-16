@@ -36,10 +36,16 @@ dependencies {
     compileOnly("com.konghq:unirest-java:3.11.09")
     compileOnly("com.github.MrGraycat:eGlow:master-SNAPSHOT")
     implementation("net.byteflux:libby-bukkit:1.1.5")
+    compileOnly("io.papermc:paperlib:1.0.7")
 }
 
 tasks.processResources {
     filesMatching("plugin.yml") {
         expand("version" to (parent?.version ?: project.version))
     }
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
 }

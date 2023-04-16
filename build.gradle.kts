@@ -16,6 +16,7 @@ repositories {
     maven("https://oss.sonatype.org/content/repositories/central")
     maven("https://repo.dmulloy2.net/repository/public/")
     maven("https://repo.alessiodp.com/releases/")
+    maven("https://papermc.io/repo/repository/maven-releases/")
 }
 
 java {
@@ -45,6 +46,8 @@ tasks.shadowJar {
     relocate("org.apache.commons.logging", "es.angelillo15.mast.libs.commons-logging")
     relocate("org.reflections", "es.angelillo15.mast.libs.reflections")
     relocate("redis.clients.jedis", "es.angelillo15.mast.libs.jedis")
+    relocate("net.kyori", "es.angelillo15.mast.libs.kyori")
+    relocate("io.papermc.lib", "es.angelillo15.mast.libs.paperlib")
 }
 
 dependencies {
@@ -64,6 +67,8 @@ dependencies {
     implementation("com.google.code.gson:gson:2.10.1")
     implementation("net.byteflux:libby-bukkit:1.1.5")
     implementation("org.reflections:reflections:0.10.2")
+    // implementation("net.kyori:adventure-text-minimessage:4.13.1")
+    implementation("io.papermc:paperlib:1.0.7")
 }
 
 tasks.withType<JavaCompile> {
