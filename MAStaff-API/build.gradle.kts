@@ -86,3 +86,8 @@ blossom {
     replaceToken("{git-date}", current ?: "undefined")
     replaceToken("{git-branch}", grgit.branch.current().name ?: "undefined")
 }
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+}
