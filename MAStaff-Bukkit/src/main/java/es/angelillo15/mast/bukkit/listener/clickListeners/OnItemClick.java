@@ -4,8 +4,11 @@ import es.angelillo15.mast.api.IStaffPlayer;
 import es.angelillo15.mast.api.Permissions;
 import es.angelillo15.mast.api.items.IExecutableItem;
 import es.angelillo15.mast.api.items.IExecutableLocationItem;
+import es.angelillo15.mast.api.items.StaffItem;
 import es.angelillo15.mast.api.managers.StaffPlayersManagers;
 import es.angelillo15.mast.bukkit.MAStaff;
+import org.bukkit.block.Chest;
+import org.bukkit.block.Container;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -18,47 +21,44 @@ public class OnItemClick implements Listener {
 
         Player player = event.getPlayer();
 
-        if(!player.hasPermission(Permissions.STAFF.getPermission())){
+        if (!player.hasPermission(Permissions.STAFF.getPermission())) {
             return;
         }
 
         IStaffPlayer staffPlayer = StaffPlayersManagers.getStaffPlayer(player);
 
-        if(!staffPlayer.isStaffMode()){
+        if (!staffPlayer.isStaffMode()) {
             return;
         }
 
-        if(event.getItem() == null){
-            if(!player.hasPermission(Permissions.STAFF_BUILD.getPermission())){
+        if (event.getItem() == null) {
+
+            if (!player.hasPermission(Permissions.STAFF_BUILD.getPermission())) {
                 event.setCancelled(true);
             }
             return;
         }
 
-        ItemMeta meta = event.getItem().getItemMeta();
+        StaffItem item = staffPlayer.getItems().get(player.getItemInHand().getItemMeta().getDisplayName());
 
-        staffPlayer.getItems().forEach(item -> {
-            if(item.getItem().getItemMeta().getDisplayName().equals(meta.getDisplayName())){
-                if(item instanceof IExecutableItem) {
-                    MAStaff.getPlugin().getPLogger().debug("Executing item " +
-                            item.getItem().getItemMeta().getDisplayName() +
-                            " for player " + player.getName()
-                    );
-                    ((IExecutableItem) item).click(player);
-                }
+        if (item instanceof IExecutableItem) {
+            MAStaff.getPlugin().getPLogger().debug("Executing item " +
+                    item.getItem().getItemMeta().getDisplayName() +
+                    " for player " + player.getName()
+            );
+            ((IExecutableItem) item).click(player);
+        }
 
-                if(item instanceof IExecutableLocationItem){
-                    if(event.getClickedBlock() == null) return;
+        if (item instanceof IExecutableLocationItem) {
+            if (event.getClickedBlock() == null) return;
 
-                    MAStaff.getPlugin().getPLogger().debug("Executing item " +
-                            item.getItem().getItemMeta().getDisplayName() +
-                            " for player " + player.getName()
-                    );
+            MAStaff.getPlugin().getPLogger().debug("Executing item " +
+                    item.getItem().getItemMeta().getDisplayName() +
+                    " for player " + player.getName()
+            );
 
-                    ((IExecutableLocationItem) item).click(player, event.getClickedBlock().getLocation());
-                }
-            }
-        });
+            ((IExecutableLocationItem) item).click(player, event.getClickedBlock().getLocation());
+        }
 
         event.setCancelled(true);
     }
