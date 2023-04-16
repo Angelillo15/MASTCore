@@ -1,12 +1,11 @@
-package es.angelillo15.mast.bukkit.data;
+package es.angelillo15.mast.api.database;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
-import es.angelillo15.mast.api.database.DataProvider;
+import es.angelillo15.mast.api.MAStaffInstance;
 import es.angelillo15.mast.api.database.sql.CommonQueries;
 import es.angelillo15.mast.api.database.sql.MySQLQueries;
 import es.angelillo15.mast.api.database.sql.SQLiteQueries;
-import es.angelillo15.mast.bukkit.MAStaff;
 import es.angelillo15.mast.api.TextUtils;
 import lombok.Getter;
 
@@ -24,6 +23,10 @@ public class PluginConnection {
     private static CommonQueries queries;
     private static HikariConfig config;
     private static HikariDataSource dataSource;
+    @Getter
+    private static PluginConnection instance;
+    @Getter
+    private Connection conn;
 
     public PluginConnection(String host, int port, String database, String user, String password){
         dataProvider = DataProvider.MYSQL;
@@ -37,11 +40,14 @@ public class PluginConnection {
         dataSource = new HikariDataSource(config);
         try {
             connection = dataSource.getConnection();
+            conn = connection;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
         CommonQueries.setConnection(connection);
         queries = new MySQLQueries();
+
+        instance = this;
     }
 
     public PluginConnection(String pluginPath){
@@ -49,22 +55,34 @@ public class PluginConnection {
         try {
             Class.forName("org.sqlite.JDBC");
         } catch (ClassNotFoundException e) {
-            MAStaff.getPlugin().getPLogger().error((TextUtils.colorize("&c┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓")));
-            MAStaff.getPlugin().getPLogger().error((TextUtils.colorize("&c┃ The SQLite driver couldn't be found!                                     ┃")));
-            MAStaff.getPlugin().getPLogger().error((TextUtils.colorize("&c┃                                                                          ┃")));
-            MAStaff.getPlugin().getPLogger().error((TextUtils.colorize("&c┃ Please, join our Discord server to get support:                          ┃")));
-            MAStaff.getPlugin().getPLogger().error((TextUtils.colorize("&c┃ https://discord.nookure.com                                              ┃")));
-            MAStaff.getPlugin().getPLogger().error((TextUtils.colorize("&c┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛")));
+            MAStaffInstance.getLogger().error((TextUtils.simpleColorize("&c┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓")));
+            MAStaffInstance.getLogger().error((TextUtils.simpleColorize("&c┃ The SQLite driver couldn't be found!                                     ┃")));
+            MAStaffInstance.getLogger().error((TextUtils.simpleColorize("&c┃                                                                          ┃")));
+            MAStaffInstance.getLogger().error((TextUtils.simpleColorize("&c┃ Please, join our Discord server to get support:                          ┃")));
+            MAStaffInstance.getLogger().error((TextUtils.simpleColorize("&c┃ https://discord.nookure.com                                              ┃")));
+            MAStaffInstance.getLogger().error((TextUtils.simpleColorize("&c┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛")));
         }
         try {
             String dataPath = pluginPath + "/database.db";
             String url = "jdbc:sqlite:" + dataPath;
             connection = DriverManager.getConnection(url);
+            conn = connection;
 
             CommonQueries.setConnection(connection);
             queries = new SQLiteQueries();
         } catch (SQLException e) {
-            MAStaff.getPlugin().getPLogger().error("An error ocurred while trying to connect to the SQLite database: " + e.getMessage());
+            MAStaffInstance.getLogger().error("An error ocurred while trying to connect to the SQLite database: " + e.getMessage());
+        }
+
+        instance = this;
+    }
+
+    public static boolean tableExists(String table) {
+        try {
+            return connection.getMetaData().getTables(null, null, table, null).next();
+        } catch (SQLException e) {
+            MAStaffInstance.getLogger().error("An error ocurred while trying to check if the table " + table + " exists: " + e.getMessage());
+            return false;
         }
     }
 }
