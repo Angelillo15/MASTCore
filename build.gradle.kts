@@ -16,6 +16,7 @@ repositories {
     maven("https://oss.sonatype.org/content/repositories/central")
     maven("https://repo.dmulloy2.net/repository/public/")
     maven("https://repo.alessiodp.com/releases/")
+    maven("https://papermc.io/repo/repository/maven-releases/")
 }
 
 java {
@@ -46,6 +47,7 @@ tasks.shadowJar {
     relocate("org.reflections", "es.angelillo15.mast.libs.reflections")
     relocate("redis.clients.jedis", "es.angelillo15.mast.libs.jedis")
     relocate("net.kyori", "es.angelillo15.mast.libs.kyori")
+    relocate("io.papermc.lib", "es.angelillo15.mast.libs.paperlib")
 }
 
 dependencies {
@@ -53,7 +55,6 @@ dependencies {
     implementation(project(":MAStaff-Bukkit"))
     implementation(project(":MAStaff-Bungee"))
     implementation(project("MAStaff-Legacy"))
-    implementation(project(":MAStaff-Folia"))
     compileOnly("org.yaml:snakeyaml:1.33")
     implementation("com.github.Carleslc.Simple-YAML:Simple-Yaml:1.8.3")
     implementation("com.github.Angelillo15:ConfigManager:1.4")
@@ -66,7 +67,8 @@ dependencies {
     implementation("com.google.code.gson:gson:2.10.1")
     implementation("net.byteflux:libby-bukkit:1.1.5")
     implementation("org.reflections:reflections:0.10.2")
-    implementation("net.kyori:adventure-text-minimessage:4.13.1")
+    // implementation("net.kyori:adventure-text-minimessage:4.13.1")
+    implementation("io.papermc:paperlib:1.0.7")
 }
 
 tasks.withType<JavaCompile> {
@@ -85,12 +87,10 @@ allprojects {
         options.encoding = "UTF-8"
     }
 
-    /*
     java {
         sourceCompatibility = javaVersion
         targetCompatibility = javaVersion
     }
-    */
 
     dependencies {
         compileOnly("org.projectlombok:lombok:1.18.24")

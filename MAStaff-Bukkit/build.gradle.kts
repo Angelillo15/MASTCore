@@ -20,7 +20,6 @@ repositories {
 dependencies {
     compileOnly(project(":MAStaff-API"))
     compileOnly(project(":MAStaff-Legacy"))
-    compileOnly(project(":MAStaff-Folia"))
     compileOnly("org.spigotmc:spigot-api:1.19-R0.1-SNAPSHOT")
     compileOnly("com.destroystokyo.paper:paper-api:1.16.5-R0.1-SNAPSHOT")
     compileOnly("org.yaml:snakeyaml:1.33")
@@ -37,6 +36,7 @@ dependencies {
     compileOnly("com.konghq:unirest-java:3.11.09")
     compileOnly("com.github.MrGraycat:eGlow:master-SNAPSHOT")
     implementation("net.byteflux:libby-bukkit:1.1.5")
+    compileOnly("io.papermc:paperlib:1.0.7")
 }
 
 tasks.processResources {

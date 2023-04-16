@@ -1,5 +1,6 @@
 package es.angelillo15.mast.bukkit.utils.scheduler;
 
+import es.angelillo15.mast.api.chat.api.chat.hover.content.Entity;
 import es.angelillo15.mast.api.utils.IScheduler;
 import es.angelillo15.mast.bukkit.MAStaff;
 import org.bukkit.Bukkit;
@@ -43,5 +44,10 @@ public class BukkitScheduler implements IScheduler {
     @Override
     public void cancelAllTasks() {
         Bukkit.getScheduler().cancelTasks(MAStaff.getPlugin());
+    }
+
+    @Override
+    public void entityTaskAsync(Entity entity, Runnable runnable, long delay, long period) {
+
     }
 }

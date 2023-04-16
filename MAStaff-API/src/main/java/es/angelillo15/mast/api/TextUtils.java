@@ -2,8 +2,6 @@ package es.angelillo15.mast.api;
 
 import es.angelillo15.mast.api.chat.api.ChatColor;
 import me.clip.placeholderapi.PlaceholderAPI;
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.entity.Player;
 
 import java.util.regex.Matcher;
@@ -55,8 +53,7 @@ public class TextUtils {
             finalText.append(text);
         }
 
-        String pluginFinal = ChatColor.translateAlternateColorCodes('&', finalText.toString());
-        return MiniMessage.miniMessage().serialize(MiniMessage.miniMessage().deserialize(pluginFinal));
+        return ChatColor.translateAlternateColorCodes('&', finalText.toString());
     }
 
     public static String processPlaceholders(Player player, String text) {

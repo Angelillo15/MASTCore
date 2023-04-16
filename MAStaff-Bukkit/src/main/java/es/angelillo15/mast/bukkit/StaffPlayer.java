@@ -15,6 +15,7 @@ import es.angelillo15.mast.bukkit.config.Messages;
 import es.angelillo15.mast.bukkit.loaders.ItemsLoader;
 import es.angelillo15.mast.bukkit.utils.PermsUtils;
 import es.angelillo15.mast.bukkit.utils.StaffUtils;
+import io.papermc.lib.PaperLib;
 import lombok.SneakyThrows;
 import me.MrGraycat.eGlow.API.Enum.EGlowColor;
 import me.MrGraycat.eGlow.EGlow;
@@ -287,14 +288,10 @@ public class StaffPlayer implements IStaffPlayer {
         Location location = new Location(world, x, y, z, yaw, pitch);
         switch (world.getEnvironment()) {
             case NETHER:
-                new Thread(() -> {
-                    player.teleport(location);
-                }).start();
+                PaperLib.teleportAsync(player, location);
                 return true;
             default:
-                new Thread(() -> {
-                    player.teleport(world.getHighestBlockAt(location).getLocation().add(0, 1, 0));
-                }).start();
+                PaperLib.teleportAsync(player, world.getHighestBlockAt(location).getLocation().add(0, 1, 0));
                 return true;
         }
     }
