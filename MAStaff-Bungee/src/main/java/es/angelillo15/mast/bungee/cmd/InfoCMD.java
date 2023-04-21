@@ -65,7 +65,5 @@ public class InfoCMD extends Command {
             }
 
         }).start();
-
-
     }
 }
