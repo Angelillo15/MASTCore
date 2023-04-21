@@ -1,5 +1,6 @@
 package es.angelillo15.mast.api;
 
+import es.angelillo15.mast.api.cmd.Command;
 import es.angelillo15.mast.api.exceptions.PluginNotLoadedException;
 import es.angelillo15.mast.api.utils.ServerUtils;
 import es.angelillo15.mast.api.utils.VersionUtils;
@@ -44,6 +45,7 @@ public interface MAStaffInstance<P> {
             return getBungeeInstance().getPLogger();
         }
     }
+    public default void registerCommand(Command command){};
     public boolean isDebug();
     public void drawLogo();
     public void loadConfig();
