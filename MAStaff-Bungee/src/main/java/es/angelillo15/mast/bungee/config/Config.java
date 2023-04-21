@@ -1,6 +1,9 @@
 package es.angelillo15.mast.bungee.config;
 
 public class Config {
+    public static String dateFormat() {
+        return ConfigLoader.getConfig().getConfig().getString("Config.date-format");
+    }
     public static class Redis {
         public static boolean isEnabled() {
             return ConfigLoader.getConfig().getConfig().getBoolean("Redis.enabled");
