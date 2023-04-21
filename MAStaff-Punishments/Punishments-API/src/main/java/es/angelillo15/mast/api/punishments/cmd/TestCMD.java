@@ -1,4 +1,4 @@
-package es.angelillo15.mast.bungee.punishments.cmd;
+package es.angelillo15.mast.api.punishments.cmd;
 
 import es.angelillo15.mast.api.cmd.Command;
 import es.angelillo15.mast.api.cmd.CommandData;
