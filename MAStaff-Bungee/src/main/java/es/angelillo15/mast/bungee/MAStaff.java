@@ -6,6 +6,7 @@ import es.angelillo15.mast.api.MAStaffInstance;
 import es.angelillo15.mast.api.TextUtils;
 import es.angelillo15.mast.api.cmd.Command;
 import es.angelillo15.mast.api.cmd.CommandData;
+import es.angelillo15.mast.api.data.DataManager;
 import es.angelillo15.mast.api.database.PluginConnection;
 import es.angelillo15.mast.api.redis.EventManager;
 import es.angelillo15.mast.api.redis.events.server.ServerConnectedEvent;
@@ -22,6 +23,7 @@ import es.angelillo15.mast.bungee.listener.redis.server.OnServer;
 import es.angelillo15.mast.bungee.listener.redis.staff.OnStaffJoinLeave;
 import es.angelillo15.mast.bungee.listener.redis.staff.OnStaffSwitch;
 import es.angelillo15.mast.bungee.listener.redis.staff.OnStaffTalk;
+import es.angelillo15.mast.bungee.listener.user.UserJoinListener;
 import es.angelillo15.mast.bungee.manager.RedisManager;
 import es.angelillo15.mast.bungee.utils.BungeeServerUtils;
 import es.angelillo15.mast.bungee.utils.Logger;
@@ -111,7 +113,7 @@ public class MAStaff extends Plugin implements MAStaffInstance<Plugin> {
         getProxy().getPluginManager().registerListener(this, new StaffChangeEvent());
         getProxy().getPluginManager().registerListener(this, new StaffJoinChange());
         getProxy().getPluginManager().registerListener(this, new StaffTalkEvent());
-
+        getProxy().getPluginManager().registerListener(this, new UserJoinListener());
         if (Config.Redis.isEnabled()) registerRedisListeners();
 
     }
@@ -135,6 +137,8 @@ public class MAStaff extends Plugin implements MAStaffInstance<Plugin> {
         } else {
             new PluginConnection(getDataFolder().getPath());
         }
+
+        DataManager.load();
 
         MAStaff.getInstance().getPLogger().info("Database loaded!");
     }

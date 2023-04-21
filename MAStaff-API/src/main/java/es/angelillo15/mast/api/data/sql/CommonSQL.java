@@ -44,9 +44,10 @@ public class CommonSQL extends AbstractDataManager {
         UserData userData = null;
 
         try (PreparedStatement statement =
-                     PluginConnection.getConnection().prepareStatement("SELECT * FROM `user_data` WHERE ? = ?")) {
-            statement.setString(1, where);
-            statement.setString(2, value);
+                     PluginConnection.getConnection().prepareStatement("SELECT * FROM `user_data` WHERE `where` = ?"
+                             .replace("`where`", "`" + where + "`"))
+        ) {
+            statement.setString(1, value);
             statement.executeQuery();
             ResultSet resultSet = statement.getResultSet();
 
@@ -118,5 +119,36 @@ public class CommonSQL extends AbstractDataManager {
     @Override
     public UserData getUserData(String username) {
         return getUserData("username", username);
+    }
+
+
+    @Override
+    public boolean userExists(UUID uuid) {
+        try (PreparedStatement statement =
+                     PluginConnection.getConnection().prepareStatement("SELECT * FROM `user_data` WHERE `UUID` = ?")) {
+            statement.setString(1, uuid.toString());
+            statement.executeQuery();
+            boolean exists = statement.getResultSet().next();
+            MAStaffInstance.getLogger().debug("User exists: " + exists);
+            return exists;
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public boolean userExists(String username) {
+        try (PreparedStatement statement =
+                     PluginConnection.getConnection().prepareStatement("SELECT * FROM `user_data` WHERE `username` = ?")) {
+            statement.setString(1, username);
+            statement.executeQuery();
+            boolean exists = statement.getResultSet().next();
+            MAStaffInstance.getLogger().debug("User exists: " + exists);
+            return exists;
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 }

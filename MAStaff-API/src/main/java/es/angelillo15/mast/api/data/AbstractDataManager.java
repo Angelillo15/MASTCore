@@ -43,4 +43,15 @@ public abstract class AbstractDataManager {
         return null;
     }
 
+    public boolean userExists(String where, String value) {
+        return false;
+    }
+
+    public boolean userExists(UUID UUID) {
+        return false;
+    }
+
+    public boolean userExists(String username) {
+        return false;
+    }
 }
