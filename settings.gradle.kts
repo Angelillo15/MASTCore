@@ -19,4 +19,3 @@ include("MAStaff-Punishments:Punishments-Bungee")
 findProject(":MAStaff-Punishments:Punishments-Bungee")?.name = "Punishments-Bungee"
 include("MAStaff-Punishments:Punishments-API")
 findProject(":MAStaff-Punishments:Punishments-API")?.name = "Punishments-API"
-include("MAStaff-Common")
