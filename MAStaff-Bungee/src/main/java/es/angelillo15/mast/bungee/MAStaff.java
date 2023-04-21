@@ -3,10 +3,13 @@ package es.angelillo15.mast.bungee;
 import es.angelillo15.mast.api.ILogger;
 import es.angelillo15.mast.api.MAStaffInstance;
 import es.angelillo15.mast.api.TextUtils;
+import es.angelillo15.mast.api.cmd.Command;
+import es.angelillo15.mast.api.cmd.CommandData;
 import es.angelillo15.mast.api.database.PluginConnection;
 import es.angelillo15.mast.api.redis.EventHandler;
 import es.angelillo15.mast.api.redis.EventManager;
 import es.angelillo15.mast.api.redis.events.server.ServerConnectedEvent;
+import es.angelillo15.mast.bungee.cmd.CustomCommand;
 import es.angelillo15.mast.bungee.cmd.HelpopCMD;
 import es.angelillo15.mast.bungee.cmd.MASTBReload;
 import es.angelillo15.mast.bungee.cmd.StaffChat;
@@ -34,6 +37,35 @@ public class MAStaff extends Plugin implements MAStaffInstance<Plugin> {
     @Override
     public ILogger getPLogger() {
         return logger;
+    }
+
+    @Override
+    public void registerCommand(Command command) {
+        CommandData data;
+
+        try {
+            data = command.getClass().getAnnotation(CommandData.class);
+        } catch (Exception e) {
+            logger.error("Error while registering command " + command.getClass().getName());
+            return;
+        }
+
+        if (data.aliases().length == 0 && data.permission().isEmpty()) {
+            getProxy().getPluginManager().registerCommand(this, new CustomCommand(data.name(), command));
+            return;
+        }
+
+        if (data.aliases().length == 0) {
+            getProxy().getPluginManager().registerCommand(this, new CustomCommand(data.name(), data.permission(), command));
+            return;
+        }
+
+        if (data.permission().isEmpty()) {
+            getProxy().getPluginManager().registerCommand(this, new CustomCommand(data.name(), command, data.aliases()));
+            return;
+        }
+
+        getProxy().getPluginManager().registerCommand(this, new CustomCommand(data.name(), data.permission(), command, data.aliases()));
     }
 
     @Override
