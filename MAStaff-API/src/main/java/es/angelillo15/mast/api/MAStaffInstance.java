@@ -46,6 +46,7 @@ public interface MAStaffInstance<P> {
         }
     }
     public default void registerCommand(Command command){};
+    public IServerUtils getServerUtils();
     public boolean isDebug();
     public void drawLogo();
     public void loadConfig();

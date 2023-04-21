@@ -1,12 +1,12 @@
 package es.angelillo15.mast.bungee;
 
 import es.angelillo15.mast.api.ILogger;
+import es.angelillo15.mast.api.IServerUtils;
 import es.angelillo15.mast.api.MAStaffInstance;
 import es.angelillo15.mast.api.TextUtils;
 import es.angelillo15.mast.api.cmd.Command;
 import es.angelillo15.mast.api.cmd.CommandData;
 import es.angelillo15.mast.api.database.PluginConnection;
-import es.angelillo15.mast.api.redis.EventHandler;
 import es.angelillo15.mast.api.redis.EventManager;
 import es.angelillo15.mast.api.redis.events.server.ServerConnectedEvent;
 import es.angelillo15.mast.bungee.cmd.CustomCommand;
@@ -23,6 +23,7 @@ import es.angelillo15.mast.bungee.listener.redis.staff.OnStaffJoinLeave;
 import es.angelillo15.mast.bungee.listener.redis.staff.OnStaffSwitch;
 import es.angelillo15.mast.bungee.listener.redis.staff.OnStaffTalk;
 import es.angelillo15.mast.bungee.manager.RedisManager;
+import es.angelillo15.mast.bungee.utils.BungeeServerUtils;
 import es.angelillo15.mast.bungee.utils.Logger;
 import lombok.Getter;
 import lombok.Setter;
@@ -34,6 +35,7 @@ public class MAStaff extends Plugin implements MAStaffInstance<Plugin> {
     private ILogger logger;
     @Setter
     private boolean debug;
+    private IServerUtils serverUtils;
     @Override
     public ILogger getPLogger() {
         return logger;
@@ -77,6 +79,7 @@ public class MAStaff extends Plugin implements MAStaffInstance<Plugin> {
     public void drawLogo() {
         instance = this;
         logger = new Logger();
+        serverUtils = new BungeeServerUtils();
 
         logger.info(TextUtils.simpleColorize("&a"));
         logger.info(TextUtils.simpleColorize("&a ███▄ ▄███▓ ▄▄▄        ██████ ▄▄▄█████▓ ▄▄▄        █████▒ █████▒"));
@@ -161,6 +164,10 @@ public class MAStaff extends Plugin implements MAStaffInstance<Plugin> {
 
     }
 
+    @Override
+    public IServerUtils getServerUtils() {
+        return serverUtils;
+    }
 
     @Override
     public Plugin getPluginInstance() {
