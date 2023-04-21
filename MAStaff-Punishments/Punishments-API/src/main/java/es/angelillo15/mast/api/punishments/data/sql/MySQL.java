@@ -27,7 +27,7 @@ public class MySQL extends CommonSQL{
                                      " `banned_by_name` VARCHAR(25) NOT NULL DEFAULT '0'," +
                                      " `removed_by_uuid` INT NULL DEFAULT 0," +
                                      " `removed_by_reason` INT NULL DEFAULT 0," +
-                                     " `removed_by_date` TIMESTAMP NULL DEFAULT 0," +
+                                     " `removed_by_date` BIGINT NULL DEFAULT 0," +
                                      " `active` INT NOT NULL DEFAULT 0," +
                                      " `time` BIGINT NOT NULL DEFAULT 0," +
                                      " `until` BIGINT NOT NULL DEFAULT 0," +

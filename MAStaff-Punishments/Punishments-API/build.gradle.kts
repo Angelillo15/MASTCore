@@ -2,18 +2,12 @@ plugins {
     id("java")
 }
 
-group = "es.angelillo15"
-version = "2.2.0"
-
 repositories {
     mavenCentral()
 }
 
 dependencies {
-    testImplementation(platform("org.junit:junit-bom:5.9.1"))
-    testImplementation("org.junit.jupiter:junit-jupiter")
-}
-
-tasks.test {
-    useJUnitPlatform()
+    compileOnly("com.github.Angelillo15:ConfigManager:1.4")
+    compileOnly("org.yaml:snakeyaml:1.33")
+    compileOnly("com.github.Carleslc.Simple-YAML:Simple-Yaml:1.8.3")
 }

@@ -7,6 +7,7 @@ import lombok.Getter;
 import org.bukkit.plugin.Plugin;
 
 import java.io.File;
+import java.io.InputStream;
 
 public class MAStaffAddon<P> {
     @Getter
@@ -59,5 +60,9 @@ public class MAStaffAddon<P> {
         if(!this.addonFolder.exists()) this.addonFolder.mkdirs();
         config = new ConfigManager(this.addonFolder.toPath(), "config.yml", "config.yml", this);
         config.registerConfig();
+    }
+
+    public InputStream getResourceAsStream(String name) {
+        return getClass().getClassLoader().getResourceAsStream(name);
     }
 }

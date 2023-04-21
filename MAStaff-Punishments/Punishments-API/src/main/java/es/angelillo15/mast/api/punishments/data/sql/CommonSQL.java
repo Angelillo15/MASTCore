@@ -5,6 +5,7 @@ import es.angelillo15.mast.api.punishments.data.AbstractDataManager;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.UUID;
 
 public class CommonSQL extends AbstractDataManager {
     @Override
@@ -31,6 +32,27 @@ public class CommonSQL extends AbstractDataManager {
             statement.setBoolean(9, ipban);
 
             statement.execute();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public boolean isPermBanned(UUID uuid) {
+        return isPermBanned("UUID", uuid.toString());
+    }
+
+    @Override
+    public boolean isPermBanned(String username) {
+        return isPermBanned("username", username);
+    }
+
+    @Override
+    public boolean isPermBanned(String where, String value) {
+        try(PreparedStatement statement = PluginConnection.getConnection().prepareStatement(
+                "SELECT * FROM `mastaff_punishments_bans` WHERE ` + where + ` = ? AND `until` = 0 AND `active` = 1;")) {
+            statement.setString(1, value);
+            return statement.executeQuery().next();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
