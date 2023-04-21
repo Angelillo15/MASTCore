@@ -47,4 +47,13 @@ public class PlayerCommandSender implements CommandSender {
     public boolean isSpigot() {
         return true;
     }
+    @Override
+    public String getUniqueId() {
+        return player.getUniqueId().toString();
+    }
+
+    @Override
+    public String getAddress() {
+        return player.getAddress().getAddress().getHostAddress().split(":")[0];
+    }
 }

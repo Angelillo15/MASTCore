@@ -19,6 +19,11 @@ public class BukkitConsoleCommandSender implements CommandSender {
     }
 
     @Override
+    public String getUniqueId() {
+        return "CONSOLE";
+    }
+
+    @Override
     public boolean isPlayer() {
         return false;
     }
@@ -41,5 +46,10 @@ public class BukkitConsoleCommandSender implements CommandSender {
     @Override
     public boolean isSpigot() {
         return true;
+    }
+
+    @Override
+    public String getAddress() {
+        return "0.0.0.0";
     }
 }
