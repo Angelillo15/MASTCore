@@ -1,12 +1,12 @@
 package es.angelillo15.mast.bungee.cmd;
 
 import es.angelillo15.mast.api.TextUtils;
-import es.angelillo15.mast.api.chat.api.chat.TextComponent;
 import es.angelillo15.mast.api.cmd.Command;
 import es.angelillo15.mast.api.cmd.CommandData;
 import es.angelillo15.mast.api.cmd.sender.CommandSender;
 import es.angelillo15.mast.api.data.DataManager;
 import es.angelillo15.mast.api.data.UserData;
+import es.angelillo15.mast.api.managers.UserDataManager;
 import es.angelillo15.mast.bungee.config.Config;
 import es.angelillo15.mast.bungee.config.Messages;
 import net.md_5.bungee.api.ProxyServer;
@@ -33,14 +33,14 @@ public class InfoCMD extends Command {
 
             if (isUUID) {
                 try {
-                    userData = DataManager.getDataManager().getUserData(UUID.fromString(args[0]));
+                    userData = UserDataManager.getUserData(UUID.fromString(args[0]));
                     isOnline = ProxyServer.getInstance().getPlayer(UUID.fromString(args[0])) != null;
                 } catch (Exception e) {
                     sender.sendMessage(TextUtils.simpleColorize(Messages.getInfoUserNotFound()));
                     return;
                 }
             } else {
-                userData = DataManager.getDataManager().getUserData(args[0]);
+                userData = UserDataManager.getUserData(args[0]);
                 isOnline = ProxyServer.getInstance().getPlayer(args[0]) != null;
             }
 

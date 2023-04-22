@@ -73,6 +73,7 @@ dependencies {
     compileOnly("redis.clients:jedis:4.4.0-m2")
     compileOnly("net.kyori:adventure-text-minimessage:4.13.1")
     compileOnly("com.zaxxer:HikariCP:5.0.1")
+    compileOnly("com.github.ben-manes.caffeine:caffeine:2.9.2")
 }
 
 blossom {
