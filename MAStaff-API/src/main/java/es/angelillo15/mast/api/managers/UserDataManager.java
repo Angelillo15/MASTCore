@@ -12,7 +12,7 @@ import java.util.concurrent.TimeUnit;
 public class UserDataManager {
     private static final Cache<String, UserData> userDataCache = Caffeine.newBuilder()
             .maximumSize(100)
-            .expireAfterWrite(10, TimeUnit.MINUTES)
+            .expireAfterWrite(1, TimeUnit.MINUTES)
             .build();
 
     public static UserData getUserData(String key) {
