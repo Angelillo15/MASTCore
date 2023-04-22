@@ -48,8 +48,7 @@ public class CommonSQL extends AbstractDataManager {
                              .replace("`where`", "`" + where + "`"))
         ) {
             statement.setString(1, value);
-            statement.executeQuery();
-            ResultSet resultSet = statement.getResultSet();
+            ResultSet resultSet = statement.executeQuery();
 
             if (resultSet.next()) {
                 userData = new UserData(
@@ -127,11 +126,11 @@ public class CommonSQL extends AbstractDataManager {
         try (PreparedStatement statement =
                      PluginConnection.getConnection().prepareStatement("SELECT * FROM `user_data` WHERE `UUID` = ?")) {
             statement.setString(1, uuid.toString());
-            statement.executeQuery();
-            boolean exists = statement.getResultSet().next();
-            MAStaffInstance.getLogger().debug("User exists: " + exists);
-            return exists;
-
+            ResultSet result = statement.executeQuery();
+            boolean rb = result.next();
+            statement.close();
+            MAStaffInstance.getLogger().debug("User exists: " + rb);
+            return rb;
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -142,8 +141,8 @@ public class CommonSQL extends AbstractDataManager {
         try (PreparedStatement statement =
                      PluginConnection.getConnection().prepareStatement("SELECT * FROM `user_data` WHERE `username` = ?")) {
             statement.setString(1, username);
-            statement.executeQuery();
-            boolean exists = statement.getResultSet().next();
+            ResultSet result = statement.executeQuery();
+            boolean exists = result.next();
             MAStaffInstance.getLogger().debug("User exists: " + exists);
             return exists;
 
