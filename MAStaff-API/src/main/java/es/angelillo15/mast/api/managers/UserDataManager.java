@@ -30,6 +30,11 @@ public class UserDataManager {
                     DataManager.getDataManager().getUserData(UUID.fromString(key)) :
                     DataManager.getDataManager().getUserData(key);
 
+            if (userData == null) {
+                MAStaffInstance.getLogger().debug("User " + key + " does not exist in the database.");
+                return null;
+            }
+
             userDataCache.put(key, userData);
 
             data = userData;

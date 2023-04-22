@@ -45,7 +45,9 @@ public class InfoCMD extends Command {
             }
 
             if (userData == null) {
-                sender.sendMessage(es.angelillo15.mast.bungee.utils.TextUtils.colorize(Messages.getInfoUserNotFound()));
+                sender.sendMessage(es.angelillo15.mast.bungee.utils.TextUtils.colorize(Messages.getInfoUserNotFound()
+                        .replace("{player}", args[0]))
+                );
                 return;
             }
 
