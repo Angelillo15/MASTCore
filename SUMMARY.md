@@ -15,3 +15,4 @@
 ## 🪢 BungeeCord
 
 * [Config](bungeecord/config.md)
+* [Redis Sync](bungeecord/redis-sync.md)
