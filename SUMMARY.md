@@ -7,6 +7,7 @@
 * [Let's get started](introduction/lets-get-started.md)
 * [Databases](introduction/databases.md)
 * [Permissions](introduction/permissions.md)
+* [Permission Setup](introduction/permission-setup.md)
 
 ## 🪣 Bukkit
 
