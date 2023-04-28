@@ -3,6 +3,7 @@ package es.angelillo15.mast.bukkit;
 import es.angelillo15.mast.api.managers.loader.ReflectionLoader;
 import es.angelillo15.mast.bukkit.addons.AddonsLoader;
 import es.angelillo15.mast.bukkit.utils.LibsLoader;
+import es.angelillo15.mast.bukkit.utils.scheduler.Scheduler;
 import io.papermc.lib.PaperLib;
 
 public class MAStaffLoader extends MAStaff {
@@ -17,7 +18,7 @@ public class MAStaffLoader extends MAStaff {
         loadDatabase();
         loadModules();
         AddonsLoader.loadAddons();
-        checkUpdates();
+        Scheduler.execute(this::checkUpdates);
         debugInfo();
         ReflectionLoader.loadAll();
         ReflectionLoader.loadBukkit();
