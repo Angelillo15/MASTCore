@@ -50,6 +50,12 @@ public abstract class PunishmentsPlayer<P> {
     public abstract ArrayList<Punishment> getPunishments(boolean active);
 
     /**
+     * Add punishment
+     * @param punishment Punishment to add
+     */
+    public abstract void addPunishment(Punishment punishment);
+
+    /**
      * Is player banned
      */
     public abstract boolean isBanned();

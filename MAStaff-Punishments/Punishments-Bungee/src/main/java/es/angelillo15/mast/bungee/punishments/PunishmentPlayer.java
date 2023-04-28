@@ -90,14 +90,31 @@ public class PunishmentPlayer extends PunishmentsPlayer<ProxiedPlayer> {
 
     @Override
     public boolean isBanned() {
-        return false;
+        boolean isBanned = false;
+
+        for (Punishment punishment : getPunishments(PunishmentsTypes.BAN, true)) {
+            if (!punishment.isExpired()) {
+                isBanned = true;
+            }
+        }
+
+        return isBanned;
     }
 
     @Override
     public boolean isMuted() {
-        return false;
+        boolean isMuted = false;
+
+        for (Punishment punishment : getPunishments(PunishmentsTypes.MUTE, true)) {
+            if (!punishment.isExpired()) {
+                isMuted = true;
+            }
+        }
+
+        return isMuted;
     }
 
+    @Override
     public void addPunishment(Punishment punishment) {
         punishmentCache.put(punishment.getId(), punishment);
     }
