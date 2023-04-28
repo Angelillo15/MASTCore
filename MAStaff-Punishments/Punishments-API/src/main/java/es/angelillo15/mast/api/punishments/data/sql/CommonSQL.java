@@ -43,14 +43,14 @@ public class CommonSQL extends AbstractDataManager {
     }
 
     @Override
-    public boolean isPermBanned(String username) {
-        return isPermBanned("username", username);
+    public boolean isPermBanned(String uuid) {
+        return isPermBanned("UUID", uuid);
     }
 
     @Override
     public boolean isPermBanned(String where, String value) {
         try(PreparedStatement statement = PluginConnection.getConnection().prepareStatement(
-                "SELECT * FROM `mastaff_punishments_bans` WHERE ` + where + ` = ? AND `until` = 0 AND `active` = 1;")) {
+                "SELECT * FROM `mastaff_punishments_bans` WHERE `" + where + "` = ? AND `until` = 0 AND `active` = 1;")) {
             statement.setString(1, value);
             return statement.executeQuery().next();
         } catch (SQLException e) {
