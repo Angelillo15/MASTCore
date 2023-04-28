@@ -11,7 +11,6 @@ public class AddonLogger implements ILogger {
         this.logger = logger;
     }
 
-
     @Override
     public void info(String message) {
         logger.info("[" + addon.getDescriptionFile().getName() + "] " + message);
