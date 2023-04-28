@@ -26,6 +26,7 @@ public class SQLite extends CommonSQL {
                                      "    banned_by_uuid TEXT NOT NULL DEFAULT '0'," +
                                      "    banned_by_name TEXT NOT NULL DEFAULT '0'," +
                                      "    removed_by_uuid TEXT NULL DEFAULT 0," +
+                                     "    removed_by_uuid TEXT NULL DEFAULT 0," +
                                      "    removed_by_reason TEXT NULL DEFAULT 0," +
                                      "    removed_by_date INTEGER NULL DEFAULT 0," +
                                      "    active INTEGER NOT NULL DEFAULT 0," +
