@@ -33,7 +33,6 @@ public class SQLite extends CommonSQL {
                                      "    until INTEGER NOT NULL DEFAULT 0," +
                                      "    ipban INTEGER NOT NULL DEFAULT 0," +
                                      "    UNIQUE(ID)," +
-                                     "    UNIQUE(UUID)" +
                                      ");")
         ){
             statement.executeUpdate();
