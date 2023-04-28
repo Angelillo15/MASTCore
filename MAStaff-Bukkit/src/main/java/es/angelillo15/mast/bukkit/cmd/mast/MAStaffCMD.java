@@ -1,5 +1,6 @@
 package es.angelillo15.mast.bukkit.cmd.mast;
 
+import es.angelillo15.mast.api.Constants;
 import es.angelillo15.mast.api.TextUtils;
 import es.angelillo15.mast.api.cmd.LegacySubCommand;
 import es.angelillo15.mast.bukkit.config.Messages;
@@ -42,11 +43,10 @@ public class MAStaffCMD implements CommandExecutor {
     }
 
     public static void sendHelp(CommandSender sender) {
-        sender.sendMessage(TextUtils.colorize("&6----------------MAStaff----------------"));
-        sender.sendMessage(TextUtils.colorize("&bAvailable Commands:"));
+        sender.sendMessage(TextUtils.colorize("&a&lMAS&r&ltaff &7- &fv" + Constants.VERSION));
         legacySubCommands.forEach(subCommand -> {
             if(sender.hasPermission(subCommand.getPermission())){
-                sender.sendMessage(TextUtils.colorize("&b" + subCommand.getSyntax() + " &7- &f" + subCommand.getDescription()));
+                sender.sendMessage(TextUtils.colorize("&a&l> &r" + subCommand.getSyntax() + " &7- &7" + subCommand.getDescription()));
             }
         });
 
