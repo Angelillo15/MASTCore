@@ -8,6 +8,7 @@ public class MAStaffPunishmentsLoader extends MAStaffPunishments {
         super.onEnable();
         loadData();
         loadCommands();
+        loadListeners();
         getLogger().info(TextUtils.simpleColorize("&aMAStaff-Punishments has been enabled!"));
 
     }
