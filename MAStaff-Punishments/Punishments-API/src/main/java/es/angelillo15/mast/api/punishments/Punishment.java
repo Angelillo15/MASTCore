@@ -4,9 +4,9 @@ public class Punishment {
     private int id;
     private final PunishmentsTypes type;
 
-    private final PunishmentsPlayer<?> player;
+    private final String player;
 
-    private final PunishmentsPlayer<?> punisher;
+    private final String punisher;
 
     private final String reason;
 
@@ -14,7 +14,7 @@ public class Punishment {
 
     private final long duration;
 
-    public Punishment(PunishmentsTypes type, PunishmentsPlayer<?> player, PunishmentsPlayer<?> punisher, String reason, long time, long duration) {
+    public Punishment(PunishmentsTypes type, String player, String punisher, String reason, long time, long duration) {
         this.type = type;
         this.player = player;
         this.punisher = punisher;
@@ -27,11 +27,11 @@ public class Punishment {
         return type;
     }
 
-    public PunishmentsPlayer<?> getPlayer() {
+    public String getPlayer() {
         return player;
     }
 
-    public PunishmentsPlayer<?> getPunisher() {
+    public String getPunisher() {
         return punisher;
     }
 
