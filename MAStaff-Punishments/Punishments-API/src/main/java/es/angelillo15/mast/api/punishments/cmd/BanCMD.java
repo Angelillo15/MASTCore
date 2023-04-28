@@ -5,6 +5,7 @@ import es.angelillo15.mast.api.cmd.CommandData;
 import es.angelillo15.mast.api.cmd.sender.CommandSender;
 import es.angelillo15.mast.api.data.DataManager;
 import es.angelillo15.mast.api.data.UserData;
+import es.angelillo15.mast.api.punishments.enums.ErrorTypes;
 import es.angelillo15.mast.api.punishments.utils.BanUtils;
 
 @CommandData(
@@ -32,7 +33,29 @@ public class BanCMD extends Command {
                 reason.append(args[i]).append(" ");
             }
 
-            BanUtils.permBan(sender, BanUtils.getUserData(args[0]), reason.toString(),false);
+            if (target == null) {
+                sender.sendMessage("Player not found");
+                return;
+            }
+
+            ErrorTypes result = BanUtils.ban(sender, BanUtils.getUserData(target), reason.toString(), 0, false);
+
+            if (result == ErrorTypes.NULL_DATA) {
+                sender.sendMessage("Player not found");
+                return;
+            }
+
+            if (result == ErrorTypes.PLAYER_ALREADY_PERM_BANNED) {
+                sender.sendMessage("Player already perm banned");
+                return;
+            }
+
+            if (result == ErrorTypes.SUCCESS) {
+                sender.sendMessage("Player banned");
+                return;
+            }
+
+            sender.sendMessage("An error ocurred");
         }).start();
     }
 }
