@@ -1,0 +1,25 @@
+#
+#  ███▄ ▄███▓ ▄▄▄        ██████ ▄▄▄█████▓ ▄▄▄        █████▒ █████▒
+#  ▓██▒▀█▀ ██▒▒████▄    ▒██    ▒ ▓  ██▒ ▓▒▒████▄    ▓██   ▒▓██   ▒
+#  ▓██    ▓██░▒██  ▀█▄  ░ ▓██▄   ▒ ▓██░ ▒░▒██  ▀█▄  ▒████ ░▒████ ░
+#  ▒██    ▒██ ░██▄▄▄▄██   ▒   ██▒░ ▓██▓ ░ ░██▄▄▄▄██ ░▓█▒  ░░▓█▒  ░
+#  ▒██▒   ░██▒ ▓█   ▓██▒▒██████▒▒  ▒██▒ ░  ▓█   ▓██▒░▒█░   ░▒█░
+#  ░ ▒░   ░  ░ ▒▒   ▓▒█░▒ ▒▓▒ ▒ ░  ▒ ░░    ▒▒   ▓▒█░ ▒ ░    ▒ ░
+#  ░  ░      ░  ▒   ▒▒ ░░ ░▒  ░ ░    ░      ▒   ▒▒ ░ ░      ░
+#  ░      ░     ░   ▒   ░  ░  ░    ░        ░   ▒    ░ ░    ░ ░
+#  ░         ░  ░      ░                 ░  ░
+#
+# This is the Config file for MAStaff Punishments
+# where you can modify and customize the plugin.
+#
+# Remember to join my Discord server if you need help:
+# https://discord.angelillo15.es/
+#
+# General configuration for the plugin.
+#
+Config:
+  # Refresh time for the cache in seconds.
+  cacheRefreshTime: 60
+  # The language file you want to use for the plugin messages.
+  # Included locales: en.yml (English) and es.yml (Spanish)
+  language: en.yml
