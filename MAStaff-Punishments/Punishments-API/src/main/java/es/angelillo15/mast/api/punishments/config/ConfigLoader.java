@@ -19,8 +19,11 @@ public class ConfigLoader {
     @Getter
     private static ConfigManager config;
 
-    public static void load() {
-
+    public static void load(MAStaffAddon<?> plugin) {
+        ConfigLoader.plugin = plugin;
+        loadConfig();
+        loadLanguages();
+        loadMessage();
     }
 
     public static void loadConfig() {
@@ -35,19 +38,19 @@ public class ConfigLoader {
     public static void loadLanguages() {
         File file = new File(plugin.getAddonFolder().toPath() + File.separator + "lang");
         if (!file.exists()) {
-            file.mkdir();
+            file.mkdirs();
         }
 
-        ConfigMerge.merge(new File(plugin.getAddonFolder().toPath() + File.separator + "lang/spanish.yml"),
-                plugin.getResourceAsStream("Punishments/lang/spanish.yml")
+        ConfigMerge.merge(new File(plugin.getAddonFolder().toPath() + File.separator + "lang/es.yml"),
+                plugin.getResourceAsStream("Punishments/lang/es.yml")
         );
 
-        ConfigMerge.merge(new File(plugin.getAddonFolder().toPath().toString() + File.separator + "lang/english.yml"),
-                plugin.getResourceAsStream("Punishments/lang/english.yml")
+        ConfigMerge.merge(new File(plugin.getAddonFolder().toPath().toString() + File.separator + "lang/en.yml"),
+                plugin.getResourceAsStream("Punishments/lang/en.yml")
         );
 
-        es = new ConfigManager(plugin.getAddonFolder().toPath(), "Punishments/lang/spanish.yml", "/lang/spanish.yml");
-        en = new ConfigManager(plugin.getAddonFolder().toPath(), "Punishments/lang/english.yml", "/lang/english.yml");
+        es = new ConfigManager(plugin.getAddonFolder().toPath(), "Punishments/lang/es.yml", "/lang/es.yml");
+        en = new ConfigManager(plugin.getAddonFolder().toPath(), "Punishments/lang/en.yml", "/lang/en.yml");
         en.registerConfig();
         es.registerConfig();
     }
@@ -56,7 +59,7 @@ public class ConfigLoader {
         String language = config.getConfig().getString("Config.language");
         String lang = "lang/" + language;
 
-        messages = new ConfigManager(plugin.getAddonFolder().toPath(), "/Punishments/" + lang, lang);
+        messages = new ConfigManager(plugin.getAddonFolder().toPath(), "/" + lang, lang);
         messages.registerConfig();
         try {
             messages.getConfig().load();
