@@ -13,12 +13,17 @@ public class SQLite extends CommonSQL {
             MAStaffInstance.getLogger().debug("Creating table mastaff_punishments_bans");
             bansMigration();
         }
+
+        if (!PluginConnection.tableExists("mastaff_punishments_ips_banned")) {
+            MAStaffInstance.getLogger().debug("Creating table mastaff_punishments_ips");
+            ipsMigration();
+        }
     }
 
     public void bansMigration() {
         try (PreparedStatement statement =
                      PluginConnection.getConnection().prepareStatement(
-                             "CREATE TABLE mastaff_punishments_bans (" +
+                             "CREATE TABLE mastaff_punishments_ips_banned (" +
                                      "    ID INTEGER PRIMARY KEY AUTOINCREMENT," +
                                      "    UUID TEXT NOT NULL DEFAULT '0'," +
                                      "    reason TEXT NOT NULL DEFAULT '0'," +
@@ -34,9 +39,26 @@ public class SQLite extends CommonSQL {
                                      "    ipban INTEGER NOT NULL DEFAULT 0," +
                                      "    UNIQUE(ID)," +
                                      ");")
-        ){
+        ) {
             statement.executeUpdate();
             MAStaffInstance.getLogger().debug("Created table mastaff_punishments_bans");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void ipsMigration() {
+        try (PreparedStatement statement =
+                     PluginConnection.getConnection().prepareStatement(
+                             "CREATE TABLE mastaff_punishments_ips (" +
+                                     "    ID INTEGER PRIMARY KEY AUTOINCREMENT," +
+                                     "    IP TEXT NOT NULL DEFAULT '0'," +
+                                     "    ban_id INTEGER NOT NULL DEFAULT '0'," +
+                                     "    UNIQUE(ID)," +
+                                     ");")
+        ) {
+            statement.executeUpdate();
+            MAStaffInstance.getLogger().debug("Created table mastaff_punishments_ips");
         } catch (Exception e) {
             e.printStackTrace();
         }
