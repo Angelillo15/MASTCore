@@ -5,6 +5,7 @@ import es.angelillo15.mast.api.addons.AddonDescription;
 import es.angelillo15.mast.api.addons.AddonsManager;
 import es.angelillo15.mast.api.addons.MAStaffAddon;
 import es.angelillo15.mast.bungee.MAStaff;
+import es.angelillo15.mast.bungee.config.Config;
 import es.angelillo15.mast.bungee.punishments.MAStaffPunishmentsLoader;
 import lombok.SneakyThrows;
 import net.md_5.bungee.api.plugin.Plugin;
@@ -87,11 +88,11 @@ public class AddonsLoader {
     }
 
     public static void loadDefaultAddons() {
-        registerAddon("Punishments", new MAStaffPunishmentsLoader());
+        if (Config.Modules.isPunishmentsEnabled()) registerAddon("Punishments", new MAStaffPunishmentsLoader());
     }
 
     public static void registerAddon(AddonDescription addonDescription, MAStaffAddon<Plugin> addon) {
-        addon.init(new File(MAStaff.getInstance().getDataFolder() + File.separator + "modules" + File.separator
+        addon.init(new File(MAStaff.getInstance().getDataFolder() + File.separator + "addons" + File.separator
                 + addonDescription.getName()), addonDescription, MAStaff.getInstance(),
                 false);
         AddonsManager.registerAddon(addon);
