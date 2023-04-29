@@ -4,6 +4,12 @@ public class Config {
     public static String dateFormat() {
         return ConfigLoader.getConfig().getConfig().getString("Config.date-format");
     }
+
+    public static class Modules {
+        public static boolean isPunishmentsEnabled() {
+            return ConfigLoader.getConfig().getConfig().getBoolean("Modules.punishments");
+        }
+    }
     public static class Redis {
         public static boolean isEnabled() {
             return ConfigLoader.getConfig().getConfig().getBoolean("Redis.enabled");

@@ -26,6 +26,15 @@ Config:
   debug: false
   # Date format for the plugin.
   date-format: "dd/MM/yyyy HH:mm:ss"
+Modules:
+  # Enable or disable the Punishments module.
+  # WARNING - This module isn't finished yet.
+  #           It's recommended to disable it.
+  #           Is only available for MAStaff Bungee (for the moment).
+  #           Is in an open beta, so it can have bugs.
+  #           If you find any bug, please report it in the GitHub repository
+  #           or in the Discord server https://discord.nookure.com.
+  punishments: false
 Helpop:
   # Cooldown in seconds
   cooldown: 30
