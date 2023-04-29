@@ -7,13 +7,13 @@ import es.angelillo15.mast.api.punishments.Punishment;
 import es.angelillo15.mast.api.punishments.PunishmentsTypes;
 import es.angelillo15.mast.api.punishments.cache.PunishmentsManager;
 import es.angelillo15.mast.api.punishments.data.AbstractDataManager;
+import es.angelillo15.mast.api.punishments.models.BanModel;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.connection.PendingConnection;
-import net.md_5.bungee.api.connection.ProxiedPlayer;
-import net.md_5.bungee.api.event.PostLoginEvent;
 import net.md_5.bungee.api.event.PreLoginEvent;
 import net.md_5.bungee.api.plugin.Listener;
 import net.md_5.bungee.event.EventHandler;
+import java.util.UUID;
 
 public class PlayerJoinListener implements Listener {
     @EventHandler
@@ -60,13 +60,15 @@ public class PlayerJoinListener implements Listener {
                 es.angelillo15.mast.api.punishments.data.DataManager.getDataManager();
 
         if (manager.isPermBanned(userData.getUUID())) {
+
+            BanModel model = manager.getBan(UUID.fromString(userData.getUUID()));
             player.disconnect(new TextComponent("Banned"));
 
             PunishmentsManager.addPunishment(player.getName(), new Punishment(
                     PunishmentsTypes.BAN,
                     player.getName(),
-                    "Banned",
-                    "Banned",
+                    model.getBannedBy(),
+                    model.getReason(),
                     0,
                     -1
             ));
