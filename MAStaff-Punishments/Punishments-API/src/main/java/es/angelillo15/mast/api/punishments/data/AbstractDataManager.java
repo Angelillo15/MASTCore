@@ -1,5 +1,7 @@
 package es.angelillo15.mast.api.punishments.data;
 
+import es.angelillo15.mast.api.punishments.models.BanModel;
+
 import java.util.UUID;
 
 public abstract class AbstractDataManager {
@@ -21,5 +23,9 @@ public abstract class AbstractDataManager {
 
     public boolean isPermBanned(String where, String value) {
         return false;
+    }
+
+    public BanModel getBan(UUID uuid) {
+        return null;
     }
 }

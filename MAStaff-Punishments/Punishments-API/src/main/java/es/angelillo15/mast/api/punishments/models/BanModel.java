@@ -10,17 +10,36 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 public class BanModel {
-    private int id;
-    private UUID uuid;
-    private String bannedByUUID;
-    private String bannedBy;
-    private String reason;
-    private String removedBy;
-    private String removedByUUID;
-    private String removedReason;
-    private long removedByDate;
-    private boolean active;
-    private long time;
-    private long until;
-    private boolean ipBan;
+    private int id = -1;
+    private UUID uuid = null;
+    private String bannedByUUID = null;
+    private String bannedBy = null;
+    private String reason = null;
+    private String removedBy = null;
+    private String removedByUUID = null;
+    private String removedReason = null;
+    private long removedByDate = -1;
+    private boolean active = false;
+    private long time = -1;
+    private long until = -1;
+    private boolean ipBan = false;
+
+    @Override
+    public String toString(){
+        return "BanModel{" +
+                "id=" + id +
+                ", uuid=" + uuid +
+                ", bannedByUUID='" + bannedByUUID + '\'' +
+                ", bannedBy='" + bannedBy + '\'' +
+                ", reason='" + reason + '\'' +
+                ", removedBy='" + removedBy + '\'' +
+                ", removedByUUID='" + removedByUUID + '\'' +
+                ", removedReason='" + removedReason + '\'' +
+                ", removedByDate=" + removedByDate +
+                ", active=" + active +
+                ", time=" + time +
+                ", until=" + until +
+                ", ipBan=" + ipBan +
+                '}';
+    }
 }

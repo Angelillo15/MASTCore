@@ -21,7 +21,6 @@ public class SQLite extends CommonSQL {
                              "CREATE TABLE mastaff_punishments_bans (" +
                                      "    ID INTEGER PRIMARY KEY AUTOINCREMENT," +
                                      "    UUID TEXT NOT NULL DEFAULT '0'," +
-                                     "    IP TEXT NOT NULL DEFAULT '0'," +
                                      "    reason TEXT NOT NULL DEFAULT '0'," +
                                      "    banned_by_uuid TEXT NOT NULL DEFAULT '0'," +
                                      "    banned_by_name TEXT NOT NULL DEFAULT '0'," +
