@@ -6,6 +6,7 @@ public class MAStaffPunishmentsLoader extends MAStaffPunishments {
     @Override
     public void onEnable() {
         super.onEnable();
+        loadConfig();
         loadData();
         loadCommands();
         loadListeners();

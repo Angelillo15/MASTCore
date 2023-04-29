@@ -4,6 +4,7 @@ import es.angelillo15.mast.api.MAStaffInstance;
 import es.angelillo15.mast.api.addons.MAStaffAddon;
 import es.angelillo15.mast.api.punishments.cmd.BanCMD;
 import es.angelillo15.mast.api.punishments.cmd.IsBanned;
+import es.angelillo15.mast.api.punishments.config.ConfigLoader;
 import es.angelillo15.mast.api.punishments.data.DataManager;
 import es.angelillo15.mast.api.punishments.cmd.TestCMD;
 import es.angelillo15.mast.bungee.punishments.listeners.PlayerJoinListener;
@@ -16,7 +17,6 @@ public class MAStaffPunishments extends MAStaffAddon<Plugin> {
     @Override
     public void onEnable() {
         super.onEnable();
-
     }
 
     public void loadListeners() {
@@ -38,7 +38,7 @@ public class MAStaffPunishments extends MAStaffAddon<Plugin> {
     }
 
     public void loadConfig() {
-
+        ConfigLoader.load(this);
     }
 
     public void loadMetrics() {
