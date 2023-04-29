@@ -11,7 +11,7 @@ public class PunishmentsManager {
     @Getter
     private static final Cache<String, Punishment> punishmentCache = Caffeine.newBuilder()
             .maximumSize(100)
-            .expireAfterWrite(10, TimeUnit.MINUTES)
+            .expireAfterWrite(1, TimeUnit.MINUTES)
             .build();
 
     public static void addPunishment(String usr, Punishment punishment) {
@@ -19,6 +19,9 @@ public class PunishmentsManager {
     }
 
     public static Punishment getPunishment(String usr) {
+        new Thread(() -> {
+
+        }).start();
         return punishmentCache.getIfPresent(usr);
     }
 
