@@ -100,13 +100,6 @@ public class TextUtils {
             buf.append("s");
             uptime = uptime % SECOND;
         }
-        if (uptime > 0) {
-            if (buf.length() > 0) {
-                buf.append(", ");
-            }
-            buf.append(uptime);
-            buf.append("ms");
-        }
         return buf.toString();
     }
 
