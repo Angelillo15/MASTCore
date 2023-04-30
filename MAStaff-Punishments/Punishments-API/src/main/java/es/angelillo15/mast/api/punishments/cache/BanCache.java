@@ -2,26 +2,23 @@ package es.angelillo15.mast.api.punishments.cache;
 
 import com.github.benmanes.caffeine.cache.Cache;
 import com.github.benmanes.caffeine.cache.Caffeine;
-import es.angelillo15.mast.api.punishments.Punishment;
+import es.angelillo15.mast.api.punishments.models.BanModel;
 import lombok.Getter;
 
 import java.util.concurrent.TimeUnit;
 
-public class PunishmentsManager {
+public class BanCache {
     @Getter
-    private static final Cache<String, Punishment> punishmentCache = Caffeine.newBuilder()
+    private static final Cache<String, BanModel> punishmentCache = Caffeine.newBuilder()
             .maximumSize(100)
             .expireAfterWrite(1, TimeUnit.MINUTES)
             .build();
 
-    public static void addPunishment(String usr, Punishment punishment) {
-        punishmentCache.put(usr, punishment);
+    public static void addPunishment(String usr, BanModel ban) {
+        punishmentCache.put(usr, ban);
     }
 
-    public static Punishment getPunishment(String usr) {
-        new Thread(() -> {
-
-        }).start();
+    public static BanModel getPunishment(String usr) {
         return punishmentCache.getIfPresent(usr);
     }
 
