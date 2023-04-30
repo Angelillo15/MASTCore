@@ -3,6 +3,7 @@ package es.angelillo15.mast.api.punishments.cache;
 import com.github.benmanes.caffeine.cache.Cache;
 import com.github.benmanes.caffeine.cache.Caffeine;
 import es.angelillo15.mast.api.models.BanModel;
+import es.angelillo15.mast.api.punishments.config.Config;
 import lombok.Getter;
 
 import java.util.concurrent.TimeUnit;
@@ -11,7 +12,7 @@ public class BanCache {
     @Getter
     private static final Cache<String, BanModel> punishmentCache = Caffeine.newBuilder()
             .maximumSize(100)
-            .expireAfterWrite(1, TimeUnit.MINUTES)
+            .expireAfterWrite(Config.cacheRefreshTime(), TimeUnit.SECONDS)
             .build();
 
     public static void addPunishment(String usr, BanModel ban) {
