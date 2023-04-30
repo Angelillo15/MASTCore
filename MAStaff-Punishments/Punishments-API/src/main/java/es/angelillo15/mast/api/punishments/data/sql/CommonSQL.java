@@ -22,7 +22,7 @@ public class CommonSQL extends AbstractDataManager {
                              "INSERT INTO `mastaff_punishments_bans` " +
                                      "(`UUID`, `reason`, `banned_by_uuid`, `banned_by_name`, `active`, `time`, `until`, `ipban`) " +
                                      "VALUES (?, ?, ?, ?, ?, ?, ?, ?);")
-        ){
+        ) {
             statement.setString(1, uuid);
             statement.setString(2, reason);
             statement.setString(3, banned_by_uuid);
@@ -50,7 +50,7 @@ public class CommonSQL extends AbstractDataManager {
 
     @Override
     public boolean isPermBanned(String where, String value) {
-        try(PreparedStatement statement = PluginConnection.getConnection().prepareStatement(
+        try (PreparedStatement statement = PluginConnection.getConnection().prepareStatement(
                 "SELECT * FROM `mastaff_punishments_bans` WHERE `" + where + "` = ? AND `until` = 0 AND `active` = 1;")) {
             statement.setString(1, value);
             return statement.executeQuery().next();
@@ -71,7 +71,7 @@ public class CommonSQL extends AbstractDataManager {
 
     @Override
     public boolean isTempBanned(String where, String value) {
-        try(PreparedStatement statement = PluginConnection.getConnection().prepareStatement(
+        try (PreparedStatement statement = PluginConnection.getConnection().prepareStatement(
                 "SELECT * FROM `mastaff_punishments_bans` WHERE `" + where + "` = ? AND `active` = 1;")) {
             statement.setString(1, value);
             return statement.executeQuery().next();
@@ -82,7 +82,7 @@ public class CommonSQL extends AbstractDataManager {
 
     @Override
     public BanModel getBan(UUID uuid) {
-        try(PreparedStatement statement = PluginConnection.getConnection().prepareStatement(
+        try (PreparedStatement statement = PluginConnection.getConnection().prepareStatement(
                 "SELECT * FROM `mastaff_punishments_bans` WHERE `UUID` = ? AND `active` = 1;")) {
             statement.setString(1, uuid.toString());
             ResultSet rs = statement.executeQuery();
@@ -108,5 +108,20 @@ public class CommonSQL extends AbstractDataManager {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @Override
+    public void setBanActive(String uuid, boolean active) {
+        try (PreparedStatement statement = PluginConnection.getConnection().prepareStatement(
+                "UPDATE `mastaff_punishments_bans` SET `active` = ? WHERE `UUID` = ?;")
+        ) {
+            statement.setBoolean(1, active);
+            statement.setString(2, uuid);
+
+            statement.execute();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 }

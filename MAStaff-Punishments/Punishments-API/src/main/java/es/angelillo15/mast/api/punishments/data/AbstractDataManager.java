@@ -33,8 +33,9 @@ public abstract class AbstractDataManager {
         return false;
     }
 
+    public void setBanActive(String uuid, boolean active) {
 
-
+    }
 
     public boolean isPermBanned(String where, String value) {
         return false;
