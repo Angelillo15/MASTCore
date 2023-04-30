@@ -124,4 +124,9 @@ public class CommonSQL extends AbstractDataManager {
         }
 
     }
+
+    @Override
+    public boolean isBanned(String uuid) {
+        return isTempBanned(uuid) || isPermBanned(uuid);
+    }
 }
