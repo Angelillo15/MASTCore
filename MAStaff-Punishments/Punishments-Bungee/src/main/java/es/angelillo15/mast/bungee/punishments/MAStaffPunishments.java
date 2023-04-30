@@ -17,6 +17,12 @@ import net.md_5.bungee.api.plugin.Plugin;
 
 public class MAStaffPunishments extends MAStaffAddon<Plugin> {
     @Override
+    public void reload() {
+        loadConfig();
+        loadData();
+    }
+
+    @Override
     public void onEnable() {
         super.onEnable();
     }

@@ -10,6 +10,7 @@ import es.angelillo15.mast.api.data.DataManager;
 import es.angelillo15.mast.api.database.PluginConnection;
 import es.angelillo15.mast.api.redis.EventManager;
 import es.angelillo15.mast.api.redis.events.server.ServerConnectedEvent;
+import es.angelillo15.mast.bungee.addons.AddonsLoader;
 import es.angelillo15.mast.bungee.cmd.*;
 import es.angelillo15.mast.bungee.config.Config;
 import es.angelillo15.mast.bungee.config.ConfigLoader;
@@ -26,7 +27,10 @@ import es.angelillo15.mast.bungee.utils.BungeeServerUtils;
 import es.angelillo15.mast.bungee.utils.Logger;
 import lombok.Getter;
 import lombok.Setter;
+import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.plugin.Plugin;
+
+import java.sql.SQLException;
 
 public class MAStaff extends Plugin implements MAStaffInstance<Plugin> {
     @Getter
@@ -148,22 +152,33 @@ public class MAStaff extends Plugin implements MAStaffInstance<Plugin> {
 
     @Override
     public void unregisterCommands() {
-
+        ProxyServer.getInstance().getPluginManager().unregisterCommands(this);
     }
 
     @Override
     public void unregisterListeners() {
-
+        ProxyServer.getInstance().getPluginManager().unregisterListeners(this);
     }
 
     @Override
     public void unloadDatabase() {
-
+        try {
+            PluginConnection.getConnection().close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
     public void reload() {
-
+        unloadDatabase();
+        unregisterCommands();
+        unregisterListeners();
+        loadConfig();
+        loadDatabase();
+        registerCommands();
+        registerListeners();
+        AddonsLoader.reloadAddons();
     }
 
     @Override
