@@ -2,7 +2,7 @@ package es.angelillo15.mast.api.punishments.data.sql;
 
 import es.angelillo15.mast.api.database.PluginConnection;
 import es.angelillo15.mast.api.punishments.data.AbstractDataManager;
-import es.angelillo15.mast.api.punishments.models.BanModel;
+import es.angelillo15.mast.api.models.BanModel;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
