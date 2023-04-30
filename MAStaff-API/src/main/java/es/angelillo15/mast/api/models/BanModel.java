@@ -28,6 +28,10 @@ public class BanModel {
         return until == 0;
     }
 
+    public boolean isExpired() {
+        return until != 0 && until < System.currentTimeMillis();
+    }
+
     @Override
     public String toString(){
         return "BanModel{" +
