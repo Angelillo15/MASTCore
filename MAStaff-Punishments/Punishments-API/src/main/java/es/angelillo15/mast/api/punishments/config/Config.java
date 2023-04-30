@@ -7,4 +7,8 @@ public class Config {
     public static String language() {
         return ConfigLoader.getConfig().getConfig().getString("Config.language");
     }
+
+    public static String dateFormat() {
+        return ConfigLoader.getConfig().getConfig().getString("Config.date-format");
+    }
 }
