@@ -1,5 +1,6 @@
 package es.angelillo15.mast.api.cmd;
 
+import es.angelillo15.mast.api.Constants;
 import es.angelillo15.mast.api.TextUtils;
 import es.angelillo15.mast.api.cmd.sender.CommandSender;
 import lombok.Getter;
@@ -37,10 +38,11 @@ public abstract class CommandParent extends Command {
     }
 
     public void sendHelp(CommandSender sender) {
-        sender.sendMessage(TextUtils.simpleColorize("&6----------------MAStaff----------------"));
-        sender.sendMessage(TextUtils.simpleColorize("&bAvailable Commands:"));
+        sender.sendMessage(TextUtils.simpleColorize("&a&lMAS&r&ltaff &7- &fv" + Constants.VERSION));
         for (SubCommand subCommand : subCommands.values()) {
-            sender.sendMessage(TextUtils.simpleColorize("&b" + subCommand.getSyntax() + " &7- &f" + subCommand.getDescription()));
+            if(sender.hasPermission(subCommand.getPermission())){
+                sender.sendMessage(TextUtils.colorize("&a&l> &r" + subCommand.getSyntax() + " &7- &7" + subCommand.getDescription()));
+            }
         }
     }
 
