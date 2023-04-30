@@ -21,6 +21,21 @@ public abstract class AbstractDataManager {
         return false;
     }
 
+    public boolean isTempBanned(String where, String value) {
+        return false;
+    }
+
+    public boolean isTempBanned(UUID uuid) {
+        return false;
+    }
+
+    public boolean isTempBanned(String uuid) {
+        return false;
+    }
+
+
+
+
     public boolean isPermBanned(String where, String value) {
         return false;
     }

@@ -60,6 +60,27 @@ public class CommonSQL extends AbstractDataManager {
     }
 
     @Override
+    public boolean isTempBanned(UUID uuid) {
+        return isTempBanned("UUID", uuid.toString());
+    }
+
+    @Override
+    public boolean isTempBanned(String uuid) {
+        return isTempBanned("UUID", uuid);
+    }
+
+    @Override
+    public boolean isTempBanned(String where, String value) {
+        try(PreparedStatement statement = PluginConnection.getConnection().prepareStatement(
+                "SELECT * FROM `mastaff_punishments_bans` WHERE `" + where + "` = ? AND `active` = 1;")) {
+            statement.setString(1, value);
+            return statement.executeQuery().next();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
     public BanModel getBan(UUID uuid) {
         try(PreparedStatement statement = PluginConnection.getConnection().prepareStatement(
                 "SELECT * FROM `mastaff_punishments_bans` WHERE `UUID` = ? AND `active` = 1;")) {
