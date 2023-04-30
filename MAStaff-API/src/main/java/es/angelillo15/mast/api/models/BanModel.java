@@ -1,4 +1,4 @@
-package es.angelillo15.mast.api.punishments.models;
+package es.angelillo15.mast.api.models;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

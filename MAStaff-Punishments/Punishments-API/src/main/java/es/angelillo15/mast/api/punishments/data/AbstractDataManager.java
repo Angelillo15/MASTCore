@@ -1,6 +1,6 @@
 package es.angelillo15.mast.api.punishments.data;
 
-import es.angelillo15.mast.api.punishments.models.BanModel;
+import es.angelillo15.mast.api.models.BanModel;
 
 import java.util.UUID;
 

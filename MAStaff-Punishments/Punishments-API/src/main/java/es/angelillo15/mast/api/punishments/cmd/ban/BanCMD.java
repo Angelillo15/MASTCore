@@ -3,8 +3,14 @@ package es.angelillo15.mast.api.punishments.cmd.ban;
 import es.angelillo15.mast.api.cmd.Command;
 import es.angelillo15.mast.api.cmd.CommandData;
 import es.angelillo15.mast.api.cmd.sender.CommandSender;
+import es.angelillo15.mast.api.data.UserData;
+import es.angelillo15.mast.api.models.BanModel;
+import es.angelillo15.mast.api.punishments.data.DataManager;
 import es.angelillo15.mast.api.punishments.enums.ErrorTypes;
+import es.angelillo15.mast.api.punishments.events.EventManager;
 import es.angelillo15.mast.api.punishments.utils.BanUtils;
+
+import java.util.UUID;
 
 @CommandData(
         name = "ban",
@@ -35,8 +41,8 @@ public class BanCMD extends Command {
                 sender.sendMessage("Player not found");
                 return;
             }
-
-            ErrorTypes result = BanUtils.ban(sender, BanUtils.getUserData(target), reason.toString(), 0, false);
+            UserData data = BanUtils.getUserData(target);
+            ErrorTypes result = BanUtils.ban(sender, data , reason.toString(), 0, false);
 
             if (result == ErrorTypes.NULL_DATA) {
                 sender.sendMessage("Player not found");
@@ -50,6 +56,7 @@ public class BanCMD extends Command {
 
             if (result == ErrorTypes.SUCCESS) {
                 sender.sendMessage("Player banned");
+                EventManager.getEventManager().sendPlayerBannedEvent(DataManager.getDataManager().getBan(UUID.fromString(data.getUUID())), sender);
                 return;
             }
 
