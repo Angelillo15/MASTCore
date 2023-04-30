@@ -11,6 +11,10 @@ public class NumberUtils {
             throw new NumberFormatException("Invalid time");
         }
 
+        if (s.endsWith("s")) {
+            return parsed * 1000;
+        }
+
         if (s.endsWith("m")) {
             return parsed * 1000 * 60;
         }
