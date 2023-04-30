@@ -21,8 +21,12 @@ public class BanModel {
     private long removedByDate = -1;
     private boolean active = false;
     private long time = -1;
-    private long until = -1;
+    private long until;
     private boolean ipBan = false;
+
+    public boolean isPermanent() {
+        return until == 0;
+    }
 
     @Override
     public String toString(){
