@@ -61,7 +61,7 @@ dependencies {
     compileOnly("io.github.waterfallmc:waterfall-api:1.19-R0.1-SNAPSHOT")
     compileOnly("org.spigotmc:spigot-api:1.13-R0.1-SNAPSHOT")
     compileOnly("me.clip:placeholderapi:2.11.2")
-    compileOnly("com.github.mrgraycat:eGlow:master-SNAPSHOT")
+    compileOnly("com.github.MrGraycat:Eglow:3.2.2-PRE2")
     compileOnly("net.byteflux:libby-bukkit:1.1.5")
     compileOnly("com.github.hamza-cskn.obliviate-invs:core:4.1.10")
     compileOnly("com.github.hamza-cskn.obliviate-invs:configurablegui:4.1.10")
