@@ -29,4 +29,8 @@ public class BanCache {
     public static boolean isPunished(String usr) {
         return punishmentCache.getIfPresent(usr) != null;
     }
+
+    public static void clearCache() {
+        punishmentCache.invalidateAll();
+    }
 }
