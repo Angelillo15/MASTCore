@@ -1,11 +1,12 @@
 package es.angelillo15.mast.bungee.punishments.listeners;
 
 import es.angelillo15.mast.api.MAStaffInstance;
+import es.angelillo15.mast.api.TextUtils;
 import es.angelillo15.mast.api.data.DataManager;
 import es.angelillo15.mast.api.data.UserData;
-import es.angelillo15.mast.api.punishments.Punishment;
-import es.angelillo15.mast.api.punishments.PunishmentsTypes;
-import es.angelillo15.mast.api.punishments.cache.PunishmentsManager;
+import es.angelillo15.mast.api.punishments.cache.BanCache;
+import es.angelillo15.mast.api.punishments.config.Config;
+import es.angelillo15.mast.api.punishments.config.Messages;
 import es.angelillo15.mast.api.punishments.data.AbstractDataManager;
 import es.angelillo15.mast.api.punishments.models.BanModel;
 import net.md_5.bungee.api.chat.TextComponent;
@@ -28,23 +29,18 @@ public class PlayerJoinListener implements Listener {
     private boolean cacheCheck(PendingConnection conn) {
         MAStaffInstance.getLogger().debug("Checking cache for " + conn.getName() + "'s ban");
 
-        if (!PunishmentsManager.isPunished(conn.getName())) {
+        if (!BanCache.isPunished(conn.getName())) {
             MAStaffInstance.getLogger().debug("Not in cache");
             return false;
         }
 
-        Punishment punishment = PunishmentsManager.getPunishment(conn.getName());
+        BanModel model = BanCache.getPunishment(conn.getName());
 
-        if (!(punishment.getType() == PunishmentsTypes.BAN)) {
-            MAStaffInstance.getLogger().debug("Not banned");
-            return false;
-        }
-
-        if (punishment.isPermanent()) {
-            MAStaffInstance.getLogger().debug("Permanent ban");
-            conn.disconnect(new TextComponent(punishment.getReason()));
+        if (model != null) {
+            disconnect(model, conn);
             return true;
         }
+
 
         return false;
     }
@@ -62,16 +58,9 @@ public class PlayerJoinListener implements Listener {
         if (manager.isPermBanned(userData.getUUID())) {
 
             BanModel model = manager.getBan(UUID.fromString(userData.getUUID()));
-            player.disconnect(new TextComponent("Banned"));
+            disconnect(model, player);
 
-            PunishmentsManager.addPunishment(player.getName(), new Punishment(
-                    PunishmentsTypes.BAN,
-                    player.getName(),
-                    model.getBannedBy(),
-                    model.getReason(),
-                    0,
-                    -1
-            ));
+            BanCache.addPunishment(player.getName(), model);
             return true;
         }
 
@@ -79,4 +68,25 @@ public class PlayerJoinListener implements Listener {
 
     }
 
+    private void disconnect(BanModel model, PendingConnection player) {
+        if (model.isPermanent()) {
+            player.disconnect(new TextComponent(
+                    Messages.Ban.bannedMessagePermanent()
+                            .replace("{reason}", model.getReason())
+                            .replace("{bannedBy}", model.getBannedBy())
+                            .replace("{bannedOn}", TextUtils.formatDate(model.getTime(), Config.dateFormat())
+                            )
+            ));
+        } else {
+            player.disconnect(new TextComponent(
+                    Messages.Ban.tempBanMessageBase()
+                            .replace("{reason}", model.getReason())
+                            .replace("{bannedBy}", model.getBannedBy())
+                            .replace("{bannedOn}", TextUtils.formatDate(model.getTime(), Config.dateFormat()))
+                            .replace("{expires}", TextUtils.formatDate(model.getUntil(), Config.dateFormat()))
+                            .replace("{duration}", TextUtils.formatUptime(model.getUntil()))
+            ));
+        }
+
+    }
 }
