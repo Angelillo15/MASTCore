@@ -81,6 +81,20 @@ public class PlayerBanListener implements Listener {
             return true;
         }
 
+        if (manager.isTempBanned(userData.getUUID())) {
+
+            BanModel model = manager.getBan(UUID.fromString(userData.getUUID()));
+
+            if (model.isExpired()) {
+                manager.setBanActive(model.getUuid().toString(), false);
+                return false;
+            }
+            disconnect(model, player);
+
+            BanCache.addPunishment(player.getName(), model);
+            return true;
+        }
+
         return false;
 
     }
