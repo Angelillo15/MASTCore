@@ -1,4 +1,4 @@
-package es.angelillo15.mast.api.punishments.cmd;
+package es.angelillo15.mast.api.punishments.cmd.ban;
 
 import es.angelillo15.mast.api.cmd.Command;
 import es.angelillo15.mast.api.cmd.CommandData;
@@ -15,7 +15,7 @@ import java.util.UUID;
         permission = "mastaff.punishments.isbanned",
         aliases = {"isban", "isb"}
 )
-public class IsBanned extends Command {
+public class IsBannedCMD extends Command {
     @Override
     public void onCommand(CommandSender sender, String label, String[] args) {
         if (args.length < 1) {
