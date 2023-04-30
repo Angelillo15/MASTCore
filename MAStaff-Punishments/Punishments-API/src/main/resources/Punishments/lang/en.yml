@@ -15,3 +15,64 @@
 # Remember to join my Discord server if you need help:
 # https://discord.nookure.com/
 #
+# Ban Messages
+Default:
+  # Default Punishments actions Reasons
+  #
+  # Default reasons when a Player is banned.
+  defaultBanReason: 'No reason specified.'
+  # Default reasons when a Player is muted.
+  defaultMuteReason: 'No reason specified.'
+  # Default reasons when a Player is kicked.
+  defaultKickReason: 'No reason specified.'
+  # Default reasons when a Player is unmuted.
+  defaultUnMuteReason: 'No reason specified.'
+  # Default reasons when a Player is unbanned.
+  defaultUnBanReason: 'No reason specified.'
+  # Default reasons when a Player is unwarned.
+  defaultUnWarnReason: 'No reason specified.'
+  # Appeal Message
+  appealMessage: 'Appeal at: https://discord.nookure.com/'
+Ban:
+  # Ban Message
+  # This message is sent to the player when he is banned.
+  # You can use the following placeholders:
+  # ↳ {bannedOn} - The date when the player was banned.
+  # ↳ {bannedBy} - The player who banned the player.
+  # ↳ {reason} - The reason why the player was banned.
+  # ↳ {duration} - The duration of the ban.
+  # ↳ {expires} - The date when the ban expires.
+  # ↳ {appeal} - The link to appeal the ban.
+  bannedMessageBase: |
+    &c&lNookure &f&lNETWORK
+    &cYou are banned from the server.
+
+    &eBanned on: &f{bannedOn}
+    &eBanned by: &f{bannedBy}
+    &eRazón: &f{reason}
+  # Here you can modify the message sent to the player when he is temp banned.
+  # You can use the following placeholders:
+  # ↳ {bannedOn} - The date when the player was banned.
+  # ↳ {bannedBy} - The player who banned the player.
+  # ↳ {reason} - The reason why the player was banned.
+  # ↳ {duration} - The duration of the ban.
+  # ↳ {expires} - The date when the ban expires.
+  # ↳ {appeal} - The link to appeal the ban.
+  # ↳ {base} - The base message.
+  bannedMessage: |
+    {base}
+    Expires: &f{expires}
+    &f{appeal}
+  # Here you can modify the message sent to the player when he is temp banned.
+  # You can use the following placeholders:
+  # ↳ {bannedOn} - The date when the player was banned.
+  # ↳ {bannedBy} - The player who banned the player.
+  # ↳ {reason} - The reason why the player was banned.
+  # ↳ {duration} - The duration of the ban.
+  # ↳ {expires} - The date when the ban expires.
+  # ↳ {appeal} - The link to appeal the ban.
+  # ↳ {base} - The base message.
+  bannedMessagePermanent: |
+    {base}
+    &cYou are permanently banned from the server.
+    &f{appeal}
