@@ -23,6 +23,10 @@ public class BanUtils {
         return ErrorTypes.SUCCESS;
     }
 
+    public static boolean isBanned(String uuid) {
+        return DataManager.getDataManager().isTempBanned(uuid);
+    }
+
     public static ErrorTypes permBan(CommandSender banned_by, UserData target, String reason, boolean ipban) {
         return ban(banned_by, target, reason, 0, ipban);
     }
@@ -36,5 +40,9 @@ public class BanUtils {
         }
 
         return data;
+    }
+
+    public static void unban(String uuid) {
+        DataManager.getDataManager().setBanActive(uuid, false);
     }
 }
