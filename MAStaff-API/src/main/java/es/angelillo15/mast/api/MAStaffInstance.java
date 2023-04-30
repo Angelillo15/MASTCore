@@ -12,7 +12,11 @@ import org.bukkit.plugin.Plugin;
 
 public interface MAStaffInstance<P> {
     public static int version() {
-        return VersionUtils.getBukkitVersion();
+        if (ServerUtils.getServerType() == ServerUtils.ServerType.BUNGEE) {
+            return 19;
+        } else {
+            return VersionUtils.getBukkitVersion();
+        }
     }
 
     public static MAStaffInstance<Plugin> getInstance(){
