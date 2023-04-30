@@ -23,3 +23,5 @@ Config:
   # The language file you want to use for the plugin messages.
   # Included locales: en.yml (English) and es.yml (Spanish)
   language: en.yml
+  # Date format for the plugin.
+  date-format: "dd/MM/yyyy HH:mm:ss"
