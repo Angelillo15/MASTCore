@@ -59,11 +59,122 @@ public class Messages {
         }
     }
 
+    public static class Commands {
+        public static String playerNotFound() {
+            return colorize(ConfigLoader.getMessages().getConfig().getString("Commands.playerNotFound"));
+        }
+
+        public static String playerNotFound(String player) {
+            return colorize(playerNotFound())
+                    .replace("{player}", player);
+        }
+
+        public static String playerNotBanned() {
+            return colorize(ConfigLoader.getMessages().getConfig().getString("Commands.playerNotBanned"));
+        }
+
+        public static String playerNotBanned(String player) {
+            return colorize(playerNotBanned())
+                    .replace("{player}", player);
+        }
+
+        public static String playerNotMuted() {
+            return colorize(ConfigLoader.getMessages().getConfig().getString("Commands.playerNotMuted"));
+        }
+
+        public static String playerNotMuted(String player) {
+            return colorize(playerNotMuted())
+                    .replace("{player}", player);
+        }
+
+        public static String playerNotWarned() {
+            return colorize(ConfigLoader.getMessages().getConfig().getString("Commands.playerNotWarned"));
+        }
+
+        public static String playerNotWarned(String player) {
+            return colorize(playerNotWarned())
+                    .replace("{player}", player);
+        }
+
+        public static String playerNotOnline() {
+            return colorize(ConfigLoader.getMessages().getConfig().getString("Commands.playerNotOnline"));
+        }
+
+        public static String playerNotOnline(String player) {
+            return colorize(playerNotOnline())
+                    .replace("{player}", player);
+        }
+
+        public static String playerAlreadyBanned() {
+            return colorize(ConfigLoader.getMessages().getConfig().getString("Commands.playerAlreadyBanned"));
+        }
+
+        public static String playerAlreadyBanned(String player) {
+            return colorize(playerAlreadyBanned())
+                    .replace("{player}", player);
+        }
+
+        public static String playerAlreadyMuted() {
+            return colorize(ConfigLoader.getMessages().getConfig().getString("Commands.playerAlreadyMuted"));
+        }
+
+        public static String playerAlreadyMuted(String player) {
+            return colorize(playerAlreadyMuted())
+                    .replace("{player}", player);
+        }
+
+        public static class Ban {
+            public static String usage() {
+                return colorize(ConfigLoader.getMessages().getConfig().getString("Commands.ban.usage"));
+            }
+
+            public static String success() {
+                return colorize(ConfigLoader.getMessages().getConfig().getString("Commands.ban.success"));
+            }
+
+            public static String success(String player, String reason) {
+                return colorize(success())
+                        .replace("{player}", player)
+                        .replace("{reason}", reason);
+            }
+        }
+
+        public static class TempBan {
+            public static String usage() {
+                return colorize(ConfigLoader.getMessages().getConfig().getString("Commands.tempBan.usage"));
+            }
+
+            public static String success() {
+                return colorize(ConfigLoader.getMessages().getConfig().getString("Commands.tempBan.success"));
+            }
+
+            public static String success(String player, String time, String reason) {
+                return colorize(success())
+                        .replace("{player}", player)
+                        .replace("{time}", time)
+                        .replace("{reason}", reason);
+            }
+        }
+
+        public static class Unban {
+            public static String usage() {
+                return colorize(ConfigLoader.getMessages().getConfig().getString("Commands.unban.usage"));
+            }
+
+            public static String success() {
+                return colorize(ConfigLoader.getMessages().getConfig().getString("Commands.unban.success"));
+            }
+
+            public static String success(String player) {
+                return colorize(success())
+                        .replace("{player}", player);
+            }
+        }
+    }
+
     public static String colorize(String message) {
         return TextUtils.colorize(message)
                 .replace("{prefix}", Default.prefix()
-                );
+                ).replace("&", "§");
     }
-
-
 }

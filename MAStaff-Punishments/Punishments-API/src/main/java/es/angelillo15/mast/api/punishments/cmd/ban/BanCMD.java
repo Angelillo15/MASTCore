@@ -4,7 +4,7 @@ import es.angelillo15.mast.api.cmd.Command;
 import es.angelillo15.mast.api.cmd.CommandData;
 import es.angelillo15.mast.api.cmd.sender.CommandSender;
 import es.angelillo15.mast.api.data.UserData;
-import es.angelillo15.mast.api.models.BanModel;
+import es.angelillo15.mast.api.punishments.config.Messages;
 import es.angelillo15.mast.api.punishments.data.DataManager;
 import es.angelillo15.mast.api.punishments.enums.ErrorTypes;
 import es.angelillo15.mast.api.punishments.events.EventManager;
@@ -24,7 +24,7 @@ public class BanCMD extends Command {
     public void onCommand(CommandSender sender, String label, String[] args) {
         new Thread(() -> {
             if (args.length < 2) {
-                sender.sendMessage("Usage: /ban <player> <reason>");
+                sender.sendMessage(Messages.Commands.Ban.usage());
                 return;
             }
 
@@ -38,24 +38,24 @@ public class BanCMD extends Command {
             }
 
             if (target == null) {
-                sender.sendMessage("Player not found");
+                sender.sendMessage(Messages.Commands.playerNotFound(target));
                 return;
             }
             UserData data = BanUtils.getUserData(target);
             ErrorTypes result = BanUtils.ban(sender, data , reason.toString(), 0, false);
 
             if (result == ErrorTypes.NULL_DATA) {
-                sender.sendMessage("Player not found");
+                sender.sendMessage(Messages.Commands.playerNotFound(target));
                 return;
             }
 
             if (result == ErrorTypes.PLAYER_ALREADY_PERM_BANNED) {
-                sender.sendMessage("Player already perm banned");
+                sender.sendMessage(Messages.Commands.playerAlreadyBanned(target));
                 return;
             }
 
             if (result == ErrorTypes.SUCCESS) {
-                sender.sendMessage("Player banned");
+                sender.sendMessage(Messages.Commands.Ban.success(target, reason.toString()));
                 EventManager.getEventManager().sendPlayerBannedEvent(DataManager.getDataManager().getBan(UUID.fromString(data.getUUID())), sender);
                 return;
             }

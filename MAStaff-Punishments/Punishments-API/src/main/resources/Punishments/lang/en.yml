@@ -20,7 +20,7 @@ Default:
   # Default Punishments actions Reasons
   #
   # Plugin prefix
-  prefix: '&c&lNookure &f&lNETWORK &8&l» &f'
+  prefix: '&c&lPunishments &8&l» &f'
   # Default reasons when a Player is banned.
   defaultBanReason: 'No reason specified.'
   # Default reasons when a Player is muted.
@@ -78,3 +78,35 @@ Ban:
     &f{base}
     &cYou are permanently banned from the server.
     &f{appeal}
+# Command messages
+Commands:
+  # Message sent to the player when he tries to execute a command
+  # with a player argument that not exists in the DB.
+  playerNotFound: '{prefix} &c{player} not found.'
+  # Message sent to the player when he tries to unban a player that is not banned.
+  playerNotBanned: '{prefix} &c{player} is not banned.'
+  # Message sent to the player when he tries to unmute a player that is not muted.
+  playerNotMuted: '{prefix} &c{player} is not muted.'
+  # Message sent to the player when he tries to unwarn a player that is not warned.
+  playerNotWarned: '{prefix} &c{player} is not warned.'
+  # Message sent to the player when he tries to use a command with a player that isn't online.
+  playerNotOnline: '{prefix} &c{player} is not online.'
+  # Message sent to the player when he tries to use a command with a player that is already banned.
+  playerAlreadyBanned: '{prefix} &c{player} is already banned.'
+  # Message sent to the player when he tries to use a command with a player that is already muted.
+  playerAlreadyMuted: '{prefix} &c{player} is already muted.'
+  ban:
+    # Message sent to the player when he doesn't fill all the arguments.
+    usage: '{prefix} &cUsage: /ban <player> <reason?>'
+    # Message sent to the player when he bans a player.
+    success: '{prefix} &a{player} has been banned by the reason {reason}.'
+  tempBan:
+    # Message sent to the player when he doesn't fill all the arguments.
+    usage: '{prefix} &cUsage: /tempban <player> <duration|s|m|h|d|w|M/MO|y> <reason?>'
+    # Message sent to the player when he temp bans a player.
+    success: '{prefix} &a{player} has been banned for {duration} by the reason {reason}.'
+  unban:
+    # Message sent to the player when he doesn't fill all the arguments.
+    usage: '{prefix} &cUsage: /unban <player> <reason?>'
+    # Message sent to the player when he unbans a player that is not banned.
+    success: '{prefix} &a{player} has been unbanned.'

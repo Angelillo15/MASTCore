@@ -3,9 +3,15 @@ package es.angelillo15.mast.api.punishments.cmd.ban;
 import es.angelillo15.mast.api.cmd.Command;
 import es.angelillo15.mast.api.cmd.CommandData;
 import es.angelillo15.mast.api.cmd.sender.CommandSender;
+import es.angelillo15.mast.api.data.UserData;
+import es.angelillo15.mast.api.punishments.config.Messages;
+import es.angelillo15.mast.api.punishments.data.DataManager;
 import es.angelillo15.mast.api.punishments.enums.ErrorTypes;
+import es.angelillo15.mast.api.punishments.events.EventManager;
 import es.angelillo15.mast.api.punishments.utils.BanUtils;
 import es.angelillo15.mast.api.utils.NumberUtils;
+
+import java.util.UUID;
 
 @CommandData(
         name = "tempban",
@@ -16,7 +22,7 @@ public class TempBanCMD extends Command {
     @Override
     public void onCommand(CommandSender sender, String label, String[] args) {
         if (args.length < 3) {
-            sender.sendMessage("Usage: /tempban <player> <time> <reason>");
+            sender.sendMessage(Messages.Commands.TempBan.usage());
             return;
         }
 
@@ -36,20 +42,17 @@ public class TempBanCMD extends Command {
             return;
         }
 
-        ErrorTypes error = BanUtils.ban(sender, BanUtils.getUserData(target), reason.toString(), time, false);
+        UserData data = BanUtils.getUserData(target);
+
+        ErrorTypes error = BanUtils.ban(sender, data, reason.toString(), time, false);
 
         if (error == ErrorTypes.NULL_DATA) {
-            sender.sendMessage("Player not found");
+            sender.sendMessage(Messages.Commands.playerNotFound(target));
             return;
         }
 
         if (error == ErrorTypes.PLAYER_ALREADY_PERM_BANNED) {
-            sender.sendMessage("Player already perm banned");
-            return;
-        }
-
-        if (error == ErrorTypes.SUCCESS) {
-            sender.sendMessage("Player banned");
+            sender.sendMessage(Messages.Commands.playerAlreadyBanned(target));
             return;
         }
 
@@ -58,5 +61,10 @@ public class TempBanCMD extends Command {
             return;
         }
 
+        if (error == ErrorTypes.SUCCESS) {
+            EventManager.getEventManager().sendPlayerBannedEvent(DataManager.getDataManager().getBan(UUID.fromString(data.getUUID())), sender);
+            sender.sendMessage(Messages.Commands.TempBan.success(target, reason.toString(), args[1]));
+            return;
+        }
     }
 }
