@@ -4,8 +4,8 @@ import es.angelillo15.mast.api.cmd.Command;
 import es.angelillo15.mast.api.cmd.CommandData;
 import es.angelillo15.mast.api.cmd.sender.CommandSender;
 import es.angelillo15.mast.api.data.UserData;
+import es.angelillo15.mast.api.models.BanModel;
 import es.angelillo15.mast.api.punishments.data.DataManager;
-import es.angelillo15.mast.api.punishments.models.BanModel;
 import es.angelillo15.mast.api.punishments.utils.BanUtils;
 
 import java.util.UUID;
