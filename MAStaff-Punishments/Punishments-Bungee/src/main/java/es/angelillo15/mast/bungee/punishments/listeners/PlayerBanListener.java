@@ -10,6 +10,7 @@ import es.angelillo15.mast.api.punishments.cache.BanCache;
 import es.angelillo15.mast.api.punishments.config.Config;
 import es.angelillo15.mast.api.punishments.config.Messages;
 import es.angelillo15.mast.api.punishments.data.AbstractDataManager;
+import es.angelillo15.mast.api.punishments.utils.BanUtils;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.TextComponent;
@@ -86,7 +87,7 @@ public class PlayerBanListener implements Listener {
             BanModel model = manager.getBan(UUID.fromString(userData.getUUID()));
 
             if (model.isExpired()) {
-                manager.setBanActive(model.getUuid().toString(), false);
+                BanUtils.unban(model.getUuid().toString());
                 return false;
             }
             disconnect(model, player);
@@ -117,7 +118,7 @@ public class PlayerBanListener implements Listener {
                             .replace("{bannedBy}", model.getBannedBy())
                             .replace("{bannedOn}", TextUtils.formatDate(model.getTime(), Config.dateFormat()))
                             .replace("{expires}", TextUtils.formatDate(model.getUntil(), Config.dateFormat()))
-                            .replace("{duration}", TextUtils.formatUptime(model.getUntil()))
+                            .replace("{duration}", TextUtils.formatUptime(model.getUntil() - System.currentTimeMillis()))
             );
         }
     }
