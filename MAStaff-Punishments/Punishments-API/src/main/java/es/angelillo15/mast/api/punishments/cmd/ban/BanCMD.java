@@ -1,10 +1,8 @@
-package es.angelillo15.mast.api.punishments.cmd;
+package es.angelillo15.mast.api.punishments.cmd.ban;
 
 import es.angelillo15.mast.api.cmd.Command;
 import es.angelillo15.mast.api.cmd.CommandData;
 import es.angelillo15.mast.api.cmd.sender.CommandSender;
-import es.angelillo15.mast.api.data.DataManager;
-import es.angelillo15.mast.api.data.UserData;
 import es.angelillo15.mast.api.punishments.enums.ErrorTypes;
 import es.angelillo15.mast.api.punishments.utils.BanUtils;
 
