@@ -19,6 +19,8 @@
 Default:
   # Default Punishments actions Reasons
   #
+  # Plugin prefix
+  prefix: '&c&lNookure &f&lNETWORK &8&l» &f'
   # Default reasons when a Player is banned.
   defaultBanReason: 'No reason specified.'
   # Default reasons when a Player is muted.
@@ -44,12 +46,12 @@ Ban:
   # ↳ {expires} - The date when the ban expires.
   # ↳ {appeal} - The link to appeal the ban.
   bannedMessageBase: |
-    &c&lNookure &f&lNETWORK
+    &c&lNookure &f&lNetwork
     &cYou are banned from the server.
 
     &eBanned on: &f{bannedOn}
     &eBanned by: &f{bannedBy}
-    &eRazón: &f{reason}
+    &eReason: &f{reason}
   # Here you can modify the message sent to the player when he is temp banned.
   # You can use the following placeholders:
   # ↳ {bannedOn} - The date when the player was banned.
@@ -60,7 +62,7 @@ Ban:
   # ↳ {appeal} - The link to appeal the ban.
   # ↳ {base} - The base message.
   bannedMessage: |
-    {base}
+    &f{base}
     Expires: &f{expires}
     &f{appeal}
   # Here you can modify the message sent to the player when he is temp banned.
@@ -73,6 +75,6 @@ Ban:
   # ↳ {appeal} - The link to appeal the ban.
   # ↳ {base} - The base message.
   bannedMessagePermanent: |
-    {base}
+    &f{base}
     &cYou are permanently banned from the server.
     &f{appeal}
