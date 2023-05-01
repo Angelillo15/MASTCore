@@ -1,8 +1,10 @@
 package es.angelillo15.mast.api.punishments.data.sql;
 
+import es.angelillo15.mast.api.MAStaffInstance;
 import es.angelillo15.mast.api.database.PluginConnection;
 import es.angelillo15.mast.api.punishments.data.AbstractDataManager;
 import es.angelillo15.mast.api.models.BanModel;
+import lombok.SneakyThrows;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -16,12 +18,12 @@ public class CommonSQL extends AbstractDataManager {
     }
 
     @Override
-    public void ban(String uuid, String ip, String reason, String banned_by_uuid, String banned_by_name, boolean active, long time, long until, boolean ipban) {
+    public void ban(String uuid, String username, String ip, String reason, String banned_by_uuid, String banned_by_name, boolean active, long time, long until, boolean ipban) {
         try (PreparedStatement statement =
                      PluginConnection.getConnection().prepareStatement(
                              "INSERT INTO `mastaff_punishments_bans` " +
-                                     "(`UUID`, `reason`, `banned_by_uuid`, `banned_by_name`, `active`, `time`, `until`, `ipban`) " +
-                                     "VALUES (?, ?, ?, ?, ?, ?, ?, ?);")
+                                     "(`UUID`, `reason`, `banned_by_uuid`, `banned_by_name`, `active`, `time`, `until`, `ipban`, `USERNAME`) " +
+                                     "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);")
         ) {
             statement.setString(1, uuid);
             statement.setString(2, reason);
@@ -31,6 +33,7 @@ public class CommonSQL extends AbstractDataManager {
             statement.setLong(6, time);
             statement.setLong(7, until);
             statement.setBoolean(8, ipban);
+            statement.setString(9, username);
 
             statement.execute();
         } catch (SQLException e) {
@@ -44,8 +47,8 @@ public class CommonSQL extends AbstractDataManager {
     }
 
     @Override
-    public boolean isPermBanned(String uuid) {
-        return isPermBanned("UUID", uuid);
+    public boolean isPermBanned(String username) {
+        return isPermBanned("USERNAME", username);
     }
 
     @Override
@@ -66,8 +69,9 @@ public class CommonSQL extends AbstractDataManager {
 
     @Override
     public boolean isTempBanned(String uuid) {
-        return isTempBanned("UUID", uuid);
+        return isTempBanned("username", uuid);
     }
+
 
     @Override
     public boolean isTempBanned(String where, String value) {
@@ -87,27 +91,49 @@ public class CommonSQL extends AbstractDataManager {
             statement.setString(1, uuid.toString());
             ResultSet rs = statement.executeQuery();
 
-            BanModel ban = new BanModel();
-
-            if (!rs.next()) return null;
-
-            ban.setId(rs.getInt("id"));
-            ban.setUuid(UUID.fromString(rs.getString("UUID")));
-            ban.setReason(rs.getString("reason"));
-            ban.setBannedByUUID(rs.getString("banned_by_uuid"));
-            ban.setBannedBy(rs.getString("banned_by_name"));
-            ban.setRemovedBy(rs.getString("removed_by_name"));
-            ban.setRemovedByUUID(rs.getString("removed_by_uuid"));
-            ban.setRemovedByDate(rs.getLong("removed_by_date"));
-            ban.setActive(rs.getBoolean("active"));
-            ban.setTime(rs.getLong("time"));
-            ban.setUntil(rs.getLong("until"));
-            ban.setIpBan(rs.getBoolean("ipban"));
-
-            return ban;
+            return getBan(rs);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @Override
+    public BanModel getBan(String username) {
+        try (PreparedStatement statement = PluginConnection.getConnection().prepareStatement(
+                "SELECT * FROM `mastaff_punishments_bans` WHERE `USERNAME` = ? AND `active` = 1;")) {
+            statement.setString(1, username);
+            ResultSet rs = statement.executeQuery();
+
+            return getBan(rs);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @SneakyThrows
+    public BanModel getBan(ResultSet rs) {
+        BanModel ban = new BanModel();
+
+        if (!rs.next()) return null;
+
+        ban.setId(rs.getInt("id"));
+        try {
+            ban.setUuid(UUID.fromString(rs.getString("UUID")));
+        } catch (Exception e) {
+            MAStaffInstance.getLogger().debug("UUID is null setting up");
+        }
+        ban.setReason(rs.getString("reason"));
+        ban.setBannedByUUID(rs.getString("banned_by_uuid"));
+        ban.setBannedBy(rs.getString("banned_by_name"));
+        ban.setRemovedBy(rs.getString("removed_by_name"));
+        ban.setRemovedByUUID(rs.getString("removed_by_uuid"));
+        ban.setRemovedByDate(rs.getLong("removed_by_date"));
+        ban.setActive(rs.getBoolean("active"));
+        ban.setTime(rs.getLong("time"));
+        ban.setUntil(rs.getLong("until"));
+        ban.setIpBan(rs.getBoolean("ipban"));
+
+        return ban;
     }
 
     @Override
@@ -123,6 +149,34 @@ public class CommonSQL extends AbstractDataManager {
             throw new RuntimeException(e);
         }
 
+    }
+
+    @Override
+    public void setUUID(String username, UUID uuid) {
+        try (PreparedStatement statement = PluginConnection.getConnection().prepareStatement(
+                "UPDATE `mastaff_punishments_bans` SET `UUID` = ? WHERE `USERNAME` = ?;")
+        ) {
+            statement.setString(1, uuid.toString());
+            statement.setString(2, username);
+
+            statement.execute();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public void setUsername(UUID uuid, String username) {
+        try (PreparedStatement statement = PluginConnection.getConnection().prepareStatement(
+                "UPDATE `mastaff_punishments_bans` SET `USERNAME` = ? WHERE `USERNAME` = ?;")
+        ) {
+            statement.setString(1, username);
+            statement.setString(2, uuid.toString());
+
+            statement.execute();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
