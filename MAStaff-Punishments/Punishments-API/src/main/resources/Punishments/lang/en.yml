@@ -78,6 +78,34 @@ Ban:
     &f{base}
     &cYou are permanently banned from the server.
     &f{appeal}
+  # This message is sent to the server when a player is banned.
+  # You can use the following placeholders:
+  # ↳ {bannedOn} - The date when the player was banned.
+  # ↳ {bannedBy} - The player who banned the player.
+  # ↳ {reason} - The reason why the player was banned.
+  bannedPlayerTriesToJoin: "{prefix} {player} tried to join but he's banned."
+  # This message is sent to the server when a player is banned.
+  # You can use the following placeholders:
+  # ↳ {bannedOn} - The date when the player was banned.
+  # ↳ {bannedBy} - The player who banned the player.
+  # ↳ {reason} - The reason why the player was banned.
+  # ↳ {duration} - The duration of the ban.
+  # ↳ {expires} - The date when the ban expires.
+  tempBannedPlayerTriesToJoin: "{prefix} {player} tried to join but he's temp banned for {duration}."
+  # This message is sent to the server when a player is banned.
+  # You can use the following placeholders:
+  # ↳ {bannedOn} - The date when the player was banned.
+  # ↳ {bannedBy} - The player who banned the player.
+  # ↳ {reason} - The reason why the player was banned.
+  bannedBroadcast: "{prefix} &c{player} has been banned by {bannedBy} for {reason}."
+  # This message is sent to the server when a player is temp banned.
+  # You can use the following placeholders:
+  # ↳ {bannedOn} - The date when the player was banned.
+  # ↳ {bannedBy} - The player who banned the player.
+  # ↳ {reason} - The reason why the player was banned.
+  # ↳ {duration} - The duration of the ban.
+  # ↳ {expires} - The date when the ban expires.
+  tempBannedBroadcast: "{prefix} &c{player} has been banned by {bannedBy} for {reason} for {duration}."
 # Command messages
 Commands:
   # Message sent to the player when he tries to execute a command
