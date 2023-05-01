@@ -106,7 +106,7 @@ public class LibsManager {
                         .version("prod125")
                         .isolatedLoad(false)
                         .relocate("com{}craftmend{}storm", "es{}angelillo15{}mast{}libs{}storm")
-                        .relocate("com{}google{}gson", "es{}angelillo15{}mast{}libs{}gson")
+                        .relocate("com{}google{}gson", "es{}angelillo15{}mast{}libs{}google{}gson")
                         .build();
 
 

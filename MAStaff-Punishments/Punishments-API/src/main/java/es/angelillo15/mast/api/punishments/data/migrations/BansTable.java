@@ -9,9 +9,6 @@ import lombok.Data;
 @Data
 @Table(name = "mastaff_bans")
 public class BansTable extends StormModel {
-    @Column(keyType = KeyType.PRIMARY, autoIncrement = true)
-    private int id;
-
     @Column(length = 36)
     private String uuid;
 
@@ -32,15 +29,16 @@ public class BansTable extends StormModel {
 
     @Column(length = 16)
     private String unbanned_by_name;
-    @Column
-    private long time;
 
     @Column
-    private long until;
+    private Long time;
 
     @Column
-    private boolean active;
+    private Long until;
 
     @Column
-    private boolean ipban;
+    private Boolean active;
+
+    @Column
+    private Boolean ipban;
 }

@@ -71,7 +71,7 @@ dependencies {
     compileOnly("com.github.Carleslc.Simple-YAML:Simple-Yaml:1.8.3")
     compileOnly("redis.clients:jedis:4.4.0-m2")
     compileOnly("net.kyori:adventure-text-minimessage:4.13.1")
-    compileOnly("com.zaxxer:HikariCP:5.0.1")
+    compileOnly("com.zaxxer:HikariCP:4.0.3")
     compileOnly("com.github.ben-manes.caffeine:caffeine:2.9.2")
     compileOnly("com.github.Mindgamesnl:storm:prod125")
 }

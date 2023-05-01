@@ -3,6 +3,7 @@ package es.angelillo15.mast.api.database;
 import com.craftmend.storm.Storm;
 import com.craftmend.storm.connection.hikaricp.HikariDriver;
 import com.craftmend.storm.connection.sqlite.SqliteFileDriver;
+import com.craftmend.storm.dialect.mariadb.MariaDialect;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import es.angelillo15.mast.api.MAStaffInstance;
@@ -46,7 +47,9 @@ public class PluginConnection {
         config.addDataSourceProperty( "prepStmtCacheSize" , "250" );
         config.addDataSourceProperty( "prepStmtCacheSqlLimit" , "2048" );
         dataSource = new HikariDataSource(config);
-        storm = new Storm(new HikariDriver(config));
+
+        storm = new Storm(new PluginDriver(dataSource));
+
         try {
             connection = dataSource.getConnection();
             conn = connection;
