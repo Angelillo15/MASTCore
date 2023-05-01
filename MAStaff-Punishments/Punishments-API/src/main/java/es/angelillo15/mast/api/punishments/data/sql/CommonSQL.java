@@ -2,6 +2,7 @@ package es.angelillo15.mast.api.punishments.data.sql;
 
 import es.angelillo15.mast.api.MAStaffInstance;
 import es.angelillo15.mast.api.database.PluginConnection;
+import es.angelillo15.mast.api.models.IPBanModel;
 import es.angelillo15.mast.api.punishments.data.AbstractDataManager;
 import es.angelillo15.mast.api.models.BanModel;
 import lombok.SneakyThrows;
@@ -110,6 +111,19 @@ public class CommonSQL extends AbstractDataManager {
         }
     }
 
+    @Override
+    public BanModel getBan(int id) {
+        try (PreparedStatement statement = PluginConnection.getConnection().prepareStatement(
+                "SELECT * FROM `mastaff_punishments_bans` WHERE `ID` = ? AND `active` = 1;")) {
+            statement.setInt(1, id);
+            ResultSet rs = statement.executeQuery();
+
+            return getBan(rs);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     @SneakyThrows
     public BanModel getBan(ResultSet rs) {
         BanModel ban = new BanModel();
@@ -184,5 +198,33 @@ public class CommonSQL extends AbstractDataManager {
     @Override
     public boolean isBanned(String uuid) {
         return isTempBanned(uuid) || isPermBanned(uuid);
+    }
+
+    @Override
+    public IPBanModel getIPBan(String ip) {
+        try (PreparedStatement statement = PluginConnection.getConnection().prepareStatement(
+                "SELECT * FROM `mastaff_punishments_bans` WHERE `IP` = ? AND `active` = 1;")) {
+            statement.setString(1, ip);
+            ResultSet rs = statement.executeQuery();
+
+            return getIPBan(rs);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @SneakyThrows
+    public IPBanModel getIPBan(ResultSet rs) {
+        if (!rs.next()) return null;
+
+        IPBanModel ban = new IPBanModel();
+        ban.setIp(rs.getString("IP"));
+        ban.setBan_id(rs.getInt("id"));
+
+        BanModel banModel = getBan(ban.getBan_id());
+
+        ban.setBanModel(banModel);
+
+        return ban;
     }
 }

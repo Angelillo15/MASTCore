@@ -1,6 +1,7 @@
 package es.angelillo15.mast.api.punishments.data;
 
 import es.angelillo15.mast.api.models.BanModel;
+import es.angelillo15.mast.api.models.IPBanModel;
 
 import java.util.UUID;
 
@@ -53,11 +54,19 @@ public abstract class AbstractDataManager {
         return null;
     }
 
+    public BanModel getBan(int id) {
+        return null;
+    }
+
     public void setUUID(String username, UUID uuid) {
 
     }
 
     public void setUsername(UUID uuid, String username) {
 
+    }
+
+    public IPBanModel getIPBan(String ip) {
+        return null;
     }
 }
