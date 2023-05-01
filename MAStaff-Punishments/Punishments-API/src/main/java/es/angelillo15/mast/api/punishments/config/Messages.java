@@ -201,11 +201,13 @@ public class Messages {
                 return colorize(ConfigLoader.getMessages().getConfig().getString("Commands.tempBan.success"));
             }
 
-            public static String success(String player, String time, String reason) {
+            public static String success(String player, String time, String reason, String staff) {
                 return colorize(success())
                         .replace("{player}", player)
-                        .replace("{time}", time)
+                        .replace("{duration}", time)
+                        .replace("{staff}", staff)
                         .replace("{reason}", reason);
+
             }
         }
 
