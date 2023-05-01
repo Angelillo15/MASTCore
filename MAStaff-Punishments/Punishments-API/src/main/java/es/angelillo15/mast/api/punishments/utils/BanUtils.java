@@ -25,8 +25,8 @@ public class BanUtils {
         return ErrorTypes.SUCCESS;
     }
 
-    public static boolean isBanned(String uuid) {
-        return DataManager.getDataManager().isTempBanned(UUID.fromString(uuid));
+    public static boolean isBanned(String username) {
+        return DataManager.getDataManager().isTempBanned(username);
     }
 
     public static ErrorTypes permBan(CommandSender banned_by, UserData target, String reason, boolean ipban) {
@@ -44,7 +44,7 @@ public class BanUtils {
         return data;
     }
 
-    public static void unban(String uuid) {
-        DataManager.getDataManager().setBanActive(uuid, false);
+    public static void unban(String username) {
+        DataManager.getDataManager().setBanActive(username, false);
     }
 }
