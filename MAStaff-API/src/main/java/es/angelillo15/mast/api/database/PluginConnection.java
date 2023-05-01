@@ -1,5 +1,8 @@
 package es.angelillo15.mast.api.database;
 
+import com.craftmend.storm.Storm;
+import com.craftmend.storm.connection.hikaricp.HikariDriver;
+import com.craftmend.storm.connection.sqlite.SqliteFileDriver;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import es.angelillo15.mast.api.MAStaffInstance;
@@ -8,7 +11,9 @@ import es.angelillo15.mast.api.database.sql.MySQLQueries;
 import es.angelillo15.mast.api.database.sql.SQLiteQueries;
 import es.angelillo15.mast.api.TextUtils;
 import lombok.Getter;
+import lombok.SneakyThrows;
 
+import java.io.File;
 import java.nio.file.Path;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -22,12 +27,15 @@ public class PluginConnection {
     @Getter
     private static CommonQueries queries;
     private static HikariConfig config;
+    @Getter
+    private static Storm storm;
     private static HikariDataSource dataSource;
     @Getter
     private static PluginConnection instance;
     @Getter
     private Connection conn;
 
+    @SneakyThrows
     public PluginConnection(String host, int port, String database, String user, String password){
         dataProvider = DataProvider.MYSQL;
         config = new HikariConfig();
@@ -38,6 +46,7 @@ public class PluginConnection {
         config.addDataSourceProperty( "prepStmtCacheSize" , "250" );
         config.addDataSourceProperty( "prepStmtCacheSqlLimit" , "2048" );
         dataSource = new HikariDataSource(config);
+        storm = new Storm(new HikariDriver(config));
         try {
             connection = dataSource.getConnection();
             conn = connection;
@@ -67,6 +76,8 @@ public class PluginConnection {
             String url = "jdbc:sqlite:" + dataPath;
             connection = DriverManager.getConnection(url);
             conn = connection;
+
+            storm = new Storm(new SqliteFileDriver(new File(dataPath)));
 
             CommonQueries.setConnection(connection);
             queries = new SQLiteQueries();

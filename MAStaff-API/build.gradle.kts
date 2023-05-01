@@ -73,6 +73,7 @@ dependencies {
     compileOnly("net.kyori:adventure-text-minimessage:4.13.1")
     compileOnly("com.zaxxer:HikariCP:5.0.1")
     compileOnly("com.github.ben-manes.caffeine:caffeine:2.9.2")
+    compileOnly("com.github.Mindgamesnl:storm:prod125")
 }
 
 blossom {

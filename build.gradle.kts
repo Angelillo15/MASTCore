@@ -49,6 +49,7 @@ tasks.shadowJar {
     relocate("net.kyori", "es.angelillo15.mast.libs.kyori")
     relocate("io.papermc.lib", "es.angelillo15.mast.libs.paperlib")
     relocate("com.github.benmanes.caffeine", "es.angelillo15.mast.libs.caffeine")
+    relocate("com.craftmend.storm", "es.angelillo15.mast.libs.storm")
 }
 
 dependencies {
@@ -71,6 +72,7 @@ dependencies {
     implementation("org.reflections:reflections:0.10.2")
     implementation("io.papermc:paperlib:1.0.7")
     implementation("com.github.ben-manes.caffeine:caffeine:2.9.2")
+    compileOnly("com.github.Mindgamesnl:storm:prod12")
 }
 
 tasks.withType<JavaCompile> {
