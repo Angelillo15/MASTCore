@@ -1,7 +1,10 @@
 package es.angelillo15.mast.api.punishments.utils;
 
+import es.angelillo15.mast.api.MAStaffInstance;
 import es.angelillo15.mast.api.cmd.sender.CommandSender;
 import es.angelillo15.mast.api.data.UserData;
+import es.angelillo15.mast.api.models.BanModel;
+import es.angelillo15.mast.api.models.IPBanModel;
 import es.angelillo15.mast.api.punishments.data.DataManager;
 import es.angelillo15.mast.api.punishments.enums.ErrorTypes;
 
@@ -20,9 +23,28 @@ public class BanUtils {
             return ErrorTypes.PLAYER_ALREADY_PERM_BANNED;
         }
 
-        ban(data.getUUID(), data.getUsername(), data.getLastIP(), reason, banned_by.getUniqueId(), banned_by.getName(), true, System.currentTimeMillis(), until, ipban);
+        ban(data.getUUID(),
+                data.getUsername(),
+                data.getLastIP(),
+                reason,
+                banned_by.getUniqueId(),
+                banned_by.getName(),
+                true,
+                System.currentTimeMillis(),
+                until,
+                ipban
+        );
+
+        if (ipban) {
+            DataManager.getDataManager().IPBan(
+                    DataManager.getDataManager().getBan(data.getUsername()),
+                    data.getLastIP()
+            );
+        }
 
         return ErrorTypes.SUCCESS;
+
+
     }
 
     public static boolean isBanned(String username) {
@@ -45,7 +67,19 @@ public class BanUtils {
     }
 
     public static void unban(String username, String reason) {
+        BanModel ban = DataManager.getDataManager().getBan(username);
+
+        MAStaffInstance.getLogger().debug(ban.toString());
+
         DataManager.getDataManager().setBanActive(username, false, reason);
+
+        if (ban.isIpBan()) {
+            IPBanModel ipBan = DataManager.getDataManager().getIPBan(ban.getId());
+
+            if (ipBan != null) {
+                DataManager.getDataManager().deleteIPBan(ipBan.getIp() );
+            }
+        }
     }
 
     public static void unban(String username) {

@@ -61,11 +61,6 @@ public class TempBanCMD extends Command {
             return;
         }
 
-        if (error == ErrorTypes.PLAYER_ALREADY_TEMP_BANNED) {
-            sender.sendMessage("Player already temp banned");
-            return;
-        }
-
         if (error == ErrorTypes.SUCCESS) {
             try {
                 EventManager.getEventManager().sendPlayerBannedEvent(DataManager.getDataManager().getBan(UUID.fromString(data.getUUID())), sender);

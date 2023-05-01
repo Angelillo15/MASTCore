@@ -6,6 +6,7 @@ import es.angelillo15.mast.api.data.DataManager;
 import es.angelillo15.mast.api.data.UserData;
 import es.angelillo15.mast.api.event.bungee.ban.PlayerBannedEvent;
 import es.angelillo15.mast.api.models.BanModel;
+import es.angelillo15.mast.api.models.IPBanModel;
 import es.angelillo15.mast.api.punishments.cache.BanCache;
 import es.angelillo15.mast.api.punishments.config.Config;
 import es.angelillo15.mast.api.punishments.config.Messages;
@@ -15,7 +16,6 @@ import es.angelillo15.mast.api.punishments.utils.BanUtils;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.TextComponent;
-import net.md_5.bungee.api.connection.Connection;
 import net.md_5.bungee.api.connection.PendingConnection;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.event.PostLoginEvent;
@@ -33,15 +33,34 @@ public class PlayerBanListener implements Listener {
         PendingConnection conn = event.getConnection();
         event.registerIntent((Plugin) MAStaffInstance.getBungeeInstance());
 
-        if (cacheCheck(conn)) return;
-        if (databaseCheck(conn)) return;
+        if (cacheCheck(conn)) {
+            event.completeIntent((Plugin) MAStaffInstance.getBungeeInstance());
+            MAStaffInstance.getLogger().debug("Cache check");
+            return;
+        }
+        if (ipBanCheck(conn)) {
+            event.completeIntent((Plugin) MAStaffInstance.getBungeeInstance());
+            MAStaffInstance.getLogger().debug("IP ban check");
+            return;
+        }
 
-        event.completeIntent((Plugin) MAStaffInstance.getBungeeInstance());
+        if (databaseCheck(conn)) {
+            MAStaffInstance.getLogger().debug("Database check");
+            event.completeIntent((Plugin) MAStaffInstance.getBungeeInstance());
+        }
+
+        try {
+            event.completeIntent((Plugin) MAStaffInstance.getBungeeInstance());
+        } catch (Exception ignored) {
+
+        }
     }
 
     @EventHandler(priority = EventPriority.HIGH)
     public void onPostLogin(PostLoginEvent event) {
+        /*
         new Thread(() -> {
+            MAStaffInstance.getLogger().debug("Post login event");
             newUser(event.getPlayer());
 
             ProxiedPlayer player = event.getPlayer();
@@ -54,15 +73,32 @@ public class PlayerBanListener implements Listener {
                 manager.setUsername(player.getUniqueId(), player.getName());
             }
         }).start();
+         */
     }
 
     @EventHandler
     public void onPlayerBan(PlayerBannedEvent event) {
+        event.registerIntent((Plugin) MAStaffInstance.getBungeeInstance());
+
         ProxiedPlayer banned = ProxyServer.getInstance().getPlayer(event.getBanModel().getUuid());
+        AbstractDataManager manager =
+                es.angelillo15.mast.api.punishments.data.DataManager.getDataManager();
+
+        if (event.getBanModel().isIpBan()) {
+            IPBanModel ipBanModel = manager.getIPBan(event.getBanModel().getId());
+
+            for (ProxiedPlayer player : ProxyServer.getInstance().getPlayers()) {
+                if (player.getAddress().getAddress().getHostAddress().split(":")[0].equals(ipBanModel.getIp())) {
+                    player.disconnect(getBaseComponent(event.getBanModel()));
+                }
+            }
+        }
 
         if (banned != null) {
             banned.disconnect(getBaseComponent(event.getBanModel()));
         }
+
+        event.completeIntent((Plugin) MAStaffInstance.getBungeeInstance());
     }
 
     private boolean cacheCheck(PendingConnection conn) {
@@ -80,6 +116,45 @@ public class PlayerBanListener implements Listener {
             EventManager.getEventManager().sendPlayerTryToJoinBannedEvent(model, conn.getName());
             return true;
         }
+        return false;
+    }
+
+    private boolean ipBanCheck(PendingConnection connection) {
+        String ip = connection.getAddress().getAddress().getHostAddress().split(":")[0];
+
+        MAStaffInstance.getLogger().debug("Checking cache for " + ip + "'s ban");
+
+        if (BanCache.isPunished(ip)) {
+            disconnect(BanCache.getPunishment(ip), connection);
+            MAStaffInstance.getLogger().debug("Found in cache");
+            return true;
+        }
+
+        AbstractDataManager manager =
+                es.angelillo15.mast.api.punishments.data.DataManager.getDataManager();
+
+        if (!manager.isIPBanned(ip)) {
+            MAStaffInstance.getLogger().debug("Not in cache but not banned");
+            return false;
+        }
+
+        MAStaffInstance.getLogger().debug("Not in cache but banned");
+
+        IPBanModel model = manager.getIPBan(ip);
+        BanModel banModel = manager.getBan(model.getBan_id(), true);
+
+        if (banModel != null) {
+            if (banModel.isExpired()) {
+                BanUtils.unban(banModel.getUsername());
+                return false;
+            }
+
+            disconnect(banModel, connection);
+            EventManager.getEventManager().sendPlayerTryToJoinBannedEvent(banModel, connection.getName());
+            BanCache.addPunishment(ip, banModel);
+            return true;
+        }
+
         return false;
     }
 
@@ -111,10 +186,10 @@ public class PlayerBanListener implements Listener {
         if (userData == null) {
             return false;
         }
+        BanModel model = manager.getBan(UUID.fromString(userData.getUUID()));
 
         if (manager.isPermBanned(userData.getUUID())) {
 
-            BanModel model = manager.getBan(UUID.fromString(userData.getUUID()));
             disconnect(model, player);
 
             BanCache.addPunishment(player.getName(), model);
@@ -122,9 +197,7 @@ public class PlayerBanListener implements Listener {
             return true;
         }
 
-        if (manager.isTempBanned(UUID.fromString(userData.getUUID()))) {
-
-            BanModel model = manager.getBan(UUID.fromString(userData.getUUID()));
+        if (manager.isTempBanned(model.getUuid())) {
 
             if (model.isExpired()) {
                 BanUtils.unban(model.getUuid().toString());
@@ -147,20 +220,28 @@ public class PlayerBanListener implements Listener {
     }
 
     private BaseComponent getBaseComponent(BanModel model) {
+        String message = null;
         if (model.isPermanent()) {
-            return new TextComponent(Messages.Ban.bannedMessagePermanent()
+            if (model.isIpBan()) message = Messages.Ban.ipBannedMessagePermanent();
+            else message = Messages.Ban.bannedMessagePermanent();
+
+            return new TextComponent(message
                     .replace("{reason}", model.getReason())
                     .replace("{bannedBy}", model.getBannedBy())
                     .replace("{bannedOn}", TextUtils.formatDate(model.getTime(), Config.dateFormat()))
+                    .replace("{banId}", String.valueOf(model.getId()))
             );
         } else {
-            return new TextComponent(
-                    Messages.Ban.tempBanMessageBase()
-                            .replace("{reason}", model.getReason())
-                            .replace("{bannedBy}", model.getBannedBy())
-                            .replace("{bannedOn}", TextUtils.formatDate(model.getTime(), Config.dateFormat()))
-                            .replace("{expires}", TextUtils.formatDate(model.getUntil(), Config.dateFormat()))
-                            .replace("{duration}", TextUtils.formatUptime(model.getUntil() - System.currentTimeMillis()))
+            if (model.isIpBan()) message = Messages.Ban.ipBannedMessage();
+            else message = Messages.Ban.tempBanMessageBase();
+
+            return new TextComponent(message
+                    .replace("{reason}", model.getReason())
+                    .replace("{bannedBy}", model.getBannedBy())
+                    .replace("{bannedOn}", TextUtils.formatDate(model.getTime(), Config.dateFormat()))
+                    .replace("{expires}", TextUtils.formatDate(model.getUntil(), Config.dateFormat()))
+                    .replace("{duration}", TextUtils.formatUptime(model.getUntil() - System.currentTimeMillis()))
+                    .replace("{banId}", String.valueOf(model.getId()))
             );
         }
     }
