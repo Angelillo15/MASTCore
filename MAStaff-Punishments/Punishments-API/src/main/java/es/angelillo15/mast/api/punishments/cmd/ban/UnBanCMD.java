@@ -26,22 +26,16 @@ public class UnBanCMD extends Command {
 
             String target = args[0];
 
-            UserData data = BanUtils.getUserData(target);
 
-            if (data == null) {
-                sender.sendMessage(Messages.Commands.playerNotFound(target));
-                return;
-            }
-
-            if (!BanUtils.isBanned(data.getUUID())) {
+            if (!BanUtils.isBanned(target)) {
                 sender.sendMessage(Messages.Commands.playerNotBanned(target));
                 return;
             }
 
-            BanUtils.unban(data.getUUID());
+            BanUtils.unban(target);
             BanCache.clearCache();
 
-            sender.sendMessage(Messages.Commands.Unban.success(data.getUsername()));
+            sender.sendMessage(Messages.Commands.Unban.success(target));
         }).start();
     }
 }

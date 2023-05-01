@@ -62,8 +62,12 @@ public class TempBanCMD extends Command {
         }
 
         if (error == ErrorTypes.SUCCESS) {
-            EventManager.getEventManager().sendPlayerBannedEvent(DataManager.getDataManager().getBan(UUID.fromString(data.getUUID())), sender);
-            sender.sendMessage(Messages.Commands.TempBan.success(target, reason.toString(), args[1]));
+            try {
+                EventManager.getEventManager().sendPlayerBannedEvent(DataManager.getDataManager().getBan(UUID.fromString(data.getUUID())), sender);
+            } catch (Exception e) {
+                EventManager.getEventManager().sendPlayerBannedEvent(DataManager.getDataManager().getBan(target), sender);
+            }
+            sender.sendMessage(Messages.Commands.TempBan.success(target, args[1], reason.toString(), sender.getName()));
             return;
         }
     }
