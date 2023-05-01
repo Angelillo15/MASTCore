@@ -10,16 +10,20 @@ import es.angelillo15.mast.api.punishments.cache.BanCache;
 import es.angelillo15.mast.api.punishments.config.Config;
 import es.angelillo15.mast.api.punishments.config.Messages;
 import es.angelillo15.mast.api.punishments.data.AbstractDataManager;
+import es.angelillo15.mast.api.punishments.events.EventManager;
 import es.angelillo15.mast.api.punishments.utils.BanUtils;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.TextComponent;
+import net.md_5.bungee.api.connection.Connection;
 import net.md_5.bungee.api.connection.PendingConnection;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
+import net.md_5.bungee.api.event.PostLoginEvent;
 import net.md_5.bungee.api.event.PreLoginEvent;
 import net.md_5.bungee.api.plugin.Listener;
 import net.md_5.bungee.api.plugin.Plugin;
 import net.md_5.bungee.event.EventHandler;
+import net.md_5.bungee.event.EventPriority;
 
 import java.util.UUID;
 
@@ -30,9 +34,26 @@ public class PlayerBanListener implements Listener {
         event.registerIntent((Plugin) MAStaffInstance.getBungeeInstance());
 
         if (cacheCheck(conn)) return;
-        databaseCheck(conn);
+        if (databaseCheck(conn)) return;
 
         event.completeIntent((Plugin) MAStaffInstance.getBungeeInstance());
+    }
+
+    @EventHandler(priority = EventPriority.HIGH)
+    public void onPostLogin(PostLoginEvent event) {
+        new Thread(() -> {
+            newUser(event.getPlayer());
+
+            ProxiedPlayer player = event.getPlayer();
+
+            AbstractDataManager manager =
+                    es.angelillo15.mast.api.punishments.data.DataManager.getDataManager();
+
+            if (manager.isBanned(player.getName())) {
+                manager.setUUID(player.getName(), player.getUniqueId());
+                manager.setUsername(player.getUniqueId(), player.getName());
+            }
+        }).start();
     }
 
     @EventHandler
@@ -56,12 +77,26 @@ public class PlayerBanListener implements Listener {
 
         if (model != null) {
             disconnect(model, conn);
+            EventManager.getEventManager().sendPlayerTryToJoinBannedEvent(model, conn.getName());
             return true;
         }
-
-
         return false;
     }
+
+    public void newUser(ProxiedPlayer conn) {
+        MAStaffInstance.getLogger().debug("Registering " + conn.getName() + " in database");
+
+        AbstractDataManager manager =
+                es.angelillo15.mast.api.punishments.data.DataManager.getDataManager();
+
+        if (!manager.isBanned(conn.getName())) return;
+
+        BanModel model = manager.getBan(conn.getName());
+        disconnect(model, conn.getPendingConnection());
+        BanCache.addPunishment(conn.getName(), model);
+        EventManager.getEventManager().sendPlayerTryToJoinBannedEvent(model, conn.getName());
+    }
+
 
     private boolean databaseCheck(PendingConnection player) {
         MAStaffInstance.getLogger().debug("Checking database for " + player.getName() + "'s ban");
@@ -73,16 +108,21 @@ public class PlayerBanListener implements Listener {
         AbstractDataManager manager =
                 es.angelillo15.mast.api.punishments.data.DataManager.getDataManager();
 
+        if (userData == null) {
+            return false;
+        }
+
         if (manager.isPermBanned(userData.getUUID())) {
 
             BanModel model = manager.getBan(UUID.fromString(userData.getUUID()));
             disconnect(model, player);
 
             BanCache.addPunishment(player.getName(), model);
+            EventManager.getEventManager().sendPlayerTryToJoinBannedEvent(model, player.getName());
             return true;
         }
 
-        if (manager.isTempBanned(userData.getUUID())) {
+        if (manager.isTempBanned(UUID.fromString(userData.getUUID()))) {
 
             BanModel model = manager.getBan(UUID.fromString(userData.getUUID()));
 
@@ -93,6 +133,8 @@ public class PlayerBanListener implements Listener {
             disconnect(model, player);
 
             BanCache.addPunishment(player.getName(), model);
+
+            EventManager.getEventManager().sendPlayerTryToJoinBannedEvent(model, player.getName());
             return true;
         }
 
