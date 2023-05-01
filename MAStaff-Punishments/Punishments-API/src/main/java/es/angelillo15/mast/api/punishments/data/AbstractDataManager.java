@@ -9,7 +9,7 @@ public abstract class AbstractDataManager {
 
     }
 
-    public void ban(String uuid, String ip, String reason, String banned_by_uuid, String banned_by_name, boolean active, long time, long until, boolean ipban) {
+    public void ban(String uuid, String username, String ip, String reason, String banned_by_uuid, String banned_by_name, boolean active, long time, long until, boolean ipban) {
 
     }
 
@@ -37,7 +37,7 @@ public abstract class AbstractDataManager {
 
     }
 
-    public boolean isBanned(String uuid) {
+    public boolean isBanned(String name) {
         return false;
     }
 
@@ -47,5 +47,17 @@ public abstract class AbstractDataManager {
 
     public BanModel getBan(UUID uuid) {
         return null;
+    }
+
+    public BanModel getBan(String username) {
+        return null;
+    }
+
+    public void setUUID(String username, UUID uuid) {
+
+    }
+
+    public void setUsername(UUID uuid, String username) {
+
     }
 }
