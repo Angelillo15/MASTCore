@@ -13,7 +13,8 @@ public class DataManager {
         return dataManager;
     }
 
-    public static void load() {
+    public static void load() {/*
+
         switch (PluginConnection.getDataProvider()) {
             case MYSQL:
                 dataManager = new MySQL();
@@ -29,5 +30,6 @@ public class DataManager {
         dataManager.migrations();
 
         MAStaffInstance.getLogger().debug("Migrations runed for " + PluginConnection.getDataProvider().name() + " data provider");
+        */
     }
 }
