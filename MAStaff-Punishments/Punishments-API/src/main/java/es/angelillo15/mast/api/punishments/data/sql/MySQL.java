@@ -28,6 +28,7 @@ public class MySQL extends CommonSQL{
                                      "(" +
                                      "  `ID` INT(11) NOT NULL AUTO_INCREMENT," +
                                      "  `UUID` VARCHAR(36) NOT NULL DEFAULT '0' COLLATE 'utf8mb4_general_ci'," +
+                                     "  `USERNAME` VARCHAR(36) NOT NULL DEFAULT '0' COLLATE 'utf8mb4_general_ci'," +
                                      "  `reason` VARCHAR(4096) NOT NULL DEFAULT '0'," +
                                      "  `banned_by_uuid` VARCHAR(36) NOT NULL DEFAULT '0'," +
                                      "  `banned_by_name` VARCHAR(25) NOT NULL DEFAULT '0'," +
