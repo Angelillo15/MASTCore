@@ -69,7 +69,7 @@ public class CommonSQL extends AbstractDataManager {
 
     @Override
     public boolean isTempBanned(String uuid) {
-        return isTempBanned("username", uuid);
+        return isTempBanned("USERNAME", uuid);
     }
 
 
@@ -132,17 +132,18 @@ public class CommonSQL extends AbstractDataManager {
         ban.setTime(rs.getLong("time"));
         ban.setUntil(rs.getLong("until"));
         ban.setIpBan(rs.getBoolean("ipban"));
+        ban.setUsername(rs.getString("USERNAME"));
 
         return ban;
     }
 
     @Override
-    public void setBanActive(String uuid, boolean active) {
+    public void setBanActive(String username, boolean active) {
         try (PreparedStatement statement = PluginConnection.getConnection().prepareStatement(
-                "UPDATE `mastaff_punishments_bans` SET `active` = ? WHERE `UUID` = ?;")
+                "UPDATE `mastaff_punishments_bans` SET `active` = ? WHERE `USERNAME` = ?;")
         ) {
             statement.setBoolean(1, active);
-            statement.setString(2, uuid);
+            statement.setString(2, username);
 
             statement.execute();
         } catch (SQLException e) {

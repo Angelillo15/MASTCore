@@ -12,6 +12,7 @@ import java.util.UUID;
 public class BanModel {
     private int id = -1;
     private UUID uuid = null;
+    private String username = null;
     private String bannedByUUID = null;
     private String bannedBy = null;
     private String reason = null;
