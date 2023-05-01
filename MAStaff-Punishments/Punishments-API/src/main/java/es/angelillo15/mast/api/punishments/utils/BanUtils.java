@@ -44,7 +44,11 @@ public class BanUtils {
         return data;
     }
 
+    public static void unban(String username, String reason) {
+        DataManager.getDataManager().setBanActive(username, false, reason);
+    }
+
     public static void unban(String username) {
-        DataManager.getDataManager().setBanActive(username, false);
+        DataManager.getDataManager().setBanActive(username, false, "expired");
     }
 }

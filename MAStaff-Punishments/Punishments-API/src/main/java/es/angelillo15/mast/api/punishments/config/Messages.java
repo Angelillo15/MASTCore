@@ -23,7 +23,7 @@ public class Messages {
         }
 
         public static String defaultUnbanReason() {
-            return ConfigLoader.getMessages().getConfig().getString("Default.defaultUnbanReason");
+            return ConfigLoader.getMessages().getConfig().getString("Default.defaultUnBanReason");
         }
 
         public static String defaultUnmuteReason() {
@@ -220,9 +220,10 @@ public class Messages {
                 return colorize(ConfigLoader.getMessages().getConfig().getString("Commands.unban.success"));
             }
 
-            public static String success(String player) {
+            public static String success(String player, String reason) {
                 return colorize(success())
-                        .replace("{player}", player);
+                        .replace("{player}", player)
+                        .replace("{reason}", reason);
             }
         }
     }

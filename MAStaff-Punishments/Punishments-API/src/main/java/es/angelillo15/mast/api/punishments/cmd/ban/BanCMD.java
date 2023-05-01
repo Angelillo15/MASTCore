@@ -23,7 +23,7 @@ public class BanCMD extends Command {
     @Override
     public void onCommand(CommandSender sender, String label, String[] args) {
         new Thread(() -> {
-            if (args.length < 2) {
+            if (args.length < 1) {
                 sender.sendMessage(Messages.Commands.Ban.usage());
                 return;
             }
@@ -35,6 +35,10 @@ public class BanCMD extends Command {
 
             for (int i = 1; i < args.length; i++) {
                 reason.append(args[i]).append(" ");
+            }
+
+            if (reason.toString().isEmpty()) {
+                reason.append(Messages.Default.defaultBanReason());
             }
 
             if (target == null) {

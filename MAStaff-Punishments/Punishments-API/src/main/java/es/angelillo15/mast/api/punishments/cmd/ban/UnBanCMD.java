@@ -23,19 +23,27 @@ public class UnBanCMD extends Command {
                 sender.sendMessage(Messages.Commands.Unban.usage());
                 return;
             }
+            StringBuilder reason = new StringBuilder();
+
+            for (int i = 1; i < args.length; i++) {
+                reason.append(args[i]).append(" ");
+            }
+
+            if (reason.toString().isEmpty()) {
+                reason.append(Messages.Default.defaultUnbanReason());
+            }
 
             String target = args[0];
-
 
             if (!BanUtils.isBanned(target)) {
                 sender.sendMessage(Messages.Commands.playerNotBanned(target));
                 return;
             }
 
-            BanUtils.unban(target);
+            BanUtils.unban(target, reason.toString());
             BanCache.clearCache();
 
-            sender.sendMessage(Messages.Commands.Unban.success(target));
+            sender.sendMessage(Messages.Commands.Unban.success(target, reason.toString()));
         }).start();
     }
 }

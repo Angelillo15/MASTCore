@@ -21,7 +21,7 @@ import java.util.UUID;
 public class TempBanCMD extends Command {
     @Override
     public void onCommand(CommandSender sender, String label, String[] args) {
-        if (args.length < 3) {
+        if (args.length < 2) {
             sender.sendMessage(Messages.Commands.TempBan.usage());
             return;
         }
@@ -33,6 +33,11 @@ public class TempBanCMD extends Command {
         for (int i = 2; i < args.length; i++) {
             reason.append(args[i]).append(" ");
         }
+
+        if (reason.toString().isEmpty()) {
+            reason.append(Messages.Default.defaultBanReason());
+        }
+
         long time;
 
         try {
@@ -68,7 +73,6 @@ public class TempBanCMD extends Command {
                 EventManager.getEventManager().sendPlayerBannedEvent(DataManager.getDataManager().getBan(target), sender);
             }
             sender.sendMessage(Messages.Commands.TempBan.success(target, args[1], reason.toString(), sender.getName()));
-            return;
         }
     }
 }

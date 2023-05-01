@@ -33,7 +33,7 @@ public abstract class AbstractDataManager {
         return false;
     }
 
-    public void setBanActive(String uuid, boolean active) {
+    public void setBanActive(String uuid, boolean active, String reason) {
 
     }
 

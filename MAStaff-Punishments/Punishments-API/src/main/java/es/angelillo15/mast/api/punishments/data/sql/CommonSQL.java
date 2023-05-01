@@ -138,12 +138,13 @@ public class CommonSQL extends AbstractDataManager {
     }
 
     @Override
-    public void setBanActive(String username, boolean active) {
+    public void setBanActive(String username, boolean active, String reason) {
         try (PreparedStatement statement = PluginConnection.getConnection().prepareStatement(
-                "UPDATE `mastaff_punishments_bans` SET `active` = ? WHERE `USERNAME` = ?;")
+                "UPDATE `mastaff_punishments_bans` SET `active` = ?, `removed_by_reason` = ? WHERE `USERNAME` = ? AND `active` = 1;")
         ) {
             statement.setBoolean(1, active);
-            statement.setString(2, username);
+            statement.setString(2, reason);
+            statement.setString(3, username);
 
             statement.execute();
         } catch (SQLException e) {
