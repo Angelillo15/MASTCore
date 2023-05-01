@@ -56,7 +56,13 @@ public class BanCMD extends Command {
 
             if (result == ErrorTypes.SUCCESS) {
                 sender.sendMessage(Messages.Commands.Ban.success(target, reason.toString()));
-                EventManager.getEventManager().sendPlayerBannedEvent(DataManager.getDataManager().getBan(UUID.fromString(data.getUUID())), sender);
+                try {
+                    EventManager.getEventManager().sendPlayerBannedEvent(DataManager.getDataManager().getBan(UUID.fromString(data.getUUID())), sender);
+                } catch (Exception e) {
+                    EventManager.getEventManager().sendPlayerBannedEvent(DataManager.getDataManager().getBan(target), sender);
+                }
+
+
                 return;
             }
 
