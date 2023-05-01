@@ -51,6 +51,13 @@ public class Messages {
         public static String bannedMessagePermanent() {
             return formatBase(ConfigLoader.getMessages().getConfig().getString("Ban.bannedMessagePermanent"));
         }
+        public static String ipBannedMessage() {
+            return formatBase(ConfigLoader.getMessages().getConfig().getString("Ban.ipBannedMessage"));
+        }
+
+        public static String ipBannedMessagePermanent() {
+            return formatBase(ConfigLoader.getMessages().getConfig().getString("Ban.ipBannedMessagePermanent"));
+        }
 
         public static String formatBase(String msg) {
             return colorize(msg)
@@ -185,10 +192,11 @@ public class Messages {
                 return colorize(ConfigLoader.getMessages().getConfig().getString("Commands.ban.success"));
             }
 
-            public static String success(String player, String reason) {
+            public static String success(String player, String reason, String staff) {
                 return colorize(success())
                         .replace("{player}", player)
-                        .replace("{reason}", reason);
+                        .replace("{reason}", reason)
+                        .replace("{staff}", staff);
             }
         }
 
@@ -199,6 +207,42 @@ public class Messages {
 
             public static String success() {
                 return colorize(ConfigLoader.getMessages().getConfig().getString("Commands.tempBan.success"));
+            }
+
+            public static String success(String player, String time, String reason, String staff) {
+                return colorize(success())
+                        .replace("{player}", player)
+                        .replace("{duration}", time)
+                        .replace("{staff}", staff)
+                        .replace("{reason}", reason);
+
+            }
+        }
+
+        public static class IpBan {
+            public static String usage() {
+                return colorize(ConfigLoader.getMessages().getConfig().getString("Commands.ipBan.usage"));
+            }
+
+            public static String success() {
+                return colorize(ConfigLoader.getMessages().getConfig().getString("Commands.ipBan.success"));
+            }
+
+            public static String success(String player, String reason, String staff) {
+                return colorize(success())
+                        .replace("{player}", player)
+                        .replace("{reason}", reason)
+                        .replace("{staff}", staff);
+            }
+        }
+
+        public static class TempIpBan {
+            public static String usage() {
+                return colorize(ConfigLoader.getMessages().getConfig().getString("Commands.tempIpBan.usage"));
+            }
+
+            public static String success() {
+                return colorize(ConfigLoader.getMessages().getConfig().getString("Commands.tempIpBan.success"));
             }
 
             public static String success(String player, String time, String reason, String staff) {

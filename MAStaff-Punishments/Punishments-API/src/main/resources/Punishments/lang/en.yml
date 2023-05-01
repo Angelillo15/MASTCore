@@ -37,7 +37,7 @@ Default:
   appealMessage: 'Appeal at: https://discord.nookure.com/'
 Ban:
   # Ban Message
-  # This message is sent to the player when he is banned.
+  # This message is sent to the player when he/she is banned.
   # You can use the following placeholders:
   # ↳ {bannedOn} - The date when the player was banned.
   # ↳ {bannedBy} - The player who banned the player.
@@ -52,7 +52,7 @@ Ban:
     &eBanned on: &f{bannedOn}
     &eBanned by: &f{bannedBy}
     &eReason: &f{reason}
-  # Here you can modify the message sent to the player when he is temp banned.
+  # Here you can modify the message sent to the player when he/she is temp banned.
   # You can use the following placeholders:
   # ↳ {bannedOn} - The date when the player was banned.
   # ↳ {bannedBy} - The player who banned the player.
@@ -61,11 +61,24 @@ Ban:
   # ↳ {expires} - The date when the ban expires.
   # ↳ {appeal} - The link to appeal the ban.
   # ↳ {base} - The base message.
+  # ↳ {banId} - The unique ban ID.
   bannedMessage: |
     &f{base}
     Expires: &f{expires}
     &f{appeal}
-  # Here you can modify the message sent to the player when he is temp banned.
+  # Here you can modify the message sent to the player when he/she is banned.
+  # You can use the following placeholders:
+  # ↳ {bannedOn} - The date when the player was banned.
+  # ↳ {bannedBy} - The player who banned the player.
+  # ↳ {reason} - The reason why the player was banned.
+  # ↳ {appeal} - The link to appeal the ban.
+  # ↳ {base} - The base message.
+  # ↳ {banId} - The unique ban ID.
+  bannedMessagePermanent: |
+    &f{base}
+    &cYou are permanently banned from the server.
+    &f{appeal}
+  # Here you can modify the message sent to the player when he/she is temp ip-banned.
   # You can use the following placeholders:
   # ↳ {bannedOn} - The date when the player was banned.
   # ↳ {bannedBy} - The player who banned the player.
@@ -74,9 +87,22 @@ Ban:
   # ↳ {expires} - The date when the ban expires.
   # ↳ {appeal} - The link to appeal the ban.
   # ↳ {base} - The base message.
-  bannedMessagePermanent: |
+  # ↳ {banId} - The unique ban ID.
+  ipBannedMessage: |
     &f{base}
-    &cYou are permanently banned from the server.
+    Expires: &f{expires}
+    &f{appeal}
+  # Here you can modify the message sent to the player when he/she is ip-banned.
+  # You can use the following placeholders:
+  # ↳ {bannedOn} - The date when the player was banned.
+  # ↳ {bannedBy} - The player who banned the player.
+  # ↳ {reason} - The reason why the player was banned.
+  # ↳ {appeal} - The link to appeal the ban.
+  # ↳ {base} - The base message.
+  # ↳ {banId} - The unique ban ID.
+  ipBannedMessagePermanent: |
+    &f{base}
+    &cYou are permanently IP banned from the server.
     &f{appeal}
   # This message is sent to the server when a player is banned.
   # You can use the following placeholders:
@@ -137,6 +163,16 @@ Commands:
     usage: '{prefix} &cUsage: /tempban <player> <duration|s|m|h|d|w|M/MO|y> <reason?>'
     # Message sent to the player when he temp bans a player.
     success: '{prefix} &a{player} has been banned for {duration} by the reason {reason}.'
+  ipBan:
+    # Message sent to the player when he doesn't fill all the arguments.
+    usage: '{prefix} &cUsage: /ipban <player> <reason?>'
+    # Message sent to the player when he bans a player.
+    success: '{prefix} &a{player} has been ip-banned by the reason {reason}.'
+  tempIpBan:
+    # Message sent to the player when he doesn't fill all the arguments.
+    usage: '{prefix} &cUsage: /tempIpBan <player> <duration|s|m|h|d|w|M/MO|y> <reason?>'
+    # Message sent to the player when he temp bans a player.
+    success: '{prefix} &a{player} has been ip-banned for {duration} by the reason {reason}.'
   unban:
     # Message sent to the player when he doesn't fill all the arguments.
     usage: '{prefix} &cUsage: /unban <player> <reason?>'
