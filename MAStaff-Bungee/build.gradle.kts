@@ -22,6 +22,7 @@ dependencies {
     compileOnly("net.md-5:bungeecord-chat:1.16-R0.4")
     compileOnly("com.github.proxiodev.redisbungee:RedisBungee-Bungee:0.10.2")
     compileOnly("redis.clients:jedis:4.4.0-m2")
+    compileOnly("com.konghq:unirest-java:3.11.09")
     implementation("net.byteflux:libby-bungee:1.1.5")
 }
 

@@ -12,6 +12,7 @@ import es.angelillo15.mast.api.redis.EventManager;
 import es.angelillo15.mast.api.redis.events.server.ServerConnectedEvent;
 import es.angelillo15.mast.bungee.addons.AddonsLoader;
 import es.angelillo15.mast.bungee.cmd.*;
+import es.angelillo15.mast.bungee.cmd.mastb.MastParentCMD;
 import es.angelillo15.mast.bungee.config.Config;
 import es.angelillo15.mast.bungee.config.ConfigLoader;
 import es.angelillo15.mast.bungee.listener.StaffChangeEvent;
@@ -105,9 +106,9 @@ public class MAStaff extends Plugin implements MAStaffInstance<Plugin> {
     @Override
     public void registerCommands() {
         getProxy().getPluginManager().registerCommand(this, new StaffChat());
-        getProxy().getPluginManager().registerCommand(this, new MASTBReload());
         getProxy().getPluginManager().registerCommand(this, new HelpopCMD());
         registerCommand(new InfoCMD());
+        registerCommand(new MastParentCMD());
     }
 
     @Override
