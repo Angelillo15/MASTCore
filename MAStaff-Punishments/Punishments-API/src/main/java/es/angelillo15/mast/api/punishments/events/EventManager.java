@@ -8,6 +8,8 @@ public abstract class EventManager {
     private static EventManager eventManager;
     public abstract void sendPlayerBannedEvent(BanModel banModel, CommandSender sender);
 
+    public abstract void sendPlayerTryToJoinBannedEvent(BanModel banModel, String player);
+
     public static EventManager getEventManager() {
         if (eventManager != null) {
             return eventManager;
