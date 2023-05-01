@@ -34,7 +34,7 @@ public abstract class AbstractDataManager {
         return false;
     }
 
-    public void setBanActive(String uuid, boolean active, String reason) {
+    public void setBanActive(String username, boolean active, String reason) {
 
     }
 
@@ -58,6 +58,10 @@ public abstract class AbstractDataManager {
         return null;
     }
 
+    public BanModel getBan(int id, boolean active) {
+        return null;
+    }
+
     public void setUUID(String username, UUID uuid) {
 
     }
@@ -68,5 +72,21 @@ public abstract class AbstractDataManager {
 
     public IPBanModel getIPBan(String ip) {
         return null;
+    }
+
+    public IPBanModel getIPBan(int id) {
+        return null;
+    }
+
+    public void IPBan(BanModel ban, String ip) {
+
+    }
+
+    public void deleteIPBan(String ip) {
+
+    }
+
+    public boolean isIPBanned(String ip) {
+        return false;
     }
 }

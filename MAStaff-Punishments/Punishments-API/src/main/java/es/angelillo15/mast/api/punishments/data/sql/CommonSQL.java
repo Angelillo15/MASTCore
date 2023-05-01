@@ -69,8 +69,8 @@ public class CommonSQL extends AbstractDataManager {
     }
 
     @Override
-    public boolean isTempBanned(String uuid) {
-        return isTempBanned("USERNAME", uuid);
+    public boolean isTempBanned(String username) {
+        return isTempBanned("USERNAME", username);
     }
 
 
@@ -114,8 +114,22 @@ public class CommonSQL extends AbstractDataManager {
     @Override
     public BanModel getBan(int id) {
         try (PreparedStatement statement = PluginConnection.getConnection().prepareStatement(
-                "SELECT * FROM `mastaff_punishments_bans` WHERE `ID` = ? AND `active` = 1;")) {
+                "SELECT * FROM `mastaff_punishments_bans` WHERE `ID` = ?")) {
             statement.setInt(1, id);
+            ResultSet rs = statement.executeQuery();
+
+            return getBan(rs);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public BanModel getBan(int id, boolean active) {
+        try (PreparedStatement statement = PluginConnection.getConnection().prepareStatement(
+                "SELECT * FROM `mastaff_punishments_bans` WHERE `ID` = ? AND `active` = ?;")) {
+            statement.setInt(1, id);
+            statement.setBoolean(2, active);
             ResultSet rs = statement.executeQuery();
 
             return getBan(rs);
@@ -128,7 +142,10 @@ public class CommonSQL extends AbstractDataManager {
     public BanModel getBan(ResultSet rs) {
         BanModel ban = new BanModel();
 
-        if (!rs.next()) return null;
+        if (!rs.next()) {
+            MAStaffInstance.getLogger().debug("No ban found");
+            return null;
+        }
 
         ban.setId(rs.getInt("id"));
         try {
@@ -196,14 +213,14 @@ public class CommonSQL extends AbstractDataManager {
     }
 
     @Override
-    public boolean isBanned(String uuid) {
-        return isTempBanned(uuid) || isPermBanned(uuid);
+    public boolean isBanned(String username) {
+        return getBan(username) != null;
     }
 
     @Override
     public IPBanModel getIPBan(String ip) {
         try (PreparedStatement statement = PluginConnection.getConnection().prepareStatement(
-                "SELECT * FROM `mastaff_punishments_bans` WHERE `IP` = ? AND `active` = 1;")) {
+                "SELECT * FROM `mastaff_punishments_ips_banned` WHERE `IP` = ?;")) {
             statement.setString(1, ip);
             ResultSet rs = statement.executeQuery();
 
@@ -213,18 +230,72 @@ public class CommonSQL extends AbstractDataManager {
         }
     }
 
+    @Override
+    public IPBanModel getIPBan(int id) {
+        try (PreparedStatement statement = PluginConnection.getConnection().prepareStatement(
+                "SELECT * FROM `mastaff_punishments_ips_banned` WHERE `ban_id` = ?;")) {
+            statement.setInt(1, id);
+            ResultSet rs = statement.executeQuery();
+            return getIPBan(rs);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     @SneakyThrows
     public IPBanModel getIPBan(ResultSet rs) {
-        if (!rs.next()) return null;
+        if (!rs.next()) {
+            return null;
+        }
 
         IPBanModel ban = new IPBanModel();
         ban.setIp(rs.getString("IP"));
-        ban.setBan_id(rs.getInt("id"));
+        ban.setBan_id(rs.getInt("ban_id"));
 
-        BanModel banModel = getBan(ban.getBan_id());
+        BanModel banModel = getBan(ban.getBan_id(), true);
 
         ban.setBanModel(banModel);
 
         return ban;
+    }
+
+    @Override
+    public void IPBan(BanModel ban, String ip) {
+        try (PreparedStatement statement = PluginConnection.getConnection().prepareStatement(
+                "INSERT INTO `mastaff_punishments_ips_banned` (`IP`, `ban_id`) VALUES (?, ?);")
+        ) {
+            statement.setString(1, ip);
+            statement.setInt(2, ban.getId());
+
+            statement.execute();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public void deleteIPBan(String ip) {
+        try (PreparedStatement statement = PluginConnection.getConnection().prepareStatement(
+                "DELETE FROM `mastaff_punishments_ips_banned` WHERE `IP` = ?;")
+        ) {
+            statement.setString(1, ip);
+
+            statement.execute();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public boolean isIPBanned(String ip) {
+        try (PreparedStatement statement = PluginConnection.getConnection().prepareStatement(
+                "SELECT * FROM `mastaff_punishments_ips_banned` WHERE `IP` = ?;")) {
+            statement.setString(1, ip);
+            ResultSet rs = statement.executeQuery();
+
+            return rs.next();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
