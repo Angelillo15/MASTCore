@@ -10,6 +10,7 @@ import es.angelillo15.mast.api.punishments.cmd.cache.ClearCacheCMD;
 import es.angelillo15.mast.api.punishments.config.ConfigLoader;
 import es.angelillo15.mast.api.punishments.data.DataManager;
 import es.angelillo15.mast.api.punishments.cmd.TestCMD;
+import es.angelillo15.mast.bungee.punishments.listeners.BroadcastListener;
 import es.angelillo15.mast.bungee.punishments.listeners.PlayerBanListener;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.plugin.Listener;
@@ -20,6 +21,8 @@ public class MAStaffPunishments extends MAStaffAddon<Plugin> {
     public void reload() {
         loadConfig();
         loadData();
+        loadListeners();
+        loadCommands();
     }
 
     @Override
@@ -29,6 +32,7 @@ public class MAStaffPunishments extends MAStaffAddon<Plugin> {
 
     public void loadListeners() {
         registerEvent(new PlayerBanListener());
+        registerEvent(new BroadcastListener());
     }
 
     public void registerEvent(Listener listener) {
