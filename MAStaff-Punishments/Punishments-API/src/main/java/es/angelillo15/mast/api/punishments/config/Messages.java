@@ -9,6 +9,7 @@ public class Messages {
         public static String prefix() {
             return ConfigLoader.getMessages().getConfig().getString("Default.prefix");
         }
+
         public static String defaultBanReason() {
             return ConfigLoader.getMessages().getConfig().getString("Default.defaultBanReason");
         }
@@ -56,6 +57,58 @@ public class Messages {
                     .replace("{base}", colorize(banMessageBase()))
                     .replace("{appeal}", colorize(Default.appealMessage())
                     );
+        }
+
+        public static String bannedPlayerTriesToJoin() {
+            return colorize(ConfigLoader.getMessages().getConfig().getString("Ban.bannedPlayerTriesToJoin"));
+        }
+
+        public static String bannedPlayerTriesToJoin(String player, String bannedOn, String bannedBy, String reason) {
+            return colorize(bannedPlayerTriesToJoin())
+                    .replace("{player}", player)
+                    .replace("{bannedOn}", bannedOn)
+                    .replace("{bannedBy}", bannedBy)
+                    .replace("{reason}", reason);
+        }
+
+        public static String tempBannedPlayerTriesToJoin() {
+            return colorize(ConfigLoader.getMessages().getConfig().getString("Ban.tempBannedPlayerTriesToJoin"));
+        }
+
+        public static String tempBannedPlayerTriesToJoin(String player, String bannedOn, String bannedBy, String reason, String duration, String expires) {
+            return colorize(tempBannedPlayerTriesToJoin())
+                    .replace("{player}", player)
+                    .replace("{bannedOn}", bannedOn)
+                    .replace("{bannedBy}", bannedBy)
+                    .replace("{reason}", reason)
+                    .replace("{duration}", duration)
+                    .replace("{expires}", expires);
+        }
+
+        public static String bannedBroadcast() {
+            return colorize(ConfigLoader.getMessages().getConfig().getString("Ban.bannedBroadcast"));
+        }
+
+        public static String bannedBroadcast(String player, String bannedOn, String bannedBy, String reason) {
+            return colorize(bannedBroadcast())
+                    .replace("{player}", player)
+                    .replace("{bannedOn}", bannedOn)
+                    .replace("{bannedBy}", bannedBy)
+                    .replace("{reason}", reason);
+        }
+
+        public static String tempBannedBroadcast() {
+            return colorize(ConfigLoader.getMessages().getConfig().getString("Ban.tempBannedBroadcast"));
+        }
+
+        public static String tempBannedBroadcast(String player, String bannedOn, String bannedBy, String reason, String duration, String expires) {
+            return colorize(tempBannedBroadcast())
+                    .replace("{player}", player)
+                    .replace("{bannedOn}", bannedOn)
+                    .replace("{bannedBy}", bannedBy)
+                    .replace("{reason}", reason)
+                    .replace("{duration}", duration)
+                    .replace("{expires}", expires);
         }
     }
 
