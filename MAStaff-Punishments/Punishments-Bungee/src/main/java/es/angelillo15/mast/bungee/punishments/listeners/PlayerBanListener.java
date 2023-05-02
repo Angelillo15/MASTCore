@@ -77,7 +77,7 @@ public class PlayerBanListener implements Listener {
 
         try {
             BansTable ban = BansTable.getBan(connection.getName());
-            connection.disconnect(getBaseComponent(ban));
+            connection.disconnect(getBaseComponent(ban, connection.getName()));
         } catch (Exception ignored) {
         }
 
@@ -89,14 +89,14 @@ public class PlayerBanListener implements Listener {
 
         if (table == null) return false;
 
-        connection.disconnect(getBaseComponent(table));
+        connection.disconnect(getBaseComponent(table, connection.getName()));
 
         return true;
     }
 
-    private BaseComponent getBaseComponent(BansTable model) {
+    public static BaseComponent getBaseComponent(BansTable model, String username) {
         String message = null;
-        EventManager.getEventManager().sendPlayerTryToJoinBannedEvent(model, model.getUsername());
+        EventManager.getEventManager().sendPlayerTryToJoinBannedEvent(model, username);
 
         if (model.isPermanent()) {
             if (model.getIpban()) message = Messages.Ban.ipBannedMessagePermanent();
