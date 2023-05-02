@@ -1,6 +1,8 @@
 package es.angelillo15.mast.bungee.punishments;
 
 import es.angelillo15.mast.api.TextUtils;
+import es.angelillo15.mast.api.cmd.sender.BungeeConsoleCommandSender;
+import es.angelillo15.mast.api.punishments.PunishPlayersManager;
 
 public class MAStaffPunishmentsLoader extends MAStaffPunishments {
     @Override
@@ -11,6 +13,7 @@ public class MAStaffPunishmentsLoader extends MAStaffPunishments {
         loadCommands();
         loadListeners();
         getLogger().info(TextUtils.simpleColorize("&aMAStaff-Punishments has been enabled!"));
+        PunishPlayersManager.addPlayer(new PunishPlayer(new BungeeConsoleCommandSender()));
 
     }
 
