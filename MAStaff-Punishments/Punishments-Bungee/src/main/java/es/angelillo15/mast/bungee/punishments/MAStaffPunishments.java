@@ -2,6 +2,8 @@ package es.angelillo15.mast.bungee.punishments;
 
 import es.angelillo15.mast.api.MAStaffInstance;
 import es.angelillo15.mast.api.addons.MAStaffAddon;
+import es.angelillo15.mast.api.cmd.sender.BungeeConsoleCommandSender;
+import es.angelillo15.mast.api.punishments.PunishPlayersManager;
 import es.angelillo15.mast.api.punishments.cmd.ban.*;
 import es.angelillo15.mast.api.punishments.cmd.cache.ClearCacheCMD;
 import es.angelillo15.mast.api.punishments.config.ConfigLoader;
@@ -9,6 +11,7 @@ import es.angelillo15.mast.api.punishments.data.DataManager;
 import es.angelillo15.mast.api.punishments.cmd.TestCMD;
 import es.angelillo15.mast.bungee.punishments.listeners.BroadcastListener;
 import es.angelillo15.mast.bungee.punishments.listeners.PlayerBanListener;
+import es.angelillo15.mast.bungee.punishments.listeners.PunishPlayerListener;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.plugin.Listener;
 import net.md_5.bungee.api.plugin.Plugin;
@@ -20,6 +23,7 @@ public class MAStaffPunishments extends MAStaffAddon<Plugin> {
         loadData();
         loadListeners();
         loadCommands();
+        PunishPlayersManager.addPlayer(new PunishPlayer(new BungeeConsoleCommandSender()));
     }
 
     @Override
@@ -30,6 +34,7 @@ public class MAStaffPunishments extends MAStaffAddon<Plugin> {
     public void loadListeners() {
         registerEvent(new PlayerBanListener());
         registerEvent(new BroadcastListener());
+        registerEvent(new PunishPlayerListener());
     }
 
     public void registerEvent(Listener listener) {
