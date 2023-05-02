@@ -6,6 +6,7 @@ import es.angelillo15.mast.api.cmd.sender.CommandSender;
 import es.angelillo15.mast.api.data.UserData;
 import es.angelillo15.mast.api.database.PluginConnection;
 import es.angelillo15.mast.api.exceptions.PlayerNotBannedException;
+import es.angelillo15.mast.api.exceptions.user.PlayerNotOnlineException;
 import es.angelillo15.mast.api.managers.UserDataManager;
 import es.angelillo15.mast.api.punishments.IPunishPlayer;
 import es.angelillo15.mast.api.cache.BanCache;
@@ -14,6 +15,9 @@ import es.angelillo15.mast.api.models.BansTable;
 import es.angelillo15.mast.api.models.IpBansTable;
 import es.angelillo15.mast.api.punishments.events.EventManager;
 import lombok.SneakyThrows;
+import net.md_5.bungee.api.ProxyServer;
+import net.md_5.bungee.api.chat.TextComponent;
+import net.md_5.bungee.api.connection.ProxiedPlayer;
 
 import java.util.Objects;
 
@@ -39,6 +43,13 @@ public class PunishPlayer implements IPunishPlayer {
         return player;
     }
 
+    /**
+     * Ban the player for a certain amount of time with the default reason
+     * @param target the target of the ban
+     * @param reason the reason of the ban
+     * @param until the time in milliseconds when the ban will expire
+     * @param ipban if the ban should be an ipban
+     */
     @SneakyThrows
     @Override
     public void ban(String target, String reason, long until, boolean ipban) {
@@ -96,6 +107,10 @@ public class PunishPlayer implements IPunishPlayer {
         EventManager.getEventManager().sendPlayerBannedEvent(bansTable, player);
     }
 
+    /**
+     * Unban the player with the default reason
+     * @param target the target of the unban
+     */
     @SneakyThrows
     @Override
     public void unban(String target, String reason) {
@@ -122,5 +137,23 @@ public class PunishPlayer implements IPunishPlayer {
         );
 
         BanCache.removePunishment(target);
+    }
+
+    /**
+     * Kick the player with a custom reason
+     * @param target the target of the kick
+     * @param reason the reason of the kick
+     */
+    @Override
+    public void kick(String target, String reason) {
+        ProxiedPlayer player = ProxyServer.getInstance().getPlayer(target);
+
+        if (player == null) {
+            throw new PlayerNotOnlineException("Player " + target + " is not online");
+        }
+
+        player.disconnect(new TextComponent(
+                Messages.Kick.kickMessage(target, this.player.getName(), reason
+        )));
     }
 }

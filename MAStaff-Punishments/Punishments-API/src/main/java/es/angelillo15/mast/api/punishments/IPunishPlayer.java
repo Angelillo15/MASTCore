@@ -87,4 +87,19 @@ public interface IPunishPlayer {
      */
     void unban(String target, String reason);
 
+    /**
+     * Kick the player with the default reason
+     * @param target the target of the kick
+     */
+    default void kick(String target) {
+        kick(target, Messages.Default.defaultKickReason());
+    }
+
+    /**
+     * Kick the player with a custom reason
+     * @param target the target of the kick
+     * @param reason the reason of the kick
+     */
+    void kick(String target, String reason);
+
 }
