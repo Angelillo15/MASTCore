@@ -1,4 +1,4 @@
-package es.angelillo15.mast.api.punishments.config;
+package es.angelillo15.mast.api.config.punishments;
 
 public class Config {
     public static int cacheRefreshTime() {

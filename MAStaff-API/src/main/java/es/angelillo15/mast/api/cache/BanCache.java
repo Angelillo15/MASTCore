@@ -1,10 +1,9 @@
-package es.angelillo15.mast.api.punishments.cache;
+package es.angelillo15.mast.api.cache;
 
 import com.github.benmanes.caffeine.cache.Cache;
 import com.github.benmanes.caffeine.cache.Caffeine;
-import es.angelillo15.mast.api.models.BanModel;
-import es.angelillo15.mast.api.punishments.config.Config;
-import es.angelillo15.mast.api.punishments.data.migrations.BansTable;
+import es.angelillo15.mast.api.config.punishments.Config;
+import es.angelillo15.mast.api.models.BansTable;
 import lombok.Getter;
 
 import java.util.concurrent.TimeUnit;
