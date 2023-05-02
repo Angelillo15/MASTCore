@@ -26,5 +26,6 @@ subprojects {
     dependencies {
         compileOnly(project(":MAStaff-API"))
         compileOnly("com.github.ben-manes.caffeine:caffeine:2.9.2")
+        compileOnly("com.github.Mindgamesnl:storm:prod125")
     }
 }
