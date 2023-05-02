@@ -45,7 +45,8 @@ public class UnBanCMD extends Command {
             }
             sender.sendMessage(Messages.Commands.Unban.success(
                     target,
-                    reason.toString()
+                    reason.toString(),
+                    sender.getName()
             ));
         }).start();
     }
