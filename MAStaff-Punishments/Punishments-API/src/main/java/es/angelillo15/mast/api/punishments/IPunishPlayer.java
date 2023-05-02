@@ -1,9 +1,7 @@
 package es.angelillo15.mast.api.punishments;
 
 import es.angelillo15.mast.api.cmd.sender.CommandSender;
-import es.angelillo15.mast.api.punishments.config.Messages;
-
-import java.util.UUID;
+import es.angelillo15.mast.api.config.punishments.Messages;
 
 public interface IPunishPlayer {
     /**
@@ -73,5 +71,20 @@ public interface IPunishPlayer {
      * @param ipban if the ban should be an ipban
      */
     void ban(String target, String reason, long until, boolean ipban);
+
+    /**
+     * Unban the player with the default reason
+     * @param target the target of the unban
+     */
+    default void unban(String target) {
+        unban(target, Messages.Default.defaultUnbanReason());
+    }
+
+    /**
+     * Unban the player with a custom reason
+     * @param target the target of the unban
+     * @param reason the reason of the unban
+     */
+    void unban(String target, String reason);
 
 }
