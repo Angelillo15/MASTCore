@@ -1,12 +1,13 @@
-package es.angelillo15.mast.api.punishments.data.migrations;
+package es.angelillo15.mast.api.models;
 
 import com.craftmend.storm.Storm;
 import com.craftmend.storm.api.StormModel;
 import com.craftmend.storm.api.enums.Where;
 import com.craftmend.storm.api.markers.Column;
 import com.craftmend.storm.api.markers.Table;
+import es.angelillo15.mast.api.MAStaffInstance;
+import es.angelillo15.mast.api.cache.BanCache;
 import es.angelillo15.mast.api.database.PluginConnection;
-import es.angelillo15.mast.api.punishments.cache.BanCache;
 import lombok.Data;
 import lombok.SneakyThrows;
 
@@ -36,6 +37,9 @@ public class BansTable extends StormModel {
     @Column(length = 16)
     private String unbanned_by_name;
 
+    @Column(length = 4096)
+    private String unban_reason;
+
     @Column
     private Long time;
 
@@ -55,26 +59,33 @@ public class BansTable extends StormModel {
         return !isPermanent() && until < System.currentTimeMillis();
     }
 
+    public void unBan(){
+        unBan("CONSOLE", "Expired", "CONSOLE");
+    }
     @SneakyThrows
-    public void unBan() {
+    public void unBan(String unbanned_by_name, String unban_reason, String unbanned_by_uuid) {
         Storm storm = PluginConnection.getStorm();
 
-        active = false;
+        setActive(false);
+        setUnbanned_by_uuid(unbanned_by_uuid);
+        setUnbanned_by_name(unbanned_by_name);
+        setUnban_reason(unban_reason);
         storm.save(this);
 
-        if (!ipban) return;
 
-        IpBansTable ipBansTable = storm.buildQuery(IpBansTable.class)
-                .where("banId", Where.EQUAL, getId())
-                .limit(1)
-                .execute()
-                .join()
-                .iterator()
-                .next();
+        try {
+            IpBansTable ipBansTable = storm.buildQuery(IpBansTable.class)
+                    .where("ban_id", Where.EQUAL, getId())
+                    .limit(1)
+                    .execute()
+                    .join()
+                    .iterator()
+                    .next();
 
-        if (ipBansTable != null) {
-            storm.delete(ipBansTable);
-        }
+            if (ipBansTable != null) {
+                storm.delete(ipBansTable);
+            }
+        } catch (Exception ignored) { }
     }
 
     @SneakyThrows
@@ -83,19 +94,13 @@ public class BansTable extends StormModel {
 
         if (BanCache.isPunished(username)) return true;
 
-        boolean isBanned = storm.buildQuery(BansTable.class)
+        Boolean isBanned = storm.buildQuery(BansTable.class)
                 .where("username", Where.EQUAL, username)
                 .where("active", Where.EQUAL, true)
                 .limit(1)
                 .execute()
                 .join()
                 .size() > 0;
-
-        if (isBanned) {
-            new Thread(() -> {
-                BanCache.addPunishment(username, getBan(username));
-            }).start();
-        }
 
         return isBanned;
     }
@@ -114,12 +119,6 @@ public class BansTable extends StormModel {
                 .execute()
                 .join()
                 .size() > 0;
-
-        if (isBanned) {
-            new Thread(() -> {
-                BanCache.addPunishment(username, getBan(username));
-            }).start();
-        }
 
         return isBanned;
     }
@@ -175,20 +174,5 @@ public class BansTable extends StormModel {
             return null;
         }
 
-    }
-
-    @SneakyThrows
-    public IpBansTable getIpBanTable(){
-        Storm storm = PluginConnection.getStorm();
-
-        if (!ipban) return null;
-
-        return storm.buildQuery(IpBansTable.class)
-                .where("banId", Where.EQUAL, getId())
-                .limit(1)
-                .execute()
-                .join()
-                .iterator()
-                .next();
     }
 }

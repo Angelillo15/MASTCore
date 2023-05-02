@@ -2,8 +2,8 @@ package es.angelillo15.mast.api.punishments.data;
 
 import com.craftmend.storm.Storm;
 import es.angelillo15.mast.api.database.PluginConnection;
-import es.angelillo15.mast.api.punishments.data.migrations.BansTable;
-import es.angelillo15.mast.api.punishments.data.migrations.IpBansTable;
+import es.angelillo15.mast.api.models.BansTable;
+import es.angelillo15.mast.api.models.IpBansTable;
 import lombok.SneakyThrows;
 
 public class DataManager {
