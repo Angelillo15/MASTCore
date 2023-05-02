@@ -32,7 +32,15 @@ public class UserDataManager {
 
             if (userData == null) {
                 MAStaffInstance.getLogger().debug("User " + key + " does not exist in the database.");
-                return null;
+                UserData emptyData = new UserData();
+
+                if (isUUID) {
+                    emptyData.setUUID(key);
+                } else {
+                    emptyData.setUsername(key);
+                }
+
+                return emptyData;
             }
 
             userDataCache.put(key, userData);

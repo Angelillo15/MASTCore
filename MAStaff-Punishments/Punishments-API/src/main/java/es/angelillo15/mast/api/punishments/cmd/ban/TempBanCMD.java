@@ -1,17 +1,14 @@
 package es.angelillo15.mast.api.punishments.cmd.ban;
 
+import es.angelillo15.mast.api.TextUtils;
 import es.angelillo15.mast.api.cmd.Command;
 import es.angelillo15.mast.api.cmd.CommandData;
 import es.angelillo15.mast.api.cmd.sender.CommandSender;
-import es.angelillo15.mast.api.data.UserData;
-import es.angelillo15.mast.api.punishments.config.Messages;
-import es.angelillo15.mast.api.punishments.data.DataManager;
-import es.angelillo15.mast.api.punishments.enums.ErrorTypes;
-import es.angelillo15.mast.api.punishments.events.EventManager;
-import es.angelillo15.mast.api.punishments.utils.BanUtils;
+import es.angelillo15.mast.api.punishments.IPunishPlayer;
+import es.angelillo15.mast.api.punishments.PunishPlayersManager;
+import es.angelillo15.mast.api.config.punishments.Config;
+import es.angelillo15.mast.api.config.punishments.Messages;
 import es.angelillo15.mast.api.utils.NumberUtils;
-
-import java.util.UUID;
 
 @CommandData(
         name = "tempban",
@@ -21,6 +18,8 @@ import java.util.UUID;
 public class TempBanCMD extends Command {
     @Override
     public void onCommand(CommandSender sender, String label, String[] args) {
+        IPunishPlayer punishPlayer = PunishPlayersManager.getPlayer(sender.getUniqueId());
+
         if (args.length < 2) {
             sender.sendMessage(Messages.Commands.TempBan.usage());
             return;
@@ -47,27 +46,14 @@ public class TempBanCMD extends Command {
             return;
         }
 
-        UserData data = BanUtils.getUserData(target);
-
-        ErrorTypes error = BanUtils.ban(sender, data, reason.toString(), time, false);
-
-        if (error == ErrorTypes.NULL_DATA) {
-            sender.sendMessage(Messages.Commands.playerNotFound(target));
-            return;
-        }
-
-        if (error == ErrorTypes.PLAYER_ALREADY_PERM_BANNED) {
-            sender.sendMessage(Messages.Commands.playerAlreadyBanned(target));
-            return;
-        }
-
-        if (error == ErrorTypes.SUCCESS) {
-            try {
-                EventManager.getEventManager().sendPlayerBannedEvent(DataManager.getDataManager().getBan(UUID.fromString(data.getUUID())), sender);
-            } catch (Exception e) {
-                EventManager.getEventManager().sendPlayerBannedEvent(DataManager.getDataManager().getBan(target), sender);
-            }
-            sender.sendMessage(Messages.Commands.TempBan.success(target, args[1], reason.toString(), sender.getName()));
-        }
+        new Thread(() -> {
+            punishPlayer.ban(target, reason.toString(), time);
+            sender.sendMessage(Messages.Commands.TempBan.success(
+                    target,
+                    TextUtils.formatDate(time, Config.dateFormat()),
+                    reason.toString(),
+                    sender.getName())
+            );
+        }).start();
     }
 }

@@ -1,6 +1,6 @@
 package es.angelillo15.mast.api.event.bungee.ban;
 
-import es.angelillo15.mast.api.models.BanModel;
+import es.angelillo15.mast.api.models.BansTable;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import net.md_5.bungee.api.plugin.Event;
@@ -9,10 +9,10 @@ public class BannedPlayerTriesToJoin extends Event {
     /**
      * The ban model of the banned player
      * @return The ban model of the banned player
-     * @see BanModel
+     * @see BansTable
      */
     @Getter
-    private BanModel banModel;
+    private BansTable banModel;
     /**
      * The name of the banned player
      * @return The name of the banned player

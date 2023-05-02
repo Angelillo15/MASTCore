@@ -1,4 +1,4 @@
-package es.angelillo15.mast.api.punishments.config;
+package es.angelillo15.mast.api.config.punishments;
 
 import es.angelillo15.configmanager.ConfigManager;
 import es.angelillo15.mast.api.addons.MAStaffAddon;

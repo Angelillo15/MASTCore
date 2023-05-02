@@ -8,11 +8,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserData {
+    public static final String UNKNOWN = "unknown";
     private int ID = 0;
-    private String UUID = "unknown";
-    private String username = "unknown";
-    private String lastIP = "unknown";
-    private String regIP = "unknown";
+    private String UUID = UNKNOWN;
+    private String username = UNKNOWN;
+    private String lastIP = UNKNOWN;
+    private String regIP = UNKNOWN;
     private Long firstLogin = 0L;
     private Long lastLogin = 0L;
 }
