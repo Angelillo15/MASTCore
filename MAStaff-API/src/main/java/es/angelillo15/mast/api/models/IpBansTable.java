@@ -1,4 +1,4 @@
-package es.angelillo15.mast.api.punishments.data.migrations;
+package es.angelillo15.mast.api.models;
 
 import com.craftmend.storm.Storm;
 import com.craftmend.storm.api.StormModel;
