@@ -136,7 +136,23 @@ Ban:
   # ↳ {duration} - The duration of the ban.
   # ↳ {expires} - The date when the ban expires.
   tempBannedBroadcast: "{prefix} &c{player} has been banned by {bannedBy} for {reason} for {duration}."
-# Command messages
+Kick:
+  # This message is sent to the player when he/she is kicked.
+  # You can use the following placeholders:
+  # ↳ {player} - The player who was kicked.
+  # ↳ {kickedBy} - The player who kicked the player.
+  # ↳ {reason} - The reason why the player was kicked.
+  kickedMessage: |
+    &cYou have been kicked from the server.
+    
+    &fReason: &c{reason}
+    &fKicked by: &c{kickedBy}
+  # This message is sent to the server when a player is kicked.
+  # You can use the following placeholders:
+  # ↳ {player} - The player who was kicked.
+  # ↳ {kickedBy} - The player who kicked the player.
+  # ↳ {reason} - The reason why the player was kicked.
+  kickedBroadcast: "{prefix} &c{player} has been kicked by {kickedBy} for {reason}."
 Commands:
   # Message sent to the player when he tries to execute a command
   # with a player argument that not exists in the DB.
@@ -178,3 +194,8 @@ Commands:
     usage: '{prefix} &cUsage: /unban <player> <reason?>'
     # Message sent to the player when he unbans a player that is not banned.
     success: '{prefix} &a{player} has been unbanned.'
+  kick:
+    # Message sent to the player when he doesn't fill all the arguments.
+    usage: '{prefix} &cUsage: /kick <player> <reason?>'
+    # Message sent to the player when he kicks a player.
+    success: '{prefix} &a{player} has been kicked by {staff} with the reason {reason}.'

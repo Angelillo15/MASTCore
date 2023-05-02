@@ -49,6 +49,7 @@ public class Messages {
         public static String bannedMessagePermanent() {
             return formatBase(ConfigLoader.getMessages().getConfig().getString("Ban.bannedMessagePermanent"));
         }
+
         public static String ipBannedMessage() {
             return formatBase(ConfigLoader.getMessages().getConfig().getString("Ban.ipBannedMessage"));
         }
@@ -114,6 +115,30 @@ public class Messages {
                     .replace("{reason}", reason)
                     .replace("{duration}", duration)
                     .replace("{expires}", expires);
+        }
+    }
+
+    public static class Kick {
+        public static String kickMessage() {
+            return colorize(ConfigLoader.getMessages().getConfig().getString("Kick.kickedMessage"));
+        }
+
+        public static String kickMessage(String player, String kickedBy, String reason) {
+            return colorize(kickMessage())
+                    .replace("{player}", player)
+                    .replace("{kickedBy}", kickedBy)
+                    .replace("{reason}", reason);
+        }
+
+        public static String kickBroadcast() {
+            return colorize(ConfigLoader.getMessages().getConfig().getString("Kick.kickedBroadcast"));
+        }
+
+        public static String kickBroadcast(String player, String kickedBy, String reason) {
+            return colorize(kickBroadcast())
+                    .replace("{player}", player)
+                    .replace("{kickedBy}", kickedBy)
+                    .replace("{reason}", reason);
         }
     }
 
@@ -262,10 +287,28 @@ public class Messages {
                 return colorize(ConfigLoader.getMessages().getConfig().getString("Commands.unban.success"));
             }
 
-            public static String success(String player, String reason) {
+            public static String success(String player, String reason, String staff) {
                 return colorize(success())
                         .replace("{player}", player)
-                        .replace("{reason}", reason);
+                        .replace("{reason}", reason)
+                        .replace("{staff}", staff);
+            }
+        }
+
+        public static class Kick {
+            public static String usage() {
+                return colorize(ConfigLoader.getMessages().getConfig().getString("Commands.kick.usage"));
+            }
+
+            public static String success() {
+                return colorize(ConfigLoader.getMessages().getConfig().getString("Commands.kick.success"));
+            }
+
+            public static String success(String player, String reason, String staff) {
+                return colorize(success())
+                        .replace("{player}", player)
+                        .replace("{reason}", reason)
+                        .replace("{staff}", staff);
             }
         }
     }
