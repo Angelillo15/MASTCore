@@ -2,6 +2,7 @@ package es.angelillo15.mast.bungee.punishments;
 
 import es.angelillo15.mast.api.MAStaffInstance;
 import es.angelillo15.mast.api.addons.MAStaffAddon;
+import es.angelillo15.mast.api.punishments.cmd.KickCMD;
 import es.angelillo15.mast.api.punishments.cmd.ban.*;
 import es.angelillo15.mast.api.punishments.cmd.cache.ClearCacheCMD;
 import es.angelillo15.mast.api.config.punishments.ConfigLoader;
@@ -51,6 +52,7 @@ public class MAStaffPunishments extends MAStaffAddon<Plugin> {
         MAStaffInstance.getBungeeInstance().registerCommand(new UnBanCMD());
         MAStaffInstance.getBungeeInstance().registerCommand(new IPBanCMD());
         MAStaffInstance.getBungeeInstance().registerCommand(new TempIPBanCMD());
+        MAStaffInstance.getBungeeInstance().registerCommand(new KickCMD());
     }
 
     public void loadConfig() {
