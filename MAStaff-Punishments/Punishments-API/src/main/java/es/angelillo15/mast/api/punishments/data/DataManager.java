@@ -3,6 +3,7 @@ package es.angelillo15.mast.api.punishments.data;
 import com.craftmend.storm.Storm;
 import es.angelillo15.mast.api.database.PluginConnection;
 import es.angelillo15.mast.api.punishments.data.migrations.BansTable;
+import es.angelillo15.mast.api.punishments.data.migrations.IpBansTable;
 import lombok.SneakyThrows;
 
 public class DataManager {
@@ -12,6 +13,8 @@ public class DataManager {
         Storm storm = PluginConnection.getStorm();
 
         storm.registerModel(new BansTable());
+        storm.registerModel(new IpBansTable());
+
         storm.runMigrations();
     }
 }
