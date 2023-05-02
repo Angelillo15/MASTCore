@@ -4,22 +4,23 @@ import com.github.benmanes.caffeine.cache.Cache;
 import com.github.benmanes.caffeine.cache.Caffeine;
 import es.angelillo15.mast.api.models.BanModel;
 import es.angelillo15.mast.api.punishments.config.Config;
+import es.angelillo15.mast.api.punishments.data.migrations.BansTable;
 import lombok.Getter;
 
 import java.util.concurrent.TimeUnit;
 
 public class BanCache {
     @Getter
-    private static final Cache<String, BanModel> punishmentCache = Caffeine.newBuilder()
+    private static final Cache<String, BansTable> punishmentCache = Caffeine.newBuilder()
             .maximumSize(100)
             .expireAfterWrite(Config.cacheRefreshTime(), TimeUnit.SECONDS)
             .build();
 
-    public static void addPunishment(String usr, BanModel ban) {
+    public static void addPunishment(String usr, BansTable ban) {
         punishmentCache.put(usr, ban);
     }
 
-    public static BanModel getPunishment(String usr) {
+    public static BansTable getPunishment(String usr) {
         return punishmentCache.getIfPresent(usr);
     }
 
