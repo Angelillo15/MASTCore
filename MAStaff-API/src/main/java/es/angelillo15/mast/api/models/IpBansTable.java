@@ -51,4 +51,21 @@ public class IpBansTable extends StormModel {
             return null;
         }
     }
+
+    public static IpBansTable getIpBanned(int banId) {
+        Storm storm = PluginConnection.getStorm();
+
+        try {
+            Collection<IpBansTable> bans = storm.buildQuery(IpBansTable.class)
+                    .where("ban_id", Where.EQUAL, banId)
+                    .limit(1)
+                    .execute()
+                    .join();
+
+            return bans.iterator().next();
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
 }
