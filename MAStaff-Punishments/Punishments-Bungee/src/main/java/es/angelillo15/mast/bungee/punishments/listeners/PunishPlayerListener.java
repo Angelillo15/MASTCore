@@ -14,7 +14,7 @@ public class PunishPlayerListener implements Listener {
     public void onPlayerPostLogin(PostLoginEvent event) {
         ProxiedPlayer player = event.getPlayer();
 
-        if (!(player.hasPermission("mast.punishments.staff"))) {
+        if (!(player.hasPermission("mast.punishments"))) {
             return;
         }
 
@@ -25,7 +25,7 @@ public class PunishPlayerListener implements Listener {
     public void onPlayerDisconnect(PlayerDisconnectEvent event) {
         ProxiedPlayer player = event.getPlayer();
 
-        if (!(player.hasPermission("mast.punishments.staff"))) {
+        if (!(player.hasPermission("mast.punishments"))) {
             return;
         }
 

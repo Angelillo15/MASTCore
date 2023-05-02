@@ -17,6 +17,8 @@ import es.angelillo15.mast.api.config.punishments.Messages;
 public class BanCMD extends Command {
     @Override
     public void onCommand(CommandSender sender, String label, String[] args) {
+        if (!(sender.hasPermission("mast.punishments"))) return;
+
         IPunishPlayer punishPlayer = PunishPlayersManager.getPlayer(sender.getUniqueId());
 
         if (args.length < 1) {

@@ -20,6 +20,8 @@ import es.angelillo15.mast.api.utils.NumberUtils;
 public class TempIPBanCMD extends Command {
     @Override
     public void onCommand(CommandSender sender, String label, String[] args) {
+        if (!(sender.hasPermission("mast.punishments"))) return;
+
         IPunishPlayer punishPlayer = PunishPlayersManager.getPlayer(sender.getUniqueId());
 
         if (args.length < 2) {

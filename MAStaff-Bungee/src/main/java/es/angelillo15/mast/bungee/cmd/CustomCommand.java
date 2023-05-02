@@ -3,6 +3,7 @@ package es.angelillo15.mast.bungee.cmd;
 import es.angelillo15.mast.api.cmd.sender.BungeeConsoleCommandSender;
 import es.angelillo15.mast.api.cmd.sender.CommandSender;
 import es.angelillo15.mast.api.cmd.sender.ProxiedPlayerCommandSender;
+import es.angelillo15.mast.bungee.config.Messages;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.plugin.Command;
 
@@ -32,7 +33,9 @@ public class CustomCommand extends Command {
     public void execute(net.md_5.bungee.api.CommandSender sender, String[] args) {
         if (sender instanceof ProxiedPlayer) {
             CommandSender commandSender = new ProxiedPlayerCommandSender((ProxiedPlayer) sender);
-
+            if (!commandSender.hasPermission(getPermission())) {
+                return;
+            }
             command.onCommand(commandSender, getName(), args);
             return;
         }
