@@ -24,6 +24,7 @@ dependencies {
     compileOnly("redis.clients:jedis:4.4.0-m2")
     compileOnly("com.konghq:unirest-java:3.11.09")
     implementation("net.byteflux:libby-bungee:1.1.5")
+    compileOnly("com.github.Mindgamesnl:storm:prod125")
 }
 
 tasks.processResources {
