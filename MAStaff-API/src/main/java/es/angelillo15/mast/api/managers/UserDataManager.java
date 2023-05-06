@@ -4,35 +4,35 @@ import com.github.benmanes.caffeine.cache.Cache;
 import com.github.benmanes.caffeine.cache.Caffeine;
 import es.angelillo15.mast.api.MAStaffInstance;
 import es.angelillo15.mast.api.data.DataManager;
-import es.angelillo15.mast.api.data.UserData;
+import es.angelillo15.mast.api.models.UserModel;
 
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
 public class UserDataManager {
-    private static final Cache<String, UserData> userDataCache = Caffeine.newBuilder()
+    private static final Cache<String, UserModel> userDataCache = Caffeine.newBuilder()
             .maximumSize(100)
             .expireAfterWrite(1, TimeUnit.MINUTES)
             .build();
 
-    public static UserData getUserData(String key) {
+    public static UserModel getUserData(String key) {
         long start = System.currentTimeMillis();
 
         boolean exists = userDataCache.asMap().containsKey(key);
-        UserData data;
+        UserModel data;
 
         if (exists) {
             data = userDataCache.getIfPresent(key);
         } else {
             boolean isUUID = key.length() == 36;
 
-            UserData userData = isUUID ?
+            UserModel userModel = isUUID ?
                     DataManager.getDataManager().getUserData(UUID.fromString(key)) :
                     DataManager.getDataManager().getUserData(key);
 
-            if (userData == null) {
+            if (userModel == null) {
                 MAStaffInstance.getLogger().debug("User " + key + " does not exist in the database.");
-                UserData emptyData = new UserData();
+                UserModel emptyData = new UserModel();
 
                 if (isUUID) {
                     emptyData.setUUID(key);
@@ -43,9 +43,9 @@ public class UserDataManager {
                 return emptyData;
             }
 
-            userDataCache.put(key, userData);
+            userDataCache.put(key, userModel);
 
-            data = userData;
+            data = userModel;
         }
 
         long end = System.currentTimeMillis();
@@ -53,17 +53,17 @@ public class UserDataManager {
         return data;
     }
 
-    public static UserData getUserData(UUID UUID) {
+    public static UserModel getUserData(UUID UUID) {
         return getUserData(UUID.toString());
     }
 
 
-    public static void updateUserData(String key, UserData userData) {
-        userDataCache.put(key, userData);
+    public static void updateUserData(String key, UserModel userModel) {
+        userDataCache.put(key, userModel);
     }
 
-    public static void updateUserData(UUID UUID, UserData userData) {
-        updateUserData(UUID.toString(), userData);
+    public static void updateUserData(UUID UUID, UserModel userModel) {
+        updateUserData(UUID.toString(), userModel);
     }
 
     public static void removeUserData(String key) {

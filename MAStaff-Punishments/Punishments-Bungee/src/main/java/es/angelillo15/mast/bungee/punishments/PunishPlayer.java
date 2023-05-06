@@ -3,7 +3,7 @@ package es.angelillo15.mast.bungee.punishments;
 import com.craftmend.storm.Storm;
 import es.angelillo15.mast.api.MAStaffInstance;
 import es.angelillo15.mast.api.cmd.sender.CommandSender;
-import es.angelillo15.mast.api.data.UserData;
+import es.angelillo15.mast.api.models.UserModel;
 import es.angelillo15.mast.api.database.PluginConnection;
 import es.angelillo15.mast.api.exceptions.PlayerNotBannedException;
 import es.angelillo15.mast.api.exceptions.user.PlayerNotOnlineException;
@@ -64,7 +64,7 @@ public class PunishPlayer implements IPunishPlayer {
             return;
         }
 
-        UserData data = UserDataManager.getUserData(target);
+        UserModel data = UserDataManager.getUserData(target);
 
         bansTable.setUsername(data.getUsername());
         bansTable.setUuid(data.getUUID() == null ? "unknown" : data.getUUID());
@@ -88,7 +88,7 @@ public class PunishPlayer implements IPunishPlayer {
 
         if (ipban) {
 
-            if (Objects.equals(data.getLastIP(), UserData.UNKNOWN)) {
+            if (Objects.equals(data.getLastIp(), UserModel.UNKNOWN)) {
                 player.sendMessage(
                         Messages.Commands.playerNotFound(target)
                 );
@@ -97,7 +97,7 @@ public class PunishPlayer implements IPunishPlayer {
 
             IpBansTable ipBansTable = new IpBansTable();
 
-            ipBansTable.setIp(data.getLastIP());
+            ipBansTable.setIp(data.getLastIp());
             ipBansTable.setBanId(bansTable.getId());
 
             storm.save(ipBansTable);

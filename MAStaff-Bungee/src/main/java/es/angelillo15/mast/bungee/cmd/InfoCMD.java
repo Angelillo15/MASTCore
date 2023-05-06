@@ -4,7 +4,7 @@ import es.angelillo15.mast.api.TextUtils;
 import es.angelillo15.mast.api.cmd.Command;
 import es.angelillo15.mast.api.cmd.CommandData;
 import es.angelillo15.mast.api.cmd.sender.CommandSender;
-import es.angelillo15.mast.api.data.UserData;
+import es.angelillo15.mast.api.models.UserModel;
 import es.angelillo15.mast.api.managers.UserDataManager;
 import es.angelillo15.mast.bungee.config.Config;
 import es.angelillo15.mast.bungee.config.Messages;
@@ -26,24 +26,24 @@ public class InfoCMD extends Command {
                 sender.sendMessage("/info <player>/<uuid>");
                 return;
             }
-            UserData userData = null;
+            UserModel userModel = null;
             boolean isOnline;
             boolean isUUID = args[0].length() == 36;
 
             if (isUUID) {
                 try {
-                    userData = UserDataManager.getUserData(UUID.fromString(args[0]));
+                    userModel = UserDataManager.getUserData(UUID.fromString(args[0]));
                     isOnline = ProxyServer.getInstance().getPlayer(UUID.fromString(args[0])) != null;
                 } catch (Exception e) {
                     sender.sendMessage(TextUtils.simpleColorize(Messages.getInfoUserNotFound()));
                     return;
                 }
             } else {
-                userData = UserDataManager.getUserData(args[0]);
+                userModel = UserDataManager.getUserData(args[0]);
                 isOnline = ProxyServer.getInstance().getPlayer(args[0]) != null;
             }
 
-            if (userData == null) {
+            if (userModel == null) {
                 sender.sendMessage(es.angelillo15.mast.bungee.utils.TextUtils.colorize(Messages.getInfoUserNotFound()
                         .replace("{player}", args[0]))
                 );
@@ -52,14 +52,14 @@ public class InfoCMD extends Command {
 
             for (String s : Messages.getInfoMessage()) {
                 sender.sendMessage(s
-                        .replace("{player}", userData.getUsername())
-                        .replace("{uuid}", userData.getUUID())
-                        .replace("{reg_ip}", userData.getRegIP())
-                        .replace("{last_ip}", userData.getLastIP())
-                        .replace("{reg_date}", TextUtils.formatDate(userData.getFirstLogin(),
+                        .replace("{player}", userModel.getUsername())
+                        .replace("{uuid}", userModel.getUUID())
+                        .replace("{reg_ip}", userModel.getRegIp())
+                        .replace("{last_ip}", userModel.getLastIp())
+                        .replace("{reg_date}", TextUtils.formatDate(userModel.getFirstLogin(),
                                 Config.dateFormat())
                         )
-                        .replace("{last_date}", TextUtils.formatDate(userData.getLastLogin(),
+                        .replace("{last_date}", TextUtils.formatDate(userModel.getLastLogin(),
                                 Config.dateFormat())
                         ).replace("{online}", isOnline ? "Yes" : "No")
                 );

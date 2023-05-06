@@ -2,7 +2,7 @@ package es.angelillo15.mast.bungee.listener.user;
 
 import es.angelillo15.mast.api.MAStaffInstance;
 import es.angelillo15.mast.api.data.DataManager;
-import es.angelillo15.mast.api.data.UserData;
+import es.angelillo15.mast.api.models.UserModel;
 import es.angelillo15.mast.api.managers.UserDataManager;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.event.PostLoginEvent;
@@ -26,12 +26,12 @@ public class UserJoinListener implements Listener {
 
         if (userExists) {
             new Thread(() -> {
-                UserData userData = DataManager.getDataManager().getUserData(player.getUniqueId());
+                UserModel userModel = DataManager.getDataManager().getUserData(player.getUniqueId());
 
                 DataManager.getDataManager().updateIP(player.getUniqueId().toString(), player.getAddress().getAddress().getHostAddress());
                 DataManager.getDataManager().updateLastLogin(player.getUniqueId().toString(), String.valueOf(System.currentTimeMillis()));
 
-                if (!userData.getUsername().equals(player.getName())) {
+                if (!userModel.getUsername().equals(player.getName())) {
                     DataManager.getDataManager().updateUsername(player.getUniqueId().toString(), player.getName());
                 }
             }).start();

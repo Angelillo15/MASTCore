@@ -1,9 +1,7 @@
 package es.angelillo15.mast.api.data;
 
-import es.angelillo15.mast.api.database.PluginConnection;
+import es.angelillo15.mast.api.models.UserModel;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.util.UUID;
 
 public abstract class AbstractDataManager {
@@ -31,15 +29,15 @@ public abstract class AbstractDataManager {
 
     }
 
-    public UserData getUserData(String where, String value) {
+    public UserModel getUserData(String where, String value) {
         return null;
     }
 
-    public UserData getUserData(UUID UUID) {
+    public UserModel getUserData(UUID UUID) {
         return null;
     }
 
-    public UserData getUserData(String username) {
+    public UserModel getUserData(String username) {
         return null;
     }
 
