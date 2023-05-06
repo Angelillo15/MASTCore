@@ -28,6 +28,7 @@ import es.angelillo15.mast.bungee.utils.BungeeServerUtils;
 import es.angelillo15.mast.bungee.utils.Logger;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.SneakyThrows;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.plugin.Plugin;
 
@@ -170,6 +171,7 @@ public class MAStaff extends Plugin implements MAStaffInstance<Plugin> {
         }
     }
 
+    @SneakyThrows
     @Override
     public void reload() {
         unloadDatabase();
@@ -180,6 +182,7 @@ public class MAStaff extends Plugin implements MAStaffInstance<Plugin> {
         registerCommands();
         registerListeners();
         AddonsLoader.reloadAddons();
+        PluginConnection.getStorm().runMigrations();
     }
 
     @Override
