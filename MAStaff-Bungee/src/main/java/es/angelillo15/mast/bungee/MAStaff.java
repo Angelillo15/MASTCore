@@ -132,6 +132,7 @@ public class MAStaff extends Plugin implements MAStaffInstance<Plugin> {
         RedisManager.sendEvent(event);
     }
 
+    @SneakyThrows
     @Override
     public void loadDatabase() {
         new RedisManager().load();
@@ -141,6 +142,8 @@ public class MAStaff extends Plugin implements MAStaffInstance<Plugin> {
         } else {
             new PluginConnection(getDataFolder().getPath());
         }
+
+        PluginConnection.getStorm().runMigrations();
 
         DataManager.load();
 

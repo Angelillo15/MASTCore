@@ -18,8 +18,10 @@ public class CommonSQL extends AbstractDataManager {
     @SneakyThrows
     @Override
     public void migrations() {
+        MAStaffInstance.getLogger().debug("Running migrations");
         Storm storage = PluginConnection.getStorm();
         storage.registerModel(new UserModel());
+        storage.runMigrations();
     }
 
     public void userDataTable() {

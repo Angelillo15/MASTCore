@@ -6,7 +6,7 @@ import com.craftmend.storm.api.markers.Column;
 import com.craftmend.storm.api.markers.Table;
 import lombok.Data;
 
-@Table(name="mast_reports")
+@Table(name="mastaff_reports")
 @Data
 public class ReportModel extends StormModel {
     @Column(

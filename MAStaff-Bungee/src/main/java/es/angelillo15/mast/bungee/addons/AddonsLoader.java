@@ -1,6 +1,7 @@
 package es.angelillo15.mast.bungee.addons;
 
 import es.angelillo15.mast.api.Constants;
+import es.angelillo15.mast.api.MAStaffInstance;
 import es.angelillo15.mast.api.addons.AddonDescription;
 import es.angelillo15.mast.api.addons.AddonsManager;
 import es.angelillo15.mast.api.addons.MAStaffAddon;
@@ -18,6 +19,7 @@ import java.util.Properties;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
+@SuppressWarnings("unchecked")
 public class AddonsLoader {
     @SneakyThrows
     public static void loadAddons() {
@@ -63,7 +65,15 @@ public class AddonsLoader {
             Class<?> cls = new URLClassLoader(urls, MAStaff.getInstance().getClass().getClassLoader())
                     .loadClass(addonDescription.getMain());
 
-            MAStaffAddon<Plugin> addon = (MAStaffAddon<Plugin>) cls.newInstance();
+
+            Object instance = cls.getDeclaredConstructor().newInstance();
+
+            if (!(instance instanceof MAStaffInstance<?>)) {
+                MAStaff.getInstance().getLogger().severe("Addon " + addonDescription.getName() + " v" + addonDescription.getVersion() + " by " + addonDescription.getAuthor() + " doesn't implement MAStaffInstance!");
+                continue;
+            }
+
+            MAStaffAddon<Plugin> addon = (MAStaffAddon<Plugin>) instance;
 
             addon.init(new File(file.getParentFile() + File.separator + addonDescription.getName()), addonDescription, MAStaff.getInstance(), false);
             try {

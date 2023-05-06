@@ -43,9 +43,10 @@ public class PluginConnection {
         config.setJdbcUrl("jdbc:mysql://" + host + ":" + port + "/" + database + "?autoReconnect=true&useUnicode=yes");
         config.setUsername(user);
         config.setPassword(password);
-        config.addDataSourceProperty( "cachePrepStmts" , "true" );
-        config.addDataSourceProperty( "prepStmtCacheSize" , "250" );
-        config.addDataSourceProperty( "prepStmtCacheSqlLimit" , "2048" );
+        config.setMaximumPoolSize(20);
+        config.setConnectionTimeout(300000);
+        config.setConnectionTimeout(120000);
+        config.setLeakDetectionThreshold(300000);
         dataSource = new HikariDataSource(config);
 
         storm = new Storm(new PluginDriver(dataSource));
