@@ -25,3 +25,15 @@ Config:
   language: en.yml
   # Date format for the plugin.
   date-format: "dd/MM/yyyy HH:mm:ss"
+Warn:
+  # Warnings will expire after the time has passed.
+  # To make it permanent, set it to permanent.
+  expire-after: 30d
+  # Actions when a player reachs a certain amount of warnings.
+  # Example of a warning action:
+  # actions:
+  #   3: "kick {player} You have been kicked for reaching 3 warnings."
+  #   5: "tempban {player} 1d You have been banned for reaching 5 warnings."
+  actions:
+    3: "kick {player} You have been kicked for reaching 3 warnings."
+    5: "tempban {player} 1d You have been banned for reaching 5 warnings."
