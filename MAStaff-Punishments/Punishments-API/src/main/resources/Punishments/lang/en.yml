@@ -33,6 +33,7 @@ Default:
   defaultUnBanReason: 'No reason specified.'
   # Default reasons when a Player is unwarned.
   defaultUnWarnReason: 'No reason specified.'
+
   # Appeal Message
   appealMessage: 'Appeal at: https://discord.nookure.com/'
 Ban:
@@ -153,6 +154,28 @@ Kick:
   # ↳ {kickedBy} - The player who kicked the player.
   # ↳ {reason} - The reason why the player was kicked.
   kickedBroadcast: "{prefix} &c{player} has been kicked by {kickedBy} for {reason}."
+Warn:
+  # Send a title to the player when he/she is warned.
+  titleOnWarn: true
+  # This message is sent to the player when he/she is warned.
+  # You can use the following placeholders:
+  # ↳ {player} - The player who was warned.
+  # ↳ {warnedBy} - The player who warned the player.
+  # ↳ {reason} - The reason why the player was warned.
+  title: "&c&lYou have been warned!"
+  subtitle: "A moderator has warned you"
+  # This message is sent to the player when he/she is warned.
+  # You can use the following placeholders:
+  # ↳ {player} - The player who was warned.
+  # ↳ {warnedBy} - The player who warned the player.
+  # ↳ {reason} - The reason why the player was warned.
+  warnedMessage: "&cYou have been warned by {warnedBy} for {reason}."
+  # This message is sent to the server when a player is warned.
+  # You can use the following placeholders:
+  # ↳ {player} - The player who was warned.
+  # ↳ {warnedBy} - The player who warned the player.
+  # ↳ {reason} - The reason why the player was warned.
+  warnedBroadcast: "{prefix} &c{player} has been warned by {warnedBy} for {reason}."
 Commands:
   # Message sent to the player when he tries to execute a command
   # with a player argument that not exists in the DB.
@@ -199,3 +222,8 @@ Commands:
     usage: '{prefix} &cUsage: /kick <player> <reason?>'
     # Message sent to the player when he kicks a player.
     success: '{prefix} &a{player} has been kicked by {staff} with the reason {reason}.'
+  warn:
+    # Message sent to the player when he doesn't fill all the arguments.
+    usage: '{prefix} &cUsage: /warn <player> <reason?>'
+    # Message sent to the player when he warns a player.
+    success: '{prefix} &a{player} has been warned by {staff} with the reason {reason}.'
