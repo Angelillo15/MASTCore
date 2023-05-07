@@ -44,9 +44,8 @@ public class PluginConnection {
         config.setUsername(user);
         config.setPassword(password);
         config.setMaximumPoolSize(20);
-        config.setConnectionTimeout(300000);
-        config.setConnectionTimeout(120000);
-        config.setLeakDetectionThreshold(300000);
+        config.setConnectionTimeout(30000);
+        config.setLeakDetectionThreshold(0);
         dataSource = new HikariDataSource(config);
 
         storm = new Storm(new PluginDriver(dataSource));
