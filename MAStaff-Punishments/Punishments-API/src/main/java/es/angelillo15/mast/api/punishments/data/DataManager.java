@@ -2,10 +2,7 @@ package es.angelillo15.mast.api.punishments.data;
 
 import com.craftmend.storm.Storm;
 import es.angelillo15.mast.api.database.PluginConnection;
-import es.angelillo15.mast.api.models.BansTable;
-import es.angelillo15.mast.api.models.IpBansTable;
-import es.angelillo15.mast.api.models.ReportComments;
-import es.angelillo15.mast.api.models.ReportModel;
+import es.angelillo15.mast.api.models.*;
 import lombok.SneakyThrows;
 
 public class DataManager {
@@ -21,6 +18,8 @@ public class DataManager {
         storm.registerModel(new ReportModel());
         storm.runMigrations();
         storm.registerModel(new ReportComments());
+        storm.runMigrations();
+        storm.registerModel(new WarnModel());
         storm.runMigrations();
     }
 }
