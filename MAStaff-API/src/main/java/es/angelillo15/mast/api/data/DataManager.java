@@ -1,8 +1,7 @@
 package es.angelillo15.mast.api.data;
 
 import es.angelillo15.mast.api.MAStaffInstance;
-import es.angelillo15.mast.api.data.sql.MySQL;
-import es.angelillo15.mast.api.data.sql.SQLite;
+import es.angelillo15.mast.api.data.sql.CommonSQL;
 import es.angelillo15.mast.api.database.PluginConnection;
 
 public class DataManager {
@@ -13,17 +12,7 @@ public class DataManager {
     }
 
     public static void load() {
-        switch (PluginConnection.getDataProvider()) {
-            case MYSQL:
-                dataManager = new MySQL();
-                break;
-            case SQLITE:
-                dataManager = new SQLite();
-                break;
-            default:
-                MAStaffInstance.getLogger().error("Invalid data provider!");
-                break;
-        }
+        dataManager = new CommonSQL();
 
         dataManager.migrations();
 

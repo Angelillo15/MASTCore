@@ -22,10 +22,24 @@ public class CommonSQL extends AbstractDataManager {
         Storm storage = PluginConnection.getStorm();
         storage.registerModel(new UserModel());
         storage.runMigrations();
+        addConsoleUser();
     }
 
-    public void userDataTable() {
+    @SneakyThrows
+    public void addConsoleUser() {
+        if (UserModel.exists("username", "/CONSOLE/")) {
+            return;
+        }
 
+        UserModel userModel = new UserModel();
+        userModel.setUsername("/CONSOLE/");
+        userModel.setUUID(UUID.randomUUID().toString());
+        userModel.setFirstLogin(System.currentTimeMillis());
+        userModel.setLastLogin(System.currentTimeMillis());
+        userModel.setLastIp("localhost");
+        userModel.setRegIp("localhost");
+
+        PluginConnection.getStorm().save(userModel);
     }
 
     @Override
