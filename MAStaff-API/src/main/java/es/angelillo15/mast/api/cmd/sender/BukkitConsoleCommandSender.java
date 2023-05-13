@@ -15,7 +15,7 @@ public class BukkitConsoleCommandSender implements CommandSender {
 
     @Override
     public String getName() {
-        return "CONSOLE";
+        return "/CONSOLE/";
     }
 
     @Override

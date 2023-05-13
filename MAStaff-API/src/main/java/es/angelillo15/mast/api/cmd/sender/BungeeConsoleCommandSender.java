@@ -15,7 +15,7 @@ public class BungeeConsoleCommandSender implements CommandSender {
 
     @Override
     public String getName() {
-        return "CONSOLE";
+        return "/CONSOLE/";
     }
 
     @Override
