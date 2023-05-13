@@ -21,17 +21,19 @@ Default:
   #
   # Plugin prefix
   prefix: '&c&lPunishments &8&l» &f'
-  # Default reasons when a Player is banned.
+  # Default reason when a Player is banned.
   defaultBanReason: 'No reason specified.'
-  # Default reasons when a Player is muted.
+  # Default reason when a Player is muted.
   defaultMuteReason: 'No reason specified.'
-  # Default reasons when a Player is kicked.
+  # Default reason when a Player is kicked.
   defaultKickReason: 'No reason specified.'
-  # Default reasons when a Player is unmuted.
+  # Default reason when a Player is unmuted.
   defaultUnMuteReason: 'No reason specified.'
-  # Default reasons when a Player is unbanned.
+  # Default reason when a Player is unbanned.
   defaultUnBanReason: 'No reason specified.'
-  # Default reasons when a Player is unwarned.
+  # Default reason when a Player is warned.
+  defaultWarnReason: 'No reason specified.'
+  # Default reason when a Player is unwarned.
   defaultUnWarnReason: 'No reason specified.'
 
   # Appeal Message

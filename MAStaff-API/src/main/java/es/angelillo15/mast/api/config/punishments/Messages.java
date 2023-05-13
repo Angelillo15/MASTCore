@@ -28,6 +28,10 @@ public class Messages {
             return ConfigLoader.getMessages().getConfig().getString("Default.defaultUnMuteReason");
         }
 
+        public static String defaultWarnReason() {
+            return ConfigLoader.getMessages().getConfig().getString("Default.defaultWarnReason");
+        }
+
         public static String defaultUnWarnReason() {
             return ConfigLoader.getMessages().getConfig().getString("Default.defaultUnWarnReason");
         }
