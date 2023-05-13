@@ -142,6 +142,42 @@ public class Messages {
         }
     }
 
+    public static class Warn {
+        public static boolean titleOnWarn() {
+            return ConfigLoader.getMessages().getConfig().getBoolean("Warn.titleOnWarn");
+        }
+
+        public static String title() {
+            return colorize(ConfigLoader.getMessages().getConfig().getString("Warn.title"));
+        }
+
+        public static String subtitle() {
+            return colorize(ConfigLoader.getMessages().getConfig().getString("Warn.subtitle"));
+        }
+
+        public static String warnedMessage() {
+            return colorize(ConfigLoader.getMessages().getConfig().getString("Warn.warnedMessage"));
+        }
+
+        public static String warnedMessage(String player, String warnedBy, String reason) {
+            return colorize(warnedMessage())
+                    .replace("{player}", player)
+                    .replace("{warnedBy}", warnedBy)
+                    .replace("{reason}", reason);
+        }
+
+        public static String warnedBroadcast() {
+            return colorize(ConfigLoader.getMessages().getConfig().getString("Warn.warnedBroadcast"));
+        }
+
+        public static String warnedBroadcast(String player, String warnedBy, String reason) {
+            return colorize(warnedBroadcast())
+                    .replace("{player}", player)
+                    .replace("{warnedBy}", warnedBy)
+                    .replace("{reason}", reason);
+        }
+    }
+
     public static class Commands {
         public static String playerNotFound() {
             return colorize(ConfigLoader.getMessages().getConfig().getString("Commands.playerNotFound"));
@@ -302,6 +338,23 @@ public class Messages {
 
             public static String success() {
                 return colorize(ConfigLoader.getMessages().getConfig().getString("Commands.kick.success"));
+            }
+
+            public static String success(String player, String reason, String staff) {
+                return colorize(success())
+                        .replace("{player}", player)
+                        .replace("{reason}", reason)
+                        .replace("{staff}", staff);
+            }
+        }
+
+        public static class Warn {
+            public static String usage() {
+                return colorize(ConfigLoader.getMessages().getConfig().getString("Commands.warn.usage"));
+            }
+
+            public static String success() {
+                return colorize(ConfigLoader.getMessages().getConfig().getString("Commands.warn.success"));
             }
 
             public static String success(String player, String reason, String staff) {
