@@ -32,4 +32,20 @@ public class WarnModel extends StormModel {
     )
     private Integer removedBy;
 
+    @Column(
+            length = 4096
+    )
+    private String removeReason;
+
+    @Column
+    private Long time;
+
+    @Column
+    private Long removedTime;
+
+    @Column
+    private Boolean active;
+
+    @Column
+    private Long until;
 }
