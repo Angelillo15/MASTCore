@@ -11,6 +11,7 @@
 
 ## 🪣 Bukkit
 
+* [Commands](bukkit/commands.md)
 * [Config](bukkit/config.md)
 
 ## 🪢 BungeeCord
