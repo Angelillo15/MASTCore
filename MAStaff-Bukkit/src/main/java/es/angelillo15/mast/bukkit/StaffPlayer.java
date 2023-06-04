@@ -3,6 +3,7 @@ package es.angelillo15.mast.bukkit;
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
 import es.angelillo15.mast.api.IStaffPlayer;
+import es.angelillo15.mast.api.MAStaffInstance;
 import es.angelillo15.mast.api.Permissions;
 import es.angelillo15.mast.api.database.sql.CommonQueries;
 import es.angelillo15.mast.api.event.bukkit.staff.StaffDisableEvent;
@@ -129,7 +130,10 @@ public class StaffPlayer implements IStaffPlayer {
         if (!quit) StaffUtils.asyncBroadcastMessage(Messages.GET_VANISH_JOIN_MESSAGE()
                 .replace("{player}", player.getName()));
         setGlowing(false);
-        restoreLocation();
+        if (!restoreLocation()) {
+            MAStaffInstance.getLogger().debug("Error restoring location for " + player.getName());
+            // Todo send message of error to the player
+        }
         Bukkit.getPluginManager().callEvent(new StaffDisableEvent(this));
     }
 
@@ -307,4 +311,8 @@ public class StaffPlayer implements IStaffPlayer {
         return playerInventoryConfig.getBoolean("Status.staffMode");
     }
 
+    @Override
+    public void staffModeAsyncInventoryChecker() {
+
+    }
 }
