@@ -45,4 +45,18 @@ public class Config {
             return ConfigLoader.getConfig().getConfig().getString("Database.password");
         }
     }
+
+    public static class StaffVault {
+        public static boolean enabled() {
+            return ConfigLoader.getConfig().getConfig().getBoolean("StaffVault.enabled");
+        }
+
+        public static String name() {
+            return ConfigLoader.getConfig().getConfig().getString("StaffVault.name");
+        }
+
+        public static int checkTime() {
+            return ConfigLoader.getConfig().getConfig().getInt("StaffVault.checkTime");
+        }
+    }
 }
