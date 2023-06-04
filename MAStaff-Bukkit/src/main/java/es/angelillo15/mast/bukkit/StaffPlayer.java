@@ -282,25 +282,29 @@ public class StaffPlayer implements IStaffPlayer {
         if(!(ConfigLoader.getConfig().getConfig().getBoolean("Config.teleportBack"))) return false;
         if(!playerInventoryConfig.contains("Location.world")) return false;
         World world = Bukkit.getWorld(Objects.requireNonNull(playerInventoryConfig.getString("Location.world")));
+
         if (world == null) return false;
+
         double x = playerInventoryConfig.getDouble("Location.x");
         double y = playerInventoryConfig.getDouble("Location.y");
         double z = playerInventoryConfig.getDouble("Location.z");
         float yaw = (float) playerInventoryConfig.getDouble("Location.yaw");
         float pitch = (float) playerInventoryConfig.getDouble("Location.pitch");
+
         Location location = new Location(world, x, y, z, yaw, pitch);
-        switch (world.getEnvironment()) {
-            case NETHER:
-                PaperLib.teleportAsync(player, location);
-                return true;
-            default:
-                PaperLib.teleportAsync(player, world.getHighestBlockAt(location).getLocation().add(0, 1, 0));
-                return true;
+
+        if (world.getEnvironment() == World.Environment.NETHER) {
+            PaperLib.teleportAsync(player, location);
+            return true;
         }
+
+        PaperLib.teleportAsync(player, world.getHighestBlockAt(location).getLocation().add(0, 1, 0));
+        return true;
     }
 
     @Override
     public boolean wasInStaffMode() {
         return playerInventoryConfig.getBoolean("Status.staffMode");
     }
+
 }
