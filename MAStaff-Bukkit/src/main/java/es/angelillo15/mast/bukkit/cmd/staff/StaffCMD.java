@@ -22,6 +22,7 @@ public class StaffCMD implements CommandExecutor {
         legacySubCommands.clear();
         legacySubCommands.add(new StaffListArg());
         legacySubCommands.add(new StaffHelpArg());
+        legacySubCommands.add(new StaffVaultCMD());
         if(ConfigLoader.getPunishmentsGUI().getConfig().getBoolean("Gui.enable")) legacySubCommands.add(new StaffPunishmentsGUIArg());
     }
 
