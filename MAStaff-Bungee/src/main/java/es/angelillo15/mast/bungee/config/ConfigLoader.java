@@ -23,6 +23,7 @@ public class ConfigLoader {
 
     public ConfigLoader(MAStaff plugin) {
         this.plugin = plugin;
+        ConfigMerge.loggerSetup();
     }
 
     public void load() {

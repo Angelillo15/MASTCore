@@ -1,9 +1,9 @@
 package es.angelillo15.mast.bukkit.cmd.mast;
 
-import es.angelillo15.mast.api.cmd.SubCommand;
+import es.angelillo15.mast.api.cmd.LegacySubCommand;
 import org.bukkit.command.CommandSender;
 
-public class HelpARG extends SubCommand {
+public class HelpARG extends LegacySubCommand {
     @Override
     public String getName() {
         return "help";

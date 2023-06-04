@@ -100,6 +100,15 @@ public class LibsManager {
                         .relocate("redis{}clients{}jedis", "es{}angelillo15{}mast{}libs{}jedis")
                         .build();
 
+        Library storm = Library.builder()
+                        .groupId("com{}github{}Mindgamesnl")
+                        .artifactId("storm")
+                        .version("prod125")
+                        .isolatedLoad(false)
+                        .relocate("com{}craftmend{}storm", "es{}angelillo15{}mast{}libs{}storm")
+                        .relocate("com{}google{}gson", "es{}angelillo15{}mast{}libs{}google{}gson")
+                        .build();
+
 
         libs.add(apacheHttp);
         libs.add(hikariCP);
@@ -111,6 +120,7 @@ public class LibsManager {
         libs.add(apacheHttpMime);
         libs.add(apacheLogger);
         libs.add(jedis);
+        libs.add(storm);
         libs.add(getLib("org{}slf4j", "slf4j-api", "2.0.6"));
     }
 

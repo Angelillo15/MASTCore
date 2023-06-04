@@ -1,9 +1,13 @@
 package es.angelillo15.mast.bungee.addons;
 
+import es.angelillo15.mast.api.Constants;
+import es.angelillo15.mast.api.MAStaffInstance;
 import es.angelillo15.mast.api.addons.AddonDescription;
 import es.angelillo15.mast.api.addons.AddonsManager;
 import es.angelillo15.mast.api.addons.MAStaffAddon;
 import es.angelillo15.mast.bungee.MAStaff;
+import es.angelillo15.mast.bungee.config.Config;
+import es.angelillo15.mast.bungee.punishments.MAStaffPunishmentsLoader;
 import lombok.SneakyThrows;
 import net.md_5.bungee.api.plugin.Plugin;
 import java.io.File;
@@ -15,6 +19,7 @@ import java.util.Properties;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
+@SuppressWarnings("unchecked")
 public class AddonsLoader {
     @SneakyThrows
     public static void loadAddons() {
@@ -22,6 +27,8 @@ public class AddonsLoader {
         if (!addonsFolder.exists()) {
             addonsFolder.mkdir();
         }
+
+        loadDefaultAddons();
 
         for (File file : Objects.requireNonNull(addonsFolder.listFiles())) {
             if (!file.isFile() || !file.getName().endsWith(".jar")) {
@@ -58,17 +65,68 @@ public class AddonsLoader {
             Class<?> cls = new URLClassLoader(urls, MAStaff.getInstance().getClass().getClassLoader())
                     .loadClass(addonDescription.getMain());
 
-            MAStaffAddon<Plugin> addon = (MAStaffAddon<Plugin>) cls.newInstance();
 
-            addon.init(new File(file.getParentFile() + File.separator + addonDescription.getName()), addonDescription, MAStaff.getInstance());
-            addon.onEnable();
+            Object instance = cls.getDeclaredConstructor().newInstance();
+
+            if (!(instance instanceof MAStaffInstance<?>)) {
+                MAStaff.getInstance().getLogger().severe("Addon " + addonDescription.getName() + " v" + addonDescription.getVersion() + " by " + addonDescription.getAuthor() + " doesn't implement MAStaffInstance!");
+                continue;
+            }
+
+            MAStaffAddon<Plugin> addon = (MAStaffAddon<Plugin>) instance;
+
+            addon.init(new File(file.getParentFile() + File.separator + addonDescription.getName()), addonDescription, MAStaff.getInstance(), false);
+            try {
+                addon.onEnable();
+            } catch (Exception e) {
+                MAStaff.getInstance().getLogger().severe("Error while enabling addon " + addonDescription.getName() + " v" + addonDescription.getVersion() + " by " + addonDescription.getAuthor());
+                e.printStackTrace();
+                continue;
+            }
+
 
             AddonsManager.registerAddon(addon);
-
         }
     }
 
     public static void unloadAddons() {
         AddonsManager.getAddons().values().forEach(MAStaffAddon::onDisable);
+    }
+
+    public static void reloadAddons() {
+        AddonsManager.getAddons().values().forEach(MAStaffAddon::reload);
+    }
+
+    public static void loadDefaultAddons() {
+        if (Config.Modules.isPunishmentsEnabled()) registerAddon("Punishments", new MAStaffPunishmentsLoader());
+    }
+
+    public static void registerAddon(AddonDescription addonDescription, MAStaffAddon<Plugin> addon) {
+        addon.init(new File(MAStaff.getInstance().getDataFolder() + File.separator + "addons" + File.separator
+                + addonDescription.getName()), addonDescription, MAStaff.getInstance(),
+                false);
+        AddonsManager.registerAddon(addon);
+        MAStaff.getInstance().getPLogger().debug("Registered addon " + addonDescription.getName() + " v" + addonDescription.getVersion() + " by " + addonDescription.getAuthor());
+
+        try {
+            addon.onEnable();
+        } catch (Exception e) {
+            MAStaff.getInstance().getLogger().severe("Error while enabling addon " + addonDescription.getName() + " v" + addonDescription.getVersion() + " by " + addonDescription.getAuthor());
+            e.printStackTrace();
+        }
+    }
+
+    public static void registerAddon(String name, MAStaffAddon<Plugin> addon) {
+        AddonDescription addonDescription = new AddonDescription();
+        addonDescription.setName(name);
+        addonDescription.setVersion(Constants.VERSION);
+        addonDescription.setAuthor("Angelillo15");
+        addonDescription.setMain("Internal");
+
+        registerAddon(addonDescription, addon);
+    }
+
+    public static void unregisterAddon(MAStaffAddon<Plugin> addon) {
+        AddonsManager.unregisterAddon(addon);
     }
 }

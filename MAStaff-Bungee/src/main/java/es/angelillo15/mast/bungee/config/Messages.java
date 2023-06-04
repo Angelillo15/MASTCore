@@ -4,6 +4,8 @@ import es.angelillo15.configmanager.ConfigManager;
 import es.angelillo15.mast.bungee.utils.TextUtils;
 import net.md_5.bungee.api.ChatColor;
 
+import java.util.ArrayList;
+
 public class Messages {
     private static ConfigManager messages = ConfigLoader.getMessages();
 
@@ -67,4 +69,15 @@ public class Messages {
         messages = ConfigLoader.getMessages();
     }
 
+    public static ArrayList<String> getInfoMessage() {
+        ArrayList<String> colorized = new ArrayList<>();
+        for (String s : messages.getConfig().getStringList("Info.playerInfoMessage")) {
+            colorized.add(TextUtils.colorize(s));
+        }
+        return colorized;
+    }
+
+    public static String getInfoUserNotFound(){
+        return messages.getConfig().getString("Info.playerNotFound");
+    }
 }

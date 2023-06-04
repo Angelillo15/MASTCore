@@ -1,12 +1,12 @@
 package es.angelillo15.mast.bukkit.cmd.staff;
 
 import es.angelillo15.mast.api.Permissions;
-import es.angelillo15.mast.api.cmd.SubCommand;
+import es.angelillo15.mast.api.cmd.LegacySubCommand;
 import es.angelillo15.mast.bukkit.gui.StaffListGUI;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-public class StaffListArg extends SubCommand {
+public class StaffListArg extends LegacySubCommand {
     @Override
     public String getName() {
         return "stafflist";

@@ -26,3 +26,13 @@ Helpop:
   correctUse: '{prefix} &7You must use &a/helpop <message>&7.' # Message sent when the command is not used correctly.
   format: '&a&lHelpop &8&l» &7({server}) &a{player} &8&l» &7{msg}' # The format for sent messages on Helpop.
   cooldown: '&a&lHelpop &8&l» &7You must wait &a{cooldown} &7seconds to send another helpop message.' # The message sent when the player is on cooldown.
+Info:
+  playerNotFound: '{prefix} &7The player &a{player} &7was not found.'
+  playerInfoMessage:
+    - '&a&lPlayer Info &8&l» &7{player}'
+    - '↳ UUID &8» &7{uuid}'
+    - '↳ REG IP &8» &7{reg_ip}'
+    - '↳ LAST IP &8» &7{last_ip}'
+    - '↳ REG DATE &8» &7{reg_date}'
+    - '↳ LAST DATE &8» &7{last_date}'
+    - '↳ ONLINE &8» &7{online}'

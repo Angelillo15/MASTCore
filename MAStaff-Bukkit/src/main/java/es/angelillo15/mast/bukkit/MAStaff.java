@@ -1,8 +1,6 @@
 package es.angelillo15.mast.bukkit;
 
-import es.angelillo15.mast.api.ILogger;
-import es.angelillo15.mast.api.IStaffPlayer;
-import es.angelillo15.mast.api.MAStaffInstance;
+import es.angelillo15.mast.api.*;
 import es.angelillo15.mast.api.database.DataProvider;
 import es.angelillo15.mast.bukkit.addons.AddonsLoader;
 import es.angelillo15.mast.bukkit.cmd.FreezeCMD;
@@ -26,7 +24,6 @@ import es.angelillo15.mast.bukkit.loaders.ItemsLoader;
 import es.angelillo15.mast.bukkit.loaders.PunishmentGUILoader;
 import es.angelillo15.mast.bukkit.utils.FreezeUtils;
 import es.angelillo15.mast.bukkit.utils.Logger;
-import es.angelillo15.mast.api.TextUtils;
 import es.angelillo15.mast.bukkit.utils.Metrics;
 import es.angelillo15.mast.bukkit.utils.PermsUtils;
 import es.angelillo15.mast.bukkit.utils.scheduler.Scheduler;
@@ -42,7 +39,7 @@ import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
-import es.angelillo15.mast.bukkit.data.PluginConnection;
+import es.angelillo15.mast.api.database.PluginConnection;
 import org.simpleyaml.configuration.file.YamlFile;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -345,6 +342,11 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance<Plugin> {
 
         logger.warn(TextUtils.colorize("You are using a development version!"));
 
+    }
+
+    @Override
+    public IServerUtils getServerUtils() {
+        return null;
     }
 
     @Override

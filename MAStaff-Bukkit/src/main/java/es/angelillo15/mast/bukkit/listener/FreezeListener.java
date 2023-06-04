@@ -26,7 +26,10 @@ public class FreezeListener implements Listener {
     @EventHandler
     public void onFreezeMessage(FreezeMessageEvent e){
         Player player = e.getPlayer();
+        if (player == null) return;
+
         for (String message : Messages.spamMessage()) {
+            if (message == null) continue;
             player.sendMessage(message);
         }
     }

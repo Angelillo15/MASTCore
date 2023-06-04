@@ -13,6 +13,8 @@ repositories {
 }
 
 dependencies {
+    compileOnly(project(":MAStaff-API"))
+    compileOnly(project(":MAStaff-Punishments:Punishments-Bungee"))
     compileOnly("io.github.waterfallmc:waterfall-api:1.19-R0.1-SNAPSHOT")
     compileOnly("org.yaml:snakeyaml:1.33")
     compileOnly("com.github.Carleslc.Simple-YAML:Simple-Yaml:1.8.3")
@@ -20,8 +22,9 @@ dependencies {
     compileOnly("net.md-5:bungeecord-chat:1.16-R0.4")
     compileOnly("com.github.proxiodev.redisbungee:RedisBungee-Bungee:0.10.2")
     compileOnly("redis.clients:jedis:4.4.0-m2")
+    compileOnly("com.konghq:unirest-java:3.11.09")
     implementation("net.byteflux:libby-bungee:1.1.5")
-    implementation(project(":MAStaff-API"))
+    compileOnly("com.github.Mindgamesnl:storm:prod125")
 }
 
 tasks.processResources {

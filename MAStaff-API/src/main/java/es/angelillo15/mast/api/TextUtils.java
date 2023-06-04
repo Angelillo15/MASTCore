@@ -4,6 +4,8 @@ import es.angelillo15.mast.api.chat.api.ChatColor;
 import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.entity.Player;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -98,14 +100,11 @@ public class TextUtils {
             buf.append("s");
             uptime = uptime % SECOND;
         }
-        if (uptime > 0) {
-            if (buf.length() > 0) {
-                buf.append(", ");
-            }
-            buf.append(uptime);
-            buf.append("ms");
-        }
         return buf.toString();
+    }
+
+    public static String formatDate(long date, String format) {
+        return new SimpleDateFormat(format).format(new Date(date));
     }
 
     public static String simpleColorize(String text) {
