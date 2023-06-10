@@ -25,13 +25,14 @@ dependencies {
     compileOnly(libs.snakeYaml)
     compileOnly(libs.simpleYaml)
     compileOnly(libs.configManager)
+    compileOnly(libs.eglow)
     compileOnly(libs.hikariCP)
     compileOnly(libs.bundles.invAPI)
     compileOnly(libs.placeholderApi)
     compileOnly(libs.vault)
     compileOnly(libs.unirest)
     compileOnly(libs.unirest)
-    implementation(libs.liblyBukkit)
+    compileOnly(libs.liblyBukkit)
     compileOnly(libs.paperLib)
 }
 

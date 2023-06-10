@@ -72,6 +72,14 @@ tasks.withType<JavaCompile> {
     options.encoding = "UTF-8"
 }
 
+tasks.build {
+    dependsOn("shadowJar")
+}
+
+tasks.shadowJar {
+    archiveFileName.set("MAStaff.jar")
+}
+
 allprojects {
     apply(plugin = "java")
 
