@@ -3,7 +3,6 @@ on:
   push:
     branches:
       - 2.x # run the action on your projects default branch
-
 jobs:
   build:
     name: Dependencies
