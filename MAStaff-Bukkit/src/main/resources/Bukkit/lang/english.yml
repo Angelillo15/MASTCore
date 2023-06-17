@@ -79,3 +79,9 @@ StaffList:
   previousPage: '&a&l« &7Previous Page'
   # Next Page button name.
   nextPage: '&a&l» &7Next Page'
+# StaffVault module messages.
+StaffVault:
+  # Message sent when an item is saved to the Staff Vault.
+  itemSaved: "{prefix} &7An item has been saved to your Staff Vault."
+  # Message sent when the Staff Vault is full.
+  staffVaultFull: "{prefix} &7Your Staff Vault is full."
