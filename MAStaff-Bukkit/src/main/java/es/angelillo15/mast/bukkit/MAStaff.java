@@ -89,6 +89,7 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance<Plugin> {
     public void drawLogo() {
         new Metrics(this, 16548);
         logger = new Logger();
+        TextUtils.miniMessageCheck();
         logger.info(TextUtils.colorize("&a"));
         logger.info(TextUtils.colorize("&a ███▄ ▄███▓ ▄▄▄        ██████ ▄▄▄█████▓ ▄▄▄        █████▒ █████▒"));
         logger.info(TextUtils.colorize("&a ▓██▒▀█▀ ██▒▒████▄    ▒██    ▒ ▓  ██▒ ▓▒▒████▄    ▓██   ▒▓██   ▒"));
