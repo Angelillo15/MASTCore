@@ -4,6 +4,7 @@ import es.angelillo15.mast.api.IStaffPlayer;
 import es.angelillo15.mast.api.cmd.LegacySubCommand;
 import es.angelillo15.mast.api.TextUtils;
 import es.angelillo15.mast.api.managers.StaffPlayersManagers;
+import es.angelillo15.mast.bukkit.config.Config;
 import es.angelillo15.mast.bukkit.config.ConfigLoader;
 import es.angelillo15.mast.bukkit.config.Messages;
 import lombok.Getter;
@@ -22,7 +23,7 @@ public class StaffCMD implements CommandExecutor {
         legacySubCommands.clear();
         legacySubCommands.add(new StaffListArg());
         legacySubCommands.add(new StaffHelpArg());
-        legacySubCommands.add(new StaffVaultCMD());
+        if ( Config.StaffVault.enabled()) legacySubCommands.add(new StaffVaultCMD());
         if(ConfigLoader.getPunishmentsGUI().getConfig().getBoolean("Gui.enable")) legacySubCommands.add(new StaffPunishmentsGUIArg());
     }
 
