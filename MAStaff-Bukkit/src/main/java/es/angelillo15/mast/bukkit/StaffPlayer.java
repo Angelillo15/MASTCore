@@ -327,7 +327,7 @@ public class StaffPlayer implements IStaffPlayer {
 
             while (isStaffMode()) {
                 try {
-                    Thread.sleep(Config.StaffVault.checkTime() * 1000);
+                    Thread.sleep(Config.StaffVault.checkTime() * 1000L);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -355,20 +355,18 @@ public class StaffPlayer implements IStaffPlayer {
                         return;
                     }
                 });
+
+                player.getInventory().clear();
+                setItems();
             }
         }).start();
     }
 
     @SneakyThrows
     public void addItemToStaffVault(ItemStack item) {
-        for (ItemStack content : player.getInventory().getContents()) {
-            if (content == null) continue;
-
-            if (content.getType() == Material.AIR) continue;
-
-            if (content == item) {
-                player.getInventory().setItem(player.getInventory().first(item), null);
-            }
+        if (isStaffVaultFull()) {
+            player.sendMessage(Messages.StaffVault.staffVaultIsFull());
+            return;
         }
 
         MAStaffInstance.getLogger().debug("Added item " + item.getType().name() + " to staff vault for player " + player.getName());
@@ -387,7 +385,14 @@ public class StaffPlayer implements IStaffPlayer {
 
         playerInventoryConfig.save(playerInventoryFile);
 
+        player.sendMessage(Messages.StaffVault.itemSaved());
         MAStaffInstance.getLogger().debug("Saved staff vault for player " + player.getName());
+    }
+
+    public boolean isStaffVaultFull() {
+        if (!Config.StaffVault.enabled()) return false;
+        if (playerInventoryConfig.get("staffVault") == null) return false;
+        return ((List<ItemStack>) playerInventoryConfig.get("staffVault")).size() >= 54;
     }
 
     @Override
