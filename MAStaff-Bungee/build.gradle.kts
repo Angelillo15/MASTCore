@@ -24,6 +24,9 @@ dependencies {
     compileOnly(libs.unirest)
     implementation(libs.liblyBungee)
     compileOnly(libs.storm)
+    compileOnly(libs.miniMessage)
+    compileOnly(libs.adventureBungee)
+    compileOnly(libs.adventureApi)
 }
 
 tasks.processResources {

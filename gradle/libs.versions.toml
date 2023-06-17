@@ -21,6 +21,8 @@ jedis = "4.4.0-m2"
 storm = "prod125"
 bungeecordChat = "1.16-R0.4"
 spigotLegacy = "1.8.8-R0.1-SNAPSHOT"
+adventure = "4.14.0"
+adventurePlatform = "4.3.0"
 
 [libraries]
 snakeYaml = { group = "org.yaml", name = "snakeyaml", version.ref = "snakeYaml" }
@@ -49,6 +51,10 @@ jedis = { group = "redis.clients", name = "jedis", version.ref = "jedis" }
 storm = { group = "com.github.Mindgamesnl", name = "storm", version.ref = "storm" }
 bungeecordChat = { group = "net.md-5", name = "bungeecord-chat", version.ref = "bungeecordChat" }
 spigotLegacy = { group = "org.spigotmc", name = "spigot-api", version.ref = "spigotLegacy" }
+miniMessage = { group = "net.kyori", name = "adventure-text-minimessage", version.ref = "adventure" }
+adventureApi = { group = "net.kyori", name = "adventure-api", version.ref = "adventure" }
+adventureBukkit = { group = "net.kyori", name = "adventure-platform-bukkit", version.ref = "adventurePlatform" }
+adventureBungee = { group = "net.kyori", name = "adventure-platform-bungeecord", version.ref = "adventurePlatform" }
 
 [bundles]
 invAPI = ["invCore", "invAdvancedSlots", "invPagination", "configurableGui"]

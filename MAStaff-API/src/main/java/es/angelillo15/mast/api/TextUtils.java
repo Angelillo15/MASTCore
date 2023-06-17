@@ -3,7 +3,6 @@ package es.angelillo15.mast.api;
 import es.angelillo15.mast.api.chat.api.ChatColor;
 import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.entity.Player;
-import org.jetbrains.annotations.NotNull;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -123,8 +122,7 @@ public class TextUtils {
         return new SimpleDateFormat(format).format(new Date(date));
     }
 
-    @NotNull
-    public static String toMM(@NotNull String str) {
+    public static String toMM(String str) {
         StringBuilder sb = new StringBuilder(str);
         Matcher m = ChatColor.STRIP_COLOR_PATTERN.matcher(sb);
         while (m.find()) {

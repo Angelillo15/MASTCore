@@ -34,6 +34,9 @@ dependencies {
     compileOnly(libs.unirest)
     compileOnly(libs.liblyBukkit)
     compileOnly(libs.paperLib)
+    compileOnly(libs.miniMessage)
+    compileOnly(libs.adventureBukkit)
+    compileOnly(libs.adventureApi)
 }
 
 tasks.processResources {

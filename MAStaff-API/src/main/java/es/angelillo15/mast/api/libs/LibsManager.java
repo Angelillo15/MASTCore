@@ -1,5 +1,8 @@
 package es.angelillo15.mast.api.libs;
 
+import es.angelillo15.mast.api.MAStaffInstance;
+import es.angelillo15.mast.api.utils.ServerUtils;
+import es.angelillo15.mast.api.utils.VersionUtils;
 import lombok.Getter;
 import net.byteflux.libby.Library;
 
@@ -109,6 +112,47 @@ public class LibsManager {
                         .relocate("com{}google{}gson", "es{}angelillo15{}mast{}libs{}google{}gson")
                         .build();
 
+        Library miniMessage = Library.builder()
+                        .groupId("net{}kyori")
+                        .artifactId("adventure-text-minimessage")
+                        .version("4.14.0")
+                        .isolatedLoad(false)
+                        .relocate("net{}kyori", "es{}angelillo15{}mast{}libs{}kyori")
+                        .build();
+
+        Library adventureAPI = Library.builder()
+                        .groupId("net{}kyori")
+                        .artifactId("adventure-api")
+                        .version("4.14.0")
+                        .isolatedLoad(false)
+                        .relocate("net{}kyori", "es{}angelillo15{}mast{}libs{}kyori")
+                        .build();
+
+        Library adventureBukkitPlatform = Library.builder()
+                        .groupId("net{}kyori")
+                        .artifactId("adventure-platform-bukkit")
+                        .version("4.3.0")
+                        .isolatedLoad(false)
+                        .relocate("net{}kyori", "es{}angelillo15{}mast{}libs{}kyori")
+                        .build();
+
+        Library adventureBungeePlatform = Library.builder()
+                        .groupId("net{}kyori")
+                        .artifactId("adventure-platform-bungeecord")
+                        .version("4.3.0")
+                        .isolatedLoad(false)
+                        .relocate("net{}kyori", "es{}angelillo15{}mast{}libs{}kyori")
+                        .build();
+
+
+        libs.add(miniMessage);
+        libs.add(adventureAPI);
+
+        if (ServerUtils.getServerType() == ServerUtils.ServerType.BUKKIT) {
+            libs.add(adventureBukkitPlatform);
+        } else if (ServerUtils.getServerType() == ServerUtils.ServerType.BUNGEE) {
+            libs.add(adventureBungeePlatform);
+        }
 
         libs.add(apacheHttp);
         libs.add(hikariCP);
