@@ -41,6 +41,7 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import es.angelillo15.mast.api.database.PluginConnection;
 import org.simpleyaml.configuration.file.YamlFile;
+
 import java.sql.Connection;
 import java.sql.SQLException;
 
@@ -64,8 +65,7 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance<Plugin> {
     private static int spiVersion;
 
     public static String parseMessage(String messages) {
-        return TextUtils.colorize(messages.replace("{prefix}", Messages.PREFIX())
-        );
+        return TextUtils.colorize(messages.replace("{prefix}", Messages.PREFIX()));
     }
 
     @Override
@@ -89,6 +89,7 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance<Plugin> {
     public void drawLogo() {
         new Metrics(this, 16548);
         logger = new Logger();
+        TextUtils.miniMessageCheck();
         logger.info(TextUtils.colorize("&a"));
         logger.info(TextUtils.colorize("&a ███▄ ▄███▓ ▄▄▄        ██████ ▄▄▄█████▓ ▄▄▄        █████▒ █████▒"));
         logger.info(TextUtils.colorize("&a ▓██▒▀█▀ ██▒▒████▄    ▒██    ▒ ▓  ██▒ ▓▒▒████▄    ▓██   ▒▓██   ▒"));

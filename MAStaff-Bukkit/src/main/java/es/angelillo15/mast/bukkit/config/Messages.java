@@ -138,4 +138,14 @@ public class Messages {
         return MAStaff.parseMessage(ConfigLoader.getPunishmentsGUI().getConfig().getString("Gui.title"));
     }
 
+    public static class StaffVault {
+        public static String itemSaved() {
+            return MAStaff.parseMessage(messages.getString("StaffVault.itemSaved"));
+        }
+
+        public static String staffVaultIsFull() {
+            return MAStaff.parseMessage(messages.getString("StaffVault.staffVaultFull"));
+        }
+    }
+
 }
