@@ -15,8 +15,13 @@ public class ConfigMerge {
     }
 
     @SneakyThrows
-    public static void merge(File file, InputStream Input) {
-        YamlUpdater.create(file, Input)
+    /**
+     * Merges the InputStream into the File
+     * @param file The file to merge
+     * @param Input The InputStream to merge
+     */
+    public static void merge(File current, InputStream update) {
+        YamlUpdater.create(current, update)
                 .update();
     }
 }

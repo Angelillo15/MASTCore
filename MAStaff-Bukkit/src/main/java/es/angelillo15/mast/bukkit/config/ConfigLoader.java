@@ -53,7 +53,7 @@ public class ConfigLoader {
     }
 
     public void loadConfig() {
-        ConfigMerge.merge(new File(plugin.getDataFolder().toPath().toString() + File.separator + "config.yml"),
+        ConfigMerge.merge(new File(plugin.getDataFolder().toPath() + File.separator + "config.yml"),
                 plugin.getResource("Bukkit/config.yml")
         );
 
@@ -85,7 +85,11 @@ public class ConfigLoader {
         language = config.getConfig().getString("Config.language");
         String lang = "lang/" + language;
 
-        messages = new ConfigManager(plugin.getDataFolder().toPath(), "/Bukkit/" +lang, lang);
+        ConfigMerge.merge(new File(plugin.getDataFolder().toPath() + File.separator + "lang" + File.separator + language),
+                plugin.getResource("Bukkit/lang/" + language)
+        );
+
+        messages = new ConfigManager(plugin.getDataFolder().toPath(), "Bukkit/" +lang, lang);
         messages.registerConfig();
         try {
             messages.getConfig().load();

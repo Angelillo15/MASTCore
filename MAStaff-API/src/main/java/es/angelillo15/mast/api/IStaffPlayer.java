@@ -6,6 +6,8 @@ import es.angelillo15.mast.api.items.StaffItem;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -117,4 +119,22 @@ public interface IStaffPlayer {
      * @return the staff mode previus status
      */
     public boolean wasInStaffMode();
+
+    /**
+     * Is a checker that if there is a new item that isn't
+     * of the staff mode inventory, it will be removed
+     * and added to a staff mode vault
+     */
+    void staffModeAsyncInventoryChecker();
+
+    /**
+     * Get staff vault
+     * @return the staff vault
+     */
+    List<ItemStack> getStaffVault();
+
+    /**
+     * Open staff vault
+     */
+    void openStaffVault();
 }
