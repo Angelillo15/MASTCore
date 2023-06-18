@@ -35,8 +35,9 @@ dependencies {
     compileOnly(libs.liblyBukkit)
     compileOnly(libs.paperLib)
     compileOnly(libs.miniMessage)
-    compileOnly(libs.adventureBukkit)
+    implementation(libs.adventureBukkit)
     compileOnly(libs.adventureApi)
+
 }
 
 tasks.processResources {
