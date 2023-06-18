@@ -39,6 +39,8 @@ dependencies {
     compileOnly(libs.configManager)
     compileOnly(libs.adventureApi)
     compileOnly(libs.adventureBukkit)
+    compileOnly(libs.adventureBungee)
+    compileOnly(libs.miniMessage)
 }
 
 blossom {
