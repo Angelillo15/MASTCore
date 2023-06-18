@@ -35,7 +35,7 @@ dependencies {
     compileOnly(libs.liblyBukkit)
     compileOnly(libs.paperLib)
     compileOnly(libs.miniMessage)
-    implementation(libs.adventureBukkit)
+    compileOnly(libs.adventureBukkit)
     compileOnly(libs.adventureApi)
 
 }
