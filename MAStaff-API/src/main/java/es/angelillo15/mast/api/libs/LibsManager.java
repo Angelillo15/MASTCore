@@ -12,6 +12,8 @@ public class LibsManager {
     @Getter
     public static ArrayList<Library> libs = new ArrayList<Library>();
 
+    public static String ADVENTURE_VERSION = "4.14.0";
+
     public static void load(){
         Library hikariCP = Library.builder()
                 .groupId("com{}zaxxer")
@@ -115,7 +117,7 @@ public class LibsManager {
         Library miniMessage = Library.builder()
                         .groupId("net{}kyori")
                         .artifactId("adventure-text-minimessage")
-                        .version("4.14.0")
+                        .version(ADVENTURE_VERSION)
                         .isolatedLoad(false)
                         .relocate("net{}kyori", "es{}angelillo15{}mast{}libs{}kyori")
                         .build();
@@ -123,7 +125,7 @@ public class LibsManager {
         Library adventureAPI = Library.builder()
                         .groupId("net{}kyori")
                         .artifactId("adventure-api")
-                        .version("4.14.0")
+                        .version(ADVENTURE_VERSION)
                         .isolatedLoad(false)
                         .relocate("net{}kyori", "es{}angelillo15{}mast{}libs{}kyori")
                         .build();
@@ -144,9 +146,54 @@ public class LibsManager {
                         .relocate("net{}kyori", "es{}angelillo15{}mast{}libs{}kyori")
                         .build();
 
+        Library examination = Library.builder()
+                        .groupId("net{}kyori")
+                        .artifactId("examination-api")
+                        .version("1.3.0")
+                        .isolatedLoad(false)
+                        .relocate("net{}kyori", "es{}angelillo15{}mast{}libs{}kyori")
+                        .build();
+
+        Library adventurePlatformApi = Library.builder()
+                .groupId("net{}kyori")
+                .artifactId("adventure-platform-api")
+                .version("4.3.0")
+                .isolatedLoad(false)
+                .relocate("net{}kyori", "es{}angelillo15{}mast{}libs{}kyori")
+                .build();
+
+        Library adventurePlatformFacet = Library.builder()
+                .groupId("net{}kyori")
+                .artifactId("adventure-platform-facet")
+                .version("4.3.0")
+                .isolatedLoad(false)
+                .relocate("net{}kyori", "es{}angelillo15{}mast{}libs{}kyori")
+                .build();
+
+        Library adventureKey = Library.builder()
+                .groupId("net{}kyori")
+                .artifactId("adventure-key")
+                .version(ADVENTURE_VERSION)
+                .isolatedLoad(false)
+                .relocate("net{}kyori", "es{}angelillo15{}mast{}libs{}kyori")
+                .build();
+
+        libs.add(getAdventureLib("adventure-text-serializer-legacy"));
+        libs.add(getAdventureLib("adventure-text-serializer-plain"));
+        libs.add(getAdventureLib("adventure-text-serializer-json"));
+        libs.add(getAdventureLib("adventure-text-serializer-ansi"));
+        libs.add(getAdventureLib("adventure-text-serializer-gson"));
+        libs.add(getAdventureLib("adventure-nbt"));
+        libs.add(getAdventureLib("adventure-text-serializer-json-legacy-impl"));
+        libs.add(getAdventureLib("adventure-text-serializer-gson-legacy-impl"));
+
 
         libs.add(miniMessage);
         libs.add(adventureAPI);
+        libs.add(examination);
+        libs.add(adventurePlatformApi);
+        libs.add(adventurePlatformFacet);
+        libs.add(adventureKey);
 
         if (ServerUtils.getServerType() == ServerUtils.ServerType.BUKKIT) {
             libs.add(adventureBukkitPlatform);
@@ -218,5 +265,16 @@ public class LibsManager {
                 relocation
         );
         return library;
+    }
+
+    public static Library getAdventureLib(String artifact) {
+        Library lib = Library.builder()
+                .groupId("net{}kyori")
+                .artifactId(artifact)
+                .version(ADVENTURE_VERSION)
+                .isolatedLoad(false)
+                .relocate("net{}kyori", "es{}angelillo15{}mast{}libs{}kyori")
+                .build();
+        return lib;
     }
 }
