@@ -86,6 +86,10 @@ public class TextUtils {
         }
     }
 
+    public static void sendMessage(Player player, String text) {
+        colorize(text, player);
+    }
+
     public static String processPlaceholders(Player player, String text) {
         if (MAStaffInstance.placeholderCheck()) {
             return colorize(PlaceholderAPI.setPlaceholders(player, text));

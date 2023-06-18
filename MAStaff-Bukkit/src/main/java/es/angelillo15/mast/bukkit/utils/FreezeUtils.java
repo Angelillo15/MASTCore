@@ -1,5 +1,6 @@
 package es.angelillo15.mast.bukkit.utils;
 
+import es.angelillo15.mast.api.TextUtils;
 import es.angelillo15.mast.api.event.bukkit.freeze.FreezeMessageEvent;
 import es.angelillo15.mast.api.event.bukkit.freeze.FreezePlayerEvent;
 import es.angelillo15.mast.api.event.bukkit.freeze.UnFreezePlayerEvent;
@@ -22,7 +23,9 @@ public class FreezeUtils {
     public static void toggleFrozen(Player staff, Player target){
         if(FreezeManager.isFrozen(target)){
             FreezeManager.removePlayer(target);
-            target.sendMessage(Messages.GET_FREEZE_UNFROZEN_MESSAGE());
+
+            TextUtils.sendMessage(target, Messages.GET_FREEZE_UNFROZEN_MESSAGE());
+
             StaffUtils.asyncStaffBroadcastMessage(Messages.GET_FREEZE_UNFROZEN_BY_MESSAGE().replace("{player}",
                     target.getName()).replace("{staff}",
                     staff.getName())
@@ -30,7 +33,7 @@ public class FreezeUtils {
             Bukkit.getPluginManager().callEvent(new UnFreezePlayerEvent(target, staff));
         }else{
             FreezeManager.addPlayer(target);
-            target.sendMessage(Messages.GET_FREEZE_FROZEN_MESSAGE());
+            TextUtils.sendMessage(target, Messages.GET_FREEZE_FROZEN_MESSAGE());
             StaffUtils.asyncStaffBroadcastMessage(Messages.GET_FREEZE_FROZEN_BY_MESSAGE().replace("{player}",
                     target.getName()).replace("{staff}",
                     staff.getName())

@@ -1,6 +1,7 @@
 package es.angelillo15.mast.bukkit.utils;
 
 import es.angelillo15.mast.api.Permissions;
+import es.angelillo15.mast.api.TextUtils;
 import es.angelillo15.mast.api.event.bukkit.staff.StaffChatTalkEvent;
 import es.angelillo15.mast.bukkit.MAStaff;
 import es.angelillo15.mast.bukkit.config.Messages;
@@ -24,7 +25,7 @@ public class StaffUtils {
             }
         });
         if (players.isEmpty()) {
-            player.sendMessage(Messages.GET_NO_PLAYER_ONLINE_MESSAGE());
+            TextUtils.sendMessage(player, Messages.GET_NO_PLAYER_ONLINE_MESSAGE());
             return;
         }
         final Random random = new Random();
@@ -46,7 +47,7 @@ public class StaffUtils {
         Scheduler.executeAsync(() -> {
             Bukkit.getOnlinePlayers().forEach(p -> {
                 if (p.hasPermission("mast.staff")) {
-                    p.sendMessage(message);
+                    TextUtils.sendMessage(p, message);
                 }
             });
             MAStaff.getPlugin().getPLogger().info(message);
@@ -56,7 +57,7 @@ public class StaffUtils {
     public static void asyncBroadcastMessage(String message) {
         Scheduler.executeAsync(() -> {
             Bukkit.getOnlinePlayers().forEach(p -> {
-                p.sendMessage(message);
+                TextUtils.sendMessage(p, message);
             });
             MAStaff.getPlugin().getPLogger().info(message);
         });
@@ -66,7 +67,7 @@ public class StaffUtils {
         Scheduler.executeAsync(() -> {
             Bukkit.getOnlinePlayers().forEach(p -> {
                 if (p.hasPermission("mast.staffchat")) {
-                    p.sendMessage(message);
+                    TextUtils.sendMessage(p, message);
                 }
             });
             MAStaff.getPlugin().getPLogger().info(message);
