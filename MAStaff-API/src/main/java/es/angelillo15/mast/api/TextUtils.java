@@ -17,22 +17,7 @@ public class TextUtils {
     private static final long HOUR = 60 * MINUTE;
     private static final long DAY = 24 * HOUR;
 
-    private static boolean miniMessage = false;
-
-    public static void miniMessageCheck() {
-        try {
-            Class.forName("net.kyori.adventure.text.minimessage.MiniMessage");
-            MAStaffInstance.getLogger().info("MiniMessage found, using it for colorizing messages");
-            miniMessage = true;
-        } catch (ClassNotFoundException e) {
-            MAStaffInstance.getLogger().info("MiniMessage found, not using it for colorizing messages");
-            miniMessage = false;
-        }
-    }
-
     public static String colorize(String text) {
-        if (miniMessage) text = toMM(text);
-
         if (MAStaffInstance.version() < 16) {
             return ChatColor.translateAlternateColorCodes('&', text);
         }
@@ -61,7 +46,7 @@ public class TextUtils {
                 }
             }
 
-        } else {
+        }else {
             while (match.find()) {
                 String color = text.substring(match.start(), match.end());
                 text = text.replace(color, ChatColor.of(color) + "");
@@ -121,38 +106,6 @@ public class TextUtils {
     public static String formatDate(long date, String format) {
         return new SimpleDateFormat(format).format(new Date(date));
     }
-
-    public static String toMM(String str) {
-        StringBuilder sb = new StringBuilder(str);
-        Matcher m = ChatColor.STRIP_COLOR_PATTERN.matcher(sb);
-        while (m.find()) {
-            sb.replace(m.start(), m.end(), sb.substring(m.start(), m.end()).toLowerCase());
-        }
-        return sb.toString()
-                .replace("&0", "<black>")
-                .replace("&1", "<dark_blue>")
-                .replace("&2", "<dark_green>")
-                .replace("&3", "<dark_aqua>")
-                .replace("&4", "<dark_red>")
-                .replace("&5", "<dark_purple>")
-                .replace("&6", "<gold>")
-                .replace("&7", "<grey>")
-                .replace("&8", "<dark_grey>")
-                .replace("&9", "<blue>")
-                .replace("&a", "<green>")
-                .replace("&b", "<aqua>")
-                .replace("&c", "<red>")
-                .replace("&d", "<light_purple>")
-                .replace("&e", "<yellow>")
-                .replace("&f", "<white>")
-                .replace("&k", "<obf>")
-                .replace("&l", "<b>")
-                .replace("&m", "<st>")
-                .replace("&n", "<u>")
-                .replace("&o", "<i>")
-                .replace("&r", "<r>");
-    }
-
 
     public static String simpleColorize(String text) {
         return ChatColor.translateAlternateColorCodes('&', text);
