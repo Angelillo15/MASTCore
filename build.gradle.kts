@@ -29,7 +29,6 @@ tasks.shadowJar {
     relocate("org.yaml.snakeyaml", "es.angelillo15.mast.libs.snakeyaml")
     relocate("org.simpleyaml", "es.angelillo15.mast.libs.simpleyaml")
     relocate("es.angelillo15.glow", "es.angelillo15.mast.libs.glow")
-    relocate("net.kyori.adventure", "es.angelillo15.mast.libs.adventure")
     relocate("mc.obliviate", "es.angelillo15.mast.libs.obliviate")
     relocate("com.zaxxer.hikari", "es.angelillo15.mast.libs.hikari")
     relocate("com.google.common", "es.angelillo15.mast.libs.google.common")
@@ -70,6 +69,14 @@ dependencies {
 
 tasks.withType<JavaCompile> {
     options.encoding = "UTF-8"
+}
+
+tasks.build {
+    dependsOn("shadowJar")
+}
+
+tasks.shadowJar {
+    archiveFileName.set("MAStaff.jar")
 }
 
 allprojects {

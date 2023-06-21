@@ -1,5 +1,6 @@
 package es.angelillo15.mast.bukkit.cmd;
 
+import es.angelillo15.mast.api.TextUtils;
 import es.angelillo15.mast.bukkit.config.Messages;
 import es.angelillo15.mast.bukkit.gui.SelectTargetGUI;
 import es.angelillo15.mast.bukkit.utils.FreezeUtils;
@@ -17,7 +18,7 @@ public class FreezeCMD implements CommandExecutor {
         Player p = (Player) sender;
 
         if(!p.hasPermission("mast.freeze")){
-            p.sendMessage(Messages.GET_NO_PERMISSION_MESSAGE());
+            TextUtils.colorize(Messages.GET_NO_PERMISSION_MESSAGE(), p);
             return true;
         }
 

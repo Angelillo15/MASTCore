@@ -10,8 +10,9 @@ public class MAStaffLoader extends MAStaff {
     @Override
     public void onEnable() {
         super.onEnable();
-        drawLogo();
         LibsLoader.loadLibs();
+        setupMiniMessage();
+        drawLogo();
         loadConfig();
         registerCommands();
         registerListeners();

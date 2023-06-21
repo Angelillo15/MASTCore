@@ -1,5 +1,6 @@
 package es.angelillo15.mast.bukkit.listener;
 
+import es.angelillo15.mast.api.TextUtils;
 import es.angelillo15.mast.api.event.bukkit.freeze.FreezeMessageEvent;
 import es.angelillo15.mast.api.managers.FreezeManager;
 import es.angelillo15.mast.bukkit.config.Messages;
@@ -26,11 +27,14 @@ public class FreezeListener implements Listener {
     @EventHandler
     public void onFreezeMessage(FreezeMessageEvent e){
         Player player = e.getPlayer();
-        if (player == null) return;
+        if (player == null  || !player.isOnline()) {
+            FreezeManager.removePlayer(player);
+            return;
+        }
 
         for (String message : Messages.spamMessage()) {
             if (message == null) continue;
-            player.sendMessage(message);
+            TextUtils.colorize(message, player);
         }
     }
 

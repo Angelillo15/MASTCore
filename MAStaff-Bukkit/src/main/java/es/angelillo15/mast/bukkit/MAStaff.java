@@ -63,7 +63,6 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance<Plugin> {
     private static int currentVersion;
     @Getter
     private static int spiVersion;
-
     public static String parseMessage(String messages) {
         return TextUtils.colorize(messages.replace("{prefix}", Messages.PREFIX()));
     }
@@ -85,11 +84,15 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance<Plugin> {
         return debug;
     }
 
+
+    public void setupMiniMessage() {
+        TextUtils.initAudienceProviderBukkit(this);
+    }
+
     @Override
     public void drawLogo() {
         new Metrics(this, 16548);
         logger = new Logger();
-        TextUtils.miniMessageCheck();
         logger.info(TextUtils.colorize("&a"));
         logger.info(TextUtils.colorize("&a ███▄ ▄███▓ ▄▄▄        ██████ ▄▄▄█████▓ ▄▄▄        █████▒ █████▒"));
         logger.info(TextUtils.colorize("&a ▓██▒▀█▀ ██▒▒████▄    ▒██    ▒ ▓  ██▒ ▓▒▒████▄    ▓██   ▒▓██   ▒"));
@@ -172,13 +175,13 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance<Plugin> {
 
         } catch (Exception e) {
             logger.error(e.getMessage());
-            logger.error((TextUtils.colorize("&c┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓")));
-            logger.error((TextUtils.colorize("&c┃ An error ocurred while connecting to the MySQL database!                 ┃")));
-            logger.error((TextUtils.colorize("&c┃ Please, check your database credentials.                                 ┃")));
-            logger.error((TextUtils.colorize("&c┃ If you need help, join our Discord server to get support:                ┃")));
-            logger.error((TextUtils.colorize("&c┃ https://discord.nookure.com                                              ┃")));
-            logger.error((TextUtils.colorize("&c┃ The plugin is now connecting to a SQLite database...                     ┃")));
-            logger.error((TextUtils.colorize("&c┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛")));
+            logger.error((TextUtils.colorize("┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓")));
+            logger.error((TextUtils.colorize("┃ An error ocurred while connecting to the MySQL database!                 ┃")));
+            logger.error((TextUtils.colorize("┃ Please, check your database credentials.                                 ┃")));
+            logger.error((TextUtils.colorize("┃ If you need help, join our Discord server to get support:                ┃")));
+            logger.error((TextUtils.colorize("┃ https://discord.nookure.com                                              ┃")));
+            logger.error((TextUtils.colorize("┃ The plugin is now connecting to a SQLite database...                     ┃")));
+            logger.error((TextUtils.colorize("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛")));
             try {
                 pluginConnection = new PluginConnection(
                         getPlugin().getDataFolder().getAbsolutePath()

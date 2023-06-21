@@ -37,6 +37,10 @@ dependencies {
     compileOnly(libs.caffeine)
     compileOnly(libs.storm)
     compileOnly(libs.configManager)
+    compileOnly(libs.adventureApi)
+    compileOnly(libs.adventureBukkit)
+    compileOnly(libs.adventureBungee)
+    compileOnly(libs.miniMessage)
 }
 
 blossom {

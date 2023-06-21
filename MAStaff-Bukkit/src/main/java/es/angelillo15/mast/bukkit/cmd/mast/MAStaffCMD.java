@@ -49,6 +49,5 @@ public class MAStaffCMD implements CommandExecutor {
                 sender.sendMessage(TextUtils.colorize("&a&l> &r" + subCommand.getSyntax() + " &7- &7" + subCommand.getDescription()));
             }
         });
-
     }
 }

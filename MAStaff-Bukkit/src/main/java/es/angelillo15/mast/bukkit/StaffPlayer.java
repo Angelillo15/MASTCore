@@ -5,6 +5,7 @@ import com.google.common.io.ByteStreams;
 import es.angelillo15.mast.api.IStaffPlayer;
 import es.angelillo15.mast.api.MAStaffInstance;
 import es.angelillo15.mast.api.Permissions;
+import es.angelillo15.mast.api.TextUtils;
 import es.angelillo15.mast.api.database.sql.CommonQueries;
 import es.angelillo15.mast.api.event.bukkit.staff.StaffDisableEvent;
 import es.angelillo15.mast.api.event.bukkit.staff.StaffEnableEvent;
@@ -100,7 +101,7 @@ public class StaffPlayer implements IStaffPlayer {
     public void enableVanish() {
         VanishedPlayers.addPlayer(player);
         vanished = true;
-        player.sendMessage(Messages.GET_VANISH_ENABLE_MESSAGE());
+        TextUtils.colorize(Messages.GET_VANISH_ENABLE_MESSAGE(), player);
 
 
         for (Player p : Bukkit.getOnlinePlayers()) {
@@ -115,7 +116,7 @@ public class StaffPlayer implements IStaffPlayer {
     public void disableVanish() {
         VanishedPlayers.removePlayer(player);
         vanished = false;
-        player.sendMessage(Messages.GET_VANISH_DISABLE_MESSAGE());
+        TextUtils.colorize(Messages.GET_VANISH_DISABLE_MESSAGE(), player);
 
         for (Player p : Bukkit.getOnlinePlayers()) {
             if (p == player) continue;
@@ -125,7 +126,7 @@ public class StaffPlayer implements IStaffPlayer {
     }
 
     public void disableStaffMode() {
-        player.sendMessage(Messages.GET_STAFF_MODE_DISABLE_MESSAGE());
+        TextUtils.colorize(Messages.GET_STAFF_MODE_DISABLE_MESSAGE(), player);
         setModeData(false);
         clearInventory();
         CommonQueries.updateAsync(player.getUniqueId(), 0);
@@ -144,7 +145,7 @@ public class StaffPlayer implements IStaffPlayer {
     }
 
     public void enableStaffMode(boolean saveInventory) {
-        player.sendMessage(Messages.GET_STAFF_MODE_ENABLE_MESSAGE());
+        TextUtils.colorize(Messages.GET_STAFF_MODE_ENABLE_MESSAGE(), player);
         setModeData(true);
         if (saveInventory) saveInventory();
         staffMode = true;
@@ -365,7 +366,7 @@ public class StaffPlayer implements IStaffPlayer {
     @SneakyThrows
     public void addItemToStaffVault(ItemStack item) {
         if (isStaffVaultFull()) {
-            player.sendMessage(Messages.StaffVault.staffVaultIsFull());
+            TextUtils.sendMessage(player, Messages.StaffVault.staffVaultIsFull());
             return;
         }
 
@@ -385,7 +386,8 @@ public class StaffPlayer implements IStaffPlayer {
 
         playerInventoryConfig.save(playerInventoryFile);
 
-        player.sendMessage(Messages.StaffVault.itemSaved());
+        TextUtils.sendMessage(player, Messages.StaffVault.itemSaved());
+        TextUtils.colorize(Messages.StaffVault.itemSaved());
         MAStaffInstance.getLogger().debug("Saved staff vault for player " + player.getName());
     }
 

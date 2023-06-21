@@ -1,12 +1,13 @@
 package es.angelillo15.mast.bukkit.utils;
 
 import es.angelillo15.mast.api.ILogger;
+import es.angelillo15.mast.api.TextUtils;
 import es.angelillo15.mast.bukkit.MAStaff;
 
 public class Logger implements ILogger {
     @Override
     public void info(String message) {
-        MAStaff.getPlugin().getLogger().info(message);
+        TextUtils.getAudienceProvider().console().sendMessage(TextUtils.toComponent("[MAStaff] "+message));
     }
 
     @Override
