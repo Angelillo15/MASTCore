@@ -57,68 +57,68 @@ public interface IStaffPlayer {
     /**
      * Set staff items to the player
      */
-    public void setItems();
+    void setItems();
 
     /**
      * Get staff items
      */
-    public Map<String, StaffItem> getItems();
+    Map<String, StaffItem> getItems();
 
     /**
      * Send plugin message to the bungee
      */
-    public void sendPluginMessage();
+    void sendPluginMessage();
 
     /**
      * Save inventory
      */
-    public void saveInventory();
+    void saveInventory();
 
     /**
      * Clear inventory
      */
-    public void clearInventory();
+    void clearInventory();
 
     /**
      * Restore inventory
      */
-    public void restoreInventory();
+    void restoreInventory();
 
     /**
      * Exists data
      * @return true if exists or false if not
      */
-    public boolean existsData();
+    boolean existsData();
 
     /**
      * Change gamemode
      * @param gamemode gamemode to change
      */
-    public void changeGamemode(GameMode gamemode);
+    void changeGamemode(GameMode gamemode);
 
     /**
      * Set a glow color
      * @param color color to set
      */
-    public void setGlowColor(ChatColor color);
+    void setGlowColor(ChatColor color);
 
     /**
      * Get the glow color
      * @return the glow color
      */
-    public ChatColor getGlowColor();
+    ChatColor getGlowColor();
 
     /**
      * enable / disable glow
      * @param status status to set
      */
-    public void setGlowing(boolean status);
+    void setGlowing(boolean status);
 
     /**
      * Get the staff mode previus status
      * @return the staff mode previus status
      */
-    public boolean wasInStaffMode();
+    boolean wasInStaffMode();
 
     /**
      * Is a checker that if there is a new item that isn't
@@ -137,4 +137,28 @@ public interface IStaffPlayer {
      * Open staff vault
      */
     void openStaffVault();
+
+    /**
+     * Freeze a player
+     * @param player - player to freeze
+     */
+    void freezePlayer(Player player);
+
+    /**
+     * Unfreeze a player
+     * @param player - player to unfreeze
+     */
+    void unfreezePlayer(String player);
+
+    /**
+     * Execute punishs for a freezed player that has left the server
+     * @param player - player name to execute the punishs
+     */
+    void executeFreezedPunishments(String player);
+
+    /**
+     * Check if a player is freezed
+     * @param player - player to check
+     */
+    boolean isFreezed(Player player);
 }

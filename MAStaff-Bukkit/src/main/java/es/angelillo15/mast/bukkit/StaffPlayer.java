@@ -7,11 +7,15 @@ import es.angelillo15.mast.api.MAStaffInstance;
 import es.angelillo15.mast.api.Permissions;
 import es.angelillo15.mast.api.TextUtils;
 import es.angelillo15.mast.api.database.sql.CommonQueries;
+import es.angelillo15.mast.api.event.bukkit.freeze.FreezePlayerEvent;
+import es.angelillo15.mast.api.event.bukkit.freeze.UnFreezePlayerEvent;
 import es.angelillo15.mast.api.event.bukkit.staff.StaffDisableEvent;
 import es.angelillo15.mast.api.event.bukkit.staff.StaffEnableEvent;
 import es.angelillo15.mast.api.items.StaffItem;
 import es.angelillo15.mast.api.managers.GlowManager;
 import es.angelillo15.mast.api.managers.VanishedPlayers;
+import es.angelillo15.mast.api.managers.freeze.FreezeManager;
+import es.angelillo15.mast.bukkit.cmd.utils.CommandManager;
 import es.angelillo15.mast.bukkit.config.Config;
 import es.angelillo15.mast.bukkit.config.ConfigLoader;
 import es.angelillo15.mast.bukkit.config.Messages;
@@ -35,7 +39,6 @@ import org.bukkit.inventory.ItemStack;
 import javax.annotation.Nullable;
 import java.io.File;
 import java.util.*;
-import java.util.concurrent.TimeUnit;
 
 @SuppressWarnings({"deprecation", "UnstableApiUsage", "unchecked"})
 public class StaffPlayer implements IStaffPlayer {
@@ -406,5 +409,54 @@ public class StaffPlayer implements IStaffPlayer {
     @Override
     public void openStaffVault() {
         new StaffVault(player, 0).open();
+    }
+
+    @Override
+    public void freezePlayer(Player player) {
+        FreezeManager.freezePlayer(this, player);
+        TextUtils.sendMessage(player, Messages.GET_FREEZE_FROZEN_MESSAGE());
+
+        StaffUtils.asyncStaffBroadcastMessage(Messages.GET_FREEZE_FROZEN_BY_MESSAGE().replace("{player}",
+                player.getName()).replace("{staff}",
+                this.player.getName())
+        );
+
+        Bukkit.getPluginManager().callEvent(new FreezePlayerEvent(player, this.player));
+    }
+
+    @Override
+    public void unfreezePlayer(String player) {
+        FreezeManager.unfreezePlayer(player);
+
+
+        StaffUtils.asyncStaffBroadcastMessage(Messages.GET_FREEZE_UNFROZEN_BY_MESSAGE()
+                .replace("{player}", player)
+                .replace("{staff}", this.player.getName())
+        );
+
+        if (Bukkit.getPlayer(player) != null && Objects.requireNonNull(Bukkit.getPlayer(player)).isOnline()) {
+            TextUtils.sendMessage(Bukkit.getPlayer(player), Messages.GET_FREEZE_UNFROZEN_MESSAGE());
+            Bukkit.getPluginManager().callEvent(new UnFreezePlayerEvent(Bukkit.getPlayer(player), this.player));
+        }
+    }
+
+    @Override
+    public void executeFreezedPunishments(String player) {
+        if (!Config.Freeze.executeCommandOnExit()) return;
+        if (Config.Freeze.commands().isEmpty()) return;
+
+        Config.Freeze.commands().forEach(punishment -> {
+            CommandManager.sendCommandToConsole(this.player, punishment
+                    .replace("{player}", player)
+                    .replace("{staff}", this.player.getName())
+            );
+        });
+
+        FreezeManager.unfreezePlayer(player);
+    }
+
+    @Override
+    public boolean isFreezed(Player player) {
+        return FreezeManager.isFrozen(player);
     }
 }
