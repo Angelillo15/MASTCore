@@ -7,7 +7,7 @@
 #
 # Plugin prefix
 # You can use {prefix} in a message to display the prefix.
-Prefix: '&a&lSTAFF &8&l»' # This will appear before all the plugin messages.
+Prefix: '&a&lSTAFF &8&l»&r' # This will appear before all the plugin messages.
 # This will appear when a player without permission tries to use a command.
 NoPermission: "&7You don't have permission to use this command."
 # This will appear when the plugin is reloaded.
@@ -72,7 +72,7 @@ Freeze:
     <gray>The <green>player</green> <red>{player}</red> has left the server when he was freezed.
     <reset>
     Do you want to execute the commands specified when a player leaves ?
-    <hover:show_text:'Forgive the player'><green><click:run_command:'/freeze remove {player}'>[x]</click></green></hover> <click:run_command:/freeze exec {player}><red><hover:show_text:'Punish that player'>[✔]</hover></red> </click>
+    <hover:show_text:'Forgive the player'><red><click:run_command:'/freeze /remove {player}'>[x]</click></red></hover> <click:run_command:/freeze /exec {player}><green><hover:show_text:'Punish that player'>[✔]</hover></green> </click>
 StaffList:
   # Title of the Staff List GUI.
   title: '&a&lSTAFF &8&l» &7Online Staff'
