@@ -137,4 +137,28 @@ public interface IStaffPlayer {
      * Open staff vault
      */
     void openStaffVault();
+
+    /**
+     * Freeze a player
+     * @param player - player to freeze
+     */
+    void freezePlayer(Player player);
+
+    /**
+     * Unfreeze a player
+     * @param player - player to unfreeze
+     */
+    void unfreezePlayer(String player);
+
+    /**
+     * Execute punishs for a freezed player that has left the server
+     * @param player - player name to execute the punishs
+     */
+    void executeFreezedPunishments(String player);
+
+    /**
+     * Check if a player is freezed
+     * @param player - player to check
+     */
+    boolean isFreezed(Player player);
 }
