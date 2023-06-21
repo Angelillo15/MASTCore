@@ -67,7 +67,4 @@ public class FreezeManager {
     public static FreezeVector getFreezeVector(Player target) {
         return frozenPlayers.get(target.getName());
     }
-
-    public
-
 }
