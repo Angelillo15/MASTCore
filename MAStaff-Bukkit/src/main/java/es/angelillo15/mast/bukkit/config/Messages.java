@@ -148,4 +148,12 @@ public class Messages {
         }
     }
 
+    /*
+     * Freeze
+     */
+    public static String CONFIRM_PUNISH_MESSAGE() {
+        return MAStaff.parseMessage(messages.getString("Freeze.confirmPunishMessage"));
+    }
+
+
 }
