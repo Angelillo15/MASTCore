@@ -30,5 +30,4 @@ public class CommandManager {
 
         player.sendPluginMessage(MAStaff.getPlugin(), "BungeeCord", b.toByteArray());
     }
-
 }
