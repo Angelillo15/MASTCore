@@ -146,6 +146,10 @@ public class Messages {
         public static String staffVaultIsFull() {
             return MAStaff.parseMessage(messages.getString("StaffVault.staffVaultFull"));
         }
+
+        public static String staffVaultInStaffMode() {
+            return MAStaff.parseMessage(messages.getString("StaffVault.staffVaultInStaffMode"));
+        }
     }
 
     /*

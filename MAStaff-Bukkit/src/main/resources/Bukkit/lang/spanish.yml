@@ -64,6 +64,8 @@ Freeze:
     <reset>
     ¿Quieres ejecuutar los comandos especificados para cuando un jugador abandona estando congelado?
     <hover:show_text:'Forgive the player'><red><click:run_command:'/freeze /remove {player}'>[x]</click></red></hover> <click:run_command:/freeze /exec {player}><green><hover:show_text:'Punish that player'>[✔]</hover></green> </click>
+  # Mensaje que se manda cuando un staff intenta congelar a uu jugador con el permiso mast.freeze.bypass
+  freezeBypassMessage: '{prefix} &7No puedes congelar a este jugador.'
 StaffList:
   title: '&a&lSTAFF &8&l» &7Online Staff' # El título de la lista de Staff.
   staffLore:
@@ -80,3 +82,5 @@ StaffVault:
   itemSaved: "{prefix} &7Un item ha sido guardado en tu invetario de staff. \n <gray>Click <gold><u><click:run_command:'/staff vault'>aquí</click></u></gold> para abrirlo</gray>"
   # Mensaje que se manda cuando el inventario de staff esta lleno
   staffVaultFull: "{prefix} &7Tu inventario de staff esta lleno."
+  # Mensaje que se manda cuando intentas abrir el vault en modo staff
+  staffVaultInStaffMode: "{prefix} &7No puedes abrir el vault en modo staff."

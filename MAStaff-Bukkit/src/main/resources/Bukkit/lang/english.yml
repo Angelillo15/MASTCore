@@ -93,3 +93,5 @@ StaffVault:
   itemSaved: "{prefix} &7An item has been saved to your Staff Vault."
   # Message sent when the Staff Vault is full.
   staffVaultFull: "{prefix} &7Your Staff Vault is full."
+  # Message sent when the Staff tries to open the Staff Vault on StaffMode.
+  staffVaultInStaffMode: "{prefix} &7You can't open your Staff Vault while in Staff Mode."

@@ -1,8 +1,10 @@
 package es.angelillo15.mast.bukkit.cmd.staff;
 
 import es.angelillo15.mast.api.IStaffPlayer;
+import es.angelillo15.mast.api.TextUtils;
 import es.angelillo15.mast.api.cmd.LegacySubCommand;
 import es.angelillo15.mast.api.managers.StaffPlayersManagers;
+import es.angelillo15.mast.bukkit.config.Messages;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -36,6 +38,11 @@ public class StaffVaultCMD extends LegacySubCommand {
         }
 
         IStaffPlayer staffPlayer = StaffPlayersManagers.getStaffPlayer((Player) sender);
+        if (staffPlayer == null) return;
+
+        if (staffPlayer.isStaffMode()){
+            TextUtils.sendMessage(staffPlayer.getPlayer(), Messages.StaffVault.staffVaultInStaffMode());
+        }
 
         staffPlayer.openStaffVault();
     }
