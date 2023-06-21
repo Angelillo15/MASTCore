@@ -67,6 +67,12 @@ Freeze:
     - '&c█&6███&0█&6███&c█'
     - '&c█████████'
     - ''
+  # Message sent to the staff if he wants to punish the player.
+  confirmPunishMessage: |
+    <gray>The <green>player</green> <red>{player}</red> has left the server when he was freezed.
+    <reset>
+    Do you want to execute the commands specified when a player leaves ?
+    <hover:show_text:'Forgive the player'><green><click:run_command:'/freeze remove {player}'>[x]</click></green></hover> <click:run_command:/freeze exec {player}><red><hover:show_text:'Punish that player'>[✔]</hover></red> </click>
 StaffList:
   # Title of the Staff List GUI.
   title: '&a&lSTAFF &8&l» &7Online Staff'
