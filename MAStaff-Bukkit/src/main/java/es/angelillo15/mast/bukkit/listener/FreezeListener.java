@@ -50,7 +50,10 @@ public class FreezeListener implements Listener {
 
     @EventHandler
     public void freezedPlayerExit(PlayerQuitEvent event) {
-        if (!Config.Freeze.executeCommandOnExit()) return;
+        if (!Config.Freeze.executeCommandOnExit()) {
+            FreezeManager.unfreezePlayer(event.getPlayer());
+            return;
+        }
 
         if(!FreezeManager.isFrozen(event.getPlayer())) return;
 
