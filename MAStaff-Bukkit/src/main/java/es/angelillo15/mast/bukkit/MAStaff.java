@@ -115,13 +115,9 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance<Plugin> {
     @Override
     public void registerCommands() {
         getCommand("staff").setExecutor(new StaffCMD());
-        getCommand("freeze").setExecutor(new FreezeCMD());
+        if (Config.Freeze.enabled()) getCommand("freeze").setExecutor(new FreezeCMD());
         getCommand("mast").setExecutor(new MAStaffCMD());
         getCommand("staffchat").setExecutor(new StaffChatCMD());
-    }
-
-    public boolean placeholderCheck() {
-        return Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null;
     }
 
     @Override
@@ -135,7 +131,7 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance<Plugin> {
         pm.registerEvents(new OnItemClickInteract(), this);
         pm.registerEvents(new OnJoinLeave(), this);
         pm.registerEvents(new OnItemDrop(), this);
-        pm.registerEvents(new FreezeListener(), this);
+        if (Config.Freeze.enabled()) pm.registerEvents(new FreezeListener(), this);
         pm.registerEvents(new OnItemGet(), this);
         pm.registerEvents(new OnPlayerInteractAtEntityEvent(), this);
         pm.registerEvents(new OnAttack(), this);
