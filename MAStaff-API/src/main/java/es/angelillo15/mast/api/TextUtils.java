@@ -2,6 +2,7 @@ package es.angelillo15.mast.api;
 
 import es.angelillo15.mast.api.chat.api.ChatColor;
 import lombok.Getter;
+import lombok.Setter;
 import me.clip.placeholderapi.PlaceholderAPI;
 import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.platform.AudienceProvider;
@@ -11,8 +12,6 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.java.JavaPlugin;
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.regex.Matcher;
@@ -27,11 +26,8 @@ public class TextUtils {
     private static final long DAY = 24 * HOUR;
 
     @Getter
+    @Setter
     private static AudienceProvider audienceProvider;
-
-    public static void initAudienceProviderBukkit(JavaPlugin plugin) {
-        audienceProvider = BukkitAudiences.create(plugin);
-    }
 
     public static String colorize(String text) {
         if (MAStaffInstance.version() < 16) {
@@ -197,7 +193,7 @@ public class TextUtils {
     }
 
     public static String simpleColorize(String text) {
-        return ChatColor.translateAlternateColorCodes('&', text);
+        return text.replace("&", "§");
     }
 
     public static Audience getAudience(Player player) {
