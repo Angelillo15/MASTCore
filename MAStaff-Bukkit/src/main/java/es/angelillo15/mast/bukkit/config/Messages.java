@@ -155,5 +155,8 @@ public class Messages {
         return MAStaff.parseMessage(messages.getString("Freeze.confirmPunishMessage"));
     }
 
+    public static String GET_FREEZE_CANNOT_FREEZE_THAT_PLAYER_MESSAGE() {
+        return MAStaff.parseMessage(messages.getString("Freeze.freezeBypassMessage"));
+    }
 
 }

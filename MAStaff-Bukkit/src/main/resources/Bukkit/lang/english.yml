@@ -73,6 +73,8 @@ Freeze:
     <reset>
     Do you want to execute the commands specified when a player leaves ?
     <hover:show_text:'Forgive the player'><red><click:run_command:'/freeze /remove {player}'>[x]</click></red></hover> <click:run_command:/freeze /exec {player}><green><hover:show_text:'Punish that player'>[✔]</hover></green> </click>
+  # Message sent when a staff tries to freeze a player with mast.freeze.bypass permission.
+  freezeBypassMessage: '{prefix} &7You can not freeze that player.'
 StaffList:
   # Title of the Staff List GUI.
   title: '&a&lSTAFF &8&l» &7Online Staff'

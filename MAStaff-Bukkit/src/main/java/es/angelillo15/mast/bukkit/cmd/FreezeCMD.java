@@ -53,6 +53,11 @@ public class FreezeCMD implements CommandExecutor {
 
         if (onlineCheck(p, args, 0)) return true;
 
+        if (Bukkit.getPlayer(args[0]).hasPermission("mast.freeze.bypass")) {
+            TextUtils.colorize(Messages.GET_FREEZE_CANNOT_FREEZE_THAT_PLAYER_MESSAGE(), p);
+            return true;
+        }
+
         execute(staff, Bukkit.getPlayer(args[0]));
 
         return true;
