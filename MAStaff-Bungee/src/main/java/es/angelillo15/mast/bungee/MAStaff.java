@@ -15,6 +15,7 @@ import es.angelillo15.mast.bungee.cmd.*;
 import es.angelillo15.mast.bungee.cmd.mastb.MastParentCMD;
 import es.angelillo15.mast.bungee.config.Config;
 import es.angelillo15.mast.bungee.config.ConfigLoader;
+import es.angelillo15.mast.bungee.listener.CommandExecutor;
 import es.angelillo15.mast.bungee.listener.StaffChangeEvent;
 import es.angelillo15.mast.bungee.listener.StaffJoinChange;
 import es.angelillo15.mast.bungee.listener.StaffTalkEvent;
@@ -86,7 +87,6 @@ public class MAStaff extends Plugin implements MAStaffInstance<Plugin> {
         logger = new Logger();
         serverUtils = new BungeeServerUtils();
 
-        logger.info(TextUtils.simpleColorize("&a"));
         logger.info(TextUtils.simpleColorize("&a ███▄ ▄███▓ ▄▄▄        ██████ ▄▄▄█████▓ ▄▄▄        █████▒ █████▒"));
         logger.info(TextUtils.simpleColorize("&a ▓██▒▀█▀ ██▒▒████▄    ▒██    ▒ ▓  ██▒ ▓▒▒████▄    ▓██   ▒▓██   ▒"));
         logger.info(TextUtils.simpleColorize("&a ▓██    ▓██░▒██  ▀█▄  ░ ▓██▄   ▒ ▓██░ ▒░▒██  ▀█▄  ▒████ ░▒████ ░"));
@@ -97,6 +97,7 @@ public class MAStaff extends Plugin implements MAStaffInstance<Plugin> {
         logger.info(TextUtils.simpleColorize("&a ░      ░     ░   ▒   ░  ░  ░    ░        ░   ▒    ░ ░    ░ ░"));
         logger.info(TextUtils.simpleColorize("&a ░         ░  ░      ░                 ░  ░"));
         logger.info(TextUtils.simpleColorize("&a                                                version: " + getDescription().getVersion()));
+
     }
 
     @Override
@@ -118,8 +119,8 @@ public class MAStaff extends Plugin implements MAStaffInstance<Plugin> {
         getProxy().getPluginManager().registerListener(this, new StaffJoinChange());
         getProxy().getPluginManager().registerListener(this, new StaffTalkEvent());
         getProxy().getPluginManager().registerListener(this, new UserJoinListener());
+        getProxy().getPluginManager().registerListener(this, new CommandExecutor());
         if (Config.Redis.isEnabled()) registerRedisListeners();
-
     }
 
     public void registerRedisListeners() {

@@ -4,7 +4,6 @@ import es.angelillo15.mast.api.ILogger;
 import es.angelillo15.mast.api.MAStaffInstance;
 import es.angelillo15.mast.api.addons.config.ConfigManager;
 import lombok.Getter;
-import org.bukkit.plugin.Plugin;
 
 import java.io.File;
 import java.io.InputStream;

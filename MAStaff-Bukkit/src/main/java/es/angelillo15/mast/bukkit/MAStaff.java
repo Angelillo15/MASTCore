@@ -2,6 +2,7 @@ package es.angelillo15.mast.bukkit;
 
 import es.angelillo15.mast.api.*;
 import es.angelillo15.mast.api.database.DataProvider;
+import es.angelillo15.mast.api.utils.BukkitUtils;
 import es.angelillo15.mast.bukkit.addons.AddonsLoader;
 import es.angelillo15.mast.bukkit.cmd.FreezeCMD;
 import es.angelillo15.mast.bukkit.cmd.StaffChatCMD;
@@ -86,7 +87,7 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance<Plugin> {
 
 
     public void setupMiniMessage() {
-        TextUtils.initAudienceProviderBukkit(this);
+        BukkitUtils.setAudienceBukkit(this);
     }
 
     @Override
