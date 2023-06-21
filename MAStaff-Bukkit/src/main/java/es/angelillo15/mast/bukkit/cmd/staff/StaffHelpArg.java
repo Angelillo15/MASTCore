@@ -1,11 +1,11 @@
 package es.angelillo15.mast.bukkit.cmd.staff;
 
 import es.angelillo15.mast.api.Permissions;
-import es.angelillo15.mast.api.cmd.SubCommand;
+import es.angelillo15.mast.api.cmd.LegacySubCommand;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-public class StaffHelpArg extends SubCommand {
+public class StaffHelpArg extends LegacySubCommand {
     @Override
     public String getName() {
         return "help";

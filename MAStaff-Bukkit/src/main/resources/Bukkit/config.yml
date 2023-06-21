@@ -30,7 +30,41 @@ Config:
   disableStaffModeOnExit: false
   # Silent chest opening.
   silentChestOpening: true
+  # Staff Vault section
+#
+# Staff Vault configuration for the plugin.
+#
+# The staff vault is a virtual chest where the items
+# that the player gets when they are in staff mode are stored.
+#
+StaffVault:
+  # enable or disable the staff vault.
+  enabled: true
+  # Inventory name for the staff vault.
+  name: "&8&lStaff Vault"
+  # How often does the plugin have to check the inventory?
+  # The value is in seconds.
+  checkTime: 20
+# Freeze section
+Freeze:
+  # Enable or disable the freeze feature.
+  enabled: true
+  # Execute a command when the player is frozen and he or she
+  # exits of the servers.
+  executeCommandOnExit: true
+  # Ask the staff member if he or she wants to execute the commands.
+  askToExecuteCommands: true
+  # Commands to execute
+  # They will be executed as the console.
+  # You can use the following placeholders:
+  # ↳ {player} - Player name
+  # ↳ {staff} - Staff member name
+  # If you want the command to be executed as bungee console, add a "bungee:" prefix.
+  commands:
+    - "ban {player} &cYou have been perm-banned for leaving the server while you were frozen."
+#
 # Database configuration for the plugin. With the Bungee version, you must use MariaDB or MySQL.
+#
 Database:
   # The type of database you want to use, you can choose between SQLite or MySQL.
   # The MySQL driver also works with MariaDB

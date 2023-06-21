@@ -1,11 +1,11 @@
 package es.angelillo15.mast.bukkit.cmd.mast;
 
-import es.angelillo15.mast.api.cmd.SubCommand;
+import es.angelillo15.mast.api.cmd.LegacySubCommand;
 import es.angelillo15.mast.bukkit.MAStaff;
 import es.angelillo15.mast.bukkit.config.Messages;
 import org.bukkit.command.CommandSender;
 
-public class ReloadARG extends SubCommand {
+public class ReloadARG extends LegacySubCommand {
     @Override
     public String getName() {
         return "reload";

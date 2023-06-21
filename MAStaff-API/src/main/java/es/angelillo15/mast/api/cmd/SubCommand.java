@@ -1,6 +1,6 @@
 package es.angelillo15.mast.api.cmd;
 
-import org.bukkit.command.CommandSender;
+import es.angelillo15.mast.api.cmd.sender.CommandSender;
 
 public abstract class SubCommand {
     public abstract String getName();
@@ -11,5 +11,5 @@ public abstract class SubCommand {
 
     public abstract String getPermission();
 
-    public abstract void execute(CommandSender sender, String args[]);
+    public abstract void onCommand(CommandSender sender, String label, String[] args);
 }

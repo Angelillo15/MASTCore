@@ -138,4 +138,29 @@ public class Messages {
         return MAStaff.parseMessage(ConfigLoader.getPunishmentsGUI().getConfig().getString("Gui.title"));
     }
 
+    public static class StaffVault {
+        public static String itemSaved() {
+            return MAStaff.parseMessage(messages.getString("StaffVault.itemSaved"));
+        }
+
+        public static String staffVaultIsFull() {
+            return MAStaff.parseMessage(messages.getString("StaffVault.staffVaultFull"));
+        }
+
+        public static String staffVaultInStaffMode() {
+            return MAStaff.parseMessage(messages.getString("StaffVault.staffVaultInStaffMode"));
+        }
+    }
+
+    /*
+     * Freeze
+     */
+    public static String CONFIRM_PUNISH_MESSAGE() {
+        return MAStaff.parseMessage(messages.getString("Freeze.confirmPunishMessage"));
+    }
+
+    public static String GET_FREEZE_CANNOT_FREEZE_THAT_PLAYER_MESSAGE() {
+        return MAStaff.parseMessage(messages.getString("Freeze.freezeBypassMessage"));
+    }
+
 }

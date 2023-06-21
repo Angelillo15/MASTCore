@@ -10,11 +10,16 @@ import net.md_5.bungee.event.EventHandler;
 import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
 import java.io.IOException;
+import java.util.Objects;
 
 public class StaffChangeEvent implements Listener {
 
     @EventHandler
     public void staffEnableEvent(PluginMessageEvent event) {
+        if (!Objects.equals(event.getTag(), "BungeeCord")) {
+            return;
+        }
+
         DataInputStream in = new DataInputStream(new ByteArrayInputStream(event.getData()));
 
         try {
@@ -35,7 +40,6 @@ public class StaffChangeEvent implements Listener {
         } catch (IOException ignored) {
 
         }
-
     }
 
 

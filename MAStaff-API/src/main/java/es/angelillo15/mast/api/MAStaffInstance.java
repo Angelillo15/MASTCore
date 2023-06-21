@@ -1,6 +1,8 @@
 package es.angelillo15.mast.api;
 
+import es.angelillo15.mast.api.cmd.Command;
 import es.angelillo15.mast.api.exceptions.PluginNotLoadedException;
+import es.angelillo15.mast.api.utils.ServerUtils;
 import es.angelillo15.mast.api.utils.VersionUtils;
 import net.md_5.bungee.api.ProxyServer;
 import org.bukkit.Bukkit;
@@ -10,7 +12,11 @@ import org.bukkit.plugin.Plugin;
 
 public interface MAStaffInstance<P> {
     public static int version() {
-        return VersionUtils.getBukkitVersion();
+        if (ServerUtils.getServerType() == ServerUtils.ServerType.BUNGEE) {
+            return 19;
+        } else {
+            return VersionUtils.getBukkitVersion();
+        }
     }
 
     public static MAStaffInstance<Plugin> getInstance(){
@@ -36,6 +42,15 @@ public interface MAStaffInstance<P> {
     }
 
     public ILogger getPLogger();
+    public static ILogger getLogger() {
+        if (ServerUtils.getServerType() == ServerUtils.ServerType.BUKKIT) {
+            return getInstance().getPLogger();
+        } else {
+            return getBungeeInstance().getPLogger();
+        }
+    }
+    public default void registerCommand(Command command){};
+    public IServerUtils getServerUtils();
     public boolean isDebug();
     public void drawLogo();
     public void loadConfig();

@@ -1,5 +1,7 @@
 package es.angelillo15.mast.bukkit.config;
 
+import java.util.List;
+
 public class Config {
     public static String language() {
         return ConfigLoader.getConfig().getConfig().getString("Config.language");
@@ -43,6 +45,38 @@ public class Config {
 
         public static String password() {
             return ConfigLoader.getConfig().getConfig().getString("Database.password");
+        }
+    }
+
+    public static class StaffVault {
+        public static boolean enabled() {
+            return ConfigLoader.getConfig().getConfig().getBoolean("StaffVault.enabled");
+        }
+
+        public static String name() {
+            return ConfigLoader.getConfig().getConfig().getString("StaffVault.name");
+        }
+
+        public static int checkTime() {
+            return ConfigLoader.getConfig().getConfig().getInt("StaffVault.checkTime");
+        }
+    }
+
+    public static class Freeze {
+        public static boolean enabled() {
+            return ConfigLoader.getConfig().getConfig().getBoolean("Freeze.enabled");
+        }
+
+        public static boolean executeCommandOnExit() {
+            return ConfigLoader.getConfig().getConfig().getBoolean("Freeze.executeCommandOnExit");
+        }
+
+        public static boolean askToExecuteCommands() {
+            return ConfigLoader.getConfig().getConfig().getBoolean("Freeze.askToExecuteCommands");
+        }
+
+        public static List<String> commands() {
+            return ConfigLoader.getConfig().getConfig().getStringList("Freeze.commands");
         }
     }
 }

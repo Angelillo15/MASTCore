@@ -1,5 +1,8 @@
 package es.angelillo15.mast.api.libs;
 
+import es.angelillo15.mast.api.MAStaffInstance;
+import es.angelillo15.mast.api.utils.ServerUtils;
+import es.angelillo15.mast.api.utils.VersionUtils;
 import lombok.Getter;
 import net.byteflux.libby.Library;
 
@@ -8,6 +11,8 @@ import java.util.ArrayList;
 public class LibsManager {
     @Getter
     public static ArrayList<Library> libs = new ArrayList<Library>();
+
+    public static String ADVENTURE_VERSION = "4.14.0";
 
     public static void load(){
         Library hikariCP = Library.builder()
@@ -100,6 +105,101 @@ public class LibsManager {
                         .relocate("redis{}clients{}jedis", "es{}angelillo15{}mast{}libs{}jedis")
                         .build();
 
+        Library storm = Library.builder()
+                        .groupId("com{}github{}Mindgamesnl")
+                        .artifactId("storm")
+                        .version("prod125")
+                        .isolatedLoad(false)
+                        .relocate("com{}craftmend{}storm", "es{}angelillo15{}mast{}libs{}storm")
+                        .relocate("com{}google{}gson", "es{}angelillo15{}mast{}libs{}google{}gson")
+                        .build();
+
+        Library miniMessage = Library.builder()
+                        .groupId("net{}kyori")
+                        .artifactId("adventure-text-minimessage")
+                        .version(ADVENTURE_VERSION)
+                        .isolatedLoad(false)
+                        .relocate("net{}kyori", "es{}angelillo15{}mast{}libs{}kyori")
+                        .build();
+
+        Library adventureAPI = Library.builder()
+                        .groupId("net{}kyori")
+                        .artifactId("adventure-api")
+                        .version(ADVENTURE_VERSION)
+                        .isolatedLoad(false)
+                        .relocate("net{}kyori", "es{}angelillo15{}mast{}libs{}kyori")
+                        .build();
+
+        Library adventureBukkitPlatform = Library.builder()
+                        .groupId("net{}kyori")
+                        .artifactId("adventure-platform-bukkit")
+                        .version("4.3.0")
+                        .isolatedLoad(false)
+                        .relocate("net{}kyori", "es{}angelillo15{}mast{}libs{}kyori")
+                        .build();
+
+        Library adventureBungeePlatform = Library.builder()
+                        .groupId("net{}kyori")
+                        .artifactId("adventure-platform-bungeecord")
+                        .version("4.3.0")
+                        .isolatedLoad(false)
+                        .relocate("net{}kyori", "es{}angelillo15{}mast{}libs{}kyori")
+                        .build();
+
+        Library examination = Library.builder()
+                        .groupId("net{}kyori")
+                        .artifactId("examination-api")
+                        .version("1.3.0")
+                        .isolatedLoad(false)
+                        .relocate("net{}kyori", "es{}angelillo15{}mast{}libs{}kyori")
+                        .build();
+
+        Library adventurePlatformApi = Library.builder()
+                .groupId("net{}kyori")
+                .artifactId("adventure-platform-api")
+                .version("4.3.0")
+                .isolatedLoad(false)
+                .relocate("net{}kyori", "es{}angelillo15{}mast{}libs{}kyori")
+                .build();
+
+        Library adventurePlatformFacet = Library.builder()
+                .groupId("net{}kyori")
+                .artifactId("adventure-platform-facet")
+                .version("4.3.0")
+                .isolatedLoad(false)
+                .relocate("net{}kyori", "es{}angelillo15{}mast{}libs{}kyori")
+                .build();
+
+        Library adventureKey = Library.builder()
+                .groupId("net{}kyori")
+                .artifactId("adventure-key")
+                .version(ADVENTURE_VERSION)
+                .isolatedLoad(false)
+                .relocate("net{}kyori", "es{}angelillo15{}mast{}libs{}kyori")
+                .build();
+
+        libs.add(getAdventureLib("adventure-text-serializer-legacy"));
+        libs.add(getAdventureLib("adventure-text-serializer-plain"));
+        libs.add(getAdventureLib("adventure-text-serializer-json"));
+        libs.add(getAdventureLib("adventure-text-serializer-ansi"));
+        libs.add(getAdventureLib("adventure-text-serializer-gson"));
+        libs.add(getAdventureLib("adventure-nbt"));
+        libs.add(getAdventureLib("adventure-text-serializer-json-legacy-impl"));
+        libs.add(getAdventureLib("adventure-text-serializer-gson-legacy-impl"));
+
+
+        libs.add(miniMessage);
+        libs.add(adventureAPI);
+        libs.add(examination);
+        libs.add(adventurePlatformApi);
+        libs.add(adventurePlatformFacet);
+        libs.add(adventureKey);
+
+        if (ServerUtils.getServerType() == ServerUtils.ServerType.BUKKIT) {
+            libs.add(adventureBukkitPlatform);
+        } else if (ServerUtils.getServerType() == ServerUtils.ServerType.BUNGEE) {
+            libs.add(adventureBungeePlatform);
+        }
 
         libs.add(apacheHttp);
         libs.add(hikariCP);
@@ -111,6 +211,7 @@ public class LibsManager {
         libs.add(apacheHttpMime);
         libs.add(apacheLogger);
         libs.add(jedis);
+        libs.add(storm);
         libs.add(getLib("org{}slf4j", "slf4j-api", "2.0.6"));
     }
 
@@ -164,5 +265,16 @@ public class LibsManager {
                 relocation
         );
         return library;
+    }
+
+    public static Library getAdventureLib(String artifact) {
+        Library lib = Library.builder()
+                .groupId("net{}kyori")
+                .artifactId(artifact)
+                .version(ADVENTURE_VERSION)
+                .isolatedLoad(false)
+                .relocate("net{}kyori", "es{}angelillo15{}mast{}libs{}kyori")
+                .build();
+        return lib;
     }
 }

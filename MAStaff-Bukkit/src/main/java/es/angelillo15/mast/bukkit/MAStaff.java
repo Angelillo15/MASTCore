@@ -1,9 +1,8 @@
 package es.angelillo15.mast.bukkit;
 
-import es.angelillo15.mast.api.ILogger;
-import es.angelillo15.mast.api.IStaffPlayer;
-import es.angelillo15.mast.api.MAStaffInstance;
+import es.angelillo15.mast.api.*;
 import es.angelillo15.mast.api.database.DataProvider;
+import es.angelillo15.mast.api.utils.BukkitUtils;
 import es.angelillo15.mast.bukkit.addons.AddonsLoader;
 import es.angelillo15.mast.bukkit.cmd.FreezeCMD;
 import es.angelillo15.mast.bukkit.cmd.StaffChatCMD;
@@ -26,7 +25,6 @@ import es.angelillo15.mast.bukkit.loaders.ItemsLoader;
 import es.angelillo15.mast.bukkit.loaders.PunishmentGUILoader;
 import es.angelillo15.mast.bukkit.utils.FreezeUtils;
 import es.angelillo15.mast.bukkit.utils.Logger;
-import es.angelillo15.mast.api.TextUtils;
 import es.angelillo15.mast.bukkit.utils.Metrics;
 import es.angelillo15.mast.bukkit.utils.PermsUtils;
 import es.angelillo15.mast.bukkit.utils.scheduler.Scheduler;
@@ -42,8 +40,9 @@ import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
-import es.angelillo15.mast.bukkit.data.PluginConnection;
+import es.angelillo15.mast.api.database.PluginConnection;
 import org.simpleyaml.configuration.file.YamlFile;
+
 import java.sql.Connection;
 import java.sql.SQLException;
 
@@ -65,10 +64,8 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance<Plugin> {
     private static int currentVersion;
     @Getter
     private static int spiVersion;
-
     public static String parseMessage(String messages) {
-        return TextUtils.colorize(messages.replace("{prefix}", Messages.PREFIX())
-        );
+        return TextUtils.colorize(messages.replace("{prefix}", Messages.PREFIX()));
     }
 
     @Override
@@ -86,6 +83,11 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance<Plugin> {
     @Override
     public boolean isDebug() {
         return debug;
+    }
+
+
+    public void setupMiniMessage() {
+        BukkitUtils.setAudienceBukkit(this);
     }
 
     @Override
@@ -113,13 +115,9 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance<Plugin> {
     @Override
     public void registerCommands() {
         getCommand("staff").setExecutor(new StaffCMD());
-        getCommand("freeze").setExecutor(new FreezeCMD());
+        if (Config.Freeze.enabled()) getCommand("freeze").setExecutor(new FreezeCMD());
         getCommand("mast").setExecutor(new MAStaffCMD());
         getCommand("staffchat").setExecutor(new StaffChatCMD());
-    }
-
-    public boolean placeholderCheck() {
-        return Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null;
     }
 
     @Override
@@ -133,7 +131,7 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance<Plugin> {
         pm.registerEvents(new OnItemClickInteract(), this);
         pm.registerEvents(new OnJoinLeave(), this);
         pm.registerEvents(new OnItemDrop(), this);
-        pm.registerEvents(new FreezeListener(), this);
+        if (Config.Freeze.enabled()) pm.registerEvents(new FreezeListener(), this);
         pm.registerEvents(new OnItemGet(), this);
         pm.registerEvents(new OnPlayerInteractAtEntityEvent(), this);
         pm.registerEvents(new OnAttack(), this);
@@ -174,13 +172,13 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance<Plugin> {
 
         } catch (Exception e) {
             logger.error(e.getMessage());
-            logger.error((TextUtils.colorize("&c┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓")));
-            logger.error((TextUtils.colorize("&c┃ An error ocurred while connecting to the MySQL database!                 ┃")));
-            logger.error((TextUtils.colorize("&c┃ Please, check your database credentials.                                 ┃")));
-            logger.error((TextUtils.colorize("&c┃ If you need help, join our Discord server to get support:                ┃")));
-            logger.error((TextUtils.colorize("&c┃ https://discord.nookure.com                                              ┃")));
-            logger.error((TextUtils.colorize("&c┃ The plugin is now connecting to a SQLite database...                     ┃")));
-            logger.error((TextUtils.colorize("&c┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛")));
+            logger.error((TextUtils.colorize("┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓")));
+            logger.error((TextUtils.colorize("┃ An error ocurred while connecting to the MySQL database!                 ┃")));
+            logger.error((TextUtils.colorize("┃ Please, check your database credentials.                                 ┃")));
+            logger.error((TextUtils.colorize("┃ If you need help, join our Discord server to get support:                ┃")));
+            logger.error((TextUtils.colorize("┃ https://discord.nookure.com                                              ┃")));
+            logger.error((TextUtils.colorize("┃ The plugin is now connecting to a SQLite database...                     ┃")));
+            logger.error((TextUtils.colorize("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛")));
             try {
                 pluginConnection = new PluginConnection(
                         getPlugin().getDataFolder().getAbsolutePath()
@@ -345,6 +343,11 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance<Plugin> {
 
         logger.warn(TextUtils.colorize("You are using a development version!"));
 
+    }
+
+    @Override
+    public IServerUtils getServerUtils() {
+        return null;
     }
 
     @Override

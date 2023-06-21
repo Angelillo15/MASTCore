@@ -5,32 +5,48 @@
 # Recuerda unirte a mi servidor de Discord si necesitas ayuda:
 # https://discord.angelillo15.es/
 #
-Prefix: '&a&lSTAFF &8&l»' # Esto aparecerá delante de todos los mensajes.
+Prefix: '&a&lSTAFF &8&l»&r' # Esto aparecerá delante de todos los mensajes.
 NoPermission: "&7No tienes permiso para ejecutar este comando." # Esto aparecerá cuando un jugador que no tenga permisos utilice un comando.
 Reloaded: "{prefix} &7MAStaff ha sido recargado exitosamente." # Esto aparecerá cuando el plugin sea recargado.
 General:
   noPlayerFound: '{prefix} &7Ese jugador está desconectado.' # Mensaje enviado cuando el jugador mencionado no está conectado.
   noPlayerOnline: '{prefix} &7No hay jugadores conectados.' # Mensaje enviado cuando no hay jugadores conectados.
 Vanish:
-  joinMessage: '&a{player} &7ha entrado' # Mensaje enviado cuando un jugador desactiva el vanish.
-  leaveMessage: '&a{player} &7ha salido' # Mensaje enviado cuando un jugador activa el vanish.
-  staffJoinMessage: '&a{player} &7ha entrado silenciosamente' # Mensaje enviado al Staff cuando otro Staff entra en vanish.
-  staffLeaveMessage: '&a{player} &7ha salido silenciosamente' # Mensaje enviado al Staff cuando otro Staff sale en vanish.
-  enable: '{prefix} &7Has activado el &b&lVanish&7.' # Mensaje enviado cuando un jugador activa el vanish.
-  disable: '{prefix} &7Has desactivado el &b&lVanish&7.' # Mensaje enviado cuando un jugador desactiva el vanish.
+  # Mensaje enviado cuando un jugador desactiva el vanish.
+  joinMessage: '&a{player} &7ha entrado'
+  # Mensaje enviado cuando un jugador activa el vanish.
+  leaveMessage: '&a{player} &7ha salido'
+  # Mensaje enviado al Staff cuando otro Staff entra en vanish.
+  staffJoinMessage: '&a{player} &7ha entrado silenciosamente'
+  # Mensaje enviado al Staff cuando otro Staff sale en vanish.
+  staffLeaveMessage: '&a{player} &7ha salido silenciosamente'
+  # Mensaje enviado cuando un jugador activa el vanish.
+  enable: '{prefix} &7Has activado el &b&lVanish&7.'
+  # Mensaje enviado cuando un jugador desactiva el vanish.
+  disable: '{prefix} &7Has desactivado el &b&lVanish&7.'
 StaffChat:
-  format: '{prefix} &a{player} &8&l» &7{message}' # El formato para mensajes enviados mediante Chat de Staff.
-  correctUse: '{prefix} &7Debes de usar &a/sc <mensaje>&7.' # Mensaje enviado cuando el comando no se utiliza correctamente.
+  # El formato para mensajes enviados mediante Chat de Staff.
+  format: '{prefix} &a{player} &8&l» &7{message}'
+  # Mensaje enviado cuando el comando no se utiliza correctamente.
+  correctUse: '{prefix} &7Debes de usar &a/sc <mensaje>&7.'
 StaffMode:
-  toggledOn: '{prefix} &7Modo de staff &aactivado&7.' # Mensaje enviado al activar el Modo de Staff.
-  toggledOff: '{prefix} &7Modo de staff &adesactivado&7.' # Mensaje enviado al desactivar el Modo de Staff.
+  # Mensaje enviado al activar el Modo de Staff.
+  toggledOn: '{prefix} &7Modo de staff &aactivado&7.'
+  # Mensaje enviado al desactivar el Modo de Staff.
+  toggledOff: '{prefix} &7Modo de staff &adesactivado&7.'
 Freeze:
-  correctUse: '{prefix} &7Debes de usar &a/freeze <jugador>&7.' # Mensaje enviado cuando el comando no se utiliza correctamente.
-  correctUseOther: '{prefix} &7Debes de usar &a/freeze <jugador>&7.' # Mensaje enviado cuando el comando no se utiliza correctamente.
-  frozen: '{prefix} &7Has sido &acongelado&7.' # Mensaje enviado cuando el jugador es congelado.
-  unfrozen: '{prefix} &7Has sido &adescongelado&7.' # Mensaje enviado cuando el jugador es descongelado.
-  unfrozenBy: '{prefix} &7El jugador &a{player} &7ha sido &adescongelado &7por &a{staff}&7.' # Mensaje enviado cuando un jugador es descongelado por un staff.
-  frozenByOther: '{prefix} &7El jugador &a{player} &7ha sido &afrozen &7por &a{staff}&7.' # Mensaje enviado cuando un jugador es congelado por un staff.
+  # Mensaje enviado cuando el comando no se utiliza correctamente.
+  correctUse: '{prefix} &7Debes de usar &a/freeze <jugador>&7.'
+  # Mensaje enviado cuando el comando no se utiliza correctamente.
+  correctUseOther: '{prefix} &7Debes de usar &a/freeze <jugador>&7.'
+  # Mensaje enviado cuando el jugador es congelado.
+  frozen: '{prefix} &7Has sido &acongelado&7.'
+  # Mensaje enviado cuando el jugador es descongelado.
+  unfrozen: '{prefix} &7Has sido &adescongelado&7.'
+  # Mensaje enviado cuando un jugador es descongelado por un staff.
+  unfrozenBy: '{prefix} &7El jugador &a{player} &7ha sido &adescongelado &7por &a{staff}&7.'
+  # Mensaje enviado cuando un jugador es congelado por un staff.
+  frozenByOther: '{prefix} &7El jugador &a{player} &7ha sido &afrozen &7por &a{staff}&7.'
   playerSpamMessage:
     - ''
     - '&7████&c█&7████'
@@ -42,6 +58,14 @@ Freeze:
     - '&c█&6███&0█&6███&c█'
     - '&c█████████'
     - ''
+  # Message mandado al staff cuando el jugador que congelaron abandona la partida
+  confirmPunishMessage: |
+    <gray>El <green>jugador</green> <red>{player}</red> se ha salido del servidor mientras se encontraba congelado.
+    <reset>
+    ¿Quieres ejecuutar los comandos especificados para cuando un jugador abandona estando congelado?
+    <hover:show_text:'Forgive the player'><red><click:run_command:'/freeze /remove {player}'>[x]</click></red></hover> <click:run_command:/freeze /exec {player}><green><hover:show_text:'Punish that player'>[✔]</hover></green> </click>
+  # Mensaje que se manda cuando un staff intenta congelar a uu jugador con el permiso mast.freeze.bypass
+  freezeBypassMessage: '{prefix} &7No puedes congelar a este jugador.'
 StaffList:
   title: '&a&lSTAFF &8&l» &7Online Staff' # El título de la lista de Staff.
   staffLore:
@@ -49,5 +73,14 @@ StaffList:
     - "&6&l» &7Nombre: &a%player_name%"
     - "&6&l» &7Rango: &a%vault_prefix%"
     - ""
-  previousPage: '&a&l« &7Pagina Anterior' # Nombre del botón de la página anterior.
-  nextPage: '&a&l» &7Pagina siguiente' # Nombre del botón de la página siguiente.
+  # Nombre del botón de la página anterior.
+  previousPage: '&a&l« &7Pagina Anterior'
+  # Nombre del botón de la página siguiente.
+  nextPage: '&a&l» &7Pagina siguiente'
+StaffVault:
+  # Mensaje mandado cuando un item se guarda en el inventario de staff
+  itemSaved: "{prefix} &7Un item ha sido guardado en tu invetario de staff. \n <gray>Click <gold><u><click:run_command:'/staff vault'>aquí</click></u></gold> para abrirlo</gray>"
+  # Mensaje que se manda cuando el inventario de staff esta lleno
+  staffVaultFull: "{prefix} &7Tu inventario de staff esta lleno."
+  # Mensaje que se manda cuando intentas abrir el vault en modo staff
+  staffVaultInStaffMode: "{prefix} &7No puedes abrir el vault en modo staff."

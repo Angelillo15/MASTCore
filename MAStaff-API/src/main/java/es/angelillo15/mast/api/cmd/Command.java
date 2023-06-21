@@ -1,17 +1,7 @@
 package es.angelillo15.mast.api.cmd;
 
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+import es.angelillo15.mast.api.cmd.sender.CommandSender;
 
-@Target({ElementType.TYPE})
-@Retention(RetentionPolicy.RUNTIME)
-public @interface Command {
-    String name();
-    String[] aliases() default {};
-    String permission() default "";
-    String usage() default "";
-    String description() default "";
-    String[] subcommands() default {};
+public abstract class Command {
+    public abstract void onCommand(CommandSender sender, String label, String[] args);
 }

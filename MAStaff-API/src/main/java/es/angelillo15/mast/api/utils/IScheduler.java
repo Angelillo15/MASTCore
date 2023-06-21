@@ -1,7 +1,6 @@
 package es.angelillo15.mast.api.utils;
 
 import es.angelillo15.mast.api.chat.api.chat.hover.content.Entity;
-import org.bukkit.plugin.Plugin;
 
 public interface IScheduler {
     public void execute(Runnable runnable);

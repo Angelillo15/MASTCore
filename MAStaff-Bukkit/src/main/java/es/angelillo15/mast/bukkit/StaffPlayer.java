@@ -3,15 +3,23 @@ package es.angelillo15.mast.bukkit;
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
 import es.angelillo15.mast.api.IStaffPlayer;
+import es.angelillo15.mast.api.MAStaffInstance;
 import es.angelillo15.mast.api.Permissions;
+import es.angelillo15.mast.api.TextUtils;
 import es.angelillo15.mast.api.database.sql.CommonQueries;
+import es.angelillo15.mast.api.event.bukkit.freeze.FreezePlayerEvent;
+import es.angelillo15.mast.api.event.bukkit.freeze.UnFreezePlayerEvent;
 import es.angelillo15.mast.api.event.bukkit.staff.StaffDisableEvent;
 import es.angelillo15.mast.api.event.bukkit.staff.StaffEnableEvent;
 import es.angelillo15.mast.api.items.StaffItem;
 import es.angelillo15.mast.api.managers.GlowManager;
 import es.angelillo15.mast.api.managers.VanishedPlayers;
+import es.angelillo15.mast.api.managers.freeze.FreezeManager;
+import es.angelillo15.mast.bukkit.cmd.utils.CommandManager;
+import es.angelillo15.mast.bukkit.config.Config;
 import es.angelillo15.mast.bukkit.config.ConfigLoader;
 import es.angelillo15.mast.bukkit.config.Messages;
+import es.angelillo15.mast.bukkit.gui.StaffVault;
 import es.angelillo15.mast.bukkit.loaders.ItemsLoader;
 import es.angelillo15.mast.bukkit.utils.PermsUtils;
 import es.angelillo15.mast.bukkit.utils.StaffUtils;
@@ -28,6 +36,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
+import javax.annotation.Nullable;
 import java.io.File;
 import java.util.*;
 
@@ -36,7 +45,9 @@ public class StaffPlayer implements IStaffPlayer {
     @Getter
     @Setter
     private boolean quit;
+    @Getter
     private final File playerInventoryFile;
+    @Getter
     private FileConfiguration playerInventoryConfig;
     private ChatColor glowColor = ChatColor.GREEN;
     private boolean staffMode;
@@ -93,7 +104,7 @@ public class StaffPlayer implements IStaffPlayer {
     public void enableVanish() {
         VanishedPlayers.addPlayer(player);
         vanished = true;
-        player.sendMessage(Messages.GET_VANISH_ENABLE_MESSAGE());
+        TextUtils.colorize(Messages.GET_VANISH_ENABLE_MESSAGE(), player);
 
 
         for (Player p : Bukkit.getOnlinePlayers()) {
@@ -108,7 +119,7 @@ public class StaffPlayer implements IStaffPlayer {
     public void disableVanish() {
         VanishedPlayers.removePlayer(player);
         vanished = false;
-        player.sendMessage(Messages.GET_VANISH_DISABLE_MESSAGE());
+        TextUtils.colorize(Messages.GET_VANISH_DISABLE_MESSAGE(), player);
 
         for (Player p : Bukkit.getOnlinePlayers()) {
             if (p == player) continue;
@@ -118,7 +129,7 @@ public class StaffPlayer implements IStaffPlayer {
     }
 
     public void disableStaffMode() {
-        player.sendMessage(Messages.GET_STAFF_MODE_DISABLE_MESSAGE());
+        TextUtils.colorize(Messages.GET_STAFF_MODE_DISABLE_MESSAGE(), player);
         setModeData(false);
         clearInventory();
         CommonQueries.updateAsync(player.getUniqueId(), 0);
@@ -129,12 +140,15 @@ public class StaffPlayer implements IStaffPlayer {
         if (!quit) StaffUtils.asyncBroadcastMessage(Messages.GET_VANISH_JOIN_MESSAGE()
                 .replace("{player}", player.getName()));
         setGlowing(false);
-        restoreLocation();
+        if (!restoreLocation()) {
+            MAStaffInstance.getLogger().debug("Error restoring location for " + player.getName());
+            // Todo send message of error to the player
+        }
         Bukkit.getPluginManager().callEvent(new StaffDisableEvent(this));
     }
 
     public void enableStaffMode(boolean saveInventory) {
-        player.sendMessage(Messages.GET_STAFF_MODE_ENABLE_MESSAGE());
+        TextUtils.colorize(Messages.GET_STAFF_MODE_ENABLE_MESSAGE(), player);
         setModeData(true);
         if (saveInventory) saveInventory();
         staffMode = true;
@@ -147,6 +161,7 @@ public class StaffPlayer implements IStaffPlayer {
                 .replace("{player}", player.getName()));
         setGlowing(true);
         saveLocation();
+        staffModeAsyncInventoryChecker();
         Bukkit.getPluginManager().callEvent(new StaffEnableEvent(this));
     }
 
@@ -282,25 +297,166 @@ public class StaffPlayer implements IStaffPlayer {
         if(!(ConfigLoader.getConfig().getConfig().getBoolean("Config.teleportBack"))) return false;
         if(!playerInventoryConfig.contains("Location.world")) return false;
         World world = Bukkit.getWorld(Objects.requireNonNull(playerInventoryConfig.getString("Location.world")));
+
         if (world == null) return false;
+
         double x = playerInventoryConfig.getDouble("Location.x");
         double y = playerInventoryConfig.getDouble("Location.y");
         double z = playerInventoryConfig.getDouble("Location.z");
         float yaw = (float) playerInventoryConfig.getDouble("Location.yaw");
         float pitch = (float) playerInventoryConfig.getDouble("Location.pitch");
+
         Location location = new Location(world, x, y, z, yaw, pitch);
-        switch (world.getEnvironment()) {
-            case NETHER:
-                PaperLib.teleportAsync(player, location);
-                return true;
-            default:
-                PaperLib.teleportAsync(player, world.getHighestBlockAt(location).getLocation().add(0, 1, 0));
-                return true;
+
+        if (world.getEnvironment() == World.Environment.NETHER) {
+            PaperLib.teleportAsync(player, location);
+            return true;
         }
+
+        PaperLib.teleportAsync(player, world.getHighestBlockAt(location).getLocation().add(0, 1, 0));
+        return true;
     }
 
     @Override
     public boolean wasInStaffMode() {
         return playerInventoryConfig.getBoolean("Status.staffMode");
+    }
+
+    @Override
+    public void staffModeAsyncInventoryChecker() {
+        if (!Config.StaffVault.enabled()) return;
+
+        new Thread(() -> {
+            MAStaffInstance.getLogger().debug("Starting staff mode inventory checker for " + player.getName());
+
+            while (isStaffMode()) {
+                try {
+                    Thread.sleep(Config.StaffVault.checkTime() * 1000L);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+                if (!player.isOnline() || !isStaffMode()) break;
+
+                MAStaffInstance.getLogger().debug("Checking inventory for " + player.getName());
+
+                player.getInventory().forEach(itemStack -> {
+                    if (itemStack == null) return;
+                    if (itemStack.getType() == Material.AIR) return;
+
+                    if (itemStack.getItemMeta() == null) {
+                        addItemToStaffVault(itemStack);
+                        return;
+                    }
+
+                    if (!(itemStack.getItemMeta().hasDisplayName())) {
+                        addItemToStaffVault(itemStack);
+                        return;
+                    }
+
+                    if (!(items.containsKey(itemStack.getItemMeta().getDisplayName()))) {
+                        addItemToStaffVault(itemStack);
+                        return;
+                    }
+                });
+
+                player.getInventory().clear();
+                setItems();
+            }
+        }).start();
+    }
+
+    @SneakyThrows
+    public void addItemToStaffVault(ItemStack item) {
+        if (isStaffVaultFull()) {
+            TextUtils.sendMessage(player, Messages.StaffVault.staffVaultIsFull());
+            return;
+        }
+
+        MAStaffInstance.getLogger().debug("Added item " + item.getType().name() + " to staff vault for player " + player.getName());
+
+        List<ItemStack> staffVault = new ArrayList<>();
+
+        if (playerInventoryConfig.get("staffVault") != null) {
+            staffVault = ((List<ItemStack>) Objects.requireNonNull(
+                    playerInventoryConfig.get("staffVault")
+            ));
+        }
+
+        staffVault.add(item);
+
+        playerInventoryConfig.set("staffVault", staffVault);
+
+        playerInventoryConfig.save(playerInventoryFile);
+
+        TextUtils.sendMessage(player, Messages.StaffVault.itemSaved());
+        TextUtils.colorize(Messages.StaffVault.itemSaved());
+        MAStaffInstance.getLogger().debug("Saved staff vault for player " + player.getName());
+    }
+
+    public boolean isStaffVaultFull() {
+        if (!Config.StaffVault.enabled()) return false;
+        if (playerInventoryConfig.get("staffVault") == null) return false;
+        return ((List<ItemStack>) playerInventoryConfig.get("staffVault")).size() >= 54;
+    }
+
+    @Override
+    @Nullable
+    public List<ItemStack> getStaffVault() {
+        return ((List<ItemStack>) playerInventoryConfig.get("staffVault"));
+    }
+
+    @Override
+    public void openStaffVault() {
+        new StaffVault(player, 0).open();
+    }
+
+    @Override
+    public void freezePlayer(Player player) {
+        FreezeManager.freezePlayer(this, player);
+        TextUtils.sendMessage(player, Messages.GET_FREEZE_FROZEN_MESSAGE());
+
+        StaffUtils.asyncStaffBroadcastMessage(Messages.GET_FREEZE_FROZEN_BY_MESSAGE().replace("{player}",
+                player.getName()).replace("{staff}",
+                this.player.getName())
+        );
+
+        Bukkit.getPluginManager().callEvent(new FreezePlayerEvent(player, this.player));
+    }
+
+    @Override
+    public void unfreezePlayer(String player) {
+        FreezeManager.unfreezePlayer(player);
+
+
+        StaffUtils.asyncStaffBroadcastMessage(Messages.GET_FREEZE_UNFROZEN_BY_MESSAGE()
+                .replace("{player}", player)
+                .replace("{staff}", this.player.getName())
+        );
+
+        if (Bukkit.getPlayer(player) != null && Objects.requireNonNull(Bukkit.getPlayer(player)).isOnline()) {
+            TextUtils.sendMessage(Bukkit.getPlayer(player), Messages.GET_FREEZE_UNFROZEN_MESSAGE());
+            Bukkit.getPluginManager().callEvent(new UnFreezePlayerEvent(Bukkit.getPlayer(player), this.player));
+        }
+    }
+
+    @Override
+    public void executeFreezedPunishments(String player) {
+        if (!Config.Freeze.executeCommandOnExit()) return;
+        if (Config.Freeze.commands().isEmpty()) return;
+
+        Config.Freeze.commands().forEach(punishment -> {
+            CommandManager.sendCommandToConsole(this.player, punishment
+                    .replace("{player}", player)
+                    .replace("{staff}", this.player.getName())
+            );
+        });
+
+        FreezeManager.unfreezePlayer(player);
+    }
+
+    @Override
+    public boolean isFreezed(Player player) {
+        return FreezeManager.isFrozen(player);
     }
 }

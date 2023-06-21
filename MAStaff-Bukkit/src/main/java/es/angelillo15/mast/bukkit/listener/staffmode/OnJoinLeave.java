@@ -57,6 +57,10 @@ public class OnJoinLeave implements Listener {
 
         StaffPlayer staffPlayer = (StaffPlayer) StaffPlayersManagers.getStaffPlayer(player);
 
+        if (staffPlayer == null) {
+            return;
+        }
+
         if(staffPlayer.isStaffMode()){
             StaffUtils.asyncStaffChatMessage(Messages.GET_STAFF_VANISH_LEAVE_MESSAGE()
                     .replace("{player}", player.getName()));
