@@ -13,7 +13,6 @@ import es.angelillo15.mast.api.config.bukkit.ConfigLoader;
 import es.angelillo15.mast.api.config.bukkit.Messages;
 import es.angelillo15.mast.bukkit.legacy.BukkitLegacyLoader;
 import es.angelillo15.mast.bukkit.listener.FreezeListener;
-import es.angelillo15.mast.bukkit.listener.VanishListener;
 import es.angelillo15.mast.bukkit.listener.clickListeners.OnItemClick;
 import es.angelillo15.mast.bukkit.listener.OnJoin;
 import es.angelillo15.mast.bukkit.listener.clickListeners.OnItemClickInteract;
@@ -127,7 +126,6 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance<Plugin> {
         pm.registerEvents(new OnJoin(), this);
         pm.registerEvents(new OnItemClick(), this);
         pm.registerEvents(new OnItemDrop(), this);
-        pm.registerEvents(new VanishListener(), this);
         pm.registerEvents(new OnInventoryClick(), this);
         pm.registerEvents(new OnItemClickInteract(), this);
         pm.registerEvents(new OnJoinLeave(), this);
@@ -224,15 +222,15 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance<Plugin> {
 
             } else {
                 if (getServer().getPluginManager().getPlugin("Vault") == null) {
-                    logger.warn(TextUtils.colorize("&cVault not found! Glow will not work!"));
+                    logger.warn(TextUtils.colorize("Vault not found! Glow will not work!"));
                 }
 
                 if (this.getServer().getPluginManager().getPlugin("eGlow") == null) {
-                    logger.warn(TextUtils.colorize("&ceGlow not found! Glow will not work!"));
+                    logger.warn(TextUtils.colorize("eGlow not found! Glow will not work!"));
                 }
 
                 if (!ConfigLoader.getGlow().getConfig().getBoolean("Config.enabled")) {
-                    logger.warn(TextUtils.colorize("&cGlow is disabled! Glow will not work!"));
+                    logger.warn(TextUtils.colorize("Glow is disabled! Glow will not work!"));
                 }
             }
         }
