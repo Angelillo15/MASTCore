@@ -22,7 +22,7 @@ public class ServerUtils {
         }
     }
 
-    private static boolean isProtocolLibInstalled() {
+    public static boolean isProtocolLibInstalled() {
         try {
             Class.forName("com.comphenix.protocol.ProtocolLibrary");
             return true;
