@@ -20,6 +20,7 @@ repositories {
     maven("https://repo.extendedclip.com/content/repositories/placeholderapi/")
     maven("https://repo.alessiodp.com/releases/")
     maven("https://jitpack.io")
+    maven("https://repo.dmulloy2.net/repository/public/")
 }
 
 dependencies {
@@ -41,6 +42,7 @@ dependencies {
     compileOnly(libs.adventureBukkit)
     compileOnly(libs.adventureBungee)
     compileOnly(libs.miniMessage)
+    compileOnly(libs.protocolLib)
 }
 
 blossom {

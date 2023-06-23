@@ -57,6 +57,7 @@ dependencies {
     implementation(project(":MAStaff-Bungee"))
     implementation(project("MAStaff-Legacy"))
     implementation(project(":MAStaff-Punishments"))
+    implementation(project(":MAStaff-Vanish"))
     implementation(libs.simpleYaml)
     implementation(libs.configManager)
     implementation(libs.bundles.invAPI)
