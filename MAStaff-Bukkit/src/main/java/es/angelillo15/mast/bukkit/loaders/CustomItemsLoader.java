@@ -5,7 +5,7 @@ import es.angelillo15.mast.api.items.ItemTypes;
 import es.angelillo15.mast.api.managers.ItemManager;
 import es.angelillo15.mast.api.material.XMaterial;
 import es.angelillo15.mast.bukkit.MAStaff;
-import es.angelillo15.mast.bukkit.config.ConfigLoader;
+import es.angelillo15.mast.api.config.bukkit.ConfigLoader;
 import es.angelillo15.mast.bukkit.items.custom.CustomCommandInteractionItem;
 import es.angelillo15.mast.bukkit.items.custom.CustomCommandItem;
 import org.bukkit.inventory.ItemStack;

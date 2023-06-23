@@ -8,9 +8,9 @@ import es.angelillo15.mast.bukkit.cmd.FreezeCMD;
 import es.angelillo15.mast.bukkit.cmd.StaffChatCMD;
 import es.angelillo15.mast.bukkit.cmd.mast.MAStaffCMD;
 import es.angelillo15.mast.bukkit.cmd.staff.StaffCMD;
-import es.angelillo15.mast.bukkit.config.Config;
-import es.angelillo15.mast.bukkit.config.ConfigLoader;
-import es.angelillo15.mast.bukkit.config.Messages;
+import es.angelillo15.mast.api.config.bukkit.Config;
+import es.angelillo15.mast.api.config.bukkit.ConfigLoader;
+import es.angelillo15.mast.api.config.bukkit.Messages;
 import es.angelillo15.mast.bukkit.legacy.BukkitLegacyLoader;
 import es.angelillo15.mast.bukkit.listener.FreezeListener;
 import es.angelillo15.mast.bukkit.listener.VanishListener;
@@ -31,7 +31,6 @@ import es.angelillo15.mast.bukkit.utils.scheduler.Scheduler;
 import kong.unirest.HttpResponse;
 import kong.unirest.Unirest;
 import lombok.Getter;
-import lombok.Setter;
 import lombok.SneakyThrows;
 import mc.obliviate.inventory.InventoryAPI;
 import org.bukkit.Bukkit;
@@ -43,6 +42,8 @@ import org.bukkit.plugin.java.JavaPlugin;
 import es.angelillo15.mast.api.database.PluginConnection;
 import org.simpleyaml.configuration.file.YamlFile;
 
+import java.io.File;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.SQLException;
 
@@ -53,7 +54,6 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance<Plugin> {
     private static MAStaff plugin;
     @Getter
     private static boolean glowEnabled = false;
-    @Setter
     private boolean debug = false;
     private static ILogger logger;
     @Getter
@@ -64,9 +64,6 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance<Plugin> {
     private static int currentVersion;
     @Getter
     private static int spiVersion;
-    public static String parseMessage(String messages) {
-        return TextUtils.colorize(messages.replace("{prefix}", Messages.PREFIX()));
-    }
 
     @Override
     public void onEnable() {
@@ -85,6 +82,10 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance<Plugin> {
         return debug;
     }
 
+    @Override
+    public void setDebug(boolean debug) {
+        this.debug = debug;
+    }
 
     public void setupMiniMessage() {
         BukkitUtils.setAudienceBukkit(this);
@@ -358,5 +359,15 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance<Plugin> {
     @Override
     public Plugin getPluginInstance() {
         return this;
+    }
+
+    @Override
+    public File getPluginDataFolder() {
+        return getDataFolder();
+    }
+
+    @Override
+    public InputStream getPluginResource(String s) {
+        return getResource(s);
     }
 }

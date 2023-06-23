@@ -2,9 +2,8 @@ package es.angelillo15.mast.bukkit.utils;
 
 import es.angelillo15.mast.api.Permissions;
 import es.angelillo15.mast.api.TextUtils;
-import es.angelillo15.mast.api.event.bukkit.staff.StaffChatTalkEvent;
 import es.angelillo15.mast.bukkit.MAStaff;
-import es.angelillo15.mast.bukkit.config.Messages;
+import es.angelillo15.mast.api.config.bukkit.Messages;
 import es.angelillo15.mast.bukkit.utils.scheduler.Scheduler;
 import io.papermc.lib.PaperLib;
 import org.bukkit.Bukkit;

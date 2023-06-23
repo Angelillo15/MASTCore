@@ -2,7 +2,7 @@ package es.angelillo15.mast.bukkit.cmd.mast;
 
 import es.angelillo15.mast.api.cmd.LegacySubCommand;
 import es.angelillo15.mast.bukkit.MAStaff;
-import es.angelillo15.mast.bukkit.config.Messages;
+import es.angelillo15.mast.api.config.bukkit.Messages;
 import org.bukkit.command.CommandSender;
 
 public class ReloadARG extends LegacySubCommand {
