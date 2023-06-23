@@ -91,4 +91,10 @@ public class Config {
             return ConfigLoader.getConfig().getConfig().getBoolean("Addons.freeze");
         }
     }
+
+    public static class Vanish {
+        public static boolean appearAsSpectator() {
+            return ConfigLoader.getConfig().getConfig().getBoolean("Vanish.appearAsSpectator");
+        }
+    }
 }

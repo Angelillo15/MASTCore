@@ -65,6 +65,9 @@ Freeze:
   # If you want the command to be executed as bungee console, add a "bungee:" prefix.
   commands:
     - "ban {player} &cYou have been perm-banned for leaving the server while you were frozen."
+Vanish:
+  # Appear as spectator to staffs that can see you.
+  appearAsSpectator: true
 #
 # Database configuration for the plugin. With the Bungee version, you must use MariaDB or MySQL.
 #
