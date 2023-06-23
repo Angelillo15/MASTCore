@@ -19,3 +19,8 @@ include("MAStaff-Punishments:Punishments-Bungee")
 findProject(":MAStaff-Punishments:Punishments-Bungee")?.name = "Punishments-Bungee"
 include("MAStaff-Punishments:Punishments-API")
 findProject(":MAStaff-Punishments:Punishments-API")?.name = "Punishments-API"
+include("MAStaff-Vanish")
+include("MAStaff-Vanish:Vanish-API")
+findProject(":MAStaff-Vanish:Vanish-API")?.name = "Vanish-API"
+include("MAStaff-Vanish:Vanish-Bukkit")
+findProject(":MAStaff-Vanish:Vanish-Bukkit")?.name = "Vanish-Bukkit"
