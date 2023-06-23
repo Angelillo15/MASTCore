@@ -19,7 +19,7 @@ public class ProtocolLibPacketUtils implements IPacketUtils {
         byte ping = 0;
 
         PacketContainer packetContainer = new PacketContainer(PacketType.Play.Server.PLAYER_INFO);
-        packetContainer.getPlayerInfoAction().write(0, EnumWrappers.PlayerInfoAction.UPDATE_GAME_MODE);
+        packetContainer.getIntegers().writeSafely(0, 2);
 
         ArrayList<PlayerInfoData> data = new ArrayList<>();
 
