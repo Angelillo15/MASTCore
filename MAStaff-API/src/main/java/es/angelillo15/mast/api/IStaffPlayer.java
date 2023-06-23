@@ -3,10 +3,13 @@ package es.angelillo15.mast.api;
 import es.angelillo15.mast.api.exceptions.AlreadyDisableException;
 import es.angelillo15.mast.api.exceptions.AlreadyEnableException;
 import es.angelillo15.mast.api.items.StaffItem;
+import es.angelillo15.mast.api.player.IVanishPlayer;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+
+import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Map;
 
@@ -161,4 +164,10 @@ public interface IStaffPlayer {
      * @param player - player to check
      */
     boolean isFreezed(Player player);
+
+    /**
+     * Get the vanish player
+     * @return the vanish player or null if is disabled
+     */
+    IVanishPlayer getVanishPlayer();
 }
