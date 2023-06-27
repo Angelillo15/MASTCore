@@ -3,23 +3,27 @@ package es.angelillo15.mast.bungee.punishments;
 import com.craftmend.storm.Storm;
 import es.angelillo15.mast.api.MAStaffInstance;
 import es.angelillo15.mast.api.cmd.sender.CommandSender;
+import es.angelillo15.mast.api.config.punishments.Config;
 import es.angelillo15.mast.api.models.UserModel;
 import es.angelillo15.mast.api.database.PluginConnection;
 import es.angelillo15.mast.api.exceptions.PlayerNotBannedException;
 import es.angelillo15.mast.api.exceptions.user.PlayerNotOnlineException;
 import es.angelillo15.mast.api.managers.UserDataManager;
+import es.angelillo15.mast.api.models.WarnModel;
 import es.angelillo15.mast.api.punishments.IPunishPlayer;
 import es.angelillo15.mast.api.cache.BanCache;
 import es.angelillo15.mast.api.config.punishments.Messages;
 import es.angelillo15.mast.api.models.BansTable;
 import es.angelillo15.mast.api.models.IpBansTable;
 import es.angelillo15.mast.api.punishments.events.EventManager;
+import es.angelillo15.mast.api.utils.NumberUtils;
 import lombok.SneakyThrows;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 
 import java.util.Objects;
+import java.util.function.BiConsumer;
 
 public class PunishPlayer implements IPunishPlayer {
     private final CommandSender player;
@@ -41,6 +45,17 @@ public class PunishPlayer implements IPunishPlayer {
     @Override
     public CommandSender getPlayer() {
         return player;
+    }
+
+    public void getUserModel(BiConsumer<UserModel, UserModel> callback, String target) {
+        try {
+            UserModel senderUser = UserDataManager.getUserData(player.getName());
+            UserModel targetUser = UserDataManager.getUserData(target);
+            callback.accept(senderUser, targetUser);
+        } catch (Exception e) {
+            MAStaffInstance.getLogger().debug("Error while getting user data: " + e.getMessage());
+            player.sendMessage(Messages.Commands.playerNotFound(target));
+        }
     }
 
     /**
@@ -156,4 +171,28 @@ public class PunishPlayer implements IPunishPlayer {
                 Messages.Kick.kickMessage(target, this.player.getName(), reason
         )));
     }
+
+    /**
+     * Warn the player with the config default time and a custom reason
+     * @param target the target of the warn
+     * @param reason the reason of the warn
+     */
+    @Override
+    public void warn(String target, String reason) {
+
+    }
+
+    /**
+     * UnWarn the player
+     * @param target the target of the unwarn
+     * @param reason the reason of the unwarn
+     */
+    @Override
+    public void unWarn(String target, String reason) {
+        getUserModel((senderUser, targetUser) -> {
+            WarnModel warn = WarnModel.getActiveWarns(targetUser).get(0);
+
+        }, target);
+    }
+
 }
