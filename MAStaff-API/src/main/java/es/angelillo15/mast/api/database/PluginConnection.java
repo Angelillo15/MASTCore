@@ -1,9 +1,11 @@
 package es.angelillo15.mast.api.database;
 
 import com.craftmend.storm.Storm;
+import com.craftmend.storm.StormOptions;
 import com.craftmend.storm.connection.hikaricp.HikariDriver;
 import com.craftmend.storm.connection.sqlite.SqliteFileDriver;
 import com.craftmend.storm.dialect.mariadb.MariaDialect;
+import com.craftmend.storm.logger.StormLogger;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import es.angelillo15.mast.api.MAStaffInstance;
@@ -48,7 +50,10 @@ public class PluginConnection {
         config.setLeakDetectionThreshold(0);
         dataSource = new HikariDataSource(config);
 
-        storm = new Storm(new PluginDriver(dataSource));
+        storm = new Storm(
+                getDefaultStormOptions(),
+                new PluginDriver(dataSource)
+        );
 
         try {
             connection = dataSource.getConnection();
@@ -80,7 +85,10 @@ public class PluginConnection {
             connection = DriverManager.getConnection(url);
             conn = connection;
 
-            storm = new Storm(new SqliteFileDriver(new File(dataPath)));
+            storm = new Storm(
+                    getDefaultStormOptions(),
+                    new SqliteFileDriver(new File(dataPath))
+            );
 
             CommonQueries.setConnection(connection);
             queries = new SQLiteQueries();
@@ -98,5 +106,23 @@ public class PluginConnection {
             MAStaffInstance.getLogger().error("An error ocurred while trying to check if the table " + table + " exists: " + e.getMessage());
             return false;
         }
+    }
+
+    public static StormOptions getDefaultStormOptions() {
+        StormOptions options = new StormOptions();
+
+        options.setLogger(new StormLogger() {
+            @Override
+            public void warning(String string) {
+                MAStaffInstance.getLogger().warn(string);
+            }
+
+            @Override
+            public void info(String string) {
+                MAStaffInstance.getLogger().info(string);
+            }
+        });
+
+        return options;
     }
 }
