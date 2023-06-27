@@ -20,3 +20,10 @@ findProject(":MAStaff-Punishments:Punishments-Bungee")?.name = "Punishments-Bung
 include("MAStaff-Punishments:Punishments-API")
 findProject(":MAStaff-Punishments:Punishments-API")?.name = "Punishments-API"
 include("MAStaff-Vanish")
+include("MAStaff-Inventories")
+include("MAStaff-Inventories:Inventories-Common")
+findProject(":MAStaff-Inventories:Inventories-Common")?.name = "Inventories-Common"
+include("MAStaff-Inventories:Inventories-Bungee")
+findProject(":MAStaff-Inventories:Inventories-Bungee")?.name = "Inventories-Bungee"
+include("MAStaff-Inventories:Inventories-Bukkit")
+findProject(":MAStaff-Inventories:Inventories-Bukkit")?.name = "Inventories-Bukkit"
