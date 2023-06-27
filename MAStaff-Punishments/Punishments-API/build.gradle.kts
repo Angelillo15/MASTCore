@@ -14,4 +14,7 @@ dependencies {
     compileOnly(libs.simpleYaml)
     compileOnly(libs.waterfall)
     compileOnly(libs.storm)
+    compileOnly(libs.adventureBungee)
+    compileOnly(libs.miniMessage)
+    compileOnly(libs.adventureApi)
 }
