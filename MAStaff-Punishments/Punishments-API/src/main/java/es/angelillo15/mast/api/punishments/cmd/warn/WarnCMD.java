@@ -63,6 +63,5 @@ public class WarnCMD extends Command {
 
             sender.sendMessage(Messages.Commands.Warn.success(target, reason.toString(), sender.getName()));
         }).start();
-
     }
 }
