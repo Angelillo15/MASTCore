@@ -229,3 +229,13 @@ Commands:
     usage: '{prefix} &cUsage: /warn <player> <reason?>'
     # Message sent to the player when he warns a player.
     success: '{prefix} &a{player} has been warned by {staff} with the reason {reason}.'
+  unWarn:
+    # Message sent to the player when he doesn't fill all the arguments.
+    usage: '{prefix} &cUsage: /unwarn <player> <reason?>'
+    # Message sent to the player when he unwarns a player that is not warned.
+    success: '{prefix} &a{player} has been unwarned by {staff} with the reason {reason}.'
+  history:
+    # Message sent to the player when he doesn't fill all the arguments.
+    usage: '{prefix} &cUsage: /history <player>'
+    # Message sent to the player when he checks the history of a player.
+    success: '{prefix} &a{player} history:'
