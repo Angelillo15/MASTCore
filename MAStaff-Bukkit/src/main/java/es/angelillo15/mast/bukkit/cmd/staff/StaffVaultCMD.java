@@ -4,7 +4,7 @@ import es.angelillo15.mast.api.IStaffPlayer;
 import es.angelillo15.mast.api.TextUtils;
 import es.angelillo15.mast.api.cmd.LegacySubCommand;
 import es.angelillo15.mast.api.managers.StaffPlayersManagers;
-import es.angelillo15.mast.bukkit.config.Messages;
+import es.angelillo15.mast.api.config.bukkit.Messages;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 

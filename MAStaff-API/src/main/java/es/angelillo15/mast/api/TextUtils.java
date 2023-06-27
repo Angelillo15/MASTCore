@@ -1,6 +1,7 @@
 package es.angelillo15.mast.api;
 
 import es.angelillo15.mast.api.chat.api.ChatColor;
+import es.angelillo15.mast.api.config.bukkit.Messages;
 import lombok.Getter;
 import lombok.Setter;
 import me.clip.placeholderapi.PlaceholderAPI;
@@ -206,5 +207,9 @@ public class TextUtils {
         BungeeAudiences bungeeAudiences = (BungeeAudiences) audienceProvider;
 
         return bungeeAudiences.player(player);
+    }
+
+    public static String parseBukkitMessage(String messages) {
+        return TextUtils.colorize(messages.replace("{prefix}", Messages.PREFIX()));
     }
 }

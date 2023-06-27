@@ -33,6 +33,8 @@ import lombok.SneakyThrows;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.plugin.Plugin;
 
+import java.io.File;
+import java.io.InputStream;
 import java.sql.SQLException;
 
 public class MAStaff extends Plugin implements MAStaffInstance<Plugin> {
@@ -197,5 +199,15 @@ public class MAStaff extends Plugin implements MAStaffInstance<Plugin> {
     @Override
     public Plugin getPluginInstance() {
         return null;
+    }
+
+    @Override
+    public File getPluginDataFolder() {
+        return getDataFolder();
+    }
+
+    @Override
+    public InputStream getPluginResource(String s) {
+        return getResourceAsStream(s);
     }
 }

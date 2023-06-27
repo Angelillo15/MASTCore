@@ -20,6 +20,7 @@ repositories {
 dependencies {
     compileOnly(project(":MAStaff-API"))
     compileOnly(project(":MAStaff-Legacy"))
+    compileOnly(project(":MAStaff-Vanish"))
     compileOnly(libs.spigot)
     compileOnly(libs.paperApi)
     compileOnly(libs.snakeYaml)

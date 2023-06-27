@@ -2,7 +2,7 @@ package es.angelillo15.mast.bukkit.loaders;
 
 import es.angelillo15.mast.api.managers.GlowManager;
 import es.angelillo15.mast.bukkit.MAStaff;
-import es.angelillo15.mast.bukkit.config.ConfigLoader;
+import es.angelillo15.mast.api.config.bukkit.ConfigLoader;
 import org.bukkit.ChatColor;
 
 public class GlowLoader {

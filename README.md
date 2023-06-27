@@ -8,4 +8,4 @@ This repository contains the source code for the MAStaff plugin.
 2. Place the downloaded jar file in your server's `plugins` folder
 3. Restart your server
 
-[![wakatime](https://wakatime.com/badge/user/2801d3d3-e6f9-4aa2-b517-ea5c3b529e63/project/61ef254c-3f23-4258-b78d-b555fe19beb1.svg)](https://wakatime.com/badge/user/2801d3d3-e6f9-4aa2-b517-ea5c3b529e63/project/61ef254c-3f23-4258-b78d-b555fe19beb1) [![Discord](https://discordapp.com/api/guilds/918181438879305748/widget.png)](https://discord.angelillo15.es) 
+[![Discord](https://discordapp.com/api/guilds/918181438879305748/widget.png)](https://discord.angelillo15.es) 

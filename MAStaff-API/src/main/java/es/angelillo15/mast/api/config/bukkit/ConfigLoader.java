@@ -1,16 +1,16 @@
-package es.angelillo15.mast.bukkit.config;
+package es.angelillo15.mast.api.config.bukkit;
 
 import es.angelillo15.configmanager.ConfigManager;
 import es.angelillo15.mast.api.ILogger;
+import es.angelillo15.mast.api.MAStaffInstance;
 import es.angelillo15.mast.api.managers.ConfigMerge;
-import es.angelillo15.mast.bukkit.MAStaff;
 import lombok.Getter;
 
 import java.io.File;
 import java.io.IOException;
 
 public class ConfigLoader {
-    private MAStaff plugin;
+    private MAStaffInstance<?> plugin;
     @Getter
     private static ConfigManager config;
     @Getter
@@ -30,11 +30,11 @@ public class ConfigLoader {
     private String language;
 
     public ConfigLoader() {
-        this.plugin = MAStaff.getPlugin();
+        this.plugin = MAStaffInstance.getInstance();
     }
 
     public void load() {
-        ILogger logger = MAStaff.getPlugin().getPLogger();
+        ILogger logger = MAStaffInstance.getLogger();
         loadConfig();
         logger.debug("Loaded config");
         logger.debug("Loading languages...");
@@ -53,29 +53,29 @@ public class ConfigLoader {
     }
 
     public void loadConfig() {
-        ConfigMerge.merge(new File(plugin.getDataFolder().toPath() + File.separator + "config.yml"),
-                plugin.getResource("Bukkit/config.yml")
+        ConfigMerge.merge(new File(plugin.getPluginDataFolder().toPath() + File.separator + "config.yml"),
+                plugin.getPluginResource("Bukkit/config.yml")
         );
 
-        config = new ConfigManager(plugin.getDataFolder().toPath(), "Bukkit/config.yml", "config.yml");
+        config = new ConfigManager(plugin.getPluginDataFolder().toPath(), "Bukkit/config.yml", "config.yml");
         config.registerConfig();
 
-        MAStaff.getPlugin().setDebug(config.getConfig().getBoolean("Config.debug"));
+        MAStaffInstance.getInstance().setDebug(config.getConfig().getBoolean("Config.debug"));
     }
 
     public void loadInternal (){
-        internalStaffItems = new ConfigManager(plugin.getDataFolder().toPath(), "Bukkit/modules/items/internal.yml", "/modules/items/internal.yml");
+        internalStaffItems = new ConfigManager(plugin.getPluginDataFolder().toPath(), "Bukkit/modules/items/internal.yml", "/modules/items/internal.yml");
         internalStaffItems.registerConfig();
     }
 
     public void loadLanguages() {
-        File file = new File(plugin.getDataFolder().toPath().toString() + File.separator + "lang");
+        File file = new File(plugin.getPluginDataFolder().toPath().toString() + File.separator + "lang");
         if (!file.exists()) {
             file.mkdirs();
         }
 
-        es = new ConfigManager(plugin.getDataFolder().toPath(), "Bukkit/lang/spanish.yml", "/lang/spanish.yml");
-        en = new ConfigManager(plugin.getDataFolder().toPath(), "Bukkit/lang/english.yml", "/lang/english.yml");
+        es = new ConfigManager(plugin.getPluginDataFolder().toPath(), "Bukkit/lang/spanish.yml", "/lang/spanish.yml");
+        en = new ConfigManager(plugin.getPluginDataFolder().toPath(), "Bukkit/lang/english.yml", "/lang/english.yml");
         es.registerConfig();
         en.registerConfig();
 
@@ -85,11 +85,11 @@ public class ConfigLoader {
         language = config.getConfig().getString("Config.language");
         String lang = "lang/" + language;
 
-        ConfigMerge.merge(new File(plugin.getDataFolder().toPath() + File.separator + "lang" + File.separator + language),
-                plugin.getResource("Bukkit/lang/" + language)
+        ConfigMerge.merge(new File(plugin.getPluginDataFolder().toPath() + File.separator + "lang" + File.separator + language),
+                plugin.getPluginResource("Bukkit/lang/" + language)
         );
 
-        messages = new ConfigManager(plugin.getDataFolder().toPath(), "Bukkit/" +lang, lang);
+        messages = new ConfigManager(plugin.getPluginDataFolder().toPath(), "Bukkit/" +lang, lang);
         messages.registerConfig();
         try {
             messages.getConfig().load();
@@ -99,17 +99,17 @@ public class ConfigLoader {
     }
 
     public void loadPunishmentsGUI(){
-        punishmentsGUI = new ConfigManager(plugin.getDataFolder().toPath(), "Bukkit/modules/punishments/gui.yml", "/modules/punishments/gui.yml");
+        punishmentsGUI = new ConfigManager(plugin.getPluginDataFolder().toPath(), "Bukkit/modules/punishments/gui.yml", "/modules/punishments/gui.yml");
         punishmentsGUI.registerConfig();
     }
 
     public void loadCustomItems() {
-        customItems = new ConfigManager(plugin.getDataFolder().toPath(), "Bukkit/modules/items/custom.yml", "/modules/items/custom.yml");
+        customItems = new ConfigManager(plugin.getPluginDataFolder().toPath(), "Bukkit/modules/items/custom.yml", "/modules/items/custom.yml");
         customItems.registerConfig();
     }
 
     public void loadGlowModule(){
-        glow = new ConfigManager(plugin.getDataFolder().toPath(), "Bukkit/modules/glow.yml", "/modules/glow.yml");
+        glow = new ConfigManager(plugin.getPluginDataFolder().toPath(), "Bukkit/modules/glow.yml", "/modules/glow.yml");
         glow.registerConfig();
     }
 }

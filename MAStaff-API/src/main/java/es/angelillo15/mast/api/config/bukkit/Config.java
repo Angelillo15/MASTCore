@@ -1,4 +1,6 @@
-package es.angelillo15.mast.bukkit.config;
+package es.angelillo15.mast.api.config.bukkit;
+
+import es.angelillo15.mast.api.config.bukkit.ConfigLoader;
 
 import java.util.List;
 
@@ -64,7 +66,7 @@ public class Config {
 
     public static class Freeze {
         public static boolean enabled() {
-            return ConfigLoader.getConfig().getConfig().getBoolean("Freeze.enabled");
+            return ConfigLoader.getConfig().getConfig().getBoolean("Addons.freeze");
         }
 
         public static boolean executeCommandOnExit() {
@@ -77,6 +79,22 @@ public class Config {
 
         public static List<String> commands() {
             return ConfigLoader.getConfig().getConfig().getStringList("Freeze.commands");
+        }
+    }
+
+    public static class Addons {
+        public static boolean vanish() {
+            return ConfigLoader.getConfig().getConfig().getBoolean("Addons.vanish");
+        }
+
+        public static boolean freeze() {
+            return ConfigLoader.getConfig().getConfig().getBoolean("Addons.freeze");
+        }
+    }
+
+    public static class Vanish {
+        public static boolean appearAsSpectator() {
+            return ConfigLoader.getConfig().getConfig().getBoolean("Vanish.appearAsSpectator");
         }
     }
 }
