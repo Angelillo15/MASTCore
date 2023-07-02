@@ -16,10 +16,11 @@ import java.util.ArrayList;
 public class ProtocolLibPacketUtils implements IPacketUtils {
     @Override
     public void sendPlayerInfoChangeGameModePacket(Player player, Player staff, boolean vanished) {
-        byte ping = 0;
+        /*
+        byte ping = (byte) staff.getPing();
 
         PacketContainer packetContainer = new PacketContainer(PacketType.Play.Server.PLAYER_INFO);
-        packetContainer.getIntegers().writeSafely(0, 2);
+        packetContainer.getPlayerInfoAction().write(0, EnumWrappers.PlayerInfoAction.UPDATE_GAME_MODE);
 
         ArrayList<PlayerInfoData> data = new ArrayList<>();
 
@@ -41,5 +42,6 @@ public class ProtocolLibPacketUtils implements IPacketUtils {
         } catch (Exception e) {
             MAStaffInstance.getLogger().error("Error sending PlayerInfo packet to " + player.getName() + " for " + staff.getName() + " (vanished: " + vanished + ")", e);
         }
+         */
     }
 }

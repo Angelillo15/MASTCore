@@ -26,9 +26,6 @@ public class VanishPlayer implements IVanishPlayer {
                 vanishedFor.add(p);
             }
         });
-
-        sendPlayerInfoChangeGameModePacket(true);
-
     }
 
     @Override
@@ -38,9 +35,6 @@ public class VanishPlayer implements IVanishPlayer {
         vanishedFor.forEach(p -> {
             p.showPlayer(player.getPlayer());
         });
-
-        sendPlayerInfoChangeGameModePacket(false);
-
 
         vanishedFor.clear();
     }
