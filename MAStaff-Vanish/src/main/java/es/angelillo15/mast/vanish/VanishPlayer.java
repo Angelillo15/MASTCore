@@ -21,7 +21,7 @@ public class VanishPlayer implements IVanishPlayer {
         VanishDataManager.addVanishedPlayer(player);
 
         Bukkit.getOnlinePlayers().forEach(p -> {
-            if (p.hasPermission("mast.vanish.see")) {
+            if (!p.hasPermission("mast.vanish.see")) {
                 p.hidePlayer(player.getPlayer());
                 vanishedFor.add(p);
             }
@@ -35,6 +35,8 @@ public class VanishPlayer implements IVanishPlayer {
         vanishedFor.forEach(p -> {
             p.showPlayer(player.getPlayer());
         });
+
+        vanishedFor.clear();
     }
 
     @Override
@@ -58,5 +60,15 @@ public class VanishPlayer implements IVanishPlayer {
             MAStaffVanish.getPacketUtils().sendPlayerInfoChangeGameModePacket(player.getPlayer(), p, vanished);
         });
          */
+    }
+
+    @Override
+    public void removeVanishedFor(Player player) {
+        vanishedFor.remove(player);
+    }
+
+    @Override
+    public void addVanishedFor(Player player) {
+        vanishedFor.add(player);
     }
 }

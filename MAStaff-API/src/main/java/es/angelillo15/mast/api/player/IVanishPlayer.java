@@ -31,4 +31,14 @@ public interface IVanishPlayer {
      * @param vanished
      */
     public void sendPlayerInfoChangeGameModePacket(boolean vanished);
+
+    /**
+     * Remove a player from the vanishedFor list
+     */
+    void removeVanishedFor(Player player);
+
+    /**
+     * Add a player to the vanishedFor list
+     */
+    void addVanishedFor(Player player);
 }

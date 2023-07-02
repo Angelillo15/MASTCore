@@ -2,7 +2,6 @@ package es.angelillo15.mast.vanish.listeners;
 
 import es.angelillo15.mast.api.IStaffPlayer;
 import es.angelillo15.mast.api.Permissions;
-import es.angelillo15.mast.api.config.bukkit.Config;
 import es.angelillo15.mast.api.managers.StaffPlayersManagers;
 import es.angelillo15.mast.api.vanish.VanishDataManager;
 import org.bukkit.entity.Player;
@@ -19,13 +18,20 @@ public class VanishListener implements Listener {
 
         boolean hasVanishPermission = player.hasPermission(Permissions.STAFF_VANISH_SEE.getPermission());
 
-        VanishDataManager.getVanishedPlayers().forEach(vanishedPlayer -> {
-            if (hasVanishPermission) {
-                player.hidePlayer(vanishedPlayer.getPlayer());
-                return;
-            }
+        if (!hasVanishPermission) {
+            return;
+        }
 
-            vanishedPlayer.getVanishPlayer().sendPlayerInfoChangeGameModePacket(true);
+        VanishDataManager.getVanishedPlayers().forEach(vanishedPlayer -> {
+            player.hidePlayer(vanishedPlayer.getPlayer());
+            vanishedPlayer.getVanishPlayer().addVanishedFor(player);
+        });
+    }
+
+    @EventHandler(ignoreCancelled = true)
+    public void onPlayerLeave(PlayerQuitEvent event) {
+        VanishDataManager.getVanishedPlayers().forEach(vanishedPlayer -> {
+            vanishedPlayer.getVanishPlayer().removeVanishedFor(event.getPlayer());
         });
     }
 
