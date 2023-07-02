@@ -51,6 +51,7 @@ public class VanishPlayer implements IVanishPlayer {
 
     @Override
     public void sendPlayerInfoChangeGameModePacket(boolean vanished) {
+        /*
         Bukkit.getOnlinePlayers().forEach(p -> {
             if (isVanishedFor(p)) {
                 return;
@@ -58,6 +59,7 @@ public class VanishPlayer implements IVanishPlayer {
 
             MAStaffVanish.getPacketUtils().sendPlayerInfoChangeGameModePacket(player.getPlayer(), p, vanished);
         });
+         */
     }
 
     @Override
