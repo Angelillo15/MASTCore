@@ -18,14 +18,13 @@ public class VanishListener implements Listener {
 
         boolean hasVanishPermission = player.hasPermission(Permissions.STAFF_VANISH_SEE.getPermission());
 
-        VanishDataManager.getVanishedPlayers().forEach(vanishedPlayer -> {
-            if (!hasVanishPermission) {
-                player.hidePlayer(vanishedPlayer.getPlayer());
-                vanishedPlayer.getVanishPlayer().addVanishedFor(player);
-                return;
-            }
+        if (!hasVanishPermission) {
+            return;
+        }
 
-            vanishedPlayer.getVanishPlayer().sendPlayerInfoChangeGameModePacket(true);
+        VanishDataManager.getVanishedPlayers().forEach(vanishedPlayer -> {
+            player.hidePlayer(vanishedPlayer.getPlayer());
+            vanishedPlayer.getVanishPlayer().addVanishedFor(player);
         });
     }
 
