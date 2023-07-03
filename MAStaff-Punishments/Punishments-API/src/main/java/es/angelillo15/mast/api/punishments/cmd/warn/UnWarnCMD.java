@@ -29,9 +29,6 @@ public class UnWarnCMD extends PunishCommand {
             reason.append(Messages.Default.defaultUnWarnReason());
         }
 
-        new Thread(() -> {
-            sender.unWarn(args[0], reason.toString());
-            sender.sendMessage(Messages.Commands.UnWarn.success(target, reason.toString(), sender.getName()));
-        }).start();
+        sender.unWarn(target, reason.toString());
     }
 }
