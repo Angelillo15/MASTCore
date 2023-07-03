@@ -11,8 +11,10 @@ import es.angelillo15.mast.api.database.PluginConnection;
 import es.angelillo15.mast.api.pagination.Page;
 import lombok.Data;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 
+@SuppressWarnings("unchecked")
 @Data
 @Table(name = "mastaff_warns")
 public class WarnModel extends StormModel {
@@ -51,7 +53,7 @@ public class WarnModel extends StormModel {
     private Long removedTime;
 
     @Column
-    private Boolean active;
+    private Integer active;
 
     @Column
     private Long until;
@@ -66,14 +68,32 @@ public class WarnModel extends StormModel {
 
         ArrayList<WarnModel> warns = new ArrayList<>();
         try {
-            storm.buildQuery(WarnModel.class)
+            warns.addAll(storm.buildQuery(WarnModel.class)
                     .where("user", Where.EQUAL, user.getId())
                     .execute()
-                    .get()
-                    .forEach(warns::add);
+                    .get());
         } catch (Exception e) {
             MAStaffInstance.getLogger().debug("Error while getting warns: " + e.getMessage());
         }
+
+        MAStaffInstance.getLogger().debug("Warns size for " + user.getUsername() + ": " + warns.size());
+
+        ArrayList<WarnModel> finalWarns = (ArrayList<WarnModel>) warns.clone();
+
+        new Thread(() -> {
+            if (finalWarns.isEmpty()) return;
+
+            finalWarns.forEach(warn -> {
+                if (warn.getUntil() < System.currentTimeMillis()) {
+                    warn.setActive(0);
+                    try {
+                        PluginConnection.getStorm().save(warn);
+                    } catch (SQLException e) {
+                        MAStaffInstance.getLogger().debug("Error while saving warn: " + e.getMessage());
+                    }
+                }
+            });
+        }).start();
 
         return warns;
     }
@@ -86,9 +106,7 @@ public class WarnModel extends StormModel {
     public static ArrayList<WarnModel> getActiveWarns(UserModel user) {
         ArrayList<WarnModel> warns = getWarns(user);
 
-        for (WarnModel warn : getWarns(user)) {
-            if (!warn.getActive()) warns.remove(warn);
-        }
+        warns.removeIf(warn -> !warn.getActive().equals(1) || warn.getUntil() < System.currentTimeMillis());
 
         return warns;
     }
