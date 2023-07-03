@@ -22,14 +22,18 @@ import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Objects;
 import java.util.function.BiConsumer;
 
 public class PunishPlayer implements IPunishPlayer {
     private final CommandSender player;
+    private final UserModel data;
 
     public PunishPlayer(CommandSender player) {
         this.player = player;
+        this.data = UserDataManager.getUserData(player.getName());
     }
 
     @Override
@@ -49,11 +53,10 @@ public class PunishPlayer implements IPunishPlayer {
 
     public void getUserModel(BiConsumer<UserModel, UserModel> callback, String target) {
         try {
-            UserModel senderUser = UserDataManager.getUserData(player.getName());
             UserModel targetUser = UserDataManager.getUserData(target);
-            callback.accept(senderUser, targetUser);
+            callback.accept(data, targetUser);
         } catch (Exception e) {
-            MAStaffInstance.getLogger().debug("Error while getting user data: " + e.getMessage());
+            MAStaffInstance.getLogger().debug("Error while getting user data: " + e.getMessage() + " - " + e.getCause() + " - " + target);
             player.sendMessage(Messages.Commands.playerNotFound(target));
         }
     }
@@ -179,7 +182,24 @@ public class PunishPlayer implements IPunishPlayer {
      */
     @Override
     public void warn(String target, String reason) {
+        getUserModel((senderUser, targetUser) -> {
+            WarnModel warn = new WarnModel();
 
+            warn.setActive(1);
+            warn.setReason(reason);
+            warn.setWarnedBy(data.getId());
+            warn.setUntil(System.currentTimeMillis() + NumberUtils.parseToMilis(Config.Warn.expireAfter()));
+            warn.setTime(System.currentTimeMillis());
+            warn.setUser(targetUser.getId());
+
+            try {
+                PluginConnection.getStorm().save(warn);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+
+            player.sendMessage(Messages.Commands.Warn.success(target, reason, player.getName()));
+        }, target);
     }
 
     /**
@@ -190,8 +210,28 @@ public class PunishPlayer implements IPunishPlayer {
     @Override
     public void unWarn(String target, String reason) {
         getUserModel((senderUser, targetUser) -> {
-            WarnModel warn = WarnModel.getActiveWarns(targetUser).get(0);
+            ArrayList<WarnModel> warns = WarnModel.getActiveWarns(targetUser);
 
+            MAStaffInstance.getLogger().debug("Warns: " + warns.size());
+
+            if (warns.isEmpty()) {
+                player.sendMessage(
+                        Messages.Commands.playerNotWarned(target)
+                );
+                return;
+            }
+
+            WarnModel warn = warns.get(0);
+
+            warn.setActive(0);
+
+            player.sendMessage(Messages.Commands.UnWarn.success(target, reason, player.getName()));
+
+            try {
+                PluginConnection.getStorm().save(warn);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
         }, target);
     }
 
