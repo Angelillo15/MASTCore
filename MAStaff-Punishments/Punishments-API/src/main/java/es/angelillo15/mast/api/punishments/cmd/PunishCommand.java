@@ -16,7 +16,7 @@ public abstract class PunishCommand extends Command {
             return;
         }
 
-        onCommand(punishPlayer, label, args);
+        new Thread(() -> onCommand(punishPlayer, label, args)).start();
     }
 
     public abstract void onCommand(IPunishPlayer sender, String label, String[] args);
