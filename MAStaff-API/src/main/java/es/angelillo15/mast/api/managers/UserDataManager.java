@@ -43,6 +43,13 @@ public class UserDataManager {
                 return emptyData;
             }
 
+            MAStaffInstance.getLogger().debug("User " + key + " doesn't exist in the database.");
+            MAStaffInstance.getLogger().debug(" - UUID: " + userModel.getUUID());
+            MAStaffInstance.getLogger().debug(" - Username: " + userModel.getUsername());
+            MAStaffInstance.getLogger().debug(" - Username Length: " + userModel.getUsername().length());
+            MAStaffInstance.getLogger().debug(" - IP: " + userModel.getLastIp());
+            MAStaffInstance.getLogger().debug(" - First join: " + userModel.getFirstLogin());
+
             userDataCache.put(key, userModel);
 
             data = userModel;
@@ -50,6 +57,13 @@ public class UserDataManager {
 
         long end = System.currentTimeMillis();
         MAStaffInstance.getLogger().debug("getUserData took " + (end - start) + "ms");
+
+        if (data == null) {
+            MAStaffInstance.getLogger().debug("User " + key + " has no data.");
+            MAStaffInstance.getLogger().debug(" - Key: " + key);
+            MAStaffInstance.getLogger().debug(" - Key Length: " + key.length());
+        }
+
         return data;
     }
 
