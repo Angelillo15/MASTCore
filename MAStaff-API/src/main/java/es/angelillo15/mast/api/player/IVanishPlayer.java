@@ -19,26 +19,4 @@ public interface IVanishPlayer {
      */
     boolean isVanished();
 
-    /**
-     * Check if the player is vanished for a specific player
-     * @param player the player to check
-     * @return true if the player is vanished for the specific player, false otherwise
-     */
-    boolean isVanishedFor(Player player);
-
-    /**
-     * Send the player info change game mode packet to all the players that can see the player
-     * @param vanished
-     */
-    public void sendPlayerInfoChangeGameModePacket(boolean vanished);
-
-    /**
-     * Remove a player from the vanishedFor list
-     */
-    void removeVanishedFor(Player player);
-
-    /**
-     * Add a player to the vanishedFor list
-     */
-    void addVanishedFor(Player player);
 }

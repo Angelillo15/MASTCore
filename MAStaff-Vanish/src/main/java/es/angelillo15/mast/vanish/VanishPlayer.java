@@ -1,6 +1,7 @@
 package es.angelillo15.mast.vanish;
 
 import es.angelillo15.mast.api.IStaffPlayer;
+import es.angelillo15.mast.api.MAStaffInstance;
 import es.angelillo15.mast.api.player.IVanishPlayer;
 import es.angelillo15.mast.api.vanish.VanishDataManager;
 import org.bukkit.Bukkit;
@@ -9,7 +10,6 @@ import org.bukkit.entity.Player;
 import java.util.ArrayList;
 @SuppressWarnings("deprecation")
 public class VanishPlayer implements IVanishPlayer {
-    ArrayList<Player> vanishedFor = new ArrayList<>();
     private final IStaffPlayer player;
 
     public VanishPlayer(IStaffPlayer player) {
@@ -21,10 +21,11 @@ public class VanishPlayer implements IVanishPlayer {
         VanishDataManager.addVanishedPlayer(player);
 
         Bukkit.getOnlinePlayers().forEach(p -> {
-            if (!p.hasPermission("mast.vanish.see")) {
-                p.hidePlayer(player.getPlayer());
-                vanishedFor.add(p);
+            if (p.hasPermission("mast.vanish.see")) {
+                return;
             }
+
+            hide(player.getPlayer());
         });
     }
 
@@ -32,11 +33,9 @@ public class VanishPlayer implements IVanishPlayer {
     public void disableVanish() {
         VanishDataManager.removeVanishedPlayer(player);
 
-        vanishedFor.forEach(p -> {
-            p.showPlayer(player.getPlayer());
+        Bukkit.getOnlinePlayers().forEach(p -> {
+            show(player.getPlayer());
         });
-
-        vanishedFor.clear();
     }
 
     @Override
@@ -44,31 +43,19 @@ public class VanishPlayer implements IVanishPlayer {
         return VanishDataManager.isVanished(player);
     }
 
-    @Override
-    public boolean isVanishedFor(Player player) {
-        return vanishedFor.contains(player);
+    public void hide(Player player) {
+        if (MAStaffInstance.version() > 12) {
+            this.player.getPlayer().hidePlayer(MAStaffInstance.getInstance().getPluginInstance(), player);
+        } else {
+            this.player.getPlayer().hidePlayer(player);
+        }
     }
 
-    @Override
-    public void sendPlayerInfoChangeGameModePacket(boolean vanished) {
-        /*
-        Bukkit.getOnlinePlayers().forEach(p -> {
-            if (isVanishedFor(p)) {
-                return;
-            }
-
-            MAStaffVanish.getPacketUtils().sendPlayerInfoChangeGameModePacket(player.getPlayer(), p, vanished);
-        });
-         */
-    }
-
-    @Override
-    public void removeVanishedFor(Player player) {
-        vanishedFor.remove(player);
-    }
-
-    @Override
-    public void addVanishedFor(Player player) {
-        vanishedFor.add(player);
+    public void show(Player player) {
+        if (MAStaffInstance.version() > 12) {
+            this.player.getPlayer().showPlayer(MAStaffInstance.getInstance().getPluginInstance(), player);
+        } else {
+            this.player.getPlayer().showPlayer(player);
+        }
     }
 }
