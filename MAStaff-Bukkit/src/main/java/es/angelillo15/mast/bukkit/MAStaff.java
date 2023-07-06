@@ -289,6 +289,8 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance<Plugin> {
         registerCommands();
         logger.debug("Registering Listeners...");
         registerListeners();
+        logger.debug("Loading minimessage");
+        setupMiniMessage();
         logger.debug("reloading addons...");
         AddonsLoader.reload();
         logger.debug("Checking for updates...");
