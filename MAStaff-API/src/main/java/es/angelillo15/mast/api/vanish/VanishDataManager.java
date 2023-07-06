@@ -31,6 +31,8 @@ public class VanishDataManager {
         vanishedPlayers.remove(player);
     }
 
+
+
     /**
      * Checks if a player is vanished
      * @param player

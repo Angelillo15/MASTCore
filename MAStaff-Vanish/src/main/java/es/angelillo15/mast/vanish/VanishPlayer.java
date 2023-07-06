@@ -45,17 +45,17 @@ public class VanishPlayer implements IVanishPlayer {
 
     public void hide(Player player) {
         if (MAStaffInstance.version() > 12) {
-            this.player.getPlayer().hidePlayer(MAStaffInstance.getInstance().getPluginInstance(), player);
+            player.hidePlayer(MAStaffInstance.getInstance().getPluginInstance(), this.player.getPlayer());
         } else {
-            this.player.getPlayer().hidePlayer(player);
+            player.hidePlayer(this.player.getPlayer());
         }
     }
 
     public void show(Player player) {
         if (MAStaffInstance.version() > 12) {
-            this.player.getPlayer().showPlayer(MAStaffInstance.getInstance().getPluginInstance(), player);
+            player.showPlayer(MAStaffInstance.getInstance().getPluginInstance(), this.player.getPlayer());
         } else {
-            this.player.getPlayer().showPlayer(player);
+            player.showPlayer(this.player.getPlayer());
         }
     }
 }
