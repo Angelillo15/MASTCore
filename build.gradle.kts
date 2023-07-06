@@ -77,7 +77,7 @@ tasks.build {
 }
 
 tasks.shadowJar {
-    archiveFileName.set("MAStaff.jar")
+    archiveFileName.set("MAStaff-" + project.version + ".jar")
 }
 
 allprojects {
