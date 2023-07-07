@@ -3,7 +3,6 @@ package es.angelillo15.mast.vanish.listeners;
 import es.angelillo15.mast.api.IStaffPlayer;
 import es.angelillo15.mast.api.MAStaffInstance;
 import es.angelillo15.mast.api.managers.StaffPlayersManagers;
-import es.angelillo15.mast.api.player.IVanishPlayer;
 import es.angelillo15.mast.api.vanish.VanishDataManager;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -12,6 +11,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
+@SuppressWarnings("deprecation")
 public class VanishListener implements Listener {
     @EventHandler(ignoreCancelled = true)
     public void onJoin(PlayerJoinEvent event) {
