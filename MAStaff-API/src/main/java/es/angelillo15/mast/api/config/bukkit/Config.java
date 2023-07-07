@@ -90,6 +90,10 @@ public class Config {
         public static boolean freeze() {
             return ConfigLoader.getConfig().getConfig().getBoolean("Addons.freeze");
         }
+
+        public static boolean glow() {
+            return ConfigLoader.getConfig().getConfig().getBoolean("Addons.glow");
+        }
     }
 
     public static class Vanish {

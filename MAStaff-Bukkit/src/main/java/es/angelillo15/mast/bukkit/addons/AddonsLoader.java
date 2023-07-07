@@ -6,6 +6,7 @@ import es.angelillo15.mast.api.addons.AddonsManager;
 import es.angelillo15.mast.api.addons.MAStaffAddon;
 import es.angelillo15.mast.bukkit.MAStaff;
 import es.angelillo15.mast.api.config.bukkit.Config;
+import es.angelillo15.mast.glow.GlowAddon;
 import es.angelillo15.mast.vanish.MAStaffVanish;
 import lombok.SneakyThrows;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -106,6 +107,7 @@ public class AddonsLoader {
 
     public static void loadDefaultAddons() {
         if (Config.Addons.vanish()) registerAddon("Vanish", new MAStaffVanish());
+        if (Config.Addons.glow()) registerAddon("Glow", new GlowAddon());
     }
 
     public static void registerAddon(AddonDescription addonDescription, MAStaffAddon<JavaPlugin> addon) {
