@@ -45,11 +45,11 @@ public class OnJoinLeave implements Listener {
         }
     }
 
-    @EventHandler
+    @EventHandler(ignoreCancelled = true)
     public void onLeave(PlayerQuitEvent event){
         Player player = event.getPlayer();
 
-        if(!player.hasPermission(Permissions.STAFF.getPermission())){
+        if (!StaffPlayersManagers.isStaffPlayer(player)) {
             return;
         }
 
