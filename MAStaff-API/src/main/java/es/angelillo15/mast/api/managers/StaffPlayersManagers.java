@@ -17,8 +17,9 @@ public class StaffPlayersManagers {
     /**
      * @param staffPlayer The staff player to add
      */
-    public static void addStaffPlayer(@NonNull IStaffPlayer staffPlayer) throws AlreadyInTheMapException {
-        if(staffPlayers.containsKey(staffPlayer.getPlayer().getName())) throw new AlreadyInTheMapException("The player is already in the map");
+    public static void addStaffPlayer(@NonNull IStaffPlayer staffPlayer) {
+        staffPlayers.remove(staffPlayer.getPlayer().getName());
+
         staffPlayers.put(staffPlayer.getPlayer().getName(), staffPlayer);
     }
 
