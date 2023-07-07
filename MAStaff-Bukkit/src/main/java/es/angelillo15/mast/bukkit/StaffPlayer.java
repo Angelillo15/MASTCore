@@ -462,6 +462,6 @@ public class StaffPlayer implements IStaffPlayer {
 
     @Override
     public IVanishPlayer getVanishPlayer() {
-        return null;
+        return vanishPlayer;
     }
 }
