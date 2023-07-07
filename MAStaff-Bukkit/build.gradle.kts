@@ -21,6 +21,8 @@ dependencies {
     compileOnly(project(":MAStaff-API"))
     compileOnly(project(":MAStaff-Legacy"))
     compileOnly(project(":MAStaff-Vanish"))
+    compileOnly(project(":MAStaff-PAPI"))
+    compileOnly(project(":MAStaff-Glow"))
     compileOnly(libs.spigot)
     compileOnly(libs.paperApi)
     compileOnly(libs.snakeYaml)
@@ -38,7 +40,6 @@ dependencies {
     compileOnly(libs.miniMessage)
     compileOnly(libs.adventureBukkit)
     compileOnly(libs.adventureApi)
-
 }
 
 tasks.processResources {

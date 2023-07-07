@@ -24,6 +24,7 @@ public class MAStaffLoader extends MAStaff {
         ReflectionLoader.loadAll();
         ReflectionLoader.loadBukkit();
         PaperLib.suggestPaper(this);
+        registerPlaceholderAPI();
     }
 
     @Override

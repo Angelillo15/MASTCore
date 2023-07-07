@@ -27,11 +27,13 @@ import es.angelillo15.mast.bukkit.utils.Logger;
 import es.angelillo15.mast.bukkit.utils.Metrics;
 import es.angelillo15.mast.bukkit.utils.PermsUtils;
 import es.angelillo15.mast.bukkit.utils.scheduler.Scheduler;
+import es.angelillo15.mast.glow.MAStaffExtension;
 import kong.unirest.HttpResponse;
 import kong.unirest.Unirest;
 import lombok.Getter;
 import lombok.SneakyThrows;
 import mc.obliviate.inventory.InventoryAPI;
+import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.HandlerList;
@@ -344,6 +346,12 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance<Plugin> {
 
         logger.warn(TextUtils.colorize("You are using a development version!"));
 
+    }
+
+    public void registerPlaceholderAPI() {
+        if (!MAStaffInstance.placeholderCheck()) return;
+
+        new MAStaffExtension().register();
     }
 
     @Override
