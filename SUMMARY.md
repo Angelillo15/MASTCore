@@ -13,6 +13,7 @@
 
 * [Commands](bukkit/commands.md)
 * [Config](bukkit/config.md)
+* [Glow](bukkit/glow.md)
 
 ## 🪢 BungeeCord
 
