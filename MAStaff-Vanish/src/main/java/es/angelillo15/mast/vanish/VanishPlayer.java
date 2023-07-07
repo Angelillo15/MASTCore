@@ -20,22 +20,20 @@ public class VanishPlayer implements IVanishPlayer {
     public void enableVanish() {
         VanishDataManager.addVanishedPlayer(player);
 
-        Bukkit.getOnlinePlayers().forEach(p -> {
+        for (Player p : Bukkit.getOnlinePlayers()) {
             if (p.hasPermission("mast.vanish.see")) {
-                return;
+                continue;
             }
 
-            hide(player.getPlayer());
-        });
+            hide(p);
+        }
     }
 
     @Override
     public void disableVanish() {
         VanishDataManager.removeVanishedPlayer(player);
 
-        Bukkit.getOnlinePlayers().forEach(p -> {
-            show(player.getPlayer());
-        });
+        Bukkit.getOnlinePlayers().forEach(this::show);
     }
 
     @Override
