@@ -42,6 +42,7 @@ dependencies {
     compileOnly(libs.adventureBungee)
     compileOnly(libs.miniMessage)
     compileOnly(libs.protocolLib)
+    compileOnly(libs.vault)
 }
 
 blossom {

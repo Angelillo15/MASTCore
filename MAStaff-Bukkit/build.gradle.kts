@@ -28,7 +28,6 @@ dependencies {
     compileOnly(libs.snakeYaml)
     compileOnly(libs.simpleYaml)
     compileOnly(libs.configManager)
-    compileOnly(libs.eglow)
     compileOnly(libs.hikariCP)
     compileOnly(libs.bundles.invAPI)
     compileOnly(libs.placeholderApi)

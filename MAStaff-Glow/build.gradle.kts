@@ -5,6 +5,8 @@ repositories {
 
 dependencies {
     compileOnly(project(":MAStaff-API"))
+    compileOnly(project(":MAStaff-PAPI"))
     compileOnly(libs.spigot)
     compileOnly(libs.placeholderApi)
+    compileOnly(libs.vault)
 }
