@@ -22,10 +22,10 @@ public class MAStaffExtension extends PlaceholderExpansion {
 
     @Override
     public String onPlaceholderRequest(Player player, String params) {
-        Placeholder placeholder = PlaceholderManager.getPlaceholder(params.split("_")[0].substring(1));
+        Placeholder placeholder = PlaceholderManager.getPlaceholder(params);
 
         if (placeholder == null) return "Placeholder not found";
 
-        return placeholder.onPlaceholderRequest(player, params.split("_")[1]);
+        return placeholder.onPlaceholderRequest(player, params);
     }
 }
