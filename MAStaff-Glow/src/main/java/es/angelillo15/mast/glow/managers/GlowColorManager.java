@@ -1,13 +1,11 @@
-package es.angelillo15.mast.api.managers;
+package es.angelillo15.mast.glow.managers;
 
+import es.angelillo15.mast.api.chat.api.ChatColor;
 import lombok.Getter;
-import me.MrGraycat.eGlow.API.EGlowAPI;
-import me.MrGraycat.eGlow.EGlow;
-import org.bukkit.ChatColor;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class GlowManager {
+public class GlowColorManager {
     @Getter
     private static HashMap<String, ChatColor> colors = new HashMap<>();
 
