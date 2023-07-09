@@ -25,8 +25,9 @@ import es.angelillo15.mast.bukkit.loaders.PunishmentGUILoader;
 import es.angelillo15.mast.bukkit.utils.FreezeUtils;
 import es.angelillo15.mast.bukkit.utils.Logger;
 import es.angelillo15.mast.bukkit.utils.Metrics;
-import es.angelillo15.mast.bukkit.utils.PermsUtils;
+import es.angelillo15.mast.api.utils.PermsUtils;
 import es.angelillo15.mast.bukkit.utils.scheduler.Scheduler;
+import es.angelillo15.mast.glow.MAStaffExtension;
 import kong.unirest.HttpResponse;
 import kong.unirest.Unirest;
 import lombok.Getter;
@@ -206,34 +207,11 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance<Plugin> {
             logger.info("Loading legacy modules...");
             new BukkitLegacyLoader().load();
         }
-
-        if (version > 9) {
-            if (this.getServer().getPluginManager().getPlugin("eGlow") != null && ConfigLoader.getGlow()
-                    .getConfig().getBoolean("Config.enabled") &&
-                    this.getServer().getPluginManager().getPlugin("Vault") != null) {
-                glowEnabled = true;
-                GlowLoader.loadGlow();
-
-                if (getServer().getPluginManager().getPlugin("Vault") == null) {
-                    return;
-                }
-
-                PermsUtils.setupPermissions();
-
-            } else {
-                if (getServer().getPluginManager().getPlugin("Vault") == null) {
-                    logger.warn(TextUtils.colorize("Vault not found! Glow will not work!"));
-                }
-
-                if (this.getServer().getPluginManager().getPlugin("eGlow") == null) {
-                    logger.warn(TextUtils.colorize("eGlow not found! Glow will not work!"));
-                }
-
-                if (!ConfigLoader.getGlow().getConfig().getBoolean("Config.enabled")) {
-                    logger.warn(TextUtils.colorize("Glow is disabled! Glow will not work!"));
-                }
-            }
+        if (getServer().getPluginManager().getPlugin("Vault") == null) {
+            return;
         }
+
+        PermsUtils.setupPermissions();
     }
 
     @Override
@@ -316,7 +294,9 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance<Plugin> {
                 .asString();
 
 
-        currentVersion = Integer.parseInt(getDescription().getVersion().replace(".", "")
+        currentVersion = Integer.parseInt(getDescription().getVersion()
+                .replace("-DEV", "")
+                .replace(".", "")
                 .replace("v", "")
                 .replace("V", "")
                 .replace("b", "")
@@ -344,6 +324,12 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance<Plugin> {
 
         logger.warn(TextUtils.colorize("You are using a development version!"));
 
+    }
+
+    public void registerPlaceholderAPI() {
+        if (!MAStaffInstance.placeholderCheck()) return;
+
+        new MAStaffExtension().register();
     }
 
     @Override

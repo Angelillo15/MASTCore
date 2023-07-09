@@ -7,7 +7,6 @@
 # https://discord.angelillo15.es/
 #
 Config:
-  enabled: true
   # The plugin will get the groups from Vault,
   # make sure you have it installed.
   # Color per group. These are the available colors:

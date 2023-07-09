@@ -17,7 +17,6 @@ repositories {
     maven("https://hub.spigotmc.org/nexus/content/repositories/snapshots/")
     maven("https://oss.sonatype.org/content/repositories/snapshots")
     maven("https://oss.sonatype.org/content/repositories/central")
-    maven("https://repo.extendedclip.com/content/repositories/placeholderapi/")
     maven("https://repo.alessiodp.com/releases/")
     maven("https://jitpack.io")
     maven("https://repo.dmulloy2.net/repository/public/")
@@ -43,6 +42,7 @@ dependencies {
     compileOnly(libs.adventureBungee)
     compileOnly(libs.miniMessage)
     compileOnly(libs.protocolLib)
+    compileOnly(libs.vault)
 }
 
 blossom {
@@ -56,6 +56,15 @@ blossom {
     replaceToken("{git-user}", grgit.head().committer.name ?: "undefined")
     replaceToken("{git-date}", current ?: "undefined")
     replaceToken("{git-branch}", grgit.branch.current().name ?: "undefined")
+
+    if (project.version.toString().endsWith("-SNAPSHOT") ||
+            project.version.toString().endsWith("-DEV") ||
+            project.version.toString().endsWith("-BETA") ||
+            project.version.toString().endsWith("-ALPHA"))
+    {
+        replaceToken("false", "true")
+    }
+
 }
 
 java {

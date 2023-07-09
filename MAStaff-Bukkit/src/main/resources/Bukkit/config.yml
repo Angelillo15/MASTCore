@@ -37,6 +37,10 @@ Addons:
   vanish: true
   # Enable or disable the freeze feature.
   freeze: true
+  # Glow module for the plugin.
+  # If you have the NEZNAMY TAB plugin, you have to set up some things.
+  # Read this wiki page for more information:
+  glow: true
 # Staff Vault configuration for the plugin.
 #
 # The staff vault is a virtual chest where the items

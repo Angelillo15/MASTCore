@@ -1,6 +1,6 @@
-package es.angelillo15.mast.bukkit.utils;
+package es.angelillo15.mast.api.utils;
 
-import es.angelillo15.mast.bukkit.MAStaff;
+import es.angelillo15.mast.api.MAStaffInstance;
 import lombok.Getter;
 import net.milkbowl.vault.permission.Permission;
 import org.bukkit.entity.Player;
@@ -13,13 +13,15 @@ public class PermsUtils {
     private static boolean vaultEnabled = false;
 
     public static boolean setupPermissions() {
-        RegisteredServiceProvider<Permission> rsp = MAStaff.getPlugin().getServer().getServicesManager().getRegistration(Permission.class);
+        RegisteredServiceProvider<Permission> rsp =
+                MAStaffInstance.getInstance().getPluginInstance().getServer().getServicesManager().getRegistration(Permission.class);
         perms = rsp.getProvider();
         vaultEnabled = true;
         return perms != null;
     }
 
     public static String getGroup(Player player) {
+        if (perms == null) return "";
         return perms.getPrimaryGroup(player);
     }
 }

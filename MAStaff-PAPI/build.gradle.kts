@@ -1,10 +1,3 @@
-plugins {
-    id("java")
-}
-
-group = parent?.group ?: "es.angelillo15"
-version = parent?.version ?: "undefined"
-
 repositories {
     mavenCentral()
     maven("https://hub.spigotmc.org/nexus/content/repositories/snapshots/")
@@ -13,4 +6,5 @@ repositories {
 dependencies {
     compileOnly(project(":MAStaff-API"))
     compileOnly(libs.spigot)
+    compileOnly(libs.placeholderApi)
 }

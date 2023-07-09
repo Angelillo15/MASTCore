@@ -17,9 +17,11 @@ public class VanishListener implements Listener {
     public void onJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
 
-        VanishDataManager.getVanishedPlayers().forEach(vanishedPlayer -> {
-            if(player.hasPermission("mast.vanish.see")) return;
+        Bukkit.getOnlinePlayers().forEach(p -> show(p, player));
 
+        if(player.hasPermission("mast.vanish.see")) return;
+
+        VanishDataManager.getVanishedPlayers().forEach(vanishedPlayer -> {
             hide(vanishedPlayer.getPlayer(), player);
         });
     }

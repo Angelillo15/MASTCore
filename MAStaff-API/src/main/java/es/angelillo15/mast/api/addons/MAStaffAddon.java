@@ -53,6 +53,7 @@ public class MAStaffAddon<P> {
      */
     public void reload(){
         // needs to be implemented
+        onEnable();
     }
 
     public void loadConfig() {
