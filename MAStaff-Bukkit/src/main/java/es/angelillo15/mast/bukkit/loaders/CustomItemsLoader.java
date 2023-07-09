@@ -25,7 +25,7 @@ public class CustomItemsLoader {
 
         for (String s : items.getConfigurationSection("StaffItems").getKeys(false)) {
             if (!(items.getBoolean("StaffItems." + s + ".enabled"))) {
-                return;
+                continue;
             }
 
             XMaterial material = XMaterial.valueOf(items.getString("StaffItems." + s + ".material"));
