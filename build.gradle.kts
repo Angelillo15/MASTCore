@@ -5,7 +5,7 @@ plugins {
 }
 
 group = "es.angelillo15"
-version = "2.3.2-DEV"
+version = "2.3.2"
 val javaVersion = JavaVersion.VERSION_1_8
 
 java {
