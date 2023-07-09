@@ -11,22 +11,18 @@ import org.bukkit.event.player.PlayerJoinEvent;
 
 public class OnJoin implements Listener {
     @EventHandler
-    public void onPlayerJoin(PlayerJoinEvent e){
+    public void onPlayerJoin(PlayerJoinEvent e) {
         Player player = e.getPlayer();
 
-        if(!(player.hasPermission("mast.staff"))){
+        if (!(player.hasPermission("mast.staff"))) {
             return;
         }
 
-        if(StaffPlayersManagers.getStaffPlayers().containsKey(player.getUniqueId())){
+        if (StaffPlayersManagers.getStaffPlayers().containsKey(player.getUniqueId())) {
             return;
         }
 
-        try {
-            StaffPlayersManagers.addStaffPlayer(new StaffPlayer(player));
-            MAStaff.getPlugin().getPLogger().debug("Added " + player.getName() + " to the map");
-        } catch (AlreadyInTheMapException ex) {
-            throw new RuntimeException(ex);
-        }
+        StaffPlayersManagers.addStaffPlayer(new StaffPlayer(player));
+        MAStaff.getPlugin().getPLogger().debug("Added " + player.getName() + " to the map");
     }
 }

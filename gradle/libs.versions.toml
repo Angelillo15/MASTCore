@@ -23,6 +23,7 @@ bungeecordChat = "1.16-R0.4"
 spigotLegacy = "1.8.8-R0.1-SNAPSHOT"
 adventure = "4.14.0"
 adventurePlatform = "4.3.0"
+protocolLib = "5.0.0"
 
 [libraries]
 snakeYaml = { group = "org.yaml", name = "snakeyaml", version.ref = "snakeYaml" }
@@ -55,6 +56,7 @@ miniMessage = { group = "net.kyori", name = "adventure-text-minimessage", versio
 adventureApi = { group = "net.kyori", name = "adventure-api", version.ref = "adventure" }
 adventureBukkit = { group = "net.kyori", name = "adventure-platform-bukkit", version.ref = "adventurePlatform" }
 adventureBungee = { group = "net.kyori", name = "adventure-platform-bungeecord", version.ref = "adventurePlatform" }
+protocolLib = { group = "com.comphenix.protocol", name = "ProtocolLib", version.ref = "protocolLib" }
 
 [bundles]
 invAPI = ["invCore", "invAdvancedSlots", "invPagination", "configurableGui"]

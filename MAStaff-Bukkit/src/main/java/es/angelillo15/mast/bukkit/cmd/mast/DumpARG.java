@@ -7,7 +7,7 @@ import es.angelillo15.mast.api.TextUtils;
 import es.angelillo15.mast.api.addons.AddonsManager;
 import es.angelillo15.mast.api.cmd.LegacySubCommand;
 import es.angelillo15.mast.bukkit.MAStaff;
-import es.angelillo15.mast.bukkit.config.Messages;
+import es.angelillo15.mast.api.config.bukkit.Messages;
 import kong.unirest.HttpResponse;
 import kong.unirest.Unirest;
 import org.bukkit.command.CommandSender;

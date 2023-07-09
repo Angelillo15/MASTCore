@@ -31,7 +31,16 @@ Config:
   # Silent chest opening.
   silentChestOpening: true
   # Staff Vault section
-#
+# Here you can configure the plugin addons.
+Addons:
+  # Enable or disable the Vanish addon.
+  vanish: true
+  # Enable or disable the freeze feature.
+  freeze: true
+  # Glow module for the plugin.
+  # If you have the NEZNAMY TAB plugin, you have to set up some things.
+  # Read this wiki page for more information:
+  glow: true
 # Staff Vault configuration for the plugin.
 #
 # The staff vault is a virtual chest where the items
@@ -47,8 +56,6 @@ StaffVault:
   checkTime: 20
 # Freeze section
 Freeze:
-  # Enable or disable the freeze feature.
-  enabled: true
   # Execute a command when the player is frozen and he or she
   # exits of the servers.
   executeCommandOnExit: true
@@ -62,6 +69,9 @@ Freeze:
   # If you want the command to be executed as bungee console, add a "bungee:" prefix.
   commands:
     - "ban {player} &cYou have been perm-banned for leaving the server while you were frozen."
+Vanish:
+  # Appear as spectator to staffs that can see you.
+  appearAsSpectator: true
 #
 # Database configuration for the plugin. With the Bungee version, you must use MariaDB or MySQL.
 #

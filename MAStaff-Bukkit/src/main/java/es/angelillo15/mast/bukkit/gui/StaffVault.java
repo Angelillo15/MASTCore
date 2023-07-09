@@ -1,16 +1,13 @@
 package es.angelillo15.mast.bukkit.gui;
 
-import es.angelillo15.mast.api.IStaffPlayer;
 import es.angelillo15.mast.api.TextUtils;
 import es.angelillo15.mast.api.managers.StaffPlayersManagers;
 import es.angelillo15.mast.api.material.XMaterial;
 import es.angelillo15.mast.bukkit.StaffPlayer;
-import es.angelillo15.mast.bukkit.config.Config;
-import es.angelillo15.mast.bukkit.config.Messages;
+import es.angelillo15.mast.api.config.bukkit.Config;
 import lombok.SneakyThrows;
 import mc.obliviate.inventory.Gui;
 import mc.obliviate.inventory.Icon;
-import mc.obliviate.inventory.pagination.PaginationManager;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -19,7 +16,6 @@ import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;

@@ -5,19 +5,8 @@ plugins {
 }
 
 group = "es.angelillo15"
-version = "2.3.0"
+version = "2.3.2"
 val javaVersion = JavaVersion.VERSION_1_8
-
-repositories {
-    mavenCentral()
-    maven("https://jitpack.io")
-    maven("https://hub.spigotmc.org/nexus/content/repositories/snapshots/")
-    maven("https://oss.sonatype.org/content/repositories/snapshots")
-    maven("https://oss.sonatype.org/content/repositories/central")
-    maven("https://repo.dmulloy2.net/repository/public/")
-    maven("https://repo.alessiodp.com/releases/")
-    maven("https://papermc.io/repo/repository/maven-releases/")
-}
 
 java {
     sourceCompatibility = javaVersion
@@ -57,6 +46,9 @@ dependencies {
     implementation(project(":MAStaff-Bungee"))
     implementation(project("MAStaff-Legacy"))
     implementation(project(":MAStaff-Punishments"))
+    implementation(project(":MAStaff-Vanish"))
+    implementation(project(":MAStaff-PAPI"))
+    implementation(project(":MAStaff-Glow"))
     implementation(libs.simpleYaml)
     implementation(libs.configManager)
     implementation(libs.bundles.invAPI)
@@ -76,7 +68,7 @@ tasks.build {
 }
 
 tasks.shadowJar {
-    archiveFileName.set("MAStaff.jar")
+    archiveFileName.set("MAStaff-" + project.version + ".jar")
 }
 
 allprojects {
@@ -85,6 +77,15 @@ allprojects {
     repositories {
         mavenCentral()
         maven("https://jitpack.io")
+        maven("https://jitpack.io")
+        maven("https://hub.spigotmc.org/nexus/content/repositories/snapshots/")
+        maven("https://oss.sonatype.org/content/repositories/snapshots")
+        maven("https://oss.sonatype.org/content/repositories/central")
+        maven("https://repo.dmulloy2.net/repository/public/")
+        maven("https://repo.alessiodp.com/releases/")
+        maven("https://papermc.io/repo/repository/maven-releases/")
+        maven("https://repo.extendedclip.com/content/repositories/placeholderapi/")
+
     }
 
     tasks.withType<JavaCompile> {

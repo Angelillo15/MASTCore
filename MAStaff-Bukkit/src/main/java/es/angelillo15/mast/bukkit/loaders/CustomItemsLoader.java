@@ -5,7 +5,7 @@ import es.angelillo15.mast.api.items.ItemTypes;
 import es.angelillo15.mast.api.managers.ItemManager;
 import es.angelillo15.mast.api.material.XMaterial;
 import es.angelillo15.mast.bukkit.MAStaff;
-import es.angelillo15.mast.bukkit.config.ConfigLoader;
+import es.angelillo15.mast.api.config.bukkit.ConfigLoader;
 import es.angelillo15.mast.bukkit.items.custom.CustomCommandInteractionItem;
 import es.angelillo15.mast.bukkit.items.custom.CustomCommandItem;
 import org.bukkit.inventory.ItemStack;
@@ -25,7 +25,7 @@ public class CustomItemsLoader {
 
         for (String s : items.getConfigurationSection("StaffItems").getKeys(false)) {
             if (!(items.getBoolean("StaffItems." + s + ".enabled"))) {
-                return;
+                continue;
             }
 
             XMaterial material = XMaterial.valueOf(items.getString("StaffItems." + s + ".material"));

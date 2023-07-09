@@ -4,7 +4,6 @@ import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
 import es.angelillo15.mast.api.IStaffPlayer;
 import es.angelillo15.mast.api.MAStaffInstance;
-import es.angelillo15.mast.api.Permissions;
 import es.angelillo15.mast.api.TextUtils;
 import es.angelillo15.mast.api.database.sql.CommonQueries;
 import es.angelillo15.mast.api.event.bukkit.freeze.FreezePlayerEvent;
@@ -12,24 +11,22 @@ import es.angelillo15.mast.api.event.bukkit.freeze.UnFreezePlayerEvent;
 import es.angelillo15.mast.api.event.bukkit.staff.StaffDisableEvent;
 import es.angelillo15.mast.api.event.bukkit.staff.StaffEnableEvent;
 import es.angelillo15.mast.api.items.StaffItem;
-import es.angelillo15.mast.api.managers.GlowManager;
-import es.angelillo15.mast.api.managers.VanishedPlayers;
 import es.angelillo15.mast.api.managers.freeze.FreezeManager;
+import es.angelillo15.mast.api.player.IGlowPlayer;
+import es.angelillo15.mast.api.player.IVanishPlayer;
 import es.angelillo15.mast.bukkit.cmd.utils.CommandManager;
-import es.angelillo15.mast.bukkit.config.Config;
-import es.angelillo15.mast.bukkit.config.ConfigLoader;
-import es.angelillo15.mast.bukkit.config.Messages;
+import es.angelillo15.mast.api.config.bukkit.Config;
+import es.angelillo15.mast.api.config.bukkit.ConfigLoader;
+import es.angelillo15.mast.api.config.bukkit.Messages;
 import es.angelillo15.mast.bukkit.gui.StaffVault;
 import es.angelillo15.mast.bukkit.loaders.ItemsLoader;
-import es.angelillo15.mast.bukkit.utils.PermsUtils;
 import es.angelillo15.mast.bukkit.utils.StaffUtils;
+import es.angelillo15.mast.glow.GlowPlayer;
+import es.angelillo15.mast.vanish.VanishPlayer;
 import io.papermc.lib.PaperLib;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.SneakyThrows;
-import me.MrGraycat.eGlow.API.Enum.EGlowColor;
-import me.MrGraycat.eGlow.EGlow;
-import me.MrGraycat.eGlow.Manager.Interface.IEGlowPlayer;
 import org.bukkit.*;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -49,14 +46,17 @@ public class StaffPlayer implements IStaffPlayer {
     private final File playerInventoryFile;
     @Getter
     private FileConfiguration playerInventoryConfig;
-    private ChatColor glowColor = ChatColor.GREEN;
     private boolean staffMode;
     private final Player player;
+    private IGlowPlayer glowPlayer;
     private boolean vanished;
     private final Map<String, StaffItem> items = new HashMap<>();
+    private IVanishPlayer vanishPlayer;
 
     public StaffPlayer(Player player) {
         this.player = player;
+        if (Config.Addons.vanish()) this.vanishPlayer = new VanishPlayer(this);
+        if (Config.Addons.glow()) this.glowPlayer = new GlowPlayer(this);
         playerInventoryFile = new File(MAStaff.getPlugin().getDataFolder().getAbsoluteFile() + "/data/staffMode/" + player.getUniqueId() + ".yml");
         playerInventoryConfig = YamlConfiguration.loadConfiguration(playerInventoryFile);
     }
@@ -102,30 +102,27 @@ public class StaffPlayer implements IStaffPlayer {
     }
 
     public void enableVanish() {
-        VanishedPlayers.addPlayer(player);
         vanished = true;
-        TextUtils.colorize(Messages.GET_VANISH_ENABLE_MESSAGE(), player);
 
-
-        for (Player p : Bukkit.getOnlinePlayers()) {
-            if (p == player) continue;
-            if (p.hasPermission(Permissions.STAFF_VANISH_SEE.getPermission())) continue;
-
-            p.hidePlayer(player);
+        if (vanishPlayer == null) {
+            player.performCommand("vanish");
+            return;
         }
 
+        vanishPlayer.enableVanish();
+        TextUtils.colorize(Messages.GET_VANISH_ENABLE_MESSAGE(), player);
     }
 
     public void disableVanish() {
-        VanishedPlayers.removePlayer(player);
         vanished = false;
-        TextUtils.colorize(Messages.GET_VANISH_DISABLE_MESSAGE(), player);
 
-        for (Player p : Bukkit.getOnlinePlayers()) {
-            if (p == player) continue;
-            if (p.hasPermission(Permissions.STAFF_VANISH_SEE.getPermission())) continue;
-            p.showPlayer(player);
+        if (vanishPlayer == null) {
+            player.performCommand("vanish");
+            return;
         }
+
+        vanishPlayer.disableVanish();
+        TextUtils.colorize(Messages.GET_VANISH_DISABLE_MESSAGE(), player);
     }
 
     public void disableStaffMode() {
@@ -241,38 +238,15 @@ public class StaffPlayer implements IStaffPlayer {
     }
 
     @Override
-    public void setGlowColor(ChatColor color) {
-        this.glowColor = color;
-    }
-
-    @Override
-    public ChatColor getGlowColor() {
-        return this.glowColor;
-    }
-
-    @Override
     public void setGlowing(boolean status) {
-        if (status) enableGlowing();
-        else disableGlowing();
-    }
+        if (glowPlayer == null) return;
 
-    public void enableGlowing() {
-        if (!MAStaff.isGlowEnabled()) return;
-        this.glowColor = GlowManager.getColor(PermsUtils.getGroup(player));
-        this.glowColor = GlowManager.getColor(PermsUtils.getGroup(player));
-        IEGlowPlayer iegp = EGlow.getAPI().getEGlowPlayer(player);
-        EGlow.getAPI().enableGlow(
-                iegp,
-                EGlowColor.valueOf(glowColor.name())
-        );
+        if (status)
+            this.glowPlayer.enableGlow();
+        else
+            this.glowPlayer.disableGlow();
 
-        EGlow.getAPI().resetCustomGlowReceivers(iegp);
-    }
 
-    public void disableGlowing() {
-        if (!MAStaff.isGlowEnabled()) return;
-        IEGlowPlayer iegp = EGlow.getAPI().getEGlowPlayer(player);
-        EGlow.getAPI().disableGlow(iegp);
     }
 
     @SneakyThrows
@@ -283,7 +257,7 @@ public class StaffPlayer implements IStaffPlayer {
     }
 
     @SneakyThrows
-    public void saveLocation(){
+    public void saveLocation() {
         playerInventoryConfig.set("Location.world", player.getLocation().getWorld().getName());
         playerInventoryConfig.set("Location.x", player.getLocation().getX());
         playerInventoryConfig.set("Location.y", player.getLocation().getY());
@@ -293,9 +267,9 @@ public class StaffPlayer implements IStaffPlayer {
         playerInventoryConfig.save(playerInventoryFile);
     }
 
-    public boolean restoreLocation(){
-        if(!(ConfigLoader.getConfig().getConfig().getBoolean("Config.teleportBack"))) return false;
-        if(!playerInventoryConfig.contains("Location.world")) return false;
+    public boolean restoreLocation() {
+        if (!(ConfigLoader.getConfig().getConfig().getBoolean("Config.teleportBack"))) return false;
+        if (!playerInventoryConfig.contains("Location.world")) return false;
         World world = Bukkit.getWorld(Objects.requireNonNull(playerInventoryConfig.getString("Location.world")));
 
         if (world == null) return false;
@@ -458,5 +432,15 @@ public class StaffPlayer implements IStaffPlayer {
     @Override
     public boolean isFreezed(Player player) {
         return FreezeManager.isFrozen(player);
+    }
+
+    @Override
+    public IVanishPlayer getVanishPlayer() {
+        return vanishPlayer;
+    }
+
+    @Override
+    public IGlowPlayer getGlowPlayer() {
+        return glowPlayer;
     }
 }

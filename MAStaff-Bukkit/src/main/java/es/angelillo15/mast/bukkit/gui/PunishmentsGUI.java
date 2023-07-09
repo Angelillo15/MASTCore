@@ -1,13 +1,10 @@
 package es.angelillo15.mast.bukkit.gui;
 
 import es.angelillo15.mast.api.gui.CommandItem;
-import es.angelillo15.mast.api.gui.GuiUtils;
 import es.angelillo15.mast.api.gui.TargetGUI;
 import es.angelillo15.mast.api.managers.PunishmentsGUIManager;
 import es.angelillo15.mast.api.material.XMaterial;
-import es.angelillo15.mast.bukkit.MAStaff;
-import es.angelillo15.mast.bukkit.config.Messages;
-import mc.obliviate.inventory.pagination.PaginationManager;
+import es.angelillo15.mast.api.config.bukkit.Messages;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryOpenEvent;

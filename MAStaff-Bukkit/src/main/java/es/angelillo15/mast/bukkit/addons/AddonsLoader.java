@@ -1,9 +1,14 @@
 package es.angelillo15.mast.bukkit.addons;
 
+import es.angelillo15.mast.api.Constants;
+import es.angelillo15.mast.api.MAStaffInstance;
 import es.angelillo15.mast.api.addons.AddonDescription;
 import es.angelillo15.mast.api.addons.AddonsManager;
 import es.angelillo15.mast.api.addons.MAStaffAddon;
 import es.angelillo15.mast.bukkit.MAStaff;
+import es.angelillo15.mast.api.config.bukkit.Config;
+import es.angelillo15.mast.glow.GlowAddon;
+import es.angelillo15.mast.vanish.MAStaffVanish;
 import lombok.SneakyThrows;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -26,6 +31,8 @@ public class AddonsLoader {
             //noinspection ResultOfMethodCallIgnored
             addonsFolder.mkdir();
         }
+
+        loadDefaultAddons();
 
         for (File file : Objects.requireNonNull(addonsFolder.listFiles())) {
             MAStaff.getPlugin().getPLogger().debug("Loading addon " + file.getName() + "...");
@@ -97,5 +104,35 @@ public class AddonsLoader {
             MAStaff.getPlugin().getPLogger().debug("Addon " + addon.getDescriptionFile().getName() + " reloaded!");
         }
         MAStaff.getPlugin().getPLogger().debug("Addons reloaded!");
+    }
+
+    public static void loadDefaultAddons() {
+        if (Config.Addons.vanish()) registerAddon("Vanish", new MAStaffVanish());
+        if (Config.Addons.glow() && MAStaffInstance.version() > 9) registerAddon("Glow", new GlowAddon());
+    }
+
+    public static void registerAddon(AddonDescription addonDescription, MAStaffAddon<JavaPlugin> addon) {
+        addon.init(new File(MAStaff.getPlugin().getDataFolder() + File.separator + "addons" + File.separator
+                        + addonDescription.getName()), addonDescription, MAStaff.getPlugin(),
+                true);
+        AddonsManager.registerAddon(addon);
+        MAStaff.getPlugin().getPLogger().debug("Registered addon " + addonDescription.getName() + " v" + addonDescription.getVersion() + " by " + addonDescription.getAuthor());
+
+        try {
+            addon.onEnable();
+        } catch (Exception e) {
+            MAStaff.getPlugin().getLogger().severe("Error while enabling addon " + addonDescription.getName() + " v" + addonDescription.getVersion() + " by " + addonDescription.getAuthor());
+            e.printStackTrace();
+        }
+    }
+
+    public static void registerAddon(String name, MAStaffAddon<JavaPlugin> addon) {
+        AddonDescription addonDescription = new AddonDescription();
+        addonDescription.setName(name);
+        addonDescription.setVersion(Constants.VERSION);
+        addonDescription.setAuthor("Angelillo15");
+        addonDescription.setMain("Internal");
+
+        registerAddon(addonDescription, addon);
     }
 }

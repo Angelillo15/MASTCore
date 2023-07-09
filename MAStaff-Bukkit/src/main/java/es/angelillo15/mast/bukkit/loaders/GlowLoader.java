@@ -1,16 +1,16 @@
 package es.angelillo15.mast.bukkit.loaders;
 
-import es.angelillo15.mast.api.managers.GlowManager;
+import es.angelillo15.mast.api.chat.api.ChatColor;
+import es.angelillo15.mast.glow.managers.GlowColorManager;
 import es.angelillo15.mast.bukkit.MAStaff;
-import es.angelillo15.mast.bukkit.config.ConfigLoader;
-import org.bukkit.ChatColor;
+import es.angelillo15.mast.api.config.bukkit.ConfigLoader;
 
 public class GlowLoader {
     public static void loadGlow(){
-        GlowManager.clearColorList();
+        GlowColorManager.clearColorList();
         MAStaff.getPlugin().getPLogger().debug("Loading groups colors...");
         ConfigLoader.getGlow().getConfig().getConfigurationSection("Config.groups").getKeys(false).forEach(group -> {
-            GlowManager.addColor(group, ChatColor.valueOf(ConfigLoader.getGlow().getConfig()
+            GlowColorManager.addColor(group, ChatColor.of(ConfigLoader.getGlow().getConfig()
                     .getString("Config.groups." + group + ".color"))
             );
 

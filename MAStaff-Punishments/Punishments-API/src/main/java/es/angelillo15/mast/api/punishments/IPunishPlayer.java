@@ -23,6 +23,14 @@ public interface IPunishPlayer {
     String getName();
 
     /**
+     * Send a message to the player
+     * @param message the message to send
+     */
+    default void sendMessage(String message){
+        getPlayer().sendMessage(message);
+    }
+
+    /**
      * Ban the player forever with the default reason
      */
     default void ban(String target){
@@ -101,5 +109,35 @@ public interface IPunishPlayer {
      * @param reason the reason of the kick
      */
     void kick(String target, String reason);
+
+    /**
+     * Warn the player with the config default time and reason
+     * @param target the target of the warn
+     */
+    default void warn(String target) {
+        warn(target, Messages.Default.defaultWarnReason());
+    }
+
+    /**
+     * Warn the player with the config default time and a custom reason
+     * @param target the target of the warn
+     * @param reason the reason of the warn
+     */
+    void warn(String target, String reason);
+
+    /**
+     * UnWarn the player
+     * @param target the target of the unwarn
+     */
+    default void unWarn(String target) {
+        unWarn(target, Messages.Default.defaultUnWarnReason());
+    }
+
+    /**
+     * UnWarn the player
+     * @param target the target of the unwarn
+     * @param reason the reason of the unwarn
+     */
+    void unWarn(String target, String reason);
 
 }

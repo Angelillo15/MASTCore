@@ -368,6 +368,29 @@ public class Messages {
                         .replace("{staff}", staff);
             }
         }
+
+        public static class UnWarn {
+            public static String usage() {
+                return colorize(ConfigLoader.getMessages().getConfig().getString("Commands.unWarn.usage"));
+            }
+
+            public static String success() {
+                return colorize(ConfigLoader.getMessages().getConfig().getString("Commands.unWarn.success"));
+            }
+
+            public static String success(String player, String reason, String staff) {
+                return colorize(success())
+                        .replace("{player}", player)
+                        .replace("{reason}", reason)
+                        .replace("{staff}", staff);
+            }
+        }
+
+        public static class History {
+            public static String usage() {
+                return colorize(ConfigLoader.getMessages().getConfig().getString("Commands.history.usage"));
+            }
+        }
     }
 
     public static String colorize(String message) {

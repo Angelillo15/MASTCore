@@ -9,6 +9,9 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
+import java.io.File;
+import java.io.InputStream;
+
 
 public interface MAStaffInstance<P> {
     public static int version() {
@@ -63,6 +66,9 @@ public interface MAStaffInstance<P> {
     public void unloadDatabase();
     public void reload();
     public default IStaffPlayer createStaffPlayer(Player player) { return null; }
+    File getPluginDataFolder();
+    InputStream getPluginResource(String s);
+    void setDebug(boolean debug);
     public P getPluginInstance();
 
 }

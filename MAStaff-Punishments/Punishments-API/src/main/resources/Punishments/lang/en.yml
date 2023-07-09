@@ -178,6 +178,45 @@ Warn:
   # ↳ {warnedBy} - The player who warned the player.
   # ↳ {reason} - The reason why the player was warned.
   warnedBroadcast: "{prefix} &c{player} has been warned by {warnedBy} for {reason}."
+History:
+  types:
+    # This message is sent when a player has a ban in his history.
+    # You can use the following placeholders:
+    # ↳ {true/false} - If the ban is active or not.
+    # ↳ {expires} - The date when the ban expires.
+    # ↳ {reason} - The reason why the player was banned.
+    # ↳ {bannedBy} - The player who banned the player.
+    # ↳ {banId} - The unique ban ID.
+    # ↳ {player} - The player who was banned.
+    # ↳ {duration} - The duration of the ban.
+    # ↳ {bannedOn} - The date when the player was banned.
+    ban: "Ban - &cactive: &7{true/false} - &cexpires: &7{expires} - &creason: &7{reason} - &cbanned by: &7{bannedBy}"
+    # This message is sent when a player has an IP-Ban in his history.
+    # You can use the following placeholders:
+    # ↳ {true/false} - If the ban is active or not.
+    # ↳ {expires} - The date when the ban expires.
+    # ↳ {reason} - The reason why the player was banned.
+    # ↳ {bannedBy} - The player who banned the player.
+    # ↳ {banId} - The unique ban ID.
+    # ↳ {player} - The player who was banned.
+    # ↳ {duration} - The duration of the ban.
+    # ↳ {bannedOn} - The date when the player was banned.
+    banIP: "IP Ban - &cactive: &7{true/false} - &cexpires: &7{expires} - &creason: &7{reason} - &cbanned by: &7{bannedBy}"
+    # This message is sent when a player has a kick in his history.
+    # You can use the following placeholders:
+    # ↳ {reason} - The reason why the player was kicked.
+    # ↳ {kickedBy} - The player who kicked the player.
+    # ↳ {player} - The player who was kicked.
+    kick: "Kick - &creason: &7{reason} - &ckicked by: &7{kickedBy}"
+    # This message is sent when a player has a warn in his history.
+    # You can use the following placeholders:
+    # ↳ {true/false} - If the warn is active or not.
+    # ↳ {expires} - The date when the warn expires.
+    # ↳ {reason} - The reason why the player was warned.
+    # ↳ {warnedBy} - The player who warned the player.
+    # ↳ {player} - The player who was warned.
+    # ↳ {warnedOn} - The date when the player was warned
+    warn: "Warn - &cactive &7{true/false} - &cexpires: &7{expires}"
 Commands:
   # Message sent to the player when he tries to execute a command
   # with a player argument that not exists in the DB.
@@ -229,3 +268,13 @@ Commands:
     usage: '{prefix} &cUsage: /warn <player> <reason?>'
     # Message sent to the player when he warns a player.
     success: '{prefix} &a{player} has been warned by {staff} with the reason {reason}.'
+  unWarn:
+    # Message sent to the player when he doesn't fill all the arguments.
+    usage: '{prefix} &cUsage: /unwarn <player> <reason?>'
+    # Message sent to the player when he unwarns a player that is not warned.
+    success: '{prefix} &a{player} has been unwarned by {staff} with the reason {reason}.'
+  history:
+    # Message sent to the player when he doesn't fill all the arguments.
+    usage: '{prefix} &cUsage: /history <player>'
+    # Message sent to the player when he checks the history of a player.
+    success: '{prefix} &a{player} history:'
