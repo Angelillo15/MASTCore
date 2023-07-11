@@ -41,7 +41,7 @@ You will need to go to the \*groups.yml\* and add this placeholder \`%mastaff\_g
 
 ```yaml
 _DEFAULT_:
-  tagprefix: '%vault-prefix%%mastaff_glow_color%'
+  tagprefix: '%vault-prefix%%mastaff_glow:color%'
 ```
 
 This will add the color to the name if you are in staffmode with glow enabled
