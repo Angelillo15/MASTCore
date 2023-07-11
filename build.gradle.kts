@@ -77,15 +77,14 @@ allprojects {
     repositories {
         mavenCentral()
         maven("https://jitpack.io")
-        maven("https://jitpack.io")
         maven("https://hub.spigotmc.org/nexus/content/repositories/snapshots/")
         maven("https://oss.sonatype.org/content/repositories/snapshots")
         maven("https://oss.sonatype.org/content/repositories/central")
         maven("https://repo.dmulloy2.net/repository/public/")
         maven("https://repo.alessiodp.com/releases/")
         maven("https://papermc.io/repo/repository/maven-releases/")
+        maven("https://repo.papermc.io/repository/maven-public/")
         maven("https://repo.extendedclip.com/content/repositories/placeholderapi/")
-
     }
 
     tasks.withType<JavaCompile> {
@@ -101,5 +100,8 @@ allprojects {
         compileOnly("org.projectlombok:lombok:1.18.24")
         annotationProcessor("org.projectlombok:lombok:1.18.24")
         compileOnly("org.reflections:reflections:0.10.2")
+        testImplementation("org.projectlombok:lombok:1.18.24")
+        testAnnotationProcessor("org.projectlombok:lombok:1.18.24")
+        testImplementation("org.junit.jupiter:junit-jupiter-api:5.7.0")
     }
 }
