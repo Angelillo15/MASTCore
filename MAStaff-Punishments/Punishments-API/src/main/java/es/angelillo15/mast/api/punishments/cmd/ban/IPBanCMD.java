@@ -6,6 +6,7 @@ import es.angelillo15.mast.api.cmd.sender.CommandSender;
 import es.angelillo15.mast.api.punishments.IPunishPlayer;
 import es.angelillo15.mast.api.punishments.PunishPlayersManager;
 import es.angelillo15.mast.api.config.punishments.Messages;
+import es.angelillo15.mast.api.punishments.cmd.PunishCommand;
 
 @CommandData(
         name = "ipban",
@@ -13,13 +14,9 @@ import es.angelillo15.mast.api.config.punishments.Messages;
         usage = "/ipban <ip> <reason>",
         description = "Ban an IP"
 )
-public class IPBanCMD extends Command {
+public class IPBanCMD extends PunishCommand {
     @Override
-    public void onCommand(CommandSender sender, String label, String[] args) {
-        if (!(sender.hasPermission("mast.punishments"))) return;
-
-        IPunishPlayer punishPlayer = PunishPlayersManager.getPlayer(sender.getUniqueId());
-
+    public void onCommand(IPunishPlayer sender, String label, String[] args) {
         if (args.length < 1) {
             sender.sendMessage(Messages.Commands.IpBan.usage());
             return;
@@ -42,9 +39,7 @@ public class IPBanCMD extends Command {
             return;
         }
 
-        new Thread(() -> {
-            punishPlayer.ban(args[0], reason.toString(), true);
-            sender.sendMessage(Messages.Commands.IpBan.success(target, reason.toString(), sender.getName()));
-        }).start();
+        sender.ban(args[0], reason.toString(), true);
+        sender.sendMessage(Messages.Commands.IpBan.success(target, reason.toString(), sender.getName()));
     }
 }

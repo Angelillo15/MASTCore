@@ -8,6 +8,7 @@ import es.angelillo15.mast.api.punishments.IPunishPlayer;
 import es.angelillo15.mast.api.punishments.PunishPlayersManager;
 import es.angelillo15.mast.api.config.punishments.Config;
 import es.angelillo15.mast.api.config.punishments.Messages;
+import es.angelillo15.mast.api.punishments.cmd.PunishCommand;
 import es.angelillo15.mast.api.utils.NumberUtils;
 
 @CommandData(
@@ -17,13 +18,9 @@ import es.angelillo15.mast.api.utils.NumberUtils;
         usage = "&cUsage: &7/tempipban <player> <time> <reason>",
         description = "Temporarily IP ban a player"
 )
-public class TempIPBanCMD extends Command {
+public class TempIPBanCMD extends PunishCommand {
     @Override
-    public void onCommand(CommandSender sender, String label, String[] args) {
-        if (!(sender.hasPermission("mast.punishments"))) return;
-
-        IPunishPlayer punishPlayer = PunishPlayersManager.getPlayer(sender.getUniqueId());
-
+    public void onCommand(IPunishPlayer sender, String label, String[] args) {
         if (args.length < 2) {
             sender.sendMessage(Messages.Commands.TempIpBan.usage());
             return;
@@ -49,14 +46,13 @@ public class TempIPBanCMD extends Command {
             sender.sendMessage("Invalid time");
             return;
         }
-        new Thread(() -> {
-            punishPlayer.ban(target, reason.toString(), time, true);
-            sender.sendMessage(Messages.Commands.TempIpBan.success(
-                    target,
-                    TextUtils.formatDate(time, Config.dateFormat()),
-                    reason.toString(),
-                    sender.getName())
-            );
-        }).start();
+
+        sender.ban(target, reason.toString(), time, true);
+        sender.sendMessage(Messages.Commands.TempIpBan.success(
+                target,
+                TextUtils.formatDate(time, Config.dateFormat()),
+                reason.toString(),
+                sender.getName())
+        );
     }
 }

@@ -8,6 +8,7 @@ import es.angelillo15.mast.api.punishments.IPunishPlayer;
 import es.angelillo15.mast.api.punishments.PunishPlayersManager;
 import es.angelillo15.mast.api.config.punishments.Config;
 import es.angelillo15.mast.api.config.punishments.Messages;
+import es.angelillo15.mast.api.punishments.cmd.PunishCommand;
 import es.angelillo15.mast.api.utils.NumberUtils;
 
 @CommandData(
@@ -15,13 +16,9 @@ import es.angelillo15.mast.api.utils.NumberUtils;
         permission = "mastaff.punishments.tempban",
         aliases = {"tban"}
 )
-public class TempBanCMD extends Command {
+public class TempBanCMD extends PunishCommand {
     @Override
-    public void onCommand(CommandSender sender, String label, String[] args) {
-        if (!(sender.hasPermission("mast.punishments"))) return;
-
-        IPunishPlayer punishPlayer = PunishPlayersManager.getPlayer(sender.getUniqueId());
-
+    public void onCommand(IPunishPlayer sender, String label, String[] args) {
         if (args.length < 2) {
             sender.sendMessage(Messages.Commands.TempBan.usage());
             return;
@@ -49,7 +46,7 @@ public class TempBanCMD extends Command {
         }
 
         new Thread(() -> {
-            punishPlayer.ban(target, reason.toString(), time);
+            sender.ban(target, reason.toString(), time);
             sender.sendMessage(Messages.Commands.TempBan.success(
                     target,
                     TextUtils.formatDate(time, Config.dateFormat()),

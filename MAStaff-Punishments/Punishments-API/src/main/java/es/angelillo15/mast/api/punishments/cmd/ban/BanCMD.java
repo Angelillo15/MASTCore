@@ -6,6 +6,7 @@ import es.angelillo15.mast.api.cmd.sender.CommandSender;
 import es.angelillo15.mast.api.punishments.IPunishPlayer;
 import es.angelillo15.mast.api.punishments.PunishPlayersManager;
 import es.angelillo15.mast.api.config.punishments.Messages;
+import es.angelillo15.mast.api.punishments.cmd.PunishCommand;
 
 @CommandData(
         name = "ban",
@@ -14,15 +15,11 @@ import es.angelillo15.mast.api.config.punishments.Messages;
         permission = "mast.punishments.ban",
         aliases = {"b"}
 )
-public class BanCMD extends Command {
+public class BanCMD extends PunishCommand {
     @Override
-    public void onCommand(CommandSender sender, String label, String[] args) {
-        if (!(sender.hasPermission("mast.punishments"))) return;
-
-        IPunishPlayer punishPlayer = PunishPlayersManager.getPlayer(sender.getUniqueId());
-
+    public void onCommand(IPunishPlayer punishPlayer, String label, String[] args) {
         if (args.length < 1) {
-            sender.sendMessage(Messages.Commands.Ban.usage());
+            punishPlayer.sendMessage(Messages.Commands.Ban.usage());
             return;
         }
 
@@ -39,13 +36,11 @@ public class BanCMD extends Command {
         }
 
         if (target == null) {
-            sender.sendMessage(Messages.Commands.playerNotFound(target));
+            punishPlayer.sendMessage(Messages.Commands.playerNotFound(target));
             return;
         }
 
-        new Thread(() -> {
-            punishPlayer.ban(args[0], reason.toString());
-            sender.sendMessage(Messages.Commands.Ban.success(target, reason.toString(), sender.getName()));
-        }).start();
+        punishPlayer.ban(args[0], reason.toString());
+        punishPlayer.sendMessage(Messages.Commands.Ban.success(target, reason.toString(), punishPlayer.getName()));
     }
 }

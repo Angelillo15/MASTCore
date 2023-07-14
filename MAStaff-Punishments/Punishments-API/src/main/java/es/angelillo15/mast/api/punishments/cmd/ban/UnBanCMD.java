@@ -7,6 +7,7 @@ import es.angelillo15.mast.api.cmd.sender.CommandSender;
 import es.angelillo15.mast.api.punishments.IPunishPlayer;
 import es.angelillo15.mast.api.punishments.PunishPlayersManager;
 import es.angelillo15.mast.api.config.punishments.Messages;
+import es.angelillo15.mast.api.punishments.cmd.PunishCommand;
 
 @CommandData(
         name = "unban",
@@ -15,13 +16,9 @@ import es.angelillo15.mast.api.config.punishments.Messages;
         permission = "mast.punishments.unban",
         aliases = {"ub"}
 )
-public class UnBanCMD extends Command {
+public class UnBanCMD extends PunishCommand {
     @Override
-    public void onCommand(CommandSender sender, String label, String[] args) {
-        if (!(sender.hasPermission("mast.punishments"))) return;
-
-        IPunishPlayer punishPlayer = PunishPlayersManager.getPlayer(sender.getUniqueId());
-
+    public void onCommand(IPunishPlayer sender, String label, String[] args) {
         if (args.length < 1) {
             sender.sendMessage(Messages.Commands.Unban.usage());
             return;
@@ -38,18 +35,17 @@ public class UnBanCMD extends Command {
         }
 
         String target = args[0];
-        new Thread(() -> {
-            try {
-                punishPlayer.unban(target, reason.toString());
-            } catch (Exception e) {
-                MAStaffInstance.getLogger().debug("Error while unbanning player " + target + ": " + e.getMessage());
-                return;
-            }
-            sender.sendMessage(Messages.Commands.Unban.success(
-                    target,
-                    reason.toString(),
-                    sender.getName()
-            ));
-        }).start();
+
+        try {
+            sender.unban(target, reason.toString());
+        } catch (Exception e) {
+            MAStaffInstance.getLogger().debug("Error while unbanning player " + target + ": " + e.getMessage());
+            return;
+        }
+        sender.sendMessage(Messages.Commands.Unban.success(
+                target,
+                reason.toString(),
+                sender.getName()
+        ));
     }
 }
