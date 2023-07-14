@@ -347,6 +347,8 @@ public class StaffPlayer implements IStaffPlayer {
             return;
         }
 
+        if (!this.isStaffMode() || !this.player.isOnline()) return;
+
         MAStaffInstance.getLogger().debug("Added item " + item.getType().name() + " to staff vault for player " + player.getName());
 
         List<ItemStack> staffVault = new ArrayList<>();
