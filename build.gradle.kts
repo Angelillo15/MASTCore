@@ -1,6 +1,7 @@
 plugins {
     id("java")
     id("com.github.johnrengelman.shadow") version "4.0.4"
+    id("org.jetbrains.kotlin.jvm") version "1.9.0"
     id("io.github.gradle-nexus.publish-plugin") version "1.1.0"
 }
 
@@ -73,6 +74,7 @@ tasks.shadowJar {
 
 allprojects {
     apply(plugin = "java")
+    apply(plugin = "org.jetbrains.kotlin.jvm")
 
     repositories {
         mavenCentral()
@@ -100,6 +102,7 @@ allprojects {
         compileOnly("org.projectlombok:lombok:1.18.24")
         annotationProcessor("org.projectlombok:lombok:1.18.24")
         compileOnly("org.reflections:reflections:0.10.2")
+        compileOnly(rootProject.libs.kotlin)
         testImplementation("org.projectlombok:lombok:1.18.24")
         testAnnotationProcessor("org.projectlombok:lombok:1.18.24")
         testImplementation("org.junit.jupiter:junit-jupiter-api:5.7.0")

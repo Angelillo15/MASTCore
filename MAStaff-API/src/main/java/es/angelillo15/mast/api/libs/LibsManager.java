@@ -178,6 +178,13 @@ public class LibsManager {
                 .relocate("net{}kyori", "es{}angelillo15{}mast{}libs{}kyori")
                 .build();
 
+        Library kotlinJVM = Library.builder()
+                .groupId("org{}jetbrains{}kotlin")
+                .artifactId("kotlin-stdlib-jdk8")
+                .version("1.9.0")
+                .isolatedLoad(false)
+                .build();
+
         libs.add(getAdventureLib("adventure-text-serializer-legacy"));
         libs.add(getAdventureLib("adventure-text-serializer-plain"));
         libs.add(getAdventureLib("adventure-text-serializer-json"));
@@ -194,6 +201,7 @@ public class LibsManager {
         libs.add(adventurePlatformApi);
         libs.add(adventurePlatformFacet);
         libs.add(adventureKey);
+        libs.add(kotlinJVM);
 
         if (ServerUtils.getServerType() == ServerUtils.ServerType.BUKKIT) {
             libs.add(adventureBukkitPlatform);
