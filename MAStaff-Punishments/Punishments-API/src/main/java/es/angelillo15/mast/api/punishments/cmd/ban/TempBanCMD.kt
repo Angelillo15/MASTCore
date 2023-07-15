@@ -1,58 +1,49 @@
-package es.angelillo15.mast.api.punishments.cmd.ban;
+package es.angelillo15.mast.api.punishments.cmd.ban
 
-import es.angelillo15.mast.api.TextUtils;
-import es.angelillo15.mast.api.cmd.Command;
-import es.angelillo15.mast.api.cmd.CommandData;
-import es.angelillo15.mast.api.cmd.sender.CommandSender;
-import es.angelillo15.mast.api.punishments.IPunishPlayer;
-import es.angelillo15.mast.api.punishments.PunishPlayersManager;
-import es.angelillo15.mast.api.config.punishments.Config;
-import es.angelillo15.mast.api.config.punishments.Messages;
-import es.angelillo15.mast.api.punishments.cmd.PunishCommand;
-import es.angelillo15.mast.api.utils.NumberUtils;
+import es.angelillo15.mast.api.TextUtils
+import es.angelillo15.mast.api.cmd.CommandData
+import es.angelillo15.mast.api.config.punishments.Config
+import es.angelillo15.mast.api.config.punishments.Messages
+import es.angelillo15.mast.api.punishments.IPunishPlayer
+import es.angelillo15.mast.api.punishments.cmd.PunishCommand
+import es.angelillo15.mast.api.utils.NumberUtils
 
 @CommandData(
         name = "tempban",
         permission = "mastaff.punishments.tempban",
-        aliases = {"tban"}
+        aliases = ["tban"]
 )
-public class TempBanCMD extends PunishCommand {
-    @Override
-    public void onCommand(IPunishPlayer sender, String label, String[] args) {
-        if (args.length < 2) {
-            sender.sendMessage(Messages.Commands.TempBan.usage());
-            return;
+class TempBanCMD : PunishCommand() {
+    override fun onCommand(sender: IPunishPlayer, label: String, args: Array<String>) {
+        if (args.size < 2) {
+            sender.sendMessage(Messages.Commands.TempBan.usage())
+            return
         }
 
-        String target = args[0];
+        val target = args[0]
+        val reason = StringBuilder()
 
-        StringBuilder reason = new StringBuilder();
-
-        for (int i = 2; i < args.length; i++) {
-            reason.append(args[i]).append(" ");
+        for (i in 2 until args.size) {
+            reason.append(args[i]).append(" ")
         }
 
         if (reason.toString().isEmpty()) {
-            reason.append(Messages.Default.defaultBanReason());
+            reason.append(Messages.Default.defaultBanReason())
         }
 
-        long time;
-
-        try {
-            time = System.currentTimeMillis() + NumberUtils.parseToMilis(args[1]);
-        } catch (NumberFormatException e) {
-            sender.sendMessage("Invalid time");
-            return;
+        val time: Long = try {
+            System.currentTimeMillis() + NumberUtils.parseToMilis(args[1])
+        } catch (e: NumberFormatException) {
+            sender.sendMessage("Invalid time")
+            return
         }
 
-        new Thread(() -> {
-            sender.ban(target, reason.toString(), time);
-            sender.sendMessage(Messages.Commands.TempBan.success(
-                    target,
-                    TextUtils.formatDate(time, Config.dateFormat()),
-                    reason.toString(),
-                    sender.getName())
-            );
-        }).start();
+        sender.ban(target, reason.toString(), time)
+        sender.sendMessage(Messages.Commands.TempBan.success(
+                target,
+                TextUtils.formatDate(time, Config.dateFormat()),
+                reason.toString(),
+                sender.name)
+        )
     }
 }

@@ -1,46 +1,36 @@
-package es.angelillo15.mast.api.punishments.cmd.ban;
+package es.angelillo15.mast.api.punishments.cmd.ban
 
-import es.angelillo15.mast.api.cmd.Command;
-import es.angelillo15.mast.api.cmd.CommandData;
-import es.angelillo15.mast.api.cmd.sender.CommandSender;
-import es.angelillo15.mast.api.punishments.IPunishPlayer;
-import es.angelillo15.mast.api.punishments.PunishPlayersManager;
-import es.angelillo15.mast.api.config.punishments.Messages;
-import es.angelillo15.mast.api.punishments.cmd.PunishCommand;
+import es.angelillo15.mast.api.cmd.CommandData
+import es.angelillo15.mast.api.config.punishments.Messages
+import es.angelillo15.mast.api.punishments.IPunishPlayer
+import es.angelillo15.mast.api.punishments.cmd.PunishCommand
 
 @CommandData(
         name = "ban",
         description = "Ban a player",
         usage = "/ban <player> <reason>",
         permission = "mast.punishments.ban",
-        aliases = {"b"}
+        aliases = ["b"]
 )
-public class BanCMD extends PunishCommand {
-    @Override
-    public void onCommand(IPunishPlayer punishPlayer, String label, String[] args) {
-        if (args.length < 1) {
-            punishPlayer.sendMessage(Messages.Commands.Ban.usage());
-            return;
+class BanCMD : PunishCommand() {
+    override fun onCommand(punishPlayer: IPunishPlayer, label: String, args: Array<String>) {
+        if (args.isEmpty()) {
+            punishPlayer.sendMessage(Messages.Commands.Ban.usage())
+            return
         }
 
-        String target = args[0];
+        val target = args[0]
+        val reason = StringBuilder()
 
-        StringBuilder reason = new StringBuilder();
-
-        for (int i = 1; i < args.length; i++) {
-            reason.append(args[i]).append(" ");
+        for (i in 1 until args.size) {
+            reason.append(args[i]).append(" ")
         }
 
         if (reason.toString().isEmpty()) {
-            reason.append(Messages.Default.defaultBanReason());
+            reason.append(Messages.Default.defaultBanReason())
         }
 
-        if (target == null) {
-            punishPlayer.sendMessage(Messages.Commands.playerNotFound(target));
-            return;
-        }
-
-        punishPlayer.ban(args[0], reason.toString());
-        punishPlayer.sendMessage(Messages.Commands.Ban.success(target, reason.toString(), punishPlayer.getName()));
+        punishPlayer.ban(args[0], reason.toString())
+        punishPlayer.sendMessage(Messages.Commands.Ban.success(target, reason.toString(), punishPlayer.name))
     }
 }
