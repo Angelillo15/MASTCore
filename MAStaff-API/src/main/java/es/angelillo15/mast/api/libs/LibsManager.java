@@ -178,12 +178,12 @@ public class LibsManager {
                 .relocate("net{}kyori", "es{}angelillo15{}mast{}libs{}kyori")
                 .build();
 
-        Library kotlinJVM = Library.builder()
-                .groupId("org{}jetbrains{}kotlin")
-                .artifactId("kotlin-stdlib-jdk8")
-                .version("1.9.0")
-                .isolatedLoad(false)
-                .build();
+        libs.add(getKotlinLib("kotlin-stdlib-jdk8"));
+        libs.add(getKotlinLib("kotlin-stdlib-jdk7"));
+        libs.add(getKotlinLib("kotlin-stdlib"));
+        libs.add(getKotlinLib("kotlin-stdlib-common"));
+        libs.add(getKotlinLib("kotlin-stdlib-js"));
+        libs.add(getKotlinLib("kotlin-reflect"));
 
         libs.add(getAdventureLib("adventure-text-serializer-legacy"));
         libs.add(getAdventureLib("adventure-text-serializer-plain"));
@@ -201,7 +201,6 @@ public class LibsManager {
         libs.add(adventurePlatformApi);
         libs.add(adventurePlatformFacet);
         libs.add(adventureKey);
-        libs.add(kotlinJVM);
 
         if (ServerUtils.getServerType() == ServerUtils.ServerType.BUKKIT) {
             libs.add(adventureBukkitPlatform);
@@ -284,5 +283,14 @@ public class LibsManager {
                 .relocate("net{}kyori", "es{}angelillo15{}mast{}libs{}kyori")
                 .build();
         return lib;
+    }
+
+    public static Library getKotlinLib(String artifact) {
+        return Library.builder()
+                .groupId("org{}jetbrains{}kotlin")
+                .artifactId(artifact)
+                .version("1.9.0")
+                .isolatedLoad(false)
+                .build();
     }
 }
