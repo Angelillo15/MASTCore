@@ -1,18 +1,12 @@
 plugins {
     id("java")
-    id("com.github.johnrengelman.shadow") version "4.0.4"
-    id("org.jetbrains.kotlin.jvm") version "1.9.0"
+    id("com.github.johnrengelman.shadow") version "8.1.1"
+    kotlin("jvm") version "1.9.0"
     id("io.github.gradle-nexus.publish-plugin") version "1.1.0"
 }
 
 group = "es.angelillo15"
 version = "2.3.2"
-val javaVersion = JavaVersion.VERSION_1_8
-
-java {
-    sourceCompatibility = javaVersion
-    targetCompatibility = javaVersion
-}
 
 tasks.shadowJar {
     relocate("es.angelillo15.configmanager", "es.angelillo15.mast.libs.config.manager")
@@ -93,11 +87,6 @@ allprojects {
         options.encoding = "UTF-8"
     }
 
-    java {
-        sourceCompatibility = javaVersion
-        targetCompatibility = javaVersion
-    }
-
     dependencies {
         compileOnly("org.projectlombok:lombok:1.18.24")
         annotationProcessor("org.projectlombok:lombok:1.18.24")
@@ -106,5 +95,9 @@ allprojects {
         testImplementation("org.projectlombok:lombok:1.18.24")
         testAnnotationProcessor("org.projectlombok:lombok:1.18.24")
         testImplementation("org.junit.jupiter:junit-jupiter-api:5.7.0")
+    }
+
+    kotlin {
+        jvmToolchain(8);
     }
 }
