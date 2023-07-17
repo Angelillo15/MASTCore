@@ -3,7 +3,9 @@ package es.angelillo15.mast.api.punishments.cmd.ban
 import es.angelillo15.mast.api.cmd.CommandData
 import es.angelillo15.mast.api.config.punishments.Messages
 import es.angelillo15.mast.api.punishments.IPunishPlayer
+import es.angelillo15.mast.api.punishments.PunishTargetReasonCommand
 import es.angelillo15.mast.api.punishments.cmd.PunishCommand
+import es.angelillo15.mast.api.punishments.cmd.PunishTargetCommand
 
 @CommandData(
         name = "ipban",
@@ -11,21 +13,11 @@ import es.angelillo15.mast.api.punishments.cmd.PunishCommand
         usage = "/ipban <ip> <reason>",
         description = "Ban an IP"
 )
-class IPBanCMD : PunishCommand() {
-    override fun onCommand(sender: IPunishPlayer, label: String, args: Array<String>) {
+class IPBanCMD : PunishTargetReasonCommand(1, Messages.Default.defaultBanReason()) {
+    override fun onCommand(sender: IPunishPlayer, target: String, label: String, args: Array<out String>, reason: String) {
         if (args.isEmpty()) {
             sender.sendMessage(Messages.Commands.IpBan.usage())
             return
-        }
-
-        val target = args[0]
-        val reason = StringBuilder()
-        for (i in 1 until args.size) {
-            reason.append(args[i]).append(" ")
-        }
-
-        if (reason.toString().isEmpty()) {
-            reason.append(Messages.Default.defaultBanReason())
         }
 
         sender.ban(args[0], reason.toString(), true)
