@@ -132,8 +132,6 @@ public class PunishPlayer implements IPunishPlayer {
     @SneakyThrows
     @Override
     public void unban(String target, String reason) {
-        Storm storm = PluginConnection.getStorm();
-
         BansTable bansTable = null;
 
         if (!BansTable.isPermBanned(target)) {
@@ -141,10 +139,14 @@ public class PunishPlayer implements IPunishPlayer {
                     Messages.Commands.playerNotBanned(target)
             );
 
-            throw new PlayerNotBannedException("Player " + target + " is not banned");
+            return;
         }
 
         bansTable = BansTable.getBan(target);
+
+        if (bansTable == null) {
+            return;
+        }
 
         bansTable.unBan(player.getName(), reason, player.getUniqueId());
 
