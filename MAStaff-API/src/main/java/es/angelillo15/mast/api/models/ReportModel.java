@@ -5,9 +5,11 @@ import com.craftmend.storm.api.enums.KeyType;
 import com.craftmend.storm.api.markers.Column;
 import com.craftmend.storm.api.markers.Table;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
-@Table(name="mastaff_reports")
 @Data
+@Table(name="mastaff_reports")
+@EqualsAndHashCode(callSuper = true)
 public class ReportModel extends StormModel {
     @Column(
             references = { UserModel.class },

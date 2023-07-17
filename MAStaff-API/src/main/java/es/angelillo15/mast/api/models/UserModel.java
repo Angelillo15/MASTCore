@@ -8,9 +8,11 @@ import com.craftmend.storm.api.markers.Table;
 import es.angelillo15.mast.api.MAStaffInstance;
 import es.angelillo15.mast.api.database.PluginConnection;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @Data
 @Table(name = "mastaff_user_data")
+@EqualsAndHashCode(callSuper = true)
 public class UserModel extends StormModel {
 
     public static final String UNKNOWN = "unknown";

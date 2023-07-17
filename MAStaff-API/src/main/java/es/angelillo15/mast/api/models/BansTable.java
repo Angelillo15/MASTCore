@@ -9,12 +9,14 @@ import es.angelillo15.mast.api.MAStaffInstance;
 import es.angelillo15.mast.api.cache.BanCache;
 import es.angelillo15.mast.api.database.PluginConnection;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.SneakyThrows;
 
 import java.util.UUID;
 
 @Data
 @Table(name = "mastaff_bans")
+@EqualsAndHashCode(callSuper = true)
 public class BansTable extends StormModel {
     @Column(length = 36)
     private String uuid;
