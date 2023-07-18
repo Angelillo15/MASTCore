@@ -3,12 +3,17 @@ package es.angelillo15.mast.api;
 import es.angelillo15.mast.api.exceptions.AlreadyDisableException;
 import es.angelillo15.mast.api.exceptions.AlreadyEnableException;
 import es.angelillo15.mast.api.items.StaffItem;
-import lombok.NonNull;
+import es.angelillo15.mast.api.player.IGlowPlayer;
+import es.angelillo15.mast.api.player.IVanishPlayer;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
-import java.util.ArrayList;
+import javax.annotation.Nullable;
+import java.util.List;
+import java.util.Map;
+
 /**
 * This interface allows to you to interact with the staff players
 */
@@ -33,7 +38,7 @@ public interface IStaffPlayer {
     /**
      * @param staffMode enable or disable the staff mode
      * Method to enable or disable the StaffMode,
-     * ths method can throws exceptions
+     * ths method can throw exceptions
      */
     void setStaffMode(boolean staffMode, boolean saveInventory) throws AlreadyEnableException, AlreadyDisableException;
     /**
@@ -56,66 +61,113 @@ public interface IStaffPlayer {
     /**
      * Set staff items to the player
      */
-    public void setItems();
+    void setItems();
 
     /**
      * Get staff items
      */
-    public ArrayList<StaffItem> getItems();
+    Map<String, StaffItem> getItems();
 
     /**
      * Send plugin message to the bungee
      */
-    public void sendPluginMessage();
+    void sendPluginMessage();
 
     /**
      * Save inventory
      */
-    public void saveInventory();
+    void saveInventory();
 
     /**
      * Clear inventory
      */
-    public void clearInventory();
+    void clearInventory();
 
     /**
      * Restore inventory
      */
-    public void restoreInventory();
+    void restoreInventory();
 
     /**
      * Exists data
      * @return true if exists or false if not
      */
-    public boolean existsData();
+    boolean existsData();
 
     /**
      * Change gamemode
      * @param gamemode gamemode to change
      */
-    public void changeGamemode(GameMode gamemode);
-
-    /**
-     * Set a glow color
-     * @param color color to set
-     */
-    public void setGlowColor(ChatColor color);
-
-    /**
-     * Get the glow color
-     * @return the glow color
-     */
-    public ChatColor getGlowColor();
+    void changeGamemode(GameMode gamemode);
 
     /**
      * enable / disable glow
      * @param status status to set
      */
-    public void setGlowing(boolean status);
+    void setGlowing(boolean status);
 
     /**
      * Get the staff mode previus status
      * @return the staff mode previus status
      */
-    public boolean wasInStaffMode();
+    boolean wasInStaffMode();
+
+    /**
+     * Is a checker that if there is a new item that isn't
+     * of the staff mode inventory, it will be removed
+     * and added to a staff mode vault
+     */
+    void staffModeAsyncInventoryChecker();
+
+    /**
+     * Get staff vault
+     * @return the staff vault
+     */
+    List<ItemStack> getStaffVault();
+
+    /**
+     * Open staff vault
+     */
+    void openStaffVault();
+
+    /**
+     * Freeze a player
+     * @param player - player to freeze
+     */
+    void freezePlayer(Player player);
+
+    /**
+     * Unfreeze a player
+     * @param player - player to unfreeze
+     */
+    void unfreezePlayer(String player);
+
+    /**
+     * Execute punishs for a freezed player that has left the server
+     * @param player - player name to execute the punishs
+     */
+    void executeFreezedPunishments(String player);
+
+    /**
+     * Check if a player is freezed
+     * @param player - player to check
+     */
+    boolean isFreezed(Player player);
+
+    /**
+     * Execute staff mode commands
+     */
+    void executeStaffModeCommands();
+
+    /**
+     * Get the vanish player
+     * @return the vanish player or null if is disabled
+     */
+    IVanishPlayer getVanishPlayer();
+
+    /**
+     * Get the glow player
+     * @return the glow player or null if is disabled
+     */
+    IGlowPlayer getGlowPlayer();
 }

@@ -7,32 +7,27 @@ authors: [ Angelillo15 ]
 description: Simple and optimised Staff Core
 website: angelillo15.es
 softdepend: [PlaceholderAPI, Vault, eGlow]
+folia-supported: true
 commands:
   staff:
     description: Staff Command
     usage: /staff
     aliases: [staff, staffmode, sm]
     permission: mast.staff
-    default: op
   freeze:
     description: Freeze Command
     aliases: [freeze]
     permission: mast.freeze
-    default: op
   staffchat:
     description: Staff Chat Command
     aliases: [staffchat, sc]
     permission: mast.staffchat
-    default: op
   mast:
     description: MAStaff Command
     aliases: [mastaff, mastcore]
     permission: mast.admin
-    default: op
 permissions:
   mast.staff:
     description: Staff Command
-    default: op
   mast.staff.see:
     description: Permission to view vanished players
-    default: op

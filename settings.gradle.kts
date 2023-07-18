@@ -11,5 +11,14 @@ rootProject.name = "MAStaff"
 include("MAStaff-API")
 include("MAStaff-Bukkit")
 include("MAStaff-Bungee")
-include("MAStaff-Bukkit:untitled")
 include("MAStaff-Legacy")
+include("MAStaff-Punishments")
+include("MAStaff-Punishments:Punishments-Bukkit")
+findProject(":MAStaff-Punishments:Punishments-Bukkit")?.name = "Punishments-Bukkit"
+include("MAStaff-Punishments:Punishments-Bungee")
+findProject(":MAStaff-Punishments:Punishments-Bungee")?.name = "Punishments-Bungee"
+include("MAStaff-Punishments:Punishments-API")
+findProject(":MAStaff-Punishments:Punishments-API")?.name = "Punishments-API"
+include("MAStaff-Vanish")
+include("MAStaff-Glow")
+include("MAStaff-PAPI")

@@ -11,5 +11,7 @@ public class Constants {
 
     public static final String GIT_BRANCH = "{git-branch}";
 
+    public static final boolean DEV_MODE = false;
+
     private Constants() {}
 }

@@ -1,14 +1,26 @@
 package es.angelillo15.mast.api;
 
+import es.angelillo15.mast.api.cmd.Command;
 import es.angelillo15.mast.api.exceptions.PluginNotLoadedException;
+import es.angelillo15.mast.api.utils.ServerUtils;
+import es.angelillo15.mast.api.utils.VersionUtils;
 import net.md_5.bungee.api.ProxyServer;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
+import java.io.File;
+import java.io.InputStream;
+
 
 public interface MAStaffInstance<P> {
-    public static final int version = Integer.parseInt(Bukkit.getBukkitVersion().split("-")[0].split("\\.")[1]);
+    public static int version() {
+        if (ServerUtils.getServerType() == ServerUtils.ServerType.BUNGEE) {
+            return 19;
+        } else {
+            return VersionUtils.getBukkitVersion();
+        }
+    }
 
     public static MAStaffInstance<Plugin> getInstance(){
         MAStaffInstance<Plugin> instance = (MAStaffInstance<Plugin>) Bukkit.getPluginManager().getPlugin("MAStaff");
@@ -33,6 +45,15 @@ public interface MAStaffInstance<P> {
     }
 
     public ILogger getPLogger();
+    public static ILogger getLogger() {
+        if (ServerUtils.getServerType() == ServerUtils.ServerType.BUKKIT) {
+            return getInstance().getPLogger();
+        } else {
+            return getBungeeInstance().getPLogger();
+        }
+    }
+    public default void registerCommand(Command command){};
+    public IServerUtils getServerUtils();
     public boolean isDebug();
     public void drawLogo();
     public void loadConfig();
@@ -44,7 +65,10 @@ public interface MAStaffInstance<P> {
     public void unregisterListeners();
     public void unloadDatabase();
     public void reload();
-    public IStaffPlayer createStaffPlayer(Player player);
+    public default IStaffPlayer createStaffPlayer(Player player) { return null; }
+    File getPluginDataFolder();
+    InputStream getPluginResource(String s);
+    void setDebug(boolean debug);
     public P getPluginInstance();
 
 }

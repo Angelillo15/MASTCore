@@ -13,13 +13,20 @@ repositories {
 }
 
 dependencies {
-    compileOnly("io.github.waterfallmc:waterfall-api:1.19-R0.1-SNAPSHOT")
-    compileOnly("org.yaml:snakeyaml:1.33")
-    compileOnly("com.github.Carleslc.Simple-YAML:Simple-Yaml:1.8.3")
-    compileOnly("com.github.Angelillo15:ConfigManager:1.4")
-    compileOnly("net.md-5:bungeecord-chat:1.16-R0.4")
-    implementation("net.byteflux:libby-bungee:1.1.5")
-    implementation(project(":MAStaff-API"))
+    compileOnly(project(":MAStaff-API"))
+    compileOnly(project(":MAStaff-Punishments:Punishments-Bungee"))
+    compileOnly(libs.waterfall)
+    compileOnly(libs.snakeYaml)
+    compileOnly(libs.simpleYaml)
+    compileOnly(libs.configManager)
+    compileOnly(libs.bungeecordChat)
+    compileOnly(libs.jedis)
+    compileOnly(libs.unirest)
+    implementation(libs.liblyBungee)
+    compileOnly(libs.storm)
+    compileOnly(libs.miniMessage)
+    compileOnly(libs.adventureBungee)
+    compileOnly(libs.adventureApi)
 }
 
 tasks.processResources {

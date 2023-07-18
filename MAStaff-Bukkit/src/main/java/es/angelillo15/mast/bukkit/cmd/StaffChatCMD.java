@@ -1,7 +1,8 @@
 package es.angelillo15.mast.bukkit.cmd;
 
+import es.angelillo15.mast.api.TextUtils;
 import es.angelillo15.mast.api.event.bukkit.staff.StaffChatTalkEvent;
-import es.angelillo15.mast.bukkit.config.Messages;
+import es.angelillo15.mast.api.config.bukkit.Messages;
 import es.angelillo15.mast.bukkit.utils.StaffUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -17,7 +18,7 @@ public class StaffChatCMD implements CommandExecutor {
             if(p.hasPermission("mast.staffchat")){
 
                 if(args.length < 1){
-                    p.sendMessage(Messages.GET_STAFFCHAT_CORRECT_USE());
+                    TextUtils.colorize(Messages.GET_STAFFCHAT_CORRECT_USE(), p);
                     return true;
                 }
                 String message = Messages.GET_STAFF_CHAT_FORMAT().replace("{player}",
@@ -31,7 +32,7 @@ public class StaffChatCMD implements CommandExecutor {
 
                 return true;
             }else{
-                p.sendMessage(Messages.GET_NO_PERMISSION_MESSAGE());
+                TextUtils.sendMessage(p, Messages.GET_NO_PERMISSION_MESSAGE());
                 return false;
             }
         }

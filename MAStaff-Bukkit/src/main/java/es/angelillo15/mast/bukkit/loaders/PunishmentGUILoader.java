@@ -6,9 +6,8 @@ import es.angelillo15.mast.api.gui.Page;
 import es.angelillo15.mast.api.managers.PunishmentsGUIManager;
 import es.angelillo15.mast.api.material.XMaterial;
 import es.angelillo15.mast.bukkit.MAStaff;
-import es.angelillo15.mast.bukkit.config.ConfigLoader;
+import es.angelillo15.mast.api.config.bukkit.ConfigLoader;
 import es.angelillo15.mast.api.gui.CommandItem;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.simpleyaml.configuration.file.YamlFile;
 

@@ -1,8 +1,9 @@
 package es.angelillo15.mast.bukkit.cmd.mast;
 
+import es.angelillo15.mast.api.Constants;
 import es.angelillo15.mast.api.TextUtils;
-import es.angelillo15.mast.api.cmd.SubCommand;
-import es.angelillo15.mast.bukkit.config.Messages;
+import es.angelillo15.mast.api.cmd.LegacySubCommand;
+import es.angelillo15.mast.api.config.bukkit.Messages;
 import lombok.Getter;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -12,13 +13,13 @@ import java.util.ArrayList;
 
 public class MAStaffCMD implements CommandExecutor {
     @Getter
-    private static ArrayList<SubCommand> subCommands = new ArrayList<>();
+    private static ArrayList<LegacySubCommand> legacySubCommands = new ArrayList<>();
 
     public MAStaffCMD(){
-        subCommands.clear();
-        subCommands.add(new ReloadARG());
-        subCommands.add(new HelpARG());
-        subCommands.add(new DumpARG());
+        legacySubCommands.clear();
+        legacySubCommands.add(new ReloadARG());
+        legacySubCommands.add(new HelpARG());
+        legacySubCommands.add(new DumpARG());
     }
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
@@ -27,13 +28,13 @@ public class MAStaffCMD implements CommandExecutor {
             return true;
         }
 
-        for (SubCommand subCommand : subCommands) {
-            if(args[0].equalsIgnoreCase(subCommand.getName())){
-                if(!sender.hasPermission(subCommand.getPermission())){
+        for (LegacySubCommand legacySubCommand : legacySubCommands) {
+            if(args[0].equalsIgnoreCase(legacySubCommand.getName())){
+                if(!sender.hasPermission(legacySubCommand.getPermission())){
                     sender.sendMessage(Messages.GET_NO_PERMISSION_MESSAGE());
                     return true;
                 }
-                subCommand.execute(sender, args);
+                legacySubCommand.execute(sender, args);
                 return true;
             }
         }
@@ -42,13 +43,11 @@ public class MAStaffCMD implements CommandExecutor {
     }
 
     public static void sendHelp(CommandSender sender) {
-        sender.sendMessage(TextUtils.colorize("&6----------------MAStaff----------------"));
-        sender.sendMessage(TextUtils.colorize("&bAvailable Commands:"));
-        subCommands.forEach(subCommand -> {
+        sender.sendMessage(TextUtils.colorize("&a&lMAS&r&ltaff &7- &fv" + Constants.VERSION));
+        legacySubCommands.forEach(subCommand -> {
             if(sender.hasPermission(subCommand.getPermission())){
-                sender.sendMessage(TextUtils.colorize("&b" + subCommand.getSyntax() + " &7- &f" + subCommand.getDescription()));
+                sender.sendMessage(TextUtils.colorize("&a&l> &r" + subCommand.getSyntax() + " &7- &7" + subCommand.getDescription()));
             }
         });
-
     }
 }

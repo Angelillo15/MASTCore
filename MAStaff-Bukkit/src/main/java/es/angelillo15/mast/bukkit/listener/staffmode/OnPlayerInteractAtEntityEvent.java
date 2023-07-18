@@ -7,7 +7,7 @@ import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 
 public class OnPlayerInteractAtEntityEvent implements Listener {
     @EventHandler
-    public void OnPlayerInteractAtEntityEvent(PlayerInteractAtEntityEvent event) {
+    public void onPlayerInteractAtEntityEvent(PlayerInteractAtEntityEvent event) {
         if (StaffPlayersManagers.isStaffPlayer(event.getPlayer()) && StaffPlayersManagers.getStaffPlayer(event.getPlayer()).isStaffMode())
             event.setCancelled(true);
 

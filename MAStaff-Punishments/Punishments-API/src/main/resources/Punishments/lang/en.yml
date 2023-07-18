@@ -1,0 +1,280 @@
+#
+#  ███▄ ▄███▓ ▄▄▄        ██████ ▄▄▄█████▓ ▄▄▄        █████▒ █████▒
+#  ▓██▒▀█▀ ██▒▒████▄    ▒██    ▒ ▓  ██▒ ▓▒▒████▄    ▓██   ▒▓██   ▒
+#  ▓██    ▓██░▒██  ▀█▄  ░ ▓██▄   ▒ ▓██░ ▒░▒██  ▀█▄  ▒████ ░▒████ ░
+#  ▒██    ▒██ ░██▄▄▄▄██   ▒   ██▒░ ▓██▓ ░ ░██▄▄▄▄██ ░▓█▒  ░░▓█▒  ░
+#  ▒██▒   ░██▒ ▓█   ▓██▒▒██████▒▒  ▒██▒ ░  ▓█   ▓██▒░▒█░   ░▒█░
+#  ░ ▒░   ░  ░ ▒▒   ▓▒█░▒ ▒▓▒ ▒ ░  ▒ ░░    ▒▒   ▓▒█░ ▒ ░    ▒ ░
+#  ░  ░      ░  ▒   ▒▒ ░░ ░▒  ░ ░    ░      ▒   ▒▒ ░ ░      ░
+#  ░      ░     ░   ▒   ░  ░  ░    ░        ░   ▒    ░ ░    ░ ░
+#  ░         ░  ░      ░                 ░  ░
+#
+# This is the English language file for MAStaff Punishments,
+# where you can modify and customize the plugin messages.
+#
+# Remember to join my Discord server if you need help:
+# https://discord.nookure.com/
+#
+# Ban Messages
+Default:
+  # Default Punishments actions Reasons
+  #
+  # Plugin prefix
+  prefix: '&c&lPunishments &8&l» &f'
+  # Default reason when a Player is banned.
+  defaultBanReason: 'No reason specified.'
+  # Default reason when a Player is muted.
+  defaultMuteReason: 'No reason specified.'
+  # Default reason when a Player is kicked.
+  defaultKickReason: 'No reason specified.'
+  # Default reason when a Player is unmuted.
+  defaultUnMuteReason: 'No reason specified.'
+  # Default reason when a Player is unbanned.
+  defaultUnBanReason: 'No reason specified.'
+  # Default reason when a Player is warned.
+  defaultWarnReason: 'No reason specified.'
+  # Default reason when a Player is unwarned.
+  defaultUnWarnReason: 'No reason specified.'
+
+  # Appeal Message
+  appealMessage: 'Appeal at: https://discord.nookure.com/'
+Ban:
+  # Ban Message
+  # This message is sent to the player when he/she is banned.
+  # You can use the following placeholders:
+  # ↳ {bannedOn} - The date when the player was banned.
+  # ↳ {bannedBy} - The player who banned the player.
+  # ↳ {reason} - The reason why the player was banned.
+  # ↳ {duration} - The duration of the ban.
+  # ↳ {expires} - The date when the ban expires.
+  # ↳ {appeal} - The link to appeal the ban.
+  bannedMessageBase: |
+    &c&lNookure &f&lNetwork
+    &cYou are banned from the server.
+
+    &eBanned on: &f{bannedOn}
+    &eBanned by: &f{bannedBy}
+    &eReason: &f{reason}
+  # Here you can modify the message sent to the player when he/she is temp banned.
+  # You can use the following placeholders:
+  # ↳ {bannedOn} - The date when the player was banned.
+  # ↳ {bannedBy} - The player who banned the player.
+  # ↳ {reason} - The reason why the player was banned.
+  # ↳ {duration} - The duration of the ban.
+  # ↳ {expires} - The date when the ban expires.
+  # ↳ {appeal} - The link to appeal the ban.
+  # ↳ {base} - The base message.
+  # ↳ {banId} - The unique ban ID.
+  bannedMessage: |
+    &f{base}
+    Expires: &f{expires}
+    &f{appeal}
+  # Here you can modify the message sent to the player when he/she is banned.
+  # You can use the following placeholders:
+  # ↳ {bannedOn} - The date when the player was banned.
+  # ↳ {bannedBy} - The player who banned the player.
+  # ↳ {reason} - The reason why the player was banned.
+  # ↳ {appeal} - The link to appeal the ban.
+  # ↳ {base} - The base message.
+  # ↳ {banId} - The unique ban ID.
+  bannedMessagePermanent: |
+    &f{base}
+    &cYou are permanently banned from the server.
+    &f{appeal}
+  # Here you can modify the message sent to the player when he/she is temp ip-banned.
+  # You can use the following placeholders:
+  # ↳ {bannedOn} - The date when the player was banned.
+  # ↳ {bannedBy} - The player who banned the player.
+  # ↳ {reason} - The reason why the player was banned.
+  # ↳ {duration} - The duration of the ban.
+  # ↳ {expires} - The date when the ban expires.
+  # ↳ {appeal} - The link to appeal the ban.
+  # ↳ {base} - The base message.
+  # ↳ {banId} - The unique ban ID.
+  ipBannedMessage: |
+    &f{base}
+    Expires: &f{expires}
+    &f{appeal}
+  # Here you can modify the message sent to the player when he/she is ip-banned.
+  # You can use the following placeholders:
+  # ↳ {bannedOn} - The date when the player was banned.
+  # ↳ {bannedBy} - The player who banned the player.
+  # ↳ {reason} - The reason why the player was banned.
+  # ↳ {appeal} - The link to appeal the ban.
+  # ↳ {base} - The base message.
+  # ↳ {banId} - The unique ban ID.
+  ipBannedMessagePermanent: |
+    &f{base}
+    &cYou are permanently IP banned from the server.
+    &f{appeal}
+  # This message is sent to the server when a player is banned.
+  # You can use the following placeholders:
+  # ↳ {player} - The player who was banned.
+  # ↳ {bannedOn} - The date when the player was banned.
+  # ↳ {bannedBy} - The player who banned the player.
+  # ↳ {reason} - The reason why the player was banned.
+  bannedPlayerTriesToJoin: "{prefix} {player} tried to join but he's banned."
+  # This message is sent to the server when a player is banned.
+  # You can use the following placeholders:
+  # ↳ {player} - The player who was banned.
+  # ↳ {bannedOn} - The date when the player was banned.
+  # ↳ {bannedBy} - The player who banned the player.
+  # ↳ {reason} - The reason why the player was banned.
+  # ↳ {duration} - The duration of the ban.
+  # ↳ {expires} - The date when the ban expires.
+  tempBannedPlayerTriesToJoin: "{prefix} {player} tried to join but he's temp banned for {duration}."
+  # This message is sent to the server when a player is banned.
+  # You can use the following placeholders:
+  # ↳ {player} - The player who was banned.
+  # ↳ {bannedOn} - The date when the player was banned.
+  # ↳ {bannedBy} - The player who banned the player.
+  # ↳ {reason} - The reason why the player was banned.
+  bannedBroadcast: "{prefix} &c{player} has been banned by {bannedBy} for {reason}."
+  # This message is sent to the server when a player is temp banned.
+  # You can use the following placeholders:
+  # ↳ {player} - The player who was banned.
+  # ↳ {bannedOn} - The date when the player was banned.
+  # ↳ {bannedBy} - The player who banned the player.
+  # ↳ {reason} - The reason why the player was banned.
+  # ↳ {duration} - The duration of the ban.
+  # ↳ {expires} - The date when the ban expires.
+  tempBannedBroadcast: "{prefix} &c{player} has been banned by {bannedBy} for {reason} for {duration}."
+Kick:
+  # This message is sent to the player when he/she is kicked.
+  # You can use the following placeholders:
+  # ↳ {player} - The player who was kicked.
+  # ↳ {kickedBy} - The player who kicked the player.
+  # ↳ {reason} - The reason why the player was kicked.
+  kickedMessage: |
+    &cYou have been kicked from the server.
+    
+    &fReason: &c{reason}
+    &fKicked by: &c{kickedBy}
+  # This message is sent to the server when a player is kicked.
+  # You can use the following placeholders:
+  # ↳ {player} - The player who was kicked.
+  # ↳ {kickedBy} - The player who kicked the player.
+  # ↳ {reason} - The reason why the player was kicked.
+  kickedBroadcast: "{prefix} &c{player} has been kicked by {kickedBy} for {reason}."
+Warn:
+  # Send a title to the player when he/she is warned.
+  titleOnWarn: true
+  # This message is sent to the player when he/she is warned.
+  # You can use the following placeholders:
+  # ↳ {player} - The player who was warned.
+  # ↳ {warnedBy} - The player who warned the player.
+  # ↳ {reason} - The reason why the player was warned.
+  title: "&c&lYou have been warned!"
+  subtitle: "A moderator has warned you"
+  # This message is sent to the player when he/she is warned.
+  # You can use the following placeholders:
+  # ↳ {player} - The player who was warned.
+  # ↳ {warnedBy} - The player who warned the player.
+  # ↳ {reason} - The reason why the player was warned.
+  warnedMessage: "&cYou have been warned by {warnedBy} for {reason}."
+  # This message is sent to the server when a player is warned.
+  # You can use the following placeholders:
+  # ↳ {player} - The player who was warned.
+  # ↳ {warnedBy} - The player who warned the player.
+  # ↳ {reason} - The reason why the player was warned.
+  warnedBroadcast: "{prefix} &c{player} has been warned by {warnedBy} for {reason}."
+History:
+  types:
+    # This message is sent when a player has a ban in his history.
+    # You can use the following placeholders:
+    # ↳ {true/false} - If the ban is active or not.
+    # ↳ {expires} - The date when the ban expires.
+    # ↳ {reason} - The reason why the player was banned.
+    # ↳ {bannedBy} - The player who banned the player.
+    # ↳ {banId} - The unique ban ID.
+    # ↳ {player} - The player who was banned.
+    # ↳ {duration} - The duration of the ban.
+    # ↳ {bannedOn} - The date when the player was banned.
+    ban: "Ban - &cactive: &7{true/false} - &cexpires: &7{expires} - &creason: &7{reason} - &cbanned by: &7{bannedBy}"
+    # This message is sent when a player has an IP-Ban in his history.
+    # You can use the following placeholders:
+    # ↳ {true/false} - If the ban is active or not.
+    # ↳ {expires} - The date when the ban expires.
+    # ↳ {reason} - The reason why the player was banned.
+    # ↳ {bannedBy} - The player who banned the player.
+    # ↳ {banId} - The unique ban ID.
+    # ↳ {player} - The player who was banned.
+    # ↳ {duration} - The duration of the ban.
+    # ↳ {bannedOn} - The date when the player was banned.
+    banIP: "IP Ban - &cactive: &7{true/false} - &cexpires: &7{expires} - &creason: &7{reason} - &cbanned by: &7{bannedBy}"
+    # This message is sent when a player has a kick in his history.
+    # You can use the following placeholders:
+    # ↳ {reason} - The reason why the player was kicked.
+    # ↳ {kickedBy} - The player who kicked the player.
+    # ↳ {player} - The player who was kicked.
+    kick: "Kick - &creason: &7{reason} - &ckicked by: &7{kickedBy}"
+    # This message is sent when a player has a warn in his history.
+    # You can use the following placeholders:
+    # ↳ {true/false} - If the warn is active or not.
+    # ↳ {expires} - The date when the warn expires.
+    # ↳ {reason} - The reason why the player was warned.
+    # ↳ {warnedBy} - The player who warned the player.
+    # ↳ {player} - The player who was warned.
+    # ↳ {warnedOn} - The date when the player was warned
+    warn: "Warn - &cactive &7{true/false} - &cexpires: &7{expires}"
+Commands:
+  # Message sent to the player when he tries to execute a command
+  # with a player argument that not exists in the DB.
+  playerNotFound: '{prefix} &c{player} not found.'
+  # Message sent to the player when he tries to unban a player that is not banned.
+  playerNotBanned: '{prefix} &c{player} is not banned.'
+  # Message sent to the player when he tries to unmute a player that is not muted.
+  playerNotMuted: '{prefix} &c{player} is not muted.'
+  # Message sent to the player when he tries to unwarn a player that is not warned.
+  playerNotWarned: '{prefix} &c{player} is not warned.'
+  # Message sent to the player when he tries to use a command with a player that isn't online.
+  playerNotOnline: '{prefix} &c{player} is not online.'
+  # Message sent to the player when he tries to use a command with a player that is already banned.
+  playerAlreadyBanned: '{prefix} &c{player} is already banned.'
+  # Message sent to the player when he tries to use a command with a player that is already muted.
+  playerAlreadyMuted: '{prefix} &c{player} is already muted.'
+  ban:
+    # Message sent to the player when he doesn't fill all the arguments.
+    usage: '{prefix} &cUsage: /ban <player> <reason?>'
+    # Message sent to the player when he bans a player.
+    success: '{prefix} &a{player} has been banned by the reason {reason}.'
+  tempBan:
+    # Message sent to the player when he doesn't fill all the arguments.
+    usage: '{prefix} &cUsage: /tempban <player> <duration|s|m|h|d|w|M/MO|y> <reason?>'
+    # Message sent to the player when he temp bans a player.
+    success: '{prefix} &a{player} has been banned for {duration} by the reason {reason}.'
+  ipBan:
+    # Message sent to the player when he doesn't fill all the arguments.
+    usage: '{prefix} &cUsage: /ipban <player> <reason?>'
+    # Message sent to the player when he bans a player.
+    success: '{prefix} &a{player} has been ip-banned by the reason {reason}.'
+  tempIpBan:
+    # Message sent to the player when he doesn't fill all the arguments.
+    usage: '{prefix} &cUsage: /tempIpBan <player> <duration|s|m|h|d|w|M/MO|y> <reason?>'
+    # Message sent to the player when he temp bans a player.
+    success: '{prefix} &a{player} has been ip-banned for {duration} by the reason {reason}.'
+  unban:
+    # Message sent to the player when he doesn't fill all the arguments.
+    usage: '{prefix} &cUsage: /unban <player> <reason?>'
+    # Message sent to the player when he unbans a player that is not banned.
+    success: '{prefix} &a{player} has been unbanned.'
+  kick:
+    # Message sent to the player when he doesn't fill all the arguments.
+    usage: '{prefix} &cUsage: /kick <player> <reason?>'
+    # Message sent to the player when he kicks a player.
+    success: '{prefix} &a{player} has been kicked by {staff} with the reason {reason}.'
+  warn:
+    # Message sent to the player when he doesn't fill all the arguments.
+    usage: '{prefix} &cUsage: /warn <player> <reason?>'
+    # Message sent to the player when he warns a player.
+    success: '{prefix} &a{player} has been warned by {staff} with the reason {reason}.'
+  unWarn:
+    # Message sent to the player when he doesn't fill all the arguments.
+    usage: '{prefix} &cUsage: /unwarn <player> <reason?>'
+    # Message sent to the player when he unwarns a player that is not warned.
+    success: '{prefix} &a{player} has been unwarned by {staff} with the reason {reason}.'
+  history:
+    # Message sent to the player when he doesn't fill all the arguments.
+    usage: '{prefix} &cUsage: /history <player>'
+    # Message sent to the player when he checks the history of a player.
+    success: '{prefix} &a{player} history:'

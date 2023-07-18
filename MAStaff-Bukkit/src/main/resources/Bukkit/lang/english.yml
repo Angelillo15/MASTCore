@@ -5,32 +5,57 @@
 # Remember to join my Discord server if you need help:
 # https://discord.angelillo15.es/
 #
-Prefix: '&a&lSTAFF &8&l»' # This will appear before all the plugin messages.
-NoPermission: "&7You don't have permission to use this command." # This will appear when a player without permission tries to use a command.
-Reloaded: "{prefix} &7MAStaff has been reloaded succesfully." # This will appear when the plugin is reloaded.
+# Plugin prefix
+# You can use {prefix} in a message to display the prefix.
+Prefix: '&a&lSTAFF &8&l»&r' # This will appear before all the plugin messages.
+# This will appear when a player without permission tries to use a command.
+NoPermission: "&7You don't have permission to use this command."
+# This will appear when the plugin is reloaded.
+Reloaded: "{prefix} &7MAStaff has been reloaded succesfully."
+# These are the general messages.
 General:
   noPlayerFound: '{prefix} &7That player is offline.' # Message sent when the player specified is offline.
   noPlayerOnline: '{prefix} &7There are no players online.' # Message sent when there are no players online.
+# Vanish module messages.
 Vanish:
-  joinMessage: '&a{player} &7has joined the game' # Message sent when a player toggles off vanish.
-  leaveMessage: '&a{player} &7has left the game' # Message sent when a player toggles on vanish.
-  staffJoinMessage: '&a{player} &7has joined the game silently' # Message sent to Staff when another staff joins in vanish.
-  staffLeaveMessage: '&a{player} &7has left the game silently' # Message sent to Staff when another staff leaves in vanish.
-  enable: '{prefix} &7You have enabled vanish.' # Message sent when a player toggles on vanish.
-  disable: '{prefix} &7You have disabled vanish.' # Message sent when a player toggles off vanish.
+  # Message sent when a player toggles off vanish.
+  joinMessage: '&a{player} &7has joined the game'
+  # Message sent when a player toggles on vanish.
+  leaveMessage: '&a{player} &7has left the game'
+  # Message sent to Staff when another staff joins in vanish.
+  staffJoinMessage: '&a{player} &7has joined the game silently'
+  # Message sent to Staff when another staff leaves in vanish.
+  staffLeaveMessage: '&a{player} &7has left the game silently'
+  # Message sent when a player toggles on vanish.
+  enable: '{prefix} &7You have enabled vanish.'
+  # Message sent when a player toggles off vanish.
+  disable: '{prefix} &7You have disabled vanish.'
+# Messages for the StaffChat module.
 StaffChat:
-  format: '{prefix} &a{player} &8&l» &7{message}' # The format for sent messages on Staff Chat.
-  correctUse: '{prefix} &7You must use &a/sc <message>&7.' # Message sent when the command is not used correctly.
+  # The format for sent messages on Staff Chat.
+  format: '{prefix} &a{player} &8&l» &7{message}'
+  # Message sent when the command is not used correctly.
+  correctUse: '{prefix} &7You must use &a/sc <message>&7.'
+# Messages for the StaffMode module.
 StaffMode:
-  toggledOn: '{prefix} &7Staff mode has been &aenabled&7.' # Message sent after enabling Staff Mode.
-  toggledOff: '{prefix} &7Staff mode has been &adisabled&7.' # Message sent after disabling Staff Mode.
+  # Message sent after enabling Staff Mode.
+  toggledOn: '{prefix} &7Staff mode has been &aenabled&7.'
+  # Message sent after disabling Staff Mode.
+  toggledOff: '{prefix} &7Staff mode has been &adisabled&7.'
 Freeze:
-  correctUse: '{prefix} &7You must use &a/freeze <player>&7.' # Message sent when the command is not used correctly.
-  correctUseOther: '{prefix} &7You must use &a/freeze <player>&7.' # Message sent when the command is not used correctly.
-  frozen: '{prefix} &7You have been &afrozen&7.' # Message sent when the player is frozen.
-  unfrozen: '{prefix} &7You have been &aunfrozen&7.' # Message sent when the player is unfrozen.
-  unfrozenBy: '{prefix} &7The player &a{player} &7has been &aunfrozen &7by &a{staff}&7.' # Message sent when the player is unfrozen by a staff.
-  frozenByOther: '{prefix} &7The player &a{player} &7has been &afrozen &7by &a{staff}&7.' # Message sent when the player is frozen by a staff.
+  # Message sent when the command is not used correctly.
+  correctUse: '{prefix} &7You must use &a/freeze <player>&7.'
+  # Message sent when the command is not used correctly.
+  correctUseOther: '{prefix} &7You must use &a/freeze <player>&7.'
+  # Message sent when the player is frozen.
+  frozen: '{prefix} &7You have been &afrozen&7.'
+  # Message sent when the player is unfrozen.
+  unfrozen: '{prefix} &7You have been &aunfrozen&7.'
+  # Message sent when the player is unfrozen by a staff.
+  unfrozenBy: '{prefix} &7The player &a{player} &7has been &aunfrozen &7by &a{staff}&7.'
+  # Message sent when the player is frozen by a staff.
+  frozenByOther: '{prefix} &7The player &a{player} &7has been &afrozen &7by &a{staff}&7.'
+  # Message sent to the player chat when he is frozen.
   playerSpamMessage:
     - ''
     - '&7████&c█&7████'
@@ -42,12 +67,31 @@ Freeze:
     - '&c█&6███&0█&6███&c█'
     - '&c█████████'
     - ''
+  # Message sent to the staff if he wants to punish the player.
+  confirmPunishMessage: |
+    <gray>The <green>player</green> <red>{player}</red> has left the server when he was freezed.
+    <reset>
+    Do you want to execute the commands specified when a player leaves ?
+    <hover:show_text:'Forgive the player'><red><click:run_command:'/freeze /remove {player}'>[x]</click></red></hover> <click:run_command:/freeze /exec {player}><green><hover:show_text:'Punish that player'>[✔]</hover></green> </click>
+  # Message sent when a staff tries to freeze a player with mast.freeze.bypass permission.
+  freezeBypassMessage: '{prefix} &7You can not freeze that player.'
 StaffList:
-  title: '&a&lSTAFF &8&l» &7Online Staff' # Title of the Staff List GUI.
+  # Title of the Staff List GUI.
+  title: '&a&lSTAFF &8&l» &7Online Staff'
   staffLore:
     - ""
     - "&6&l» &7Name: &a%player_name%"
     - "&6&l» &7Rank: &a%vault_prefix%"
     - ""
-  previousPage: '&a&l« &7Previous Page' # Previous Page button name.
-  nextPage: '&a&l» &7Next Page' # Next Page button name.
+  # Previous Page button name.
+  previousPage: '&a&l« &7Previous Page'
+  # Next Page button name.
+  nextPage: '&a&l» &7Next Page'
+# StaffVault module messages.
+StaffVault:
+  # Message sent when an item is saved to the Staff Vault.
+  itemSaved: "{prefix} &7An item has been saved to your Staff Vault."
+  # Message sent when the Staff Vault is full.
+  staffVaultFull: "{prefix} &7Your Staff Vault is full."
+  # Message sent when the Staff tries to open the Staff Vault on StaffMode.
+  staffVaultInStaffMode: "{prefix} &7You can't open your Staff Vault while in Staff Mode."

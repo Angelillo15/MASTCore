@@ -5,9 +5,9 @@ import com.google.gson.JsonParser;
 import es.angelillo15.mast.api.Constants;
 import es.angelillo15.mast.api.TextUtils;
 import es.angelillo15.mast.api.addons.AddonsManager;
-import es.angelillo15.mast.api.cmd.SubCommand;
+import es.angelillo15.mast.api.cmd.LegacySubCommand;
 import es.angelillo15.mast.bukkit.MAStaff;
-import es.angelillo15.mast.bukkit.config.Messages;
+import es.angelillo15.mast.api.config.bukkit.Messages;
 import kong.unirest.HttpResponse;
 import kong.unirest.Unirest;
 import org.bukkit.command.CommandSender;
@@ -16,7 +16,7 @@ import org.bukkit.plugin.Plugin;
 import java.lang.management.ManagementFactory;
 import java.util.ArrayList;
 
-public class DumpARG extends SubCommand {
+public class DumpARG extends LegacySubCommand {
     @Override
     public String getName() {
         return "dump";

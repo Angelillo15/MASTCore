@@ -3,7 +3,7 @@ package es.angelillo15.mast.bukkit.gui;
 import es.angelillo15.mast.api.gui.GuiUtils;
 import es.angelillo15.mast.api.material.XMaterial;
 import es.angelillo15.mast.bukkit.MAStaff;
-import es.angelillo15.mast.bukkit.config.Messages;
+import es.angelillo15.mast.api.config.bukkit.Messages;
 import mc.obliviate.inventory.Gui;
 import mc.obliviate.inventory.Icon;
 import mc.obliviate.inventory.pagination.PaginationManager;

@@ -1,9 +1,11 @@
 package es.angelillo15.mast.bukkit.utils;
 
 import es.angelillo15.mast.api.Permissions;
-import es.angelillo15.mast.api.event.bukkit.staff.StaffChatTalkEvent;
+import es.angelillo15.mast.api.TextUtils;
 import es.angelillo15.mast.bukkit.MAStaff;
-import es.angelillo15.mast.bukkit.config.Messages;
+import es.angelillo15.mast.api.config.bukkit.Messages;
+import es.angelillo15.mast.bukkit.utils.scheduler.Scheduler;
+import io.papermc.lib.PaperLib;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -11,6 +13,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.Random;
 
 public class StaffUtils {
@@ -22,11 +25,11 @@ public class StaffUtils {
             }
         });
         if (players.isEmpty()) {
-            player.sendMessage(Messages.GET_NO_PLAYER_ONLINE_MESSAGE());
+            TextUtils.sendMessage(player, Messages.GET_NO_PLAYER_ONLINE_MESSAGE());
             return;
         }
         final Random random = new Random();
-        player.teleport(players.get(random.nextInt(players.size())).getLocation());
+        PaperLib.teleportAsync(player, players.get(random.nextInt(players.size())).getLocation());
     }
 
     public static boolean passThrough(Player player, Location clickedLocation) {
@@ -36,15 +39,15 @@ public class StaffUtils {
             clickedLocation.add(direction);
             distance++;
         } while (clickedLocation.getBlock().getType().equals(Material.AIR) && distance < 6);
-        player.teleport(clickedLocation);
+        PaperLib.teleportAsync(player, clickedLocation);
         return true;
     }
 
     public static void asyncStaffBroadcastMessage(String message) {
-        Bukkit.getScheduler().runTaskAsynchronously(MAStaff.getPlugin(), () -> {
+        Scheduler.executeAsync(() -> {
             Bukkit.getOnlinePlayers().forEach(p -> {
                 if (p.hasPermission("mast.staff")) {
-                    p.sendMessage(message);
+                    TextUtils.sendMessage(p, message);
                 }
             });
             MAStaff.getPlugin().getPLogger().info(message);
@@ -52,19 +55,21 @@ public class StaffUtils {
     }
 
     public static void asyncBroadcastMessage(String message) {
-        Bukkit.getScheduler().runTaskAsynchronously(MAStaff.getPlugin(), () -> {
+        if (Objects.equals(message, "")) return;
+
+        Scheduler.executeAsync(() -> {
             Bukkit.getOnlinePlayers().forEach(p -> {
-                p.sendMessage(message);
+                TextUtils.sendMessage(p, message);
             });
             MAStaff.getPlugin().getPLogger().info(message);
         });
     }
 
     public static void asyncStaffChatMessage(String message) {
-        Bukkit.getScheduler().runTaskAsynchronously(MAStaff.getPlugin(), () -> {
+        Scheduler.executeAsync(() -> {
             Bukkit.getOnlinePlayers().forEach(p -> {
                 if (p.hasPermission("mast.staffchat")) {
-                    p.sendMessage(message);
+                    TextUtils.sendMessage(p, message);
                 }
             });
             MAStaff.getPlugin().getPLogger().info(message);

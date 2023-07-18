@@ -4,9 +4,9 @@ import es.angelillo15.mast.api.ILogger;
 import es.angelillo15.mast.api.MAStaffInstance;
 import es.angelillo15.mast.api.addons.config.ConfigManager;
 import lombok.Getter;
-import org.bukkit.plugin.Plugin;
 
 import java.io.File;
+import java.io.InputStream;
 
 public class MAStaffAddon<P> {
     @Getter
@@ -20,11 +20,15 @@ public class MAStaffAddon<P> {
     @Getter
     private ConfigManager config;
 
-    public void init(File addonFolder, AddonDescription descriptionFile, P mastaffInstance) {
+    public void init(File addonFolder, AddonDescription descriptionFile, P mastaffInstance, boolean bukkit) {
         this.addonFolder = addonFolder;
         this.descriptionFile = descriptionFile;
         this.mastaffInstance = mastaffInstance;
-        this.logger = new AddonLogger(this, MAStaffInstance.getInstance().getPLogger());
+        this.logger = new AddonLogger(this,
+                bukkit ?
+                        MAStaffInstance.getInstance().getPLogger() :
+                        MAStaffInstance.getBungeeInstance().getPLogger()
+        );
     }
 
     /**
@@ -49,11 +53,16 @@ public class MAStaffAddon<P> {
      */
     public void reload(){
         // needs to be implemented
+        onEnable();
     }
 
     public void loadConfig() {
         if(!this.addonFolder.exists()) this.addonFolder.mkdirs();
         config = new ConfigManager(this.addonFolder.toPath(), "config.yml", "config.yml", this);
         config.registerConfig();
+    }
+
+    public InputStream getResourceAsStream(String name) {
+        return getClass().getClassLoader().getResourceAsStream(name);
     }
 }

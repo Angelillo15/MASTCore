@@ -13,7 +13,7 @@ public class OnItemDrop implements Listener {
     public void onDrop(PlayerDropItemEvent event){
         Player player = event.getPlayer();
 
-        if(!player.hasPermission("mast.staffmode")){
+        if(!StaffPlayersManagers.isStaffPlayer(player)){
             return;
         }
 
