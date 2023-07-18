@@ -11,11 +11,11 @@ private var actions = ArrayList<Action>()
 
 fun start() {
     thread = Thread {
-        MAStaffInstance.getLogger().info("Starting Starting parallel thread...")
+        MAStaffInstance.getLogger().debug("Starting parallel thread...")
 
         while (!shuttingDown) {
             try {
-                Thread.sleep(miles.toLong())
+                Thread.sleep(200)
             } catch (e: InterruptedException) {
                 e.printStackTrace()
             }
@@ -25,9 +25,11 @@ fun start() {
             }
 
             for (action in actions) {
-                if (action.delay > 0) {
-                    action.delay -= miles
+                if (action.delayTask > 0) {
+                    action.delayTask -= miles
                     continue
+                } else {
+                    action.delayTask = action.delay
                 }
 
                 try {
@@ -41,7 +43,7 @@ fun start() {
         }
 
         shuttingDown = false
-        MAStaffInstance.getLogger().info("Parallel thread stopped!")
+        MAStaffInstance.getLogger().debug("Parallel thread stopped!")
     }.start()
 }
 
@@ -49,7 +51,7 @@ fun start() {
  * Stops the thread
  */
 fun stop() {
-    MAStaffInstance.getLogger().info("Stopping parallel thread...")
+    MAStaffInstance.getLogger().debug("Stopping parallel thread...")
     shuttingDown = true
     clearActions()
 }
@@ -121,4 +123,12 @@ fun execute(runnable: Runnable, delay: Int?, repeat: Boolean?) : Int {
  */
 fun execute(runnable: () -> Unit, delay: Int?, repeat: Boolean?) : Int {
     return execute(Runnable { runnable() }, delay, repeat)
+}
+
+/**
+ * Executes a runnable
+ * @param runnable The runnable to execute
+ */
+fun execute(runnable: Runnable) : Int {
+    return execute(runnable, 0, false)
 }
