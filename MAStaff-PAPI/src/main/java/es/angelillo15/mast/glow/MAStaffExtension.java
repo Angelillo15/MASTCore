@@ -1,6 +1,7 @@
 package es.angelillo15.mast.glow;
 
 import es.angelillo15.mast.api.Constants;
+import es.angelillo15.mast.glow.placeholders.StaffModePlaceholder;
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import org.bukkit.entity.Player;
 
@@ -18,6 +19,10 @@ public class MAStaffExtension extends PlaceholderExpansion {
     @Override
     public String getVersion() {
         return Constants.VERSION;
+    }
+
+    public MAStaffExtension() {
+        PlaceholderManager.registerPlaceholder(new StaffModePlaceholder());
     }
 
     @Override
