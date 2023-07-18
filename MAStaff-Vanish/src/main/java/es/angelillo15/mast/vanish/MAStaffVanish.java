@@ -15,6 +15,7 @@ public class MAStaffVanish extends MAStaffAddon<JavaPlugin> {
         getLogger().info("Enabling MAStaff Vanish module...");
         useProtocolLib = ServerUtils.isProtocolLibInstalled();
         registerListeners();
+        VanishThreadKt.init();
     }
 
     void registerListeners() {
