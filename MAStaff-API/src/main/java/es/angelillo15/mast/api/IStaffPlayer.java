@@ -155,6 +155,11 @@ public interface IStaffPlayer {
     boolean isFreezed(Player player);
 
     /**
+     * Execute staff mode commands
+     */
+    void executeStaffModeCommands();
+
+    /**
      * Get the vanish player
      * @return the vanish player or null if is disabled
      */
