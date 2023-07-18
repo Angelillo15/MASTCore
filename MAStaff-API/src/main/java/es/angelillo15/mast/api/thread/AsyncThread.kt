@@ -2,14 +2,15 @@ package es.angelillo15.mast.api.thread
 
 import es.angelillo15.mast.api.MAStaffInstance
 
-private val tps = 5
-private val miles = 1000 / tps
+private const val tps = 5
+private const val miles = 1000 / tps
 private var shuttingDown = false
+private var thread: Unit? = null
 
 private var actions = ArrayList<Action>()
 
 fun start() {
-    Thread {
+    thread = Thread {
         MAStaffInstance.getLogger().info("Starting Starting parallel thread...")
 
         while (!shuttingDown) {
@@ -87,6 +88,22 @@ fun clearActions() {
 }
 
 /**
+ * Get all current actions
+ * @return The actions
+ */
+fun getActions() : ArrayList<Action> {
+    return actions
+}
+
+/**
+ * Get the current thread
+ * @return The thread
+ */
+fun getThread() : Unit? {
+    return thread
+}
+
+/**
  * Executes a runnable
  * @param runnable The runnable to execute
  * @param delay The delay in milliseconds
@@ -96,6 +113,12 @@ fun execute(runnable: Runnable, delay: Int?, repeat: Boolean?) : Int {
     return addAction(Action(runnable, delay ?: 0, repeat ?: false))
 }
 
+/**
+ * Executes a runnable
+ * @param runnable The runnable to execute
+ * @param delay The delay in milliseconds
+ * @param repeat If the action should repeat
+ */
 fun execute(runnable: () -> Unit, delay: Int?, repeat: Boolean?) : Int {
     return execute(Runnable { runnable() }, delay, repeat)
 }
