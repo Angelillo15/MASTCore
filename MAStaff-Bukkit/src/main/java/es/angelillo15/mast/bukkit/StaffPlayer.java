@@ -432,6 +432,28 @@ public class StaffPlayer implements IStaffPlayer {
     }
 
     @Override
+    public void executeStaffModeCommands() {
+        if (staffMode && Config.executeCommandsOnEnter()) {
+            sendEnableCommands();
+            return;
+        }
+
+        if (!staffMode && Config.executeCommandsOnExit()) sendQuitCommands();
+    }
+
+    public void sendEnableCommands() {
+        Config.commandsOnEnter().forEach(command -> {
+            player.performCommand(command.replace("{player}", player.getName()));
+        });
+    }
+
+    public void sendQuitCommands() {
+        Config.commandsOnExit().forEach(command -> {
+            player.performCommand(command.replace("{player}", player.getName()));
+        });
+    }
+
+    @Override
     public boolean isFreezed(Player player) {
         return FreezeManager.isFrozen(player);
     }
