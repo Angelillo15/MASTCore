@@ -43,7 +43,7 @@ public class VanishListener implements Listener {
         VanishDataManager.removeVanishedPlayer(staffPlayer);
     }
 
-    public void hide(Player staff, Player player) {
+    public static void hide(Player staff, Player player) {
         if (MAStaffInstance.version() > 12) {
             player.hidePlayer(MAStaffInstance.getInstance().getPluginInstance(), staff);
         } else {
@@ -51,7 +51,7 @@ public class VanishListener implements Listener {
         }
     }
 
-    public void show(Player staff, Player player) {
+    public static void show(Player staff, Player player) {
         if (MAStaffInstance.version() > 12) {
             player.showPlayer(MAStaffInstance.getInstance().getPluginInstance(), staff);
         } else {
