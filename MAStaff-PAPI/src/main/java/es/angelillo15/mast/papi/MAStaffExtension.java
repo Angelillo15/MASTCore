@@ -1,6 +1,8 @@
 package es.angelillo15.mast.papi;
 
 import es.angelillo15.mast.api.Constants;
+import es.angelillo15.mast.papi.placeholders.ServerCountPlaceholder;
+import es.angelillo15.mast.papi.placeholders.StaffCountPlaceholder;
 import es.angelillo15.mast.papi.placeholders.StaffModePlaceholder;
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import org.bukkit.entity.Player;
@@ -23,6 +25,8 @@ public class MAStaffExtension extends PlaceholderExpansion {
 
     public MAStaffExtension() {
         PlaceholderManager.registerPlaceholder(new StaffModePlaceholder());
+        PlaceholderManager.registerPlaceholder(new StaffCountPlaceholder());
+        PlaceholderManager.registerPlaceholder(new ServerCountPlaceholder());
     }
 
     @Override
