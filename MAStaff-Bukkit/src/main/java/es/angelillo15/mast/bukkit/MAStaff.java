@@ -2,6 +2,7 @@ package es.angelillo15.mast.bukkit;
 
 import es.angelillo15.mast.api.*;
 import es.angelillo15.mast.api.database.DataProvider;
+import es.angelillo15.mast.api.thread.AsyncThreadKt;
 import es.angelillo15.mast.api.utils.BukkitUtils;
 import es.angelillo15.mast.bukkit.addons.AddonsLoader;
 import es.angelillo15.mast.bukkit.cmd.FreezeCMD;
@@ -249,6 +250,8 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance<Plugin> {
         unregisterCommands();
         logger.debug("Unregistering Listeners...");
         unregisterListeners();
+        logger.debug("Stopping tasks...");
+        AsyncThreadKt.stop();
         logger.debug("Reloading Config...");
         loadConfig();
         Messages.setMessages(ConfigLoader.getMessages().getConfig());
@@ -273,6 +276,8 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance<Plugin> {
         AddonsLoader.reload();
         logger.debug("Checking for updates...");
         debugInfo();
+        logger.debug("Starting tasks...");
+        AsyncThreadKt.start();
         new Thread(this::checkUpdates);
         long end = System.currentTimeMillis();
         logger.debug("Reloaded successfully in {time}ms ✔️"
