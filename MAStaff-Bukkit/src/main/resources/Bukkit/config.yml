@@ -30,7 +30,20 @@ Config:
   disableStaffModeOnExit: false
   # Silent chest opening.
   silentChestOpening: true
-  # Staff Vault section
+  # Execute commands on staff mode enter.
+  executeCommandsOnEnter: false
+  # Execute commands on staff mode exit.
+  executeCommandsOnExit: false
+  # Commands to execute on staff mode enter.
+  # They will be executed as the player
+  # when all Staff enable Actions has finished.
+  commandsOnEnter:
+    - "vanish"
+  # Commands to execute on staff mode exit.
+  # They will be executed as the player
+  # when all Staff enable Actions has finished.
+  commandsOnExit:
+    - "vanish"
 # Here you can configure the plugin addons.
 Addons:
   # Enable or disable the Vanish addon.
