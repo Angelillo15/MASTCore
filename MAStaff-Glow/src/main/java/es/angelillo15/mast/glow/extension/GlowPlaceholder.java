@@ -2,8 +2,8 @@ package es.angelillo15.mast.glow.extension;
 
 import es.angelillo15.mast.api.IStaffPlayer;
 import es.angelillo15.mast.api.managers.StaffPlayersManagers;
-import es.angelillo15.mast.glow.Placeholder;
-import es.angelillo15.mast.glow.PlaceholderData;
+import es.angelillo15.mast.papi.Placeholder;
+import es.angelillo15.mast.papi.PlaceholderData;
 import org.bukkit.entity.Player;
 
 @PlaceholderData(key = "glow:color")

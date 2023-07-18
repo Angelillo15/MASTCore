@@ -1,7 +1,7 @@
-package es.angelillo15.mast.glow;
+package es.angelillo15.mast.papi;
 
 import es.angelillo15.mast.api.Constants;
-import es.angelillo15.mast.glow.placeholders.StaffModePlaceholder;
+import es.angelillo15.mast.papi.placeholders.StaffModePlaceholder;
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import org.bukkit.entity.Player;
 

@@ -28,7 +28,7 @@ import es.angelillo15.mast.bukkit.utils.Logger;
 import es.angelillo15.mast.bukkit.utils.Metrics;
 import es.angelillo15.mast.api.utils.PermsUtils;
 import es.angelillo15.mast.bukkit.utils.scheduler.Scheduler;
-import es.angelillo15.mast.glow.MAStaffExtension;
+import es.angelillo15.mast.papi.MAStaffExtension;
 import kong.unirest.HttpResponse;
 import kong.unirest.Unirest;
 import lombok.Getter;

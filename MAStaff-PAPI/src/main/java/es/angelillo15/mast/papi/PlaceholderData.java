@@ -1,4 +1,4 @@
-package es.angelillo15.mast.glow;
+package es.angelillo15.mast.papi;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
