@@ -33,6 +33,7 @@ tasks.shadowJar {
     relocate("io.papermc.lib", "es.angelillo15.mast.libs.paperlib")
     relocate("com.github.benmanes.caffeine", "es.angelillo15.mast.libs.caffeine")
     relocate("com.craftmend.storm", "es.angelillo15.mast.libs.storm")
+    relocate("javassist", "es.angelillo15.mast.libs.javassist")
 }
 
 dependencies {
@@ -44,14 +45,10 @@ dependencies {
     implementation(project(":MAStaff-Vanish"))
     implementation(project(":MAStaff-PAPI"))
     implementation(project(":MAStaff-Glow"))
-    implementation(libs.simpleYaml)
-    implementation(libs.configManager)
     implementation(libs.bundles.invAPI)
-    implementation(libs.gson)
     implementation(libs.liblyBukkit)
     implementation(libs.reflections)
     implementation(libs.paperLib)
-    implementation(libs.caffeine)
 }
 
 tasks.withType<JavaCompile> {
@@ -64,6 +61,7 @@ tasks.build {
 
 tasks.shadowJar {
     archiveFileName.set("MAStaff-" + project.version + ".jar")
+    exclude("org/slf4j/")
 }
 
 allprojects {
