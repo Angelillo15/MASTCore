@@ -119,7 +119,6 @@ public class LibsManager {
                 .artifactId("adventure-text-minimessage")
                 .version(ADVENTURE_VERSION)
                 .isolatedLoad(false)
-                .relocate("net{}kyori", "es{}angelillo15{}mast{}libs{}kyori")
                 .build();
 
         Library adventureAPI = Library.builder()
@@ -127,7 +126,6 @@ public class LibsManager {
                 .artifactId("adventure-api")
                 .version(ADVENTURE_VERSION)
                 .isolatedLoad(false)
-                .relocate("net{}kyori", "es{}angelillo15{}mast{}libs{}kyori")
                 .build();
 
         Library adventureBukkitPlatform = Library.builder()
@@ -135,7 +133,6 @@ public class LibsManager {
                 .artifactId("adventure-platform-bukkit")
                 .version("4.3.0")
                 .isolatedLoad(false)
-                .relocate("net{}kyori", "es{}angelillo15{}mast{}libs{}kyori")
                 .build();
 
         Library adventureBungeePlatform = Library.builder()
@@ -143,7 +140,6 @@ public class LibsManager {
                 .artifactId("adventure-platform-bungeecord")
                 .version("4.3.0")
                 .isolatedLoad(false)
-                .relocate("net{}kyori", "es{}angelillo15{}mast{}libs{}kyori")
                 .build();
 
         Library examination = Library.builder()
@@ -151,7 +147,6 @@ public class LibsManager {
                 .artifactId("examination-api")
                 .version("1.3.0")
                 .isolatedLoad(false)
-                .relocate("net{}kyori", "es{}angelillo15{}mast{}libs{}kyori")
                 .build();
 
         Library adventurePlatformApi = Library.builder()
@@ -159,7 +154,6 @@ public class LibsManager {
                 .artifactId("adventure-platform-api")
                 .version("4.3.0")
                 .isolatedLoad(false)
-                .relocate("net{}kyori", "es{}angelillo15{}mast{}libs{}kyori")
                 .build();
 
         Library adventurePlatformFacet = Library.builder()
@@ -167,7 +161,6 @@ public class LibsManager {
                 .artifactId("adventure-platform-facet")
                 .version("4.3.0")
                 .isolatedLoad(false)
-                .relocate("net{}kyori", "es{}angelillo15{}mast{}libs{}kyori")
                 .build();
 
         Library adventureKey = Library.builder()
@@ -175,7 +168,6 @@ public class LibsManager {
                 .artifactId("adventure-key")
                 .version(ADVENTURE_VERSION)
                 .isolatedLoad(false)
-                .relocate("net{}kyori", "es{}angelillo15{}mast{}libs{}kyori")
                 .build();
 
         Library caffeine = Library.builder()
@@ -195,17 +187,17 @@ public class LibsManager {
                 .build();
 
         Library snakeYAML = Library.builder()
-                .groupId("org{}yaml{}snakeyaml")
+                .groupId("org{}yaml")
                 .artifactId("snakeyaml")
-                .version("1.33")
+                .version("2.0")
                 .isolatedLoad(false)
                 .relocate("org{}yaml{}snakeyaml", "es{}angelillo15{}mast{}libs{}snakeyaml")
                 .build();
 
         Library simpleYAML = Library.builder()
                 .groupId("com{}github{}Carleslc{}Simple-YAML")
-                .artifactId("Simple-YAML")
-                .version("1.8.3")
+                .artifactId("Simple-Yaml")
+                .version("1.8.4")
                 .isolatedLoad(false)
                 .relocate("org{}yaml{}snakeyaml", "es{}angelillo15{}mast{}libs{}snakeyaml")
                 .relocate("org{}simpleyaml", "es{}angelillo15{}mast{}libs{}simpleyaml")
@@ -330,7 +322,6 @@ public class LibsManager {
                 .artifactId(artifact)
                 .version(ADVENTURE_VERSION)
                 .isolatedLoad(false)
-                .relocate("net{}kyori", "es{}angelillo15{}mast{}libs{}kyori")
                 .build();
         return lib;
     }
