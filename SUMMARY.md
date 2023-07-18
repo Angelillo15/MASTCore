@@ -14,6 +14,7 @@
 * [Commands](bukkit/commands.md)
 * [Config](bukkit/config.md)
 * [Glow](bukkit/glow.md)
+* [Staff Vault](bukkit/staff-vault.md)
 
 ## 🪢 BungeeCord
 
