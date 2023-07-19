@@ -1,11 +1,9 @@
 package es.angelillo15.mast.api.punishments.cmd.ban
 
-import es.angelillo15.mast.api.MAStaffInstance
 import es.angelillo15.mast.api.cmd.CommandData
 import es.angelillo15.mast.api.config.punishments.Messages
 import es.angelillo15.mast.api.punishments.IPunishPlayer
-import es.angelillo15.mast.api.punishments.PunishTargetReasonCommand
-import es.angelillo15.mast.api.punishments.cmd.PunishCommand
+import es.angelillo15.mast.api.punishments.cmd.PunishTargetReasonCommand
 
 @CommandData(
         name = "unban",

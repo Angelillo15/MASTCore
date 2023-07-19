@@ -1,6 +1,6 @@
-package es.angelillo15.mast.api.punishments
+package es.angelillo15.mast.api.punishments.cmd
 
-import es.angelillo15.mast.api.punishments.cmd.PunishTargetCommand
+import es.angelillo15.mast.api.punishments.IPunishPlayer
 
 abstract class PunishTargetReasonCommand() : PunishTargetCommand() {
     private var startCount = 1
