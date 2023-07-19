@@ -1,7 +1,11 @@
 package es.angelillo15.mast.bukkit;
 
+import com.google.inject.Guice;
+import com.google.inject.Injector;
 import es.angelillo15.mast.api.*;
 import es.angelillo15.mast.api.database.DataProvider;
+import es.angelillo15.mast.api.inject.StaticMembersInjector;
+import es.angelillo15.mast.api.managers.StaffPlayersManagers;
 import es.angelillo15.mast.api.thread.AsyncThreadKt;
 import es.angelillo15.mast.api.utils.BukkitUtils;
 import es.angelillo15.mast.bukkit.addons.AddonsLoader;
@@ -12,6 +16,7 @@ import es.angelillo15.mast.bukkit.cmd.staff.StaffCMD;
 import es.angelillo15.mast.api.config.bukkit.Config;
 import es.angelillo15.mast.api.config.bukkit.ConfigLoader;
 import es.angelillo15.mast.api.config.bukkit.Messages;
+import es.angelillo15.mast.bukkit.inject.InstanceInjector;
 import es.angelillo15.mast.bukkit.legacy.BukkitLegacyLoader;
 import es.angelillo15.mast.bukkit.listener.FreezeListener;
 import es.angelillo15.mast.bukkit.listener.clickListeners.OnItemClick;
@@ -65,6 +70,8 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance<Plugin> {
     private static int currentVersion;
     @Getter
     private static int spiVersion;
+    @Getter
+    private Injector injector;
 
     @Override
     public void onEnable() {
@@ -111,7 +118,7 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance<Plugin> {
 
     @Override
     public void loadConfig() {
-        new ConfigLoader().load();
+        new ConfigLoader(this).load();
     }
 
     @Override
@@ -206,7 +213,7 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance<Plugin> {
 
         if (version < 9) {
             logger.info("Loading legacy modules...");
-            new BukkitLegacyLoader().load();
+            new BukkitLegacyLoader().load(this);
         }
         if (getServer().getPluginManager().getPlugin("Vault") == null) {
             return;
@@ -329,6 +336,13 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance<Plugin> {
 
         logger.warn(TextUtils.colorize("You are using a development version!"));
 
+    }
+
+    public void inject() {
+        getPLogger().debug("Injecting...");
+        injector = Guice.createInjector(new InstanceInjector());
+
+        StaticMembersInjector.injectStatics(injector, StaffPlayersManagers.class);
     }
 
     public void registerPlaceholderAPI() {
