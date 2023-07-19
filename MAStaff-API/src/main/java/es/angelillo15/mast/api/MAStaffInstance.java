@@ -1,8 +1,10 @@
 package es.angelillo15.mast.api;
 
+import com.velocitypowered.api.plugin.PluginManager;
 import es.angelillo15.mast.api.cmd.Command;
 import es.angelillo15.mast.api.exceptions.PluginNotLoadedException;
 import es.angelillo15.mast.api.utils.ServerUtils;
+import es.angelillo15.mast.api.utils.VelocityUtils;
 import es.angelillo15.mast.api.utils.VersionUtils;
 import net.md_5.bungee.api.ProxyServer;
 import org.bukkit.Bukkit;
@@ -22,7 +24,7 @@ public interface MAStaffInstance<P> {
         }
     }
 
-    public static MAStaffInstance<Plugin> getInstance(){
+    static MAStaffInstance<Plugin> getInstance(){
         MAStaffInstance<Plugin> instance = (MAStaffInstance<Plugin>) Bukkit.getPluginManager().getPlugin("MAStaff");
         if(instance == null){
             throw new PluginNotLoadedException("MAStaff is not loaded");
@@ -30,7 +32,7 @@ public interface MAStaffInstance<P> {
         return instance;
     }
 
-    public static MAStaffInstance<net.md_5.bungee.api.plugin.Plugin> getBungeeInstance() {
+    static MAStaffInstance<net.md_5.bungee.api.plugin.Plugin> getBungeeInstance() {
         MAStaffInstance<net.md_5.bungee.api.plugin.Plugin> instance = (MAStaffInstance<net.md_5.bungee.api.plugin.Plugin>) ProxyServer
                 .getInstance().getPluginManager()
                 .getPlugin("MAStaff");
@@ -40,6 +42,11 @@ public interface MAStaffInstance<P> {
         return instance;
     }
 
+    static MAStaffInstance<com.velocitypowered.api.proxy.ProxyServer> getVelocityInstance() {
+        return VelocityUtils.getInstance();
+    }
+
+
     public static boolean placeholderCheck() {
         return Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null;
     }
@@ -48,9 +55,13 @@ public interface MAStaffInstance<P> {
     public static ILogger getLogger() {
         if (ServerUtils.getServerType() == ServerUtils.ServerType.BUKKIT) {
             return getInstance().getPLogger();
-        } else {
+        }
+
+        if (ServerUtils.getServerType() == ServerUtils.ServerType.BUNGEE) {
             return getBungeeInstance().getPLogger();
         }
+
+        return getVelocityInstance().getPLogger();
     }
     public default void registerCommand(Command command){};
     public IServerUtils getServerUtils();
