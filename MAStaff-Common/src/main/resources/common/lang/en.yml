@@ -1,0 +1,25 @@
+#
+#  ███▄ ▄███▓ ▄▄▄        ██████ ▄▄▄█████▓ ▄▄▄        █████▒ █████▒
+#  ▓██▒▀█▀ ██▒▒████▄    ▒██    ▒ ▓  ██▒ ▓▒▒████▄    ▓██   ▒▓██   ▒
+#  ▓██    ▓██░▒██  ▀█▄  ░ ▓██▄   ▒ ▓██░ ▒░▒██  ▀█▄  ▒████ ░▒████ ░
+#  ▒██    ▒██ ░██▄▄▄▄██   ▒   ██▒░ ▓██▓ ░ ░██▄▄▄▄██ ░▓█▒  ░░▓█▒  ░
+#  ▒██▒   ░██▒ ▓█   ▓██▒▒██████▒▒  ▒██▒ ░  ▓█   ▓██▒░▒█░   ░▒█░
+#  ░ ▒░   ░  ░ ▒▒   ▓▒█░▒ ▒▓▒ ▒ ░  ▒ ░░    ▒▒   ▓▒█░ ▒ ░    ▒ ░
+#  ░  ░      ░  ▒   ▒▒ ░░ ░▒  ░ ░    ░      ▒   ▒▒ ░ ░      ░
+#  ░      ░     ░   ▒   ░  ░  ░    ░        ░   ▒    ░ ░    ░ ░
+#  ░         ░  ░      ░                 ░  ░
+#
+# This is the English language file for MAStaff Commons (Bukkit, BungeeCord & Velocity),
+# where you can modify and customize the plugin messages.
+#
+# Remember to join my Discord server if you need help:
+# https://discord.nookure.com/
+#
+# Prefix for the plugin.
+Prefix: '&a&lSTAFF &8&l»&r' # This will appear before all the plugin messages.
+# Messages for the StaffChat module.
+StaffChat:
+  # The format for sent messages on Staff Chat.
+  format: '{prefix} &a{player} &8&l» &7{message}'
+  # Message sent when the command is not used correctly.
+  correctUse: '{prefix} &7You must use &a/sc <message>&7.'
