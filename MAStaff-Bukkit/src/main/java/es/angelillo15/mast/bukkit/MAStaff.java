@@ -16,7 +16,7 @@ import es.angelillo15.mast.bukkit.cmd.staff.StaffCMD;
 import es.angelillo15.mast.api.config.bukkit.Config;
 import es.angelillo15.mast.api.config.bukkit.ConfigLoader;
 import es.angelillo15.mast.api.config.bukkit.Messages;
-import es.angelillo15.mast.bukkit.inject.InstanceInjector;
+import es.angelillo15.mast.bukkit.inject.BukkitInjector;
 import es.angelillo15.mast.bukkit.legacy.BukkitLegacyLoader;
 import es.angelillo15.mast.bukkit.listener.FreezeListener;
 import es.angelillo15.mast.bukkit.listener.clickListeners.OnItemClick;
@@ -70,7 +70,6 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance<Plugin> {
     private static int currentVersion;
     @Getter
     private static int spiVersion;
-    @Getter
     private Injector injector;
 
     @Override
@@ -132,21 +131,21 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance<Plugin> {
     @Override
     public void registerListeners() {
         PluginManager pm = Bukkit.getPluginManager();
-        pm.registerEvents(new OnJoin(), this);
-        pm.registerEvents(new OnItemClick(), this);
-        pm.registerEvents(new OnItemDrop(), this);
-        pm.registerEvents(new OnInventoryClick(), this);
-        pm.registerEvents(new OnItemClickInteract(), this);
-        pm.registerEvents(new OnJoinLeave(), this);
-        pm.registerEvents(new OnItemDrop(), this);
-        if (Config.Freeze.enabled()) pm.registerEvents(new FreezeListener(), this);
-        pm.registerEvents(new OnItemGet(), this);
-        pm.registerEvents(new OnPlayerInteractAtEntityEvent(), this);
-        pm.registerEvents(new OnAttack(), this);
-        if (Config.silentOpenChest()) pm.registerEvents(new OnOpenChest(), this);
-        if (version >= 19) pm.registerEvents(new OnBlockReceiveGameEvent(), this);
-        if (version >= 9) pm.registerEvents(new OnSwapHand(), this);
-        if (version >= 9) pm.registerEvents(new OnAchievement(), this);
+        pm.registerEvents(injector.getInstance(OnJoin.class), this);
+        pm.registerEvents(injector.getInstance(OnItemClick.class), this);
+        pm.registerEvents(injector.getInstance(OnItemDrop.class), this);
+        pm.registerEvents(injector.getInstance(OnInventoryClick.class), this);
+        pm.registerEvents(injector.getInstance(OnItemClickInteract.class), this);
+        pm.registerEvents(injector.getInstance(OnJoinLeave.class), this);
+        pm.registerEvents(injector.getInstance(OnItemDrop.class), this);
+        if (Config.Freeze.enabled()) pm.registerEvents(injector.getInstance(FreezeListener.class), this);
+        pm.registerEvents(injector.getInstance(OnItemGet.class), this);
+        pm.registerEvents(injector.getInstance(OnPlayerInteractAtEntityEvent.class), this);
+        pm.registerEvents(injector.getInstance(OnAttack.class), this);
+        if (Config.silentOpenChest()) pm.registerEvents(injector.getInstance(OnOpenChest.class), this);
+        if (version >= 19) pm.registerEvents(injector.getInstance(OnBlockReceiveGameEvent.class), this);
+        if (version >= 9) pm.registerEvents(injector.getInstance(OnSwapHand.class), this);
+        if (version >= 9) pm.registerEvents(injector.getInstance(OnAchievement.class), this);
         FreezeUtils.setupMessageSender();
         this.getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
     }
@@ -340,7 +339,7 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance<Plugin> {
 
     public void inject() {
         getPLogger().debug("Injecting...");
-        injector = Guice.createInjector(new InstanceInjector());
+        injector = Guice.createInjector(new BukkitInjector());
 
         StaticMembersInjector.injectStatics(injector, StaffPlayersManagers.class);
     }
@@ -348,7 +347,7 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance<Plugin> {
     public void registerPlaceholderAPI() {
         if (!MAStaffInstance.placeholderCheck()) return;
 
-        new MAStaffExtension().register();
+        injector.getInstance(MAStaffExtension.class).register();
     }
 
     @Override
@@ -358,7 +357,7 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance<Plugin> {
 
     @Override
     public IStaffPlayer createStaffPlayer(Player player) {
-        return new StaffPlayer(player);
+        return injector.getInstance(StaffPlayer.class).setPlayer(player);
     }
 
     @Override
@@ -374,5 +373,10 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance<Plugin> {
     @Override
     public InputStream getPluginResource(String s) {
         return getResource(s);
+    }
+
+    @Override
+    public Injector getInjector() {
+        return injector;
     }
 }

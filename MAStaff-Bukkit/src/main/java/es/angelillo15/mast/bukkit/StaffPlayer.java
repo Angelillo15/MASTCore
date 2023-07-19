@@ -43,23 +43,15 @@ public class StaffPlayer implements IStaffPlayer {
     @Setter
     private boolean quit;
     @Getter
-    private final File playerInventoryFile;
+    private File playerInventoryFile;
     @Getter
     private FileConfiguration playerInventoryConfig;
     private boolean staffMode;
-    private final Player player;
+    private Player player;
     private IGlowPlayer glowPlayer;
     private boolean vanished;
     private final Map<String, StaffItem> items = new HashMap<>();
     private IVanishPlayer vanishPlayer;
-
-    public StaffPlayer(Player player) {
-        this.player = player;
-        if (Config.Addons.vanish()) this.vanishPlayer = new VanishPlayer(this);
-        if (Config.Addons.glow()) this.glowPlayer = new GlowPlayer(this);
-        playerInventoryFile = new File(MAStaff.getPlugin().getDataFolder().getAbsoluteFile() + "/data/staffMode/" + player.getUniqueId() + ".yml");
-        playerInventoryConfig = YamlConfiguration.loadConfiguration(playerInventoryFile);
-    }
 
     @SneakyThrows
     @Override
@@ -466,5 +458,16 @@ public class StaffPlayer implements IStaffPlayer {
     @Override
     public IGlowPlayer getGlowPlayer() {
         return glowPlayer;
+    }
+
+    public StaffPlayer setPlayer(Player player) {
+        this.player = player;
+        if (Config.Addons.vanish()) this.vanishPlayer = new VanishPlayer(this);
+        if (Config.Addons.glow()) this.glowPlayer = new GlowPlayer(this);
+
+        playerInventoryFile = new File(MAStaff.getPlugin().getDataFolder().getAbsoluteFile() + "/data/staffMode/" + player.getUniqueId() + ".yml");
+        playerInventoryConfig = YamlConfiguration.loadConfiguration(playerInventoryFile);
+
+        return this;
     }
 }

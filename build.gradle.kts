@@ -94,6 +94,7 @@ allprojects {
         testAnnotationProcessor("org.projectlombok:lombok:1.18.24")
         testImplementation("org.junit.jupiter:junit-jupiter-api:5.7.0")
         testImplementation(rootProject.libs.kotlin)
+        compileOnly(rootProject.libs.guice)
     }
 
     kotlin {

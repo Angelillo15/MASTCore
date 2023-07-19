@@ -1,6 +1,8 @@
 package es.angelillo15.mast.papi;
 
+import com.google.inject.Inject;
 import es.angelillo15.mast.api.Constants;
+import es.angelillo15.mast.api.MAStaffInstance;
 import es.angelillo15.mast.papi.placeholders.ServerCountPlaceholder;
 import es.angelillo15.mast.papi.placeholders.StaffCountPlaceholder;
 import es.angelillo15.mast.papi.placeholders.StaffModePlaceholder;
@@ -8,6 +10,8 @@ import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import org.bukkit.entity.Player;
 
 public class MAStaffExtension extends PlaceholderExpansion {
+    @Inject
+    private MAStaffInstance instance;
     @Override
     public String getIdentifier() {
         return "mastaff";
@@ -23,10 +27,13 @@ public class MAStaffExtension extends PlaceholderExpansion {
         return Constants.VERSION;
     }
 
-    public MAStaffExtension() {
-        PlaceholderManager.registerPlaceholder(new StaffModePlaceholder());
-        PlaceholderManager.registerPlaceholder(new StaffCountPlaceholder());
-        PlaceholderManager.registerPlaceholder(new ServerCountPlaceholder());
+    @Override
+    public boolean register() {
+        PlaceholderManager.registerPlaceholder(instance.getInjector().getInstance(StaffModePlaceholder.class));
+        PlaceholderManager.registerPlaceholder(instance.getInjector().getInstance(StaffCountPlaceholder.class));
+        PlaceholderManager.registerPlaceholder(instance.getInjector().getInstance(ServerCountPlaceholder.class));
+
+        return super.register();
     }
 
     @Override

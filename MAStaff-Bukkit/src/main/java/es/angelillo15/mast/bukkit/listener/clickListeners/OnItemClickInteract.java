@@ -1,9 +1,11 @@
 package es.angelillo15.mast.bukkit.listener.clickListeners;
 
+import com.google.inject.Inject;
 import es.angelillo15.mast.api.IStaffPlayer;
 import es.angelillo15.mast.api.Permissions;
 import es.angelillo15.mast.api.items.IPlayerInteractItem;
 import es.angelillo15.mast.api.items.StaffItem;
+import es.angelillo15.mast.api.managers.StaffManager;
 import es.angelillo15.mast.api.managers.StaffPlayersManagers;
 import es.angelillo15.mast.bukkit.MAStaff;
 import org.bukkit.entity.Player;
@@ -13,13 +15,15 @@ import org.bukkit.event.player.PlayerInteractEntityEvent;
 
 @SuppressWarnings({"deprecation", "ConstantValue"})
 public class OnItemClickInteract implements Listener {
+    @Inject
+    private StaffManager staffManager;
     static boolean clicked = false;
 
     @EventHandler
     public void onEntityInteract(PlayerInteractEntityEvent event) {
         Player player = event.getPlayer();
 
-        if (!StaffPlayersManagers.getStaffPlayers().containsKey(player.getName())) return;
+        if (!staffManager.isStaffPlayer(player)) return;
         if (!player.hasPermission(Permissions.STAFF.getPermission())) return;
 
         IStaffPlayer staffPlayer = StaffPlayersManagers.getStaffPlayer(player);
