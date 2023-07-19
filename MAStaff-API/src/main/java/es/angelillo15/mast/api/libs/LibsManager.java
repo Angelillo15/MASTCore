@@ -213,6 +213,13 @@ public class LibsManager {
                 .relocate("es{}angelillo15{}configmanager", "es{}angelillo15{}mast{}libs{}config{}manager")
                 .build();
 
+        Library sqlite = Library.builder()
+                .groupId("org{}xerial")
+                .artifactId("sqlite-jdbc")
+                .version("3.42.0.0")
+                .isolatedLoad(false)
+                .build();
+
         libs.add(getKotlinLib("kotlin-stdlib-jdk8"));
         libs.add(getKotlinLib("kotlin-stdlib-jdk7"));
         libs.add(getKotlinLib("kotlin-stdlib"));
@@ -260,6 +267,10 @@ public class LibsManager {
         libs.add(simpleYAML);
         libs.add(configManger);
         libs.add(getLib("org{}slf4j", "slf4j-api", "2.0.6"));
+
+        if (ServerUtils.getServerType() == ServerUtils.ServerType.VELOCITY) {
+            libs.add(sqlite);
+        }
     }
 
     /**
