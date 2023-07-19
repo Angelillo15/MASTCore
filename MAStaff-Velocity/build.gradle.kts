@@ -1,4 +1,5 @@
 dependencies {
+    implementation(libs.libbyVelocity)
     compileOnly(project(":MAStaff-API"))
     compileOnly(libs.velocity)
     annotationProcessor(libs.velocity)
@@ -8,11 +9,11 @@ dependencies {
     compileOnly(libs.bungeecordChat)
     compileOnly(libs.jedis)
     compileOnly(libs.unirest)
-    implementation(libs.libbyVelocity)
     compileOnly(libs.storm)
     compileOnly(libs.miniMessage)
     compileOnly(libs.adventureBungee)
     compileOnly(libs.adventureApi)
+    compileOnly(libs.guice)
 }
 
 tasks.processResources {

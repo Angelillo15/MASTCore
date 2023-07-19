@@ -26,6 +26,7 @@ adventurePlatform = "4.3.0"
 protocolLib = "5.0.0"
 kotlin = "1.9.0"
 velocity = "3.1.1"
+guice = "7.0.0"
 
 [libraries]
 snakeYaml = { group = "org.yaml", name = "snakeyaml", version.ref = "snakeYaml" }
@@ -62,6 +63,7 @@ adventureBungee = { group = "net.kyori", name = "adventure-platform-bungeecord",
 protocolLib = { group = "com.comphenix.protocol", name = "ProtocolLib", version.ref = "protocolLib" }
 kotlin = { group = "org.jetbrains.kotlin", name = "kotlin-stdlib-jdk8", version.ref = "kotlin" }
 velocity = { group = "com.velocitypowered", name = "velocity-api", version.ref = "velocity" }
+guice = { group = "com.google.inject", name = "guice", version.ref = "guice" }
 
 [bundles]
 invAPI = ["invCore", "invAdvancedSlots", "invPagination", "configurableGui"]
