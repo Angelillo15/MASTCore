@@ -26,6 +26,7 @@ dependencies {
     compileOnly(libs.miniMessage)
     compileOnly(libs.adventureBukkit)
     compileOnly(libs.adventureApi)
+    compileOnly(libs.guice)
 }
 
 tasks.processResources {

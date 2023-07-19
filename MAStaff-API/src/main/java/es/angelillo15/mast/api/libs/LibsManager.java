@@ -220,6 +220,34 @@ public class LibsManager {
                 .isolatedLoad(false)
                 .build();
 
+        Library googleGuice = Library.builder()
+                .groupId("com{}google{}inject")
+                .artifactId("guice")
+                .version("7.0.0")
+                .isolatedLoad(false)
+                .build();
+
+        Library jakartaInjectTck = Library.builder()
+                .groupId("jakarta{}inject")
+                .artifactId("jakarta.inject-tck")
+                .version("2.0.1")
+                .isolatedLoad(false)
+                .build();
+
+        Library jakartaInjectApi = Library.builder()
+                .groupId("jakarta{}inject")
+                .artifactId("jakarta.inject-api")
+                .version("2.0.1")
+                .isolatedLoad(false)
+                .build();
+
+        Library aopalliance = Library.builder()
+                .groupId("aopalliance")
+                .artifactId("aopalliance")
+                .version("1.0")
+                .isolatedLoad(false)
+                .build();
+
         libs.add(getKotlinLib("kotlin-stdlib-jdk8"));
         libs.add(getKotlinLib("kotlin-stdlib-jdk7"));
         libs.add(getKotlinLib("kotlin-stdlib"));
@@ -270,6 +298,11 @@ public class LibsManager {
 
         if (ServerUtils.getServerType() == ServerUtils.ServerType.VELOCITY) {
             libs.add(sqlite);
+        } else {
+            libs.add(aopalliance);
+            libs.add(googleGuice);
+            libs.add(jakartaInjectApi);
+            libs.add(jakartaInjectTck);
         }
     }
 
