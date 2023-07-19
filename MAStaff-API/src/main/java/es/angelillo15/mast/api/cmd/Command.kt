@@ -1,7 +1,7 @@
-package es.angelillo15.mast.api.cmd;
+package es.angelillo15.mast.api.cmd
 
-import es.angelillo15.mast.api.cmd.sender.CommandSender;
+import es.angelillo15.mast.api.cmd.sender.CommandSender
 
-public abstract class Command {
-    public abstract void onCommand(CommandSender sender, String label, String[] args);
+abstract class Command {
+    abstract fun onCommand(sender: CommandSender?, label: String?, args: Array<String?>?)
 }
