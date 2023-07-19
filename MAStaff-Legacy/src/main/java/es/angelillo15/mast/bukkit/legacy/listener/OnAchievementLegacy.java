@@ -12,10 +12,6 @@ import org.bukkit.plugin.Plugin;
 public class OnAchievementLegacy implements Listener {
     @EventHandler
     public void onAchievement(PlayerAchievementAwardedEvent event) {
-        MAStaffInstance<Plugin> instance = MAStaffInstance.getInstance();
-
-        instance.getPLogger().info("Achievement: " + event.getAchievement().name());
-
         Player player = event.getPlayer();
 
         if (!StaffPlayersManagers.isStaffPlayer(player)) return;

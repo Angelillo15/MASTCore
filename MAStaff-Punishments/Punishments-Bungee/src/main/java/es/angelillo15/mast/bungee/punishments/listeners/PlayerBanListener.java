@@ -9,6 +9,8 @@ import es.angelillo15.mast.api.config.punishments.Messages;
 import es.angelillo15.mast.api.models.BansTable;
 import es.angelillo15.mast.api.models.IpBansTable;
 import es.angelillo15.mast.api.punishments.events.EventManager;
+import es.angelillo15.mast.bungee.punishments.MAStaffPunishments;
+import es.angelillo15.mast.bungee.punishments.MAStaffPunishmentsLoader;
 import lombok.SneakyThrows;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.TextComponent;
@@ -24,17 +26,17 @@ import java.sql.SQLException;
 public class PlayerBanListener implements Listener {
     @EventHandler
     public void onPreLogin(PreLoginEvent event) {
-        event.registerIntent((Plugin) MAStaffInstance.getBungeeInstance());
+        event.registerIntent(MAStaffPunishmentsLoader.getInstance().getMaStaffInstance().getPluginInstance());
         PendingConnection connection = event.getConnection();
 
         if (banCheck(connection)) {
-            event.completeIntent((Plugin) MAStaffInstance.getBungeeInstance());
+            event.completeIntent(MAStaffPunishmentsLoader.getInstance().getMaStaffInstance().getPluginInstance());
             return;
         }
 
         ipBanCheck(connection);
 
-        event.completeIntent((Plugin) MAStaffInstance.getBungeeInstance());
+        event.completeIntent(MAStaffPunishmentsLoader.getInstance().getMaStaffInstance().getPluginInstance());
     }
 
     @EventHandler

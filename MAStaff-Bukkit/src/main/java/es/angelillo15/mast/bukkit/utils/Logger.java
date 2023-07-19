@@ -4,7 +4,11 @@ import es.angelillo15.mast.api.ILogger;
 import es.angelillo15.mast.api.TextUtils;
 import es.angelillo15.mast.bukkit.MAStaff;
 
-public class Logger implements ILogger {
+public class Logger extends ILogger {
+    public Logger() {
+        setInstance(this);
+    }
+
     @Override
     public void info(String message) {
         TextUtils.getAudienceProvider().console().sendMessage(TextUtils.toComponent("[MAStaff] "+message));

@@ -1,31 +1,41 @@
 package es.angelillo15.mast.api;
 
-public interface ILogger {
-    void info(String message);
+public abstract class ILogger {
+    private static ILogger instance;
 
-    void warn(String message);
+    public static ILogger getInstance() {
+        return instance;
+    }
 
-    void error(String message);
+    public static void setInstance(ILogger instance) {
+        ILogger.instance = instance;
+    }
 
-    void debug(String message);
+    abstract public void info(String message);
 
-    default void info(String message, Object... args) {
+    abstract public void warn(String message);
+
+    abstract public void error(String message);
+
+    abstract public void debug(String message);
+
+    void info(String message, Object... args) {
         info(format(message, args));
     }
 
-    default void warn(String message, Object... args) {
+    void warn(String message, Object... args) {
         warn(format(message, args));
     }
 
-    default void error(String message, Object... args) {
+    void error(String message, Object... args) {
         error(format(message, args));
     }
 
-    default void debug(String message, Object... args) {
+    void debug(String message, Object... args) {
         debug(format(message, args));
     }
 
-    default String format(String message, Object... args) {
+    String format(String message, Object... args) {
         String msg = message;
         for (Object arg : args) {
             msg = msg.replaceFirst("\\{\\}", arg.toString());

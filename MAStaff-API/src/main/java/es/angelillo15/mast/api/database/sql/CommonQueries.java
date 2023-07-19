@@ -72,7 +72,7 @@ public class CommonQueries {
             result.next();
             return result.getInt("state");
         } catch (SQLException e) {
-            MAStaffInstance.getInstance().getPLogger().debug(e.getMessage());
+            MAStaffInstance.getLogger().debug(e.getMessage());
         }
         return 0;
     }

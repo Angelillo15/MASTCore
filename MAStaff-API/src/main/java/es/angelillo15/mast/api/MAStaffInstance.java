@@ -23,46 +23,15 @@ public interface MAStaffInstance<P> {
             return VersionUtils.getBukkitVersion();
         }
     }
-
-    static MAStaffInstance<Plugin> getInstance(){
-        MAStaffInstance<Plugin> instance = (MAStaffInstance<Plugin>) Bukkit.getPluginManager().getPlugin("MAStaff");
-        if(instance == null){
-            throw new PluginNotLoadedException("MAStaff is not loaded");
-        }
-        return instance;
-    }
-
-    static MAStaffInstance<net.md_5.bungee.api.plugin.Plugin> getBungeeInstance() {
-        MAStaffInstance<net.md_5.bungee.api.plugin.Plugin> instance = (MAStaffInstance<net.md_5.bungee.api.plugin.Plugin>) ProxyServer
-                .getInstance().getPluginManager()
-                .getPlugin("MAStaff");
-        if(instance == null){
-            throw new PluginNotLoadedException("MAStaff is not loaded");
-        }
-        return instance;
-    }
-
-    static MAStaffInstance<com.velocitypowered.api.proxy.ProxyServer> getVelocityInstance() {
-        return VelocityUtils.getInstance();
-    }
-
-
     public static boolean placeholderCheck() {
         return Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null;
     }
 
     public ILogger getPLogger();
-    public static ILogger getLogger() {
-        if (ServerUtils.getServerType() == ServerUtils.ServerType.BUKKIT) {
-            return getInstance().getPLogger();
-        }
-
-        if (ServerUtils.getServerType() == ServerUtils.ServerType.BUNGEE) {
-            return getBungeeInstance().getPLogger();
-        }
-
-        return getVelocityInstance().getPLogger();
+    static ILogger getLogger() {
+        return ILogger.getInstance();
     }
+
     public default void registerCommand(Command command){};
     public IServerUtils getServerUtils();
     public boolean isDebug();

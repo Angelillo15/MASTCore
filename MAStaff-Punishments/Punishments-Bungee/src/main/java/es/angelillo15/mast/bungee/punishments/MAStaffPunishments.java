@@ -37,7 +37,7 @@ public class MAStaffPunishments extends MAStaffAddon<Plugin> {
     }
 
     public void registerEvent(Listener listener) {
-        ProxyServer.getInstance().getPluginManager().registerListener((Plugin) MAStaffInstance.getBungeeInstance(), listener);
+        ProxyServer.getInstance().getPluginManager().registerListener((Plugin) getMaStaffInstance(), listener);
     }
 
     public void loadAPI() {
@@ -45,16 +45,16 @@ public class MAStaffPunishments extends MAStaffAddon<Plugin> {
     }
 
     public void loadCommands() {
-        MAStaffInstance.getBungeeInstance().registerCommand(new BanCMD());
-        MAStaffInstance.getBungeeInstance().registerCommand(new IsBannedCMD());
-        MAStaffInstance.getBungeeInstance().registerCommand(new ClearCacheCMD());
-        MAStaffInstance.getBungeeInstance().registerCommand(new TempBanCMD());
-        MAStaffInstance.getBungeeInstance().registerCommand(new UnBanCMD());
-        MAStaffInstance.getBungeeInstance().registerCommand(new IPBanCMD());
-        MAStaffInstance.getBungeeInstance().registerCommand(new TempIPBanCMD());
-        MAStaffInstance.getBungeeInstance().registerCommand(new KickCMD());
-        MAStaffInstance.getBungeeInstance().registerCommand(new WarnCMD());
-        MAStaffInstance.getBungeeInstance().registerCommand(new UnWarnCMD());
+        getMaStaffInstance().registerCommand(new BanCMD());
+        getMaStaffInstance().registerCommand(new IsBannedCMD());
+        getMaStaffInstance().registerCommand(new ClearCacheCMD());
+        getMaStaffInstance().registerCommand(new TempBanCMD());
+        getMaStaffInstance().registerCommand(new UnBanCMD());
+        getMaStaffInstance().registerCommand(new IPBanCMD());
+        getMaStaffInstance().registerCommand(new TempIPBanCMD());
+        getMaStaffInstance().registerCommand(new KickCMD());
+        getMaStaffInstance().registerCommand(new WarnCMD());
+        getMaStaffInstance().registerCommand(new UnWarnCMD());
     }
 
     public void loadConfig() {

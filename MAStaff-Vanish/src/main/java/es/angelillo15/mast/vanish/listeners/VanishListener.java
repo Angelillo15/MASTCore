@@ -4,6 +4,7 @@ import es.angelillo15.mast.api.IStaffPlayer;
 import es.angelillo15.mast.api.MAStaffInstance;
 import es.angelillo15.mast.api.managers.StaffPlayersManagers;
 import es.angelillo15.mast.api.vanish.VanishDataManager;
+import es.angelillo15.mast.vanish.MAStaffVanish;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -45,7 +46,7 @@ public class VanishListener implements Listener {
 
     public static void hide(Player staff, Player player) {
         if (MAStaffInstance.version() > 12) {
-            player.hidePlayer(MAStaffInstance.getInstance().getPluginInstance(), staff);
+            player.hidePlayer(MAStaffVanish.getInstance().getMaStaffInstance().getPluginInstance(), staff);
         } else {
             player.hidePlayer(staff);
         }
@@ -53,7 +54,7 @@ public class VanishListener implements Listener {
 
     public static void show(Player staff, Player player) {
         if (MAStaffInstance.version() > 12) {
-            player.showPlayer(MAStaffInstance.getInstance().getPluginInstance(), staff);
+            player.showPlayer(MAStaffVanish.getInstance().getMaStaffInstance().getPluginInstance(), staff);
         } else {
             player.showPlayer(staff);
         }

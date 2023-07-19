@@ -5,12 +5,13 @@ import es.angelillo15.mast.api.ILogger;
 import es.angelillo15.mast.api.MAStaffInstance;
 import es.angelillo15.mast.api.managers.ConfigMerge;
 import lombok.Getter;
+import org.bukkit.plugin.Plugin;
 
 import java.io.File;
 import java.io.IOException;
 
 public class ConfigLoader {
-    private MAStaffInstance<?> plugin;
+    private MAStaffInstance<Plugin> plugin;
     @Getter
     private static ConfigManager config;
     @Getter
@@ -29,8 +30,8 @@ public class ConfigLoader {
     private static ConfigManager punishmentsGUI;
     private String language;
 
-    public ConfigLoader() {
-        this.plugin = MAStaffInstance.getInstance();
+    public ConfigLoader(MAStaffInstance<Plugin> plugin) {
+        this.plugin = plugin;
     }
 
     public void load() {
@@ -60,7 +61,7 @@ public class ConfigLoader {
         config = new ConfigManager(plugin.getPluginDataFolder().toPath(), "Bukkit/config.yml", "config.yml");
         config.registerConfig();
 
-        MAStaffInstance.getInstance().setDebug(config.getConfig().getBoolean("Config.debug"));
+        plugin.setDebug(config.getConfig().getBoolean("Config.debug"));
     }
 
     public void loadInternal (){
