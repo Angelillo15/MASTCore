@@ -43,6 +43,7 @@ dependencies {
     compileOnly(libs.miniMessage)
     compileOnly(libs.protocolLib)
     compileOnly(libs.vault)
+    compileOnly(libs.velocity)
 }
 
 blossom {
