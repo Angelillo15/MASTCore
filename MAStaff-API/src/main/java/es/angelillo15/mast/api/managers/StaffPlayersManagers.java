@@ -1,5 +1,6 @@
 package es.angelillo15.mast.api.managers;
 
+import com.google.inject.Inject;
 import es.angelillo15.mast.api.IStaffPlayer;
 import es.angelillo15.mast.api.MAStaffInstance;
 import es.angelillo15.mast.api.Permissions;
@@ -7,10 +8,14 @@ import es.angelillo15.mast.api.exceptions.AlreadyInTheMapException;
 import lombok.Getter;
 import lombok.NonNull;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.Plugin;
 
 import java.util.HashMap;
 
 public class StaffPlayersManagers {
+    @Inject
+    private static MAStaffInstance<Plugin> instance;
+
     @Getter
     private static HashMap<String, IStaffPlayer> staffPlayers = new HashMap<>();
 
@@ -44,7 +49,7 @@ public class StaffPlayersManagers {
     public static IStaffPlayer getStaffPlayer(@NonNull Player player) {
         IStaffPlayer staffPlayer = staffPlayers.get(player.getName());
         if (staffPlayer == null && player.isOnline() && player.hasPermission(Permissions.STAFF.getPermission())) {
-            staffPlayer = MAStaffInstance.getInstance().createStaffPlayer(player);
+            staffPlayer = instance.createStaffPlayer(player);
             staffPlayers.put(player.getName(), staffPlayer);
             staffPlayer = staffPlayers.get(player.getName());
         }
