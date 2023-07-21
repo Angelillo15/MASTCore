@@ -1,5 +1,7 @@
 package es.angelillo15.mast.bungee;
 
+import com.google.inject.Guice;
+import com.google.inject.Injector;
 import es.angelillo15.mast.api.ILogger;
 import es.angelillo15.mast.api.IServerUtils;
 import es.angelillo15.mast.api.MAStaffInstance;
@@ -8,6 +10,9 @@ import es.angelillo15.mast.api.cmd.Command;
 import es.angelillo15.mast.api.cmd.CommandData;
 import es.angelillo15.mast.api.data.DataManager;
 import es.angelillo15.mast.api.database.PluginConnection;
+import es.angelillo15.mast.api.inject.StaticMembersInjector;
+import es.angelillo15.mast.api.managers.LegacyUserDataManager;
+import es.angelillo15.mast.api.managers.StaffPlayersManagers;
 import es.angelillo15.mast.api.redis.EventManager;
 import es.angelillo15.mast.api.redis.events.server.ServerConnectedEvent;
 import es.angelillo15.mast.bungee.addons.AddonsLoader;
@@ -15,6 +20,7 @@ import es.angelillo15.mast.bungee.cmd.*;
 import es.angelillo15.mast.bungee.cmd.mastb.MastParentCMD;
 import es.angelillo15.mast.bungee.config.Config;
 import es.angelillo15.mast.bungee.config.ConfigLoader;
+import es.angelillo15.mast.bungee.inject.BungeeInjector;
 import es.angelillo15.mast.bungee.listener.CommandExecutor;
 import es.angelillo15.mast.bungee.listener.StaffChangeEvent;
 import es.angelillo15.mast.bungee.listener.StaffJoinChange;
@@ -48,6 +54,7 @@ public class MAStaff extends Plugin implements MAStaffInstance<Plugin> {
     public ILogger getPLogger() {
         return logger;
     }
+    private Injector injector;
 
     @Override
     public void registerCommand(Command command) {
@@ -191,6 +198,12 @@ public class MAStaff extends Plugin implements MAStaffInstance<Plugin> {
         PluginConnection.getStorm().runMigrations();
     }
 
+    public void loadInjector() {
+        this.injector = Guice.createInjector(new BungeeInjector());
+
+        StaticMembersInjector.injectStatics(injector, LegacyUserDataManager.class);
+    }
+
     @Override
     public IServerUtils getServerUtils() {
         return serverUtils;
@@ -210,4 +223,10 @@ public class MAStaff extends Plugin implements MAStaffInstance<Plugin> {
     public InputStream getPluginResource(String s) {
         return getResourceAsStream(s);
     }
+
+    @Override
+    public Injector getInjector() {
+        return this.injector;
+    }
+
 }

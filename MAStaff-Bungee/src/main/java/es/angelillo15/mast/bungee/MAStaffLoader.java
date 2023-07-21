@@ -18,6 +18,7 @@ public class MAStaffLoader extends MAStaff {
         loadDatabase();
         registerListeners();
         registerCommands();
+        loadInjector();
         ReflectionLoader.loadBungee();
         ReflectionLoader.loadAll();
         AddonsLoader.loadAddons();

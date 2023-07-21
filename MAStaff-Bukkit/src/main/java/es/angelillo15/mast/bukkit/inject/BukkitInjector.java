@@ -9,6 +9,7 @@ public class BukkitInjector extends CommonModule {
     protected void configure() {
         super.configure();
         bind(MAStaffInstance.class).toInstance(MAStaff.getPlugin());
+        bind(MAStaff.class).toInstance(MAStaff.getPlugin());
     }
 
 }
