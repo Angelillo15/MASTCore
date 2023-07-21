@@ -1,6 +1,5 @@
 package es.angelillo15.mast.bungee.punishments;
 
-import es.angelillo15.mast.api.MAStaffInstance;
 import es.angelillo15.mast.api.addons.MAStaffAddon;
 import es.angelillo15.mast.api.punishments.cmd.KickCMD;
 import es.angelillo15.mast.api.punishments.cmd.ban.*;
@@ -40,9 +39,6 @@ public class MAStaffPunishments extends MAStaffAddon<Plugin> {
         ProxyServer.getInstance().getPluginManager().registerListener((Plugin) getMaStaffInstance(), listener);
     }
 
-    public void loadAPI() {
-
-    }
 
     public void loadCommands() {
         getMaStaffInstance().registerCommand(new BanCMD());
@@ -59,10 +55,6 @@ public class MAStaffPunishments extends MAStaffAddon<Plugin> {
 
     public void loadConfig() {
         ConfigLoader.load(this);
-    }
-
-    public void loadMetrics() {
-
     }
 
     public void loadData() {
