@@ -171,11 +171,11 @@ public class LibsManager {
                 .build();
 
         Library caffeine = Library.builder()
-                .groupId("com{}github{}ben-manes")
+                .groupId("com{}github{}ben-manes{}caffeine")
                 .artifactId("caffeine")
-                .version("2.9.2")
+                .version("2.9.3")
                 .isolatedLoad(false)
-                .relocate("com{}github{}benmanes{}caffeine", "es{}angelillo15{}zat{}libs{}caffeine")
+                .relocate("com{}github{}benmanes{}caffeine", "es{}angelillo15{}mast{}libs{}caffeine")
                 .build();
 
         Library gson = Library.builder()
