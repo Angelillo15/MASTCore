@@ -1,5 +1,5 @@
 [versions]
-snakeYaml = "1.33"
+snakeYaml = "2.0"
 simpleYaml = "1.8.3"
 configManager = "1.4"
 hikariCP = "4.0.3"
