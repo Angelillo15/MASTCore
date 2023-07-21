@@ -88,7 +88,7 @@ public class AddonsLoader {
     @SneakyThrows
     public static void disableAddons(){
         MAStaff.getPlugin().getPLogger().debug("Disabling addons...");
-        for(MAStaffAddon addon : AddonsManager.getAddons().values()){
+        for(MAStaffAddon<?> addon : AddonsManager.getAddons().values()){
             MAStaff.getPlugin().getPLogger().debug("Disabling addon " + addon.getDescriptionFile().getName() + "...");
             addon.onDisable();
             MAStaff.getPlugin().getPLogger().debug("Addon " + addon.getDescriptionFile().getName() + " disabled!");
@@ -98,7 +98,7 @@ public class AddonsLoader {
 
     public static void reload(){
         MAStaff.getPlugin().getPLogger().debug("Reloading addons...");
-        for(MAStaffAddon addon : AddonsManager.getAddons().values()){
+        for(MAStaffAddon<?> addon : AddonsManager.getAddons().values()){
             MAStaff.getPlugin().getPLogger().debug("Reloading addon " + addon.getDescriptionFile().getName() + "...");
             addon.reload();
             MAStaff.getPlugin().getPLogger().debug("Addon " + addon.getDescriptionFile().getName() + " reloaded!");
@@ -108,7 +108,10 @@ public class AddonsLoader {
 
     public static void loadDefaultAddons() {
         if (Config.Addons.vanish()) registerAddon("Vanish", new MAStaffVanish());
-        if (Config.Addons.glow() && MAStaffInstance.version() > 9) registerAddon("Glow", new GlowAddon());
+
+        if (Config.Addons.glow() && MAStaffInstance.version() > 9) registerAddon("Glow",
+                MAStaff.getPlugin().getInjector().getInstance(GlowAddon.class)
+        );
     }
 
     public static void registerAddon(AddonDescription addonDescription, MAStaffAddon<JavaPlugin> addon) {
