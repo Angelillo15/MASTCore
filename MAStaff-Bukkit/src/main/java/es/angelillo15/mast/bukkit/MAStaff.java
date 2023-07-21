@@ -6,7 +6,7 @@ import es.angelillo15.mast.api.*;
 import es.angelillo15.mast.api.database.DataProvider;
 import es.angelillo15.mast.api.inject.StaticMembersInjector;
 import es.angelillo15.mast.api.managers.LegacyUserDataManager;
-import es.angelillo15.mast.api.managers.StaffPlayersManagers;
+import es.angelillo15.mast.api.managers.LegacyStaffPlayersManagers;
 import es.angelillo15.mast.api.thread.AsyncThreadKt;
 import es.angelillo15.mast.api.utils.BukkitUtils;
 import es.angelillo15.mast.bukkit.addons.AddonsLoader;
@@ -43,7 +43,6 @@ import mc.obliviate.inventory.InventoryAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.HandlerList;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import es.angelillo15.mast.api.database.PluginConnection;
@@ -340,7 +339,7 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance<JavaPlugin> {
         getPLogger().debug("Injecting...");
         injector = Guice.createInjector(new BukkitInjector());
 
-        StaticMembersInjector.injectStatics(injector, StaffPlayersManagers.class);
+        StaticMembersInjector.injectStatics(injector, LegacyStaffPlayersManagers.class);
         StaticMembersInjector.injectStatics(injector, LegacyUserDataManager.class);
     }
 

@@ -2,7 +2,7 @@ package es.angelillo15.mast.vanish.listeners;
 
 import es.angelillo15.mast.api.IStaffPlayer;
 import es.angelillo15.mast.api.MAStaffInstance;
-import es.angelillo15.mast.api.managers.StaffPlayersManagers;
+import es.angelillo15.mast.api.managers.LegacyStaffPlayersManagers;
 import es.angelillo15.mast.api.vanish.VanishDataManager;
 import es.angelillo15.mast.vanish.MAStaffVanish;
 import org.bukkit.Bukkit;
@@ -33,7 +33,7 @@ public class VanishListener implements Listener {
     @EventHandler(ignoreCancelled = true)
     public void onQuit(PlayerQuitEvent event) {
         if (!VanishDataManager.isVanished(event.getPlayer().getName())) return;
-        IStaffPlayer staffPlayer = StaffPlayersManagers.getStaffPlayer(event.getPlayer());
+        IStaffPlayer staffPlayer = LegacyStaffPlayersManagers.getStaffPlayer(event.getPlayer());
 
         if (staffPlayer == null) return;
 

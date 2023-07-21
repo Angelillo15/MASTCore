@@ -3,7 +3,7 @@ package es.angelillo15.mast.bukkit.cmd.staff;
 import es.angelillo15.mast.api.IStaffPlayer;
 import es.angelillo15.mast.api.cmd.LegacySubCommand;
 import es.angelillo15.mast.api.TextUtils;
-import es.angelillo15.mast.api.managers.StaffPlayersManagers;
+import es.angelillo15.mast.api.managers.LegacyStaffPlayersManagers;
 import es.angelillo15.mast.api.config.bukkit.Config;
 import es.angelillo15.mast.api.config.bukkit.ConfigLoader;
 import es.angelillo15.mast.api.config.bukkit.Messages;
@@ -32,7 +32,7 @@ public class StaffCMD implements CommandExecutor {
         if(!(sender instanceof Player)) return true;
         if(args.length == 0){
             Player player = (Player) sender;
-            IStaffPlayer staffPlayer = StaffPlayersManagers.getStaffPlayer(player);
+            IStaffPlayer staffPlayer = LegacyStaffPlayersManagers.getStaffPlayer(player);
 
             staffPlayer.toggleStaffMode();
             return true;
