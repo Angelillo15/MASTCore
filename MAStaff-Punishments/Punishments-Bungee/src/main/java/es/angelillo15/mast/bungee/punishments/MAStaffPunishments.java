@@ -1,5 +1,6 @@
 package es.angelillo15.mast.bungee.punishments;
 
+import com.google.inject.Injector;
 import es.angelillo15.mast.api.addons.MAStaffAddon;
 import es.angelillo15.mast.api.punishments.cmd.KickCMD;
 import es.angelillo15.mast.api.punishments.cmd.ban.*;
@@ -16,6 +17,7 @@ import net.md_5.bungee.api.plugin.Listener;
 import net.md_5.bungee.api.plugin.Plugin;
 
 public class MAStaffPunishments extends MAStaffAddon<Plugin> {
+    private final Injector injector = getMaStaffInstance().getInjector();
     @Override
     public void reload() {
         loadConfig();
@@ -30,9 +32,9 @@ public class MAStaffPunishments extends MAStaffAddon<Plugin> {
     }
 
     public void loadListeners() {
-        registerEvent(new PlayerBanListener());
-        registerEvent(new BroadcastListener());
-        registerEvent(new PunishPlayerListener());
+        registerEvent(injector.getInstance(PlayerBanListener.class));
+        registerEvent(injector.getInstance(BroadcastListener.class));
+        registerEvent(injector.getInstance(PunishPlayerListener.class));
     }
 
     public void registerEvent(Listener listener) {
@@ -41,16 +43,16 @@ public class MAStaffPunishments extends MAStaffAddon<Plugin> {
 
 
     public void loadCommands() {
-        getMaStaffInstance().registerCommand(new BanCMD());
-        getMaStaffInstance().registerCommand(new IsBannedCMD());
-        getMaStaffInstance().registerCommand(new ClearCacheCMD());
-        getMaStaffInstance().registerCommand(new TempBanCMD());
-        getMaStaffInstance().registerCommand(new UnBanCMD());
-        getMaStaffInstance().registerCommand(new IPBanCMD());
-        getMaStaffInstance().registerCommand(new TempIPBanCMD());
-        getMaStaffInstance().registerCommand(new KickCMD());
-        getMaStaffInstance().registerCommand(new WarnCMD());
-        getMaStaffInstance().registerCommand(new UnWarnCMD());
+        getMaStaffInstance().registerCommand(injector.getInstance(BanCMD.class));
+        getMaStaffInstance().registerCommand(injector.getInstance(IsBannedCMD.class));
+        getMaStaffInstance().registerCommand(injector.getInstance(ClearCacheCMD.class));
+        getMaStaffInstance().registerCommand(injector.getInstance(TempBanCMD.class));
+        getMaStaffInstance().registerCommand(injector.getInstance(UnBanCMD.class));
+        getMaStaffInstance().registerCommand(injector.getInstance(IPBanCMD.class));
+        getMaStaffInstance().registerCommand(injector.getInstance(TempIPBanCMD.class));
+        getMaStaffInstance().registerCommand(injector.getInstance(KickCMD.class));
+        getMaStaffInstance().registerCommand(injector.getInstance(WarnCMD.class));
+        getMaStaffInstance().registerCommand(injector.getInstance(UnWarnCMD.class));
     }
 
     public void loadConfig() {

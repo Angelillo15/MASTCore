@@ -118,8 +118,8 @@ public class MAStaff extends Plugin implements MAStaffInstance<Plugin> {
     public void registerCommands() {
         getProxy().getPluginManager().registerCommand(this, new StaffChat());
         getProxy().getPluginManager().registerCommand(this, new HelpopCMD());
-        registerCommand(new InfoCMD());
-        registerCommand(new MastParentCMD());
+        registerCommand(injector.getInstance(InfoCMD.class));
+        registerCommand(injector.getInstance(MastParentCMD.class));
     }
 
     @Override
@@ -139,6 +139,7 @@ public class MAStaff extends Plugin implements MAStaffInstance<Plugin> {
         em.registerListener(new OnStaffSwitch());
         em.registerListener(new OnStaffTalk());
         ServerConnectedEvent event = new ServerConnectedEvent(Config.Redis.getServerName());
+
         RedisManager.sendEvent(event);
     }
 
@@ -148,7 +149,13 @@ public class MAStaff extends Plugin implements MAStaffInstance<Plugin> {
         new RedisManager().load();
 
         if (Config.Database.type().equalsIgnoreCase("MYSQL")) {
-            new PluginConnection(Config.Database.host(), Config.Database.port(), Config.Database.database(), Config.Database.username(), Config.Database.password());
+            new PluginConnection(
+                    Config.Database.host(),
+                    Config.Database.port(),
+                    Config.Database.database(),
+                    Config.Database.username(),
+                    Config.Database.password()
+            );
         } else {
             new PluginConnection(getDataFolder().getPath());
         }
@@ -162,7 +169,7 @@ public class MAStaff extends Plugin implements MAStaffInstance<Plugin> {
 
     @Override
     public void loadModules() {
-
+        AddonsLoader.loadAddons(injector);
     }
 
     @Override

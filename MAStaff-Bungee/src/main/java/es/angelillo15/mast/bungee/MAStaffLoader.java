@@ -13,15 +13,15 @@ public class MAStaffLoader extends MAStaff {
     public void onEnable() {
         super.onEnable();
         drawLogo();
+        loadInjector();
         LibsLoader.loadLibs();
         loadConfig();
         loadDatabase();
         registerListeners();
         registerCommands();
-        loadInjector();
         ReflectionLoader.loadBungee();
         ReflectionLoader.loadAll();
-        AddonsLoader.loadAddons();
+        loadModules();
         PluginConnection.getStorm().runMigrations();
         new Metrics(this, 16548);
     }

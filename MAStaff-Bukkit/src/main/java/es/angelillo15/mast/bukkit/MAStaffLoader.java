@@ -14,8 +14,8 @@ public class MAStaffLoader extends MAStaff {
         LibsLoader.loadLibs();
         setupMiniMessage();
         drawLogo();
-        loadConfig();
         inject();
+        loadConfig();
         registerCommands();
         registerListeners();
         loadDatabase();
