@@ -1,5 +1,6 @@
 package es.angelillo15.mast.bungee.addons;
 
+import com.google.inject.Injector;
 import es.angelillo15.mast.api.Constants;
 import es.angelillo15.mast.api.MAStaffInstance;
 import es.angelillo15.mast.api.addons.AddonDescription;
@@ -22,7 +23,7 @@ import java.util.jar.JarFile;
 @SuppressWarnings("unchecked")
 public class AddonsLoader {
     @SneakyThrows
-    public static void loadAddons() {
+    public static void loadAddons(Injector injector) {
         File addonsFolder = new File(MAStaff.getInstance().getDataFolder() + File.separator + "addons");
         if (!addonsFolder.exists()) {
             addonsFolder.mkdir();
@@ -66,7 +67,7 @@ public class AddonsLoader {
                     .loadClass(addonDescription.getMain());
 
 
-            Object instance = cls.getDeclaredConstructor().newInstance();
+            Object instance = injector.getInstance(cls);
 
             if (!(instance instanceof MAStaffInstance<?>)) {
                 MAStaff.getInstance().getLogger().severe("Addon " + addonDescription.getName() + " v" + addonDescription.getVersion() + " by " + addonDescription.getAuthor() + " doesn't implement MAStaffInstance!");
