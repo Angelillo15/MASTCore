@@ -22,8 +22,8 @@ public class MAStaffVanish extends MAStaffAddon<JavaPlugin> {
     }
 
     void registerListeners() {
-        getMaStaffInstance().getPluginInstance().getServer().getPluginManager().registerEvents(
-                new VanishListener(), getMaStaffInstance().getPluginInstance()
+        getPluginInstance().getServer().getPluginManager().registerEvents(
+                new VanishListener(), getPluginInstance()
         );
     }
 }

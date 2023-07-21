@@ -18,7 +18,6 @@ import net.md_5.bungee.api.connection.PendingConnection;
 import net.md_5.bungee.api.event.PostLoginEvent;
 import net.md_5.bungee.api.event.PreLoginEvent;
 import net.md_5.bungee.api.plugin.Listener;
-import net.md_5.bungee.api.plugin.Plugin;
 import net.md_5.bungee.event.EventHandler;
 
 import java.sql.SQLException;
@@ -26,17 +25,17 @@ import java.sql.SQLException;
 public class PlayerBanListener implements Listener {
     @EventHandler
     public void onPreLogin(PreLoginEvent event) {
-        event.registerIntent(MAStaffPunishmentsLoader.getInstance().getMaStaffInstance().getPluginInstance());
+        event.registerIntent(MAStaffPunishmentsLoader.getInstance().getPluginInstance());
         PendingConnection connection = event.getConnection();
 
         if (banCheck(connection)) {
-            event.completeIntent(MAStaffPunishmentsLoader.getInstance().getMaStaffInstance().getPluginInstance());
+            event.completeIntent(MAStaffPunishmentsLoader.getInstance().getPluginInstance());
             return;
         }
 
         ipBanCheck(connection);
 
-        event.completeIntent(MAStaffPunishmentsLoader.getInstance().getMaStaffInstance().getPluginInstance());
+        event.completeIntent(MAStaffPunishmentsLoader.getInstance().getPluginInstance());
     }
 
     @EventHandler

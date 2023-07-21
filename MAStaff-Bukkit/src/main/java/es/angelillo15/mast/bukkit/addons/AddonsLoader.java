@@ -75,7 +75,7 @@ public class AddonsLoader {
 
                 MAStaffAddon<JavaPlugin> addon = (MAStaffAddon<JavaPlugin>) cls.getDeclaredConstructor().newInstance();
 
-                addon.init(new File(file.getParentFile() + File.separator + addonDescription.getName()), addonDescription, MAStaff.getPlugin());
+                addon.init(new File(file.getParentFile() + File.separator + addonDescription.getName()), addonDescription, MAStaff.getPlugin(), MAStaff.getPlugin());
                 addon.onEnable();
 
                 AddonsManager.registerAddon(addon);
@@ -113,7 +113,7 @@ public class AddonsLoader {
 
     public static void registerAddon(AddonDescription addonDescription, MAStaffAddon<JavaPlugin> addon) {
         addon.init(new File(MAStaff.getPlugin().getDataFolder() + File.separator + "addons" + File.separator
-                        + addonDescription.getName()), addonDescription, MAStaff.getPlugin());
+                        + addonDescription.getName()), addonDescription, MAStaff.getPlugin(), MAStaff.getPlugin());
         AddonsManager.registerAddon(addon);
         MAStaff.getPlugin().getPLogger().debug("Registered addon " + addonDescription.getName() + " v" + addonDescription.getVersion() + " by " + addonDescription.getAuthor());
 

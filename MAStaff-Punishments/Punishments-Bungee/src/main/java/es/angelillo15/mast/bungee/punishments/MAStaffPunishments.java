@@ -44,21 +44,21 @@ public class MAStaffPunishments extends MAStaffAddon<Plugin> {
     }
 
     public void registerEvent(Listener listener) {
-        ProxyServer.getInstance().getPluginManager().registerListener((Plugin) getMaStaffInstance(), listener);
+        ProxyServer.getInstance().getPluginManager().registerListener((Plugin) getMastaffInstance(), listener);
     }
 
 
     public void loadCommands() {
-        getMaStaffInstance().registerCommand(injector.getInstance(BanCMD.class));
-        getMaStaffInstance().registerCommand(injector.getInstance(IsBannedCMD.class));
-        getMaStaffInstance().registerCommand(injector.getInstance(ClearCacheCMD.class));
-        getMaStaffInstance().registerCommand(injector.getInstance(TempBanCMD.class));
-        getMaStaffInstance().registerCommand(injector.getInstance(UnBanCMD.class));
-        getMaStaffInstance().registerCommand(injector.getInstance(IPBanCMD.class));
-        getMaStaffInstance().registerCommand(injector.getInstance(TempIPBanCMD.class));
-        getMaStaffInstance().registerCommand(injector.getInstance(KickCMD.class));
-        getMaStaffInstance().registerCommand(injector.getInstance(WarnCMD.class));
-        getMaStaffInstance().registerCommand(injector.getInstance(UnWarnCMD.class));
+        getMastaffInstance().registerCommand(injector.getInstance(BanCMD.class));
+        getMastaffInstance().registerCommand(injector.getInstance(IsBannedCMD.class));
+        getMastaffInstance().registerCommand(injector.getInstance(ClearCacheCMD.class));
+        getMastaffInstance().registerCommand(injector.getInstance(TempBanCMD.class));
+        getMastaffInstance().registerCommand(injector.getInstance(UnBanCMD.class));
+        getMastaffInstance().registerCommand(injector.getInstance(IPBanCMD.class));
+        getMastaffInstance().registerCommand(injector.getInstance(TempIPBanCMD.class));
+        getMastaffInstance().registerCommand(injector.getInstance(KickCMD.class));
+        getMastaffInstance().registerCommand(injector.getInstance(WarnCMD.class));
+        getMastaffInstance().registerCommand(injector.getInstance(UnWarnCMD.class));
     }
 
     public void loadConfig() {

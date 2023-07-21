@@ -6,12 +6,13 @@ import es.angelillo15.mast.api.MAStaffInstance;
 import es.angelillo15.mast.api.managers.ConfigMerge;
 import lombok.Getter;
 import org.bukkit.plugin.Plugin;
+import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
 import java.io.IOException;
 
 public class ConfigLoader {
-    private MAStaffInstance<Plugin> plugin;
+    private MAStaffInstance<JavaPlugin> plugin;
     @Getter
     private static ConfigManager config;
     @Getter
@@ -30,7 +31,7 @@ public class ConfigLoader {
     private static ConfigManager punishmentsGUI;
     private String language;
 
-    public ConfigLoader(MAStaffInstance<Plugin> plugin) {
+    public ConfigLoader(MAStaffInstance<JavaPlugin> plugin) {
         this.plugin = plugin;
     }
 

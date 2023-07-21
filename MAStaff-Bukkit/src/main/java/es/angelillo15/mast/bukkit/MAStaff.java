@@ -54,7 +54,7 @@ import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-public class MAStaff extends JavaPlugin implements MAStaffInstance<Plugin> {
+public class MAStaff extends JavaPlugin implements MAStaffInstance<JavaPlugin> {
     @Getter
     static final int version = Integer.parseInt(Bukkit.getBukkitVersion().split("-")[0].split("\\.")[1]);
     @Getter
@@ -361,7 +361,7 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance<Plugin> {
     }
 
     @Override
-    public Plugin getPluginInstance() {
+    public JavaPlugin getPluginInstance() {
         return this;
     }
 

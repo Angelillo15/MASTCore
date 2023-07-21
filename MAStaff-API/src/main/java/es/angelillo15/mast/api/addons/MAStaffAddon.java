@@ -18,15 +18,19 @@ public class MAStaffAddon<P> {
     @Getter
     private ConfigManager config;
     @Getter
-    private MAStaffInstance<P> maStaffInstance;
+    private MAStaffInstance<?> mastaffInstance;
+    @Getter
+    private P pluginInstance;
 
-    public void init(File addonFolder, AddonDescription descriptionFile, MAStaffInstance<?> mastaffInstance) {
+    public void init(File addonFolder, AddonDescription descriptionFile, MAStaffInstance<?> mastaffInstance, P pluginInstance) {
         this.addonFolder = addonFolder;
         this.descriptionFile = descriptionFile;
         if (mastaffInstance != null) {
-            this.maStaffInstance = (MAStaffInstance<P>) mastaffInstance;
+            this.mastaffInstance = mastaffInstance;
             this.logger = new AddonLogger(this, mastaffInstance.getPLogger());
         }
+
+        this.pluginInstance = pluginInstance;
     }
 
     /**
