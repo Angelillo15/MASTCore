@@ -5,6 +5,7 @@ import com.google.inject.Injector;
 import es.angelillo15.mast.api.*;
 import es.angelillo15.mast.api.database.DataProvider;
 import es.angelillo15.mast.api.inject.StaticMembersInjector;
+import es.angelillo15.mast.api.managers.LegacyUserDataManager;
 import es.angelillo15.mast.api.managers.StaffPlayersManagers;
 import es.angelillo15.mast.api.thread.AsyncThreadKt;
 import es.angelillo15.mast.api.utils.BukkitUtils;
@@ -75,7 +76,7 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance<Plugin> {
     @Override
     public void onEnable() {
         plugin = this;
-        new Scheduler();
+        Scheduler.init();
         super.onEnable();
     }
 
@@ -172,20 +173,19 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance<Plugin> {
                             getPlugin().getDataFolder().getAbsolutePath()
                     );
                     break;
-
             }
 
-            connection = pluginConnection.getConnection();
+            connection = PluginConnection.getConnection();
 
         } catch (Exception e) {
             logger.error(e.getMessage());
-            logger.error((TextUtils.colorize("┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓")));
-            logger.error((TextUtils.colorize("┃ An error ocurred while connecting to the MySQL database!                 ┃")));
-            logger.error((TextUtils.colorize("┃ Please, check your database credentials.                                 ┃")));
-            logger.error((TextUtils.colorize("┃ If you need help, join our Discord server to get support:                ┃")));
-            logger.error((TextUtils.colorize("┃ https://discord.nookure.com                                              ┃")));
-            logger.error((TextUtils.colorize("┃ The plugin is now connecting to a SQLite database...                     ┃")));
-            logger.error((TextUtils.colorize("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛")));
+            logger.error("┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓");
+            logger.error("┃ An error ocurred while connecting to the MySQL database!                 ┃");
+            logger.error("┃ Please, check your database credentials.                                 ┃");
+            logger.error("┃ If you need help, join our Discord server to get support:                ┃");
+            logger.error("┃ https://discord.nookure.com                                              ┃");
+            logger.error("┃ The plugin is now connecting to a SQLite database...                     ┃");
+            logger.error("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛");
             try {
                 pluginConnection = new PluginConnection(
                         getPlugin().getDataFolder().getAbsolutePath()
@@ -193,7 +193,6 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance<Plugin> {
             } catch (Exception e1) {
                 e1.printStackTrace();
             }
-            throw new RuntimeException(e);
         }
         PluginConnection.getQueries().createTables();
 
@@ -342,6 +341,7 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance<Plugin> {
         injector = Guice.createInjector(new BukkitInjector());
 
         StaticMembersInjector.injectStatics(injector, StaffPlayersManagers.class);
+        StaticMembersInjector.injectStatics(injector, LegacyUserDataManager.class);
     }
 
     public void registerPlaceholderAPI() {
