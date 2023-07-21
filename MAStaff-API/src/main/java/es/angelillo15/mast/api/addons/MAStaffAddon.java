@@ -20,11 +20,13 @@ public class MAStaffAddon<P> {
     @Getter
     private MAStaffInstance<P> maStaffInstance;
 
-    public void init(File addonFolder, AddonDescription descriptionFile, MAStaffInstance<?> mastaffInstance, boolean bukkit) {
+    public void init(File addonFolder, AddonDescription descriptionFile, MAStaffInstance<?> mastaffInstance) {
         this.addonFolder = addonFolder;
         this.descriptionFile = descriptionFile;
-        this.maStaffInstance = (MAStaffInstance<P>) mastaffInstance;
-        this.logger = new AddonLogger(this, mastaffInstance.getPLogger());
+        if (mastaffInstance != null) {
+            this.maStaffInstance = (MAStaffInstance<P>) mastaffInstance;
+            this.logger = new AddonLogger(this, mastaffInstance.getPLogger());
+        }
     }
 
     /**

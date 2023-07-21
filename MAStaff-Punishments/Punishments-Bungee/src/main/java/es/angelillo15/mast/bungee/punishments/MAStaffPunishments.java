@@ -1,6 +1,8 @@
 package es.angelillo15.mast.bungee.punishments;
 
+import com.google.inject.Inject;
 import com.google.inject.Injector;
+import es.angelillo15.mast.api.MAStaffInstance;
 import es.angelillo15.mast.api.addons.MAStaffAddon;
 import es.angelillo15.mast.api.punishments.cmd.KickCMD;
 import es.angelillo15.mast.api.punishments.cmd.ban.*;
@@ -17,7 +19,10 @@ import net.md_5.bungee.api.plugin.Listener;
 import net.md_5.bungee.api.plugin.Plugin;
 
 public class MAStaffPunishments extends MAStaffAddon<Plugin> {
-    private final Injector injector = getMaStaffInstance().getInjector();
+    @Inject
+    private MAStaffInstance instance;
+
+    private Injector injector;
     @Override
     public void reload() {
         loadConfig();
@@ -29,6 +34,7 @@ public class MAStaffPunishments extends MAStaffAddon<Plugin> {
     @Override
     public void onEnable() {
         super.onEnable();
+        injector = instance.getInjector();
     }
 
     public void loadListeners() {

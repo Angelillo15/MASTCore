@@ -13,8 +13,8 @@ public class MAStaffLoader extends MAStaff {
     public void onEnable() {
         super.onEnable();
         drawLogo();
-        loadInjector();
         LibsLoader.loadLibs();
+        loadInjector();
         loadConfig();
         loadDatabase();
         registerListeners();

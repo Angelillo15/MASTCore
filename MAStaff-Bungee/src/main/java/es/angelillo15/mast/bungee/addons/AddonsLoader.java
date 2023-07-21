@@ -76,7 +76,7 @@ public class AddonsLoader {
 
             MAStaffAddon<Plugin> addon = (MAStaffAddon<Plugin>) instance;
 
-            addon.init(new File(file.getParentFile() + File.separator + addonDescription.getName()), addonDescription, MAStaff.getInstance(), false);
+            addon.init(new File(file.getParentFile() + File.separator + addonDescription.getName()), addonDescription, MAStaff.getInstance());
             try {
                 addon.onEnable();
             } catch (Exception e) {
@@ -99,13 +99,13 @@ public class AddonsLoader {
     }
 
     public static void loadDefaultAddons() {
-        if (Config.Modules.isPunishmentsEnabled()) registerAddon("Punishments", new MAStaffPunishmentsLoader());
+        if (Config.Modules.isPunishmentsEnabled())
+            registerAddon("Punishments", MAStaff.getInstance().getInjector().getInstance(MAStaffPunishmentsLoader.class));
     }
 
     public static void registerAddon(AddonDescription addonDescription, MAStaffAddon<Plugin> addon) {
         addon.init(new File(MAStaff.getInstance().getDataFolder() + File.separator + "addons" + File.separator
-                + addonDescription.getName()), addonDescription, MAStaff.getInstance(),
-                false);
+                + addonDescription.getName()), addonDescription, MAStaff.getInstance());
         AddonsManager.registerAddon(addon);
         MAStaff.getInstance().getPLogger().debug("Registered addon " + addonDescription.getName() + " v" + addonDescription.getVersion() + " by " + addonDescription.getAuthor());
 
