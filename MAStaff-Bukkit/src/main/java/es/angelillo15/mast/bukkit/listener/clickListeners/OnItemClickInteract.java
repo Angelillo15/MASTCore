@@ -6,7 +6,6 @@ import es.angelillo15.mast.api.Permissions;
 import es.angelillo15.mast.api.items.IPlayerInteractItem;
 import es.angelillo15.mast.api.items.StaffItem;
 import es.angelillo15.mast.api.managers.StaffManager;
-import es.angelillo15.mast.api.managers.StaffPlayersManagers;
 import es.angelillo15.mast.bukkit.MAStaff;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -26,7 +25,7 @@ public class OnItemClickInteract implements Listener {
         if (!staffManager.isStaffPlayer(player)) return;
         if (!player.hasPermission(Permissions.STAFF.getPermission())) return;
 
-        IStaffPlayer staffPlayer = StaffPlayersManagers.getStaffPlayer(player);
+        IStaffPlayer staffPlayer = staffManager.getStaffPlayer(player);
 
         if (staffPlayer.isStaffMode()) {
             event.setCancelled(true);

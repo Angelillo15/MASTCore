@@ -2,7 +2,6 @@ package es.angelillo15.mast.bukkit.listener.staffmode;
 
 import com.google.inject.Inject;
 import es.angelillo15.mast.api.IStaffPlayer;
-import es.angelillo15.mast.api.Permissions;
 import es.angelillo15.mast.api.database.sql.CommonQueries;
 import es.angelillo15.mast.api.managers.StaffManager;
 import es.angelillo15.mast.bukkit.MAStaff;

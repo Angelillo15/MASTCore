@@ -1,8 +1,8 @@
 package es.angelillo15.mast.bukkit.listener.staffmode;
 
+import com.google.inject.Inject;
 import es.angelillo15.mast.api.IStaffPlayer;
-import es.angelillo15.mast.api.managers.StaffPlayersManagers;
-import es.angelillo15.mast.bukkit.MAStaff;
+import es.angelillo15.mast.api.managers.StaffManager;
 import org.bukkit.Bukkit;
 import org.bukkit.block.Chest;
 import org.bukkit.block.Container;
@@ -14,15 +14,18 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.Inventory;
 
 public class OnOpenChest implements Listener {
+    @Inject
+    private StaffManager staffManager;
+
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onPlayerInteract(PlayerInteractEvent event) {
         Player player = event.getPlayer();
 
-        if (!StaffPlayersManagers.isStaffPlayer(player)) {
+        if (!staffManager.isStaffPlayer(player)) {
             return;
         }
 
-        IStaffPlayer staffPlayer = StaffPlayersManagers.getStaffPlayer(player);
+        IStaffPlayer staffPlayer = staffManager.getStaffPlayer(player);
 
         if (!staffPlayer.isStaffMode()) {
             return;

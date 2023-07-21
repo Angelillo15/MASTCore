@@ -5,7 +5,8 @@ import es.angelillo15.mast.api.IStaffPlayer;
 import lombok.NonNull;
 import org.bukkit.entity.Player;
 
-public class StaffPlayersManagers {
+@Deprecated
+public class LegacyStaffPlayersManagers {
     @Inject
     private static StaffManager staffManager;
 
