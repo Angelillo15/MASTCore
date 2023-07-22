@@ -1,6 +1,7 @@
 dependencies {
     implementation(libs.libbyVelocity)
     compileOnly(project(":MAStaff-API"))
+    compileOnly(project(":MAStaff-Common"))
     compileOnly(libs.velocity)
     annotationProcessor(libs.velocity)
     compileOnly(libs.snakeYaml)

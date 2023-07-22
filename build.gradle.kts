@@ -45,6 +45,7 @@ dependencies {
     implementation(project(":MAStaff-PAPI"))
     implementation(project(":MAStaff-Glow"))
     implementation(project(":MAStaff-Velocity"))
+    implementation(project(":MAStaff-Common"))
     implementation(libs.bundles.invAPI)
     implementation(libs.liblyBukkit)
     implementation(libs.reflections)
