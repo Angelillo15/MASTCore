@@ -4,19 +4,30 @@ import es.angelillo15.mast.api.cmd.sender.CommandSender
 
 abstract class CooldownCommand(
     private val cooldown: Int = 60,
-    private val cooldownMessage: String = "&cYou must wait &a{cooldown} &cseconds to use again the command"
+    private val cooldownMessage: String = "&cYou must wait &a{cooldown} &cseconds to use the command again"
 ) : Command() {
-    private var cooldowns: MutableMap<CommandSender, Long> = mutableMapOf()
+    private var cooldowns: MutableMap<String, Long> = mutableMapOf()
     override fun onCommand(sender: CommandSender?, label: String?, args: Array<String?>?) {
-        if (cooldowns.containsKey(sender)) {
-            sender!!.sendMessage(cooldownMessage.replace("{cooldown}", (cooldowns[sender]!! - System.currentTimeMillis() / 1000).toString()))
+        if (!cooldowns.containsKey(sender!!.uniqueId)) {
+            cooldowns[sender.uniqueId] = System.currentTimeMillis() + (cooldown * 1000)
+
+            onCooldownCommand(sender, label!!, args!!)
+
             return
         }
 
-        cooldowns[sender!!] = System.currentTimeMillis() + ( cooldown * 1000 )
+        if (cooldowns[sender.uniqueId]!! > System.currentTimeMillis()) {
+            sender.sendMessage(
+                cooldownMessage.replace(
+                    "{cooldown}",
+                    ((cooldowns[sender.uniqueId]!! - System.currentTimeMillis()) / 1000).toString()
+                )
+            )
+            return
+        }
 
-        onCooldownCommand(sender, label!!, args!!)
+        cooldowns.remove(sender.uniqueId)
     }
 
-    abstract fun onCooldownCommand(sender: CommandSender, label: String, args: Array<String?>)
+    abstract fun onCooldownCommand(sender: CommandSender, label: String, args:  Array<String?>)
 }
