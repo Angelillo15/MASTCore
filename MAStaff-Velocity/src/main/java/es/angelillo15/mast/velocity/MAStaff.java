@@ -1,16 +1,25 @@
 package es.angelillo15.mast.velocity;
 
+import com.google.inject.Guice;
 import com.google.inject.Inject;
+import com.google.inject.Injector;
+import com.velocitypowered.api.command.CommandManager;
+import com.velocitypowered.api.command.CommandMeta;
 import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.proxy.ProxyInitializeEvent;
 import com.velocitypowered.api.plugin.Plugin;
 import com.velocitypowered.api.plugin.annotation.DataDirectory;
 import com.velocitypowered.api.proxy.ProxyServer;
 import es.angelillo15.mast.api.*;
+import es.angelillo15.mast.api.cmd.Command;
+import es.angelillo15.mast.api.cmd.CommandData;
 import es.angelillo15.mast.api.config.velocity.Config;
 import es.angelillo15.mast.api.config.velocity.ConfigLoader;
 import es.angelillo15.mast.api.data.DataManager;
 import es.angelillo15.mast.api.database.PluginConnection;
+import es.angelillo15.mast.cmd.HelpOP;
+import es.angelillo15.mast.velocity.cmd.CustomCommand;
+import es.angelillo15.mast.velocity.inject.VelocityInjector;
 import es.angelillo15.mast.velocity.utils.LibsLoader;
 import lombok.Getter;
 import lombok.SneakyThrows;
@@ -40,6 +49,7 @@ public class MAStaff implements MAStaffInstance<ProxyServer> {
     private ILogger logger;
     @Getter
     private PluginConnection connection;
+    private Injector injector;
     private boolean debug;
     ClassLoader classLoader = getClass().getClassLoader();
 
@@ -56,11 +66,14 @@ public class MAStaff implements MAStaffInstance<ProxyServer> {
     public void onProxyInitialization(ProxyInitializeEvent event) {
         drawLogo();
         LibsLoader.load();
+        injector = Guice.createInjector(new VelocityInjector());
         loadConfig();
         registerCommands();
         registerListeners();
         loadDatabase();
         loadModules();
+
+        logger.info("&aMAStaff &7v" + Constants.VERSION + " &ahas been loaded correctly!");
     }
 
     @Override
@@ -99,7 +112,7 @@ public class MAStaff implements MAStaffInstance<ProxyServer> {
 
     @Override
     public void registerCommands() {
-
+        registerCommand(injector.getInstance(HelpOP.class));
     }
 
     @Override
@@ -149,6 +162,29 @@ public class MAStaff implements MAStaffInstance<ProxyServer> {
     }
 
     @Override
+    public void registerCommand(Command command) {
+        CommandData commandData = null;
+
+        CommandManager commandManager = proxyServer.getCommandManager();
+
+        try {
+            commandData = command.getClass().getAnnotation(CommandData.class);
+        } catch (Exception e) {
+            MAStaff.getInstance().getPLogger().error("Command " + command.getClass().getSimpleName() + " has no CommandData annotation!");
+            return;
+        }
+
+        CommandMeta commandMeta = commandManager.metaBuilder(commandData.name())
+                .aliases(commandData.aliases())
+                .plugin(this)
+                .build();
+
+        CustomCommand customCommand = new CustomCommand(command, commandData.permission());
+
+        commandManager.register(commandMeta, customCommand);
+    }
+
+    @Override
     public File getPluginDataFolder() {
         return dataDirectory.toFile();
     }
@@ -166,5 +202,10 @@ public class MAStaff implements MAStaffInstance<ProxyServer> {
     @Override
     public ProxyServer getPluginInstance() {
         return this.proxyServer;
+    }
+
+    @Override
+    public Injector getInjector() {
+        return injector;
     }
 }
