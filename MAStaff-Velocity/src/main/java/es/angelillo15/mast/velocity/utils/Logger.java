@@ -16,7 +16,7 @@ public class Logger extends ILogger {
 
     @Override
     public void info(String message) {
-        MAStaff.getInstance().getProxyServer().sendMessage(TextUtils.toComponent(prefix + message));
+        logger.info(TextUtils.simpleColorize(message));
     }
 
     @Override
