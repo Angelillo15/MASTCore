@@ -14,7 +14,6 @@ class CustomCommand(private var command: Command, private var permission: String
     @Inject
     private lateinit var logger: ILogger;
     override fun execute(invocation: SimpleCommand.Invocation?) {
-
         val sender: CommandSender = if (invocation!!.source() is ConsoleCommandSource) {
             VelocityConsoleCommandSender()
         } else if (invocation.source() is Player) {
