@@ -5,14 +5,13 @@ import es.angelillo15.mast.api.ILogger;
 import es.angelillo15.mast.api.MAStaffInstance;
 import es.angelillo15.mast.api.managers.ConfigMerge;
 import lombok.Getter;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
 import java.io.IOException;
 
 public class ConfigLoader {
-    private MAStaffInstance<JavaPlugin> plugin;
+    private final MAStaffInstance<JavaPlugin> plugin;
     @Getter
     private static ConfigManager config;
     @Getter
@@ -29,7 +28,6 @@ public class ConfigLoader {
     private static ConfigManager customItems;
     @Getter
     private static ConfigManager punishmentsGUI;
-    private String language;
 
     public ConfigLoader(MAStaffInstance<JavaPlugin> plugin) {
         this.plugin = plugin;
@@ -84,7 +82,7 @@ public class ConfigLoader {
     }
 
     public void loadMessage() {
-        language = config.getConfig().getString("Config.language");
+        String language = config.getConfig().getString("Config.language");
         String lang = "lang/" + language;
 
         ConfigMerge.merge(new File(plugin.getPluginDataFolder().toPath() + File.separator + "lang" + File.separator + language),
