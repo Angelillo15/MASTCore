@@ -13,6 +13,7 @@ import com.velocitypowered.api.proxy.ProxyServer;
 import es.angelillo15.mast.api.*;
 import es.angelillo15.mast.api.cmd.Command;
 import es.angelillo15.mast.api.cmd.CommandData;
+import es.angelillo15.mast.api.config.common.CommonConfig;
 import es.angelillo15.mast.api.config.velocity.Config;
 import es.angelillo15.mast.api.config.velocity.ConfigLoader;
 import es.angelillo15.mast.api.data.DataManager;
@@ -49,6 +50,8 @@ public class MAStaff implements MAStaffInstance<ProxyServer> {
     private ILogger logger;
     @Getter
     private PluginConnection connection;
+    @Getter
+    private CommonConfig commonConfig;
     private Injector injector;
     private boolean debug;
     ClassLoader classLoader = getClass().getClassLoader();
@@ -108,6 +111,8 @@ public class MAStaff implements MAStaffInstance<ProxyServer> {
     @Override
     public void loadConfig() {
         new ConfigLoader(dataDirectory, this).load();
+        commonConfig = injector.getInstance(CommonConfig.class);
+        commonConfig.load();
     }
 
     @Override

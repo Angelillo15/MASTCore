@@ -1,11 +1,13 @@
 package es.angelillo15.mast.api.config.common
 
 import com.google.inject.Inject
+import com.google.inject.Singleton
 import es.angelillo15.configmanager.ConfigManager
 import es.angelillo15.mast.api.managers.ConfigMerge
 import es.angelillo15.mast.api.utils.MAStaffInject
 import java.io.File
 
+@Singleton
 class CommonConfig {
     @Inject
     private val plugin: MAStaffInject? = null
@@ -21,10 +23,10 @@ class CommonConfig {
 
     private fun loadConfig() {
         ConfigMerge.merge(
-            File(plugin!!.pluginDataFolder.toPath().toString() + File.separator + "Common/config.yml"),
+            File(plugin!!.pluginDataFolder.toPath().toString() + File.separator + "common/config.yml"),
             plugin.getPluginResource("common/config.yml")
         )
-        config = ConfigManager(plugin.pluginDataFolder.toPath(), "common/config.yml", "Common/config.yml")
+        config = ConfigManager(plugin.pluginDataFolder.toPath(), "common/config.yml", "common/config.yml")
         config!!.registerConfig()
     }
 
@@ -35,28 +37,28 @@ class CommonConfig {
         }
         val es = ConfigManager(
             plugin.pluginDataFolder.toPath(),
-            "common/lang/spanish.yml",
-            "/Common/lang/spanish.yml"
+            "common/lang/es.yml",
+            "/common/lang/es.yml"
         )
 
         val en = ConfigManager(
             plugin.pluginDataFolder.toPath(),
-            "common/lang/english.yml",
-            "/Common/lang/english.yml"
+            "common/lang/en.yml",
+            "/common/lang/en.yml"
         )
         es.registerConfig()
         en.registerConfig()
     }
 
     private fun loadMessage() {
-        val lang = config!!.config.getString("lang")
+        val lang = config!!.config.getString("Config.language")
 
         ConfigMerge.merge(
-            File(plugin!!.pluginDataFolder.toPath().toString() + File.separator + "Common/lang/$lang.yml"),
-            plugin.getPluginResource("common/lang/$lang.yml")
+            File(plugin!!.pluginDataFolder.toPath().toString() + File.separator + "common/lang/$lang"),
+            plugin.getPluginResource("common/lang/$lang")
         )
 
-        messages = ConfigManager(plugin.pluginDataFolder.toPath(), "Common/lang/$lang.yml", "Common/lang/$lang.yml")
+        messages = ConfigManager(plugin.pluginDataFolder.toPath(), "common/lang/$lang", "common/lang/$lang")
         messages!!.registerConfig()
     }
 }

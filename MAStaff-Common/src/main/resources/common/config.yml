@@ -20,4 +20,4 @@
 Config:
   # The language file you want to use for the plugin messages.
   # Included locales: english.yml and spanish.yml
-  language: "english.yml"
+  language: "en.yml"
