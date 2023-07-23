@@ -1,6 +1,5 @@
 package es.angelillo15.mast.velocity.inject;
 
-import com.google.inject.util.Providers;
 import es.angelillo15.mast.api.MAStaffInstance;
 import es.angelillo15.mast.api.config.common.CommonConfig;
 import es.angelillo15.mast.api.inject.CommonModule;
