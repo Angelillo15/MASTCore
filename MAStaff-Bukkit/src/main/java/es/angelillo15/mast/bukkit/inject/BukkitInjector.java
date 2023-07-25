@@ -5,6 +5,7 @@ import es.angelillo15.mast.api.inject.CommonModule;
 import es.angelillo15.mast.api.managers.StaffManager;
 import es.angelillo15.mast.api.utils.MAStaffInject;
 import es.angelillo15.mast.bukkit.MAStaff;
+import es.angelillo15.mast.bukkit.ServerUtils;
 
 public class BukkitInjector extends CommonModule {
     @Override
@@ -14,6 +15,7 @@ public class BukkitInjector extends CommonModule {
         bind(MAStaff.class).toInstance(MAStaff.getPlugin());
         bind(MAStaffInject.class).toInstance(MAStaff.getPlugin());
         bind(StaffManager.class).asEagerSingleton();
+        bind(ServerUtils.class).asEagerSingleton();
     }
 
 }
