@@ -6,7 +6,7 @@ import es.angelillo15.mast.bungee.config.Config;
 import es.angelillo15.mast.bungee.config.Messages;
 import es.angelillo15.mast.bungee.manager.RedisManager;
 import es.angelillo15.mast.bungee.utils.StaffUtils;
-import es.angelillo15.mast.api.managers.StaffChatManager;
+import es.angelillo15.mast.api.managers.LegacyStaffChatManager;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.event.ChatEvent;
@@ -25,7 +25,7 @@ public class StaffTalkEvent implements Listener {
             return;
         }
 
-        if(e.getMessage().startsWith("#") || StaffChatManager.isStaffChatEnable(player.getUniqueId().toString())){
+        if(e.getMessage().startsWith("#") || LegacyStaffChatManager.isStaffChatEnable(player.getUniqueId().toString())){
             e.setCancelled(true);
             String text;
             if(e.getMessage().startsWith("#")){
