@@ -5,7 +5,7 @@
 # Remember to join my Discord server if you need help:
 # https://discord.angelillo15.es/
 #
-Reloaded: '{prefix} &7MAStaff has been reloaded succesfully.'
+Reloaded: '{prefix} &7MAStaff has been reloaded successfully.'
 Messages:
   prefix: '&a&lSTAFF &8&l»' # This will appear before all the plugin messages.
   playerStaffModeEnabled: '{prefix} &a{player} &7has &aenabled &7staff mode.'
