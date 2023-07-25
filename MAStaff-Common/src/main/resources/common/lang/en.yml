@@ -18,8 +18,11 @@
 # Prefix for the plugin.
 Prefix: '&a&lSTAFF &8&l»&r' # This will appear before all the plugin messages.
 # Messages for the StaffChat module.
+# These messages will be sent to all the players with the permission mastaff.staffchat
+# You can send a message using the command /sc <message>
+# or starting the message with the prefix you set in the config.yml
 StaffChat:
   # The format for sent messages on Staff Chat.
   format: '{prefix} &a{player} &8&l» &7{message}'
   # Message sent when the command is not used correctly.
-  correctUse: '{prefix} &7You must use &a/sc <message>&7.'
+  correctUse: '{prefix} &7You must use &a/sc <message>|<no-args -> toggle> &7.'
