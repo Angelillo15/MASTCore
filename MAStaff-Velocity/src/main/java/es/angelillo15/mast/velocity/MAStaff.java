@@ -15,6 +15,7 @@ import es.angelillo15.mast.api.cmd.Command;
 import es.angelillo15.mast.api.cmd.CommandData;
 import es.angelillo15.mast.api.config.common.CommonConfig;
 import es.angelillo15.mast.api.config.velocity.Config;
+import es.angelillo15.mast.api.config.velocity.Messages;
 import es.angelillo15.mast.api.config.velocity.VelocityConfig;
 import es.angelillo15.mast.api.data.DataManager;
 import es.angelillo15.mast.api.database.PluginConnection;
@@ -22,6 +23,7 @@ import es.angelillo15.mast.api.inject.StaticMembersInjector;
 import es.angelillo15.mast.cmd.HelpOP;
 import es.angelillo15.mast.velocity.cmd.CustomCommand;
 import es.angelillo15.mast.velocity.inject.VelocityInjector;
+import es.angelillo15.mast.velocity.listeners.OnStaffChange;
 import es.angelillo15.mast.velocity.utils.LibsLoader;
 import lombok.Getter;
 import lombok.SneakyThrows;
@@ -112,6 +114,8 @@ public class MAStaff implements MAStaffInstance<ProxyServer> {
     @Override
     public void loadConfig() {
         injector.getInstance(VelocityConfig.class).load();
+        StaticMembersInjector.injectStatics(injector, Config.class);
+        StaticMembersInjector.injectStatics(injector, Messages.class);
         commonConfig = injector.getInstance(CommonConfig.class);
         commonConfig.load();
     }
@@ -119,12 +123,11 @@ public class MAStaff implements MAStaffInstance<ProxyServer> {
     @Override
     public void registerCommands() {
         registerCommand(injector.getInstance(HelpOP.class));
-        StaticMembersInjector.injectStatics(injector, Config.class);
     }
 
     @Override
     public void registerListeners() {
-
+        proxyServer.getEventManager().register(this, injector.getInstance(OnStaffChange.class));
     }
 
     @SneakyThrows
