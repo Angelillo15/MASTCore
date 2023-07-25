@@ -21,3 +21,15 @@ Config:
   # The language file you want to use for the plugin messages.
   # Included locales: english.yml and spanish.yml
   language: "en.yml"
+# StaffChat module configuration.
+StaffChat:
+  # Enable/disable the StaffChat module.
+  enabled: true
+  # Config for the StaffChat prefix configuration.
+  # The prefix is the character that will be used at the
+  # beginning of the message to send it to the StaffChat.
+  prefix:
+    # Enable/disable the prefix for the StaffChat messages.
+    enabled: true
+    # The prefix for the StaffChat messages.
+    key: "#"
