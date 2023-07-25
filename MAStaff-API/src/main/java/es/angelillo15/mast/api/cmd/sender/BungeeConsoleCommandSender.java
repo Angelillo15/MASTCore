@@ -1,6 +1,7 @@
 package es.angelillo15.mast.api.cmd.sender;
 
 import es.angelillo15.mast.api.MAStaffInstance;
+import net.kyori.adventure.audience.Audience;
 
 public class BungeeConsoleCommandSender implements CommandSender {
     @Override
@@ -51,5 +52,10 @@ public class BungeeConsoleCommandSender implements CommandSender {
     @Override
     public String getAddress() {
         return "0.0.0.0";
+    }
+
+    @Override
+    public Audience getAudience() {
+        return null;
     }
 }

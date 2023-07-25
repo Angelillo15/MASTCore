@@ -2,6 +2,7 @@ package es.angelillo15.mast.api.cmd.sender;
 
 import com.velocitypowered.api.proxy.Player;
 import es.angelillo15.mast.api.TextUtils;
+import net.kyori.adventure.audience.Audience;
 
 public class VelocityPlayerCommandSender implements CommandSender {
     private final Player player;
@@ -58,5 +59,10 @@ public class VelocityPlayerCommandSender implements CommandSender {
     @Override
     public boolean isSpigot() {
         return false;
+    }
+
+    @Override
+    public Audience getAudience() {
+        return player;
     }
 }
