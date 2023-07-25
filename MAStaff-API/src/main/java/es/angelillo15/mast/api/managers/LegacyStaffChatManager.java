@@ -2,7 +2,8 @@ package es.angelillo15.mast.api.managers;
 
 import java.util.ArrayList;
 
-public class StaffChatManager {
+@Deprecated
+public class LegacyStaffChatManager {
     private static final ArrayList<String> staffChatEnable = new ArrayList<>();
 
     public static void setStaffChatEnable(String playerUUID, boolean staffChat) {
