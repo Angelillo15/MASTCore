@@ -184,6 +184,9 @@ public class LibsManager {
                 .version("2.10.1")
                 .isolatedLoad(false)
                 .relocate("com{}google{}gson", "es{}angelillo15{}mast{}libs{}google{}gson")
+                .relocate("com{}google{}common", "es{}angelillo15{}mast{}libs{}google{}common")
+                .relocate("com{}google{}errorprone", "es{}angelillo15{}mast{}libs{}google{}errorprone")
+                .relocate("com{}google{}thirdparty", "es{}angelillo15{}mast{}libs{}google{}thirdparty")
                 .build();
 
         Library snakeYAML = Library.builder()
@@ -224,6 +227,9 @@ public class LibsManager {
                 .groupId("com{}google{}inject")
                 .artifactId("guice")
                 .version("7.0.0")
+                .relocate("com{}google{}common", "es{}angelillo15{}mast{}libs{}google{}common")
+                .relocate("com{}google{}errorprone", "es{}angelillo15{}mast{}libs{}google{}errorprone")
+                .relocate("com{}google{}thirdparty", "es{}angelillo15{}mast{}libs{}google{}thirdparty")
                 .isolatedLoad(false)
                 .build();
 
@@ -247,6 +253,17 @@ public class LibsManager {
                 .version("1.0")
                 .isolatedLoad(false)
                 .build();
+
+        Library guavaFailureAccess = Library.builder()
+                .groupId("com{}google{}guava")
+                .artifactId("failureaccess")
+                .version("1.0")
+                .relocate("com{}google{}common", "es{}angelillo15{}mast{}libs{}google{}common")
+                .relocate("com{}google{}errorprone", "es{}angelillo15{}mast{}libs{}google{}errorprone")
+                .relocate("com{}google{}thirdparty", "es{}angelillo15{}mast{}libs{}google{}thirdparty")
+                .isolatedLoad(false)
+                .build();
+
 
         libs.add(getKotlinLib("kotlin-stdlib-jdk8"));
         libs.add(getKotlinLib("kotlin-stdlib-jdk7"));
@@ -303,6 +320,7 @@ public class LibsManager {
             libs.add(googleGuice);
             libs.add(jakartaInjectApi);
             libs.add(jakartaInjectTck);
+            libs.add(guavaFailureAccess);
         }
     }
 
