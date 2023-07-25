@@ -1,17 +1,62 @@
-package es.angelillo15.mast.api;
+package es.angelillo15.mast.api
 
-import java.util.UUID;
+import java.util.*
 
-public interface IServerUtils {
-    public boolean isOnline(UUID uuid);
+interface IServerUtils {
+    /**
+     * Check if a player is online
+     * @param uuid The UUID of the player
+     * @return true if the player is online, false otherwise
+     */
+    fun isOnline(uuid: UUID): Boolean
 
-    public boolean isOnline(String name);
+    /**
+     * Check if a player is online
+     * @param name The name of the player
+     * @return true if the player is online, false otherwise
+     */
+    fun isOnline(name: String): Boolean
 
-    public String getIP(UUID uuid);
+    /**
+     * Get the IP of a player
+     * @param uuid The UUID of the player
+     * @return The IP of the player
+     */
+    fun getIP(uuid: UUID): String
 
-    public String getIP(String name);
+    /**
+     * Get the IP of a player
+     * @param name The name of the player
+     * @return The IP of the player
+     */
+    fun getIP(name: String): String
 
-    public UUID getUUID(String name);
+    /**
+     * Get the UUID of a player
+     * @param name The name of the player
+     * @return The UUID of the player
+     */
+    fun getUUID(name: String): UUID
 
-    public String getName(UUID uuid);
+    /**
+     * Get the name of a player
+     * @param uuid The UUID of the player
+     * @return The name of the player
+     */
+    fun getName(uuid: UUID): String
+
+    /**
+     * Broadcast a message to the players with a specific permission
+     * @param message The message to broadcast
+     * @param permission The permission to check
+     */
+    fun broadcastMessage(message: String, permission: String)
+
+    /**
+     * Broadcast a message to the players with the permission "mast.staff"
+     * @param message The message to broadcast
+     */
+    fun broadcastStaffMessage(message: String) {
+        broadcastMessage(message, "mast.staff")
+    }
 }
