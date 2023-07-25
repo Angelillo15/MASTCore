@@ -304,6 +304,7 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance<JavaPlugin> {
 
 
         currentVersion = Integer.parseInt(getDescription().getVersion()
+                .replace("-BETA", "")
                 .replace("-DEV", "")
                 .replace(".", "")
                 .replace("v", "")
