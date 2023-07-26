@@ -52,6 +52,7 @@ import java.io.File;
 import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.Objects;
 
 public class MAStaff extends JavaPlugin implements MAStaffInstance<JavaPlugin> {
     @Getter
@@ -122,10 +123,10 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance<JavaPlugin> {
 
     @Override
     public void registerCommands() {
-        getCommand("staff").setExecutor(new StaffCMD());
-        if (Config.Freeze.enabled()) getCommand("freeze").setExecutor(new FreezeCMD());
-        getCommand("mast").setExecutor(new MAStaffCMD());
-        getCommand("staffchat").setExecutor(new StaffChatCMD());
+        Objects.requireNonNull(getCommand("staff")).setExecutor(new StaffCMD());
+        if (Config.Freeze.enabled()) Objects.requireNonNull(getCommand("freeze")).setExecutor(injector.getInstance(FreezeCMD.class));
+        Objects.requireNonNull(getCommand("mast")).setExecutor(new MAStaffCMD());
+        Objects.requireNonNull(getCommand("staffchat")).setExecutor(new StaffChatCMD());
     }
 
     @Override
