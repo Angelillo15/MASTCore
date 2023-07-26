@@ -65,4 +65,9 @@ public class PlayerCommandSender implements CommandSender {
     public Audience getAudience() {
         return audience;
     }
+
+    @Override
+    public String getServerName() {
+        return player.getServer().getName();
+    }
 }
