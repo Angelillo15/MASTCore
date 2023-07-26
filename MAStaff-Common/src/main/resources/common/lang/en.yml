@@ -23,6 +23,10 @@ Prefix: '&a&lSTAFF &8&l»&r' # This will appear before all the plugin messages.
 # or starting the message with the prefix you set in the config.yml
 StaffChat:
   # The format for sent messages on Staff Chat.
-  format: '{prefix} &a{player} &8&l» &7{message}'
+  format: '{prefix} &a{player} &r&7({server}) &8&l» &r&7{message}'
   # Message sent when the command is not used correctly.
   correctUse: '{prefix} &7You must use &a/sc <message>|<no-args -> toggle> &7.'
+  # Message sent when the player enables the Staff Chat.
+  enabled: '{prefix} &7You have &aenabled &7the Staff Chat.'
+  # Message sent when the player disables the Staff Chat.
+  disabled: '{prefix} &7You have &cdisabled &7the Staff Chat.'

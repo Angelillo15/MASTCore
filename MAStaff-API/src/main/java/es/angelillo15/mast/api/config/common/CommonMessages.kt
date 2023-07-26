@@ -18,6 +18,14 @@ object CommonMessages {
         fun correctUse(): String {
             return get("StaffChat.correctUse")
         }
+
+        fun enabled(): String {
+            return get("StaffChat.enabled")
+        }
+
+        fun disabled(): String {
+            return get("StaffChat.disabled")
+        }
     }
 
     fun get(key: String): String {
