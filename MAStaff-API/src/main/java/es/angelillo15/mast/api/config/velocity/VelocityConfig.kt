@@ -30,6 +30,7 @@ class VelocityConfig {
 
         config = ConfigManager(plugin.pluginDataFolder.toPath(), "Velocity/config.yml", "config.yml")
         config.registerConfig()
+        plugin.isDebug = config.config.getBoolean("Config.debug");
     }
 
     private fun loadLanguages() {
