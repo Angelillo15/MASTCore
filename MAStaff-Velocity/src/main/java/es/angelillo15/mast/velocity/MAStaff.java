@@ -14,13 +14,16 @@ import es.angelillo15.mast.api.*;
 import es.angelillo15.mast.api.cmd.Command;
 import es.angelillo15.mast.api.cmd.CommandData;
 import es.angelillo15.mast.api.config.common.CommonConfig;
+import es.angelillo15.mast.api.config.common.CommonMessages;
 import es.angelillo15.mast.api.config.velocity.Config;
 import es.angelillo15.mast.api.config.velocity.Messages;
 import es.angelillo15.mast.api.config.velocity.VelocityConfig;
 import es.angelillo15.mast.api.data.DataManager;
 import es.angelillo15.mast.api.database.PluginConnection;
 import es.angelillo15.mast.api.inject.StaticMembersInjector;
+import es.angelillo15.mast.api.thread.AsyncThreadKt;
 import es.angelillo15.mast.cmd.HelpOP;
+import es.angelillo15.mast.cmd.StaffChat;
 import es.angelillo15.mast.velocity.cmd.CustomCommand;
 import es.angelillo15.mast.velocity.inject.VelocityInjector;
 import es.angelillo15.mast.velocity.listeners.OnStaffChange;
@@ -55,6 +58,8 @@ public class MAStaff implements MAStaffInstance<ProxyServer> {
     private PluginConnection connection;
     @Getter
     private CommonConfig commonConfig;
+    @Getter
+    private VelocityConfig velocityConfig;
     private Injector injector;
     private boolean debug;
     ClassLoader classLoader = getClass().getClassLoader();
@@ -63,8 +68,8 @@ public class MAStaff implements MAStaffInstance<ProxyServer> {
     public MAStaff(ProxyServer proxyServer, Logger Slf4jLogger, @DataDirectory Path dataDirectory) {
         instance = this;
         this.Slf4jLogger = Slf4jLogger;
-        logger = new es.angelillo15.mast.velocity.utils.Logger();
         this.proxyServer = proxyServer;
+        logger = new es.angelillo15.mast.velocity.utils.Logger();
         this.dataDirectory = dataDirectory;
     }
 
@@ -78,6 +83,7 @@ public class MAStaff implements MAStaffInstance<ProxyServer> {
         registerListeners();
         loadDatabase();
         loadModules();
+        AsyncThreadKt.start();
 
         logger.info("&aMAStaff &7v" + Constants.VERSION + " &ahas been loaded correctly!");
     }
@@ -116,6 +122,10 @@ public class MAStaff implements MAStaffInstance<ProxyServer> {
         injector.getInstance(VelocityConfig.class).load();
         StaticMembersInjector.injectStatics(injector, Config.class);
         StaticMembersInjector.injectStatics(injector, Messages.class);
+        StaticMembersInjector.injectStatics(injector, CommonMessages.class);
+        StaticMembersInjector.injectStatics(injector, es.angelillo15.mast.api.config.common.Config.class);
+        velocityConfig = injector.getInstance(VelocityConfig.class);
+        velocityConfig.load();
         commonConfig = injector.getInstance(CommonConfig.class);
         commonConfig.load();
     }
@@ -123,6 +133,7 @@ public class MAStaff implements MAStaffInstance<ProxyServer> {
     @Override
     public void registerCommands() {
         registerCommand(injector.getInstance(HelpOP.class));
+        registerCommand(injector.getInstance(StaffChat.class));
     }
 
     @Override
