@@ -65,4 +65,13 @@ public class VelocityPlayerCommandSender implements CommandSender {
     public Audience getAudience() {
         return player;
     }
+
+    @Override
+    public String getServerName() {
+        if (player.getCurrentServer().isPresent()) {
+            return player.getCurrentServer().get().getServerInfo().getName();
+        }
+
+        return "Proxy";
+    }
 }

@@ -26,4 +26,6 @@ public interface CommandSender {
     boolean isSpigot();
 
     Audience getAudience();
+
+    String getServerName();
 }

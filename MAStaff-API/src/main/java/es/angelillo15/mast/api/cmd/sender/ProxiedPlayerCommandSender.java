@@ -68,4 +68,9 @@ public class ProxiedPlayerCommandSender implements CommandSender {
     public Audience getAudience() {
         return audience;
     }
+
+    @Override
+    public String getServerName() {
+        return player.getServer().getInfo().getName();
+    }
 }

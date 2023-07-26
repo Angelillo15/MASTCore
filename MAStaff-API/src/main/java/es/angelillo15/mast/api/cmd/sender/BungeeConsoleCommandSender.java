@@ -16,7 +16,7 @@ public class BungeeConsoleCommandSender implements CommandSender {
 
     @Override
     public String getName() {
-        return "/CONSOLE/";
+        return "Console";
     }
 
     @Override
@@ -57,5 +57,10 @@ public class BungeeConsoleCommandSender implements CommandSender {
     @Override
     public Audience getAudience() {
         return null;
+    }
+
+    @Override
+    public String getServerName() {
+        return "Proxy";
     }
 }
