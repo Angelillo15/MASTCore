@@ -12,7 +12,7 @@ import es.angelillo15.mast.api.data.DataManager;
 import es.angelillo15.mast.api.database.PluginConnection;
 import es.angelillo15.mast.api.inject.StaticMembersInjector;
 import es.angelillo15.mast.api.managers.LegacyUserDataManager;
-import es.angelillo15.mast.api.redis.EventManager;
+import es.angelillo15.mast.api.redis.RedisEventManager;
 import es.angelillo15.mast.api.redis.events.server.ServerConnectedEvent;
 import es.angelillo15.mast.bungee.addons.AddonsLoader;
 import es.angelillo15.mast.bungee.cmd.*;
@@ -132,7 +132,7 @@ public class MAStaff extends Plugin implements MAStaffInstance<Plugin> {
     }
 
     public void registerRedisListeners() {
-        EventManager em = EventManager.getInstance();
+        RedisEventManager em = RedisEventManager.getInstance();
         em.registerListener(new OnServer());
         em.registerListener(new OnStaffJoinLeave());
         em.registerListener(new OnStaffSwitch());

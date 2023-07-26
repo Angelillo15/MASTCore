@@ -1,6 +1,6 @@
 package es.angelillo15.mast.api.redis.events.staff;
 
-import es.angelillo15.mast.api.redis.Events;
+import es.angelillo15.mast.api.event.Events;
 import es.angelillo15.mast.api.redis.RedisEvent;
 
 public class StaffSwitchServerEvent extends RedisEvent {

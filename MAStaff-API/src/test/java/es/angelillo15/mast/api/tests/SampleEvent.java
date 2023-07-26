@@ -1,6 +1,6 @@
 package es.angelillo15.mast.api.tests;
 
-import es.angelillo15.mast.api.redis.Event;
+import es.angelillo15.mast.api.event.Event;
 
 public class SampleEvent extends Event {
     public String helloWorld() {

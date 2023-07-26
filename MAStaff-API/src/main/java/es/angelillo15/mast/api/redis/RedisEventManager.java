@@ -1,5 +1,9 @@
 package es.angelillo15.mast.api.redis;
 
+import es.angelillo15.mast.api.event.Event;
+import es.angelillo15.mast.api.event.EventHandler;
+import es.angelillo15.mast.api.event.EventVector;
+import es.angelillo15.mast.api.event.Listener;
 import lombok.SneakyThrows;
 
 import java.lang.reflect.InvocationTargetException;
@@ -9,20 +13,20 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class EventManager {
-    private EventManager() {
+public class RedisEventManager {
+    private RedisEventManager() {
         // Singleton
     }
 
-    private static EventManager instance = new EventManager();
+    private static RedisEventManager instance = new RedisEventManager();
 
     private Map<String, Class<? extends Event>> events = new HashMap<>();
 
     private Map<Class<? extends Event>, List<EventVector>> listeners = new HashMap<>();
 
-    public static EventManager getInstance() {
+    public static RedisEventManager getInstance() {
         if (instance == null) {
-            instance = new EventManager();
+            instance = new RedisEventManager();
         }
         return instance;
     }
@@ -57,37 +61,6 @@ public class EventManager {
                 }
 
                 listeners.get(eventClass).add(new EventVector(method, listener));
-            }
-        }
-    }
-
-    /**
-     * Unregister a listener
-     * @param listener Listener to unregister
-     */
-    public void unRegisterListener(Listener listener) {
-        Class<?> clazz = listener.getClass();
-
-        for (Method method : clazz.getDeclaredMethods()) {
-            if (method.isAnnotationPresent(EventHandler.class)) {
-                Class<?>[] parameterTypes = method.getParameterTypes();
-
-                if (parameterTypes.length != 1) {
-                    throw new RuntimeException("Event handler method must have exactly one parameter");
-                }
-
-                Class<?> parameterType = parameterTypes[0];
-
-                if (!Event.class.isAssignableFrom(parameterType)) {
-                    throw new RuntimeException("Event handler method must have a parameter that extends Event");
-                }
-
-                @SuppressWarnings("unchecked")
-                Class<? extends Event> eventClass = (Class<? extends Event>) parameterType;
-
-                if (listeners.containsKey(eventClass)) {
-                    listeners.get(eventClass).remove(method);
-                }
             }
         }
     }
