@@ -9,8 +9,9 @@ private var thread: Unit? = null
 
 private var actions = ArrayList<Action>()
 
+@Suppress("UNCHECKED_CAST")
 fun start() {
-    thread = Thread {
+    Thread({
         MAStaffInstance.getLogger().debug("Starting parallel thread...")
 
         while (!shuttingDown) {
@@ -24,7 +25,11 @@ fun start() {
                 break
             }
 
-            for (action in actions) {
+            val clone = getActions().clone();
+
+            val actionsClone:ArrayList<Action> = getActions().clone() as ArrayList<Action>
+
+            for (action in actionsClone) {
                 if (action.delayTask > 0) {
                     action.delayTask -= miles
                     continue
@@ -36,15 +41,18 @@ fun start() {
                     action.runnable.run()
                 } catch (e: Exception) {
                     e.printStackTrace()
+                    continue
                 }
 
                 if (!action.repeat) removeAction(action)
             }
         }
 
+
+
         shuttingDown = false
         MAStaffInstance.getLogger().debug("Parallel thread stopped!")
-    }.start()
+    }, "MAStaff-ParallelThread").start()
 }
 
 /**
