@@ -184,7 +184,7 @@ public class MAStaff implements MAStaffInstance<ProxyServer> {
 
     @Override
     public void registerCommand(Command command) {
-        CommandData commandData = null;
+        CommandData commandData;
 
         CommandManager commandManager = proxyServer.getCommandManager();
 
