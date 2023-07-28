@@ -337,6 +337,7 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance<JavaPlugin> {
 
     }
 
+    @SuppressWarnings("Deprecated")
     public void inject() {
         getPLogger().debug("Injecting...");
         injector = Guice.createInjector(new BukkitInjector());
