@@ -39,7 +39,7 @@ dependencies {
     implementation(project(":MAStaff-API"))
     implementation(project(":MAStaff-Bukkit"))
     implementation(project(":MAStaff-Bungee"))
-    implementation(project("MAStaff-Legacy"))
+    implementation(project(":MAStaff-Legacy"))
     implementation(project(":MAStaff-Punishments"))
     implementation(project(":MAStaff-Vanish"))
     implementation(project(":MAStaff-PAPI"))

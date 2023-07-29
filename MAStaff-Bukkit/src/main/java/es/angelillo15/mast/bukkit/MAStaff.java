@@ -72,6 +72,8 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance<JavaPlugin> {
     @Getter
     private static int spiVersion;
     private Injector injector;
+    @Getter
+    static boolean isFree = false;
 
     @Override
     public void onEnable() {
@@ -169,9 +171,7 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance<JavaPlugin> {
                     );
                     break;
                 case SQLITE:
-                    pluginConnection = new PluginConnection(
-                            getPlugin().getDataFolder().getAbsolutePath()
-                    );
+                    loadSqlite();
                     break;
             }
 
@@ -198,6 +198,12 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance<JavaPlugin> {
 
         logger.info(TextUtils.colorize("&aConnected to the {type} database successfully.")
                 .replace("{type}", PluginConnection.getDataProvider().name())
+        );
+    }
+
+    public void loadSqlite() {
+        pluginConnection = new PluginConnection(
+                getPlugin().getDataFolder().getAbsolutePath()
         );
     }
 
@@ -304,7 +310,7 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance<JavaPlugin> {
                 .asString();
 
 
-        currentVersion = Integer.parseInt(getDescription().getVersion()
+        currentVersion = Integer.parseInt(Constants.VERSION
                 .replace("-BETA", "")
                 .replace("-DEV", "")
                 .replace(".", "")
@@ -337,6 +343,7 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance<JavaPlugin> {
 
     }
 
+    @SuppressWarnings("Deprecated")
     public void inject() {
         getPLogger().debug("Injecting...");
         injector = Guice.createInjector(new BukkitInjector());

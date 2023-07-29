@@ -410,6 +410,7 @@ public class StaffPlayer implements IStaffPlayer {
 
     @Override
     public void executeFreezedPunishments(String player) {
+        if (MAStaff.isFree()) return;
         if (!Config.Freeze.executeCommandOnExit()) return;
         if (Config.Freeze.commands().isEmpty()) return;
 
@@ -463,7 +464,12 @@ public class StaffPlayer implements IStaffPlayer {
     public StaffPlayer setPlayer(Player player) {
         this.player = player;
         if (Config.Addons.vanish()) this.vanishPlayer = new VanishPlayer(this);
-        if (Config.Addons.glow()) this.glowPlayer = new GlowPlayer(this);
+
+        if (Config.Addons.glow() &&
+                !(MAStaff.getPlugin().getDescription().getPrefix() != null &&
+                        MAStaff.getPlugin().getDescription().getPrefix().toLowerCase().contains("lite")
+                )
+        ) this.glowPlayer = new GlowPlayer(this);
 
         playerInventoryFile = new File(MAStaff.getPlugin().getDataFolder().getAbsoluteFile() + "/data/staffMode/" + player.getUniqueId() + ".yml");
         playerInventoryConfig = YamlConfiguration.loadConfiguration(playerInventoryFile);
