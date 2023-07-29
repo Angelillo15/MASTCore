@@ -107,7 +107,12 @@ public class AddonsLoader {
     }
 
     public static void loadDefaultAddons() {
+        loadDefaultAddons(false);
+    }
+    public static void loadDefaultAddons(boolean isFree) {
         if (Config.Addons.vanish()) registerAddon("Vanish", new MAStaffVanish());
+
+        if (isFree) return;
 
         if (Config.Addons.glow() && MAStaffInstance.version() > 9) registerAddon("Glow",
                 MAStaff.getPlugin().getInjector().getInstance(GlowAddon.class)

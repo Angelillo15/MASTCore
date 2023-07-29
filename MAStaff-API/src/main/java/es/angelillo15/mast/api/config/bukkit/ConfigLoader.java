@@ -28,9 +28,16 @@ public class ConfigLoader {
     private static ConfigManager customItems;
     @Getter
     private static ConfigManager punishmentsGUI;
+    private final boolean isFree;
 
     public ConfigLoader(MAStaffInstance<JavaPlugin> plugin) {
         this.plugin = plugin;
+        this.isFree = false;
+    }
+
+    public ConfigLoader(MAStaffInstance<JavaPlugin> plugin, boolean isFree) {
+        this.plugin = plugin;
+        this.isFree = isFree;
     }
 
     public void load() {
@@ -43,12 +50,18 @@ public class ConfigLoader {
         loadMessage();
         logger.debug("Loading internal staff items...");
         loadInternal();
-        logger.debug("Loading glow module...");
-        loadGlowModule();
-        logger.debug("Loading custom items...");
-        loadCustomItems();
-        logger.debug("Loading punishments GUI...");
-        loadPunishmentsGUI();
+
+        if (!isFree) {
+            logger.debug("Loading glow module...");
+            loadGlowModule();
+
+            logger.debug("Loading custom items...");
+            loadCustomItems();
+
+            logger.debug("Loading punishments GUI...");
+            loadPunishmentsGUI();
+        }
+
         logger.debug("Configs loaded!");
     }
 
@@ -63,7 +76,7 @@ public class ConfigLoader {
         plugin.setDebug(config.getConfig().getBoolean("Config.debug"));
     }
 
-    public void loadInternal (){
+    public void loadInternal() {
         internalStaffItems = new ConfigManager(plugin.getPluginDataFolder().toPath(), "Bukkit/modules/items/internal.yml", "/modules/items/internal.yml");
         internalStaffItems.registerConfig();
     }
@@ -89,7 +102,7 @@ public class ConfigLoader {
                 plugin.getPluginResource("Bukkit/lang/" + language)
         );
 
-        messages = new ConfigManager(plugin.getPluginDataFolder().toPath(), "Bukkit/" +lang, lang);
+        messages = new ConfigManager(plugin.getPluginDataFolder().toPath(), "Bukkit/" + lang, lang);
         messages.registerConfig();
         try {
             messages.getConfig().load();
@@ -98,7 +111,7 @@ public class ConfigLoader {
         }
     }
 
-    public void loadPunishmentsGUI(){
+    public void loadPunishmentsGUI() {
         punishmentsGUI = new ConfigManager(plugin.getPluginDataFolder().toPath(), "Bukkit/modules/punishments/gui.yml", "/modules/punishments/gui.yml");
         punishmentsGUI.registerConfig();
     }
@@ -108,7 +121,7 @@ public class ConfigLoader {
         customItems.registerConfig();
     }
 
-    public void loadGlowModule(){
+    public void loadGlowModule() {
         glow = new ConfigManager(plugin.getPluginDataFolder().toPath(), "Bukkit/modules/glow.yml", "/modules/glow.yml");
         glow.registerConfig();
     }
