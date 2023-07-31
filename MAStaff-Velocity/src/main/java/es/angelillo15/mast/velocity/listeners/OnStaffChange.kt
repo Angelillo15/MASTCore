@@ -10,7 +10,6 @@ import es.angelillo15.mast.api.config.velocity.Messages
 class OnStaffChange {
     @Inject
     private lateinit var logger: ILogger
-
     @Subscribe
     fun staffChange(event: PluginMessageEvent) {
         if (event.identifier.id != "mastaff:staff") return
