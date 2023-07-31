@@ -7,6 +7,7 @@ import es.angelillo15.mast.api.database.DataProvider;
 import es.angelillo15.mast.api.inject.StaticMembersInjector;
 import es.angelillo15.mast.api.managers.LegacyUserDataManager;
 import es.angelillo15.mast.api.managers.LegacyStaffPlayersManagers;
+import es.angelillo15.mast.api.managers.StaffManager;
 import es.angelillo15.mast.api.thread.AsyncThreadKt;
 import es.angelillo15.mast.api.utils.BukkitUtils;
 import es.angelillo15.mast.bukkit.addons.AddonsLoader;
@@ -366,7 +367,12 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance<JavaPlugin> {
 
     @Override
     public IStaffPlayer createStaffPlayer(Player player) {
-        return injector.getInstance(StaffPlayer.class).setPlayer(player);
+        IStaffPlayer staffPlayer = injector.getInstance(StaffPlayer.class).setPlayer(player);
+
+        StaffManager manager = injector.getInstance(StaffManager.class);
+        manager.addStaffPlayer(staffPlayer);
+
+        return staffPlayer;
     }
 
     @Override
