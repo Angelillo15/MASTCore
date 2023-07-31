@@ -10,6 +10,7 @@ import com.velocitypowered.api.event.proxy.ProxyInitializeEvent;
 import com.velocitypowered.api.plugin.Plugin;
 import com.velocitypowered.api.plugin.annotation.DataDirectory;
 import com.velocitypowered.api.proxy.ProxyServer;
+import com.velocitypowered.api.proxy.messages.MinecraftChannelIdentifier;
 import es.angelillo15.mast.api.*;
 import es.angelillo15.mast.api.cmd.Command;
 import es.angelillo15.mast.api.cmd.CommandData;
@@ -84,6 +85,7 @@ public class MAStaff implements MAStaffInstance<ProxyServer> {
         loadDatabase();
         loadModules();
         AsyncThreadKt.start();
+        proxyServer.getChannelRegistrar().register(MinecraftChannelIdentifier.from("mastaff:staff"));
 
         logger.info("&aMAStaff &7v" + Constants.VERSION + " &ahas been loaded correctly!");
     }

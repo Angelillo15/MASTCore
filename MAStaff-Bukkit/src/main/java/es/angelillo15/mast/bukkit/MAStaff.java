@@ -127,7 +127,7 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance<JavaPlugin> {
     public void registerCommands() {
         Objects.requireNonNull(getCommand("staff")).setExecutor(new StaffCMD());
         if (Config.Freeze.enabled()) Objects.requireNonNull(getCommand("freeze")).setExecutor(injector.getInstance(FreezeCMD.class));
-        Objects.requireNonNull(getCommand("mast")).setExecutor(new MAStaffCMD());
+        Objects.requireNonNull(getCommand("mast")).setExecutor(injector.getInstance(MAStaffCMD.class));
         Objects.requireNonNull(getCommand("staffchat")).setExecutor(new StaffChatCMD());
     }
 
@@ -150,7 +150,7 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance<JavaPlugin> {
         if (version >= 9) pm.registerEvents(injector.getInstance(OnSwapHand.class), this);
         if (version >= 9) pm.registerEvents(injector.getInstance(OnAchievement.class), this);
         FreezeUtils.setupMessageSender();
-        this.getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
+        this.getServer().getMessenger().registerOutgoingPluginChannel(this, "mastaff:staff");
     }
 
     @Override
@@ -350,6 +350,7 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance<JavaPlugin> {
 
         StaticMembersInjector.injectStatics(injector, LegacyStaffPlayersManagers.class);
         StaticMembersInjector.injectStatics(injector, LegacyUserDataManager.class);
+        StaticMembersInjector.injectStatics(injector, MAStaffCMD.class);
     }
 
     public void registerPlaceholderAPI() {

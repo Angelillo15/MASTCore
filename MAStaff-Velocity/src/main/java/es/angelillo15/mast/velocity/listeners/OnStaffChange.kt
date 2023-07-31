@@ -13,7 +13,7 @@ class OnStaffChange {
 
     @Subscribe
     fun staffChange(event: PluginMessageEvent) {
-        if (event.identifier.id != "BungeeCord") return
+        if (event.identifier.id != "mastaff:staff") return
 
         val input = ByteStreams.newDataInput(event.data)
 
