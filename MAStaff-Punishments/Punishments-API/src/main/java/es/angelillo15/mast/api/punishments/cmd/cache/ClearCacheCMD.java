@@ -8,7 +8,8 @@ import es.angelillo15.mast.api.cmd.CommandParent;
         permission = "mastaff.punishments.clearcache"
 )
 public class ClearCacheCMD extends CommandParent {
-    public ClearCacheCMD() {
+    @Override
+    public void registerSubCommands() {
         this.registerSubCommand(new BansCache());
     }
 }
