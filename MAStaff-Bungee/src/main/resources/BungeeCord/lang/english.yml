@@ -1,5 +1,5 @@
 #
-# This is the English language file for MAStaff Bungee,
+# This is the English language file for MAStaff Bungee and velocity,
 # where you can modify and customize the plugin messages.
 #
 # Remember to join my Discord server if you need help:
@@ -7,7 +7,7 @@
 #
 Reloaded: '{prefix} &7MAStaff has been reloaded successfully.'
 Messages:
-  prefix: '&a&lSTAFF &8&l»' # This will appear before all the plugin messages.
+  prefix: '&a&lSTAFF &8&l»&r' # This will appear before all the plugin messages.
   playerStaffModeEnabled: '{prefix} &a{player} &7has &aenabled &7staff mode.'
   playerStaffModeDisabled: '{prefix} &a{player} &7has &adisabled &7staff mode.'
 StaffChat:
