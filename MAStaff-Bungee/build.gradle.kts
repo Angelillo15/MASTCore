@@ -13,6 +13,7 @@ dependencies {
     compileOnly(libs.miniMessage)
     compileOnly(libs.adventureBungee)
     compileOnly(libs.adventureApi)
+    compileOnly(libs.protocolize)
 }
 
 tasks.processResources {
