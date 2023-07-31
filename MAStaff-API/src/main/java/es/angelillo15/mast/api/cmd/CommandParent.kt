@@ -10,6 +10,9 @@ abstract class CommandParent : Command() {
     @Getter
     private val subCommands: MutableMap<String?, SubCommand> = HashMap()
     override fun onCommand(sender: CommandSender?, label: String?, args: Array<String?>?) {
+        if (subCommands.isEmpty())
+            registerSubCommands()
+
         if (args!!.isEmpty()) {
             sendHelp(sender)
             return
@@ -23,8 +26,11 @@ abstract class CommandParent : Command() {
             sender.sendMessage(TextUtils.simpleColorize(noPermission))
             return
         }
+
         subCommand.onCommand(sender, label, args)
     }
+
+    abstract fun registerSubCommands();
 
     fun sendHelp(sender: CommandSender?) {
         sender!!.sendMessage(TextUtils.simpleColorize("&a&lMAS&r&ltaff &7- &fv" + Constants.VERSION))
