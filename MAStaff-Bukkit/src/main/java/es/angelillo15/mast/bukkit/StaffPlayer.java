@@ -186,7 +186,7 @@ public class StaffPlayer implements IStaffPlayer {
         out.writeUTF(player.getName());
         out.writeUTF(String.valueOf(isStaffMode()));
 
-        player.sendPluginMessage(MAStaff.getPlugin(), "BungeeCord", out.toByteArray());
+        player.sendPluginMessage(MAStaff.getPlugin(), "mastaff:staff", out.toByteArray());
     }
 
     @SneakyThrows
