@@ -8,7 +8,7 @@ public class Messages {
     private static VelocityConfig config;
 
     public static String getString(String path) {
-        return TextUtils.colorize(
+        return TextUtils.toMM(
                 config.getMessages().getConfig().getString(path)
                         .replace("{prefix}", config.getMessages().getConfig().getString("Messages.prefix"))
         );
