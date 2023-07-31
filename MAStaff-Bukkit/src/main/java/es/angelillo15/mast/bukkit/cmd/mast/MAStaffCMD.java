@@ -17,7 +17,7 @@ public class MAStaffCMD implements CommandExecutor {
     @Getter
     private static ArrayList<LegacySubCommand> legacySubCommands = new ArrayList<>();
     @Inject
-    private MAStaffInject inject;
+    private static MAStaffInject inject;
 
     public MAStaffCMD(){
         legacySubCommands.clear();
