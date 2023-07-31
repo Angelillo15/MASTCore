@@ -11,6 +11,7 @@ import es.angelillo15.mast.api.config.punishments.ConfigLoader;
 import es.angelillo15.mast.api.punishments.cmd.warn.UnWarnCMD;
 import es.angelillo15.mast.api.punishments.cmd.warn.WarnCMD;
 import es.angelillo15.mast.api.punishments.data.DataManager;
+import es.angelillo15.mast.api.utils.MAStaffInject;
 import es.angelillo15.mast.bungee.punishments.listeners.BroadcastListener;
 import es.angelillo15.mast.bungee.punishments.listeners.PlayerBanListener;
 import es.angelillo15.mast.bungee.punishments.listeners.PunishPlayerListener;
@@ -20,7 +21,7 @@ import net.md_5.bungee.api.plugin.Plugin;
 
 public class MAStaffPunishments extends MAStaffAddon<Plugin> {
     @Inject
-    private MAStaffInstance instance;
+    private MAStaffInject instance;
 
     private Injector injector;
     @Override

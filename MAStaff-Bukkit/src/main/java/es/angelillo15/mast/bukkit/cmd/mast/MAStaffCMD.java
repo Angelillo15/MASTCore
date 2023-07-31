@@ -1,9 +1,11 @@
 package es.angelillo15.mast.bukkit.cmd.mast;
 
+import com.google.inject.Inject;
 import es.angelillo15.mast.api.Constants;
 import es.angelillo15.mast.api.TextUtils;
 import es.angelillo15.mast.api.cmd.LegacySubCommand;
 import es.angelillo15.mast.api.config.bukkit.Messages;
+import es.angelillo15.mast.api.utils.MAStaffInject;
 import lombok.Getter;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -14,12 +16,15 @@ import java.util.ArrayList;
 public class MAStaffCMD implements CommandExecutor {
     @Getter
     private static ArrayList<LegacySubCommand> legacySubCommands = new ArrayList<>();
+    @Inject
+    private MAStaffInject inject;
 
     public MAStaffCMD(){
         legacySubCommands.clear();
-        legacySubCommands.add(new ReloadARG());
-        legacySubCommands.add(new HelpARG());
-        legacySubCommands.add(new DumpARG());
+        legacySubCommands.add(inject.getInjector().getInstance(ReloadARG.class));
+        legacySubCommands.add(inject.getInjector().getInstance(HelpARG.class));
+        legacySubCommands.add(inject.getInjector().getInstance(DumpARG.class));
+        legacySubCommands.add(inject.getInjector().getInstance(DebugARG.class));
     }
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
