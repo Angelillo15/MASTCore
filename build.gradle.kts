@@ -80,6 +80,9 @@ allprojects {
         maven("https://papermc.io/repo/repository/maven-releases/")
         maven("https://repo.papermc.io/repository/maven-public/")
         maven("https://repo.extendedclip.com/content/repositories/placeholderapi/")
+        maven("https://mvn.exceptionflug.de/repository/exceptionflug-public/")
+        maven("https://repo.simplix.dev/repository/simplixsoft-public")
+        maven("https://repo.nookure.com/releases")
     }
 
     tasks.withType<JavaCompile> {
@@ -99,6 +102,6 @@ allprojects {
     }
 
     kotlin {
-        jvmToolchain(8);
+        jvmToolchain(17);
     }
 }
