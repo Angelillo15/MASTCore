@@ -4,7 +4,7 @@ data class WarnTemplate(
     val id: String,
     val warnReason: String,
     val warnMessage: String,
-    val maxWarnings: String,
+    val maxWarnings: Int,
     val actions: List<WarnAction>,
     val deleteOnMax: Boolean,
     val permission: String
