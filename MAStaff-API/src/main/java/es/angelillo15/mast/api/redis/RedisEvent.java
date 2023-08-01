@@ -1,5 +1,7 @@
 package es.angelillo15.mast.api.redis;
 
+import es.angelillo15.mast.api.event.Event;
+
 public class RedisEvent extends Event {
 
     private final String message;

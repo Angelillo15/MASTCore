@@ -1,8 +1,8 @@
 package es.angelillo15.mast.bungee.listener.redis.server;
 
 import es.angelillo15.mast.api.TextUtils;
-import es.angelillo15.mast.api.redis.EventHandler;
-import es.angelillo15.mast.api.redis.Listener;
+import es.angelillo15.mast.api.event.EventHandler;
+import es.angelillo15.mast.api.event.Listener;
 import es.angelillo15.mast.api.redis.events.server.ServerConnectedEvent;
 import es.angelillo15.mast.api.redis.events.server.ServerDisconnectedEvent;
 import es.angelillo15.mast.bungee.MAStaff;

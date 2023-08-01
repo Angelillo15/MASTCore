@@ -24,6 +24,23 @@ public class Config {
     public static boolean silentOpenChest() {
         return ConfigLoader.getConfig().getConfig().getBoolean("Config.silentChestOpening");
     }
+
+    public static boolean executeCommandsOnEnter() {
+        return ConfigLoader.getConfig().getConfig().getBoolean("Config.executeCommandsOnEnter");
+    }
+
+    public static boolean executeCommandsOnExit() {
+        return ConfigLoader.getConfig().getConfig().getBoolean("Config.executeCommandsOnExit");
+    }
+
+    public static List<String> commandsOnEnter() {
+        return ConfigLoader.getConfig().getConfig().getStringList("Config.commandsOnEnter");
+    }
+
+    public static List<String> commandsOnExit() {
+        return ConfigLoader.getConfig().getConfig().getStringList("Config.commandsOnExit");
+    }
+
     public static class Database {
         public static String type() {
             return ConfigLoader.getConfig().getConfig().getString("Database.type");

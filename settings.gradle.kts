@@ -22,3 +22,6 @@ findProject(":MAStaff-Punishments:Punishments-API")?.name = "Punishments-API"
 include("MAStaff-Vanish")
 include("MAStaff-Glow")
 include("MAStaff-PAPI")
+include("MAStaff-Velocity")
+include("MAStaff-Common")
+include("MAStaff-Lite")

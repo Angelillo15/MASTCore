@@ -6,9 +6,8 @@ import es.angelillo15.mast.api.cmd.sender.CommandSender;
 import es.angelillo15.mast.api.config.punishments.Config;
 import es.angelillo15.mast.api.models.UserModel;
 import es.angelillo15.mast.api.database.PluginConnection;
-import es.angelillo15.mast.api.exceptions.PlayerNotBannedException;
 import es.angelillo15.mast.api.exceptions.user.PlayerNotOnlineException;
-import es.angelillo15.mast.api.managers.UserDataManager;
+import es.angelillo15.mast.api.managers.LegacyUserDataManager;
 import es.angelillo15.mast.api.models.WarnModel;
 import es.angelillo15.mast.api.punishments.IPunishPlayer;
 import es.angelillo15.mast.api.cache.BanCache;
@@ -33,7 +32,7 @@ public class PunishPlayer implements IPunishPlayer {
 
     public PunishPlayer(CommandSender player) {
         this.player = player;
-        this.data = UserDataManager.getUserData(player.getName());
+        this.data = LegacyUserDataManager.getUserData(player.getName());
     }
 
     @Override
@@ -53,7 +52,7 @@ public class PunishPlayer implements IPunishPlayer {
 
     public void getUserModel(BiConsumer<UserModel, UserModel> callback, String target) {
         try {
-            UserModel targetUser = UserDataManager.getUserData(target);
+            UserModel targetUser = LegacyUserDataManager.getUserData(target);
             callback.accept(data, targetUser);
         } catch (Exception e) {
             MAStaffInstance.getLogger().debug("Error while getting user data: " + e.getMessage() + " - " + e.getCause() + " - " + target);
@@ -82,7 +81,7 @@ public class PunishPlayer implements IPunishPlayer {
             return;
         }
 
-        UserModel data = UserDataManager.getUserData(target);
+        UserModel data = LegacyUserDataManager.getUserData(target);
 
         bansTable.setUsername(data.getUsername());
         bansTable.setUuid(data.getUUID() == null ? "unknown" : data.getUUID());
@@ -132,8 +131,6 @@ public class PunishPlayer implements IPunishPlayer {
     @SneakyThrows
     @Override
     public void unban(String target, String reason) {
-        Storm storm = PluginConnection.getStorm();
-
         BansTable bansTable = null;
 
         if (!BansTable.isPermBanned(target)) {
@@ -141,10 +138,14 @@ public class PunishPlayer implements IPunishPlayer {
                     Messages.Commands.playerNotBanned(target)
             );
 
-            throw new PlayerNotBannedException("Player " + target + " is not banned");
+            return;
         }
 
         bansTable = BansTable.getBan(target);
+
+        if (bansTable == null) {
+            return;
+        }
 
         bansTable.unBan(player.getName(), reason, player.getUniqueId());
 

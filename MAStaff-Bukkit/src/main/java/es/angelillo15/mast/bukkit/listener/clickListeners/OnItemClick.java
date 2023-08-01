@@ -1,21 +1,22 @@
 package es.angelillo15.mast.bukkit.listener.clickListeners;
 
+import com.google.inject.Inject;
 import es.angelillo15.mast.api.IStaffPlayer;
 import es.angelillo15.mast.api.Permissions;
 import es.angelillo15.mast.api.items.IExecutableItem;
 import es.angelillo15.mast.api.items.IExecutableLocationItem;
 import es.angelillo15.mast.api.items.StaffItem;
-import es.angelillo15.mast.api.managers.StaffPlayersManagers;
+import es.angelillo15.mast.api.managers.StaffManager;
 import es.angelillo15.mast.bukkit.MAStaff;
-import org.bukkit.block.Chest;
-import org.bukkit.block.Container;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.inventory.meta.ItemMeta;
 
 public class OnItemClick implements Listener {
+    @Inject
+    private StaffManager staffManager;
+
     @EventHandler
     public void onItemClick(PlayerInteractEvent event) {
 
@@ -25,7 +26,7 @@ public class OnItemClick implements Listener {
             return;
         }
 
-        IStaffPlayer staffPlayer = StaffPlayersManagers.getStaffPlayer(player);
+        IStaffPlayer staffPlayer = staffManager.getStaffPlayer(player);
 
         if (!staffPlayer.isStaffMode()) {
             return;

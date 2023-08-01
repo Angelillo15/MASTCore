@@ -1,21 +1,13 @@
-plugins {
-    id("java")
-    id("com.github.johnrengelman.shadow") version "4.0.4"
-}
-
 group = parent?.group ?: "es.angelillo15"
 version = parent?.version ?: "undefined"
 
 repositories {
     mavenCentral()
-    maven("https://hub.spigotmc.org/nexus/content/repositories/snapshots/")
-    maven("https://repo.papermc.io/repository/maven-public/")
-    maven("https://oss.sonatype.org/content/repositories/snapshots")
-    maven("https://oss.sonatype.org/content/repositories/central")
-    maven("https://repo.dmulloy2.net/repository/public/")
-    maven("https://repo.extendedclip.com/content/repositories/placeholderapi/")
-    maven("https://repo.alessiodp.com/releases/")
 }
+
+val compileOnlyApi: Configuration by configurations.creating
+configurations["compileClasspath"].extendsFrom(compileOnlyApi)
+configurations["apiElements"].extendsFrom(compileOnlyApi)
 
 dependencies {
     compileOnly(project(":MAStaff-API"))
@@ -23,31 +15,26 @@ dependencies {
     compileOnly(project(":MAStaff-Vanish"))
     compileOnly(project(":MAStaff-PAPI"))
     compileOnly(project(":MAStaff-Glow"))
-    compileOnly(libs.spigot)
-    compileOnly(libs.paperApi)
-    compileOnly(libs.snakeYaml)
-    compileOnly(libs.simpleYaml)
-    compileOnly(libs.configManager)
-    compileOnly(libs.hikariCP)
-    compileOnly(libs.bundles.invAPI)
-    compileOnly(libs.placeholderApi)
-    compileOnly(libs.vault)
-    compileOnly(libs.unirest)
-    compileOnly(libs.unirest)
-    compileOnly(libs.liblyBukkit)
-    compileOnly(libs.paperLib)
-    compileOnly(libs.miniMessage)
-    compileOnly(libs.adventureBukkit)
-    compileOnly(libs.adventureApi)
+    compileOnlyApi(libs.spigot)
+    compileOnlyApi(libs.paperApi)
+    compileOnlyApi(libs.snakeYaml)
+    compileOnlyApi(libs.simpleYaml)
+    compileOnlyApi(libs.configManager)
+    compileOnlyApi(libs.hikariCP)
+    compileOnlyApi(libs.bundles.invAPI)
+    compileOnlyApi(libs.placeholderApi)
+    compileOnlyApi(libs.vault)
+    compileOnlyApi(libs.unirest)
+    compileOnlyApi(libs.liblyBukkit)
+    compileOnlyApi(libs.paperLib)
+    compileOnlyApi(libs.miniMessage)
+    compileOnlyApi(libs.adventureBukkit)
+    compileOnlyApi(libs.adventureApi)
+    compileOnlyApi(libs.guice)
 }
 
 tasks.processResources {
     filesMatching("plugin.yml") {
         expand("version" to (parent?.version ?: project.version))
     }
-}
-
-java {
-    sourceCompatibility = JavaVersion.VERSION_1_8
-    targetCompatibility = JavaVersion.VERSION_1_8
 }

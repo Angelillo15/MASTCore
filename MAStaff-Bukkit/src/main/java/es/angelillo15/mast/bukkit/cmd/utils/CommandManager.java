@@ -28,6 +28,6 @@ public class CommandManager {
             throw new RuntimeException(e);
         }
 
-        player.sendPluginMessage(MAStaff.getPlugin(), "BungeeCord", b.toByteArray());
+        player.sendPluginMessage(MAStaff.getPlugin(), "mastaff:commands", b.toByteArray());
     }
 }

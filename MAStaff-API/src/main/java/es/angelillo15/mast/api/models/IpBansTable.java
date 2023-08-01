@@ -8,12 +8,14 @@ import com.craftmend.storm.api.markers.Column;
 import com.craftmend.storm.api.markers.Table;
 import es.angelillo15.mast.api.database.PluginConnection;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.SneakyThrows;
 
 import java.util.Collection;
 
 @Data
 @Table(name="mastaff_ipbans")
+@EqualsAndHashCode(callSuper = true)
 public class IpBansTable extends StormModel {
     @Column(length = 16)
     private String ip;

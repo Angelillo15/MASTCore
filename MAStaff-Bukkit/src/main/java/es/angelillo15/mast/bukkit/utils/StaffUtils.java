@@ -13,6 +13,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.Random;
 
 public class StaffUtils {
@@ -54,6 +55,8 @@ public class StaffUtils {
     }
 
     public static void asyncBroadcastMessage(String message) {
+        if (Objects.equals(message, "")) return;
+
         Scheduler.executeAsync(() -> {
             Bukkit.getOnlinePlayers().forEach(p -> {
                 TextUtils.sendMessage(p, message);

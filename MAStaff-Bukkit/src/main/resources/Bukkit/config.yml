@@ -12,6 +12,12 @@
 # This is the Config file for MAStaff Spigot,
 # where you can modify and customize the plugin.
 #
+# Some features are only available on MAStaff Premium
+# You can buy it in this places:
+# - https://builtbybit.com/resources/25460/
+# - https://www.spigotmc.org/resources/105713/
+# - https://polymart.org/resource/3051
+#
 # Remember to join my Discord server if you need help:
 # https://discord.nookure.com/
 #
@@ -30,7 +36,20 @@ Config:
   disableStaffModeOnExit: false
   # Silent chest opening.
   silentChestOpening: true
-  # Staff Vault section
+  # Execute commands on staff mode enter.
+  executeCommandsOnEnter: false
+  # Execute commands on staff mode exit.
+  executeCommandsOnExit: false
+  # Commands to execute on staff mode enter.
+  # They will be executed as the player
+  # when all Staff enable Actions has finished.
+  commandsOnEnter:
+    - "vanish"
+  # Commands to execute on staff mode exit.
+  # They will be executed as the player
+  # when all Staff enable Actions has finished.
+  commandsOnExit:
+    - "vanish"
 # Here you can configure the plugin addons.
 Addons:
   # Enable or disable the Vanish addon.
@@ -38,6 +57,7 @@ Addons:
   # Enable or disable the freeze feature.
   freeze: true
   # Glow module for the plugin.
+  # This is only available for MAStaff Premium version
   # If you have the NEZNAMY TAB plugin, you have to set up some things.
   # Read this wiki page for more information:
   glow: true
@@ -58,8 +78,10 @@ StaffVault:
 Freeze:
   # Execute a command when the player is frozen and he or she
   # exits of the servers.
+  # This is only available for MAStaff Premium version
   executeCommandOnExit: true
   # Ask the staff member if he or she wants to execute the commands.
+  # This is only available for MAStaff Premium version
   askToExecuteCommands: true
   # Commands to execute
   # They will be executed as the console.
@@ -69,15 +91,13 @@ Freeze:
   # If you want the command to be executed as bungee console, add a "bungee:" prefix.
   commands:
     - "ban {player} &cYou have been perm-banned for leaving the server while you were frozen."
-Vanish:
-  # Appear as spectator to staffs that can see you.
-  appearAsSpectator: true
 #
 # Database configuration for the plugin. With the Bungee version, you must use MariaDB or MySQL.
 #
 Database:
   # The type of database you want to use, you can choose between SQLite or MySQL.
   # The MySQL driver also works with MariaDB
+  # The free version only has SQLite
   type: 'SQLite'
   # Your database host IP address.
   host: '127.0.0.1'

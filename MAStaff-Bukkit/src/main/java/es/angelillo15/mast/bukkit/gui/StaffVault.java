@@ -1,7 +1,7 @@
 package es.angelillo15.mast.bukkit.gui;
 
 import es.angelillo15.mast.api.TextUtils;
-import es.angelillo15.mast.api.managers.StaffPlayersManagers;
+import es.angelillo15.mast.api.managers.LegacyStaffPlayersManagers;
 import es.angelillo15.mast.api.material.XMaterial;
 import es.angelillo15.mast.bukkit.StaffPlayer;
 import es.angelillo15.mast.api.config.bukkit.Config;
@@ -40,12 +40,12 @@ public class StaffVault extends Gui {
         Player player = (Player) event.getPlayer();
 
 
-        if (!StaffPlayersManagers.isStaffPlayer(player)) {
+        if (!LegacyStaffPlayersManagers.isStaffPlayer(player)) {
             player.closeInventory();
             return;
         }
 
-        staffPlayer = (StaffPlayer) StaffPlayersManagers.getStaffPlayer(player);
+        staffPlayer = (StaffPlayer) LegacyStaffPlayersManagers.getStaffPlayer(player);
 
         List<ItemStack> items = staffPlayer.getStaffVault();
 

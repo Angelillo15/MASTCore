@@ -1,18 +1,22 @@
 package es.angelillo15.mast.api.cmd.sender;
 
+import es.angelillo15.mast.api.TextUtils;
+import net.kyori.adventure.audience.Audience;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 
 public class ProxiedPlayerCommandSender implements CommandSender {
     private final ProxiedPlayer player;
+    private final Audience audience;
 
     public ProxiedPlayerCommandSender(ProxiedPlayer player) {
         this.player = player;
+        this.audience = TextUtils.getAudience(player);
     }
 
     @Override
     public void sendMessage(String message) {
-        player.sendMessage(new TextComponent(message));
+        player.sendMessage(new TextComponent(TextUtils.colorize(message)));
     }
 
     @Override
@@ -58,5 +62,15 @@ public class ProxiedPlayerCommandSender implements CommandSender {
     @Override
     public String getAddress() {
         return player.getAddress().getAddress().getHostAddress().split(":")[0];
+    }
+
+    @Override
+    public Audience getAudience() {
+        return audience;
+    }
+
+    @Override
+    public String getServerName() {
+        return player.getServer().getInfo().getName();
     }
 }

@@ -1,24 +1,32 @@
 package es.angelillo15.mast.bungee;
 
+import com.google.inject.Guice;
+import com.google.inject.Injector;
 import es.angelillo15.mast.api.ILogger;
 import es.angelillo15.mast.api.IServerUtils;
 import es.angelillo15.mast.api.MAStaffInstance;
 import es.angelillo15.mast.api.TextUtils;
 import es.angelillo15.mast.api.cmd.Command;
 import es.angelillo15.mast.api.cmd.CommandData;
+import es.angelillo15.mast.api.config.common.CommonConfig;
+import es.angelillo15.mast.api.config.common.CommonConfigLoader;
+import es.angelillo15.mast.api.config.common.CommonMessages;
 import es.angelillo15.mast.api.data.DataManager;
 import es.angelillo15.mast.api.database.PluginConnection;
-import es.angelillo15.mast.api.redis.EventManager;
+import es.angelillo15.mast.api.inject.StaticMembersInjector;
+import es.angelillo15.mast.api.managers.LegacyUserDataManager;
+import es.angelillo15.mast.api.redis.RedisEventManager;
 import es.angelillo15.mast.api.redis.events.server.ServerConnectedEvent;
+import es.angelillo15.mast.api.thread.AsyncThreadKt;
 import es.angelillo15.mast.bungee.addons.AddonsLoader;
 import es.angelillo15.mast.bungee.cmd.*;
 import es.angelillo15.mast.bungee.cmd.mastb.MastParentCMD;
 import es.angelillo15.mast.bungee.config.Config;
 import es.angelillo15.mast.bungee.config.ConfigLoader;
+import es.angelillo15.mast.bungee.inject.BungeeInjector;
 import es.angelillo15.mast.bungee.listener.CommandExecutor;
+import es.angelillo15.mast.bungee.listener.OnStaffJoinLeaveQuit;
 import es.angelillo15.mast.bungee.listener.StaffChangeEvent;
-import es.angelillo15.mast.bungee.listener.StaffJoinChange;
-import es.angelillo15.mast.bungee.listener.StaffTalkEvent;
 import es.angelillo15.mast.bungee.listener.redis.server.OnServer;
 import es.angelillo15.mast.bungee.listener.redis.staff.OnStaffJoinLeave;
 import es.angelillo15.mast.bungee.listener.redis.staff.OnStaffSwitch;
@@ -27,6 +35,8 @@ import es.angelillo15.mast.bungee.listener.user.UserJoinListener;
 import es.angelillo15.mast.bungee.manager.RedisManager;
 import es.angelillo15.mast.bungee.utils.BungeeServerUtils;
 import es.angelillo15.mast.bungee.utils.Logger;
+import es.angelillo15.mast.cmd.HelpOP;
+import es.angelillo15.mast.cmd.StaffChat;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.SneakyThrows;
@@ -48,6 +58,9 @@ public class MAStaff extends Plugin implements MAStaffInstance<Plugin> {
     public ILogger getPLogger() {
         return logger;
     }
+    private Injector injector;
+    @Getter
+    private static CommonConfigLoader configLoader;
 
     @Override
     public void registerCommand(Command command) {
@@ -99,39 +112,46 @@ public class MAStaff extends Plugin implements MAStaffInstance<Plugin> {
         logger.info(TextUtils.simpleColorize("&a ░      ░     ░   ▒   ░  ░  ░    ░        ░   ▒    ░ ░    ░ ░"));
         logger.info(TextUtils.simpleColorize("&a ░         ░  ░      ░                 ░  ░"));
         logger.info(TextUtils.simpleColorize("&a                                                version: " + getDescription().getVersion()));
+        AsyncThreadKt.start();
 
     }
 
     @Override
     public void loadConfig() {
         new ConfigLoader(this).load();
+        configLoader = injector.getInstance(CommonConfigLoader.class);
+        configLoader.load();
     }
 
     @Override
     public void registerCommands() {
-        getProxy().getPluginManager().registerCommand(this, new StaffChat());
-        getProxy().getPluginManager().registerCommand(this, new HelpopCMD());
-        registerCommand(new InfoCMD());
-        registerCommand(new MastParentCMD());
+        registerCommand(injector.getInstance(InfoCMD.class));
+        registerCommand(injector.getInstance(MastParentCMD.class));
+        registerCommand(injector.getInstance(StaffChat.class));
+        registerCommand(injector.getInstance(HelpOP.class));
     }
 
     @Override
     public void registerListeners() {
         getProxy().getPluginManager().registerListener(this, new StaffChangeEvent());
-        getProxy().getPluginManager().registerListener(this, new StaffJoinChange());
-        getProxy().getPluginManager().registerListener(this, new StaffTalkEvent());
         getProxy().getPluginManager().registerListener(this, new UserJoinListener());
         getProxy().getPluginManager().registerListener(this, new CommandExecutor());
+        getProxy().getPluginManager().registerListener(this, injector.getInstance(OnStaffJoinLeaveQuit.class));
+        getProxy().getPluginManager().registerListener(
+                this,
+                injector.getInstance(es.angelillo15.mast.bungee.listener.staffchat.OnStaffTalk.class)
+        );
         if (Config.Redis.isEnabled()) registerRedisListeners();
     }
 
     public void registerRedisListeners() {
-        EventManager em = EventManager.getInstance();
+        RedisEventManager em = RedisEventManager.getInstance();
         em.registerListener(new OnServer());
         em.registerListener(new OnStaffJoinLeave());
         em.registerListener(new OnStaffSwitch());
         em.registerListener(new OnStaffTalk());
         ServerConnectedEvent event = new ServerConnectedEvent(Config.Redis.getServerName());
+
         RedisManager.sendEvent(event);
     }
 
@@ -141,7 +161,13 @@ public class MAStaff extends Plugin implements MAStaffInstance<Plugin> {
         new RedisManager().load();
 
         if (Config.Database.type().equalsIgnoreCase("MYSQL")) {
-            new PluginConnection(Config.Database.host(), Config.Database.port(), Config.Database.database(), Config.Database.username(), Config.Database.password());
+            new PluginConnection(
+                    Config.Database.host(),
+                    Config.Database.port(),
+                    Config.Database.database(),
+                    Config.Database.username(),
+                    Config.Database.password()
+            );
         } else {
             new PluginConnection(getDataFolder().getPath());
         }
@@ -155,7 +181,7 @@ public class MAStaff extends Plugin implements MAStaffInstance<Plugin> {
 
     @Override
     public void loadModules() {
-
+        AddonsLoader.loadAddons(injector);
     }
 
     @Override
@@ -191,6 +217,14 @@ public class MAStaff extends Plugin implements MAStaffInstance<Plugin> {
         PluginConnection.getStorm().runMigrations();
     }
 
+    public void loadInjector() {
+        this.injector = Guice.createInjector(new BungeeInjector());
+
+        StaticMembersInjector.injectStatics(injector, LegacyUserDataManager.class);
+        StaticMembersInjector.injectStatics(injector, CommonMessages.class);
+        StaticMembersInjector.injectStatics(injector, CommonConfig.class);
+    }
+
     @Override
     public IServerUtils getServerUtils() {
         return serverUtils;
@@ -210,4 +244,10 @@ public class MAStaff extends Plugin implements MAStaffInstance<Plugin> {
     public InputStream getPluginResource(String s) {
         return getResourceAsStream(s);
     }
+
+    @Override
+    public Injector getInjector() {
+        return this.injector;
+    }
+
 }

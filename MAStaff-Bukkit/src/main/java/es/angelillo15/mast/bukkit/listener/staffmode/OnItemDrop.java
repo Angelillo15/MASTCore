@@ -1,23 +1,26 @@
 package es.angelillo15.mast.bukkit.listener.staffmode;
 
+import com.google.inject.Inject;
 import es.angelillo15.mast.api.IStaffPlayer;
-import es.angelillo15.mast.api.managers.StaffPlayersManagers;
-import es.angelillo15.mast.bukkit.StaffPlayer;
+import es.angelillo15.mast.api.managers.StaffManager;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerDropItemEvent;
 
 public class OnItemDrop implements Listener {
+    @Inject
+    private StaffManager staffManager;
+
     @EventHandler
     public void onDrop(PlayerDropItemEvent event){
         Player player = event.getPlayer();
 
-        if(!StaffPlayersManagers.isStaffPlayer(player)){
+        if(!staffManager.isStaffPlayer(player)){
             return;
         }
 
-        IStaffPlayer staffPlayer = StaffPlayersManagers.getStaffPlayer(player);
+        IStaffPlayer staffPlayer = staffManager.getStaffPlayer(player);
 
         if(staffPlayer.isStaffMode()){
             event.setCancelled(true);

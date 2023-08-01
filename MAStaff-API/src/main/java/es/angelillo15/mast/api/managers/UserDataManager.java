@@ -2,6 +2,7 @@ package es.angelillo15.mast.api.managers;
 
 import com.github.benmanes.caffeine.cache.Cache;
 import com.github.benmanes.caffeine.cache.Caffeine;
+import com.google.inject.Singleton;
 import es.angelillo15.mast.api.MAStaffInstance;
 import es.angelillo15.mast.api.data.DataManager;
 import es.angelillo15.mast.api.models.UserModel;
@@ -9,13 +10,23 @@ import es.angelillo15.mast.api.models.UserModel;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
+@Singleton
 public class UserDataManager {
-    private static final Cache<String, UserModel> userDataCache = Caffeine.newBuilder()
+    private final Cache<String, UserModel> userDataCache = Caffeine.newBuilder()
             .maximumSize(100)
             .expireAfterWrite(1, TimeUnit.MINUTES)
             .build();
 
-    public static UserModel getUserData(String key) {
+    /**
+     * Get user data from the database.
+     * If the user data is not in the cache, it will be retrieved from the database.
+     * If the user data is not in the database, it will return empty user data
+     * with the UUID or username set, and it Will be filled with the rest when the user joins
+     * for the first time.
+     * @param key UUID or username
+     * @return UserModel
+     */
+    public UserModel getUserData(String key) {
         long start = System.currentTimeMillis();
 
         boolean exists = userDataCache.asMap().containsKey(key);
@@ -67,37 +78,39 @@ public class UserDataManager {
         return data;
     }
 
-    public static UserModel getUserData(UUID UUID) {
-        return getUserData(UUID.toString());
+    /**
+     * Get user data from the database.
+     * If the user data is not in the cache, it will be retrieved from the database.
+     * If the user data is not in the database, it will return empty user data
+     * with the UUID set, and it Will be filled with the rest when the user joins
+     * for the first time.
+     * @param  uuid UUID of the user
+     * @return UserModel
+     */
+    public UserModel getUserData(UUID uuid) {
+        return getUserData(uuid.toString());
     }
 
-
-    public static void updateUserData(String key, UserModel userModel) {
-        userDataCache.put(key, userModel);
-    }
-
-    public static void updateUserData(UUID UUID, UserModel userModel) {
-        updateUserData(UUID.toString(), userModel);
-    }
-
-    public static void removeUserData(String key) {
+    /**
+     * Remove user data from the cache.
+     * @param key UUID or username
+     */
+    public void removeUserData(String key) {
         userDataCache.invalidate(key);
     }
 
-    public static void removeUserData(UUID UUID) {
+    /**
+     * Remove user data from the cache.
+     * @param UUID UUID of the user
+     */
+    public void removeUserData(UUID UUID) {
         removeUserData(UUID.toString());
     }
 
-
-    public static boolean userExists(String key) {
-        return userDataCache.asMap().containsKey(key);
-    }
-
-    public static boolean userExists(UUID UUID) {
-        return userExists(UUID.toString());
-    }
-
-    public static void clearCache() {
+    /**
+     * Clear the cache.
+     */
+    public void clearCache() {
         userDataCache.invalidateAll();
     }
 }

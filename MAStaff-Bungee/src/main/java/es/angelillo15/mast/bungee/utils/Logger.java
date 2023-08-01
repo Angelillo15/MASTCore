@@ -3,7 +3,10 @@ package es.angelillo15.mast.bungee.utils;
 import es.angelillo15.mast.api.ILogger;
 import es.angelillo15.mast.bungee.MAStaff;
 
-public class Logger implements ILogger {
+public class Logger extends ILogger {
+    public Logger() {
+        setInstance(this);
+    }
     @Override
     public void info(String message) {
         MAStaff.getInstance().getLogger().info(message);

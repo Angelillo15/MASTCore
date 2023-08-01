@@ -5,7 +5,7 @@ import org.bukkit.Bukkit;
 
 public class Scheduler {
     private static IScheduler scheduler;
-    public Scheduler() {
+    public static void init() {
         if (Bukkit.getServer().getName().equalsIgnoreCase("Folia")) {
             scheduler = new FoliaScheduler();
         } else {

@@ -10,13 +10,15 @@ import es.angelillo15.mast.api.MAStaffInstance;
 import es.angelillo15.mast.api.database.PluginConnection;
 import es.angelillo15.mast.api.pagination.Page;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-@SuppressWarnings("unchecked")
 @Data
+@SuppressWarnings("unchecked")
 @Table(name = "mastaff_warns")
+@EqualsAndHashCode(callSuper = true)
 public class WarnModel extends StormModel {
     @Column(
             keyType = KeyType.FOREIGN,

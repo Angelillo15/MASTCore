@@ -2,11 +2,11 @@ package es.angelillo15.mast.api.addons;
 
 import es.angelillo15.mast.api.ILogger;
 
-public class AddonLogger implements ILogger {
-    private MAStaffAddon addon;
-    private ILogger logger;
+public class AddonLogger extends ILogger {
+    private MAStaffAddon<?> addon;
+    private final ILogger logger;
 
-    public AddonLogger(MAStaffAddon addon, ILogger logger) {
+    public AddonLogger(MAStaffAddon<?> addon, ILogger logger) {
         this.addon = addon;
         this.logger = logger;
     }

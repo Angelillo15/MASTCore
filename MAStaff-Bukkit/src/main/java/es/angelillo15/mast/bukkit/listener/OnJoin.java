@@ -1,15 +1,20 @@
 package es.angelillo15.mast.bukkit.listener;
 
-import es.angelillo15.mast.api.exceptions.AlreadyInTheMapException;
-import es.angelillo15.mast.api.managers.StaffPlayersManagers;
+import com.google.inject.Inject;
+import es.angelillo15.mast.api.MAStaffInstance;
+import es.angelillo15.mast.api.managers.StaffManager;
 import es.angelillo15.mast.bukkit.MAStaff;
-import es.angelillo15.mast.bukkit.StaffPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
 public class OnJoin implements Listener {
+    @Inject
+    private StaffManager staffManager;
+    @Inject
+    private MAStaffInstance instance;
+
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent e) {
         Player player = e.getPlayer();
@@ -18,11 +23,12 @@ public class OnJoin implements Listener {
             return;
         }
 
-        if (StaffPlayersManagers.getStaffPlayers().containsKey(player.getUniqueId())) {
+        if (staffManager.isStaffPlayer(player)) {
             return;
         }
 
-        StaffPlayersManagers.addStaffPlayer(new StaffPlayer(player));
+
+        staffManager.addStaffPlayer(instance.createStaffPlayer(player));
         MAStaff.getPlugin().getPLogger().debug("Added " + player.getName() + " to the map");
     }
 }

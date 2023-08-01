@@ -1,5 +1,7 @@
 package es.angelillo15.mast.api.cmd.sender;
 
+import net.kyori.adventure.audience.Audience;
+
 import java.util.UUID;
 
 public interface CommandSender {
@@ -22,4 +24,8 @@ public interface CommandSender {
     boolean isBungee();
 
     boolean isSpigot();
+
+    Audience getAudience();
+
+    String getServerName();
 }
