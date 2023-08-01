@@ -16,5 +16,7 @@ class MastParent : CommandParent() {
     private lateinit var instance: MAStaffInject
     override fun registerSubCommands() {
         registerSubCommand(instance.injector.getInstance(DumpArg::class.java))
+        registerSubCommand(instance.injector.getInstance(ReloadArg::class.java))
+        registerHelpSubCommand("/mastv")
     }
 }
