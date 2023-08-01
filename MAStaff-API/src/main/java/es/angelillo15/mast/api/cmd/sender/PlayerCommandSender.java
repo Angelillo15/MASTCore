@@ -14,7 +14,7 @@ public class PlayerCommandSender implements CommandSender {
 
     @Override
     public void sendMessage(String message) {
-        player.sendMessage(message);
+        audience.sendMessage(TextUtils.toComponent(message));
     }
 
     @Override

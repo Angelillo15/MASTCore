@@ -2,7 +2,6 @@ package es.angelillo15.mast.api.cmd.sender;
 
 import es.angelillo15.mast.api.TextUtils;
 import net.kyori.adventure.audience.Audience;
-import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 
 public class ProxiedPlayerCommandSender implements CommandSender {
@@ -16,7 +15,7 @@ public class ProxiedPlayerCommandSender implements CommandSender {
 
     @Override
     public void sendMessage(String message) {
-        player.sendMessage(new TextComponent(message));
+        audience.sendMessage(TextUtils.toComponent(message));
     }
 
     @Override
