@@ -2,7 +2,6 @@ package es.angelillo15.mast.bungee.punishments;
 
 import com.google.inject.Inject;
 import com.google.inject.Injector;
-import es.angelillo15.mast.api.MAStaffInstance;
 import es.angelillo15.mast.api.addons.MAStaffAddon;
 import es.angelillo15.mast.api.punishments.cmd.KickCMD;
 import es.angelillo15.mast.api.punishments.cmd.ban.*;
@@ -69,6 +68,4 @@ public class MAStaffPunishments extends MAStaffAddon<Plugin> {
     public void loadData() {
         DataManager.load();
     }
-
-
 }
