@@ -2,8 +2,8 @@ package es.angelillo15.mast.api;
 
 import lombok.Getter;
 
-@Getter
 public class Constants {
+    @Getter
     public static final String VERSION = "{version}";
     public static final String COMMIT = "{git-commit}";
     public static final String COMMIT_USER = "{git-user}";
