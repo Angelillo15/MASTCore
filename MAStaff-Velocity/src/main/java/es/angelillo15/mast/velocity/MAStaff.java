@@ -32,6 +32,7 @@ import es.angelillo15.mast.velocity.inject.VelocityInjector;
 import es.angelillo15.mast.velocity.listeners.CommandBackendExecutor;
 import es.angelillo15.mast.velocity.listeners.OnPlayerJoin;
 import es.angelillo15.mast.velocity.listeners.OnStaffChange;
+import es.angelillo15.mast.velocity.listeners.OnStaffJoinLeaveQuit;
 import es.angelillo15.mast.velocity.listeners.staffchat.OnPlayerChat;
 import es.angelillo15.mast.velocity.utils.LibsLoader;
 import lombok.Getter;
@@ -152,6 +153,7 @@ public class MAStaff implements MAStaffInstance<ProxyServer> {
         proxyServer.getEventManager().register(this, injector.getInstance(OnStaffChange.class));
         proxyServer.getEventManager().register(this, injector.getInstance(OnPlayerJoin.class));
         proxyServer.getEventManager().register(this, injector.getInstance(CommandBackendExecutor.class));
+        proxyServer.getEventManager().register(this, injector.getInstance(OnStaffJoinLeaveQuit.class));
         if (proxyServer.getPluginManager().isLoaded("unsignedvelocity"))
             proxyServer.getEventManager().register(this, injector.getInstance(OnPlayerChat.class));
     }
