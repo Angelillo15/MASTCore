@@ -4,7 +4,8 @@ import com.google.inject.Singleton
 import es.angelillo15.mast.api.templates.BanTemplate
 
 /**
- *
+ * Manages all the {@link BanTemplate}s.
+ * @since 2.4.0
  */
 @Singleton
 class BanTemplatesManager {
