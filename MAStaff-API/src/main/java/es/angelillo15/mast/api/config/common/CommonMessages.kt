@@ -46,6 +46,20 @@ object CommonMessages {
         }
     }
 
+    object StaffChanges {
+        fun staffJoin(): String {
+            return get("StaffChanges.staffJoin")
+        }
+
+        fun staffQuit(): String {
+            return get("StaffChanges.staffQuit")
+        }
+
+        fun staffSwitch(): String {
+            return get("StaffChanges.staffSwitch")
+        }
+    }
+
     fun get(key: String): String {
         return commonConfigLoader.messages!!.config.getString(key).replace("{prefix}", prefix())
     }
