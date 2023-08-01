@@ -20,8 +20,7 @@ class StaffChat : Command() {
     private lateinit var serverUtils: IServerUtils;
     @Inject
     private lateinit var staffChatManager: StaffChatManager;
-    @Inject
-    private lateinit var logger: ILogger;
+
     override fun onCommand(sender: CommandSender?, label: String?, args: Array<String?>?) {
         if (args!!.isEmpty()) {
             if (staffChatManager.isStaffChatEnabled(sender!!.name)) {
