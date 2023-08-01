@@ -33,7 +33,7 @@ abstract class CommandParent : Command() {
     abstract fun registerSubCommands();
 
     fun sendHelp(sender: CommandSender?) {
-        sender!!.sendMessage(TextUtils.simpleColorize("&a&lMAS&r&ltaff &7- &fv" + Constants.VERSION))
+        sender!!.sendMessage(TextUtils.simpleColorize("&a&lMAS&r&ltaff &7- &fv${Constants.VERSION}"))
         for (subCommand in subCommands.values) {
             if (sender.hasPermission(subCommand.permission)) {
                 sender.sendMessage(TextUtils.simpleColorize("&a&l> &r" + subCommand.syntax + " &7- &7" + subCommand.description))
@@ -65,5 +65,22 @@ abstract class CommandParent : Command() {
         @Getter
         @Setter
         private val noPermission = "&cYou don't have permission to execute this command."
+    }
+
+    fun registerHelpSubCommand(prefix: String) {
+        registerSubCommand(object : SubCommand() {
+            override val name: String
+                get() = "help"
+            override val description: String
+                get() = "Shows this help message"
+            override val syntax: String
+                get() = "$prefix help"
+            override val permission: String
+                get() = ""
+
+            override fun onCommand(sender: CommandSender?, label: String?, args: Array<String?>?) {
+                sendHelp(sender)
+            }
+        })
     }
 }
