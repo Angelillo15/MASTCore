@@ -56,7 +56,7 @@ public class FreezeManager {
 
     /**
      * Gets the frozen players list
-     * @return ArrayList<OfflinePlayer>
+     * @return ArrayList of OfflinePlayer
      */
     public static ArrayList<OfflinePlayer> getFrozenPlayers() {
         ArrayList<OfflinePlayer> frozen = new ArrayList<>();

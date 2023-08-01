@@ -59,3 +59,7 @@ blossom {
         replaceToken("false", "true")
     }
 }
+
+tasks.withType<Javadoc> {
+    options.encoding = "UTF-8"
+}
