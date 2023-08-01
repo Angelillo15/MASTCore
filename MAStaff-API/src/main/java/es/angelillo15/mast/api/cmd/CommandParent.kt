@@ -36,7 +36,7 @@ abstract class CommandParent : Command() {
         sender!!.sendMessage(TextUtils.simpleColorize("&a&lMAS&r&ltaff &7- &fv" + Constants.VERSION))
         for (subCommand in subCommands.values) {
             if (sender.hasPermission(subCommand.permission)) {
-                sender.sendMessage(TextUtils.colorize("&a&l> &r" + subCommand.syntax + " &7- &7" + subCommand.description))
+                sender.sendMessage(TextUtils.simpleColorize("&a&l> &r" + subCommand.syntax + " &7- &7" + subCommand.description))
             }
         }
     }
