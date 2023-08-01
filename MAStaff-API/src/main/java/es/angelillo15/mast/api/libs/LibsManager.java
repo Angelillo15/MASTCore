@@ -119,7 +119,6 @@ public class LibsManager {
                 .artifactId("adventure-text-minimessage")
                 .version(ADVENTURE_VERSION)
                 .isolatedLoad(false)
-                .relocate("net{}kyori", "es{}angelillo15{}mast{}libs{}kyori")
                 .build();
 
         Library adventureAPI = Library.builder()
@@ -127,7 +126,6 @@ public class LibsManager {
                 .artifactId("adventure-api")
                 .version(ADVENTURE_VERSION)
                 .isolatedLoad(false)
-                .relocate("net{}kyori", "es{}angelillo15{}mast{}libs{}kyori")
                 .build();
 
         Library adventureBukkitPlatform = Library.builder()
@@ -135,7 +133,6 @@ public class LibsManager {
                 .artifactId("adventure-platform-bukkit")
                 .version("4.3.0")
                 .isolatedLoad(false)
-                .relocate("net{}kyori", "es{}angelillo15{}mast{}libs{}kyori")
                 .build();
 
         Library adventureBungeePlatform = Library.builder()
@@ -143,7 +140,6 @@ public class LibsManager {
                 .artifactId("adventure-platform-bungeecord")
                 .version("4.3.0")
                 .isolatedLoad(false)
-                .relocate("net{}kyori", "es{}angelillo15{}mast{}libs{}kyori")
                 .build();
 
         Library examination = Library.builder()
@@ -151,7 +147,6 @@ public class LibsManager {
                 .artifactId("examination-api")
                 .version("1.3.0")
                 .isolatedLoad(false)
-                .relocate("net{}kyori", "es{}angelillo15{}mast{}libs{}kyori")
                 .build();
 
         Library adventurePlatformApi = Library.builder()
@@ -159,7 +154,6 @@ public class LibsManager {
                 .artifactId("adventure-platform-api")
                 .version("4.3.0")
                 .isolatedLoad(false)
-                .relocate("net{}kyori", "es{}angelillo15{}mast{}libs{}kyori")
                 .build();
 
         Library adventurePlatformFacet = Library.builder()
@@ -167,7 +161,6 @@ public class LibsManager {
                 .artifactId("adventure-platform-facet")
                 .version("4.3.0")
                 .isolatedLoad(false)
-                .relocate("net{}kyori", "es{}angelillo15{}mast{}libs{}kyori")
                 .build();
 
         Library adventureKey = Library.builder()
@@ -175,15 +168,14 @@ public class LibsManager {
                 .artifactId("adventure-key")
                 .version(ADVENTURE_VERSION)
                 .isolatedLoad(false)
-                .relocate("net{}kyori", "es{}angelillo15{}mast{}libs{}kyori")
                 .build();
 
         Library caffeine = Library.builder()
-                .groupId("com{}github{}ben-manes")
+                .groupId("com{}github{}ben-manes{}caffeine")
                 .artifactId("caffeine")
-                .version("2.9.2")
+                .version("2.9.3")
                 .isolatedLoad(false)
-                .relocate("com{}github{}benmanes{}caffeine", "es{}angelillo15{}zat{}libs{}caffeine")
+                .relocate("com{}github{}benmanes{}caffeine", "es{}angelillo15{}mast{}libs{}caffeine")
                 .build();
 
         Library gson = Library.builder()
@@ -192,20 +184,23 @@ public class LibsManager {
                 .version("2.10.1")
                 .isolatedLoad(false)
                 .relocate("com{}google{}gson", "es{}angelillo15{}mast{}libs{}google{}gson")
+                .relocate("com{}google{}common", "es{}angelillo15{}mast{}libs{}google{}common")
+                .relocate("com{}google{}errorprone", "es{}angelillo15{}mast{}libs{}google{}errorprone")
+                .relocate("com{}google{}thirdparty", "es{}angelillo15{}mast{}libs{}google{}thirdparty")
                 .build();
 
         Library snakeYAML = Library.builder()
-                .groupId("org{}yaml{}snakeyaml")
+                .groupId("org{}yaml")
                 .artifactId("snakeyaml")
-                .version("1.33")
+                .version("2.0")
                 .isolatedLoad(false)
                 .relocate("org{}yaml{}snakeyaml", "es{}angelillo15{}mast{}libs{}snakeyaml")
                 .build();
 
         Library simpleYAML = Library.builder()
                 .groupId("com{}github{}Carleslc{}Simple-YAML")
-                .artifactId("Simple-YAML")
-                .version("1.8.3")
+                .artifactId("Simple-Yaml")
+                .version("1.8.4")
                 .isolatedLoad(false)
                 .relocate("org{}yaml{}snakeyaml", "es{}angelillo15{}mast{}libs{}snakeyaml")
                 .relocate("org{}simpleyaml", "es{}angelillo15{}mast{}libs{}simpleyaml")
@@ -220,6 +215,55 @@ public class LibsManager {
                 .relocate("org{}simpleyaml", "es{}angelillo15{}mast{}libs{}simpleyaml")
                 .relocate("es{}angelillo15{}configmanager", "es{}angelillo15{}mast{}libs{}config{}manager")
                 .build();
+
+        Library sqlite = Library.builder()
+                .groupId("org{}xerial")
+                .artifactId("sqlite-jdbc")
+                .version("3.42.0.0")
+                .isolatedLoad(false)
+                .build();
+
+        Library googleGuice = Library.builder()
+                .groupId("com{}google{}inject")
+                .artifactId("guice")
+                .version("7.0.0")
+                .relocate("com{}google{}common", "es{}angelillo15{}mast{}libs{}google{}common")
+                .relocate("com{}google{}errorprone", "es{}angelillo15{}mast{}libs{}google{}errorprone")
+                .relocate("com{}google{}thirdparty", "es{}angelillo15{}mast{}libs{}google{}thirdparty")
+                .isolatedLoad(false)
+                .build();
+
+        Library jakartaInjectTck = Library.builder()
+                .groupId("jakarta{}inject")
+                .artifactId("jakarta.inject-tck")
+                .version("2.0.1")
+                .isolatedLoad(false)
+                .build();
+
+        Library jakartaInjectApi = Library.builder()
+                .groupId("jakarta{}inject")
+                .artifactId("jakarta.inject-api")
+                .version("2.0.1")
+                .isolatedLoad(false)
+                .build();
+
+        Library aopalliance = Library.builder()
+                .groupId("aopalliance")
+                .artifactId("aopalliance")
+                .version("1.0")
+                .isolatedLoad(false)
+                .build();
+
+        Library guavaFailureAccess = Library.builder()
+                .groupId("com{}google{}guava")
+                .artifactId("failureaccess")
+                .version("1.0")
+                .relocate("com{}google{}common", "es{}angelillo15{}mast{}libs{}google{}common")
+                .relocate("com{}google{}errorprone", "es{}angelillo15{}mast{}libs{}google{}errorprone")
+                .relocate("com{}google{}thirdparty", "es{}angelillo15{}mast{}libs{}google{}thirdparty")
+                .isolatedLoad(false)
+                .build();
+
 
         libs.add(getKotlinLib("kotlin-stdlib-jdk8"));
         libs.add(getKotlinLib("kotlin-stdlib-jdk7"));
@@ -268,6 +312,16 @@ public class LibsManager {
         libs.add(simpleYAML);
         libs.add(configManger);
         libs.add(getLib("org{}slf4j", "slf4j-api", "2.0.6"));
+
+        if (ServerUtils.getServerType() == ServerUtils.ServerType.VELOCITY) {
+            libs.add(sqlite);
+        } else {
+            libs.add(aopalliance);
+            libs.add(googleGuice);
+            libs.add(jakartaInjectApi);
+            libs.add(jakartaInjectTck);
+            libs.add(guavaFailureAccess);
+        }
     }
 
     /**
@@ -328,7 +382,6 @@ public class LibsManager {
                 .artifactId(artifact)
                 .version(ADVENTURE_VERSION)
                 .isolatedLoad(false)
-                .relocate("net{}kyori", "es{}angelillo15{}mast{}libs{}kyori")
                 .build();
     }
 

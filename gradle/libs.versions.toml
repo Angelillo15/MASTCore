@@ -1,5 +1,5 @@
 [versions]
-snakeYaml = "1.33"
+snakeYaml = "2.0"
 simpleYaml = "1.8.3"
 configManager = "1.4"
 hikariCP = "4.0.3"
@@ -25,6 +25,9 @@ adventure = "4.14.0"
 adventurePlatform = "4.3.0"
 protocolLib = "5.0.0"
 kotlin = "1.9.0"
+velocity = "3.1.1"
+guice = "7.0.0"
+protocolize = "2.2.5"
 
 [libraries]
 snakeYaml = { group = "org.yaml", name = "snakeyaml", version.ref = "snakeYaml" }
@@ -38,6 +41,7 @@ configurableGui = { group = "com.github.hamza-cskn.obliviate-invs", name = "conf
 gson = { group = "com.google.code.gson", name = "gson", version.ref = "gson" }
 liblyBukkit = { group = "net.byteflux", name = "libby-bukkit", version.ref = "libly" }
 liblyBungee = { group = "net.byteflux", name = "libby-bungee", version.ref = "libly" }
+libbyVelocity = { group = "net.byteflux", name = "libby-velocity", version.ref = "libly" }
 reflections = { group = "org.reflections", name = "reflections", version.ref = "reflections" }
 paperLib = { group = "io.papermc", name = "paperlib", version.ref = "paperLib" }
 caffeine = { group = "com.github.ben-manes.caffeine", name = "caffeine", version.ref = "caffeine" }
@@ -59,6 +63,9 @@ adventureBukkit = { group = "net.kyori", name = "adventure-platform-bukkit", ver
 adventureBungee = { group = "net.kyori", name = "adventure-platform-bungeecord", version.ref = "adventurePlatform" }
 protocolLib = { group = "com.comphenix.protocol", name = "ProtocolLib", version.ref = "protocolLib" }
 kotlin = { group = "org.jetbrains.kotlin", name = "kotlin-stdlib-jdk8", version.ref = "kotlin" }
+velocity = { group = "com.velocitypowered", name = "velocity-api", version.ref = "velocity" }
+guice = { group = "com.google.inject", name = "guice", version.ref = "guice" }
+protocolize = { group = "dev.simplix", name = "protocolize-api", version.ref = "protocolize" }
 
 [bundles]
 invAPI = ["invCore", "invAdvancedSlots", "invPagination", "configurableGui"]

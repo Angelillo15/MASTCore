@@ -3,6 +3,7 @@ package es.angelillo15.mast.api.utils;
 import es.angelillo15.mast.api.MAStaffInstance;
 import lombok.Getter;
 import net.milkbowl.vault.permission.Permission;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.RegisteredServiceProvider;
 
@@ -14,7 +15,10 @@ public class PermsUtils {
 
     public static boolean setupPermissions() {
         RegisteredServiceProvider<Permission> rsp =
-                MAStaffInstance.getInstance().getPluginInstance().getServer().getServicesManager().getRegistration(Permission.class);
+                Bukkit.getServer().getServicesManager().getRegistration(Permission.class);
+
+        assert rsp != null;
+
         perms = rsp.getProvider();
         vaultEnabled = true;
         return perms != null;

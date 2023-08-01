@@ -1,20 +1,7 @@
-plugins {
-    id("java")
-}
-
-group = "es.angelillo15"
-version = "2.0.0"
-
-repositories {
-    mavenCentral()
-    maven("https://papermc.io/repo/repository/maven-public/")
-    maven("https://repo.alessiodp.com/releases/")
-
-}
-
 dependencies {
     compileOnly(project(":MAStaff-API"))
     compileOnly(project(":MAStaff-Punishments:Punishments-Bungee"))
+    compileOnly(project(":MAStaff-Common"))
     compileOnly(libs.waterfall)
     compileOnly(libs.snakeYaml)
     compileOnly(libs.simpleYaml)
@@ -27,6 +14,7 @@ dependencies {
     compileOnly(libs.miniMessage)
     compileOnly(libs.adventureBungee)
     compileOnly(libs.adventureApi)
+    compileOnly(libs.protocolize)
 }
 
 tasks.processResources {

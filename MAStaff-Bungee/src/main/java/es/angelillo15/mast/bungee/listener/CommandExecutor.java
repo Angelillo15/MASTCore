@@ -18,7 +18,7 @@ public class CommandExecutor implements Listener {
     @SneakyThrows
     @EventHandler
     public void onPluginMessage(PluginMessageEvent event) {
-        if (!Objects.equals(event.getTag(), "BungeeCord")) {
+        if (!Objects.equals(event.getTag(), "mastaff:commands")) {
             return;
         }
 

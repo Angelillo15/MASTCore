@@ -29,7 +29,6 @@ tasks.shadowJar {
     relocate("org.apache.commons.logging", "es.angelillo15.mast.libs.commons-logging")
     relocate("org.reflections", "es.angelillo15.mast.libs.reflections")
     relocate("redis.clients.jedis", "es.angelillo15.mast.libs.jedis")
-    relocate("net.kyori", "es.angelillo15.mast.libs.kyori")
     relocate("io.papermc.lib", "es.angelillo15.mast.libs.paperlib")
     relocate("com.github.benmanes.caffeine", "es.angelillo15.mast.libs.caffeine")
     relocate("com.craftmend.storm", "es.angelillo15.mast.libs.storm")
@@ -40,11 +39,13 @@ dependencies {
     implementation(project(":MAStaff-API"))
     implementation(project(":MAStaff-Bukkit"))
     implementation(project(":MAStaff-Bungee"))
-    implementation(project("MAStaff-Legacy"))
+    implementation(project(":MAStaff-Legacy"))
     implementation(project(":MAStaff-Punishments"))
     implementation(project(":MAStaff-Vanish"))
     implementation(project(":MAStaff-PAPI"))
     implementation(project(":MAStaff-Glow"))
+    implementation(project(":MAStaff-Velocity"))
+    implementation(project(":MAStaff-Common"))
     implementation(libs.bundles.invAPI)
     implementation(libs.liblyBukkit)
     implementation(libs.reflections)
@@ -79,6 +80,9 @@ allprojects {
         maven("https://papermc.io/repo/repository/maven-releases/")
         maven("https://repo.papermc.io/repository/maven-public/")
         maven("https://repo.extendedclip.com/content/repositories/placeholderapi/")
+        maven("https://mvn.exceptionflug.de/repository/exceptionflug-public/")
+        maven("https://repo.simplix.dev/repository/simplixsoft-public")
+        maven("https://repo.nookure.com/releases")
     }
 
     tasks.withType<JavaCompile> {
@@ -94,9 +98,10 @@ allprojects {
         testAnnotationProcessor("org.projectlombok:lombok:1.18.24")
         testImplementation("org.junit.jupiter:junit-jupiter-api:5.7.0")
         testImplementation(rootProject.libs.kotlin)
+        compileOnly(rootProject.libs.guice)
     }
 
     kotlin {
-        jvmToolchain(8);
+        jvmToolchain(17);
     }
 }

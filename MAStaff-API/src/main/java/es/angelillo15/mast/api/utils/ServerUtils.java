@@ -1,9 +1,5 @@
 package es.angelillo15.mast.api.utils;
 
-import org.bukkit.Server;
-
-
-
 public class ServerUtils {
     private static ServerType serverType;
     private static boolean protocolLibInstalled = false;
@@ -17,9 +13,16 @@ public class ServerUtils {
             serverType = ServerType.BUKKIT;
             return ServerType.BUKKIT;
         } catch (ClassNotFoundException e) {
-            serverType = ServerType.BUNGEE;
-            return ServerType.BUNGEE;
+
+            try {
+                Class.forName("com.velocitypowered.api.proxy.ProxyServer");
+                serverType = ServerType.VELOCITY;
+            } catch (ClassNotFoundException e2) {
+                serverType = ServerType.BUNGEE;
+            }
         }
+
+        return serverType;
     }
 
     public static boolean isProtocolLibInstalled() {
@@ -33,6 +36,7 @@ public class ServerUtils {
 
     public enum ServerType {
         BUKKIT,
-        BUNGEE
+        BUNGEE,
+        VELOCITY
     }
 }

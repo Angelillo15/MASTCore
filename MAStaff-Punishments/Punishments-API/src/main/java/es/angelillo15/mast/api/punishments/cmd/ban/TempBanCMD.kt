@@ -5,9 +5,7 @@ import es.angelillo15.mast.api.cmd.CommandData
 import es.angelillo15.mast.api.config.punishments.Config
 import es.angelillo15.mast.api.config.punishments.Messages
 import es.angelillo15.mast.api.punishments.IPunishPlayer
-import es.angelillo15.mast.api.punishments.PunishTargetReasonCommand
-import es.angelillo15.mast.api.punishments.cmd.PunishCommand
-import es.angelillo15.mast.api.punishments.cmd.PunishTargetCommand
+import es.angelillo15.mast.api.punishments.cmd.PunishTargetReasonCommand
 import es.angelillo15.mast.api.utils.NumberUtils
 
 @CommandData(

@@ -16,7 +16,7 @@ public class StaffChangeEvent implements Listener {
 
     @EventHandler
     public void staffEnableEvent(PluginMessageEvent event) {
-        if (!Objects.equals(event.getTag(), "BungeeCord")) {
+        if (!Objects.equals(event.getTag(), "mastaff:staff")) {
             return;
         }
 

@@ -1,6 +1,7 @@
 package es.angelillo15.mast.api.thread
 
 import es.angelillo15.mast.api.MAStaffInstance
+import es.angelillo15.mast.api.utils.MAStaffInject
 
 private const val tps = 5
 private const val miles = 1000 / tps
@@ -9,8 +10,9 @@ private var thread: Unit? = null
 
 private var actions = ArrayList<Action>()
 
+@Suppress("UNCHECKED_CAST")
 fun start() {
-    thread = Thread {
+    Thread({
         MAStaffInstance.getLogger().debug("Starting parallel thread...")
 
         while (!shuttingDown) {
@@ -24,7 +26,9 @@ fun start() {
                 break
             }
 
-            for (action in actions) {
+            val actionsClone:ArrayList<Action> = getActions().clone() as ArrayList<Action>
+
+            for (action in actionsClone) {
                 if (action.delayTask > 0) {
                     action.delayTask -= miles
                     continue
@@ -33,18 +37,21 @@ fun start() {
                 }
 
                 try {
-                    action.runnable.run()
+                    action.runnable.invoke()
+                    MAStaffInstance.getLogger().debug("Executed action $action")
                 } catch (e: Exception) {
-                    e.printStackTrace()
+                    MAStaffInstance.getLogger().error("Error while executing action ${action}: ${e.message}")
                 }
 
                 if (!action.repeat) removeAction(action)
             }
         }
 
+
+
         shuttingDown = false
         MAStaffInstance.getLogger().debug("Parallel thread stopped!")
-    }.start()
+    }, "MAStaff-ParallelThread").start()
 }
 
 /**
@@ -111,24 +118,14 @@ fun getThread() : Unit? {
  * @param delay The delay in milliseconds
  * @param repeat If the action should repeat
  */
-fun execute(runnable: Runnable, delay: Int?, repeat: Boolean?) : Int {
+fun execute(runnable: () -> Unit, delay: Int?, repeat: Boolean?) : Int {
     return addAction(Action(runnable, delay ?: 0, repeat ?: false))
 }
 
 /**
  * Executes a runnable
  * @param runnable The runnable to execute
- * @param delay The delay in milliseconds
- * @param repeat If the action should repeat
  */
-fun execute(runnable: () -> Unit, delay: Int?, repeat: Boolean?) : Int {
-    return execute(Runnable { runnable() }, delay, repeat)
-}
-
-/**
- * Executes a runnable
- * @param runnable The runnable to execute
- */
-fun execute(runnable: Runnable) : Int {
+fun execute(runnable: () -> Unit) : Int {
     return execute(runnable, 0, false)
 }

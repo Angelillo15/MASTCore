@@ -79,6 +79,7 @@ public class PluginConnection {
             MAStaffInstance.getLogger().error((TextUtils.simpleColorize("&c┃ https://discord.nookure.com                                              ┃")));
             MAStaffInstance.getLogger().error((TextUtils.simpleColorize("&c┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛")));
         }
+
         try {
             String dataPath = pluginPath + "/database.db";
             String url = "jdbc:sqlite:" + dataPath;
@@ -97,15 +98,6 @@ public class PluginConnection {
         }
 
         instance = this;
-    }
-
-    public static boolean tableExists(String table) {
-        try {
-            return connection.getMetaData().getTables(null, null, table, null).next();
-        } catch (SQLException e) {
-            MAStaffInstance.getLogger().error("An error ocurred while trying to check if the table " + table + " exists: " + e.getMessage());
-            return false;
-        }
     }
 
     public static StormOptions getDefaultStormOptions() {

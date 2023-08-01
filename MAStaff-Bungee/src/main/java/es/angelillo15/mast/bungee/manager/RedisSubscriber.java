@@ -1,8 +1,8 @@
 package es.angelillo15.mast.bungee.manager;
 
 import es.angelillo15.mast.api.managers.ManagerExecutor;
-import es.angelillo15.mast.api.redis.Event;
-import es.angelillo15.mast.api.redis.EventManager;
+import es.angelillo15.mast.api.event.Event;
+import es.angelillo15.mast.api.redis.RedisEventManager;
 import es.angelillo15.mast.bungee.MAStaff;
 import es.angelillo15.mast.bungee.config.Config;
 import lombok.SneakyThrows;
@@ -25,18 +25,18 @@ public class RedisSubscriber implements ManagerExecutor {
 
                     String messageWithoutServerName = message.split(":")[1].split(">")[0];
 
-                    if (!EventManager.getInstance().eventExists(messageWithoutServerName)) {
+                    if (!RedisEventManager.getInstance().eventExists(messageWithoutServerName)) {
                         MAStaff.getInstance().getPLogger().debug("Event " + messageWithoutServerName + " doesn't exists");
                         return;
                     }
 
-                    Event event = EventManager.getInstance().getEvent(messageWithoutServerName)
+                    Event event = RedisEventManager.getInstance().getEvent(messageWithoutServerName)
                             .getDeclaredConstructor(String.class, String.class)
                             .newInstance(message.split(":")[1],
                                     message.split(":")[0]
                             );
 
-                    EventManager.getInstance().fireEvent(event);
+                    RedisEventManager.getInstance().fireEvent(event);
 
                     MAStaff.getInstance().getPLogger().debug("Event " + messageWithoutServerName + " fired");
                 }

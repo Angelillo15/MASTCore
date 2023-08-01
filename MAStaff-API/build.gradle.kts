@@ -11,16 +11,9 @@ plugins {
 group = "es.angelillo15"
 version = parent?.version ?: "2.0.0"
 
-repositories {
-    mavenCentral()
-    maven("https://papermc.io/repo/repository/maven-public/")
-    maven("https://hub.spigotmc.org/nexus/content/repositories/snapshots/")
-    maven("https://oss.sonatype.org/content/repositories/snapshots")
-    maven("https://oss.sonatype.org/content/repositories/central")
-    maven("https://repo.alessiodp.com/releases/")
-    maven("https://jitpack.io")
-    maven("https://repo.dmulloy2.net/repository/public/")
-}
+val compileOnlyApi: Configuration by configurations.creating
+configurations["compileClasspath"].extendsFrom(compileOnlyApi)
+configurations["apiElements"].extendsFrom(compileOnlyApi)
 
 dependencies {
     compileOnly(libs.waterfall)
@@ -43,6 +36,7 @@ dependencies {
     compileOnly(libs.miniMessage)
     compileOnly(libs.protocolLib)
     compileOnly(libs.vault)
+    compileOnly(libs.velocity)
 }
 
 blossom {
@@ -64,5 +58,4 @@ blossom {
     {
         replaceToken("false", "true")
     }
-
 }

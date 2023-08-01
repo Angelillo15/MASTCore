@@ -13,7 +13,8 @@ import es.angelillo15.mast.api.cmd.sender.CommandSender;
         aliases = {"mab"}
 )
 public class MastParentCMD extends CommandParent {
-    public MastParentCMD() {
+    @Override
+    public void registerSubCommands() {
         this.registerSubCommand(new ReloadARG());
         this.registerSubCommand(new DumpArg());
         this.registerSubCommand(new SubCommand() {

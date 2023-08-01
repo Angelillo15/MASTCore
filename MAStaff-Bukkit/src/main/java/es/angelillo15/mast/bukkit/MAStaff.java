@@ -1,7 +1,13 @@
 package es.angelillo15.mast.bukkit;
 
+import com.google.inject.Guice;
+import com.google.inject.Injector;
 import es.angelillo15.mast.api.*;
 import es.angelillo15.mast.api.database.DataProvider;
+import es.angelillo15.mast.api.inject.StaticMembersInjector;
+import es.angelillo15.mast.api.managers.LegacyUserDataManager;
+import es.angelillo15.mast.api.managers.LegacyStaffPlayersManagers;
+import es.angelillo15.mast.api.managers.StaffManager;
 import es.angelillo15.mast.api.thread.AsyncThreadKt;
 import es.angelillo15.mast.api.utils.BukkitUtils;
 import es.angelillo15.mast.bukkit.addons.AddonsLoader;
@@ -12,6 +18,7 @@ import es.angelillo15.mast.bukkit.cmd.staff.StaffCMD;
 import es.angelillo15.mast.api.config.bukkit.Config;
 import es.angelillo15.mast.api.config.bukkit.ConfigLoader;
 import es.angelillo15.mast.api.config.bukkit.Messages;
+import es.angelillo15.mast.bukkit.inject.BukkitInjector;
 import es.angelillo15.mast.bukkit.legacy.BukkitLegacyLoader;
 import es.angelillo15.mast.bukkit.listener.FreezeListener;
 import es.angelillo15.mast.bukkit.listener.clickListeners.OnItemClick;
@@ -37,7 +44,6 @@ import mc.obliviate.inventory.InventoryAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.HandlerList;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import es.angelillo15.mast.api.database.PluginConnection;
@@ -47,8 +53,9 @@ import java.io.File;
 import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.Objects;
 
-public class MAStaff extends JavaPlugin implements MAStaffInstance<Plugin> {
+public class MAStaff extends JavaPlugin implements MAStaffInstance<JavaPlugin> {
     @Getter
     static final int version = Integer.parseInt(Bukkit.getBukkitVersion().split("-")[0].split("\\.")[1]);
     @Getter
@@ -65,11 +72,14 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance<Plugin> {
     private static int currentVersion;
     @Getter
     private static int spiVersion;
+    private Injector injector;
+    @Getter
+    static boolean isFree = false;
 
     @Override
     public void onEnable() {
         plugin = this;
-        new Scheduler();
+        Scheduler.init();
         super.onEnable();
     }
 
@@ -111,37 +121,38 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance<Plugin> {
 
     @Override
     public void loadConfig() {
-        new ConfigLoader().load();
+        new ConfigLoader(this).load();
     }
 
     @Override
     public void registerCommands() {
-        getCommand("staff").setExecutor(new StaffCMD());
-        if (Config.Freeze.enabled()) getCommand("freeze").setExecutor(new FreezeCMD());
-        getCommand("mast").setExecutor(new MAStaffCMD());
-        getCommand("staffchat").setExecutor(new StaffChatCMD());
+        Objects.requireNonNull(getCommand("staff")).setExecutor(new StaffCMD());
+        if (Config.Freeze.enabled()) Objects.requireNonNull(getCommand("freeze")).setExecutor(injector.getInstance(FreezeCMD.class));
+        Objects.requireNonNull(getCommand("mast")).setExecutor(injector.getInstance(MAStaffCMD.class));
+        Objects.requireNonNull(getCommand("staffchat")).setExecutor(new StaffChatCMD());
     }
 
     @Override
     public void registerListeners() {
         PluginManager pm = Bukkit.getPluginManager();
-        pm.registerEvents(new OnJoin(), this);
-        pm.registerEvents(new OnItemClick(), this);
-        pm.registerEvents(new OnItemDrop(), this);
-        pm.registerEvents(new OnInventoryClick(), this);
-        pm.registerEvents(new OnItemClickInteract(), this);
-        pm.registerEvents(new OnJoinLeave(), this);
-        pm.registerEvents(new OnItemDrop(), this);
-        if (Config.Freeze.enabled()) pm.registerEvents(new FreezeListener(), this);
-        pm.registerEvents(new OnItemGet(), this);
-        pm.registerEvents(new OnPlayerInteractAtEntityEvent(), this);
-        pm.registerEvents(new OnAttack(), this);
-        if (Config.silentOpenChest()) pm.registerEvents(new OnOpenChest(), this);
-        if (version >= 19) pm.registerEvents(new OnBlockReceiveGameEvent(), this);
-        if (version >= 9) pm.registerEvents(new OnSwapHand(), this);
-        if (version >= 9) pm.registerEvents(new OnAchievement(), this);
+        pm.registerEvents(injector.getInstance(OnJoin.class), this);
+        pm.registerEvents(injector.getInstance(OnItemClick.class), this);
+        pm.registerEvents(injector.getInstance(OnItemDrop.class), this);
+        pm.registerEvents(injector.getInstance(OnInventoryClick.class), this);
+        pm.registerEvents(injector.getInstance(OnItemClickInteract.class), this);
+        pm.registerEvents(injector.getInstance(OnJoinLeave.class), this);
+        pm.registerEvents(injector.getInstance(OnItemDrop.class), this);
+        if (Config.Freeze.enabled()) pm.registerEvents(injector.getInstance(FreezeListener.class), this);
+        pm.registerEvents(injector.getInstance(OnItemGet.class), this);
+        pm.registerEvents(injector.getInstance(OnPlayerInteractAtEntityEvent.class), this);
+        pm.registerEvents(injector.getInstance(OnAttack.class), this);
+        if (Config.silentOpenChest()) pm.registerEvents(injector.getInstance(OnOpenChest.class), this);
+        if (version >= 19) pm.registerEvents(injector.getInstance(OnBlockReceiveGameEvent.class), this);
+        if (version >= 9) pm.registerEvents(injector.getInstance(OnSwapHand.class), this);
+        if (version >= 9) pm.registerEvents(injector.getInstance(OnAchievement.class), this);
         FreezeUtils.setupMessageSender();
-        this.getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
+        this.getServer().getMessenger().registerOutgoingPluginChannel(this, "mastaff:staff");
+        this.getServer().getMessenger().registerOutgoingPluginChannel(this, "mastaff:commands");
     }
 
     @Override
@@ -162,24 +173,21 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance<Plugin> {
                     );
                     break;
                 case SQLITE:
-                    pluginConnection = new PluginConnection(
-                            getPlugin().getDataFolder().getAbsolutePath()
-                    );
+                    loadSqlite();
                     break;
-
             }
 
-            connection = pluginConnection.getConnection();
+            connection = PluginConnection.getConnection();
 
         } catch (Exception e) {
             logger.error(e.getMessage());
-            logger.error((TextUtils.colorize("┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓")));
-            logger.error((TextUtils.colorize("┃ An error ocurred while connecting to the MySQL database!                 ┃")));
-            logger.error((TextUtils.colorize("┃ Please, check your database credentials.                                 ┃")));
-            logger.error((TextUtils.colorize("┃ If you need help, join our Discord server to get support:                ┃")));
-            logger.error((TextUtils.colorize("┃ https://discord.nookure.com                                              ┃")));
-            logger.error((TextUtils.colorize("┃ The plugin is now connecting to a SQLite database...                     ┃")));
-            logger.error((TextUtils.colorize("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛")));
+            logger.error("┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓");
+            logger.error("┃ An error ocurred while connecting to the MySQL database!                 ┃");
+            logger.error("┃ Please, check your database credentials.                                 ┃");
+            logger.error("┃ If you need help, join our Discord server to get support:                ┃");
+            logger.error("┃ https://discord.nookure.com                                              ┃");
+            logger.error("┃ The plugin is now connecting to a SQLite database...                     ┃");
+            logger.error("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛");
             try {
                 pluginConnection = new PluginConnection(
                         getPlugin().getDataFolder().getAbsolutePath()
@@ -187,12 +195,17 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance<Plugin> {
             } catch (Exception e1) {
                 e1.printStackTrace();
             }
-            throw new RuntimeException(e);
         }
         PluginConnection.getQueries().createTables();
 
         logger.info(TextUtils.colorize("&aConnected to the {type} database successfully.")
                 .replace("{type}", PluginConnection.getDataProvider().name())
+        );
+    }
+
+    public void loadSqlite() {
+        pluginConnection = new PluginConnection(
+                getPlugin().getDataFolder().getAbsolutePath()
         );
     }
 
@@ -206,7 +219,7 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance<Plugin> {
 
         if (version < 9) {
             logger.info("Loading legacy modules...");
-            new BukkitLegacyLoader().load();
+            new BukkitLegacyLoader().load(this);
         }
         if (getServer().getPluginManager().getPlugin("Vault") == null) {
             return;
@@ -299,7 +312,8 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance<Plugin> {
                 .asString();
 
 
-        currentVersion = Integer.parseInt(getDescription().getVersion()
+        currentVersion = Integer.parseInt(Constants.VERSION
+                .replace("-BETA", "")
                 .replace("-DEV", "")
                 .replace(".", "")
                 .replace("v", "")
@@ -331,10 +345,20 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance<Plugin> {
 
     }
 
+    @SuppressWarnings("Deprecated")
+    public void inject() {
+        getPLogger().debug("Injecting...");
+        injector = Guice.createInjector(new BukkitInjector());
+
+        StaticMembersInjector.injectStatics(injector, LegacyStaffPlayersManagers.class);
+        StaticMembersInjector.injectStatics(injector, LegacyUserDataManager.class);
+        StaticMembersInjector.injectStatics(injector, MAStaffCMD.class);
+    }
+
     public void registerPlaceholderAPI() {
         if (!MAStaffInstance.placeholderCheck()) return;
 
-        new MAStaffExtension().register();
+        injector.getInstance(MAStaffExtension.class).register();
     }
 
     @Override
@@ -344,11 +368,16 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance<Plugin> {
 
     @Override
     public IStaffPlayer createStaffPlayer(Player player) {
-        return new StaffPlayer(player);
+        IStaffPlayer staffPlayer = injector.getInstance(StaffPlayer.class).setPlayer(player);
+
+        StaffManager manager = injector.getInstance(StaffManager.class);
+        manager.addStaffPlayer(staffPlayer);
+
+        return staffPlayer;
     }
 
     @Override
-    public Plugin getPluginInstance() {
+    public JavaPlugin getPluginInstance() {
         return this;
     }
 
@@ -360,5 +389,10 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance<Plugin> {
     @Override
     public InputStream getPluginResource(String s) {
         return getResource(s);
+    }
+
+    @Override
+    public Injector getInjector() {
+        return injector;
     }
 }

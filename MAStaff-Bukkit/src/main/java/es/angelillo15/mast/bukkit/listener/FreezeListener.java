@@ -7,6 +7,7 @@ import es.angelillo15.mast.api.managers.freeze.FreezeManager;
 import es.angelillo15.mast.api.managers.freeze.FreezeVector;
 import es.angelillo15.mast.api.config.bukkit.Config;
 import es.angelillo15.mast.api.config.bukkit.Messages;
+import es.angelillo15.mast.bukkit.MAStaff;
 import io.papermc.lib.PaperLib;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -56,6 +57,8 @@ public class FreezeListener implements Listener {
         }
 
         if(!FreezeManager.isFrozen(event.getPlayer())) return;
+
+        if (MAStaff.isFree()) return;
 
         Player player = event.getPlayer();
         FreezeVector vector = FreezeManager.getFreezeVector(player);
