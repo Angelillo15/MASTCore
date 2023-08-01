@@ -10,22 +10,6 @@ Messages:
   prefix: '&a&lSTAFF &8&l»&r' # This will appear before all the plugin messages.
   playerStaffModeEnabled: '{prefix} &a{player} &7has &aenabled &7staff mode.'
   playerStaffModeDisabled: '{prefix} &a{player} &7has &adisabled &7staff mode.'
-StaffChat:
-  format: '{prefix} &7({server}) &a{player} &8&l» &7{message}' # The format for sent messages on Staff Chat.
-  correctUse: '{prefix} &7You must use &a/sc <message>&7.' # Message sent when the command is not used correctly.
-  enabled: '{prefix} &7You have &aenabled &7Staff Chat.' # Message sent when the player enables Staff Chat.
-  disabled: '{prefix} &7You have &adisabled &7Staff Chat.' # Message sent when the player disables Staff Chat.
-StaffJoin:
-  message: '{prefix} &a{player} &7has joined the server.'
-StaffChangeServer:
-  message: '{prefix} &a{player} &7has switched from &a{fromServer} &7to &a{server}&7.'
-StaffLeave:
-  message: '{prefix} &a{player} &7has left the server.'
-Helpop:
-  message: '{prefix} &7Your message has been sent to the staff team.' # The message sent when the player sends a helpop message.
-  correctUse: '{prefix} &7You must use &a/helpop <message>&7.' # Message sent when the command is not used correctly.
-  format: '&a&lHelpop &8&l» &7({server}) &a{player} &8&l» &7{msg}' # The format for sent messages on Helpop.
-  cooldown: '&a&lHelpop &8&l» &7You must wait &a{cooldown} &7seconds to send another helpop message.' # The message sent when the player is on cooldown.
 Info:
   playerNotFound: '{prefix} &7The player &a{player} &7was not found.'
   playerInfoMessage:
