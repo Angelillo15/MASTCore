@@ -33,3 +33,13 @@ StaffChat:
     enabled: true
     # The prefix for the StaffChat messages.
     key: "#"
+# Config for the Helpop module.
+Helpop:
+    # Enable/disable the Helpop module.
+    enabled: true
+    # Config for the Helpop cooldown.
+    cooldown:
+        # Enable/disable the Helpop cooldown.
+        enabled: true
+        # The time in seconds that the player must wait to send another Helpop message.
+        time: 30

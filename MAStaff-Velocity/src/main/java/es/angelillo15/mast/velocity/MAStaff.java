@@ -15,6 +15,7 @@ import es.angelillo15.mast.api.*;
 import es.angelillo15.mast.api.cmd.Command;
 import es.angelillo15.mast.api.cmd.CommandData;
 import es.angelillo15.mast.api.config.common.CommonConfig;
+import es.angelillo15.mast.api.config.common.CommonConfigLoader;
 import es.angelillo15.mast.api.config.common.CommonMessages;
 import es.angelillo15.mast.api.config.velocity.Config;
 import es.angelillo15.mast.api.config.velocity.Messages;
@@ -62,7 +63,7 @@ public class MAStaff implements MAStaffInstance<ProxyServer> {
     @Getter
     private PluginConnection connection;
     @Getter
-    private CommonConfig commonConfig;
+    private CommonConfigLoader commonConfigLoader;
     @Getter
     private VelocityConfig velocityConfig;
     private Injector injector;
@@ -129,17 +130,20 @@ public class MAStaff implements MAStaffInstance<ProxyServer> {
         StaticMembersInjector.injectStatics(injector, Config.class);
         StaticMembersInjector.injectStatics(injector, Messages.class);
         StaticMembersInjector.injectStatics(injector, CommonMessages.class);
-        StaticMembersInjector.injectStatics(injector, es.angelillo15.mast.api.config.common.Config.class);
+        StaticMembersInjector.injectStatics(injector, es.angelillo15.mast.api.config.common.CommonConfig.class);
         velocityConfig = injector.getInstance(VelocityConfig.class);
         velocityConfig.load();
-        commonConfig = injector.getInstance(CommonConfig.class);
-        commonConfig.load();
+        commonConfigLoader = injector.getInstance(CommonConfigLoader.class);
+        commonConfigLoader.load();
     }
 
     @Override
     public void registerCommands() {
-        registerCommand(injector.getInstance(HelpOP.class));
-        registerCommand(injector.getInstance(StaffChat.class));
+        if (CommonConfig.Helpop.INSTANCE.enabled())
+            registerCommand(injector.getInstance(HelpOP.class));
+        if (CommonConfig.StaffChat.INSTANCE.enabled())
+            registerCommand(injector.getInstance(StaffChat.class));
+
         registerCommand(injector.getInstance(MastParent.class));
     }
 

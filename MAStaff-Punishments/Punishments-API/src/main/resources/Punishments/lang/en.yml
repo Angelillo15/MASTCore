@@ -34,7 +34,6 @@ Default:
   defaultWarnReason: 'No reason specified.'
   # Default reason when a Player is unwarned.
   defaultUnWarnReason: 'No reason specified.'
-
   # Appeal Message
   appealMessage: 'Appeal at: https://discord.nookure.com/'
 Ban:

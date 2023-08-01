@@ -4,10 +4,10 @@ import com.google.inject.Inject
 
 object CommonMessages {
     @Inject
-    private lateinit var commonConfig: CommonConfig;
+    private lateinit var commonConfigLoader: CommonConfigLoader;
 
     fun prefix(): String {
-        return commonConfig.messages!!.config.getString("Prefix")
+        return commonConfigLoader.messages!!.config.getString("Prefix")
     }
 
     object StaffChat {
@@ -28,7 +28,25 @@ object CommonMessages {
         }
     }
 
+    object HelpOp {
+        fun format(): String {
+            return get("Helpop.format")
+        }
+
+        fun correctUse(): String {
+            return get("Helpop.correctUse")
+        }
+
+        fun message(): String {
+            return get("Helpop.message")
+        }
+
+        fun cooldown(): String {
+            return get("Helpop.cooldown")
+        }
+    }
+
     fun get(key: String): String {
-        return commonConfig.messages!!.config.getString(key).replace("{prefix}", prefix())
+        return commonConfigLoader.messages!!.config.getString(key).replace("{prefix}", prefix())
     }
 }
