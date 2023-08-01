@@ -7,6 +7,7 @@ import lombok.Getter;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 
 public class ConfigLoader {
     private static MAStaffAddon<?> plugin;
@@ -18,12 +19,19 @@ public class ConfigLoader {
     private static ConfigManager en;
     @Getter
     private static ConfigManager config;
+    @Getter
+    private static ConfigManager banTemplate;
+    @Getter
+    private static ConfigManager warnsTemplate;
 
     public static void load(MAStaffAddon<?> plugin) {
         ConfigLoader.plugin = plugin;
         loadConfig();
         loadLanguages();
         loadMessage();
+
+        banTemplate = loadFile("Punishments/templates/ban.yml","templates/ban.yml", plugin);
+        warnsTemplate = loadFile("Punishments/templates/warn.yml","templates/warn.yml", plugin);
     }
 
     public static void loadConfig() {
@@ -66,5 +74,15 @@ public class ConfigLoader {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public static ConfigManager loadFile(String original, String path, MAStaffAddon<?> plugin) {
+        ConfigMerge.merge(new File(plugin.getAddonFolder().toPath() + File.separator + path),
+                plugin.getResourceAsStream(original)
+        );
+
+        ConfigManager config = new ConfigManager(plugin.getAddonFolder().toPath(), path, path);
+        config.registerConfig();
+        return config;
     }
 }
