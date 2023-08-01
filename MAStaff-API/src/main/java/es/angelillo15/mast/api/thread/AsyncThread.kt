@@ -1,6 +1,7 @@
 package es.angelillo15.mast.api.thread
 
 import es.angelillo15.mast.api.MAStaffInstance
+import es.angelillo15.mast.api.utils.MAStaffInject
 
 private const val tps = 5
 private const val miles = 1000 / tps
@@ -25,8 +26,6 @@ fun start() {
                 break
             }
 
-            val clone = getActions().clone();
-
             val actionsClone:ArrayList<Action> = getActions().clone() as ArrayList<Action>
 
             for (action in actionsClone) {
@@ -38,10 +37,10 @@ fun start() {
                 }
 
                 try {
-                    action.runnable.run()
+                    action.runnable.invoke()
+                    MAStaffInstance.getLogger().debug("Executed action $action")
                 } catch (e: Exception) {
-                    e.printStackTrace()
-                    continue
+                    MAStaffInstance.getLogger().error("Error while executing action ${action}: ${e.message}")
                 }
 
                 if (!action.repeat) removeAction(action)
@@ -119,24 +118,14 @@ fun getThread() : Unit? {
  * @param delay The delay in milliseconds
  * @param repeat If the action should repeat
  */
-fun execute(runnable: Runnable, delay: Int?, repeat: Boolean?) : Int {
+fun execute(runnable: () -> Unit, delay: Int?, repeat: Boolean?) : Int {
     return addAction(Action(runnable, delay ?: 0, repeat ?: false))
 }
 
 /**
  * Executes a runnable
  * @param runnable The runnable to execute
- * @param delay The delay in milliseconds
- * @param repeat If the action should repeat
  */
-fun execute(runnable: () -> Unit, delay: Int?, repeat: Boolean?) : Int {
-    return execute(Runnable { runnable() }, delay, repeat)
-}
-
-/**
- * Executes a runnable
- * @param runnable The runnable to execute
- */
-fun execute(runnable: Runnable) : Int {
+fun execute(runnable: () -> Unit) : Int {
     return execute(runnable, 0, false)
 }
