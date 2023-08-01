@@ -33,7 +33,7 @@ abstract class CommandParent : Command() {
     abstract fun registerSubCommands();
 
     fun sendHelp(sender: CommandSender?) {
-        sender!!.sendMessage(TextUtils.simpleColorize("&a&lMAS&r&ltaff &7- &fv${Constants.VERSION}"))
+        sender!!.sendMessage(TextUtils.simpleColorize("&a&lMAS&r&ltaff &7- &fv${Constants.getVERSION()}"))
         for (subCommand in subCommands.values) {
             if (sender.hasPermission(subCommand.permission)) {
                 sender.sendMessage(TextUtils.simpleColorize("&a&l> &r" + subCommand.syntax + " &7- &7" + subCommand.description))
