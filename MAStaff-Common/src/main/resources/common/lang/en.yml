@@ -50,3 +50,21 @@ Helpop:
   # The placeholders are:
   # ↳ {cooldown} - The time left for the player to send another helpop message.
   cooldown: '&a&lHelpop &8&l» &7You must wait &a{cooldown} &7seconds to send another helpop message.'
+StaffChanges:
+  # The format for sent messages on Staff Changes.
+  # The placeholders are:
+  # ↳ {prefix} - The message prefix.
+  # ↳ {player} - The player name who sent the message.
+  staffJoin: '{prefix} &a{player} &7has joined the server.'
+  # The format for sent messages on Staff Changes.
+  # The placeholders are:
+  # ↳ {prefix} - The message prefix.
+  # ↳ {player} - The player name who sent the message.
+  staffQuit: '{prefix} &a{player} &7has left the server.'
+  # The format for sent messages on Staff Changes.
+  # The placeholders are:
+  # ↳ {prefix} - The message prefix.
+  # ↳ {player} - The player name who sent the message.
+  # ↳ {server} - The server names where the player is going to
+  # ↳ {fromServer} - The server names where the player is coming from
+  staffSwitch: '{prefix} &a{player} &7has switched from &a{fromServer} &7to &a{server}&7.'
