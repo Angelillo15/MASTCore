@@ -8,6 +8,9 @@ import es.angelillo15.mast.api.MAStaffInstance;
 import es.angelillo15.mast.api.TextUtils;
 import es.angelillo15.mast.api.cmd.Command;
 import es.angelillo15.mast.api.cmd.CommandData;
+import es.angelillo15.mast.api.config.common.CommonConfig;
+import es.angelillo15.mast.api.config.common.CommonConfigLoader;
+import es.angelillo15.mast.api.config.common.CommonMessages;
 import es.angelillo15.mast.api.data.DataManager;
 import es.angelillo15.mast.api.database.PluginConnection;
 import es.angelillo15.mast.api.inject.StaticMembersInjector;
@@ -32,6 +35,7 @@ import es.angelillo15.mast.bungee.listener.user.UserJoinListener;
 import es.angelillo15.mast.bungee.manager.RedisManager;
 import es.angelillo15.mast.bungee.utils.BungeeServerUtils;
 import es.angelillo15.mast.bungee.utils.Logger;
+import es.angelillo15.mast.cmd.StaffChat;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.SneakyThrows;
@@ -54,6 +58,8 @@ public class MAStaff extends Plugin implements MAStaffInstance<Plugin> {
         return logger;
     }
     private Injector injector;
+    @Getter
+    private static CommonConfigLoader configLoader;
 
     @Override
     public void registerCommand(Command command) {
@@ -111,14 +117,16 @@ public class MAStaff extends Plugin implements MAStaffInstance<Plugin> {
     @Override
     public void loadConfig() {
         new ConfigLoader(this).load();
+        configLoader = injector.getInstance(CommonConfigLoader.class);
+        configLoader.load();
     }
 
     @Override
     public void registerCommands() {
-        getProxy().getPluginManager().registerCommand(this, new StaffChat());
         getProxy().getPluginManager().registerCommand(this, new HelpopCMD());
         registerCommand(injector.getInstance(InfoCMD.class));
         registerCommand(injector.getInstance(MastParentCMD.class));
+        registerCommand(injector.getInstance(StaffChat.class));
     }
 
     @Override
@@ -208,6 +216,8 @@ public class MAStaff extends Plugin implements MAStaffInstance<Plugin> {
         this.injector = Guice.createInjector(new BungeeInjector());
 
         StaticMembersInjector.injectStatics(injector, LegacyUserDataManager.class);
+        StaticMembersInjector.injectStatics(injector, CommonMessages.class);
+        StaticMembersInjector.injectStatics(injector, CommonConfig.class);
     }
 
     @Override
