@@ -26,6 +26,7 @@ import es.angelillo15.mast.api.thread.AsyncThreadKt;
 import es.angelillo15.mast.cmd.HelpOP;
 import es.angelillo15.mast.cmd.StaffChat;
 import es.angelillo15.mast.velocity.cmd.CustomCommand;
+import es.angelillo15.mast.velocity.cmd.mastv.MastParent;
 import es.angelillo15.mast.velocity.inject.VelocityInjector;
 import es.angelillo15.mast.velocity.listeners.CommandBackendExecutor;
 import es.angelillo15.mast.velocity.listeners.OnPlayerJoin;
@@ -138,6 +139,7 @@ public class MAStaff implements MAStaffInstance<ProxyServer> {
     public void registerCommands() {
         registerCommand(injector.getInstance(HelpOP.class));
         registerCommand(injector.getInstance(StaffChat.class));
+        registerCommand(injector.getInstance(MastParent.class));
     }
 
     @Override
