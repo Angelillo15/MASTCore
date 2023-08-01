@@ -6,27 +6,27 @@ import es.angelillo15.mast.api.config.common.CommonMessages
 import es.angelillo15.mast.api.config.common.Config
 import es.angelillo15.mast.api.managers.StaffChatManager
 
-class OnStaffMessageEvent {
+open class OnStaffMessageEvent {
     @Inject
-    private lateinit var staffChatManager: StaffChatManager;
+    private lateinit var staffChatManager: StaffChatManager
     @Inject
-    private lateinit var serverUtils: IServerUtils;
+    private lateinit var serverUtils: IServerUtils
 
     fun onStaffMessageEvent(player: String, message: String, server: String) : Boolean {
-        val key = Config.StaffChat.Prefix.key();
-        var strippedMessage = message;
+        val key = Config.StaffChat.Prefix.key()
+        var strippedMessage = message
         if (!message.startsWith(key) && !staffChatManager.isStaffChatEnabled(player)) return false
 
         if (message.startsWith(key)) {
             strippedMessage = message.substring(key.length)
         }
 
-        var formattedMessage = CommonMessages.StaffChat.format()
+        val formattedMessage = CommonMessages.StaffChat.format()
             .replace("{server}", server)
             .replace("{player}", player)
-            .replace("{message}", message)
+            .replace("{message}", strippedMessage)
 
-        serverUtils.broadcastMessage(message, "mast.staffchat")
+        serverUtils.broadcastMessage(formattedMessage, "mast.staffchat")
 
         return true
     }
