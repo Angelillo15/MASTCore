@@ -17,6 +17,7 @@ import es.angelillo15.mast.api.inject.StaticMembersInjector;
 import es.angelillo15.mast.api.managers.LegacyUserDataManager;
 import es.angelillo15.mast.api.redis.RedisEventManager;
 import es.angelillo15.mast.api.redis.events.server.ServerConnectedEvent;
+import es.angelillo15.mast.api.thread.AsyncThreadKt;
 import es.angelillo15.mast.bungee.addons.AddonsLoader;
 import es.angelillo15.mast.bungee.cmd.*;
 import es.angelillo15.mast.bungee.cmd.mastb.MastParentCMD;
@@ -35,6 +36,7 @@ import es.angelillo15.mast.bungee.listener.user.UserJoinListener;
 import es.angelillo15.mast.bungee.manager.RedisManager;
 import es.angelillo15.mast.bungee.utils.BungeeServerUtils;
 import es.angelillo15.mast.bungee.utils.Logger;
+import es.angelillo15.mast.cmd.HelpOP;
 import es.angelillo15.mast.cmd.StaffChat;
 import lombok.Getter;
 import lombok.Setter;
@@ -111,6 +113,7 @@ public class MAStaff extends Plugin implements MAStaffInstance<Plugin> {
         logger.info(TextUtils.simpleColorize("&a ░      ░     ░   ▒   ░  ░  ░    ░        ░   ▒    ░ ░    ░ ░"));
         logger.info(TextUtils.simpleColorize("&a ░         ░  ░      ░                 ░  ░"));
         logger.info(TextUtils.simpleColorize("&a                                                version: " + getDescription().getVersion()));
+        AsyncThreadKt.start();
 
     }
 
@@ -123,10 +126,10 @@ public class MAStaff extends Plugin implements MAStaffInstance<Plugin> {
 
     @Override
     public void registerCommands() {
-        getProxy().getPluginManager().registerCommand(this, new HelpopCMD());
         registerCommand(injector.getInstance(InfoCMD.class));
         registerCommand(injector.getInstance(MastParentCMD.class));
         registerCommand(injector.getInstance(StaffChat.class));
+        registerCommand(injector.getInstance(HelpOP.class));
     }
 
     @Override
