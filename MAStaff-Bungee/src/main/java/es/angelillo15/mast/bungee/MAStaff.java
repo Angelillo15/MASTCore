@@ -21,8 +21,8 @@ import es.angelillo15.mast.bungee.config.Config;
 import es.angelillo15.mast.bungee.config.ConfigLoader;
 import es.angelillo15.mast.bungee.inject.BungeeInjector;
 import es.angelillo15.mast.bungee.listener.CommandExecutor;
+import es.angelillo15.mast.bungee.listener.OnStaffJoinLeaveQuit;
 import es.angelillo15.mast.bungee.listener.StaffChangeEvent;
-import es.angelillo15.mast.bungee.listener.StaffJoinChange;
 import es.angelillo15.mast.bungee.listener.StaffTalkEvent;
 import es.angelillo15.mast.bungee.listener.redis.server.OnServer;
 import es.angelillo15.mast.bungee.listener.redis.staff.OnStaffJoinLeave;
@@ -124,10 +124,10 @@ public class MAStaff extends Plugin implements MAStaffInstance<Plugin> {
     @Override
     public void registerListeners() {
         getProxy().getPluginManager().registerListener(this, new StaffChangeEvent());
-        getProxy().getPluginManager().registerListener(this, new StaffJoinChange());
         getProxy().getPluginManager().registerListener(this, new StaffTalkEvent());
         getProxy().getPluginManager().registerListener(this, new UserJoinListener());
         getProxy().getPluginManager().registerListener(this, new CommandExecutor());
+        getProxy().getPluginManager().registerListener(this, injector.getInstance(OnStaffJoinLeaveQuit.class));
         if (Config.Redis.isEnabled()) registerRedisListeners();
     }
 
