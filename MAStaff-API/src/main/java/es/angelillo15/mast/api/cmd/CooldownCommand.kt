@@ -4,10 +4,16 @@ import es.angelillo15.mast.api.cmd.sender.CommandSender
 
 abstract class CooldownCommand(
     private val cooldown: Int = 60,
-    private val cooldownMessage: String = "&cYou must wait &a{cooldown} &cseconds to use the command again"
+    private val cooldownMessage: String = "&cYou must wait &a{cooldown} &cseconds to use the command again",
+    private val enabled: Boolean = true
 ) : Command() {
     private var cooldowns: MutableMap<String, Long> = mutableMapOf()
     override fun onCommand(sender: CommandSender?, label: String?, args: Array<String?>?) {
+        if (!enabled) {
+            onCooldownCommand(sender!!, label!!, args!!)
+            return
+        }
+
         if (!cooldowns.containsKey(sender!!.uniqueId)) {
             cooldowns[sender.uniqueId] = System.currentTimeMillis() + (cooldown * 1000)
 
