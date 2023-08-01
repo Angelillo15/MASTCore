@@ -152,6 +152,7 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance<JavaPlugin> {
         if (version >= 9) pm.registerEvents(injector.getInstance(OnAchievement.class), this);
         FreezeUtils.setupMessageSender();
         this.getServer().getMessenger().registerOutgoingPluginChannel(this, "mastaff:staff");
+        this.getServer().getMessenger().registerOutgoingPluginChannel(this, "mastaff:commands");
     }
 
     @Override
