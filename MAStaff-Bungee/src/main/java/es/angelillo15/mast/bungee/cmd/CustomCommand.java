@@ -3,11 +3,11 @@ package es.angelillo15.mast.bungee.cmd;
 import es.angelillo15.mast.api.cmd.sender.BungeeConsoleCommandSender;
 import es.angelillo15.mast.api.cmd.sender.CommandSender;
 import es.angelillo15.mast.api.cmd.sender.ProxiedPlayerCommandSender;
-import es.angelillo15.mast.bungee.config.Messages;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.plugin.Command;
+import net.md_5.bungee.api.plugin.TabExecutor;
 
-public class CustomCommand extends Command {
+public class CustomCommand extends Command implements TabExecutor {
     private final es.angelillo15.mast.api.cmd.Command command;
     public CustomCommand(String name, es.angelillo15.mast.api.cmd.Command command) {
         super(name);
@@ -41,5 +41,17 @@ public class CustomCommand extends Command {
         }
 
         command.onCommand(new BungeeConsoleCommandSender(), getName(), args);
+    }
+
+    @Override
+    public Iterable<String> onTabComplete(net.md_5.bungee.api.CommandSender sender, String[] args) {
+        CommandSender commandSender;
+        if (sender instanceof ProxiedPlayer) {
+            commandSender = new ProxiedPlayerCommandSender((ProxiedPlayer) sender);
+        } else {
+            commandSender = new BungeeConsoleCommandSender();
+        }
+
+        return this.command.onTabComplete(commandSender, args);
     }
 }
