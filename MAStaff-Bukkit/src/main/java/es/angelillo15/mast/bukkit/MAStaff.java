@@ -44,7 +44,7 @@ import mc.obliviate.inventory.InventoryAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.HandlerList;
-import org.bukkit.plugin.PluginManager;
+import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 import es.angelillo15.mast.api.database.PluginConnection;
 import org.simpleyaml.configuration.file.YamlFile;
@@ -53,6 +53,7 @@ import java.io.File;
 import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Objects;
 
 public class MAStaff extends JavaPlugin implements MAStaffInstance<JavaPlugin> {
@@ -75,6 +76,7 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance<JavaPlugin> {
     private Injector injector;
     @Getter
     static boolean isFree = false;
+    private final ArrayList<Listener> listeners = new ArrayList<>();
 
     @Override
     public void onEnable() {
@@ -134,25 +136,29 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance<JavaPlugin> {
 
     @Override
     public void registerListeners() {
-        PluginManager pm = Bukkit.getPluginManager();
-        pm.registerEvents(injector.getInstance(OnJoin.class), this);
-        pm.registerEvents(injector.getInstance(OnItemClick.class), this);
-        pm.registerEvents(injector.getInstance(OnItemDrop.class), this);
-        pm.registerEvents(injector.getInstance(OnInventoryClick.class), this);
-        pm.registerEvents(injector.getInstance(OnItemClickInteract.class), this);
-        pm.registerEvents(injector.getInstance(OnJoinLeave.class), this);
-        pm.registerEvents(injector.getInstance(OnItemDrop.class), this);
-        if (Config.Freeze.enabled()) pm.registerEvents(injector.getInstance(FreezeListener.class), this);
-        pm.registerEvents(injector.getInstance(OnItemGet.class), this);
-        pm.registerEvents(injector.getInstance(OnPlayerInteractAtEntityEvent.class), this);
-        pm.registerEvents(injector.getInstance(OnAttack.class), this);
-        if (Config.silentOpenChest()) pm.registerEvents(injector.getInstance(OnOpenChest.class), this);
-        if (version >= 19) pm.registerEvents(injector.getInstance(OnBlockReceiveGameEvent.class), this);
-        if (version >= 9) pm.registerEvents(injector.getInstance(OnSwapHand.class), this);
-        if (version >= 9) pm.registerEvents(injector.getInstance(OnAchievement.class), this);
+        registerListener(injector.getInstance(OnJoin.class));
+        registerListener(injector.getInstance(OnItemClick.class));
+        registerListener(injector.getInstance(OnItemDrop.class));
+        registerListener(injector.getInstance(OnInventoryClick.class));
+        registerListener(injector.getInstance(OnItemClickInteract.class));
+        registerListener(injector.getInstance(OnJoinLeave.class));
+        registerListener(injector.getInstance(OnItemDrop.class));
+        if (Config.Freeze.enabled()) registerListener(injector.getInstance(FreezeListener.class));
+        registerListener(injector.getInstance(OnItemGet.class));
+        registerListener(injector.getInstance(OnPlayerInteractAtEntityEvent.class));
+        registerListener(injector.getInstance(OnAttack.class));
+        if (Config.silentOpenChest()) registerListener(injector.getInstance(OnOpenChest.class));
+        if (version >= 19) registerListener(injector.getInstance(OnBlockReceiveGameEvent.class));
+        if (version >= 9) registerListener(injector.getInstance(OnSwapHand.class));
+        if (version >= 9) registerListener(injector.getInstance(OnAchievement.class));
         FreezeUtils.setupMessageSender();
         this.getServer().getMessenger().registerOutgoingPluginChannel(this, "mastaff:staff");
         this.getServer().getMessenger().registerOutgoingPluginChannel(this, "mastaff:commands");
+    }
+
+    public void registerListener(Listener listener) {
+        listeners.add(listener);
+        Bukkit.getPluginManager().registerEvents(listener, this);
     }
 
     @Override
@@ -238,7 +244,11 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance<JavaPlugin> {
 
     @Override
     public void unregisterListeners() {
-        HandlerList.unregisterAll(this);
+        HandlerList.getHandlerLists().forEach( listener -> {
+           listeners.forEach(listener::unregister);
+        });
+
+        listeners.clear();
     }
 
     @Override
@@ -283,8 +293,6 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance<JavaPlugin> {
         registerCommands();
         logger.debug("Registering Listeners...");
         registerListeners();
-        logger.debug("Loading minimessage");
-        setupMiniMessage();
         logger.debug("reloading addons...");
         AddonsLoader.reload();
         logger.debug("Checking for updates...");
