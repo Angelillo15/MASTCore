@@ -3,6 +3,7 @@ package es.angelillo15.mast.api.punishments.loader
 import com.google.inject.Inject
 import com.google.inject.Singleton
 import es.angelillo15.mast.api.ILogger
+import es.angelillo15.mast.api.TextUtils
 import es.angelillo15.mast.api.config.punishments.ConfigLoader
 import es.angelillo15.mast.api.templates.BanTemplate
 import es.angelillo15.mast.api.templates.WarnAction
@@ -39,7 +40,7 @@ class TemplateLoaders {
                 BanTemplate(
                     key,
                     NumberUtils.parseToMilis(banFile.getString("Templates.$key.banDuration")),
-                    banFile.getString("Templates.$key.banMessage"),
+                    TextUtils.simpleColorize(banFile.getString("Templates.$key.banMessage")),
                     banFile.getString("Templates.$key.permission"),
                     banFile.getBoolean("Templates.$key.ipBan")
                 )
