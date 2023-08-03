@@ -60,9 +60,12 @@ public class WarnModel extends StormModel {
     @Column
     private Long until;
 
+    @Column
+    private String template = "";
+
     /**
-     * Get all the warns of a user
-     * @param user The user to get the warns from
+     * Get all the warnings of a user
+     * @param user The user to get the warnings from
      * @return An ArrayList of WarnModel
      */
     public static ArrayList<WarnModel> getWarns(UserModel user) {
@@ -101,8 +104,8 @@ public class WarnModel extends StormModel {
     }
 
     /**
-     * Get all the active warns of a user
-     * @param user The user to get the warns from
+     * Get all the active warnings of a user
+     * @param user The user to get the warnings from
      * @return An ArrayList of actives WarnModel
      */
     public static ArrayList<WarnModel> getActiveWarns(UserModel user) {
@@ -115,7 +118,7 @@ public class WarnModel extends StormModel {
 
     /**
      * Get page of warns
-     * @param user The user to get the warns from
+     * @param user The user to get the warnings from
      * @param page The page to get
      * @return An ArrayList of WarnModel
      */
@@ -138,7 +141,7 @@ public class WarnModel extends StormModel {
 
     /**
      * Get page of active warns
-     * @param user The user to get the warns from
+     * @param user The user to get the warnings from
      * @param page The page to get
      * @return An ArrayList of active WarnModel
      */
