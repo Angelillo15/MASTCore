@@ -17,6 +17,7 @@ public class MAStaffPunishmentsLoader extends MAStaffPunishments {
         loadData();
         loadCommands();
         loadListeners();
+        loadTemplates();
         getLogger().info(TextUtils.simpleColorize("&aMAStaff-Punishments has been enabled!"));
         PunishPlayersManager.addPlayer(
                 instance.getMastaffInstance().getInjector().getInstance(PunishPlayer.class)
