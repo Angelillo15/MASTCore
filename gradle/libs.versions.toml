@@ -61,6 +61,7 @@ miniMessage = { group = "net.kyori", name = "adventure-text-minimessage", versio
 adventureApi = { group = "net.kyori", name = "adventure-api", version.ref = "adventure" }
 adventureBukkit = { group = "net.kyori", name = "adventure-platform-bukkit", version.ref = "adventurePlatform" }
 adventureBungee = { group = "net.kyori", name = "adventure-platform-bungeecord", version.ref = "adventurePlatform" }
+adventureLegacy = { group = "net.kyori", name = "adventure-text-serializer-legacy", version.ref = "adventure" }
 protocolLib = { group = "com.comphenix.protocol", name = "ProtocolLib", version.ref = "protocolLib" }
 kotlin = { group = "org.jetbrains.kotlin", name = "kotlin-stdlib-jdk8", version.ref = "kotlin" }
 velocity = { group = "com.velocitypowered", name = "velocity-api", version.ref = "velocity" }
