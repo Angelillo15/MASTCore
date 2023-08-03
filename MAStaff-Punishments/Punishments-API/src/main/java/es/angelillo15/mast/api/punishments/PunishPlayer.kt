@@ -26,6 +26,7 @@ class PunishPlayer : IPunishPlayer {
     private lateinit var serverUtils: IServerUtils
     @Inject
     private lateinit var banTemplatesManager: BanTemplatesManager
+
     private lateinit var player: CommandSender
     private lateinit var data: UserModel
     fun setPlayer(player: CommandSender): PunishPlayer {
@@ -203,6 +204,9 @@ class PunishPlayer : IPunishPlayer {
         if (player.hasPermission(banTemplate.permission)) {
             ban(target, banTemplate)
             return true
+        } else {
+            player.sendMessage("§cYou don't have permission to use this template")
+            // TODO: Add message to config
         }
 
         return false
