@@ -169,18 +169,14 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance<JavaPlugin> {
         );
         try {
             switch (dataProvider) {
-                case MYSQL:
-                    pluginConnection = new PluginConnection(
-                            config.getString("Database.host"),
-                            config.getInt("Database.port"),
-                            config.getString("Database.database"),
-                            config.getString("Database.user"),
-                            config.getString("Database.password")
-                    );
-                    break;
-                case SQLITE:
-                    loadSqlite();
-                    break;
+                case MYSQL -> pluginConnection = new PluginConnection(
+                        config.getString("Database.host"),
+                        config.getInt("Database.port"),
+                        config.getString("Database.database"),
+                        config.getString("Database.user"),
+                        config.getString("Database.password")
+                );
+                case SQLITE -> loadSqlite();
             }
 
             connection = PluginConnection.getConnection();
@@ -236,10 +232,10 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance<JavaPlugin> {
 
     @Override
     public void unregisterCommands() {
-        getCommand("staff").setExecutor(null);
-        getCommand("freeze").setExecutor(null);
-        getCommand("mast").setExecutor(null);
-        getCommand("staffchat").setExecutor(null);
+        Objects.requireNonNull(getCommand("staff")).setExecutor(null);
+        Objects.requireNonNull(getCommand("freeze")).setExecutor(null);
+        Objects.requireNonNull(getCommand("mast")).setExecutor(null);
+        Objects.requireNonNull(getCommand("staffchat")).setExecutor(null);
     }
 
     @Override
@@ -252,12 +248,9 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance<JavaPlugin> {
     }
 
     @Override
+    @SneakyThrows
     public void unloadDatabase() {
-        try {
-            connection.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        connection.close();
         logger.info(TextUtils.colorize("&aDisconnected from the {type} database successfully.")
                 .replace("{type}", PluginConnection.getDataProvider().name())
         );
