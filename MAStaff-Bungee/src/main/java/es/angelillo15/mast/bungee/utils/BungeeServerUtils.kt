@@ -57,4 +57,12 @@ class BungeeServerUtils : IServerUtils {
             false
         }
     }
+
+    override fun getOnlinePlayersNames(): List<String> {
+        return ProxyServer.getInstance().players.map { it.name }
+    }
+
+    override fun getOnlinePlayersUUIDs(): List<UUID> {
+        return ProxyServer.getInstance().players.map { it.uniqueId }
+    }
 }

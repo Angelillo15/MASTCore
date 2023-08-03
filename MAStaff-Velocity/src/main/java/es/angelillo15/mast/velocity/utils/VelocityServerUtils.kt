@@ -61,4 +61,12 @@ class VelocityServerUtils : IServerUtils {
             false
         }
     }
+
+    override fun getOnlinePlayersNames(): List<String> {
+        return proxy.allPlayers.map { player -> player.username }
+    }
+
+    override fun getOnlinePlayersUUIDs(): List<UUID> {
+        return proxy.allPlayers.map { player -> player.uniqueId }
+    }
 }

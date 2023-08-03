@@ -61,6 +61,18 @@ interface IServerUtils {
     fun kickPlayer(uuid: UUID, reason: String): Boolean
 
     /**
+     * Get the names of the online players
+     * @return The names of the online players
+     */
+    fun getOnlinePlayersNames(): List<String>
+
+    /**
+     * Get the UUIDs of the online players
+     * @return The UUIDs of the online players
+     */
+    fun getOnlinePlayersUUIDs(): List<UUID>
+
+    /**
      * Kick a player
      * @param name The name of the player
      * @param reason The reason of the kick

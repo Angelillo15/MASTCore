@@ -63,4 +63,12 @@ class ServerUtils : IServerUtils {
             false
         }
     }
+
+    override fun getOnlinePlayersNames(): List<String> {
+        return Bukkit.getOnlinePlayers().map { it.name }
+    }
+
+    override fun getOnlinePlayersUUIDs(): List<UUID> {
+        return Bukkit.getOnlinePlayers().map { it.uniqueId }
+    }
 }
