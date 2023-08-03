@@ -41,6 +41,7 @@ class TemplateLoaders {
                     NumberUtils.parseToMilis(banFile.getString("Templates.$key.banDuration")),
                     banFile.getString("Templates.$key.banMessage"),
                     banFile.getString("Templates.$key.permission"),
+                    banFile.getBoolean("Templates.$key.ipBan")
                 )
             )
         }
