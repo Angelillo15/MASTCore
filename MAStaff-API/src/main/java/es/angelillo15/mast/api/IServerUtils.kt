@@ -53,6 +53,25 @@ interface IServerUtils {
     fun broadcastMessage(message: String, permission: String)
 
     /**
+     * Kick a player
+     * @param uuid The UUID of the player
+     * @param reason The reason of the kick
+     * @return true if the player was kicked, false otherwise
+     */
+    fun kickPlayer(uuid: UUID, reason: String): Boolean
+
+    /**
+     * Kick a player
+     * @param name The name of the player
+     * @param reason The reason of the kick
+     * @return true if the player was kicked, false otherwise
+     */
+    fun kickPlayer(name: String, reason: String): Boolean {
+        return kickPlayer(getUUID(name), reason)
+    }
+
+
+    /**
      * Broadcast a message to the players with the permission "mast.staff"
      * @param message The message to broadcast
      */

@@ -54,4 +54,13 @@ class ServerUtils : IServerUtils {
             }
         }
     }
+
+    override fun kickPlayer(uuid: UUID, reason: String): Boolean {
+        return try {
+            Bukkit.getPlayer(uuid)!!.kickPlayer(TextUtils.colorize(reason))
+            true
+        } catch (e: Exception) {
+            false
+        }
+    }
 }

@@ -52,4 +52,13 @@ class VelocityServerUtils : IServerUtils {
         }
 
     }
+
+    override fun kickPlayer(uuid: UUID, reason: String): Boolean {
+        return try {
+            proxy.getPlayer(uuid).get().disconnect(TextUtils.toComponent(reason))
+            true
+        } catch (e: Exception) {
+            false
+        }
+    }
 }

@@ -48,4 +48,13 @@ class BungeeServerUtils : IServerUtils {
             logger.info(TextUtils.colorize(message))
         }
     }
+
+    override fun kickPlayer(uuid: UUID, reason: String): Boolean {
+        return try {
+            ProxyServer.getInstance().getPlayer(uuid).disconnect(TextComponent(TextUtils.colorize(reason)))
+            true
+        } catch (e: Exception) {
+            false
+        }
+    }
 }
