@@ -20,11 +20,5 @@ class UnBanCMD : PunishTargetReasonCommand(1, Messages.Default.defaultUnbanReaso
         }
 
         sender.unban(target, reason)
-
-        sender.sendMessage(Messages.Commands.Unban.success(
-                target,
-                reason,
-                sender.name
-        ))
     }
 }
