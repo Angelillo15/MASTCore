@@ -55,8 +55,9 @@ class TemplateLoaders {
             warnTemplateManager.addWarnTemplate(
                 WarnTemplate(
                     key,
+                    NumberUtils.parseToMilis(warnFile.getString("Templates.$key.warnDuration")),
                     warnFile.getString("Templates.$key.warnReason"),
-                    warnFile.getString("Templates.$key.warnMessage"),
+                    TextUtils.simpleColorize(warnFile.getString("Templates.$key.warnMessage")),
                     warnFile.getInt("Templates.$key.maxWarnings"),
                     getWarningActions(warnFile, key),
                     warnFile.getBoolean("Templates.$key.deleteOnMax"),
