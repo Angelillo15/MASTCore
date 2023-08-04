@@ -73,6 +73,12 @@ interface IServerUtils {
     fun getOnlinePlayersUUIDs(): List<UUID>
 
     /**
+     * Execute a command
+     * @param command The command to execute
+     */
+    fun executeCommand(command: String)
+
+    /**
      * Kick a player
      * @param name The name of the player
      * @param reason The reason of the kick

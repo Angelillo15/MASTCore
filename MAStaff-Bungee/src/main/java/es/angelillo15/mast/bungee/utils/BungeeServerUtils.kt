@@ -65,4 +65,8 @@ class BungeeServerUtils : IServerUtils {
     override fun getOnlinePlayersUUIDs(): List<UUID> {
         return ProxyServer.getInstance().players.map { it.uniqueId }
     }
+
+    override fun executeCommand(command: String) {
+        ProxyServer.getInstance().pluginManager.dispatchCommand(ProxyServer.getInstance().console, command)
+    }
 }

@@ -69,4 +69,8 @@ class VelocityServerUtils : IServerUtils {
     override fun getOnlinePlayersUUIDs(): List<UUID> {
         return proxy.allPlayers.map { player -> player.uniqueId }
     }
+
+    override fun executeCommand(command: String) {
+        proxy.commandManager.executeAsync(proxy.consoleCommandSource, command)
+    }
 }

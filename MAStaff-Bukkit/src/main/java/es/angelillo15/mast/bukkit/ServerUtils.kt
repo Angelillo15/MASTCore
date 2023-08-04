@@ -71,4 +71,8 @@ class ServerUtils : IServerUtils {
     override fun getOnlinePlayersUUIDs(): List<UUID> {
         return Bukkit.getOnlinePlayers().map { it.uniqueId }
     }
+
+    override fun executeCommand(command: String) {
+        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command)
+    }
 }
