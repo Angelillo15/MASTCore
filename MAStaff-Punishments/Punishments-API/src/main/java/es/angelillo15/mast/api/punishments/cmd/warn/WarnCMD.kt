@@ -21,6 +21,11 @@ class WarnCMD : PunishTargetReasonCommand(1, Messages.Default.defaultWarnReason(
             sender.sendMessage(Messages.Commands.Warn.usage())
             return
         }
+
+        if (warnTemplateManager.getWarnTemplate(reason) != null)
+            sender.tryWarnTemplate(target, reason)
+        else
+            sender.warn(target, reason)
     }
 
     override fun onTabComplete(sender: CommandSender?, args: Array<String?>?): List<String?> {
