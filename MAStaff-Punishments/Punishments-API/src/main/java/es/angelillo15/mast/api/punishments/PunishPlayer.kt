@@ -1,6 +1,7 @@
 package es.angelillo15.mast.api.punishments
 
 import com.google.inject.Inject
+import es.angelillo15.mast.api.ILogger
 import es.angelillo15.mast.api.IServerUtils
 import es.angelillo15.mast.api.MAStaffInstance
 import es.angelillo15.mast.api.cache.BanCache
@@ -15,8 +16,10 @@ import es.angelillo15.mast.api.models.IpBansTable
 import es.angelillo15.mast.api.models.UserModel
 import es.angelillo15.mast.api.models.WarnModel
 import es.angelillo15.mast.api.punishments.events.EventManager
+import es.angelillo15.mast.api.templates.WarnTemplate
 import es.angelillo15.mast.api.templates.managers.BanTemplatesManager
-import es.angelillo15.mast.api.utils.NumberUtils
+import es.angelillo15.mast.api.templates.managers.WarnTemplateManager
+import es.angelillo15.mast.api.thread.execute
 import lombok.SneakyThrows
 import java.sql.SQLException
 import java.util.function.BiConsumer
@@ -26,6 +29,10 @@ class PunishPlayer : IPunishPlayer {
     private lateinit var serverUtils: IServerUtils
     @Inject
     private lateinit var banTemplatesManager: BanTemplatesManager
+    @Inject
+    private lateinit var warnTemplatesManager: WarnTemplateManager
+    @Inject
+    private lateinit var logger: ILogger;
 
     private lateinit var player: CommandSender
     private lateinit var data: UserModel
@@ -94,6 +101,7 @@ class PunishPlayer : IPunishPlayer {
                     " with id " + bansTable.id +
                     " until " + until + " ipban " + ipban
         )
+
         if (ipban) {
             if (data.lastIp == UserModel.UNKNOWN) {
                 player.sendMessage(
@@ -117,7 +125,8 @@ class PunishPlayer : IPunishPlayer {
     @SneakyThrows
     override fun unban(target: String, reason: String) {
         var bansTable: BansTable? = null
-        if (!BansTable.isPermBanned(target)) {
+
+        if (!BansTable.isBanned(target)) {
             player.sendMessage(
                 Messages.Commands.playerNotBanned(target)
             )
@@ -127,14 +136,23 @@ class PunishPlayer : IPunishPlayer {
         if (bansTable == null) {
             return
         }
+
         bansTable.unBan(player.getName(), reason, player.getUniqueId())
+
         MAStaffInstance.getLogger().debug(
             "Unbanned " + target +
                     " by " + player.getName() +
                     " (" + player.getUniqueId() + ")" +
                     " with id " + bansTable.id
         )
+
         BanCache.removePunishment(target)
+
+        player.sendMessage(Messages.Commands.Unban.success(
+            target,
+            reason,
+            player.name
+        ))
     }
 
     /**
@@ -151,24 +169,68 @@ class PunishPlayer : IPunishPlayer {
 
     /**
      * Warn the player with the config default time and a custom reason
-     * @param target the target of the warn
-     * @param reason the reason of the warn
+     * @param target the target of the warning
+     * @param reason the reason of the warning
      */
-    override fun warn(target: String, reason: String, template: String) {
-        getUserModel({ senderUser: UserModel?, targetUser: UserModel ->
+    override fun warn(target: String, reason: String, template: String, expire: Long) {
+        var executeAction = false;
+        var executeFinalAction = false;
+        var warnTemplate: WarnTemplate? = null;
+
+        getUserModel({ _: UserModel?, targetUser: UserModel ->
             val warn = WarnModel()
             warn.active = 1
             warn.reason = reason
             warn.warnedBy = data.id
-            warn.until = System.currentTimeMillis() + NumberUtils.parseToMilis(Config.Warn.expireAfter())
+            warn.until = System.currentTimeMillis() + expire
             warn.time = System.currentTimeMillis()
             warn.user = targetUser.id
+            warn.template = template
+
+            var currentWarn = 1
+
+            WarnModel.getActiveWarns(targetUser).forEach {
+                if (template == "") return@forEach
+
+                if (it.template != template || it.active == 0) {
+                    return@forEach
+                }
+
+                currentWarn++
+            }
+
+            logger.debug("Current warn: $currentWarn")
+
+            if (warnTemplatesManager.getWarnTemplate(template) != null) {
+                logger.debug("Template: $template")
+
+                warnTemplate = warnTemplatesManager.getWarnTemplate(template)
+                warn.reason = reason
+                    .replace("{warnNumber}", currentWarn.toString())
+                    .replace("{maxWarnings}", warnTemplate!!.maxWarnings.toString())
+
+                executeAction = true
+
+                if (currentWarn >= warnTemplate!!.maxWarnings) {
+                    executeFinalAction = true
+                }
+            }
+
             try {
                 PluginConnection.getStorm().save(warn)
             } catch (e: SQLException) {
                 throw RuntimeException(e)
             }
-            player.sendMessage(Messages.Commands.Warn.success(target, reason, player!!.getName()))
+
+            if (executeAction && !executeFinalAction) {
+                onWarnTemplate(targetUser, warnTemplate!!, currentWarn)
+            }
+
+            if (executeFinalAction) {
+                maxWarnsReached(targetUser, warnTemplate!!)
+            }
+
+            player.sendMessage(Messages.Commands.Warn.success(target, warn.reason, player.getName()))
         }, target)
     }
 
@@ -210,5 +272,56 @@ class PunishPlayer : IPunishPlayer {
         }
 
         return false
+    }
+
+    override fun tryWarnTemplate(target: String, template: String): Boolean {
+        val warnTemplate = warnTemplatesManager.getWarnTemplate(template) ?: return false
+
+        if (player.hasPermission(warnTemplate.permission)) {
+            warn(target, warnTemplate)
+            return true
+        } else {
+            player.sendMessage("§cYou don't have permission to use this template")
+            // TODO: Add message to config
+        }
+
+        return false
+    }
+
+    private fun maxWarnsReached(target: UserModel, warn: WarnTemplate) {
+        warn.actions.forEach {
+            if (it == null) return@forEach
+            if (it.id != warn.maxWarnings) return@forEach
+
+            execute ({
+                serverUtils.executeCommand(it.action.replace("{player}", target.username))
+            }, 500, false)
+        }
+
+        if (!warn.deleteOnMax) return
+
+        WarnModel.getActiveWarns(target).forEach {
+            if (it.template != warn.id) return@forEach
+
+            it.active = 0
+
+            try {
+                PluginConnection.getStorm().save(it)
+            } catch (e: SQLException) {
+                throw RuntimeException(e)
+            }
+        }
+    }
+
+    private fun onWarnTemplate(target: UserModel, warn: WarnTemplate, warnNumber: Int) {
+
+        warn.actions.forEach {
+            if (it == null) return@forEach
+            if (it.id != warnNumber) return@forEach
+
+            execute ({
+                serverUtils.executeCommand(it.action.replace("{player}", target.username))
+            }, 500, false)
+        }
     }
 }
