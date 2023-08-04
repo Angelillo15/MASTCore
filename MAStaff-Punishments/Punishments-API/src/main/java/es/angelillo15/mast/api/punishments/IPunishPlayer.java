@@ -1,8 +1,11 @@
 package es.angelillo15.mast.api.punishments;
 
 import es.angelillo15.mast.api.cmd.sender.CommandSender;
+import es.angelillo15.mast.api.config.punishments.Config;
 import es.angelillo15.mast.api.config.punishments.Messages;
 import es.angelillo15.mast.api.templates.BanTemplate;
+import es.angelillo15.mast.api.templates.WarnTemplate;
+import es.angelillo15.mast.api.utils.NumberUtils;
 
 public interface IPunishPlayer {
     /**
@@ -139,12 +142,22 @@ public interface IPunishPlayer {
     void kick(String target, String reason);
 
     /**
+     * Warn the player with a template
+     *
+     * @param target   the target of the warning
+     * @param template the template of the warning
+     */
+    default void warn(String target, WarnTemplate template) {
+        warn(target, template.getWarnMessage(), template.getId(), template.getWarnDuration());
+    }
+
+    /**
      * Warn the player with the config default time and reason
      *
      * @param target the target of the warning
      */
     default void warn(String target) {
-        warn(target, Messages.Default.defaultWarnReason(), "");
+        warn(target, Messages.Default.defaultWarnReason());
     }
 
     /**
@@ -154,7 +167,7 @@ public interface IPunishPlayer {
      * @param reason the reason of the warning
      */
     default void warn(String target, String reason) {
-        warn(target, reason, "");
+        warn(target, reason, "", NumberUtils.parseToMilis(Config.Warn.expireAfter()));
     }
 
     /**
@@ -163,7 +176,7 @@ public interface IPunishPlayer {
      * @param target the target of the warning
      * @param reason the reason of the warning
      */
-    void warn(String target, String reason, String template);
+    void warn(String target, String reason, String template, Long expire);
 
     /**
      * UnWarn the player
@@ -182,6 +195,22 @@ public interface IPunishPlayer {
      */
     void unWarn(String target, String reason);
 
+    /**
+     * Try to ban the player with a template
+     *
+     * @param target   the target of the ban
+     * @param template the template of the ban
+     * @return if the ban was successful
+     */
     boolean tryBanTemplate(String target, String template);
+
+    /**
+     * Try to warn the player with a template
+     *
+     * @param target   the target of the warning
+     * @param template the template of the warning
+     * @return if the warning was successful
+     */
+    boolean tryWarnTemplate(String target, String template);
 
 }
