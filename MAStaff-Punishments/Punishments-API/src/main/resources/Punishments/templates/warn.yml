@@ -28,9 +28,9 @@ Templates:
     # You can use the following placeholders:
     # {warnNumber} - The number of warnings the player has.
     # {warnDuration} - The duration of the warning.
-    # {warnReason} - The reason of the warning.
+    # {warnReason} - The reason for the warning.
     # {maxWarnings} - The max number of warnings before the count resets.
-    warnMessage: "§cYou have been warned for griefing ({warnNumber}/{maxWarnings})!"
+    warnMessage: "griefing ({warnNumber}/{maxWarnings})!"
     # The max number of warnings before the count resets.
     # Set to 0 to disable.
     maxWarnings: 3
