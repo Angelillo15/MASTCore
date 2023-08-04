@@ -1,34 +1,37 @@
-package es.angelillo15.mast.api.punishments.cmd.warn;
+package es.angelillo15.mast.api.punishments.cmd.warn
 
-import es.angelillo15.mast.api.cmd.CommandData;
-import es.angelillo15.mast.api.config.punishments.Messages;
-import es.angelillo15.mast.api.punishments.IPunishPlayer;
-import es.angelillo15.mast.api.punishments.cmd.PunishCommand;
+import com.google.inject.Inject
+import es.angelillo15.mast.api.IServerUtils
+import es.angelillo15.mast.api.cmd.CommandData
+import es.angelillo15.mast.api.cmd.sender.CommandSender
+import es.angelillo15.mast.api.config.punishments.Messages
+import es.angelillo15.mast.api.punishments.IPunishPlayer
+import es.angelillo15.mast.api.punishments.cmd.PunishCommand
+import es.angelillo15.mast.api.punishments.cmd.PunishTargetReasonCommand
+import es.angelillo15.mast.api.templates.managers.WarnTemplateManager
 
-@CommandData(
-        name = "warn",
-        permission = "mast.warn"
-)
-public class WarnCMD extends PunishCommand {
-    @Override
-    public void onCommand(IPunishPlayer sender, String label, String[] args) {
-        if (args.length < 1) {
-            sender.sendMessage(Messages.Commands.Warn.usage());
-            return;
+@CommandData(name = "warn", permission = "mast.warn")
+class WarnCMD : PunishTargetReasonCommand(1, Messages.Default.defaultWarnReason()) {
+    @Inject
+    private lateinit var serverUtils: IServerUtils
+    @Inject
+    private lateinit var warnTemplateManager: WarnTemplateManager;
+    override fun onCommand(sender: IPunishPlayer, target: String, label: String, args: Array<out String>, reason: String) {
+        if (args.isEmpty()) {
+            sender.sendMessage(Messages.Commands.Warn.usage())
+            return
+        }
+    }
+
+    override fun onTabComplete(sender: CommandSender?, args: Array<String?>?): List<String?> {
+        if (args!!.size == 1) {
+            return serverUtils.getOnlinePlayersNames()
         }
 
-        String target = args[0];
-
-        StringBuilder reason = new StringBuilder();
-
-        for (int i = 1; i < args.length; i++) {
-            reason.append(args[i]).append(" ");
+        if (args.size == 2) {
+            return warnTemplateManager.getWarnTemplates().map { it.id }
         }
 
-        if (reason.toString().isEmpty()) {
-            reason.append(Messages.Default.defaultWarnReason());
-        }
-
-        sender.warn(target, reason.toString());
+        return emptyList()
     }
 }
