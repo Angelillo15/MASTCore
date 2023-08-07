@@ -5,4 +5,5 @@ public @interface Addon {
     String version();
     String author();
     String description() default "";
+    boolean loadOnScan() default true;
 }
