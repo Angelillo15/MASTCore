@@ -6,9 +6,11 @@ repositories {
 }
 
 dependencies {
-    implementation(project(":MAStaff-Punishments:Punishments-API"))
-    implementation(project(":MAStaff-Punishments:Punishments-Bungee"))
-    implementation(project(":MAStaff-Punishments:Punishments-Bukkit"))
+    implementation(project("Punishments-API"))
+    implementation(project("Punishments-Bungee"))
+    implementation(project("Punishments-Bukkit"))
+    implementation(project("Punishments-Velocity"))
+
 }
 
 subprojects {
