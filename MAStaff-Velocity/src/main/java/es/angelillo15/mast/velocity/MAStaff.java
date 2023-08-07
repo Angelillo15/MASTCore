@@ -37,6 +37,7 @@ import es.angelillo15.mast.velocity.listeners.staffchat.OnPlayerChat;
 import es.angelillo15.mast.velocity.utils.LibsLoader;
 import lombok.Getter;
 import lombok.SneakyThrows;
+import lombok.val;
 import org.slf4j.Logger;
 
 import java.io.File;
@@ -181,22 +182,49 @@ public class MAStaff implements MAStaffInstance<ProxyServer> {
 
     @Override
     public void unregisterCommands() {
+        proxyServer.getCommandManager().getAliases().forEach(s -> {
+            val cmd = proxyServer.getCommandManager().getCommandMeta(s);
 
+            if (cmd == null) return;
+
+            if (cmd.getPlugin() != this) {
+                return;
+            }
+
+            proxyServer.getCommandManager().unregister(cmd);
+        });
     }
 
     @Override
     public void unregisterListeners() {
-
+        proxyServer.getEventManager().unregisterListeners(this);
     }
 
+    @SneakyThrows
     @Override
-    public void unloadDatabase() {
-
+    public void unloadDatabase()  {
+        PluginConnection.getConnection().close();
     }
 
     @Override
     public void reload() {
-
+        long start = System.currentTimeMillis();
+        logger.debug("Reloading...");
+        logger.debug("Unregistering listeners...");
+        unregisterListeners();
+        logger.debug("Unregistering commands...");
+        unregisterListeners();
+        logger.debug("Unloading database...");
+        unloadDatabase();
+        logger.debug("Loading config...");
+        loadConfig();
+        logger.debug("Loading database...");
+        loadDatabase();
+        logger.debug("Registering commands...");
+        registerCommands();
+        logger.debug("Registering listeners...");
+        registerListeners();
+        logger.debug("Reloading complete on " + (System.currentTimeMillis() - start) + "ms");
     }
 
     @Override
