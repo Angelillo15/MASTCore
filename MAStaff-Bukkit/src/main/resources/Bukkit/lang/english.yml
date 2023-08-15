@@ -42,6 +42,10 @@ StaffMode:
   toggledOn: '{prefix} &7Staff mode has been &aenabled&7.'
   # Message sent after disabling Staff Mode.
   toggledOff: '{prefix} &7Staff mode has been &adisabled&7.'
+  # Message sent when someone enables the night vision.
+  nightVisionOn: '{prefix} &7You have &aenabled &7the night vision.'
+  # Message sent when someone disables the night vision.
+  nightVisionOff: '{prefix} &7You have &adisabled &7the night vision.'
 Freeze:
   # Message sent when the command is not used correctly.
   correctUse: '{prefix} &7You must use &a/freeze <player>&7.'

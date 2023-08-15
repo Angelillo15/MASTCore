@@ -19,7 +19,7 @@ fun start() {
             try {
                 Thread.sleep(200)
             } catch (e: InterruptedException) {
-                e.printStackTrace()
+                MAStaffInstance.getLogger().error("Error while sleeping thread: ${e.message}")
             }
 
             if (shuttingDown) {
@@ -46,8 +46,6 @@ fun start() {
                 if (!action.repeat) removeAction(action)
             }
         }
-
-
 
         shuttingDown = false
         MAStaffInstance.getLogger().debug("Parallel thread stopped!")

@@ -14,6 +14,7 @@ import es.angelillo15.mast.api.items.StaffItem;
 import es.angelillo15.mast.api.managers.freeze.FreezeManager;
 import es.angelillo15.mast.api.player.IGlowPlayer;
 import es.angelillo15.mast.api.player.IVanishPlayer;
+import es.angelillo15.mast.api.utils.VersionUtils;
 import es.angelillo15.mast.bukkit.cmd.utils.CommandManager;
 import es.angelillo15.mast.api.config.bukkit.Config;
 import es.angelillo15.mast.api.config.bukkit.ConfigLoader;
@@ -32,6 +33,8 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
 import javax.annotation.Nullable;
 import java.io.File;
@@ -119,6 +122,7 @@ public class StaffPlayer implements IStaffPlayer {
 
     public void disableStaffMode() {
         TextUtils.colorize(Messages.GET_STAFF_MODE_DISABLE_MESSAGE(), player);
+        removeEffects();
         setModeData(false);
         clearInventory();
         CommonQueries.updateAsync(player.getUniqueId(), 0);
@@ -149,6 +153,7 @@ public class StaffPlayer implements IStaffPlayer {
         if (saveInventory) StaffUtils.asyncBroadcastMessage(Messages.GET_VANISH_LEAVE_MESSAGE()
                 .replace("{player}", player.getName()));
         setGlowing(true);
+        addEffects();
         saveLocation();
         staffModeAsyncInventoryChecker();
         Bukkit.getPluginManager().callEvent(new StaffEnableEvent(this));
@@ -465,15 +470,27 @@ public class StaffPlayer implements IStaffPlayer {
         this.player = player;
         if (Config.Addons.vanish()) this.vanishPlayer = new VanishPlayer(this);
 
-        if (Config.Addons.glow() &&
-                !(MAStaff.getPlugin().getDescription().getPrefix() != null &&
-                        MAStaff.getPlugin().getDescription().getPrefix().toLowerCase().contains("lite")
-                )
-        ) this.glowPlayer = new GlowPlayer(this);
+        if (VersionUtils.getBukkitVersion() > 8) {
+            if (Config.Addons.glow() &&
+                    !(MAStaff.getPlugin().getDescription().getPrefix() != null &&
+                            MAStaff.getPlugin().getDescription().getPrefix().toLowerCase().contains("lite")
+                    )
+            ) this.glowPlayer = new GlowPlayer(this);
+        }
 
         playerInventoryFile = new File(MAStaff.getPlugin().getDataFolder().getAbsoluteFile() + "/data/staffMode/" + player.getUniqueId() + ".yml");
         playerInventoryConfig = YamlConfiguration.loadConfiguration(playerInventoryFile);
 
         return this;
+    }
+
+    public void removeEffects() {
+        player.removePotionEffect(PotionEffectType.NIGHT_VISION);
+    }
+
+    public void addEffects() {
+        if (!Config.nighVision()) return;
+
+        player.addPotionEffect(new PotionEffect(PotionEffectType.NIGHT_VISION, 99999, 1));
     }
 }

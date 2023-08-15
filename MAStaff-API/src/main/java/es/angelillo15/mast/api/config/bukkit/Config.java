@@ -41,6 +41,10 @@ public class Config {
         return ConfigLoader.getConfig().getConfig().getStringList("Config.commandsOnExit");
     }
 
+    public static boolean nighVision() {
+        return ConfigLoader.getConfig().getConfig().getBoolean("Config.nightVision");
+    }
+
     public static class Database {
         public static String type() {
             return ConfigLoader.getConfig().getConfig().getString("Database.type");

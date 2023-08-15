@@ -150,6 +150,16 @@ public class Messages {
         }
     }
 
+    public static class StaffMessages {
+        public static String nightVisionOn() {
+            return TextUtils.parseBukkitMessage(messages.getString("StaffMode.nightVisionOn"));
+        }
+
+        public static String nightVisionOff() {
+            return TextUtils.parseBukkitMessage(messages.getString("StaffMode.nightVisionOff"));
+        }
+    }
+
     /*
      * Freeze
      */
