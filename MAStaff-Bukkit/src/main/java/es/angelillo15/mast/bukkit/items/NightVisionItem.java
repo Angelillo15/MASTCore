@@ -1,5 +1,7 @@
 package es.angelillo15.mast.bukkit.items;
 
+import es.angelillo15.mast.api.TextUtils;
+import es.angelillo15.mast.api.config.bukkit.Messages;
 import es.angelillo15.mast.api.items.IExecutableItem;
 import es.angelillo15.mast.api.items.StaffItem;
 import org.bukkit.entity.Player;
@@ -22,8 +24,10 @@ public class NightVisionItem extends StaffItem implements IExecutableItem {
     public void click(Player player) {
         if (player.hasPotionEffect(PotionEffectType.NIGHT_VISION)) {
             player.removePotionEffect(PotionEffectType.NIGHT_VISION);
+            TextUtils.sendMessage(player, Messages.StaffMessages.nightVisionOff());
         } else {
             player.addPotionEffect(PotionEffectType.NIGHT_VISION.createEffect(999999, 1));
+            TextUtils.sendMessage(player, Messages.StaffMessages.nightVisionOn());
         }
     }
 
