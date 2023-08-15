@@ -49,27 +49,15 @@ public class ItemsLoader {
 
             itemStack.setItemMeta(meta);
 
-            switch (ItemTypes.valueOf(s)){
-                case FREEZE:
-                    manager.addItem(new FreezeItem(itemStack, slot, permission));
-                    break;
-                case VANISH:
-                    manager.addItem(new VanishItem(itemStack, slot, permission));
-                    break;
-                case ENDER_CHEST:
-                    manager.addItem(new EnderChestItem(itemStack, slot, permission));
-                    break;
-                case CHEST:
-                    manager.addItem(new ChestItem(itemStack, slot, permission));
-                    break;
-                case THRU:
-                    manager.addItem(new ThruItem(itemStack, slot, permission));
-                    break;
-                case RANDOM_PLAYER_TELEPORT:
-                    manager.addItem(new RTPItem(itemStack, slot, permission));
-                    break;
-                default:
-                    throw new TypeNotPresentException("Item type not found", null);
+            switch (ItemTypes.valueOf(s)) {
+                case FREEZE -> manager.addItem(new FreezeItem(itemStack, slot, permission));
+                case VANISH -> manager.addItem(new VanishItem(itemStack, slot, permission));
+                case ENDER_CHEST -> manager.addItem(new EnderChestItem(itemStack, slot, permission));
+                case CHEST -> manager.addItem(new ChestItem(itemStack, slot, permission));
+                case THRU -> manager.addItem(new ThruItem(itemStack, slot, permission));
+                case RANDOM_PLAYER_TELEPORT -> manager.addItem(new RTPItem(itemStack, slot, permission));
+                case NIGHT_VISION -> manager.addItem(new NightVisionItem(itemStack, slot, permission));
+                default -> throw new TypeNotPresentException("Item type not found", null);
             }
         }
 

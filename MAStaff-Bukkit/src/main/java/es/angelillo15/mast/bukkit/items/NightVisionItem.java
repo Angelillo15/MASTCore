@@ -1,0 +1,54 @@
+package es.angelillo15.mast.bukkit.items;
+
+import es.angelillo15.mast.api.items.IExecutableItem;
+import es.angelillo15.mast.api.items.StaffItem;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.potion.PotionEffectType;
+
+public class NightVisionItem extends StaffItem implements IExecutableItem {
+    private final ItemStack item;
+    private final int slot;
+    private final String permission;
+
+    public NightVisionItem(ItemStack item, int slot, String permission) {
+        this.item = item;
+        this.slot = slot;
+        this.permission = permission;
+    }
+
+
+    @Override
+    public void click(Player player) {
+        if (player.hasPotionEffect(PotionEffectType.NIGHT_VISION)) {
+            player.removePotionEffect(PotionEffectType.NIGHT_VISION);
+        } else {
+            player.addPotionEffect(PotionEffectType.NIGHT_VISION.createEffect(999999, 1));
+        }
+    }
+
+    @Override
+    public String getName() {
+        return "NIGHT_VISION";
+    }
+
+    @Override
+    public ItemStack getItem() {
+        return item;
+    }
+
+    @Override
+    public String getPermission() {
+        return permission;
+    }
+
+    @Override
+    public int getSlot() {
+        return slot;
+    }
+
+    @Override
+    public void setItem(Player player) {
+        player.getInventory().setItem(getSlot(), getItem());
+    }
+}

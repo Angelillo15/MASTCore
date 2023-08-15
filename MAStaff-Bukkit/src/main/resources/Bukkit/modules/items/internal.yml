@@ -25,6 +25,15 @@ StaffItems:
     lore:
       - '&7Click to freeze'
       - '&7the player you are looking at.'
+  NIGHT_VISION:
+    enabled: true
+    permission: 'mast.item.nightvision'
+    name: '&bNight Vision'
+    material: 'POTION'
+    slot: 2
+    lore:
+      - '&7Click to enable or disable'
+      - '&7the night vision.'
   ENDER_CHEST:
     enabled: true
     permission: 'mast.item.enderchest'
@@ -59,4 +68,4 @@ StaffItems:
     material: 'COMPASS'
     slot: 8
     lore:
-      - '&7Click to passthrough a wall.'
+      - '&7Click to pass through a wall.'

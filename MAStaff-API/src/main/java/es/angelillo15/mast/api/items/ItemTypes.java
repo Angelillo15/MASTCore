@@ -11,4 +11,5 @@ public enum ItemTypes {
     THRU,
     CHEST,
     VANISH,
+    NIGHT_VISION,
 }

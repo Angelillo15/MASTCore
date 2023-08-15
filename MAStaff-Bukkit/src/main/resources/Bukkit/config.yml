@@ -50,6 +50,8 @@ Config:
   # when all Staff enable Actions has finished.
   commandsOnExit:
     - "vanish"
+  # Enable night vision when the player enters the staff mode.
+  nightVision: true
 # Here you can configure the plugin addons.
 Addons:
   # Enable or disable the Vanish addon.
