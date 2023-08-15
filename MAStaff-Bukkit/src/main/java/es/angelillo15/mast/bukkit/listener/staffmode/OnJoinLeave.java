@@ -4,6 +4,7 @@ import com.google.inject.Inject;
 import es.angelillo15.mast.api.IStaffPlayer;
 import es.angelillo15.mast.api.database.sql.CommonQueries;
 import es.angelillo15.mast.api.managers.StaffManager;
+import es.angelillo15.mast.api.utils.VersionUtils;
 import es.angelillo15.mast.bukkit.MAStaff;
 import es.angelillo15.mast.bukkit.StaffPlayer;
 import es.angelillo15.mast.api.config.bukkit.Config;
@@ -47,6 +48,9 @@ public class OnJoinLeave implements Listener {
     @EventHandler(ignoreCancelled = true)
     public void onLeave(PlayerQuitEvent event){
         Player player = event.getPlayer();
+
+        if (VersionUtils.getBukkitVersion() > 8)
+            player.setGlowing(false);
 
         if (!staffManager.isStaffPlayer(player)) {
             return;
