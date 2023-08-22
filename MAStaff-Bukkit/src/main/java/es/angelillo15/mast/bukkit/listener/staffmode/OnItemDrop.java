@@ -13,18 +13,16 @@ public class OnItemDrop implements Listener {
     private StaffManager staffManager;
 
     @EventHandler
-    public void onDrop(PlayerDropItemEvent event){
+    public void onDrop(PlayerDropItemEvent event) {
         Player player = event.getPlayer();
 
-        if(!staffManager.isStaffPlayer(player)){
-            return;
-        }
+        if (!staffManager.isStaffPlayer(player)) return;
 
         IStaffPlayer staffPlayer = staffManager.getStaffPlayer(player);
 
-        if(staffPlayer.isStaffMode()){
-            event.setCancelled(true);
-            staffPlayer.setItems();
-        }
+        if (!staffPlayer.isStaffMode()) return;
+
+        event.setCancelled(true);
+        staffPlayer.setItems();
     }
 }

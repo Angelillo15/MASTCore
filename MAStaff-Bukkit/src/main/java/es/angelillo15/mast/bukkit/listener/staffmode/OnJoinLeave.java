@@ -23,22 +23,22 @@ public class OnJoinLeave implements Listener {
     private StaffManager staffManager;
 
     @EventHandler(priority = EventPriority.HIGHEST)
-    public void onJoin(PlayerJoinEvent event){
+    public void onJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
 
-        if(!staffManager.isStaffPlayer(player)) return;
+        if (!staffManager.isStaffPlayer(player)) return;
 
         MAStaff.getPlugin().getPLogger().debug("Status: " + CommonQueries.isInStaffMode(player.getUniqueId()));
 
         IStaffPlayer staffPlayer = staffManager.getStaffPlayer(player);
 
-        if(CommonQueries.isInStaffMode(player.getUniqueId())){
+        if (CommonQueries.isInStaffMode(player.getUniqueId())) {
             MAStaff.getPlugin().getPLogger().debug("Player " + player.getName() + " previous state: " + staffPlayer.wasInStaffMode());
 
             staffPlayer.toggleStaffMode(!staffPlayer.wasInStaffMode());
         }
 
-        if(staffPlayer.isStaffMode()){
+        if (staffPlayer.isStaffMode()) {
             StaffUtils.asyncStaffChatMessage(Messages.GET_STAFF_VANISH_JOIN_MESSAGE()
                     .replace("{player}", player.getName()));
             event.setJoinMessage("");
@@ -46,24 +46,20 @@ public class OnJoinLeave implements Listener {
     }
 
     @EventHandler(ignoreCancelled = true)
-    public void onLeave(PlayerQuitEvent event){
+    public void onLeave(PlayerQuitEvent event) {
         Player player = event.getPlayer();
 
         if (VersionUtils.getBukkitVersion() > 8)
             player.setGlowing(false);
 
-        if (!staffManager.isStaffPlayer(player)) {
-            return;
-        }
+        if (!staffManager.isStaffPlayer(player)) return;
 
 
         StaffPlayer staffPlayer = (StaffPlayer) staffManager.getStaffPlayer(player);
 
-        if (staffPlayer == null) {
-            return;
-        }
+        if (staffPlayer == null) return;
 
-        if(staffPlayer.isStaffMode()){
+        if (staffPlayer.isStaffMode()) {
             StaffUtils.asyncStaffChatMessage(Messages.GET_STAFF_VANISH_LEAVE_MESSAGE()
                     .replace("{player}", player.getName()));
             event.setQuitMessage("");
@@ -74,7 +70,7 @@ public class OnJoinLeave implements Listener {
             staffPlayer.toggleStaffMode(true);
         }
 
-        if(staffPlayer.existsData() && staffPlayer.isStaffMode()){
+        if (staffPlayer.existsData() && staffPlayer.isStaffMode()) {
             staffPlayer.clearInventory();
             staffPlayer.restoreInventory();
         }

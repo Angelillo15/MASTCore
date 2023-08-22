@@ -21,33 +21,26 @@ public class OnOpenChest implements Listener {
     public void onPlayerInteract(PlayerInteractEvent event) {
         Player player = event.getPlayer();
 
-        if (!staffManager.isStaffPlayer(player)) {
-            return;
-        }
+        if (!staffManager.isStaffPlayer(player)) return;
 
         IStaffPlayer staffPlayer = staffManager.getStaffPlayer(player);
 
-        if (!staffPlayer.isStaffMode()) {
-            return;
-        }
+        if (!staffPlayer.isStaffMode()) return;
 
-        if (event.getClickedBlock() == null) {
-            return;
-        }
+        if (event.getClickedBlock() == null) return;
 
-        if (!event.getClickedBlock().getType().name().contains("CHEST")) {
-            return;
-        }
+        if (!event.getClickedBlock().getType().name().contains("CHEST")) return;
 
         Container container = (Container) event.getClickedBlock().getState();
 
-        if (container instanceof Chest) {
-            Chest chest = (Chest) container;
-            Inventory cInv = Bukkit.createInventory(null, chest.getInventory().getSize(), chest.getInventory().getType().name());
+        if (!(container instanceof Chest chest)) return;
 
-            player.openInventory(cInv);
+        Inventory cInv = Bukkit.createInventory(
+                null, chest.getInventory().getSize(),
+                chest.getInventory().getType().name()
+        );
 
-            event.setCancelled(true);
-        }
+        player.openInventory(cInv);
+        event.setCancelled(true);
     }
 }

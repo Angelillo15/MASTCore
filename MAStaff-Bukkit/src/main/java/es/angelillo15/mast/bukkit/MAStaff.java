@@ -223,6 +223,7 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance<JavaPlugin> {
             logger.info("Loading legacy modules...");
             new BukkitLegacyLoader().load(this);
         }
+
         if (getServer().getPluginManager().getPlugin("Vault") == null) {
             return;
         }

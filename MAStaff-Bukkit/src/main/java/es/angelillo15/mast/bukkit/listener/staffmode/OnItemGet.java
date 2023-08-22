@@ -15,15 +15,13 @@ public class OnItemGet implements Listener {
 
     @SuppressWarnings("deprecation")
     @EventHandler
-    public void onItemGet(PlayerPickupItemEvent event){
+    public void onItemGet(PlayerPickupItemEvent event) {
         Player player = event.getPlayer();
 
-        if(!player.hasPermission(Permissions.STAFF.getPermission())){
-            return;
-        }
+        if (!staffManager.isStaffPlayer(player)) return;
 
         IStaffPlayer staffPlayer = staffManager.getStaffPlayer(player);
 
-        if(staffPlayer.isStaffMode()) event.setCancelled(true);
+        if (staffPlayer.isStaffMode()) event.setCancelled(true);
     }
 }

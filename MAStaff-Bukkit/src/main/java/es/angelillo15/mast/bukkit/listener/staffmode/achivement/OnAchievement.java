@@ -20,6 +20,6 @@ public class OnAchievement implements Listener {
 
         IStaffPlayer staffPlayer = staffManager.getStaffPlayer(player);
 
-        if(staffPlayer.isStaffMode()) event.setCancelled(true);
+        if (staffPlayer.isStaffMode()) event.setCancelled(true);
     }
 }

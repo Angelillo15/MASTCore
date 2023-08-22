@@ -14,15 +14,15 @@ public class OnInventoryClick implements Listener {
     private StaffManager staffManager;
 
     @EventHandler
-    public void onClick(InventoryClickEvent event){
+    public void onClick(InventoryClickEvent event) {
         Player player = (Player) event.getWhoClicked();
 
-        if (!staffManager.isStaffPlayer(player)) {
-            return;
-        }
+        if (!staffManager.isStaffPlayer(player)) return;
 
         IStaffPlayer staffPlayer = staffManager.getStaffPlayer(player);
 
-        if(staffPlayer.isStaffMode()) event.setCancelled(true);
+        if (staffPlayer == null) return;
+
+        if (staffPlayer.isStaffMode()) event.setCancelled(true);
     }
 }

@@ -17,12 +17,10 @@ public class OnSwapHand implements Listener {
     public void onSwapHand(PlayerSwapHandItemsEvent event) {
         Player player = event.getPlayer();
 
-        if(!player.hasPermission(Permissions.STAFF.getPermission())) {
-            return;
-        }
+        if (!staffManager.isStaffPlayer(player)) return;
 
         IStaffPlayer staffPlayer = staffManager.getStaffPlayer(player);
 
-        if(staffPlayer.isStaffMode()) event.setCancelled(true);
+        if (staffPlayer.isStaffMode()) event.setCancelled(true);
     }
 }

@@ -6,7 +6,7 @@ prefix: MAStaff-Lite
 authors: [ Angelillo15 ]
 description: Simple and optimised Staff Core
 website: angelillo15.es
-softdepend: [PlaceholderAPI, Vault, eGlow]
+softdepend: [PlaceholderAPI, Vault]
 commands:
   staff:
     description: Staff Command

@@ -14,14 +14,12 @@ public class OnBlockReceiveGameEvent implements Listener {
 
     @EventHandler
     public void onBlockReceiveGameEvent(BlockReceiveGameEvent event) {
-        if(!(event.getEntity() instanceof Player)) return;
-
-        Player player = (Player) event.getEntity();
+        if (!(event.getEntity() instanceof Player player)) return;
 
         if (!staffManager.isStaffPlayer(player)) return;
 
         IStaffPlayer staffPlayer = staffManager.getStaffPlayer(player);
 
-        if(staffPlayer.isVanished()) event.setCancelled(true);
+        if (staffPlayer.isVanished()) event.setCancelled(true);
     }
 }
