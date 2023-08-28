@@ -6,7 +6,7 @@ prefix: MAStaff
 authors: [ Angelillo15 ]
 description: Simple and optimised Staff Core
 website: angelillo15.es
-softdepend: [PlaceholderAPI, Vault, eGlow]
+softdepend: [PlaceholderAPI, Vault]
 folia-supported: true
 commands:
   staff:

@@ -9,11 +9,11 @@ import lombok.Setter
 abstract class CommandParent : Command() {
     @Getter
     private val subCommands: MutableMap<String?, SubCommand> = HashMap()
-    override fun onCommand(sender: CommandSender?, label: String?, args: Array<String?>?) {
+    override fun onCommand(sender: CommandSender, label: String, args: Array<String>) {
         if (subCommands.isEmpty())
             registerSubCommands()
 
-        if (args!!.isEmpty()) {
+        if (args.isEmpty()) {
             sendHelp(sender)
             return
         }
@@ -22,7 +22,7 @@ abstract class CommandParent : Command() {
             sendHelp(sender)
             return
         }
-        if (!sender!!.hasPermission(subCommand.permission)) {
+        if (!sender.hasPermission(subCommand.permission)) {
             sender.sendMessage(TextUtils.simpleColorize(noPermission))
             return
         }
@@ -78,7 +78,7 @@ abstract class CommandParent : Command() {
             override val permission: String
                 get() = ""
 
-            override fun onCommand(sender: CommandSender?, label: String?, args: Array<String?>?) {
+            override fun onCommand(sender: CommandSender, label: String, args: Array<String>) {
                 sendHelp(sender)
             }
         })

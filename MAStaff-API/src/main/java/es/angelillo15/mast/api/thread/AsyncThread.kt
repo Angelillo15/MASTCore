@@ -2,6 +2,8 @@ package es.angelillo15.mast.api.thread
 
 import es.angelillo15.mast.api.MAStaffInstance
 import es.angelillo15.mast.api.utils.MAStaffInject
+import java.util.concurrent.Executors
+import java.util.concurrent.ThreadPoolExecutor
 
 private const val tps = 5
 private const val miles = 1000 / tps
@@ -9,7 +11,7 @@ private var shuttingDown = false
 private var thread: Unit? = null
 
 private var actions = ArrayList<Action>()
-
+private var threadPoolExecutor = Executors.newFixedThreadPool(5)
 @Suppress("UNCHECKED_CAST")
 fun start() {
     Thread({
@@ -36,11 +38,13 @@ fun start() {
                     action.delayTask = action.delay
                 }
 
-                try {
-                    action.runnable.invoke()
-                    MAStaffInstance.getLogger().debug("Executed action $action")
-                } catch (e: Exception) {
-                    MAStaffInstance.getLogger().error("Error while executing action ${action}: ${e.message}")
+                threadPoolExecutor.execute {
+                    try {
+                        action.runnable.invoke()
+                        MAStaffInstance.getLogger().debug("Executed action $action")
+                    } catch (e: Exception) {
+                        MAStaffInstance.getLogger().error("Error while executing action ${action}: ${e.message}")
+                    }
                 }
 
                 if (!action.repeat) removeAction(action)
@@ -49,6 +53,7 @@ fun start() {
 
         shuttingDown = false
         MAStaffInstance.getLogger().debug("Parallel thread stopped!")
+        threadPoolExecutor.shutdownNow()
     }, "MAStaff-ParallelThread").start()
 }
 
@@ -126,4 +131,52 @@ fun execute(runnable: () -> Unit, delay: Int?, repeat: Boolean?) : Int {
  */
 fun execute(runnable: () -> Unit) : Int {
     return execute(runnable, 0, false)
+}
+
+object AsyncThread {
+    /**
+     * Adjusts the threads
+     * @param threads The amount of threads
+     */
+    fun adjustThreads(threads: Int) {
+        getThreadPoolExecutor().corePoolSize = threads
+    }
+
+    /**
+     * Get the current thread pool executor
+     * @return The thread pool executor
+     */
+    fun getThreadPoolExecutor() : ThreadPoolExecutor {
+        return threadPoolExecutor as ThreadPoolExecutor
+    }
+
+    /**
+     * Increment the threads by 1
+     */
+    fun incrementThreads() {
+        incrementThreads(1)
+    }
+
+    /**
+     * Decrement the threads by 1
+     */
+    fun decrementThreads() {
+        decrementThreads(1)
+    }
+
+    /**
+     * Increment the threads by an amount
+     * @param amount The amount to increment
+     */
+    fun incrementThreads(amount: Int) {
+        adjustThreads(getThreadPoolExecutor().corePoolSize + amount)
+    }
+
+    /**
+     * Decrement the threads by an amount
+     * @param amount The amount to decrement
+     */
+    fun decrementThreads(amount: Int) {
+        adjustThreads(getThreadPoolExecutor().corePoolSize - amount)
+    }
 }

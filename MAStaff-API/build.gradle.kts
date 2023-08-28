@@ -19,7 +19,6 @@ dependencies {
     compileOnly(libs.waterfall)
     compileOnly(libs.spigot)
     compileOnly(libs.placeholderApi)
-    compileOnly(libs.eglow)
     compileOnly(libs.liblyBukkit)
     compileOnly(libs.bundles.invAPI)
     compileOnly(libs.configUpdater)

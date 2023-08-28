@@ -491,6 +491,6 @@ public class StaffPlayer implements IStaffPlayer {
     public void addEffects() {
         if (!Config.nighVision()) return;
 
-        player.addPotionEffect(new PotionEffect(PotionEffectType.NIGHT_VISION, 99999, 1));
+        player.addPotionEffect(new PotionEffect(PotionEffectType.NIGHT_VISION, 999999, 1));
     }
 }

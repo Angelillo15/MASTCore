@@ -28,7 +28,7 @@ class DumpArg : SubCommand() {
     override val permission: String
         get() = "mast.admin"
 
-    override fun onCommand(sender: CommandSender?, label: String?, args: Array<String?>?) {
+    override fun onCommand(sender: CommandSender, label: String, args: Array<String>) {
         val dump = JsonObject()
 
         dump.addProperty("pluginName", "MAStaff-Velocity")

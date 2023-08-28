@@ -36,8 +36,8 @@ class BanCMD : PunishTargetReasonCommand(1, Messages.Default.defaultBanReason())
         sender.sendMessage(Messages.Commands.Ban.success(target, reason, sender.name))
     }
 
-    override fun onTabComplete(sender: CommandSender?, args: Array<String?>?): List<String?> {
-        if (args!!.size == 1) {
+    override fun onTabComplete(sender: CommandSender, args: Array<String>): List<String> {
+        if (args.size == 1) {
             return serverUtils.getOnlinePlayersNames()
         }
 

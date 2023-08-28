@@ -18,7 +18,7 @@ class ReloadArg : SubCommand() {
     override val permission: String
         get() = "mast.reload"
 
-    override fun onCommand(sender: CommandSender?, label: String?, args: Array<String?>?) {
+    override fun onCommand(sender: CommandSender, label: String, args: Array<String>) {
         plugin.reload()
         sender!!.sendMessage(Messages.reloaded());
     }

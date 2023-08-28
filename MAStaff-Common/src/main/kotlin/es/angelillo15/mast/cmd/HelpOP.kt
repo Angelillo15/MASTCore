@@ -16,7 +16,7 @@ class HelpOP : CooldownCommand(60, CommonMessages.HelpOp.cooldown(), CommonConfi
     @Inject
     private lateinit var serverUtils: IServerUtils;
 
-    override fun onCooldownCommand(sender: CommandSender, label: String, args: Array<String?>) {
+    override fun onCooldownCommand(sender: CommandSender, label: String, args: Array<String>) {
         if (args.isEmpty()) {
             sender.sendMessage(CommonMessages.HelpOp.correctUse())
             return
