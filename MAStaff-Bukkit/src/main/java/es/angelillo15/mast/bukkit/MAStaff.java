@@ -36,6 +36,7 @@ import es.angelillo15.mast.bukkit.utils.Metrics;
 import es.angelillo15.mast.api.utils.PermsUtils;
 import es.angelillo15.mast.bukkit.utils.scheduler.Scheduler;
 import es.angelillo15.mast.papi.MAStaffExtension;
+import io.papermc.lib.PaperLib;
 import kong.unirest.HttpResponse;
 import kong.unirest.Unirest;
 import lombok.Getter;
@@ -150,7 +151,8 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance<JavaPlugin> {
         if (Config.silentOpenChest()) registerListener(injector.getInstance(OnOpenChest.class));
         if (version >= 19) registerListener(injector.getInstance(OnBlockReceiveGameEvent.class));
         if (version >= 9) registerListener(injector.getInstance(OnSwapHand.class));
-        if (version >= 9) registerListener(injector.getInstance(OnAchievement.class));
+        if (version >= 9 && PaperLib.isPaper())
+            registerListener(injector.getInstance(OnAchievement.class));
         FreezeUtils.setupMessageSender();
         this.getServer().getMessenger().registerOutgoingPluginChannel(this, "mastaff:staff");
         this.getServer().getMessenger().registerOutgoingPluginChannel(this, "mastaff:commands");

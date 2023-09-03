@@ -28,8 +28,8 @@ class WarnCMD : PunishTargetReasonCommand(1, Messages.Default.defaultWarnReason(
             sender.warn(target, reason)
     }
 
-    override fun onTabComplete(sender: CommandSender?, args: Array<String?>?): List<String?> {
-        if (args!!.size == 1) {
+    override fun onTabComplete(sender: CommandSender, args: Array<String>): List<String> {
+        if (args.size == 1) {
             return serverUtils.getOnlinePlayersNames()
         }
 

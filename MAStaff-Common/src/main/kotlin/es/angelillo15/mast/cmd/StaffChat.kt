@@ -21,9 +21,9 @@ class StaffChat : Command() {
     @Inject
     private lateinit var staffChatManager: StaffChatManager;
 
-    override fun onCommand(sender: CommandSender?, label: String?, args: Array<String?>?) {
-        if (args!!.isEmpty()) {
-            if (staffChatManager.isStaffChatEnabled(sender!!.name)) {
+    override fun onCommand(sender: CommandSender, label: String, args: Array<String>) {
+        if (args.isEmpty()) {
+            if (staffChatManager.isStaffChatEnabled(sender.name)) {
                 staffChatManager.setStaffChatEnabled(sender.name, false)
                 sender.run { sendMessage(CommonMessages.StaffChat.disabled()) }
             } else {
@@ -37,7 +37,7 @@ class StaffChat : Command() {
         val message = args.joinToString(" ")
 
         val formattedMessage = CommonMessages.StaffChat.format()
-            .replace("{server}", sender!!.serverName)
+            .replace("{server}", sender.serverName)
             .replace("{player}", sender.name)
             .replace("{message}", message)
 

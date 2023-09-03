@@ -8,16 +8,16 @@ abstract class CooldownCommand(
     private val enabled: Boolean = true
 ) : Command() {
     private var cooldowns: MutableMap<String, Long> = mutableMapOf()
-    override fun onCommand(sender: CommandSender?, label: String?, args: Array<String?>?) {
+    override fun onCommand(sender: CommandSender, label: String, args: Array<String>) {
         if (!enabled) {
-            onCooldownCommand(sender!!, label!!, args!!)
+            onCooldownCommand(sender, label, args)
             return
         }
 
-        if (!cooldowns.containsKey(sender!!.uniqueId)) {
+        if (!cooldowns.containsKey(sender.uniqueId)) {
             cooldowns[sender.uniqueId] = System.currentTimeMillis() + (cooldown * 1000)
 
-            onCooldownCommand(sender, label!!, args!!)
+            onCooldownCommand(sender, label, args)
 
             return
         }
@@ -35,5 +35,5 @@ abstract class CooldownCommand(
         cooldowns.remove(sender.uniqueId)
     }
 
-    abstract fun onCooldownCommand(sender: CommandSender, label: String, args:  Array<String?>)
+    abstract fun onCooldownCommand(sender: CommandSender, label: String, args:  Array<String>)
 }
