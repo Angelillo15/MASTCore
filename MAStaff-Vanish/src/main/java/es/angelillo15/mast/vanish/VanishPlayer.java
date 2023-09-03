@@ -8,42 +8,42 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 public class VanishPlayer implements IVanishPlayer {
-    private final IStaffPlayer player;
+  private final IStaffPlayer player;
 
-    public VanishPlayer(IStaffPlayer player) {
-        this.player = player;
+  public VanishPlayer(IStaffPlayer player) {
+    this.player = player;
+  }
+
+  @Override
+  public void enableVanish() {
+    VanishDataManager.addVanishedPlayer(player);
+
+    for (Player p : Bukkit.getOnlinePlayers()) {
+      if (p.hasPermission("mast.vanish.see")) {
+        continue;
+      }
+
+      hide(p);
     }
+  }
 
-    @Override
-    public void enableVanish() {
-        VanishDataManager.addVanishedPlayer(player);
+  @Override
+  public void disableVanish() {
+    VanishDataManager.removeVanishedPlayer(player);
 
-        for (Player p : Bukkit.getOnlinePlayers()) {
-            if (p.hasPermission("mast.vanish.see")) {
-                continue;
-            }
+    Bukkit.getOnlinePlayers().forEach(this::show);
+  }
 
-            hide(p);
-        }
-    }
+  @Override
+  public boolean isVanished() {
+    return VanishDataManager.isVanished(player);
+  }
 
-    @Override
-    public void disableVanish() {
-        VanishDataManager.removeVanishedPlayer(player);
+  public void hide(Player player) {
+    VanishListener.hide(this.player.getPlayer(), player);
+  }
 
-        Bukkit.getOnlinePlayers().forEach(this::show);
-    }
-
-    @Override
-    public boolean isVanished() {
-        return VanishDataManager.isVanished(player);
-    }
-
-    public void hide(Player player) {
-        VanishListener.hide(this.player.getPlayer(), player);
-    }
-
-    public void show(Player player) {
-        VanishListener.show(this.player.getPlayer(), player);
-    }
+  public void show(Player player) {
+    VanishListener.show(this.player.getPlayer(), player);
+  }
 }

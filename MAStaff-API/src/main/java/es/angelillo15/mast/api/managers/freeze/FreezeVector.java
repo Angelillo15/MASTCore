@@ -8,6 +8,6 @@ import org.bukkit.OfflinePlayer;
 @Data
 @AllArgsConstructor
 public class FreezeVector {
-    IStaffPlayer staffPlayer;
-    OfflinePlayer target;
+  IStaffPlayer staffPlayer;
+  OfflinePlayer target;
 }

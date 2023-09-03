@@ -15,71 +15,71 @@ import org.simpleyaml.configuration.file.YamlFile
 
 @Singleton
 class TemplateLoaders {
-    @Inject
-    private lateinit var banTemplateManager: BanTemplatesManager
+  @Inject
+  private lateinit var banTemplateManager: BanTemplatesManager
 
-    @Inject
-    private lateinit var warnTemplateManager: WarnTemplateManager
+  @Inject
+  private lateinit var warnTemplateManager: WarnTemplateManager
 
-    @Inject
-    private lateinit var logger: ILogger
+  @Inject
+  private lateinit var logger: ILogger
 
-    fun loadAll() {
-        logger.debug("Loading all templates...")
-        logger.debug("Loading all ban templates...")
-        loadBans()
-        logger.debug("Loaded all ban templates.")
-        logger.debug("Loading all warn templates...")
-        loadWarns()
-        logger.debug("Loaded all warn templates.")
+  fun loadAll() {
+    logger.debug("Loading all templates...")
+    logger.debug("Loading all ban templates...")
+    loadBans()
+    logger.debug("Loaded all ban templates.")
+    logger.debug("Loading all warn templates...")
+    loadWarns()
+    logger.debug("Loaded all warn templates.")
+  }
+
+  private fun loadBans() {
+    val banFile = ConfigLoader.getBanTemplate().config;
+
+    banFile.getConfigurationSection("Templates").getKeys(false).forEach { key ->
+      banTemplateManager.addBanTemplate(
+              BanTemplate(
+                      key,
+                      NumberUtils.parseToMilis(banFile.getString("Templates.$key.banDuration")),
+                      TextUtils.simpleColorize(banFile.getString("Templates.$key.banMessage")),
+                      banFile.getString("Templates.$key.permission"),
+                      banFile.getBoolean("Templates.$key.ipBan")
+              )
+      )
+    }
+  }
+
+  private fun loadWarns() {
+    val warnFile = ConfigLoader.getWarnsTemplate().config;
+
+    warnFile.getConfigurationSection("Templates").getKeys(false).forEach { key ->
+      warnTemplateManager.addWarnTemplate(
+              WarnTemplate(
+                      key,
+                      NumberUtils.parseToMilis(warnFile.getString("Templates.$key.warnDuration")),
+                      warnFile.getString("Templates.$key.warnReason"),
+                      TextUtils.simpleColorize(warnFile.getString("Templates.$key.warnMessage")),
+                      warnFile.getInt("Templates.$key.maxWarnings"),
+                      getWarningActions(warnFile, key),
+                      warnFile.getBoolean("Templates.$key.deleteOnMax"),
+                      warnFile.getString("Templates.$key.permission")
+              )
+      )
+    }
+  }
+
+  private fun getWarningActions(warnFile: YamlFile, key: String): List<WarnAction> {
+    val actions = ArrayList<WarnAction>()
+    warnFile.getConfigurationSection("Templates.${key}.actions").getKeys(false).forEach { action ->
+      actions.add(
+              WarnAction(
+                      action.toInt(),
+                      warnFile.getString("Templates.${key}.actions.${action}")
+              )
+      )
     }
 
-    private fun loadBans() {
-        val banFile = ConfigLoader.getBanTemplate().config;
-
-        banFile.getConfigurationSection("Templates").getKeys(false).forEach { key ->
-            banTemplateManager.addBanTemplate(
-                BanTemplate(
-                    key,
-                    NumberUtils.parseToMilis(banFile.getString("Templates.$key.banDuration")),
-                    TextUtils.simpleColorize(banFile.getString("Templates.$key.banMessage")),
-                    banFile.getString("Templates.$key.permission"),
-                    banFile.getBoolean("Templates.$key.ipBan")
-                )
-            )
-        }
-    }
-
-    private fun loadWarns() {
-        val warnFile = ConfigLoader.getWarnsTemplate().config;
-
-        warnFile.getConfigurationSection("Templates").getKeys(false).forEach { key ->
-            warnTemplateManager.addWarnTemplate(
-                WarnTemplate(
-                    key,
-                    NumberUtils.parseToMilis(warnFile.getString("Templates.$key.warnDuration")),
-                    warnFile.getString("Templates.$key.warnReason"),
-                    TextUtils.simpleColorize(warnFile.getString("Templates.$key.warnMessage")),
-                    warnFile.getInt("Templates.$key.maxWarnings"),
-                    getWarningActions(warnFile, key),
-                    warnFile.getBoolean("Templates.$key.deleteOnMax"),
-                    warnFile.getString("Templates.$key.permission")
-                )
-            )
-        }
-    }
-
-    private fun getWarningActions(warnFile: YamlFile, key: String): List<WarnAction> {
-        val actions = ArrayList<WarnAction>()
-        warnFile.getConfigurationSection("Templates.${key}.actions").getKeys(false).forEach { action ->
-            actions.add(
-                WarnAction(
-                    action.toInt(),
-                    warnFile.getString("Templates.${key}.actions.${action}")
-                )
-            )
-        }
-
-        return actions
-    }
+    return actions
+  }
 }

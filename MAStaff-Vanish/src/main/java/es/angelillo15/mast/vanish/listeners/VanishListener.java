@@ -14,49 +14,55 @@ import org.bukkit.event.player.PlayerQuitEvent;
 
 @SuppressWarnings("deprecation")
 public class VanishListener implements Listener {
-    public static void hide(Player staff, Player player) {
-        if (MAStaffInstance.version() > 12) {
-            player.hidePlayer(MAStaffVanish.getInstance().getPluginInstance(), staff);
-        } else {
-            player.hidePlayer(staff);
-        }
+  public static void hide(Player staff, Player player) {
+    if (MAStaffInstance.version() > 12) {
+      player.hidePlayer(MAStaffVanish.getInstance().getPluginInstance(), staff);
+    } else {
+      player.hidePlayer(staff);
     }
+  }
 
-    public static void show(Player staff, Player player) {
-        if (MAStaffInstance.version() > 12) {
-            player.showPlayer(MAStaffVanish.getInstance().getPluginInstance(), staff);
-        } else {
-            player.showPlayer(staff);
-        }
+  public static void show(Player staff, Player player) {
+    if (MAStaffInstance.version() > 12) {
+      player.showPlayer(MAStaffVanish.getInstance().getPluginInstance(), staff);
+    } else {
+      player.showPlayer(staff);
     }
+  }
 
-    @EventHandler(ignoreCancelled = true)
-    public void onJoin(PlayerJoinEvent event) {
-        Player player = event.getPlayer();
+  @EventHandler(ignoreCancelled = true)
+  public void onJoin(PlayerJoinEvent event) {
+    Player player = event.getPlayer();
 
-        Bukkit.getOnlinePlayers().forEach(p -> {
-            show(p, player);
-            show(player, p);
-        });
+    Bukkit.getOnlinePlayers()
+        .forEach(
+            p -> {
+              show(p, player);
+              show(player, p);
+            });
 
-        if (player.hasPermission("mast.vanish.see")) return;
+    if (player.hasPermission("mast.vanish.see")) return;
 
-        VanishDataManager.getVanishedPlayers().forEach(vanishedPlayer -> {
-            hide(vanishedPlayer.getPlayer(), player);
-        });
-    }
+    VanishDataManager.getVanishedPlayers()
+        .forEach(
+            vanishedPlayer -> {
+              hide(vanishedPlayer.getPlayer(), player);
+            });
+  }
 
-    @EventHandler(ignoreCancelled = true)
-    public void onQuit(PlayerQuitEvent event) {
-        if (!VanishDataManager.isVanished(event.getPlayer().getName())) return;
-        IStaffPlayer staffPlayer = LegacyStaffPlayersManagers.getStaffPlayer(event.getPlayer());
+  @EventHandler(ignoreCancelled = true)
+  public void onQuit(PlayerQuitEvent event) {
+    if (!VanishDataManager.isVanished(event.getPlayer().getName())) return;
+    IStaffPlayer staffPlayer = LegacyStaffPlayersManagers.getStaffPlayer(event.getPlayer());
 
-        if (staffPlayer == null) return;
+    if (staffPlayer == null) return;
 
-        Bukkit.getOnlinePlayers().forEach(player -> {
-            show(staffPlayer.getPlayer(), player);
-        });
+    Bukkit.getOnlinePlayers()
+        .forEach(
+            player -> {
+              show(staffPlayer.getPlayer(), player);
+            });
 
-        VanishDataManager.removeVanishedPlayer(staffPlayer);
-    }
+    VanishDataManager.removeVanishedPlayer(staffPlayer);
+  }
 }

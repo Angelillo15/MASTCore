@@ -1,3 +1,3 @@
 dependencies {
-    compileOnly(libs.spigot)
+  compileOnly(libs.spigot)
 }

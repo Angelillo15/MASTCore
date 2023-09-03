@@ -5,10 +5,9 @@ import es.angelillo15.mast.api.ILogger;
 import es.angelillo15.mast.api.IServerUtils;
 import es.angelillo15.mast.api.IStaffPlayer;
 import es.angelillo15.mast.api.cmd.Command;
-import org.bukkit.entity.Player;
-
 import java.io.File;
 import java.io.InputStream;
+import org.bukkit.entity.Player;
 
 public interface MAStaffInject {
     ILogger getPLogger();

@@ -10,38 +10,41 @@ import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import org.bukkit.entity.Player;
 
 public class MAStaffExtension extends PlaceholderExpansion {
-    @Inject
-    private MAStaffInstance instance;
-    @Override
-    public String getIdentifier() {
-        return "mastaff";
-    }
+  @Inject private MAStaffInstance instance;
 
-    @Override
-    public String getAuthor() {
-        return "Angelillo15";
-    }
+  @Override
+  public String getIdentifier() {
+    return "mastaff";
+  }
 
-    @Override
-    public String getVersion() {
-        return Constants.VERSION;
-    }
+  @Override
+  public String getAuthor() {
+    return "Angelillo15";
+  }
 
-    @Override
-    public boolean register() {
-        PlaceholderManager.registerPlaceholder(instance.getInjector().getInstance(StaffModePlaceholder.class));
-        PlaceholderManager.registerPlaceholder(instance.getInjector().getInstance(StaffCountPlaceholder.class));
-        PlaceholderManager.registerPlaceholder(instance.getInjector().getInstance(ServerCountPlaceholder.class));
+  @Override
+  public String getVersion() {
+    return Constants.VERSION;
+  }
 
-        return super.register();
-    }
+  @Override
+  public boolean register() {
+    PlaceholderManager.registerPlaceholder(
+        instance.getInjector().getInstance(StaffModePlaceholder.class));
+    PlaceholderManager.registerPlaceholder(
+        instance.getInjector().getInstance(StaffCountPlaceholder.class));
+    PlaceholderManager.registerPlaceholder(
+        instance.getInjector().getInstance(ServerCountPlaceholder.class));
 
-    @Override
-    public String onPlaceholderRequest(Player player, String params) {
-        Placeholder placeholder = PlaceholderManager.getPlaceholder(params);
+    return super.register();
+  }
 
-        if (placeholder == null) return "Placeholder not found";
+  @Override
+  public String onPlaceholderRequest(Player player, String params) {
+    Placeholder placeholder = PlaceholderManager.getPlaceholder(params);
 
-        return placeholder.onPlaceholderRequest(player, params);
-    }
+    if (placeholder == null) return "Placeholder not found";
+
+    return placeholder.onPlaceholderRequest(player, params);
+  }
 }

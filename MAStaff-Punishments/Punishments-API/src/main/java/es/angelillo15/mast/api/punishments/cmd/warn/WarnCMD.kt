@@ -11,38 +11,38 @@ import es.angelillo15.mast.api.templates.managers.WarnTemplateManager
 
 @CommandData(name = "warn", permission = "mast.warn")
 class WarnCMD : PunishTargetReasonCommand(1, Messages.Default.defaultWarnReason()) {
-    @Inject
-    private lateinit var serverUtils: IServerUtils
+  @Inject
+  private lateinit var serverUtils: IServerUtils
 
-    @Inject
-    private lateinit var warnTemplateManager: WarnTemplateManager;
-    override fun onCommand(
-        sender: IPunishPlayer,
-        target: String,
-        label: String,
-        args: Array<out String>,
-        reason: String
-    ) {
-        if (args.isEmpty()) {
-            sender.sendMessage(Messages.Commands.Warn.usage())
-            return
-        }
-
-        if (warnTemplateManager.getWarnTemplate(reason) != null)
-            sender.tryWarnTemplate(target, reason)
-        else
-            sender.warn(target, reason)
+  @Inject
+  private lateinit var warnTemplateManager: WarnTemplateManager;
+  override fun onCommand(
+          sender: IPunishPlayer,
+          target: String,
+          label: String,
+          args: Array<out String>,
+          reason: String
+  ) {
+    if (args.isEmpty()) {
+      sender.sendMessage(Messages.Commands.Warn.usage())
+      return
     }
 
-    override fun onTabComplete(sender: CommandSender, args: Array<String>): List<String> {
-        if (args.size == 1) {
-            return serverUtils.getOnlinePlayersNames()
-        }
+    if (warnTemplateManager.getWarnTemplate(reason) != null)
+      sender.tryWarnTemplate(target, reason)
+    else
+      sender.warn(target, reason)
+  }
 
-        if (args.size == 2) {
-            return warnTemplateManager.getWarnTemplates().map { it.id }
-        }
-
-        return emptyList()
+  override fun onTabComplete(sender: CommandSender, args: Array<String>): List<String> {
+    if (args.size == 1) {
+      return serverUtils.getOnlinePlayersNames()
     }
+
+    if (args.size == 2) {
+      return warnTemplateManager.getWarnTemplates().map { it.id }
+    }
+
+    return emptyList()
+  }
 }

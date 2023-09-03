@@ -1,7 +1,6 @@
 package es.angelillo15.mast.api.vanish;
 
 import es.angelillo15.mast.api.IStaffPlayer;
-
 import java.util.ArrayList;
 
 public class VanishDataManager {

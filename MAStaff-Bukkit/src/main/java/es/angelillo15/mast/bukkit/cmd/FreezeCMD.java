@@ -3,18 +3,16 @@ package es.angelillo15.mast.bukkit.cmd;
 import com.google.inject.Inject;
 import es.angelillo15.mast.api.IStaffPlayer;
 import es.angelillo15.mast.api.TextUtils;
-import es.angelillo15.mast.api.managers.LegacyStaffPlayersManagers;
+import es.angelillo15.mast.api.config.bukkit.Messages;
 import es.angelillo15.mast.api.managers.StaffManager;
 import es.angelillo15.mast.api.managers.freeze.FreezeManager;
-import es.angelillo15.mast.api.config.bukkit.Messages;
 import es.angelillo15.mast.bukkit.gui.SelectTargetGUI;
+import java.util.Objects;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-
-import java.util.Objects;
 
 public class FreezeCMD implements CommandExecutor {
     @Inject

@@ -7,11 +7,10 @@ import com.craftmend.storm.api.enums.Where;
 import com.craftmend.storm.api.markers.Column;
 import com.craftmend.storm.api.markers.Table;
 import es.angelillo15.mast.api.database.PluginConnection;
+import java.util.Collection;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.SneakyThrows;
-
-import java.util.Collection;
 
 @Data
 @Table(name="mastaff_ipbans")

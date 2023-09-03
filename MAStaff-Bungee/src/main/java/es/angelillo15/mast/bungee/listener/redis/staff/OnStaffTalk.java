@@ -7,13 +7,14 @@ import es.angelillo15.mast.bungee.config.Messages;
 import es.angelillo15.mast.bungee.utils.StaffUtils;
 
 public class OnStaffTalk implements Listener {
-    @EventHandler
-    public void onStaffTalk(StaffChatMessageEvent event) {
-        String message = Messages.GET_STAFF_CHAT_FORMAT()
-                .replace("{server}", event.getServer())
-                .replace("{player}", event.getStaffName())
-                .replace("{message}", event.getStaffMessage());
+  @EventHandler
+  public void onStaffTalk(StaffChatMessageEvent event) {
+    String message =
+        Messages.GET_STAFF_CHAT_FORMAT()
+            .replace("{server}", event.getServer())
+            .replace("{player}", event.getStaffName())
+            .replace("{message}", event.getStaffMessage());
 
-        StaffUtils.sendStaffChatMessage(message);
-    }
+    StaffUtils.sendStaffChatMessage(message);
+  }
 }

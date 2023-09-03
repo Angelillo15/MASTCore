@@ -2,8 +2,8 @@ package es.angelillo15.mast.bungee.listener.user;
 
 import es.angelillo15.mast.api.MAStaffInstance;
 import es.angelillo15.mast.api.data.DataManager;
-import es.angelillo15.mast.api.models.UserModel;
 import es.angelillo15.mast.api.managers.LegacyUserDataManager;
+import es.angelillo15.mast.api.models.UserModel;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.event.PostLoginEvent;
 import net.md_5.bungee.api.plugin.Listener;

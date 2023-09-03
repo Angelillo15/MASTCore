@@ -6,22 +6,18 @@ import es.angelillo15.mast.api.utils.VersionUtils;
 import org.bukkit.Bukkit;
 
 public interface MAStaffInstance<P> extends MAStaffInject {
-    static int version() {
-        if (ServerUtils.getServerType() == ServerUtils.ServerType.BUNGEE) {
-            return 19;
-        } else {
-            return VersionUtils.getBukkitVersion();
-        }
+  static int version() {
+    if (ServerUtils.getServerType() == ServerUtils.ServerType.BUNGEE) {
+      return 19;
+    } else {
+      return VersionUtils.getBukkitVersion();
     }
-
-    static boolean placeholderCheck() {
-        return Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null;
-    }
-
-    static ILogger getLogger() {
-        return ILogger.getInstance();
-    }
-
-    P getPluginInstance();
-
+  }
+  static boolean placeholderCheck() {
+    return Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null;
+  }
+  static ILogger getLogger() {
+    return ILogger.getInstance();
+  }
+  P getPluginInstance();
 }

@@ -7,43 +7,43 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 public class RTPItem extends StaffItem implements IExecutableItem {
-    private ItemStack item;
-    private int slot;
-    private String permission;
+  private final ItemStack item;
+  private final int slot;
+  private final String permission;
 
-    public RTPItem(ItemStack item, int slot, String permission) {
-        this.item = item;
-        this.slot = slot;
-        this.permission = permission;
-    }
+  public RTPItem(ItemStack item, int slot, String permission) {
+    this.item = item;
+    this.slot = slot;
+    this.permission = permission;
+  }
 
-    @Override
-    public String getName() {
-        return "RTP";
-    }
+  @Override
+  public String getName() {
+    return "RTP";
+  }
 
-    @Override
-    public ItemStack getItem() {
-        return item;
-    }
+  @Override
+  public ItemStack getItem() {
+    return item;
+  }
 
-    @Override
-    public void setItem(Player player) {
-        player.getInventory().setItem(getSlot(), getItem());
-    }
+  @Override
+  public void setItem(Player player) {
+    player.getInventory().setItem(getSlot(), getItem());
+  }
 
-    @Override
-    public String getPermission() {
-        return permission;
-    }
+  @Override
+  public String getPermission() {
+    return permission;
+  }
 
-    @Override
-    public int getSlot() {
-        return slot;
-    }
+  @Override
+  public int getSlot() {
+    return slot;
+  }
 
-    @Override
-    public void click(Player player) {
-        StaffUtils.playerRandomTeleport(player);
-    }
+  @Override
+  public void click(Player player) {
+    StaffUtils.playerRandomTeleport(player);
+  }
 }

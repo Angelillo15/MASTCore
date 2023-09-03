@@ -7,12 +7,12 @@ import es.angelillo15.mast.api.punishments.PunishPlayersManager
 import es.angelillo15.mast.api.thread.execute
 
 abstract class PunishCommand : Command() {
-    override fun onCommand(sender: CommandSender, label: String, args: Array<String>) {
-        if (!sender.hasPermission("mast.punishments")) return
+  override fun onCommand(sender: CommandSender, label: String, args: Array<String>) {
+    if (!sender.hasPermission("mast.punishments")) return
 
-        val punishPlayer = PunishPlayersManager.getPlayer(sender.uniqueId) ?: return
-        execute { onCommand(punishPlayer, label, args) }
-    }
+    val punishPlayer = PunishPlayersManager.getPlayer(sender.uniqueId) ?: return
+    execute { onCommand(punishPlayer, label, args) }
+  }
 
-    abstract fun onCommand(sender: IPunishPlayer, label: String, args: Array<String>)
+  abstract fun onCommand(sender: IPunishPlayer, label: String, args: Array<String>)
 }

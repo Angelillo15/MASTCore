@@ -9,27 +9,27 @@ import es.angelillo15.mast.api.config.common.CommonConfig
 import es.angelillo15.mast.api.config.common.CommonMessages
 
 @CommandData(
-    name = "HelpOP",
-    permission = "mast.helpop",
+        name = "HelpOP",
+        permission = "mast.helpop",
 )
 class HelpOP : CooldownCommand(60, CommonMessages.HelpOp.cooldown(), CommonConfig.Helpop.Cooldown.enabled()) {
-    @Inject
-    private lateinit var serverUtils: IServerUtils;
+  @Inject
+  private lateinit var serverUtils: IServerUtils;
 
-    override fun onCooldownCommand(sender: CommandSender, label: String, args: Array<String>) {
-        if (args.isEmpty()) {
-            sender.sendMessage(CommonMessages.HelpOp.correctUse())
-            return
-        }
-
-        serverUtils.broadcastMessage(
-            CommonMessages.HelpOp.format()
-                .replace("{player}", sender.name)
-                .replace("{msg}", args.joinToString(" "))
-                .replace("{server}", sender.serverName),
-            "mast.helpop.receive"
-        )
-
-        sender.sendMessage(CommonMessages.HelpOp.message())
+  override fun onCooldownCommand(sender: CommandSender, label: String, args: Array<String>) {
+    if (args.isEmpty()) {
+      sender.sendMessage(CommonMessages.HelpOp.correctUse())
+      return
     }
+
+    serverUtils.broadcastMessage(
+            CommonMessages.HelpOp.format()
+                    .replace("{player}", sender.name)
+                    .replace("{msg}", args.joinToString(" "))
+                    .replace("{server}", sender.serverName),
+            "mast.helpop.receive"
+    )
+
+    sender.sendMessage(CommonMessages.HelpOp.message())
+  }
 }

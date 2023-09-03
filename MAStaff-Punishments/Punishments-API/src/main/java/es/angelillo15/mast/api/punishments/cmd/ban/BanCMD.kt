@@ -10,48 +10,48 @@ import es.angelillo15.mast.api.punishments.cmd.PunishTargetReasonCommand
 import es.angelillo15.mast.api.templates.managers.BanTemplatesManager
 
 @CommandData(
-    name = "ban",
-    description = "Ban a player",
-    usage = "/ban <player> <reason>",
-    permission = "mast.punishments.ban",
-    aliases = ["b"]
+        name = "ban",
+        description = "Ban a player",
+        usage = "/ban <player> <reason>",
+        permission = "mast.punishments.ban",
+        aliases = ["b"]
 )
 class BanCMD : PunishTargetReasonCommand(1, Messages.Default.defaultBanReason()) {
-    @Inject
-    private lateinit var serverUtils: IServerUtils
+  @Inject
+  private lateinit var serverUtils: IServerUtils
 
-    @Inject
-    private lateinit var banTemplatesManager: BanTemplatesManager
+  @Inject
+  private lateinit var banTemplatesManager: BanTemplatesManager
 
-    override fun onCommand(
-        sender: IPunishPlayer,
-        target: String,
-        label: String,
-        args: Array<out String>,
-        reason: String
-    ) {
-        if (args.isEmpty()) {
-            sender.sendMessage(Messages.Commands.Ban.usage())
-            return
-        }
-
-        if (banTemplatesManager.getBanTemplate(reason) != null)
-            sender.tryBanTemplate(target, reason)
-        else
-            sender.ban(target, reason)
-
-        sender.sendMessage(Messages.Commands.Ban.success(target, reason, sender.name))
+  override fun onCommand(
+          sender: IPunishPlayer,
+          target: String,
+          label: String,
+          args: Array<out String>,
+          reason: String
+  ) {
+    if (args.isEmpty()) {
+      sender.sendMessage(Messages.Commands.Ban.usage())
+      return
     }
 
-    override fun onTabComplete(sender: CommandSender, args: Array<String>): List<String> {
-        if (args.size == 1) {
-            return serverUtils.getOnlinePlayersNames()
-        }
+    if (banTemplatesManager.getBanTemplate(reason) != null)
+      sender.tryBanTemplate(target, reason)
+    else
+      sender.ban(target, reason)
 
-        if (args.size == 2) {
-            return banTemplatesManager.getBanTemplates().map { it.id }
-        }
+    sender.sendMessage(Messages.Commands.Ban.success(target, reason, sender.name))
+  }
 
-        return emptyList()
+  override fun onTabComplete(sender: CommandSender, args: Array<String>): List<String> {
+    if (args.size == 1) {
+      return serverUtils.getOnlinePlayersNames()
     }
+
+    if (args.size == 2) {
+      return banTemplatesManager.getBanTemplates().map { it.id }
+    }
+
+    return emptyList()
+  }
 }

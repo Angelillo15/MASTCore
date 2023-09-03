@@ -14,56 +14,56 @@ private var threadPoolExecutor = Executors.newFixedThreadPool(5)
 
 @Suppress("UNCHECKED_CAST")
 fun start() {
-    Thread({
-        MAStaffInstance.getLogger().debug("Starting parallel thread...")
+  Thread({
+    MAStaffInstance.getLogger().debug("Starting parallel thread...")
 
-        while (!shuttingDown) {
-            try {
-                Thread.sleep(200)
-            } catch (e: InterruptedException) {
-                MAStaffInstance.getLogger().error("Error while sleeping thread: ${e.message}")
-            }
+    while (!shuttingDown) {
+      try {
+        Thread.sleep(200)
+      } catch (e: InterruptedException) {
+        MAStaffInstance.getLogger().error("Error while sleeping thread: ${e.message}")
+      }
 
-            if (shuttingDown) {
-                break
-            }
+      if (shuttingDown) {
+        break
+      }
 
-            val actionsClone: ArrayList<Action> = getActions().clone() as ArrayList<Action>
+      val actionsClone: ArrayList<Action> = getActions().clone() as ArrayList<Action>
 
-            for (action in actionsClone) {
-                if (action.delayTask > 0) {
-                    action.delayTask -= miles
-                    continue
-                } else {
-                    action.delayTask = action.delay
-                }
-
-                threadPoolExecutor.execute {
-                    try {
-                        action.runnable.invoke()
-                        MAStaffInstance.getLogger().debug("Executed action $action")
-                    } catch (e: Exception) {
-                        MAStaffInstance.getLogger().error("Error while executing action ${action}: ${e.message}")
-                    }
-                }
-
-                if (!action.repeat) removeAction(action)
-            }
+      for (action in actionsClone) {
+        if (action.delayTask > 0) {
+          action.delayTask -= miles
+          continue
+        } else {
+          action.delayTask = action.delay
         }
 
-        shuttingDown = false
-        MAStaffInstance.getLogger().debug("Parallel thread stopped!")
-        threadPoolExecutor.shutdownNow()
-    }, "MAStaff-ParallelThread").start()
+        threadPoolExecutor.execute {
+          try {
+            action.runnable.invoke()
+            MAStaffInstance.getLogger().debug("Executed action $action")
+          } catch (e: Exception) {
+            MAStaffInstance.getLogger().error("Error while executing action ${action}: ${e.message}")
+          }
+        }
+
+        if (!action.repeat) removeAction(action)
+      }
+    }
+
+    shuttingDown = false
+    MAStaffInstance.getLogger().debug("Parallel thread stopped!")
+    threadPoolExecutor.shutdownNow()
+  }, "MAStaff-ParallelThread").start()
 }
 
 /**
  * Stops the thread
  */
 fun stop() {
-    MAStaffInstance.getLogger().debug("Stopping parallel thread...")
-    shuttingDown = true
-    clearActions()
+  MAStaffInstance.getLogger().debug("Stopping parallel thread...")
+  shuttingDown = true
+  clearActions()
 }
 
 
@@ -72,8 +72,8 @@ fun stop() {
  * @param action The action to add
  */
 fun addAction(action: Action): Int {
-    actions.add(action)
-    return actions.indexOf(action)
+  actions.add(action)
+  return actions.indexOf(action)
 }
 
 /**
@@ -81,7 +81,7 @@ fun addAction(action: Action): Int {
  * @param action The action to remove
  */
 fun removeAction(action: Action) {
-    actions.remove(action)
+  actions.remove(action)
 }
 
 /**
@@ -89,14 +89,14 @@ fun removeAction(action: Action) {
  * @param index The index of the action to remove
  */
 fun removeAction(index: Int) {
-    actions.removeAt(index)
+  actions.removeAt(index)
 }
 
 /**
  * Removes all actions from the thread
  */
 fun clearActions() {
-    actions.clear()
+  actions.clear()
 }
 
 /**
@@ -104,7 +104,7 @@ fun clearActions() {
  * @return The actions
  */
 fun getActions(): ArrayList<Action> {
-    return actions
+  return actions
 }
 
 /**
@@ -112,7 +112,7 @@ fun getActions(): ArrayList<Action> {
  * @return The thread
  */
 fun getThread(): Unit? {
-    return thread
+  return thread
 }
 
 /**
@@ -122,7 +122,7 @@ fun getThread(): Unit? {
  * @param repeat If the action should repeat
  */
 fun execute(runnable: () -> Unit, delay: Int?, repeat: Boolean?): Int {
-    return addAction(Action(runnable, delay ?: 0, repeat ?: false))
+  return addAction(Action(runnable, delay ?: 0, repeat ?: false))
 }
 
 /**
@@ -130,53 +130,53 @@ fun execute(runnable: () -> Unit, delay: Int?, repeat: Boolean?): Int {
  * @param runnable The runnable to execute
  */
 fun execute(runnable: () -> Unit): Int {
-    return execute(runnable, 0, false)
+  return execute(runnable, 0, false)
 }
 
 object AsyncThread {
-    /**
-     * Adjusts the threads
-     * @param threads The amount of threads
-     */
-    fun adjustThreads(threads: Int) {
-        getThreadPoolExecutor().corePoolSize = threads
-    }
+  /**
+   * Adjusts the threads
+   * @param threads The amount of threads
+   */
+  fun adjustThreads(threads: Int) {
+    getThreadPoolExecutor().corePoolSize = threads
+  }
 
-    /**
-     * Get the current thread pool executor
-     * @return The thread pool executor
-     */
-    fun getThreadPoolExecutor(): ThreadPoolExecutor {
-        return threadPoolExecutor as ThreadPoolExecutor
-    }
+  /**
+   * Get the current thread pool executor
+   * @return The thread pool executor
+   */
+  fun getThreadPoolExecutor(): ThreadPoolExecutor {
+    return threadPoolExecutor as ThreadPoolExecutor
+  }
 
-    /**
-     * Increment the threads by 1
-     */
-    fun incrementThreads() {
-        incrementThreads(1)
-    }
+  /**
+   * Increment the threads by 1
+   */
+  fun incrementThreads() {
+    incrementThreads(1)
+  }
 
-    /**
-     * Decrement the threads by 1
-     */
-    fun decrementThreads() {
-        decrementThreads(1)
-    }
+  /**
+   * Decrement the threads by 1
+   */
+  fun decrementThreads() {
+    decrementThreads(1)
+  }
 
-    /**
-     * Increment the threads by an amount
-     * @param amount The amount to increment
-     */
-    fun incrementThreads(amount: Int) {
-        adjustThreads(getThreadPoolExecutor().corePoolSize + amount)
-    }
+  /**
+   * Increment the threads by an amount
+   * @param amount The amount to increment
+   */
+  fun incrementThreads(amount: Int) {
+    adjustThreads(getThreadPoolExecutor().corePoolSize + amount)
+  }
 
-    /**
-     * Decrement the threads by an amount
-     * @param amount The amount to decrement
-     */
-    fun decrementThreads(amount: Int) {
-        adjustThreads(getThreadPoolExecutor().corePoolSize - amount)
-    }
+  /**
+   * Decrement the threads by an amount
+   * @param amount The amount to decrement
+   */
+  fun decrementThreads(amount: Int) {
+    adjustThreads(getThreadPoolExecutor().corePoolSize - amount)
+  }
 }

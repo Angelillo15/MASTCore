@@ -1,12 +1,10 @@
 package es.angelillo15.mast.api.managers.freeze;
 
 import es.angelillo15.mast.api.IStaffPlayer;
-import lombok.Getter;
-import org.bukkit.OfflinePlayer;
-import org.bukkit.entity.Player;
-
 import java.util.ArrayList;
 import java.util.HashMap;
+import org.bukkit.OfflinePlayer;
+import org.bukkit.entity.Player;
 
 public class FreezeManager {
     public static HashMap<String, FreezeVector> frozenPlayers = new HashMap<>();

@@ -9,11 +9,10 @@ import com.craftmend.storm.api.markers.Table;
 import es.angelillo15.mast.api.MAStaffInstance;
 import es.angelillo15.mast.api.database.PluginConnection;
 import es.angelillo15.mast.api.pagination.Page;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-
 import java.sql.SQLException;
 import java.util.ArrayList;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @Data
 @SuppressWarnings("unchecked")

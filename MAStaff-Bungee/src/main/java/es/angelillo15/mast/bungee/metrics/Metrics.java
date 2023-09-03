@@ -1,25 +1,18 @@
 /**
- * This Metrics class was auto-generated and can be copied into your project if you are
- * not using a build tool like Gradle or Maven for dependency management.
+ * This Metrics class was auto-generated and can be copied into your project if you are not using a
+ * build tool like Gradle or Maven for dependency management.
  *
- * IMPORTANT: You are not allowed to modify this class, except changing the package.
+ * <p>IMPORTANT: You are not allowed to modify this class, except changing the package.
  *
- * Unallowed modifications include but are not limited to:
- *  - Remove the option for users to opt-out
- *  - Change the frequency for data submission
- *  - Obfuscate the code (every obfucator should allow you to make an exception for specific files)
- *  - Reformat the code (if you use a linter, add an exception)
+ * <p>Unallowed modifications include but are not limited to: - Remove the option for users to
+ * opt-out - Change the frequency for data submission - Obfuscate the code (every obfucator should
+ * allow you to make an exception for specific files) - Reformat the code (if you use a linter, add
+ * an exception)
  *
- * Violations will result in a ban of your plugin and account from bStats.
+ * <p>Violations will result in a ban of your plugin and account from bStats.
  */
 package es.angelillo15.mast.bungee.metrics;
 
-import net.md_5.bungee.api.plugin.Plugin;
-import net.md_5.bungee.config.Configuration;
-import net.md_5.bungee.config.ConfigurationProvider;
-import net.md_5.bungee.config.YamlConfiguration;
-
-import javax.net.ssl.HttpsURLConnection;
 import java.io.*;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
@@ -34,6 +27,11 @@ import java.util.function.Supplier;
 import java.util.logging.Level;
 import java.util.stream.Collectors;
 import java.util.zip.GZIPOutputStream;
+import javax.net.ssl.HttpsURLConnection;
+import net.md_5.bungee.api.plugin.Plugin;
+import net.md_5.bungee.config.Configuration;
+import net.md_5.bungee.config.ConfigurationProvider;
+import net.md_5.bungee.config.YamlConfiguration;
 
 public class Metrics {
 

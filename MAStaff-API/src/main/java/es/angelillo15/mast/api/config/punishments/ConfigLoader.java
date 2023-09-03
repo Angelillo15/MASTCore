@@ -3,11 +3,9 @@ package es.angelillo15.mast.api.config.punishments;
 import es.angelillo15.configmanager.ConfigManager;
 import es.angelillo15.mast.api.addons.MAStaffAddon;
 import es.angelillo15.mast.api.managers.ConfigMerge;
-import lombok.Getter;
-
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
+import lombok.Getter;
 
 public class ConfigLoader {
     private static MAStaffAddon<?> plugin;

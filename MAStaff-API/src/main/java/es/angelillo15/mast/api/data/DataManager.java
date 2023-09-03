@@ -5,17 +5,19 @@ import es.angelillo15.mast.api.data.sql.CommonSQL;
 import es.angelillo15.mast.api.database.PluginConnection;
 
 public class DataManager {
-    private static AbstractDataManager dataManager;
+  private static AbstractDataManager dataManager;
 
-    public static AbstractDataManager getDataManager() {
-        return dataManager;
-    }
+  public static AbstractDataManager getDataManager() {
+    return dataManager;
+  }
 
-    public static void load() {
-        dataManager = new CommonSQL();
+  public static void load() {
+    dataManager = new CommonSQL();
 
-        dataManager.migrations();
+    dataManager.migrations();
 
-        MAStaffInstance.getLogger().debug("Migrations runed for " + PluginConnection.getDataProvider().name() + " data provider");
-    }
+    MAStaffInstance.getLogger()
+        .debug(
+            "Migrations runed for " + PluginConnection.getDataProvider().name() + " data provider");
+  }
 }

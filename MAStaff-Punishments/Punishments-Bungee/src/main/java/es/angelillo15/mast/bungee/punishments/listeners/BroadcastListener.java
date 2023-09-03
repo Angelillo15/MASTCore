@@ -2,10 +2,10 @@ package es.angelillo15.mast.bungee.punishments.listeners;
 
 import es.angelillo15.mast.api.MAStaffInstance;
 import es.angelillo15.mast.api.TextUtils;
-import es.angelillo15.mast.api.event.bungee.ban.BannedPlayerTriesToJoin;
-import es.angelillo15.mast.api.event.bungee.ban.PlayerBannedEvent;
 import es.angelillo15.mast.api.config.punishments.Config;
 import es.angelillo15.mast.api.config.punishments.Messages;
+import es.angelillo15.mast.api.event.bungee.ban.BannedPlayerTriesToJoin;
+import es.angelillo15.mast.api.event.bungee.ban.PlayerBannedEvent;
 import es.angelillo15.mast.api.models.BansTable;
 import es.angelillo15.mast.api.models.IpBansTable;
 import net.md_5.bungee.api.ProxyServer;

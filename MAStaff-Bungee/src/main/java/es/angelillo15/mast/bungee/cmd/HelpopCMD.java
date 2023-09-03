@@ -4,13 +4,12 @@ import es.angelillo15.mast.bungee.config.ConfigLoader;
 import es.angelillo15.mast.bungee.config.Messages;
 import es.angelillo15.mast.bungee.utils.StaffUtils;
 import es.angelillo15.mast.bungee.utils.TextUtils;
+import java.util.HashMap;
+import java.util.Map;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.plugin.Command;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class HelpopCMD extends Command {
     private static Map<String, Long> cooldowns = new HashMap<>();

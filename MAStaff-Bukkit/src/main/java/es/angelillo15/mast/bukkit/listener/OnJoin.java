@@ -10,25 +10,22 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
 public class OnJoin implements Listener {
-    @Inject
-    private StaffManager staffManager;
-    @Inject
-    private MAStaffInstance instance;
+  @Inject private StaffManager staffManager;
+  @Inject private MAStaffInstance instance;
 
-    @EventHandler
-    public void onPlayerJoin(PlayerJoinEvent e) {
-        Player player = e.getPlayer();
+  @EventHandler
+  public void onPlayerJoin(PlayerJoinEvent e) {
+    Player player = e.getPlayer();
 
-        if (!(player.hasPermission("mast.staff"))) {
-            return;
-        }
-
-        if (staffManager.isStaffPlayer(player)) {
-            return;
-        }
-
-
-        staffManager.addStaffPlayer(instance.createStaffPlayer(player));
-        MAStaff.getPlugin().getPLogger().debug("Added " + player.getName() + " to the map");
+    if (!(player.hasPermission("mast.staff"))) {
+      return;
     }
+
+    if (staffManager.isStaffPlayer(player)) {
+      return;
+    }
+
+    staffManager.addStaffPlayer(instance.createStaffPlayer(player));
+    MAStaff.getPlugin().getPLogger().debug("Added " + player.getName() + " to the map");
+  }
 }

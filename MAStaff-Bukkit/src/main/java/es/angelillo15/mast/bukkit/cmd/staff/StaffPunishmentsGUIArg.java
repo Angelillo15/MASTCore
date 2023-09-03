@@ -7,35 +7,38 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 public class StaffPunishmentsGUIArg extends LegacySubCommand {
-    @Override
-    public String getName() {
-        return "punishments";
-    }
+  @Override
+  public String getName() {
+    return "punishments";
+  }
 
-    @Override
-    public String getDescription() {
-        return "Opens the punishments GUI";
-    }
+  @Override
+  public String getDescription() {
+    return "Opens the punishments GUI";
+  }
 
-    @Override
-    public String getSyntax() {
-        return "/staff punishments";
-    }
+  @Override
+  public String getSyntax() {
+    return "/staff punishments";
+  }
 
-    @Override
-    public String getPermission() {
-        return "mast.staff.gui.punishments";
-    }
+  @Override
+  public String getPermission() {
+    return "mast.staff.gui.punishments";
+  }
 
-    @Override
-    public void execute(CommandSender sender, String[] args) {
-        if (sender instanceof Player) {
-            if(!sender.hasPermission(getPermission())) return;
-            Player player = (Player) sender;
+  @Override
+  public void execute(CommandSender sender, String[] args) {
+    if (sender instanceof Player) {
+      if (!sender.hasPermission(getPermission())) return;
+      Player player = (Player) sender;
 
-            new SelectTargetGUI(player, (target) -> {
+      new SelectTargetGUI(
+              player,
+              (target) -> {
                 new PunishmentsGUI(player, target, 1).open();
-            }).open();
-        }
+              })
+          .open();
     }
+  }
 }

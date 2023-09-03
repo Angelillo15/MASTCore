@@ -1,20 +1,18 @@
 package es.angelillo15.mast.api.chat.api.chat;
 
 import com.google.common.base.Preconditions;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
 import es.angelillo15.mast.api.chat.api.chat.hover.content.Content;
 import es.angelillo15.mast.api.chat.api.chat.hover.content.Entity;
 import es.angelillo15.mast.api.chat.api.chat.hover.content.Item;
 import es.angelillo15.mast.api.chat.api.chat.hover.content.Text;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import es.angelillo15.mast.api.chat.chat.ComponentSerializer;
 
 @Getter
 @ToString

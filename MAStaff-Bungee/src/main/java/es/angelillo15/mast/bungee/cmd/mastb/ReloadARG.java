@@ -4,7 +4,6 @@ import es.angelillo15.mast.api.cmd.SubCommand;
 import es.angelillo15.mast.api.cmd.sender.CommandSender;
 import es.angelillo15.mast.bungee.MAStaff;
 import es.angelillo15.mast.bungee.config.Messages;
-import net.md_5.bungee.api.chat.TextComponent;
 
 public class ReloadARG extends SubCommand {
     @Override

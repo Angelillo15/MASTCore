@@ -10,19 +10,18 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerSwapHandItemsEvent;
 
 public class OnSwapHand implements Listener {
-    @Inject
-    private StaffManager staffManager;
+  @Inject private StaffManager staffManager;
 
-    @EventHandler
-    public void onSwapHand(PlayerSwapHandItemsEvent event) {
-        Player player = event.getPlayer();
+  @EventHandler
+  public void onSwapHand(PlayerSwapHandItemsEvent event) {
+    Player player = event.getPlayer();
 
-        if(!player.hasPermission(Permissions.STAFF.getPermission())) {
-            return;
-        }
-
-        IStaffPlayer staffPlayer = staffManager.getStaffPlayer(player);
-
-        if(staffPlayer.isStaffMode()) event.setCancelled(true);
+    if (!player.hasPermission(Permissions.STAFF.getPermission())) {
+      return;
     }
+
+    IStaffPlayer staffPlayer = staffManager.getStaffPlayer(player);
+
+    if (staffPlayer.isStaffMode()) event.setCancelled(true);
+  }
 }

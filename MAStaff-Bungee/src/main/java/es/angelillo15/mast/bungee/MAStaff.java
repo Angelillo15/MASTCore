@@ -37,15 +37,14 @@ import es.angelillo15.mast.bungee.utils.BungeeServerUtils;
 import es.angelillo15.mast.bungee.utils.Logger;
 import es.angelillo15.mast.cmd.HelpOP;
 import es.angelillo15.mast.cmd.StaffChat;
+import java.io.File;
+import java.io.InputStream;
+import java.sql.SQLException;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.SneakyThrows;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.plugin.Plugin;
-
-import java.io.File;
-import java.io.InputStream;
-import java.sql.SQLException;
 
 public class MAStaff extends Plugin implements MAStaffInstance<Plugin> {
     @Getter

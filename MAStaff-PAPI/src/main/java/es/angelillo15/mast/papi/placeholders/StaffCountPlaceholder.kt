@@ -8,9 +8,9 @@ import org.bukkit.entity.Player
 
 @PlaceholderData(key = "staffcount")
 class StaffCountPlaceholder : Placeholder() {
-    @Inject
-    private var manager: StaffManager? = null;
-    override fun onPlaceholderRequest(player: Player?, params: String?): String {
-        return manager!!.getStaffPlayers().size.toString()
-    }
+  @Inject
+  private var manager: StaffManager? = null;
+  override fun onPlaceholderRequest(player: Player?, params: String?): String {
+    return manager!!.getStaffPlayers().size.toString()
+  }
 }

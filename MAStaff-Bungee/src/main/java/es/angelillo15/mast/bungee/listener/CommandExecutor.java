@@ -2,17 +2,13 @@ package es.angelillo15.mast.bungee.listener;
 
 import es.angelillo15.mast.api.MAStaffInstance;
 import es.angelillo15.mast.bungee.MAStaff;
-import es.angelillo15.mast.bungee.config.Messages;
-import es.angelillo15.mast.bungee.utils.TextUtils;
+import java.io.ByteArrayInputStream;
+import java.io.DataInputStream;
+import java.util.Objects;
 import lombok.SneakyThrows;
 import net.md_5.bungee.api.event.PluginMessageEvent;
 import net.md_5.bungee.api.plugin.Listener;
 import net.md_5.bungee.event.EventHandler;
-
-import java.io.ByteArrayInputStream;
-import java.io.DataInputStream;
-import java.io.IOException;
-import java.util.Objects;
 
 public class CommandExecutor implements Listener {
     @SneakyThrows

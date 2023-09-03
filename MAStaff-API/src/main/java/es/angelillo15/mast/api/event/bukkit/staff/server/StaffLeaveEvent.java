@@ -6,20 +6,19 @@ import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
 public class StaffLeaveEvent extends Event {
-    private static final HandlerList HANDLERS = new HandlerList();
-    @Getter
-    private Player player;
+  private static final HandlerList HANDLERS = new HandlerList();
+  @Getter private Player player;
 
-    public StaffLeaveEvent(Player player) {
-        this.player = player;
-    }
+  public StaffLeaveEvent(Player player) {
+    this.player = player;
+  }
 
-    public static HandlerList getHandlerList() {
-        return HANDLERS;
-    }
+  public static HandlerList getHandlerList() {
+    return HANDLERS;
+  }
 
-    @Override
-    public HandlerList getHandlers() {
-        return null;
-    }
+  @Override
+  public HandlerList getHandlers() {
+    return null;
+  }
 }

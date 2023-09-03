@@ -1,6 +1,5 @@
 package es.angelillo15.mast.api.player;
 
-import org.bukkit.entity.Player;
 
 public interface IVanishPlayer {
     /**

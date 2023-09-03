@@ -41,9 +41,8 @@ public class OnOpenChest implements Listener {
 
         Container container = (Container) event.getClickedBlock().getState();
 
-        if (container instanceof Chest) {
-            Chest chest = (Chest) container;
-            Inventory cInv = Bukkit.createInventory(null, chest.getInventory().getSize(), chest.getInventory().getType().name());
+        if (container instanceof Chest chest) {
+          Inventory cInv = Bukkit.createInventory(null, chest.getInventory().getSize(), chest.getInventory().getType().name());
 
             player.openInventory(cInv);
 

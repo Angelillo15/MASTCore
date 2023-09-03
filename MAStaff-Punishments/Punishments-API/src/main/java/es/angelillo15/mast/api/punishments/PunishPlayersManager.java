@@ -1,7 +1,6 @@
 package es.angelillo15.mast.api.punishments;
 
 import es.angelillo15.mast.api.MAStaffInstance;
-
 import java.util.HashMap;
 
 public class PunishPlayersManager {

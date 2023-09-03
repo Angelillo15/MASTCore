@@ -9,30 +9,30 @@ import org.reflections.Reflections
 
 @Singleton
 class AddonsLoader {
-    @Inject
-    private lateinit var instance: MAStaffInject;
-    fun getAddons(platform: AddonPlatform): MutableSet<Class<*>>? {
-        val reflections = Reflections("es.angelillo15")
-        val addons = reflections.getTypesAnnotatedWith(Addon::class.java)
+  @Inject
+  private lateinit var instance: MAStaffInject;
+  fun getAddons(platform: AddonPlatform): MutableSet<Class<*>>? {
+    val reflections = Reflections("es.angelillo15")
+    val addons = reflections.getTypesAnnotatedWith(Addon::class.java)
 
-        addons.filter {
-            MAStaffAddon::class.java.isAssignableFrom(it)
-        }.filter {
-            it.getAnnotation(Addon::class.java).platform == platform
-        }
-
-        return addons
+    addons.filter {
+      MAStaffAddon::class.java.isAssignableFrom(it)
+    }.filter {
+      it.getAnnotation(Addon::class.java).platform == platform
     }
 
-    fun loadAddons(platform: AddonPlatform, instance: MAStaffInject) {
-        val addons = getAddons(platform)
-        addons?.forEach {
+    return addons
+  }
 
-            val addon = instance.injector.getInstance(it) as MAStaffAddon<*>
+  fun loadAddons(platform: AddonPlatform, instance: MAStaffInject) {
+    val addons = getAddons(platform)
+    addons?.forEach {
 
-            addon.onEnable()
-        }
+      val addon = instance.injector.getInstance(it) as MAStaffAddon<*>
 
-
+      addon.onEnable()
     }
+
+
+  }
 }

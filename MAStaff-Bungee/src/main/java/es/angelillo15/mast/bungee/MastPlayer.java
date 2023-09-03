@@ -4,10 +4,9 @@ import es.angelillo15.mast.api.TextUtils;
 import es.angelillo15.mast.api.player.IMastPlayer;
 import es.angelillo15.mast.api.player.PlayerType;
 import es.angelillo15.mast.api.report.Report;
+import java.util.ArrayList;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
-
-import java.util.ArrayList;
 
 public class MastPlayer implements IMastPlayer<ProxiedPlayer> {
     private ProxiedPlayer player;

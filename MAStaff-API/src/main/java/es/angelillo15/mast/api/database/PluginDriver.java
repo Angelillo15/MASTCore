@@ -4,9 +4,8 @@ import com.craftmend.storm.connection.StormDriver;
 import com.craftmend.storm.dialect.Dialect;
 import com.craftmend.storm.dialect.mariadb.MariaDialect;
 import com.zaxxer.hikari.HikariDataSource;
-import lombok.Getter;
-
 import java.sql.*;
+import lombok.Getter;
 
 public class PluginDriver implements StormDriver {
     @Getter

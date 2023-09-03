@@ -2,19 +2,18 @@ package es.angelillo15.mast.bukkit.utils;
 
 import es.angelillo15.mast.api.Permissions;
 import es.angelillo15.mast.api.TextUtils;
-import es.angelillo15.mast.bukkit.MAStaff;
 import es.angelillo15.mast.api.config.bukkit.Messages;
+import es.angelillo15.mast.bukkit.MAStaff;
 import es.angelillo15.mast.bukkit.utils.scheduler.Scheduler;
 import io.papermc.lib.PaperLib;
+import java.util.ArrayList;
+import java.util.Objects;
+import java.util.Random;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
-
-import java.util.ArrayList;
-import java.util.Objects;
-import java.util.Random;
 
 public class StaffUtils {
     public static void playerRandomTeleport(Player player) {

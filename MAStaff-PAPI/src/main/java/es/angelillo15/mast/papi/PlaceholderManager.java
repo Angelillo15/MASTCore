@@ -1,7 +1,6 @@
 package es.angelillo15.mast.papi;
 
 import es.angelillo15.mast.api.exceptions.NoPlaceholderDataException;
-
 import java.util.HashMap;
 
 public class PlaceholderManager {

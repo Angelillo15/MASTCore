@@ -9,18 +9,16 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
 public class OnAttack implements Listener {
-    @Inject
-    private StaffManager staffManager;
-    @EventHandler
-    public void onAttack(EntityDamageByEntityEvent event) {
-        if(!(event.getDamager() instanceof Player)) return;
+  @Inject private StaffManager staffManager;
 
-        Player player = (Player) event.getDamager();
+  @EventHandler
+  public void onAttack(EntityDamageByEntityEvent event) {
+    if (!(event.getDamager() instanceof Player player)) return;
 
-        if (!staffManager.isStaffPlayer(player)) return;
+    if (!staffManager.isStaffPlayer(player)) return;
 
-        IStaffPlayer staffPlayer = staffManager.getStaffPlayer(player);
+    IStaffPlayer staffPlayer = staffManager.getStaffPlayer(player);
 
-        if(staffPlayer.isStaffMode()) event.setCancelled(true);
-    }
+    if (staffPlayer.isStaffMode()) event.setCancelled(true);
+  }
 }

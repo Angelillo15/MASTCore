@@ -5,7 +5,6 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import es.angelillo15.mast.api.chat.api.chat.BaseComponent;
 
 /**
  * This component processes a target selector into a pre-formatted set of

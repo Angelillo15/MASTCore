@@ -8,30 +8,30 @@ import es.angelillo15.mast.api.ILogger
 import es.angelillo15.mast.api.config.velocity.Messages
 
 class OnStaffChange {
-    @Inject
-    private lateinit var logger: ILogger
+  @Inject
+  private lateinit var logger: ILogger
 
-    @Subscribe
-    fun staffChange(event: PluginMessageEvent) {
-        if (event.identifier.id != "mastaff:staff") return
+  @Subscribe
+  fun staffChange(event: PluginMessageEvent) {
+    if (event.identifier.id != "mastaff:staff") return
 
-        val input = ByteStreams.newDataInput(event.data)
+    val input = ByteStreams.newDataInput(event.data)
 
-        val subChannel = input.readUTF()
+    val subChannel = input.readUTF()
 
-        if (subChannel != "mast") return
+    if (subChannel != "mast") return
 
-        val player = input.readUTF()
-        val status = input.readBoolean()
+    val player = input.readUTF()
+    val status = input.readBoolean()
 
-        if (status) {
-            logger.info(
-                Messages.playerStaffModeEnabled().replace("{player}", player)
-            )
-        } else {
-            logger.info(
-                Messages.playerStaffModeDisabled().replace("{player}", player)
-            )
-        }
+    if (status) {
+      logger.info(
+              Messages.playerStaffModeEnabled().replace("{player}", player)
+      )
+    } else {
+      logger.info(
+              Messages.playerStaffModeDisabled().replace("{player}", player)
+      )
     }
+  }
 }

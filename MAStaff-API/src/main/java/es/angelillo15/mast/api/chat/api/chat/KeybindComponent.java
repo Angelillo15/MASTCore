@@ -5,8 +5,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import es.angelillo15.mast.api.chat.api.chat.BaseComponent;
-import es.angelillo15.mast.api.chat.api.chat.Keybinds;
 
 @Getter
 @Setter

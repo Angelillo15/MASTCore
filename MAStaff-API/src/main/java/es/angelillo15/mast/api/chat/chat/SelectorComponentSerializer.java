@@ -7,9 +7,8 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
-import java.lang.reflect.Type;
 import es.angelillo15.mast.api.chat.api.chat.SelectorComponent;
-import es.angelillo15.mast.api.chat.chat.BaseComponentSerializer;
+import java.lang.reflect.Type;
 
 public class SelectorComponentSerializer extends BaseComponentSerializer implements JsonSerializer<SelectorComponent>, JsonDeserializer<SelectorComponent>
 {

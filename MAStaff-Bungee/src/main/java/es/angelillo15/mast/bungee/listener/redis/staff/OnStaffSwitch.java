@@ -7,13 +7,13 @@ import es.angelillo15.mast.bungee.config.Messages;
 import es.angelillo15.mast.bungee.utils.StaffUtils;
 
 public class OnStaffSwitch implements Listener {
-    @EventHandler
-    public void onStaffSwitch(StaffSwitchServerEvent event) {
-        StaffUtils.sendBroadcastPermissionMessage(Messages.getStaffChangeServer()
-                        .replace("{player}", event.getStaffName())
-                        .replace("{server}", event.getServerTo())
-                        .replace("{fromServer}", event.getServerFrom()),
-                "mast.staff.notify.change");
-    }
-
+  @EventHandler
+  public void onStaffSwitch(StaffSwitchServerEvent event) {
+    StaffUtils.sendBroadcastPermissionMessage(
+        Messages.getStaffChangeServer()
+            .replace("{player}", event.getStaffName())
+            .replace("{server}", event.getServerTo())
+            .replace("{fromServer}", event.getServerFrom()),
+        "mast.staff.notify.change");
+  }
 }

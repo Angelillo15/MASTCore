@@ -5,11 +5,10 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import es.angelillo15.mast.api.IStaffPlayer;
 import es.angelillo15.mast.api.utils.MAStaffInject;
+import java.util.HashMap;
 import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
-
-import java.util.HashMap;
 
 @Singleton
 public class StaffManager {

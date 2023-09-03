@@ -6,29 +6,29 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 public class StaffHelpArg extends LegacySubCommand {
-    @Override
-    public String getName() {
-        return "help";
-    }
+  @Override
+  public String getName() {
+    return "help";
+  }
 
-    @Override
-    public String getDescription() {
-        return "Shows the staff help";
-    }
+  @Override
+  public String getDescription() {
+    return "Shows the staff help";
+  }
 
-    @Override
-    public String getSyntax() {
-        return "/staff help";
-    }
+  @Override
+  public String getSyntax() {
+    return "/staff help";
+  }
 
-    @Override
-    public String getPermission() {
-        return Permissions.STAFF.getPermission();
-    }
+  @Override
+  public String getPermission() {
+    return Permissions.STAFF.getPermission();
+  }
 
-    @Override
-    public void execute(CommandSender sender, String[] args) {
-        if(!(sender instanceof Player)) return;
-        StaffCMD.sendHelp(sender);
-    }
+  @Override
+  public void execute(CommandSender sender, String[] args) {
+    if (!(sender instanceof Player)) return;
+    StaffCMD.sendHelp(sender);
+  }
 }
