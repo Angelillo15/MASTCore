@@ -3,7 +3,7 @@ package es.angelillo15.mast.bukkit.addons;
 import es.angelillo15.mast.api.Constants;
 import es.angelillo15.mast.api.MAStaffInstance;
 import es.angelillo15.mast.api.addons.AddonDescription;
-import es.angelillo15.mast.api.addons.AddonsManager;
+import es.angelillo15.mast.api.addons.LegacyAddonsManager;
 import es.angelillo15.mast.api.addons.MAStaffAddon;
 import es.angelillo15.mast.bukkit.MAStaff;
 import es.angelillo15.mast.api.config.bukkit.Config;
@@ -78,7 +78,7 @@ public class AddonsLoader {
                 addon.init(new File(file.getParentFile() + File.separator + addonDescription.getName()), addonDescription, MAStaff.getPlugin(), MAStaff.getPlugin());
                 addon.onEnable();
 
-                AddonsManager.registerAddon(addon);
+                LegacyAddonsManager.registerAddon(addon);
                 MAStaff.getPlugin().getPLogger().debug("Addon " + addonDescription.getName() + " Version: " + addonDescription.getVersion() + " loaded!");
             }
         }
@@ -88,7 +88,7 @@ public class AddonsLoader {
     @SneakyThrows
     public static void disableAddons(){
         MAStaff.getPlugin().getPLogger().debug("Disabling addons...");
-        for(MAStaffAddon<?> addon : AddonsManager.getAddons().values()){
+        for(MAStaffAddon<?> addon : LegacyAddonsManager.getAddons().values()){
             MAStaff.getPlugin().getPLogger().debug("Disabling addon " + addon.getDescriptionFile().getName() + "...");
             addon.onDisable();
             MAStaff.getPlugin().getPLogger().debug("Addon " + addon.getDescriptionFile().getName() + " disabled!");
@@ -98,7 +98,7 @@ public class AddonsLoader {
 
     public static void reload(){
         MAStaff.getPlugin().getPLogger().debug("Reloading addons...");
-        for(MAStaffAddon<?> addon : AddonsManager.getAddons().values()){
+        for(MAStaffAddon<?> addon : LegacyAddonsManager.getAddons().values()){
             MAStaff.getPlugin().getPLogger().debug("Reloading addon " + addon.getDescriptionFile().getName() + "...");
             addon.reload();
             MAStaff.getPlugin().getPLogger().debug("Addon " + addon.getDescriptionFile().getName() + " reloaded!");
@@ -122,7 +122,7 @@ public class AddonsLoader {
     public static void registerAddon(AddonDescription addonDescription, MAStaffAddon<JavaPlugin> addon) {
         addon.init(new File(MAStaff.getPlugin().getDataFolder() + File.separator + "addons" + File.separator
                         + addonDescription.getName()), addonDescription, MAStaff.getPlugin(), MAStaff.getPlugin());
-        AddonsManager.registerAddon(addon);
+        LegacyAddonsManager.registerAddon(addon);
         MAStaff.getPlugin().getPLogger().debug("Registered addon " + addonDescription.getName() + " v" + addonDescription.getVersion() + " by " + addonDescription.getAuthor());
 
         try {

@@ -4,7 +4,7 @@ import com.google.inject.Injector;
 import es.angelillo15.mast.api.Constants;
 import es.angelillo15.mast.api.MAStaffInstance;
 import es.angelillo15.mast.api.addons.AddonDescription;
-import es.angelillo15.mast.api.addons.AddonsManager;
+import es.angelillo15.mast.api.addons.LegacyAddonsManager;
 import es.angelillo15.mast.api.addons.MAStaffAddon;
 import es.angelillo15.mast.bungee.MAStaff;
 import es.angelillo15.mast.bungee.config.Config;
@@ -86,16 +86,16 @@ public class AddonsLoader {
             }
 
 
-            AddonsManager.registerAddon(addon);
+            LegacyAddonsManager.registerAddon(addon);
         }
     }
 
     public static void unloadAddons() {
-        AddonsManager.getAddons().values().forEach(MAStaffAddon::onDisable);
+        LegacyAddonsManager.getAddons().values().forEach(MAStaffAddon::onDisable);
     }
 
     public static void reloadAddons() {
-        AddonsManager.getAddons().values().forEach(MAStaffAddon::reload);
+        LegacyAddonsManager.getAddons().values().forEach(MAStaffAddon::reload);
     }
 
     public static void loadDefaultAddons() {
@@ -106,7 +106,7 @@ public class AddonsLoader {
     public static void registerAddon(AddonDescription addonDescription, MAStaffAddon<Plugin> addon) {
         addon.init(new File(MAStaff.getInstance().getDataFolder() + File.separator + "addons" + File.separator
                 + addonDescription.getName()), addonDescription, MAStaff.getInstance(), MAStaff.getInstance());
-        AddonsManager.registerAddon(addon);
+        LegacyAddonsManager.registerAddon(addon);
         MAStaff.getInstance().getPLogger().debug("Registered addon " + addonDescription.getName() + " v" + addonDescription.getVersion() + " by " + addonDescription.getAuthor());
 
         try {
@@ -128,6 +128,6 @@ public class AddonsLoader {
     }
 
     public static void unregisterAddon(MAStaffAddon<Plugin> addon) {
-        AddonsManager.unregisterAddon(addon);
+        LegacyAddonsManager.unregisterAddon(addon);
     }
 }

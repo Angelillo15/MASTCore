@@ -6,7 +6,7 @@ import com.google.inject.Inject
 import com.velocitypowered.api.proxy.ProxyServer
 import es.angelillo15.mast.api.Constants
 import es.angelillo15.mast.api.TextUtils
-import es.angelillo15.mast.api.addons.AddonsManager
+import es.angelillo15.mast.api.addons.LegacyAddonsManager
 import es.angelillo15.mast.api.cmd.SubCommand
 import es.angelillo15.mast.api.cmd.sender.CommandSender
 import es.angelillo15.mast.api.config.velocity.Messages
@@ -54,7 +54,7 @@ class DumpArg : SubCommand() {
 
         val addons = ArrayList<JsonObject>()
 
-        AddonsManager.getAddons().forEach { (_, addon) ->
+        LegacyAddonsManager.getAddons().forEach { (_, addon) ->
             val addonJson = JsonObject()
             addonJson.addProperty("name", addon.descriptionFile.name)
             addonJson.addProperty("version", addon.descriptionFile.version)

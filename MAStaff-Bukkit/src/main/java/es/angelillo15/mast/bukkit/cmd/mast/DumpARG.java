@@ -4,7 +4,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import es.angelillo15.mast.api.Constants;
 import es.angelillo15.mast.api.TextUtils;
-import es.angelillo15.mast.api.addons.AddonsManager;
+import es.angelillo15.mast.api.addons.LegacyAddonsManager;
 import es.angelillo15.mast.api.cmd.LegacySubCommand;
 import es.angelillo15.mast.bukkit.MAStaff;
 import es.angelillo15.mast.api.config.bukkit.Messages;
@@ -68,7 +68,7 @@ public class DumpARG extends LegacySubCommand {
 
         ArrayList<JsonObject> addons = new ArrayList<>();
 
-        AddonsManager.getAddons().forEach((key, addon) -> {
+        LegacyAddonsManager.getAddons().forEach((key, addon) -> {
             JsonObject addonJson = new JsonObject();
             addonJson.addProperty("name", addon.getDescriptionFile().getName());
             addonJson.addProperty("version", addon.getDescriptionFile().getVersion());
