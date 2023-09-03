@@ -6,4 +6,11 @@ public @interface Addon {
     String author();
     String description() default "";
     boolean loadOnScan() default true;
+    AddonPlatform platform();
+
+    enum AddonPlatform {
+        BUKKIT,
+        VELOCITY,
+        BUNGEECORD,
+    }
 }
