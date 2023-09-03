@@ -17,6 +17,10 @@ public class StaffEnableEvent extends Event {
         this.staffPlayer = staffPlayer;
     }
 
+    public static HandlerList getHandlerList() {
+        return HANDLERS;
+    }
+
     /**
      * Get the staff player who enable staff mode
      * @return IStaffPlayer
@@ -27,10 +31,6 @@ public class StaffEnableEvent extends Event {
 
     @Override
     public HandlerList getHandlers() {
-        return HANDLERS;
-    }
-
-    public static HandlerList getHandlerList() {
         return HANDLERS;
     }
 }

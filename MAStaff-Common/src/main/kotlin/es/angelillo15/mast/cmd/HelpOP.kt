@@ -5,8 +5,8 @@ import es.angelillo15.mast.api.IServerUtils
 import es.angelillo15.mast.api.cmd.CommandData
 import es.angelillo15.mast.api.cmd.CooldownCommand
 import es.angelillo15.mast.api.cmd.sender.CommandSender
-import es.angelillo15.mast.api.config.common.CommonMessages
 import es.angelillo15.mast.api.config.common.CommonConfig
+import es.angelillo15.mast.api.config.common.CommonMessages
 
 @CommandData(
     name = "HelpOP",

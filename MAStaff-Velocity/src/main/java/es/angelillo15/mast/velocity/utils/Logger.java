@@ -6,6 +6,7 @@ import es.angelillo15.mast.api.TextUtils;
 import es.angelillo15.mast.velocity.MAStaff;
 
 public class Logger extends ILogger {
+    private static final String prefix = "[MAStaff] ";
     private final org.slf4j.Logger logger;
     private final ProxyServer proxyServer;
 
@@ -14,8 +15,6 @@ public class Logger extends ILogger {
         this.proxyServer = MAStaff.getInstance().getProxyServer();
         setInstance(this);
     }
-
-    private static final String prefix = "[MAStaff] ";
 
     @Override
     public void info(String message) {

@@ -54,42 +54,6 @@ public class BansTable extends StormModel {
     @Column
     private Boolean ipban;
 
-    public boolean isPermanent() {
-        return until == 0;
-    }
-    public boolean isExpired() {
-        return !isPermanent() && until < System.currentTimeMillis();
-    }
-
-    public void unBan(){
-        unBan("CONSOLE", "Expired", "CONSOLE");
-    }
-    @SneakyThrows
-    public void unBan(String unbanned_by_name, String unban_reason, String unbanned_by_uuid) {
-        Storm storm = PluginConnection.getStorm();
-
-        setActive(false);
-        setUnbanned_by_uuid(unbanned_by_uuid);
-        setUnbanned_by_name(unbanned_by_name);
-        setUnban_reason(unban_reason);
-        storm.save(this);
-
-
-        try {
-            IpBansTable ipBansTable = storm.buildQuery(IpBansTable.class)
-                    .where("ban_id", Where.EQUAL, getId())
-                    .limit(1)
-                    .execute()
-                    .join()
-                    .iterator()
-                    .next();
-
-            if (ipBansTable != null) {
-                storm.delete(ipBansTable);
-            }
-        } catch (Exception ignored) { }
-    }
-
     @SneakyThrows
     public static boolean isBanned(String username) {
         Storm storm = PluginConnection.getStorm();
@@ -176,5 +140,43 @@ public class BansTable extends StormModel {
             return null;
         }
 
+    }
+
+    public boolean isPermanent() {
+        return until == 0;
+    }
+
+    public boolean isExpired() {
+        return !isPermanent() && until < System.currentTimeMillis();
+    }
+
+    public void unBan(){
+        unBan("CONSOLE", "Expired", "CONSOLE");
+    }
+
+    @SneakyThrows
+    public void unBan(String unbanned_by_name, String unban_reason, String unbanned_by_uuid) {
+        Storm storm = PluginConnection.getStorm();
+
+        setActive(false);
+        setUnbanned_by_uuid(unbanned_by_uuid);
+        setUnbanned_by_name(unbanned_by_name);
+        setUnban_reason(unban_reason);
+        storm.save(this);
+
+
+        try {
+            IpBansTable ipBansTable = storm.buildQuery(IpBansTable.class)
+                    .where("ban_id", Where.EQUAL, getId())
+                    .limit(1)
+                    .execute()
+                    .join()
+                    .iterator()
+                    .next();
+
+            if (ipBansTable != null) {
+                storm.delete(ipBansTable);
+            }
+        } catch (Exception ignored) { }
     }
 }

@@ -45,16 +45,16 @@ blossom {
 
     replaceTokenIn("src/main/java/es/angelillo15/mast/api/Constants.java")
     replaceToken("{version}", project.version)
-    replaceToken("{git-commit}",  grgit.head().abbreviatedId ?: "undefined")
+    replaceToken("{git-commit}", grgit.head().abbreviatedId ?: "undefined")
     replaceToken("{git-user}", grgit.head().committer.name ?: "undefined")
     replaceToken("{git-date}", current ?: "undefined")
     replaceToken("{git-branch}", grgit.branch.current().name ?: "undefined")
 
     if (project.version.toString().endsWith("-SNAPSHOT") ||
-            project.version.toString().endsWith("-DEV") ||
-            project.version.toString().endsWith("-BETA") ||
-            project.version.toString().endsWith("-ALPHA"))
-    {
+        project.version.toString().endsWith("-DEV") ||
+        project.version.toString().endsWith("-BETA") ||
+        project.version.toString().endsWith("-ALPHA")
+    ) {
         replaceToken("false", "true")
     }
 }

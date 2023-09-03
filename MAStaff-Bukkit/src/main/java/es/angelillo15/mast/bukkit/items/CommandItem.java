@@ -10,6 +10,13 @@ public class CommandItem extends StaffItem implements ICommandItem {
     private ItemStack item;
     private int slot;
     private String permission;
+    public CommandItem(ItemStack item, int slot, String command, String permission) {
+        this.item = item;
+        this.slot = slot;
+        this.command = command;
+        this.permission = permission;
+    }
+
     @Override
     public void execute(Player player, String command) {
         player.performCommand(command);
@@ -31,6 +38,11 @@ public class CommandItem extends StaffItem implements ICommandItem {
     }
 
     @Override
+    public void setItem(Player player) {
+        player.getInventory().setItem(getSlot(), getItem());
+    }
+
+    @Override
     public String getPermission() {
         return permission;
     }
@@ -38,18 +50,6 @@ public class CommandItem extends StaffItem implements ICommandItem {
     @Override
     public int getSlot() {
         return slot;
-    }
-
-    @Override
-    public void setItem(Player player) {
-        player.getInventory().setItem(getSlot(), getItem());
-    }
-
-    public CommandItem(ItemStack item, int slot, String command, String permission) {
-        this.item = item;
-        this.slot = slot;
-        this.command = command;
-        this.permission = permission;
     }
 
 

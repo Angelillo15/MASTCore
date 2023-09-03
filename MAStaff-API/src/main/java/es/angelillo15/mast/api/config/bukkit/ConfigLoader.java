@@ -11,7 +11,6 @@ import java.io.File;
 import java.io.IOException;
 
 public class ConfigLoader {
-    private final MAStaffInstance<JavaPlugin> plugin;
     @Getter
     private static ConfigManager config;
     @Getter
@@ -28,6 +27,7 @@ public class ConfigLoader {
     private static ConfigManager customItems;
     @Getter
     private static ConfigManager punishmentsGUI;
+    private final MAStaffInstance<JavaPlugin> plugin;
     private final boolean isFree;
 
     public ConfigLoader(MAStaffInstance<JavaPlugin> plugin) {

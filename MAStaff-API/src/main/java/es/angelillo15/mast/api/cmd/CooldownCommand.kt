@@ -35,5 +35,5 @@ abstract class CooldownCommand(
         cooldowns.remove(sender.uniqueId)
     }
 
-    abstract fun onCooldownCommand(sender: CommandSender, label: String, args:  Array<String>)
+    abstract fun onCooldownCommand(sender: CommandSender, label: String, args: Array<String>)
 }

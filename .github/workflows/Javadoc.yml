@@ -47,7 +47,7 @@ jobs:
           cd ..
           rm -r javadocs/javadocs/mastaff/
           ls javadocs/javadocs/
-        
+          
           cp -r MAStaff/MAStaff-API/build/docs/javadoc javadocs/javadocs/mastaff/
           ls javadocs/javadocs/mastaff
           cd javadocs

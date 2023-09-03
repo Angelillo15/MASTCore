@@ -37,5 +37,11 @@ abstract class PunishTargetReasonCommand() : PunishTargetCommand() {
         onCommand(sender, target, label, args, reason.toString())
     }
 
-    abstract fun onCommand(sender: IPunishPlayer, target: String, label: String, args: Array<out String>, reason: String)
+    abstract fun onCommand(
+        sender: IPunishPlayer,
+        target: String,
+        label: String,
+        args: Array<out String>,
+        reason: String
+    )
 }

@@ -6,9 +6,6 @@ import es.angelillo15.mast.api.utils.ServerUtils;
 
 public abstract class EventManager {
     private static EventManager eventManager;
-    public abstract void sendPlayerBannedEvent(BansTable bansTable, CommandSender sender);
-
-    public abstract void sendPlayerTryToJoinBannedEvent(BansTable banModel, String player);
 
     public static EventManager getEventManager() {
         if (eventManager != null) {
@@ -21,4 +18,8 @@ public abstract class EventManager {
 
         return eventManager;
     }
+
+    public abstract void sendPlayerBannedEvent(BansTable bansTable, CommandSender sender);
+
+    public abstract void sendPlayerTryToJoinBannedEvent(BansTable banModel, String player);
 }

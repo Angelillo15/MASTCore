@@ -19,10 +19,17 @@ import es.angelillo15.mast.api.templates.managers.BanTemplatesManager
 class BanCMD : PunishTargetReasonCommand(1, Messages.Default.defaultBanReason()) {
     @Inject
     private lateinit var serverUtils: IServerUtils
+
     @Inject
     private lateinit var banTemplatesManager: BanTemplatesManager
 
-    override fun onCommand(sender: IPunishPlayer, target: String, label: String, args: Array<out String>, reason: String) {
+    override fun onCommand(
+        sender: IPunishPlayer,
+        target: String,
+        label: String,
+        args: Array<out String>,
+        reason: String
+    ) {
         if (args.isEmpty()) {
             sender.sendMessage(Messages.Commands.Ban.usage())
             return

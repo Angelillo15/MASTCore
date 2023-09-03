@@ -20,18 +20,12 @@ import org.bukkit.inventory.meta.ItemMeta;
 import java.util.function.Consumer;
 
 public class SelectTargetGUI extends Gui {
-    enum CallbackType {
-        GUI,
-        RUNNABLE
-    }
-
+    private final PaginationManager pagination = new PaginationManager(this);
     private CallbackType callbackType;
     private Consumer<Player> callback;
     private TargetGUI targetGui;
     @Getter
     private Player targetPlayer;
-    private final PaginationManager pagination = new PaginationManager(this);
-
     public SelectTargetGUI(Player player, TargetGUI targetGUI) {
         super(player, "select-target", "Select a target", 6);
         this.targetGui = targetGUI;
@@ -120,8 +114,13 @@ public class SelectTargetGUI extends Gui {
 
         return false;
     }
+
     @Override
     public void onClose(InventoryCloseEvent event) {
         super.onClose(event);
+    }
+    enum CallbackType {
+        GUI,
+        RUNNABLE
     }
 }

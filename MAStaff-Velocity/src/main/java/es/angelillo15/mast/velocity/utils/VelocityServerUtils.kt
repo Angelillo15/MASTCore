@@ -13,6 +13,7 @@ import java.util.*
 class VelocityServerUtils : IServerUtils {
     @Inject
     lateinit var proxy: ProxyServer;
+
     @Inject
     lateinit var logger: ILogger
 
@@ -21,7 +22,7 @@ class VelocityServerUtils : IServerUtils {
     }
 
     override fun isOnline(name: String): Boolean {
-       return proxy.getPlayer(name).isPresent
+        return proxy.getPlayer(name).isPresent
     }
 
     override fun getIP(uuid: UUID): String {

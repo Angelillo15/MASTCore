@@ -10,7 +10,6 @@ import java.io.File;
 import java.io.IOException;
 
 public class ConfigLoader {
-    private MAStaff plugin;
     @Getter
     private static ConfigManager config;
     @Getter
@@ -19,6 +18,7 @@ public class ConfigLoader {
     private static ConfigManager es;
     @Getter
     private static ConfigManager en;
+    private MAStaff plugin;
     private String language;
 
     public ConfigLoader(MAStaff plugin) {

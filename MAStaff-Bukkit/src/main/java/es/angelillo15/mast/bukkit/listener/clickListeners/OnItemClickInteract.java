@@ -14,9 +14,9 @@ import org.bukkit.event.player.PlayerInteractEntityEvent;
 
 @SuppressWarnings({"deprecation", "ConstantValue"})
 public class OnItemClickInteract implements Listener {
+    static boolean clicked = false;
     @Inject
     private StaffManager staffManager;
-    static boolean clicked = false;
 
     @EventHandler
     public void onEntityInteract(PlayerInteractEntityEvent event) {

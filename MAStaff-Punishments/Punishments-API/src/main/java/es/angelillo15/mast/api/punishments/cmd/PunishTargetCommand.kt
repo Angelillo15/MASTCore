@@ -13,5 +13,5 @@ abstract class PunishTargetCommand : PunishCommand() {
         onCommand(sender, argsParsed, label, args)
     }
 
-    abstract fun onCommand(sender: IPunishPlayer, target: String, label: String, args:  Array<out String>)
+    abstract fun onCommand(sender: IPunishPlayer, target: String, label: String, args: Array<out String>)
 }

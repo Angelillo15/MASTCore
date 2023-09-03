@@ -19,18 +19,17 @@ public class FreezeMessageEvent extends Event implements Cancellable {
         this.isCancelled = false;
     }
 
-    public void setMessages(ArrayList<String> messages) {
-        this.messages = messages;
+    public static HandlerList getHandlerList() {
+        return HANDLERS;
     }
 
     public ArrayList<String> getMessages() {
         return messages;
     }
 
-    public static HandlerList getHandlerList() {
-        return HANDLERS;
+    public void setMessages(ArrayList<String> messages) {
+        this.messages = messages;
     }
-
 
     @Override
     public boolean isCancelled() {

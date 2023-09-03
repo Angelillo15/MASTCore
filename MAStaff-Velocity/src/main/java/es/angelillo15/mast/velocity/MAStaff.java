@@ -60,6 +60,7 @@ public class MAStaff implements MAStaffInstance<ProxyServer> {
     private final Logger Slf4jLogger;
     @Getter
     private final Path dataDirectory;
+    ClassLoader classLoader = getClass().getClassLoader();
     @Getter
     private ILogger logger;
     @Getter
@@ -70,7 +71,6 @@ public class MAStaff implements MAStaffInstance<ProxyServer> {
     private VelocityConfig velocityConfig;
     private Injector injector;
     private boolean debug;
-    ClassLoader classLoader = getClass().getClassLoader();
 
     @Inject
     public MAStaff(ProxyServer proxyServer, Logger Slf4jLogger, @DataDirectory Path dataDirectory) {
@@ -110,6 +110,11 @@ public class MAStaff implements MAStaffInstance<ProxyServer> {
     @Override
     public boolean isDebug() {
         return debug;
+    }
+
+    @Override
+    public void setDebug(boolean debug) {
+        this.debug = debug;
     }
 
     @Override
@@ -258,11 +263,6 @@ public class MAStaff implements MAStaffInstance<ProxyServer> {
     @Override
     public InputStream getPluginResource(String s) {
         return classLoader.getResourceAsStream(s);
-    }
-
-    @Override
-    public void setDebug(boolean debug) {
-        this.debug = debug;
     }
 
     @Override

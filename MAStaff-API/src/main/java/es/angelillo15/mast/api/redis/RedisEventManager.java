@@ -14,15 +14,13 @@ import java.util.List;
 import java.util.Map;
 
 public class RedisEventManager {
+    private static RedisEventManager instance = new RedisEventManager();
+    private Map<String, Class<? extends Event>> events = new HashMap<>();
+    private Map<Class<? extends Event>, List<EventVector>> listeners = new HashMap<>();
+
     private RedisEventManager() {
         // Singleton
     }
-
-    private static RedisEventManager instance = new RedisEventManager();
-
-    private Map<String, Class<? extends Event>> events = new HashMap<>();
-
-    private Map<Class<? extends Event>, List<EventVector>> listeners = new HashMap<>();
 
     public static RedisEventManager getInstance() {
         if (instance == null) {

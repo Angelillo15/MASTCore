@@ -61,10 +61,11 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance<JavaPlugin> {
     @Getter
     static final int version = Integer.parseInt(Bukkit.getBukkitVersion().split("-")[0].split("\\.")[1]);
     @Getter
+    static boolean isFree = false;
+    @Getter
     private static MAStaff plugin;
     @Getter
     private static boolean glowEnabled = false;
-    private boolean debug = false;
     private static ILogger logger;
     @Getter
     private static PluginConnection pluginConnection;
@@ -74,10 +75,9 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance<JavaPlugin> {
     private static int currentVersion;
     @Getter
     private static int spiVersion;
-    private Injector injector;
-    @Getter
-    static boolean isFree = false;
     private final ArrayList<Listener> listeners = new ArrayList<>();
+    private boolean debug = false;
+    private Injector injector;
 
     @Override
     public void onEnable() {

@@ -34,6 +34,8 @@ import es.angelillo15.mast.api.chat.api.chat.TextComponent;
 public final class ComponentBuilder
 {
 
+    @Getter
+    private final List<es.angelillo15.mast.api.chat.api.chat.BaseComponent> parts = new ArrayList<es.angelillo15.mast.api.chat.api.chat.BaseComponent>();
     /**
      * The position for the current part to modify. Modified cursors will
      * automatically reset to the last part after appending new components.
@@ -41,8 +43,6 @@ public final class ComponentBuilder
      */
     @Getter
     private int cursor = -1;
-    @Getter
-    private final List<es.angelillo15.mast.api.chat.api.chat.BaseComponent> parts = new ArrayList<es.angelillo15.mast.api.chat.api.chat.BaseComponent>();
     private es.angelillo15.mast.api.chat.api.chat.BaseComponent dummy;
 
     private ComponentBuilder(es.angelillo15.mast.api.chat.api.chat.BaseComponent[] parts)

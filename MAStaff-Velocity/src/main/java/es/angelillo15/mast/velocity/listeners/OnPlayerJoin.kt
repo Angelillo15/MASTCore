@@ -12,6 +12,7 @@ import es.angelillo15.mast.api.thread.execute
 class OnPlayerJoin {
     @Inject
     lateinit var logger: ILogger
+
     @Inject
     lateinit var userDataManager: UserDataManager;
 

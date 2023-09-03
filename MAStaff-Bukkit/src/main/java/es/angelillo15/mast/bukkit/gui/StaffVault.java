@@ -22,14 +22,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class StaffVault extends Gui {
-    enum Pagination {
-        PREVIOUS,
-        NEXT
-    }
-
     private int page = 0;
     private StaffPlayer staffPlayer;
-
     public StaffVault(@NotNull Player player, int page) {
         super(player, "StaffVault", TextUtils.colorize(Config.StaffVault.name()), 6);
         this.page = page;
@@ -111,5 +105,10 @@ public class StaffVault extends Gui {
 
         staffPlayer.getPlayerInventoryConfig().save(staffPlayer.getPlayerInventoryFile());
 
+    }
+
+    enum Pagination {
+        PREVIOUS,
+        NEXT
     }
 }

@@ -17,8 +17,10 @@ import org.simpleyaml.configuration.file.YamlFile
 class TemplateLoaders {
     @Inject
     private lateinit var banTemplateManager: BanTemplatesManager
+
     @Inject
     private lateinit var warnTemplateManager: WarnTemplateManager
+
     @Inject
     private lateinit var logger: ILogger
 

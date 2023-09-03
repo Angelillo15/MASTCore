@@ -27,6 +27,7 @@ import es.angelillo15.mast.api.chat.api.chat.hover.content.TextSerializer;
 public class ComponentSerializer implements JsonDeserializer<BaseComponent>
 {
 
+    public static final ThreadLocal<Set<BaseComponent>> serializedComponents = new ThreadLocal<Set<BaseComponent>>();
     private static final JsonParser JSON_PARSER = new JsonParser();
     private static final Gson gson = new GsonBuilder().
             registerTypeAdapter( BaseComponent.class, new ComponentSerializer() ).
@@ -40,8 +41,6 @@ public class ComponentSerializer implements JsonDeserializer<BaseComponent>
             registerTypeAdapter( Item.class, new ItemSerializer() ).
             registerTypeAdapter( ItemTag.class, new ItemTag.Serializer() ).
             create();
-
-    public static final ThreadLocal<Set<BaseComponent>> serializedComponents = new ThreadLocal<Set<BaseComponent>>();
 
     public static BaseComponent[] parse(String json)
     {

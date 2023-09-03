@@ -2231,6 +2231,12 @@ public enum XMaterial {
          * @since 1.0.0
          */
         private static final int VERSION;
+        /**
+         * Cached result if the server version is after the v1.13 flattening update.
+         *
+         * @since 3.0.0
+         */
+        private static final boolean ISFLAT = supports(13);
 
         static { // This needs to be right below VERSION because of initialization order.
             String version = Bukkit.getVersion();
@@ -2239,12 +2245,5 @@ public enum XMaterial {
             if (matcher.find()) VERSION = Integer.parseInt(matcher.group(1));
             else throw new IllegalArgumentException("Failed to parse server version from: " + version);
         }
-
-        /**
-         * Cached result if the server version is after the v1.13 flattening update.
-         *
-         * @since 3.0.0
-         */
-        private static final boolean ISFLAT = supports(13);
     }
 }

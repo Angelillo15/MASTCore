@@ -21,6 +21,46 @@ public final class TextComponent extends es.angelillo15.mast.api.chat.api.chat.B
 {
 
     private static final Pattern url = Pattern.compile( "^(?:(https?)://)?([-\\w_\\.]{2,}\\.[a-z]{2,4})(/\\S*)?$" );
+    /**
+     * The text of the component that will be displayed to the client
+     */
+    private String text;
+
+    /**
+     * Creates a TextComponent with blank text.
+     */
+    public TextComponent()
+    {
+        this.text = "";
+    }
+
+    /**
+     * Creates a TextComponent with formatting and text from the passed
+     * component
+     *
+     * @param textComponent the component to copy from
+     */
+    public TextComponent(TextComponent textComponent)
+    {
+        super( textComponent );
+        setText( textComponent.getText() );
+    }
+
+    /**
+     * Creates a TextComponent with blank text and the extras set to the passed
+     * array
+     *
+     * @param extras the extras to set
+     */
+    public TextComponent(es.angelillo15.mast.api.chat.api.chat.BaseComponent... extras)
+    {
+        this();
+        if ( extras.length == 0 )
+        {
+            return;
+        }
+        setExtra( new ArrayList<BaseComponent>( Arrays.asList( extras ) ) );
+    }
 
     /**
      * Converts the old formatting system that used
@@ -161,47 +201,6 @@ public final class TextComponent extends es.angelillo15.mast.api.chat.api.chat.B
         components.add( component );
 
         return components.toArray( new es.angelillo15.mast.api.chat.api.chat.BaseComponent[ 0 ] );
-    }
-
-    /**
-     * The text of the component that will be displayed to the client
-     */
-    private String text;
-
-    /**
-     * Creates a TextComponent with blank text.
-     */
-    public TextComponent()
-    {
-        this.text = "";
-    }
-
-    /**
-     * Creates a TextComponent with formatting and text from the passed
-     * component
-     *
-     * @param textComponent the component to copy from
-     */
-    public TextComponent(TextComponent textComponent)
-    {
-        super( textComponent );
-        setText( textComponent.getText() );
-    }
-
-    /**
-     * Creates a TextComponent with blank text and the extras set to the passed
-     * array
-     *
-     * @param extras the extras to set
-     */
-    public TextComponent(es.angelillo15.mast.api.chat.api.chat.BaseComponent... extras)
-    {
-        this();
-        if ( extras.length == 0 )
-        {
-            return;
-        }
-        setExtra( new ArrayList<BaseComponent>( Arrays.asList( extras ) ) );
     }
 
     /**

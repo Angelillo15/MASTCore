@@ -1,7 +1,6 @@
 package es.angelillo15.mast.api.event
 
 import com.google.inject.Singleton
-import lombok.SneakyThrows
 import java.lang.reflect.InvocationTargetException
 
 @Singleton

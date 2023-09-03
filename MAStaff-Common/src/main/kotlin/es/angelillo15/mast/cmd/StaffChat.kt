@@ -1,7 +1,6 @@
 package es.angelillo15.mast.cmd
 
 import com.google.inject.Inject
-import es.angelillo15.mast.api.ILogger
 import es.angelillo15.mast.api.IServerUtils
 import es.angelillo15.mast.api.cmd.Command
 import es.angelillo15.mast.api.cmd.CommandData
@@ -18,6 +17,7 @@ import es.angelillo15.mast.api.managers.StaffChatManager
 class StaffChat : Command() {
     @Inject
     private lateinit var serverUtils: IServerUtils;
+
     @Inject
     private lateinit var staffChatManager: StaffChatManager;
 

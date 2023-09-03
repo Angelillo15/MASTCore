@@ -28,6 +28,11 @@ public class RTPItem extends StaffItem implements IExecutableItem {
     }
 
     @Override
+    public void setItem(Player player) {
+        player.getInventory().setItem(getSlot(), getItem());
+    }
+
+    @Override
     public String getPermission() {
         return permission;
     }
@@ -35,11 +40,6 @@ public class RTPItem extends StaffItem implements IExecutableItem {
     @Override
     public int getSlot() {
         return slot;
-    }
-
-    @Override
-    public void setItem(Player player) {
-        player.getInventory().setItem(getSlot(), getItem());
     }
 
     @Override

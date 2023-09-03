@@ -22,8 +22,6 @@ public final class TranslationRegistry
 {
 
     public static final TranslationRegistry INSTANCE = new TranslationRegistry();
-    //
-    private final List<TranslationProvider> providers = new LinkedList<>();
 
     static
     {
@@ -48,6 +46,9 @@ public final class TranslationRegistry
         {
         }
     }
+
+    //
+    private final List<TranslationProvider> providers = new LinkedList<>();
 
     private void addProvider(TranslationProvider provider)
     {

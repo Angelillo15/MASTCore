@@ -8,7 +8,7 @@ import es.angelillo15.mast.api.utils.MAStaffInject
 
 class ReloadArg : SubCommand() {
     @Inject
-    private lateinit var plugin:  MAStaffInject
+    private lateinit var plugin: MAStaffInject
     override val name: String
         get() = "reload"
     override val description: String

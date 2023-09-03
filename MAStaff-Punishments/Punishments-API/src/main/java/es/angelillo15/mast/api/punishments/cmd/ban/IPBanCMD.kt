@@ -6,13 +6,19 @@ import es.angelillo15.mast.api.punishments.IPunishPlayer
 import es.angelillo15.mast.api.punishments.cmd.PunishTargetReasonCommand
 
 @CommandData(
-        name = "ipban",
-        permission = "mastaff.punishments.ipban",
-        usage = "/ipban <ip> <reason>",
-        description = "Ban an IP"
+    name = "ipban",
+    permission = "mastaff.punishments.ipban",
+    usage = "/ipban <ip> <reason>",
+    description = "Ban an IP"
 )
 class IPBanCMD : PunishTargetReasonCommand(1, Messages.Default.defaultBanReason()) {
-    override fun onCommand(sender: IPunishPlayer, target: String, label: String, args: Array<out String>, reason: String) {
+    override fun onCommand(
+        sender: IPunishPlayer,
+        target: String,
+        label: String,
+        args: Array<out String>,
+        reason: String
+    ) {
         if (args.isEmpty()) {
             sender.sendMessage(Messages.Commands.IpBan.usage())
             return

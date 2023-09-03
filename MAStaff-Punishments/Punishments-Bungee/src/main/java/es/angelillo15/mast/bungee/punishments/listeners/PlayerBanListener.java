@@ -23,6 +23,35 @@ import net.md_5.bungee.event.EventHandler;
 import java.sql.SQLException;
 
 public class PlayerBanListener implements Listener {
+    public static BaseComponent getBaseComponent(BansTable model, String username) {
+        String message = null;
+        EventManager.getEventManager().sendPlayerTryToJoinBannedEvent(model, username);
+
+        if (model.isPermanent()) {
+            if (model.getIpban()) message = Messages.Ban.ipBannedMessagePermanent();
+            else message = Messages.Ban.bannedMessagePermanent();
+
+            return new TextComponent(message
+                    .replace("{reason}", model.getReason())
+                    .replace("{bannedBy}", model.getBanned_by_name())
+                    .replace("{bannedOn}", TextUtils.formatDate(model.getTime(), Config.dateFormat()))
+                    .replace("{banId}", String.valueOf(model.getId()))
+            );
+        } else {
+            if (model.getIpban()) message = Messages.Ban.ipBannedMessage();
+            else message = Messages.Ban.tempBanMessageBase();
+
+            return new TextComponent(message
+                    .replace("{reason}", model.getReason())
+                    .replace("{bannedBy}", model.getBanned_by_name())
+                    .replace("{bannedOn}", TextUtils.formatDate(model.getTime(), Config.dateFormat()))
+                    .replace("{expires}", TextUtils.formatDate(model.getUntil(), Config.dateFormat()))
+                    .replace("{duration}", TextUtils.formatUptime(model.getUntil() - System.currentTimeMillis()))
+                    .replace("{banId}", String.valueOf(model.getId()))
+            );
+        }
+    }
+
     @EventHandler
     public void onPreLogin(PreLoginEvent event) {
         event.registerIntent(MAStaffPunishmentsLoader.getInstance().getPluginInstance());
@@ -93,34 +122,5 @@ public class PlayerBanListener implements Listener {
         connection.disconnect(getBaseComponent(table, connection.getName()));
 
         return true;
-    }
-
-    public static BaseComponent getBaseComponent(BansTable model, String username) {
-        String message = null;
-        EventManager.getEventManager().sendPlayerTryToJoinBannedEvent(model, username);
-
-        if (model.isPermanent()) {
-            if (model.getIpban()) message = Messages.Ban.ipBannedMessagePermanent();
-            else message = Messages.Ban.bannedMessagePermanent();
-
-            return new TextComponent(message
-                    .replace("{reason}", model.getReason())
-                    .replace("{bannedBy}", model.getBanned_by_name())
-                    .replace("{bannedOn}", TextUtils.formatDate(model.getTime(), Config.dateFormat()))
-                    .replace("{banId}", String.valueOf(model.getId()))
-            );
-        } else {
-            if (model.getIpban()) message = Messages.Ban.ipBannedMessage();
-            else message = Messages.Ban.tempBanMessageBase();
-
-            return new TextComponent(message
-                    .replace("{reason}", model.getReason())
-                    .replace("{bannedBy}", model.getBanned_by_name())
-                    .replace("{bannedOn}", TextUtils.formatDate(model.getTime(), Config.dateFormat()))
-                    .replace("{expires}", TextUtils.formatDate(model.getUntil(), Config.dateFormat()))
-                    .replace("{duration}", TextUtils.formatUptime(model.getUntil() - System.currentTimeMillis()))
-                    .replace("{banId}", String.valueOf(model.getId()))
-            );
-        }
     }
 }

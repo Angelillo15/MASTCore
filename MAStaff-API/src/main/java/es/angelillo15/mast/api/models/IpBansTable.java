@@ -26,18 +26,6 @@ public class IpBansTable extends StormModel {
     )
     private Integer banId;
 
-    @SneakyThrows
-    public BansTable getBanTable() {
-        Storm storm = PluginConnection.getStorm();
-        Collection<BansTable> bans = storm.buildQuery(BansTable.class)
-                .where("id", Where.EQUAL, banId)
-                .limit(1)
-                .execute()
-                .join();
-
-        return bans.isEmpty() ? null : bans.iterator().next();
-    }
-
     public static BansTable getIpBanned(String ip) {
         Storm storm = PluginConnection.getStorm();
 
@@ -68,6 +56,18 @@ public class IpBansTable extends StormModel {
         } catch (Exception e) {
             return null;
         }
+    }
+
+    @SneakyThrows
+    public BansTable getBanTable() {
+        Storm storm = PluginConnection.getStorm();
+        Collection<BansTable> bans = storm.buildQuery(BansTable.class)
+                .where("id", Where.EQUAL, banId)
+                .limit(1)
+                .execute()
+                .join();
+
+        return bans.isEmpty() ? null : bans.iterator().next();
     }
 
 }

@@ -15,6 +15,7 @@ class CommonConfigLoader {
         private set
     var messages: ConfigManager? = null
         private set
+
     fun load() {
         loadConfig()
         loadLanguages()

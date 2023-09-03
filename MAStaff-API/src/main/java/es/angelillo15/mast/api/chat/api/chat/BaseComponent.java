@@ -110,6 +110,39 @@ public abstract class BaseComponent
     }
 
     /**
+     * Converts the components to a string that uses the old formatting codes
+     * ({@link ChatColor#COLOR_CHAR}
+     *
+     * @param components the components to convert
+     * @return the string in the old format
+     */
+    public static String toLegacyText(BaseComponent... components)
+    {
+        StringBuilder builder = new StringBuilder();
+        for ( BaseComponent msg : components )
+        {
+            builder.append( msg.toLegacyText() );
+        }
+        return builder.toString();
+    }
+
+    /**
+     * Converts the components into a string without any formatting
+     *
+     * @param components the components to convert
+     * @return the string as plain text
+     */
+    public static String toPlainText(BaseComponent... components)
+    {
+        StringBuilder builder = new StringBuilder();
+        for ( BaseComponent msg : components )
+        {
+            builder.append( msg.toPlainText() );
+        }
+        return builder.toString();
+    }
+
+    /**
      * Copies the events and formatting of a BaseComponent. Already set
      * formatting will be replaced.
      *
@@ -233,39 +266,6 @@ public abstract class BaseComponent
         BaseComponent component = duplicate();
         component.retain( ComponentBuilder.FormatRetention.NONE );
         return component;
-    }
-
-    /**
-     * Converts the components to a string that uses the old formatting codes
-     * ({@link ChatColor#COLOR_CHAR}
-     *
-     * @param components the components to convert
-     * @return the string in the old format
-     */
-    public static String toLegacyText(BaseComponent... components)
-    {
-        StringBuilder builder = new StringBuilder();
-        for ( BaseComponent msg : components )
-        {
-            builder.append( msg.toLegacyText() );
-        }
-        return builder.toString();
-    }
-
-    /**
-     * Converts the components into a string without any formatting
-     *
-     * @param components the components to convert
-     * @return the string as plain text
-     */
-    public static String toPlainText(BaseComponent... components)
-    {
-        StringBuilder builder = new StringBuilder();
-        for ( BaseComponent msg : components )
-        {
-            builder.append( msg.toPlainText() );
-        }
-        return builder.toString();
     }
 
     /**

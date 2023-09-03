@@ -6,7 +6,6 @@ import es.angelillo15.mast.api.IServerUtils
 import es.angelillo15.mast.api.MAStaffInstance
 import es.angelillo15.mast.api.cache.BanCache
 import es.angelillo15.mast.api.cmd.sender.CommandSender
-import es.angelillo15.mast.api.config.punishments.Config
 import es.angelillo15.mast.api.config.punishments.Messages
 import es.angelillo15.mast.api.database.PluginConnection
 import es.angelillo15.mast.api.exceptions.user.PlayerNotOnlineException
@@ -27,10 +26,13 @@ import java.util.function.BiConsumer
 class PunishPlayer : IPunishPlayer {
     @Inject
     private lateinit var serverUtils: IServerUtils
+
     @Inject
     private lateinit var banTemplatesManager: BanTemplatesManager
+
     @Inject
     private lateinit var warnTemplatesManager: WarnTemplateManager
+
     @Inject
     private lateinit var logger: ILogger;
 
@@ -148,11 +150,13 @@ class PunishPlayer : IPunishPlayer {
 
         BanCache.removePunishment(target)
 
-        player.sendMessage(Messages.Commands.Unban.success(
-            target,
-            reason,
-            player.name
-        ))
+        player.sendMessage(
+            Messages.Commands.Unban.success(
+                target,
+                reason,
+                player.name
+            )
+        )
     }
 
     /**
@@ -293,7 +297,7 @@ class PunishPlayer : IPunishPlayer {
             if (it == null) return@forEach
             if (it.id != warn.maxWarnings) return@forEach
 
-            execute ({
+            execute({
                 serverUtils.executeCommand(it.action.replace("{player}", target.username))
             }, 500, false)
         }
@@ -319,7 +323,7 @@ class PunishPlayer : IPunishPlayer {
             if (it == null) return@forEach
             if (it.id != warnNumber) return@forEach
 
-            execute ({
+            execute({
                 serverUtils.executeCommand(it.action.replace("{player}", target.username))
             }, 500, false)
         }

@@ -72,6 +72,31 @@ public final class HoverEvent
         this.legacy = true;
     }
 
+    /**
+     * Gets the appropriate {@link Content} class for an {@link Action} for the
+     * GSON serialization
+     *
+     * @param action the action to get for
+     * @param array if to return the arrayed class
+     * @return the class
+     */
+    public static Class<?> getClass(HoverEvent.Action action, boolean array)
+    {
+        Preconditions.checkArgument( action != null, "action" );
+
+        switch ( action )
+        {
+            case SHOW_TEXT:
+                return ( array ) ? Text[].class : Text.class;
+            case SHOW_ENTITY:
+                return ( array ) ? Entity[].class : Entity.class;
+            case SHOW_ITEM:
+                return ( array ) ? Item[].class : Item.class;
+            default:
+                throw new UnsupportedOperationException( "Action '" + action.name() + " not supported" );
+        }
+    }
+
     @Deprecated
     public BaseComponent[] getValue()
     {
@@ -109,30 +134,5 @@ public final class HoverEvent
          */
         @Deprecated
         SHOW_ACHIEVEMENT,
-    }
-
-    /**
-     * Gets the appropriate {@link Content} class for an {@link Action} for the
-     * GSON serialization
-     *
-     * @param action the action to get for
-     * @param array if to return the arrayed class
-     * @return the class
-     */
-    public static Class<?> getClass(HoverEvent.Action action, boolean array)
-    {
-        Preconditions.checkArgument( action != null, "action" );
-
-        switch ( action )
-        {
-            case SHOW_TEXT:
-                return ( array ) ? Text[].class : Text.class;
-            case SHOW_ENTITY:
-                return ( array ) ? Entity[].class : Entity.class;
-            case SHOW_ITEM:
-                return ( array ) ? Item[].class : Item.class;
-            default:
-                throw new UnsupportedOperationException( "Action '" + action.name() + " not supported" );
-        }
     }
 }

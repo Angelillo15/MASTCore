@@ -11,6 +11,7 @@ import es.angelillo15.mast.handler.StaffJoinLeaveChangeHandler
 class OnStaffJoinLeaveQuit : StaffJoinLeaveChangeHandler() {
     @Inject
     private lateinit var serverManger: PreviousServerManager
+
     @Subscribe
     fun onStaffJoin(event: PostLoginEvent) {
         val player = event.player

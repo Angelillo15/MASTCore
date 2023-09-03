@@ -20,6 +20,10 @@ public class FreezePlayerEvent extends Event {
         this.freezerPlayer = freezerPlayer;
     }
 
+    public static HandlerList getHandlerList() {
+        return HANDLERS;
+    }
+
     /**
      * Get the player who was frozen
      * @return Player who was frozen
@@ -38,10 +42,6 @@ public class FreezePlayerEvent extends Event {
 
     @Override
     public HandlerList getHandlers() {
-        return HANDLERS;
-    }
-
-    public static HandlerList getHandlerList() {
         return HANDLERS;
     }
 

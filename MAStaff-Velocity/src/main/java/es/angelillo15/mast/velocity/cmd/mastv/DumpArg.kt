@@ -41,8 +41,12 @@ class DumpArg : SubCommand() {
         dump.addProperty("osArch", System.getProperty("os.arch"))
         dump.addProperty("cpuCores", Runtime.getRuntime().availableProcessors())
         dump.addProperty("allocatedMemory", Runtime.getRuntime().maxMemory() / 1024 / 1024)
-        dump.addProperty("uptime", TextUtils.formatUptime(System.currentTimeMillis()
-                - ManagementFactory.getRuntimeMXBean().startTime))
+        dump.addProperty(
+            "uptime", TextUtils.formatUptime(
+                System.currentTimeMillis()
+                        - ManagementFactory.getRuntimeMXBean().startTime
+            )
+        )
 
         val git = JsonObject()
         git.addProperty("branch", Constants.GIT_BRANCH)
@@ -74,7 +78,7 @@ class DumpArg : SubCommand() {
 
         val plugins = ArrayList<JsonObject>()
 
-        proxy.pluginManager.plugins.forEach {container ->
+        proxy.pluginManager.plugins.forEach { container ->
             val pluginJson = JsonObject()
 
             pluginJson.addProperty("name", container.description.id)
@@ -103,8 +107,11 @@ class DumpArg : SubCommand() {
                 val key = json["key"].asString
                 val url = "https://nookure.com/dump/$key"
 
-                sender!!.sendMessage(TextUtils.simpleColorize(Messages.prefix() +
-                        " &aDump url: &6 <click:open_url:'${url}'>${url}</click>" )
+                sender!!.sendMessage(
+                    TextUtils.simpleColorize(
+                        Messages.prefix() +
+                                " &aDump url: &6 <click:open_url:'${url}'>${url}</click>"
+                    )
                 )
             } catch (e: Exception) {
                 e.printStackTrace()

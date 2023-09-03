@@ -47,7 +47,7 @@ class ServerUtils : IServerUtils {
 
     override fun broadcastMessage(message: String, permission: String) {
         execute {
-            Bukkit.getOnlinePlayers().forEach{ player ->
+            Bukkit.getOnlinePlayers().forEach { player ->
                 if (!player.hasPermission(permission)) return@forEach
 
                 TextUtils.getAudience(player).sendMessage(TextUtils.toComponent(message))

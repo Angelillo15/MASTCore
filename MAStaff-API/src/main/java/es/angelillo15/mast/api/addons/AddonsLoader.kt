@@ -11,7 +11,7 @@ import org.reflections.Reflections
 class AddonsLoader {
     @Inject
     private lateinit var instance: MAStaffInject;
-    fun getAddons(platform: AddonPlatform) : MutableSet<Class<*>>? {
+    fun getAddons(platform: AddonPlatform): MutableSet<Class<*>>? {
         val reflections = Reflections("es.angelillo15")
         val addons = reflections.getTypesAnnotatedWith(Addon::class.java)
 

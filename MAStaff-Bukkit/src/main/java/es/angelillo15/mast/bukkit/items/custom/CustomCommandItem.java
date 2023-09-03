@@ -39,6 +39,11 @@ public class CustomCommandItem extends StaffItem implements IExecutableItem {
     }
 
     @Override
+    public void setItem(Player player) {
+        player.getInventory().setItem(this.slot, this.itemStack);
+    }
+
+    @Override
     public String getPermission() {
         return this.permission;
     }
@@ -46,10 +51,5 @@ public class CustomCommandItem extends StaffItem implements IExecutableItem {
     @Override
     public int getSlot() {
         return this.slot;
-    }
-
-    @Override
-    public void setItem(Player player) {
-        player.getInventory().setItem(this.slot, this.itemStack);
     }
 }

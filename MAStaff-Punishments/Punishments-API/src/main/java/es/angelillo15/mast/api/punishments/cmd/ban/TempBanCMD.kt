@@ -9,12 +9,18 @@ import es.angelillo15.mast.api.punishments.cmd.PunishTargetReasonCommand
 import es.angelillo15.mast.api.utils.NumberUtils
 
 @CommandData(
-        name = "tempban",
-        permission = "mastaff.punishments.tempban",
-        aliases = ["tban"]
+    name = "tempban",
+    permission = "mastaff.punishments.tempban",
+    aliases = ["tban"]
 )
 class TempBanCMD : PunishTargetReasonCommand(2, Messages.Default.defaultBanReason()) {
-    override fun onCommand(sender: IPunishPlayer, target: String, label: String, args: Array<out String>, reason: String) {
+    override fun onCommand(
+        sender: IPunishPlayer,
+        target: String,
+        label: String,
+        args: Array<out String>,
+        reason: String
+    ) {
         if (args.size < 2) {
             sender.sendMessage(Messages.Commands.TempBan.usage())
             return
@@ -28,11 +34,13 @@ class TempBanCMD : PunishTargetReasonCommand(2, Messages.Default.defaultBanReaso
         }
 
         sender.ban(target, reason, time)
-        sender.sendMessage(Messages.Commands.TempBan.success(
+        sender.sendMessage(
+            Messages.Commands.TempBan.success(
                 target,
                 TextUtils.formatDate(time, Config.dateFormat()),
                 reason,
-                sender.name)
+                sender.name
+            )
         )
     }
 }

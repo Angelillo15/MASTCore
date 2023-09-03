@@ -26,14 +26,6 @@ public final class ChatColor
      */
     public static final Pattern STRIP_COLOR_PATTERN = Pattern.compile( "(?i)" + String.valueOf( COLOR_CHAR ) + "[0-9A-FK-ORX]" );
     /**
-     * Colour instances keyed by their active character.
-     */
-    private static final Map<Character, ChatColor> BY_CHAR = new HashMap<Character, ChatColor>();
-    /**
-     * Colour instances keyed by their name.
-     */
-    private static final Map<String, ChatColor> BY_NAME = new HashMap<String, ChatColor>();
-    /**
      * Represents black.
      */
     public static final ChatColor BLACK = new ChatColor( '0', "black", new Color( 0x000000 ) );
@@ -122,6 +114,14 @@ public final class ChatColor
      */
     public static final ChatColor RESET = new ChatColor( 'r', "reset" );
     /**
+     * Colour instances keyed by their active character.
+     */
+    private static final Map<Character, ChatColor> BY_CHAR = new HashMap<Character, ChatColor>();
+    /**
+     * Colour instances keyed by their name.
+     */
+    private static final Map<String, ChatColor> BY_NAME = new HashMap<String, ChatColor>();
+    /**
      * Count used for populating legacy ordinal.
      */
     private static int count = 0;
@@ -163,36 +163,6 @@ public final class ChatColor
         this.toString = toString;
         this.ordinal = -1;
         this.color = new Color( rgb );
-    }
-
-    @Override
-    public int hashCode()
-    {
-        int hash = 7;
-        hash = 53 * hash + Objects.hashCode( this.toString );
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object obj)
-    {
-        if ( this == obj )
-        {
-            return true;
-        }
-        if ( obj == null || getClass() != obj.getClass() )
-        {
-            return false;
-        }
-        final ChatColor other = (ChatColor) obj;
-
-        return Objects.equals( this.toString, other.toString );
-    }
-
-    @Override
-    public String toString()
-    {
-        return toString;
     }
 
     /**
@@ -301,6 +271,36 @@ public final class ChatColor
     public static ChatColor[] values()
     {
         return BY_CHAR.values().toArray( new ChatColor[ 0 ] );
+    }
+
+    @Override
+    public int hashCode()
+    {
+        int hash = 7;
+        hash = 53 * hash + Objects.hashCode( this.toString );
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj)
+    {
+        if ( this == obj )
+        {
+            return true;
+        }
+        if ( obj == null || getClass() != obj.getClass() )
+        {
+            return false;
+        }
+        final ChatColor other = (ChatColor) obj;
+
+        return Objects.equals( this.toString, other.toString );
+    }
+
+    @Override
+    public String toString()
+    {
+        return toString;
     }
 
     /**

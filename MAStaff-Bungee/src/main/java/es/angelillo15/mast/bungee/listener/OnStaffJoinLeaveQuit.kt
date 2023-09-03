@@ -9,7 +9,7 @@ import net.md_5.bungee.api.event.ServerSwitchEvent
 import net.md_5.bungee.api.plugin.Listener
 import net.md_5.bungee.event.EventHandler
 
-class OnStaffJoinLeaveQuit : Listener, StaffJoinLeaveChangeHandler()  {
+class OnStaffJoinLeaveQuit : Listener, StaffJoinLeaveChangeHandler() {
     @Inject
     private lateinit var previousServer: PreviousServerManager
 

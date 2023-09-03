@@ -1,7 +1,6 @@
 package es.angelillo15.mast.api.thread
 
 import es.angelillo15.mast.api.MAStaffInstance
-import es.angelillo15.mast.api.utils.MAStaffInject
 import java.util.concurrent.Executors
 import java.util.concurrent.ThreadPoolExecutor
 
@@ -12,6 +11,7 @@ private var thread: Unit? = null
 
 private var actions = ArrayList<Action>()
 private var threadPoolExecutor = Executors.newFixedThreadPool(5)
+
 @Suppress("UNCHECKED_CAST")
 fun start() {
     Thread({
@@ -28,7 +28,7 @@ fun start() {
                 break
             }
 
-            val actionsClone:ArrayList<Action> = getActions().clone() as ArrayList<Action>
+            val actionsClone: ArrayList<Action> = getActions().clone() as ArrayList<Action>
 
             for (action in actionsClone) {
                 if (action.delayTask > 0) {
@@ -103,7 +103,7 @@ fun clearActions() {
  * Get all current actions
  * @return The actions
  */
-fun getActions() : ArrayList<Action> {
+fun getActions(): ArrayList<Action> {
     return actions
 }
 
@@ -111,7 +111,7 @@ fun getActions() : ArrayList<Action> {
  * Get the current thread
  * @return The thread
  */
-fun getThread() : Unit? {
+fun getThread(): Unit? {
     return thread
 }
 
@@ -121,7 +121,7 @@ fun getThread() : Unit? {
  * @param delay The delay in milliseconds
  * @param repeat If the action should repeat
  */
-fun execute(runnable: () -> Unit, delay: Int?, repeat: Boolean?) : Int {
+fun execute(runnable: () -> Unit, delay: Int?, repeat: Boolean?): Int {
     return addAction(Action(runnable, delay ?: 0, repeat ?: false))
 }
 
@@ -129,7 +129,7 @@ fun execute(runnable: () -> Unit, delay: Int?, repeat: Boolean?) : Int {
  * Executes a runnable
  * @param runnable The runnable to execute
  */
-fun execute(runnable: () -> Unit) : Int {
+fun execute(runnable: () -> Unit): Int {
     return execute(runnable, 0, false)
 }
 
@@ -146,7 +146,7 @@ object AsyncThread {
      * Get the current thread pool executor
      * @return The thread pool executor
      */
-    fun getThreadPoolExecutor() : ThreadPoolExecutor {
+    fun getThreadPoolExecutor(): ThreadPoolExecutor {
         return threadPoolExecutor as ThreadPoolExecutor
     }
 

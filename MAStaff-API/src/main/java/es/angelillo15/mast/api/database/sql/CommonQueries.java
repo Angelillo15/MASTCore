@@ -16,9 +16,7 @@ public class CommonQueries {
     @Getter
     @Setter
     private static Connection connection;
-    public void createTables() {
 
-    }
     public static void changeData(UUID uuid, int state) {
         if(!existsData(uuid)){
             insertData(uuid, state);
@@ -96,6 +94,10 @@ public class CommonQueries {
         new Thread(() -> {
             changeData(uuid, state);
         }).start();
+    }
+
+    public void createTables() {
+
     }
 
 }

@@ -26,6 +26,16 @@ public class MAStaffCMD implements CommandExecutor {
         legacySubCommands.add(inject.getInjector().getInstance(DumpARG.class));
         legacySubCommands.add(inject.getInjector().getInstance(DebugARG.class));
     }
+
+    public static void sendHelp(CommandSender sender) {
+        sender.sendMessage(TextUtils.colorize("&a&lMAS&r&ltaff &7- &fv" + Constants.VERSION));
+        legacySubCommands.forEach(subCommand -> {
+            if(sender.hasPermission(subCommand.getPermission())){
+                sender.sendMessage(TextUtils.colorize("&a&l> &r" + subCommand.getSyntax() + " &7- &7" + subCommand.getDescription()));
+            }
+        });
+    }
+
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if(args.length == 0){
@@ -45,14 +55,5 @@ public class MAStaffCMD implements CommandExecutor {
         }
         sendHelp(sender);
         return true;
-    }
-
-    public static void sendHelp(CommandSender sender) {
-        sender.sendMessage(TextUtils.colorize("&a&lMAS&r&ltaff &7- &fv" + Constants.VERSION));
-        legacySubCommands.forEach(subCommand -> {
-            if(sender.hasPermission(subCommand.getPermission())){
-                sender.sendMessage(TextUtils.colorize("&a&l> &r" + subCommand.getSyntax() + " &7- &7" + subCommand.getDescription()));
-            }
-        });
     }
 }

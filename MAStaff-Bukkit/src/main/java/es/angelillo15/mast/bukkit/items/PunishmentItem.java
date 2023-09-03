@@ -29,6 +29,11 @@ public class PunishmentItem extends StaffItem implements IPlayerInteractItem {
     }
 
     @Override
+    public void setItem(Player player) {
+        player.getInventory().setItem(getSlot(), getItem());
+    }
+
+    @Override
     public String getPermission() {
         return permission;
     }
@@ -37,12 +42,6 @@ public class PunishmentItem extends StaffItem implements IPlayerInteractItem {
     public int getSlot() {
         return slot;
     }
-
-    @Override
-    public void setItem(Player player) {
-        player.getInventory().setItem(getSlot(), getItem());
-    }
-
 
     @Override
     public void interact(Player player, Player target) {

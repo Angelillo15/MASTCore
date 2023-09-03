@@ -17,7 +17,13 @@ import es.angelillo15.mast.api.utils.NumberUtils
 )
 class TempIPBanCMD : PunishTargetReasonCommand(2, Messages.Default.defaultBanReason()) {
 
-    override fun onCommand(sender: IPunishPlayer, target: String, label: String, args: Array<out String>, reason: String) {
+    override fun onCommand(
+        sender: IPunishPlayer,
+        target: String,
+        label: String,
+        args: Array<out String>,
+        reason: String
+    ) {
         if (args.size < 2) {
             sender.sendMessage(Messages.Commands.TempIpBan.usage())
             return

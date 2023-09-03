@@ -136,6 +136,17 @@ public class Messages {
         return TextUtils.parseBukkitMessage(ConfigLoader.getPunishmentsGUI().getConfig().getString("Gui.title"));
     }
 
+    /*
+     * Freeze
+     */
+    public static String CONFIRM_PUNISH_MESSAGE() {
+        return TextUtils.parseBukkitMessage(messages.getString("Freeze.confirmPunishMessage"));
+    }
+
+    public static String GET_FREEZE_CANNOT_FREEZE_THAT_PLAYER_MESSAGE() {
+        return TextUtils.parseBukkitMessage(messages.getString("Freeze.freezeBypassMessage"));
+    }
+
     public static class StaffVault {
         public static String itemSaved() {
             return TextUtils.parseBukkitMessage(messages.getString("StaffVault.itemSaved"));
@@ -158,17 +169,6 @@ public class Messages {
         public static String nightVisionOff() {
             return TextUtils.parseBukkitMessage(messages.getString("StaffMode.nightVisionOff"));
         }
-    }
-
-    /*
-     * Freeze
-     */
-    public static String CONFIRM_PUNISH_MESSAGE() {
-        return TextUtils.parseBukkitMessage(messages.getString("Freeze.confirmPunishMessage"));
-    }
-
-    public static String GET_FREEZE_CANNOT_FREEZE_THAT_PLAYER_MESSAGE() {
-        return TextUtils.parseBukkitMessage(messages.getString("Freeze.freezeBypassMessage"));
     }
 
 }

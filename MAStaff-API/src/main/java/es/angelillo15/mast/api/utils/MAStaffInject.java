@@ -15,20 +15,35 @@ public interface MAStaffInject {
     default void registerCommand(Command command){};
     IServerUtils getServerUtils();
     boolean isDebug();
-    void drawLogo();
-    void loadConfig();
-    void registerCommands();
-    void registerListeners();
-    void loadDatabase();
-    void loadModules();
-    void unregisterCommands();
-    void unregisterListeners();
-    void unloadDatabase();
-    void reload();
-    default IStaffPlayer createStaffPlayer(Player player) { return null; }
-    File getPluginDataFolder();
-    InputStream getPluginResource(String s);
+
     void setDebug(boolean debug);
+
+    void drawLogo();
+
+    void loadConfig();
+
+    void registerCommands();
+
+    void registerListeners();
+
+    void loadDatabase();
+
+    void loadModules();
+
+    void unregisterCommands();
+
+    void unregisterListeners();
+
+    void unloadDatabase();
+
+    void reload();
+
+    default IStaffPlayer createStaffPlayer(Player player) { return null; }
+
+    File getPluginDataFolder();
+
+    InputStream getPluginResource(String s);
+
     default Injector getInjector() {
         return null;
     }

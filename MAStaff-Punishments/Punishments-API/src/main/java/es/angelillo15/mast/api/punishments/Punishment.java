@@ -1,18 +1,13 @@
 package es.angelillo15.mast.api.punishments;
 
 public class Punishment {
-    private int id;
     private final PunishmentsTypes type;
-
     private final String player;
-
     private final String punisher;
-
     private final String reason;
-
     private final long time;
-
     private final long duration;
+    private int id;
 
     public Punishment(PunishmentsTypes type, String player, String punisher, String reason, long time, long duration) {
         this.type = type;

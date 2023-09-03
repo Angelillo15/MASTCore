@@ -8,7 +8,9 @@ class OnPlayerChat : OnStaffMessageEvent() {
     @Subscribe
     fun onPlayerChat(event: PlayerChatEvent) {
         if (onStaffMessageEvent(
-                event.player.username, event.message, event.player.currentServer.get().serverInfo.name)) {
+                event.player.username, event.message, event.player.currentServer.get().serverInfo.name
+            )
+        ) {
             event.result = PlayerChatEvent.ChatResult.denied()
         }
     }

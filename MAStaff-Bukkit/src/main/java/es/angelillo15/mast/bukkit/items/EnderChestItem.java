@@ -31,6 +31,11 @@ public class EnderChestItem extends StaffItem implements IPlayerInteractItem {
     }
 
     @Override
+    public void setItem(Player player) {
+        player.getInventory().setItem(getSlot(), getItem());
+    }
+
+    @Override
     public int getSlot() {
         return slot;
     }
@@ -38,10 +43,5 @@ public class EnderChestItem extends StaffItem implements IPlayerInteractItem {
     @Override
     public String getPermission() {
         return permission;
-    }
-
-    @Override
-    public void setItem(Player player) {
-        player.getInventory().setItem(getSlot(), getItem());
     }
 }

@@ -50,17 +50,18 @@ import java.sql.SQLException;
 public class MAStaff extends Plugin implements MAStaffInstance<Plugin> {
     @Getter
     private static MAStaff instance;
+    @Getter
+    private static CommonConfigLoader configLoader;
     private ILogger logger;
     @Setter
     private boolean debug;
     private IServerUtils serverUtils;
+    private Injector injector;
+
     @Override
     public ILogger getPLogger() {
         return logger;
     }
-    private Injector injector;
-    @Getter
-    private static CommonConfigLoader configLoader;
 
     @Override
     public void registerCommand(Command command) {

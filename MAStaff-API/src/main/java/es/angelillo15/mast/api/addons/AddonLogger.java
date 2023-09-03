@@ -3,8 +3,8 @@ package es.angelillo15.mast.api.addons;
 import es.angelillo15.mast.api.ILogger;
 
 public class AddonLogger extends ILogger {
-    private MAStaffAddon<?> addon;
     private final ILogger logger;
+    private MAStaffAddon<?> addon;
 
     public AddonLogger(MAStaffAddon<?> addon, ILogger logger) {
         this.addon = addon;

@@ -9,6 +9,7 @@ import com.velocitypowered.api.proxy.ProxyServer
 class CommandBackendExecutor {
     @Inject
     lateinit var server: ProxyServer
+
     @Subscribe
     fun onCommand(event: PluginMessageEvent) {
         if (event.identifier.id != "mastaff:commands") return

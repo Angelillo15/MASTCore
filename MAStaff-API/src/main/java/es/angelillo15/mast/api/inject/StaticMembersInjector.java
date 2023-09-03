@@ -13,11 +13,6 @@ public class StaticMembersInjector<T> implements MembersInjector<T> {
         this.injector = injector;
     }
 
-    @Override
-    public void injectMembers(T instance) {
-        injector.injectMembers(instance);
-    }
-
     public static <T> void injectStatics(Injector injector, Class<T> clazz) {
         Field[] fields = clazz.getDeclaredFields();
 
@@ -31,5 +26,10 @@ public class StaticMembersInjector<T> implements MembersInjector<T> {
                 }
             }
         }
+    }
+
+    @Override
+    public void injectMembers(T instance) {
+        injector.injectMembers(instance);
     }
 }

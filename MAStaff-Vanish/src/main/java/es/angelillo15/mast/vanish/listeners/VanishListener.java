@@ -14,6 +14,22 @@ import org.bukkit.event.player.PlayerQuitEvent;
 
 @SuppressWarnings("deprecation")
 public class VanishListener implements Listener {
+    public static void hide(Player staff, Player player) {
+        if (MAStaffInstance.version() > 12) {
+            player.hidePlayer(MAStaffVanish.getInstance().getPluginInstance(), staff);
+        } else {
+            player.hidePlayer(staff);
+        }
+    }
+
+    public static void show(Player staff, Player player) {
+        if (MAStaffInstance.version() > 12) {
+            player.showPlayer(MAStaffVanish.getInstance().getPluginInstance(), staff);
+        } else {
+            player.showPlayer(staff);
+        }
+    }
+
     @EventHandler(ignoreCancelled = true)
     public void onJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
@@ -42,21 +58,5 @@ public class VanishListener implements Listener {
         });
 
         VanishDataManager.removeVanishedPlayer(staffPlayer);
-    }
-
-    public static void hide(Player staff, Player player) {
-        if (MAStaffInstance.version() > 12) {
-            player.hidePlayer(MAStaffVanish.getInstance().getPluginInstance(), staff);
-        } else {
-            player.hidePlayer(staff);
-        }
-    }
-
-    public static void show(Player staff, Player player) {
-        if (MAStaffInstance.version() > 12) {
-            player.showPlayer(MAStaffVanish.getInstance().getPluginInstance(), staff);
-        } else {
-            player.showPlayer(staff);
-        }
     }
 }

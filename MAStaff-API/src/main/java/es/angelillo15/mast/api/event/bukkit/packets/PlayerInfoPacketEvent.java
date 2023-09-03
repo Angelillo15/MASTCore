@@ -16,10 +16,9 @@ public class PlayerInfoPacketEvent extends Event implements Cancellable {
     @Getter
     private final EnumWrappers.PlayerInfoAction playerInfoAction;
     @Getter
-    private List<PlayerInfoData> infoDataList;
-    @Getter
     private final Player player;
-
+    @Getter
+    private List<PlayerInfoData> infoDataList;
     private boolean isCancelled = false;
 
     public PlayerInfoPacketEvent(Player paramPlayer, List<PlayerInfoData> paramList, EnumWrappers.PlayerInfoAction paramPlayerInfoAction) {
@@ -27,6 +26,10 @@ public class PlayerInfoPacketEvent extends Event implements Cancellable {
         this.infoDataList = paramList;
         this.playerInfoAction = paramPlayerInfoAction;
         this.player = paramPlayer;
+    }
+
+    public static HandlerList getHandlerList() {
+        return handlers;
     }
 
     @Override
@@ -42,10 +45,6 @@ public class PlayerInfoPacketEvent extends Event implements Cancellable {
     @NotNull
     @Override
     public HandlerList getHandlers() {
-        return handlers;
-    }
-
-    public static HandlerList getHandlerList() {
         return handlers;
     }
 }

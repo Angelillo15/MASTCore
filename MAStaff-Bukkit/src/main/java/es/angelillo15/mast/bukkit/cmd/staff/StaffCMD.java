@@ -34,6 +34,17 @@ public class StaffCMD implements CommandExecutor {
         }
     }
 
+    public static void sendHelp(CommandSender sender) {
+        sender.sendMessage(TextUtils.colorize("&6----------------Staff----------------"));
+        sender.sendMessage(TextUtils.colorize("&bAvailable Commands:"));
+        legacySubCommands.forEach(subCommand -> {
+            if(sender.hasPermission(subCommand.getPermission())){
+                sender.sendMessage(TextUtils.colorize("&b" + subCommand.getSyntax() + " &7- &f" + subCommand.getDescription()));
+            }
+        });
+
+    }
+
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if(!(sender instanceof Player)) return true;
@@ -57,16 +68,5 @@ public class StaffCMD implements CommandExecutor {
         }
         sendHelp(sender);
         return true;
-    }
-
-    public static void sendHelp(CommandSender sender) {
-        sender.sendMessage(TextUtils.colorize("&6----------------Staff----------------"));
-        sender.sendMessage(TextUtils.colorize("&bAvailable Commands:"));
-        legacySubCommands.forEach(subCommand -> {
-            if(sender.hasPermission(subCommand.getPermission())){
-                sender.sendMessage(TextUtils.colorize("&b" + subCommand.getSyntax() + " &7- &f" + subCommand.getDescription()));
-            }
-        });
-
     }
 }

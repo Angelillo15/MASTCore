@@ -34,6 +34,11 @@ public class CommandInteractionItem extends StaffItem implements IPlayerInteract
     }
 
     @Override
+    public void setItem(Player player) {
+
+    }
+
+    @Override
     public String getPermission() {
         return permission;
     }
@@ -41,10 +46,5 @@ public class CommandInteractionItem extends StaffItem implements IPlayerInteract
     @Override
     public int getSlot() {
         return slot;
-    }
-
-    @Override
-    public void setItem(Player player) {
-
     }
 }

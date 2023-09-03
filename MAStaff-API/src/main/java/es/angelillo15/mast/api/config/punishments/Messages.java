@@ -3,6 +3,12 @@ package es.angelillo15.mast.api.config.punishments;
 import es.angelillo15.mast.api.TextUtils;
 
 public class Messages {
+    public static String colorize(String message) {
+        return TextUtils.colorize(message)
+                .replace("{prefix}", Default.prefix()
+                ).replace("&", "§");
+    }
+
     public static class Default {
         public static String prefix() {
             return ConfigLoader.getMessages().getConfig().getString("Default.prefix");
@@ -391,11 +397,5 @@ public class Messages {
                 return colorize(ConfigLoader.getMessages().getConfig().getString("Commands.history.usage"));
             }
         }
-    }
-
-    public static String colorize(String message) {
-        return TextUtils.colorize(message)
-                .replace("{prefix}", Default.prefix()
-                ).replace("&", "§");
     }
 }

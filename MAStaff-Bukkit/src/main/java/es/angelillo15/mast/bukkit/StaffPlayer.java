@@ -42,6 +42,7 @@ import java.util.*;
 
 @SuppressWarnings({"deprecation", "UnstableApiUsage", "unchecked"})
 public class StaffPlayer implements IStaffPlayer {
+    private final Map<String, StaffItem> items = new HashMap<>();
     @Getter
     @Setter
     private boolean quit;
@@ -53,7 +54,6 @@ public class StaffPlayer implements IStaffPlayer {
     private Player player;
     private IGlowPlayer glowPlayer;
     private boolean vanished;
-    private final Map<String, StaffItem> items = new HashMap<>();
     private IVanishPlayer vanishPlayer;
 
     @SneakyThrows
@@ -162,6 +162,24 @@ public class StaffPlayer implements IStaffPlayer {
     @Override
     public Player getPlayer() {
         return this.player;
+    }
+
+    public StaffPlayer setPlayer(Player player) {
+        this.player = player;
+        if (Config.Addons.vanish()) this.vanishPlayer = new VanishPlayer(this);
+
+        if (VersionUtils.getBukkitVersion() > 8) {
+            if (Config.Addons.glow() &&
+                    !(MAStaff.getPlugin().getDescription().getPrefix() != null &&
+                            MAStaff.getPlugin().getDescription().getPrefix().toLowerCase().contains("lite")
+                    )
+            ) this.glowPlayer = new GlowPlayer(this);
+        }
+
+        playerInventoryFile = new File(MAStaff.getPlugin().getDataFolder().getAbsoluteFile() + "/data/staffMode/" + player.getUniqueId() + ".yml");
+        playerInventoryConfig = YamlConfiguration.loadConfiguration(playerInventoryFile);
+
+        return this;
     }
 
     @Override
@@ -464,24 +482,6 @@ public class StaffPlayer implements IStaffPlayer {
     @Override
     public IGlowPlayer getGlowPlayer() {
         return glowPlayer;
-    }
-
-    public StaffPlayer setPlayer(Player player) {
-        this.player = player;
-        if (Config.Addons.vanish()) this.vanishPlayer = new VanishPlayer(this);
-
-        if (VersionUtils.getBukkitVersion() > 8) {
-            if (Config.Addons.glow() &&
-                    !(MAStaff.getPlugin().getDescription().getPrefix() != null &&
-                            MAStaff.getPlugin().getDescription().getPrefix().toLowerCase().contains("lite")
-                    )
-            ) this.glowPlayer = new GlowPlayer(this);
-        }
-
-        playerInventoryFile = new File(MAStaff.getPlugin().getDataFolder().getAbsoluteFile() + "/data/staffMode/" + player.getUniqueId() + ".yml");
-        playerInventoryConfig = YamlConfiguration.loadConfiguration(playerInventoryFile);
-
-        return this;
     }
 
     public void removeEffects() {
