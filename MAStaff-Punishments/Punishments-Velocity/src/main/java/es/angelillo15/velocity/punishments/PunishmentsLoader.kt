@@ -8,7 +8,8 @@ import es.angelillo15.mast.api.addons.annotations.Addon
     version = Constants.VERSION,
     author = "Angelillo15",
     description = "An addon for MAStaff that adds punishments to the plugin",
-    loadOnScan = false
+    loadOnScan = false,
+    platform = Addon.AddonPlatform.VELOCITY
 )
 class PunishmentsLoader : MAStaffPunishments() {
 }
