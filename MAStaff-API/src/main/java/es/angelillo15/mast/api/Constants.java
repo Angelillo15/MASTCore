@@ -1,6 +1,5 @@
 package es.angelillo15.mast.api;
 
-import lombok.Getter;
 
 public class Constants {
     public static final String VERSION = "{version}";
@@ -14,6 +13,4 @@ public class Constants {
     public static String getVersion() {
         return VERSION;
     }
-
-
 }
