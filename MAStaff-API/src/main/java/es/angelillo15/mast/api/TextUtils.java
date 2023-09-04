@@ -78,6 +78,8 @@ public class TextUtils {
   }
 
   public static void colorize(String text, Audience... audience) {
+    if (text == null || text.isEmpty()) return;
+
     for (Audience player : audience) {
       player.sendMessage(toComponent(text));
     }

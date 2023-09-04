@@ -1,6 +1,8 @@
 package es.angelillo15.mast.bukkit
 
+import com.google.inject.Inject
 import com.google.inject.Singleton
+import es.angelillo15.mast.api.ILogger
 import es.angelillo15.mast.api.IServerUtils
 import es.angelillo15.mast.api.TextUtils
 import es.angelillo15.mast.api.thread.execute
@@ -9,6 +11,8 @@ import java.util.*
 
 @Singleton
 class ServerUtils : IServerUtils {
+  @Inject
+  lateinit var logger: ILogger
   override fun isOnline(uuid: UUID): Boolean {
     val player = Bukkit.getPlayer(uuid);
 
@@ -46,12 +50,16 @@ class ServerUtils : IServerUtils {
   }
 
   override fun broadcastMessage(message: String, permission: String) {
+    if (message.isEmpty()) return
+
     execute {
       Bukkit.getOnlinePlayers().forEach { player ->
         if (!player.hasPermission(permission)) return@forEach
 
         TextUtils.getAudience(player).sendMessage(TextUtils.toComponent(message))
       }
+
+      logger.info(message)
     }
   }
 

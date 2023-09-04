@@ -39,6 +39,8 @@ class BungeeServerUtils : IServerUtils {
   }
 
   override fun broadcastMessage(message: String, permission: String) {
+    if (message.isEmpty()) return
+
     execute {
       ProxyServer.getInstance().players.forEach { player ->
         if (player.hasPermission(permission))

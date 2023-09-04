@@ -42,6 +42,8 @@ class VelocityServerUtils : IServerUtils {
   }
 
   override fun broadcastMessage(message: String, permission: String) {
+    if (message.isEmpty()) return
+
     execute {
       val players = proxy.allPlayers.filter { player -> player.hasPermission(permission) }
 
