@@ -17,6 +17,7 @@ import es.angelillo15.mast.api.items.StaffItem;
 import es.angelillo15.mast.api.managers.freeze.FreezeManager;
 import es.angelillo15.mast.api.player.IGlowPlayer;
 import es.angelillo15.mast.api.player.IVanishPlayer;
+import es.angelillo15.mast.api.utils.MAStaffInject;
 import es.angelillo15.mast.api.utils.VersionUtils;
 import es.angelillo15.mast.bukkit.cmd.utils.CommandManager;
 import es.angelillo15.mast.bukkit.gui.StaffVault;
@@ -324,50 +325,37 @@ public class StaffPlayer implements IStaffPlayer {
   public void staffModeAsyncInventoryChecker() {
     if (!Config.StaffVault.enabled()) return;
 
-    new Thread(
-            () -> {
-              MAStaffInstance.getLogger()
-                  .debug("Starting staff mode inventory checker for " + player.getName());
+    new Thread(() -> {
+      MAStaffInstance.getLogger().debug("Starting staff mode inventory checker for " + player.getName());
 
-              while (isStaffMode()) {
-                try {
-                  Thread.sleep(Config.StaffVault.checkTime() * 1000L);
-                } catch (InterruptedException e) {
-                  e.printStackTrace();
-                }
-
-                if (!player.isOnline() || !isStaffMode()) break;
-
-                MAStaffInstance.getLogger().debug("Checking inventory for " + player.getName());
-
-                player
-                    .getInventory()
-                    .forEach(
-                        itemStack -> {
-                          if (itemStack == null) return;
-                          if (itemStack.getType() == Material.AIR) return;
-
-                          if (itemStack.getItemMeta() == null) {
-                            addItemToStaffVault(itemStack);
-                            return;
-                          }
-
-                          if (!(itemStack.getItemMeta().hasDisplayName())) {
-                            addItemToStaffVault(itemStack);
-                            return;
-                          }
-
-                          if (!(items.containsKey(itemStack.getItemMeta().getDisplayName()))) {
-                            addItemToStaffVault(itemStack);
-                            return;
-                          }
-                        });
-
-                player.getInventory().clear();
-                setItems();
-              }
-            })
-        .start();
+      while (isStaffMode()) {
+        try {
+          Thread.sleep(Config.StaffVault.checkTime() * 1000L);
+        } catch (InterruptedException e) {
+          MAStaffInstance.getLogger().debug("Error while sleeping thread for " + player.getName());
+        }
+        if (!player.isOnline() || !isStaffMode()) break;
+        MAStaffInstance.getLogger().debug("Checking inventory for " + player.getName());
+        player.getInventory().forEach(itemStack -> {
+          if (itemStack == null) return;
+          if (itemStack.getType() == Material.AIR) return;
+          if (itemStack.getItemMeta() == null) {
+            addItemToStaffVault(itemStack);
+            return;
+          }
+          if (!(itemStack.getItemMeta().hasDisplayName())) {
+            addItemToStaffVault(itemStack);
+            return;
+          }
+          if (!(items.containsKey(itemStack.getItemMeta().getDisplayName()))) {
+            addItemToStaffVault(itemStack);
+            return;
+          }
+        });
+        player.getInventory().clear();
+        setItems();
+      }
+    }).start();
   }
 
   @SneakyThrows
