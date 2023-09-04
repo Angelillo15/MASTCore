@@ -19,6 +19,7 @@ class HelpOP : CooldownCommand(60, CommonMessages.HelpOp.cooldown(), CommonConfi
   override fun onCooldownCommand(sender: CommandSender, label: String, args: Array<String>) {
     if (args.isEmpty()) {
       sender.sendMessage(CommonMessages.HelpOp.correctUse())
+      invalidateCooldown(sender)
       return
     }
 
