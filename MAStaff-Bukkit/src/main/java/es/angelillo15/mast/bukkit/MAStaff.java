@@ -142,6 +142,8 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance<JavaPlugin> {
         registerListener(injector.getInstance(OnItemClickInteract.class));
         registerListener(injector.getInstance(OnJoinLeave.class));
         registerListener(injector.getInstance(OnItemDrop.class));
+        registerListener(injector.getInstance(OnEntityTarget.class));
+        registerListener(injector.getInstance(OnFoodLevelChange.class));
         if (Config.Freeze.enabled()) registerListener(injector.getInstance(FreezeListener.class));
         registerListener(injector.getInstance(OnItemGet.class));
         registerListener(injector.getInstance(OnPlayerInteractAtEntityEvent.class));
