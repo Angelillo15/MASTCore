@@ -78,9 +78,11 @@ public class OnJoinLeave implements Listener {
     if (staffPlayer.existsData() && staffPlayer.isStaffMode()) {
       staffPlayer.clearInventory();
       staffPlayer.restoreInventory();
+      staffPlayer.restoreHealthAndFood();
+      player.setAllowFlight(false);
+      player.setInvulnerable(false);
+      staffPlayer.changeGamemode(GameMode.SURVIVAL);
     }
-
-    staffPlayer.changeGamemode(GameMode.SURVIVAL);
 
     staffManager.removeStaffPlayer(staffPlayer);
   }

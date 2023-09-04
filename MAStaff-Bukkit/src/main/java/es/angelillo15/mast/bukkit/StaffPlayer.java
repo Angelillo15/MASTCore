@@ -27,6 +27,7 @@ import es.angelillo15.mast.glow.GlowPlayer;
 import es.angelillo15.mast.vanish.VanishPlayer;
 import io.papermc.lib.PaperLib;
 import java.io.File;
+import java.io.IOException;
 import java.util.*;
 import javax.annotation.Nullable;
 import lombok.Getter;
@@ -123,12 +124,15 @@ public class StaffPlayer implements IStaffPlayer {
 
   public void disableStaffMode() {
     TextUtils.colorize(Messages.GET_STAFF_MODE_DISABLE_MESSAGE(), player);
+    player.setAllowFlight(false);
+    player.setInvulnerable(false);
     removeEffects();
     setModeData(false);
     clearInventory();
     CommonQueries.updateAsync(player.getUniqueId(), 0);
     staffMode = false;
     restoreInventory();
+    restoreHealthAndFood();
     disableVanish();
     changeGamemode(GameMode.SURVIVAL);
     if (!quit)
@@ -151,12 +155,15 @@ public class StaffPlayer implements IStaffPlayer {
     clearInventory();
     setItems();
     CommonQueries.updateAsync(player.getUniqueId(), 1);
-    changeGamemode(GameMode.CREATIVE);
+    changeGamemode(GameMode.SURVIVAL);
     if (saveInventory)
       StaffUtils.asyncBroadcastMessage(
           Messages.GET_VANISH_LEAVE_MESSAGE().replace("{player}", player.getName()));
     setGlowing(true);
     addEffects();
+    player.setAllowFlight(true);
+    player.setInvulnerable(true);
+    saveHealthAndFood();
     saveLocation();
     staffModeAsyncInventoryChecker();
     Bukkit.getPluginManager().callEvent(new StaffEnableEvent(this));
@@ -504,6 +511,21 @@ public class StaffPlayer implements IStaffPlayer {
   public void addEffects() {
     if (!Config.nighVision()) return;
 
-    player.addPotionEffect(new PotionEffect(PotionEffectType.NIGHT_VISION, 999999, 1));
+    player.addPotionEffect(new PotionEffect(PotionEffectType.NIGHT_VISION, 99999999, 1));
+  }
+
+  @Override
+  public void saveHealthAndFood() {
+    playerInventoryConfig.set("health", player.getHealth());
+    playerInventoryConfig.set("food", player.getFoodLevel());
+    player.setHealth(20);
+    player.setFoodLevel(20);
+  }
+
+  @Override
+  public void restoreHealthAndFood() {
+    if (!playerInventoryConfig.contains("health")) return;
+    player.setHealth(playerInventoryConfig.getDouble("health"));
+    player.setFoodLevel(playerInventoryConfig.getInt("food"));
   }
 }
