@@ -1,18 +1,20 @@
 package es.angelillo15.mast.api.chat.api.chat;
 
 import com.google.common.base.Preconditions;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 import es.angelillo15.mast.api.chat.api.chat.hover.content.Content;
 import es.angelillo15.mast.api.chat.api.chat.hover.content.Entity;
 import es.angelillo15.mast.api.chat.api.chat.hover.content.Item;
 import es.angelillo15.mast.api.chat.api.chat.hover.content.Text;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import es.angelillo15.mast.api.chat.chat.ComponentSerializer;
 
 @Getter
 @ToString
@@ -70,31 +72,6 @@ public final class HoverEvent
         this.legacy = true;
     }
 
-    /**
-     * Gets the appropriate {@link Content} class for an {@link Action} for the
-     * GSON serialization
-     *
-     * @param action the action to get for
-     * @param array if to return the arrayed class
-     * @return the class
-     */
-    public static Class<?> getClass(HoverEvent.Action action, boolean array)
-    {
-        Preconditions.checkArgument( action != null, "action" );
-
-        switch ( action )
-        {
-            case SHOW_TEXT:
-                return ( array ) ? Text[].class : Text.class;
-            case SHOW_ENTITY:
-                return ( array ) ? Entity[].class : Entity.class;
-            case SHOW_ITEM:
-                return ( array ) ? Item[].class : Item.class;
-            default:
-                throw new UnsupportedOperationException( "Action '" + action.name() + " not supported" );
-        }
-    }
-
     @Deprecated
     public BaseComponent[] getValue()
     {
@@ -132,5 +109,30 @@ public final class HoverEvent
          */
         @Deprecated
         SHOW_ACHIEVEMENT,
+    }
+
+    /**
+     * Gets the appropriate {@link Content} class for an {@link Action} for the
+     * GSON serialization
+     *
+     * @param action the action to get for
+     * @param array if to return the arrayed class
+     * @return the class
+     */
+    public static Class<?> getClass(HoverEvent.Action action, boolean array)
+    {
+        Preconditions.checkArgument( action != null, "action" );
+
+        switch ( action )
+        {
+            case SHOW_TEXT:
+                return ( array ) ? Text[].class : Text.class;
+            case SHOW_ENTITY:
+                return ( array ) ? Entity[].class : Entity.class;
+            case SHOW_ITEM:
+                return ( array ) ? Item[].class : Item.class;
+            default:
+                throw new UnsupportedOperationException( "Action '" + action.name() + " not supported" );
+        }
     }
 }

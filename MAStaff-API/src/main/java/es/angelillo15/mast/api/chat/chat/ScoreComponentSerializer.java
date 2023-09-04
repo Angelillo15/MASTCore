@@ -7,8 +7,9 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
-import es.angelillo15.mast.api.chat.api.chat.ScoreComponent;
 import java.lang.reflect.Type;
+import es.angelillo15.mast.api.chat.api.chat.ScoreComponent;
+import es.angelillo15.mast.api.chat.chat.BaseComponentSerializer;
 
 public class ScoreComponentSerializer extends BaseComponentSerializer implements JsonSerializer<ScoreComponent>, JsonDeserializer<ScoreComponent>
 {

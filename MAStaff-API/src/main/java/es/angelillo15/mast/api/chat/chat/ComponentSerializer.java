@@ -8,6 +8,8 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import com.google.gson.JsonParser;
+import java.lang.reflect.Type;
+import java.util.Set;
 import es.angelillo15.mast.api.chat.api.chat.BaseComponent;
 import es.angelillo15.mast.api.chat.api.chat.ItemTag;
 import es.angelillo15.mast.api.chat.api.chat.KeybindComponent;
@@ -21,13 +23,10 @@ import es.angelillo15.mast.api.chat.api.chat.hover.content.Item;
 import es.angelillo15.mast.api.chat.api.chat.hover.content.ItemSerializer;
 import es.angelillo15.mast.api.chat.api.chat.hover.content.Text;
 import es.angelillo15.mast.api.chat.api.chat.hover.content.TextSerializer;
-import java.lang.reflect.Type;
-import java.util.Set;
 
 public class ComponentSerializer implements JsonDeserializer<BaseComponent>
 {
 
-    public static final ThreadLocal<Set<BaseComponent>> serializedComponents = new ThreadLocal<Set<BaseComponent>>();
     private static final JsonParser JSON_PARSER = new JsonParser();
     private static final Gson gson = new GsonBuilder().
             registerTypeAdapter( BaseComponent.class, new ComponentSerializer() ).
@@ -41,6 +40,8 @@ public class ComponentSerializer implements JsonDeserializer<BaseComponent>
             registerTypeAdapter( Item.class, new ItemSerializer() ).
             registerTypeAdapter( ItemTag.class, new ItemTag.Serializer() ).
             create();
+
+    public static final ThreadLocal<Set<BaseComponent>> serializedComponents = new ThreadLocal<Set<BaseComponent>>();
 
     public static BaseComponent[] parse(String json)
     {

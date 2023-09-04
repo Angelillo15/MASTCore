@@ -66,7 +66,7 @@ public class TextUtils {
       finalText.append(text);
     }
 
-    return ChatColor.translateAlternateColorCodes('&', finalText.toString());
+    return simpleColorize(finalText.toString());
   }
 
   public static void colorize(String text, Player... audience) {
@@ -106,7 +106,7 @@ public class TextUtils {
     }
     if (uptime > HOUR) {
       long hours = (uptime - uptime % HOUR) / HOUR;
-      if (buf.length() > 0) {
+      if (!buf.isEmpty()) {
         buf.append(", ");
       }
       buf.append(hours);
@@ -115,7 +115,7 @@ public class TextUtils {
     }
     if (uptime > MINUTE) {
       long minutes = (uptime - uptime % MINUTE) / MINUTE;
-      if (buf.length() > 0) {
+      if (!buf.isEmpty()) {
         buf.append(", ");
       }
       buf.append(minutes);
@@ -124,7 +124,7 @@ public class TextUtils {
     }
     if (uptime > SECOND) {
       long seconds = (uptime - uptime % SECOND) / SECOND;
-      if (buf.length() > 0) {
+      if (!buf.isEmpty()) {
         buf.append(", ");
       }
       buf.append(seconds);
@@ -135,12 +135,10 @@ public class TextUtils {
   }
 
   public static String toMM(String str) {
-    StringBuilder sb = new StringBuilder(str);
-    Matcher m = ChatColor.STRIP_COLOR_PATTERN.matcher(sb);
-    while (m.find()) {
-      sb.replace(m.start(), m.end(), sb.substring(m.start(), m.end()).toLowerCase());
-    }
-    return sb.toString()
+    if (!str.contains("&") && !str.contains("§")) return str;
+
+    return str
+        .replace("§", "&")
         .replace("&0", "<reset><black>")
         .replace("&1", "<reset><dark_blue>")
         .replace("&2", "<reset><dark_green>")
@@ -162,29 +160,7 @@ public class TextUtils {
         .replace("&m", "<st>")
         .replace("&n", "<u>")
         .replace("&r", "<reset>")
-        .replace("&o", "<i>")
-        .replace("§0", "<reset><black>")
-        .replace("§1", "<reset><dark_blue>")
-        .replace("§2", "<reset><dark_green>")
-        .replace("§3", "<reset><dark_aqua>")
-        .replace("§4", "<reset><dark_red>")
-        .replace("§5", "<reset><dark_purple>")
-        .replace("§6", "<reset><gold>")
-        .replace("§7", "<reset><grey>")
-        .replace("§8", "<reset><dark_grey>")
-        .replace("§9", "<reset><blue>")
-        .replace("§a", "<reset><green>")
-        .replace("§b", "<reset><aqua>")
-        .replace("§c", "<reset><red>")
-        .replace("§d", "<reset><light_purple>")
-        .replace("§e", "<reset><yellow>")
-        .replace("§f", "<reset><white>")
-        .replace("§k", "<obf>")
-        .replace("§l", "<b>")
-        .replace("§m", "<st>")
-        .replace("§n", "<u>")
-        .replace("§r", "<reset>")
-        .replace("§o", "<i>");
+        .replace("&o", "<i>");
   }
 
   public static Component toComponent(String str) {

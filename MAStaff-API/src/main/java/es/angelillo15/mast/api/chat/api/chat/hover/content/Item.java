@@ -1,11 +1,11 @@
 package es.angelillo15.mast.api.chat.api.chat.hover.content;
 
-import es.angelillo15.mast.api.chat.api.chat.HoverEvent;
-import es.angelillo15.mast.api.chat.api.chat.ItemTag;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
+import es.angelillo15.mast.api.chat.api.chat.HoverEvent;
+import es.angelillo15.mast.api.chat.api.chat.ItemTag;
 
 @Data
 @AllArgsConstructor
