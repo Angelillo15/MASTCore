@@ -40,6 +40,14 @@ public class Config {
     return ConfigLoader.getConfig().getConfig().getStringList("Config.commandsOnExit");
   }
 
+  public static boolean customPotionEffects() {
+    return ConfigLoader.getConfig().getConfig().getBoolean("Config.customPotionEffects");
+  }
+
+  public static List<String> potionEffects() {
+    return ConfigLoader.getConfig().getConfig().getStringList("Config.potionEffects");
+  }
+
   public static boolean nighVision() {
     return ConfigLoader.getConfig().getConfig().getBoolean("Config.nightVision");
   }
