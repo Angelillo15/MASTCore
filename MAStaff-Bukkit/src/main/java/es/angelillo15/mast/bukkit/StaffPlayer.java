@@ -506,12 +506,52 @@ public class StaffPlayer implements IStaffPlayer {
 
   public void removeEffects() {
     player.removePotionEffect(PotionEffectType.NIGHT_VISION);
+    getPotionEffectType().forEach(potionEffectType -> player.removePotionEffect(potionEffectType));
   }
 
   public void addEffects() {
     if (!Config.nighVision()) return;
 
     player.addPotionEffect(new PotionEffect(PotionEffectType.NIGHT_VISION, 99999999, 1));
+
+    if (!Config.customPotionEffects()) return;
+
+    Config.potionEffects().forEach(potionEffect -> {
+      String[] split = potionEffect.split(":");
+      String potionEffectName = split[0];
+      int amplifier = Integer.parseInt(split[1]);
+      int duration = Integer.parseInt(split[2]);
+
+      PotionEffectType potionEffectType = PotionEffectType.getByName(potionEffectName);
+
+      if (potionEffectType == null) {
+        MAStaffInstance.getLogger().error("Potion effect " + potionEffectName + " not found");
+        return;
+      }
+
+      PotionEffect effect = new PotionEffect(potionEffectType, duration, amplifier);
+      player.addPotionEffect(effect);
+    });
+  }
+
+  public List<PotionEffectType> getPotionEffectType() {
+    List<PotionEffectType> potionEffectTypes = new ArrayList<>();
+
+    Config.potionEffects().forEach(potionEffect -> {
+      String[] split = potionEffect.split(":");
+      String potionEffectName = split[0];
+
+      PotionEffectType potionEffectType = PotionEffectType.getByName(potionEffectName);
+
+      if (potionEffectType == null) {
+        MAStaffInstance.getLogger().error("Potion effect " + potionEffectName + " not found");
+        return;
+      }
+
+      potionEffectTypes.add(potionEffectType);
+    });
+
+    return potionEffectTypes;
   }
 
   @Override
