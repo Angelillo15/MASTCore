@@ -167,4 +167,14 @@ public interface IStaffPlayer {
      * @return the glow player or null if is disabled
      */
     IGlowPlayer getGlowPlayer();
+
+    /**
+     * Save health and food
+     */
+    void saveHealthAndFood();
+
+    /**
+     * Restore health and food
+     */
+    void restoreHealthAndFood();
 }
