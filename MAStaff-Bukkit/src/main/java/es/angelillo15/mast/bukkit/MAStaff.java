@@ -3,26 +3,28 @@ package es.angelillo15.mast.bukkit;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import es.angelillo15.mast.api.*;
+import es.angelillo15.mast.api.config.bukkit.Config;
+import es.angelillo15.mast.api.config.bukkit.ConfigLoader;
+import es.angelillo15.mast.api.config.bukkit.Messages;
 import es.angelillo15.mast.api.database.DataProvider;
+import es.angelillo15.mast.api.database.PluginConnection;
 import es.angelillo15.mast.api.inject.StaticMembersInjector;
-import es.angelillo15.mast.api.managers.LegacyUserDataManager;
 import es.angelillo15.mast.api.managers.LegacyStaffPlayersManagers;
+import es.angelillo15.mast.api.managers.LegacyUserDataManager;
 import es.angelillo15.mast.api.managers.StaffManager;
 import es.angelillo15.mast.api.thread.AsyncThreadKt;
 import es.angelillo15.mast.api.utils.BukkitUtils;
+import es.angelillo15.mast.api.utils.PermsUtils;
 import es.angelillo15.mast.bukkit.addons.AddonsLoader;
 import es.angelillo15.mast.bukkit.cmd.FreezeCMD;
 import es.angelillo15.mast.bukkit.cmd.StaffChatCMD;
 import es.angelillo15.mast.bukkit.cmd.mast.MAStaffCMD;
 import es.angelillo15.mast.bukkit.cmd.staff.StaffCMD;
-import es.angelillo15.mast.api.config.bukkit.Config;
-import es.angelillo15.mast.api.config.bukkit.ConfigLoader;
-import es.angelillo15.mast.api.config.bukkit.Messages;
 import es.angelillo15.mast.bukkit.inject.BukkitInjector;
 import es.angelillo15.mast.bukkit.legacy.BukkitLegacyLoader;
 import es.angelillo15.mast.bukkit.listener.FreezeListener;
-import es.angelillo15.mast.bukkit.listener.clickListeners.OnItemClick;
 import es.angelillo15.mast.bukkit.listener.OnJoin;
+import es.angelillo15.mast.bukkit.listener.clickListeners.OnItemClick;
 import es.angelillo15.mast.bukkit.listener.clickListeners.OnItemClickInteract;
 import es.angelillo15.mast.bukkit.listener.staffmode.*;
 import es.angelillo15.mast.bukkit.listener.staffmode.achivement.OnAchievement;
@@ -33,9 +35,14 @@ import es.angelillo15.mast.bukkit.loaders.PunishmentGUILoader;
 import es.angelillo15.mast.bukkit.utils.FreezeUtils;
 import es.angelillo15.mast.bukkit.utils.Logger;
 import es.angelillo15.mast.bukkit.utils.Metrics;
-import es.angelillo15.mast.api.utils.PermsUtils;
 import es.angelillo15.mast.bukkit.utils.scheduler.Scheduler;
 import es.angelillo15.mast.papi.MAStaffExtension;
+import io.papermc.lib.PaperLib;
+import java.io.File;
+import java.io.InputStream;
+import java.sql.Connection;
+import java.util.ArrayList;
+import java.util.Objects;
 import kong.unirest.HttpResponse;
 import kong.unirest.Unirest;
 import lombok.Getter;
@@ -44,25 +51,19 @@ import mc.obliviate.inventory.InventoryAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.HandlerList;
-import org.bukkit.plugin.PluginManager;
+import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
-import es.angelillo15.mast.api.database.PluginConnection;
 import org.simpleyaml.configuration.file.YamlFile;
-
-import java.io.File;
-import java.io.InputStream;
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.util.Objects;
 
 public class MAStaff extends JavaPlugin implements MAStaffInstance<JavaPlugin> {
     @Getter
     static final int version = Integer.parseInt(Bukkit.getBukkitVersion().split("-")[0].split("\\.")[1]);
     @Getter
+    static boolean isFree = false;
+    @Getter
     private static MAStaff plugin;
     @Getter
     private static boolean glowEnabled = false;
-    private boolean debug = false;
     private static ILogger logger;
     @Getter
     private static PluginConnection pluginConnection;
@@ -72,9 +73,9 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance<JavaPlugin> {
     private static int currentVersion;
     @Getter
     private static int spiVersion;
+    private final ArrayList<Listener> listeners = new ArrayList<>();
+    private boolean debug = false;
     private Injector injector;
-    @Getter
-    static boolean isFree = false;
 
     @Override
     public void onEnable() {
@@ -134,25 +135,32 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance<JavaPlugin> {
 
     @Override
     public void registerListeners() {
-        PluginManager pm = Bukkit.getPluginManager();
-        pm.registerEvents(injector.getInstance(OnJoin.class), this);
-        pm.registerEvents(injector.getInstance(OnItemClick.class), this);
-        pm.registerEvents(injector.getInstance(OnItemDrop.class), this);
-        pm.registerEvents(injector.getInstance(OnInventoryClick.class), this);
-        pm.registerEvents(injector.getInstance(OnItemClickInteract.class), this);
-        pm.registerEvents(injector.getInstance(OnJoinLeave.class), this);
-        pm.registerEvents(injector.getInstance(OnItemDrop.class), this);
-        if (Config.Freeze.enabled()) pm.registerEvents(injector.getInstance(FreezeListener.class), this);
-        pm.registerEvents(injector.getInstance(OnItemGet.class), this);
-        pm.registerEvents(injector.getInstance(OnPlayerInteractAtEntityEvent.class), this);
-        pm.registerEvents(injector.getInstance(OnAttack.class), this);
-        if (Config.silentOpenChest()) pm.registerEvents(injector.getInstance(OnOpenChest.class), this);
-        if (version >= 19) pm.registerEvents(injector.getInstance(OnBlockReceiveGameEvent.class), this);
-        if (version >= 9) pm.registerEvents(injector.getInstance(OnSwapHand.class), this);
-        if (version >= 9) pm.registerEvents(injector.getInstance(OnAchievement.class), this);
+        registerListener(injector.getInstance(OnJoin.class));
+        registerListener(injector.getInstance(OnItemClick.class));
+        registerListener(injector.getInstance(OnItemDrop.class));
+        registerListener(injector.getInstance(OnInventoryClick.class));
+        registerListener(injector.getInstance(OnItemClickInteract.class));
+        registerListener(injector.getInstance(OnJoinLeave.class));
+        registerListener(injector.getInstance(OnItemDrop.class));
+        registerListener(injector.getInstance(OnEntityTarget.class));
+        registerListener(injector.getInstance(OnFoodLevelChange.class));
+        if (Config.Freeze.enabled()) registerListener(injector.getInstance(FreezeListener.class));
+        registerListener(injector.getInstance(OnItemGet.class));
+        registerListener(injector.getInstance(OnPlayerInteractAtEntityEvent.class));
+        registerListener(injector.getInstance(OnAttack.class));
+        if (Config.silentOpenChest()) registerListener(injector.getInstance(OnOpenChest.class));
+        if (version >= 19) registerListener(injector.getInstance(OnBlockReceiveGameEvent.class));
+        if (version >= 9) registerListener(injector.getInstance(OnSwapHand.class));
+        if (version >= 9 && PaperLib.isPaper())
+            registerListener(injector.getInstance(OnAchievement.class));
         FreezeUtils.setupMessageSender();
         this.getServer().getMessenger().registerOutgoingPluginChannel(this, "mastaff:staff");
         this.getServer().getMessenger().registerOutgoingPluginChannel(this, "mastaff:commands");
+    }
+
+    public void registerListener(Listener listener) {
+        listeners.add(listener);
+        Bukkit.getPluginManager().registerEvents(listener, this);
     }
 
     @Override
@@ -163,18 +171,14 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance<JavaPlugin> {
         );
         try {
             switch (dataProvider) {
-                case MYSQL:
-                    pluginConnection = new PluginConnection(
-                            config.getString("Database.host"),
-                            config.getInt("Database.port"),
-                            config.getString("Database.database"),
-                            config.getString("Database.user"),
-                            config.getString("Database.password")
-                    );
-                    break;
-                case SQLITE:
-                    loadSqlite();
-                    break;
+                case MYSQL -> pluginConnection = new PluginConnection(
+                        config.getString("Database.host"),
+                        config.getInt("Database.port"),
+                        config.getString("Database.database"),
+                        config.getString("Database.user"),
+                        config.getString("Database.password")
+                );
+                case SQLITE -> loadSqlite();
             }
 
             connection = PluginConnection.getConnection();
@@ -230,24 +234,25 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance<JavaPlugin> {
 
     @Override
     public void unregisterCommands() {
-        getCommand("staff").setExecutor(null);
-        getCommand("freeze").setExecutor(null);
-        getCommand("mast").setExecutor(null);
-        getCommand("staffchat").setExecutor(null);
+        Objects.requireNonNull(getCommand("staff")).setExecutor(null);
+        Objects.requireNonNull(getCommand("freeze")).setExecutor(null);
+        Objects.requireNonNull(getCommand("mast")).setExecutor(null);
+        Objects.requireNonNull(getCommand("staffchat")).setExecutor(null);
     }
 
     @Override
     public void unregisterListeners() {
-        HandlerList.unregisterAll(this);
+        HandlerList.getHandlerLists().forEach( listener -> {
+           listeners.forEach(listener::unregister);
+        });
+
+        listeners.clear();
     }
 
     @Override
+    @SneakyThrows
     public void unloadDatabase() {
-        try {
-            connection.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        connection.close();
         logger.info(TextUtils.colorize("&aDisconnected from the {type} database successfully.")
                 .replace("{type}", PluginConnection.getDataProvider().name())
         );
@@ -283,8 +288,6 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance<JavaPlugin> {
         registerCommands();
         logger.debug("Registering Listeners...");
         registerListeners();
-        logger.debug("Loading minimessage");
-        setupMiniMessage();
         logger.debug("reloading addons...");
         AddonsLoader.reload();
         logger.debug("Checking for updates...");

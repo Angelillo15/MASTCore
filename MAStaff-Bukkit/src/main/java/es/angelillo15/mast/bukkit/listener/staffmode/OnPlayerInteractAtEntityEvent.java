@@ -7,12 +7,11 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 
 public class OnPlayerInteractAtEntityEvent implements Listener {
-    @Inject
-    private StaffManager staffManager;
+  @Inject private StaffManager staffManager;
 
-    @EventHandler
-    public void onPlayerInteractAtEntityEvent(PlayerInteractAtEntityEvent event) {
-        if (staffManager.isStaffPlayer(event.getPlayer()) && staffManager.getStaffPlayer(event.getPlayer()).isStaffMode())
-            event.setCancelled(true);
-    }
+  @EventHandler
+  public void onPlayerInteractAtEntityEvent(PlayerInteractAtEntityEvent event) {
+    if (staffManager.isStaffPlayer(event.getPlayer())
+        && staffManager.getStaffPlayer(event.getPlayer()).isStaffMode()) event.setCancelled(true);
+  }
 }

@@ -1,69 +1,70 @@
 package es.angelillo15.mast.api.punishments;
 
 public class Punishment {
-    private int id;
-    private final PunishmentsTypes type;
+  private final PunishmentsTypes type;
+  private final String player;
+  private final String punisher;
+  private final String reason;
+  private final long time;
+  private final long duration;
+  private int id;
 
-    private final String player;
+  public Punishment(
+      PunishmentsTypes type,
+      String player,
+      String punisher,
+      String reason,
+      long time,
+      long duration) {
+    this.type = type;
+    this.player = player;
+    this.punisher = punisher;
+    this.reason = reason;
+    this.time = time;
+    this.duration = duration;
+  }
 
-    private final String punisher;
+  public PunishmentsTypes getType() {
+    return type;
+  }
 
-    private final String reason;
+  public String getPlayer() {
+    return player;
+  }
 
-    private final long time;
+  public String getPunisher() {
+    return punisher;
+  }
 
-    private final long duration;
+  public String getReason() {
+    return reason;
+  }
 
-    public Punishment(PunishmentsTypes type, String player, String punisher, String reason, long time, long duration) {
-        this.type = type;
-        this.player = player;
-        this.punisher = punisher;
-        this.reason = reason;
-        this.time = time;
-        this.duration = duration;
-    }
+  public long getTime() {
+    return time;
+  }
 
-    public PunishmentsTypes getType() {
-        return type;
-    }
+  public long getDuration() {
+    return duration;
+  }
 
-    public String getPlayer() {
-        return player;
-    }
+  public boolean isPermanent() {
+    return duration == -1;
+  }
 
-    public String getPunisher() {
-        return punisher;
-    }
+  public boolean isExpired() {
+    return !isPermanent() && System.currentTimeMillis() > time + duration;
+  }
 
-    public String getReason() {
-        return reason;
-    }
+  public boolean isTemp() {
+    return !isPermanent() && !isExpired();
+  }
 
-    public long getTime() {
-        return time;
-    }
+  public long getRemainingTime() {
+    return time + duration - System.currentTimeMillis();
+  }
 
-    public long getDuration() {
-        return duration;
-    }
-
-    public boolean isPermanent() {
-        return duration == -1;
-    }
-
-    public boolean isExpired() {
-        return !isPermanent() && System.currentTimeMillis() > time + duration;
-    }
-
-    public boolean isTemp() {
-        return !isPermanent() && !isExpired();
-    }
-
-    public long getRemainingTime() {
-        return time + duration - System.currentTimeMillis();
-    }
-
-    public int getId() {
-        return id;
-    }
+  public int getId() {
+    return id;
+  }
 }

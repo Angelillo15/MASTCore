@@ -5,7 +5,7 @@ import net.kyori.adventure.platform.bungeecord.BungeeAudiences;
 import net.md_5.bungee.api.plugin.Plugin;
 
 public class BungeeUtils {
-    public static void setAudienceBungee(Plugin plugin) {
-        TextUtils.setAudienceProvider(BungeeAudiences.create(plugin));
-    }
+  public static void setAudienceBungee(Plugin plugin) {
+    TextUtils.setAudienceProvider(BungeeAudiences.create(plugin));
+  }
 }

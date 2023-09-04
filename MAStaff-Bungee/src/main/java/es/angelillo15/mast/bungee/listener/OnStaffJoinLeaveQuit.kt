@@ -9,42 +9,42 @@ import net.md_5.bungee.api.event.ServerSwitchEvent
 import net.md_5.bungee.api.plugin.Listener
 import net.md_5.bungee.event.EventHandler
 
-class OnStaffJoinLeaveQuit : Listener, StaffJoinLeaveChangeHandler()  {
-    @Inject
-    private lateinit var previousServer: PreviousServerManager
+class OnStaffJoinLeaveQuit : Listener, StaffJoinLeaveChangeHandler() {
+  @Inject
+  private lateinit var previousServer: PreviousServerManager
 
-    @EventHandler
-    fun onStaffJoin(event: PostLoginEvent) {
-        val player = event.player
+  @EventHandler
+  fun onStaffJoin(event: PostLoginEvent) {
+    val player = event.player
 
-        if (!player.hasPermission("mast.staff.join")) {
-            return;
-        }
-
-        staffJoin(player.name)
+    if (!player.hasPermission("mast.staff.join")) {
+      return;
     }
 
-    @EventHandler
-    fun onStaffLeave(event: PlayerDisconnectEvent) {
-        val player = event.player
+    staffJoin(player.name)
+  }
 
-        if (!player.hasPermission("mast.staff.leave")) {
-            return;
-        }
+  @EventHandler
+  fun onStaffLeave(event: PlayerDisconnectEvent) {
+    val player = event.player
 
-        staffLeave(player.name)
+    if (!player.hasPermission("mast.staff.leave")) {
+      return;
     }
 
-    @EventHandler
-    fun onServerSwitch(event: ServerSwitchEvent) {
-        val player = event.player
+    staffLeave(player.name)
+  }
 
-        if (!player.hasPermission("mast.staff.change")) {
-            return;
-        }
+  @EventHandler
+  fun onServerSwitch(event: ServerSwitchEvent) {
+    val player = event.player
 
-        staffSwitch(player.name, event.player.server.info.name)
-
-        previousServer.setPreviousServer(player.name, event.player.server.info.name)
+    if (!player.hasPermission("mast.staff.change")) {
+      return;
     }
+
+    staffSwitch(player.name, event.player.server.info.name)
+
+    previousServer.setPreviousServer(player.name, event.player.server.info.name)
+  }
 }

@@ -6,45 +6,43 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 public class CommandInteractionItem extends StaffItem implements IPlayerInteractItem {
-    private int slot;
-    private ItemStack item;
-    private String command;
-    private String permission;
+  private final int slot;
+  private final ItemStack item;
+  private final String command;
+  private final String permission;
 
-    public CommandInteractionItem(ItemStack item, int slot, String command, String permission) {
-        this.item = item;
-        this.slot = slot;
-        this.command = command;
-        this.permission = permission;
-    }
+  public CommandInteractionItem(ItemStack item, int slot, String command, String permission) {
+    this.item = item;
+    this.slot = slot;
+    this.command = command;
+    this.permission = permission;
+  }
 
-    @Override
-    public void interact(Player player, Player target) {
-        player.performCommand(command.replace("{target}", target.getName()));
-    }
+  @Override
+  public void interact(Player player, Player target) {
+    player.performCommand(command.replace("{target}", target.getName()));
+  }
 
-    @Override
-    public String getName() {
-        return "COMMAND_INTERACTION";
-    }
+  @Override
+  public String getName() {
+    return "COMMAND_INTERACTION";
+  }
 
-    @Override
-    public ItemStack getItem() {
-        return item;
-    }
+  @Override
+  public ItemStack getItem() {
+    return item;
+  }
 
-    @Override
-    public String getPermission() {
-        return permission;
-    }
+  @Override
+  public void setItem(Player player) {}
 
-    @Override
-    public int getSlot() {
-        return slot;
-    }
+  @Override
+  public String getPermission() {
+    return permission;
+  }
 
-    @Override
-    public void setItem(Player player) {
-
-    }
+  @Override
+  public int getSlot() {
+    return slot;
+  }
 }

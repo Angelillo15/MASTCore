@@ -10,20 +10,19 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerPickupItemEvent;
 
 public class OnItemGet implements Listener {
-    @Inject
-    private StaffManager staffManager;
+  @Inject private StaffManager staffManager;
 
-    @SuppressWarnings("deprecation")
-    @EventHandler
-    public void onItemGet(PlayerPickupItemEvent event){
-        Player player = event.getPlayer();
+  @SuppressWarnings("deprecation")
+  @EventHandler
+  public void onItemGet(PlayerPickupItemEvent event) {
+    Player player = event.getPlayer();
 
-        if(!player.hasPermission(Permissions.STAFF.getPermission())){
-            return;
-        }
-
-        IStaffPlayer staffPlayer = staffManager.getStaffPlayer(player);
-
-        if(staffPlayer.isStaffMode()) event.setCancelled(true);
+    if (!player.hasPermission(Permissions.STAFF.getPermission())) {
+      return;
     }
+
+    IStaffPlayer staffPlayer = staffManager.getStaffPlayer(player);
+
+    if (staffPlayer.isStaffMode()) event.setCancelled(true);
+  }
 }

@@ -1,8 +1,6 @@
 package es.angelillo15.mast.api.player;
 
 import es.angelillo15.mast.api.report.Report;
-import org.bukkit.entity.Player;
-
 import java.util.ArrayList;
 
 public interface IMastPlayer<T> {

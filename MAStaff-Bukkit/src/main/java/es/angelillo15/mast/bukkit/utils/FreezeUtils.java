@@ -6,13 +6,19 @@ import es.angelillo15.mast.bukkit.utils.scheduler.Scheduler;
 import org.bukkit.Bukkit;
 
 public class FreezeUtils {
-    public static void setupMessageSender(){
-        Scheduler.executeTimerAsync(() -> {
-            FreezeManager.getFrozenPlayers().forEach(player -> {
-                if (player.isOnline()) {
-                    Bukkit.getPluginManager().callEvent(new FreezeMessageEvent(player.getPlayer()));
-                }
-            });
-        }, 0, 20*5);
-    }
+  public static void setupMessageSender() {
+    Scheduler.executeTimerAsync(
+        () -> {
+          FreezeManager.getFrozenPlayers()
+              .forEach(
+                  player -> {
+                    if (player.isOnline()) {
+                      Bukkit.getPluginManager()
+                          .callEvent(new FreezeMessageEvent(player.getPlayer()));
+                    }
+                  });
+        },
+        0,
+        20 * 5);
+  }
 }

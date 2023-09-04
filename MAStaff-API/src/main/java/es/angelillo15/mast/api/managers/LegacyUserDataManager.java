@@ -2,7 +2,6 @@ package es.angelillo15.mast.api.managers;
 
 import com.google.inject.Inject;
 import es.angelillo15.mast.api.models.UserModel;
-
 import java.util.UUID;
 
 @Deprecated

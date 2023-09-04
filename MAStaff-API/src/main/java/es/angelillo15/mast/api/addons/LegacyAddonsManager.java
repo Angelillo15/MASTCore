@@ -2,7 +2,7 @@ package es.angelillo15.mast.api.addons;
 
 import java.util.HashMap;
 
-public class AddonsManager {
+public class LegacyAddonsManager {
     private static HashMap<String, MAStaffAddon> addons = new HashMap<>();
 
     public static void registerAddon(MAStaffAddon addon) {

@@ -3,10 +3,9 @@ package es.angelillo15.mast.api.addons;
 import es.angelillo15.mast.api.ILogger;
 import es.angelillo15.mast.api.MAStaffInstance;
 import es.angelillo15.mast.api.addons.config.ConfigManager;
-import lombok.Getter;
-
 import java.io.File;
 import java.io.InputStream;
+import lombok.Getter;
 
 public class MAStaffAddon<P> {
     @Getter

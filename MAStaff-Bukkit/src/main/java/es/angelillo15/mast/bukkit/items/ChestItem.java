@@ -6,42 +6,43 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 public class ChestItem extends StaffItem implements IPlayerInteractItem {
-    private ItemStack item;
-    private int slot;
-    private String permission;
-    public ChestItem(ItemStack item, int slot, String permission) {
-        this.item = item;
-        this.slot = slot;
-        this.permission = permission;
-    }
+  private final ItemStack item;
+  private final int slot;
+  private final String permission;
 
-    @Override
-    public void interact(Player player, Player target) {
-        player.openInventory(target.getInventory());
-    }
+  public ChestItem(ItemStack item, int slot, String permission) {
+    this.item = item;
+    this.slot = slot;
+    this.permission = permission;
+  }
 
-    @Override
-    public String getName() {
-        return "CHEST";
-    }
+  @Override
+  public void interact(Player player, Player target) {
+    player.openInventory(target.getInventory());
+  }
 
-    @Override
-    public ItemStack getItem() {
-        return this.item;
-    }
+  @Override
+  public String getName() {
+    return "CHEST";
+  }
 
-    @Override
-    public String getPermission() {
-        return this.permission;
-    }
+  @Override
+  public ItemStack getItem() {
+    return this.item;
+  }
 
-    @Override
-    public int getSlot() {
-        return slot;
-    }
+  @Override
+  public void setItem(Player player) {
+    player.getInventory().setItem(getSlot(), getItem());
+  }
 
-    @Override
-    public void setItem(Player player) {
-        player.getInventory().setItem(getSlot(), getItem());
-    }
+  @Override
+  public String getPermission() {
+    return this.permission;
+  }
+
+  @Override
+  public int getSlot() {
+    return slot;
+  }
 }

@@ -2,18 +2,17 @@ package es.angelillo15.mast.bukkit.loaders;
 
 import es.angelillo15.mast.api.ILogger;
 import es.angelillo15.mast.api.TextUtils;
+import es.angelillo15.mast.api.config.bukkit.ConfigLoader;
+import es.angelillo15.mast.api.gui.CommandItem;
 import es.angelillo15.mast.api.gui.Page;
 import es.angelillo15.mast.api.managers.PunishmentsGUIManager;
 import es.angelillo15.mast.api.material.XMaterial;
 import es.angelillo15.mast.bukkit.MAStaff;
-import es.angelillo15.mast.api.config.bukkit.ConfigLoader;
-import es.angelillo15.mast.api.gui.CommandItem;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.simpleyaml.configuration.file.YamlFile;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import org.bukkit.inventory.meta.ItemMeta;
+import org.simpleyaml.configuration.file.YamlFile;
 
 public class PunishmentGUILoader {
     public static void load() {

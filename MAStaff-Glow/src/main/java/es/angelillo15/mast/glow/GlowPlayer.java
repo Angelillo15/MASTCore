@@ -8,36 +8,35 @@ import es.angelillo15.mast.glow.managers.GlowColorManager;
 import es.angelillo15.mast.glow.managers.GlowManager;
 
 public class GlowPlayer implements IGlowPlayer {
-    private final IStaffPlayer staffPlayer;
-    private ChatColor color = ChatColor.GREEN;
+  private final IStaffPlayer staffPlayer;
+  private ChatColor color = ChatColor.GREEN;
 
-    public GlowPlayer(IStaffPlayer staffPlayer) {
-        this.staffPlayer = staffPlayer;
+  public GlowPlayer(IStaffPlayer staffPlayer) {
+    this.staffPlayer = staffPlayer;
+  }
+
+  @Override
+  public void enableGlow() {
+    try {
+      color = GlowColorManager.getColor(PermsUtils.getGroup(staffPlayer.getPlayer()));
+    } catch (Exception e) {
+      color = ChatColor.GREEN;
     }
 
-    @Override
-    public void enableGlow() {
-        try {
-            color = GlowColorManager.getColor(PermsUtils.getGroup(staffPlayer.getPlayer()));
-        } catch (Exception e) {
-            color = ChatColor.GREEN;
-        }
+    staffPlayer.getPlayer().setGlowing(true);
 
-        staffPlayer.getPlayer().setGlowing(true);
+    GlowManager.addPlayer(staffPlayer.getPlayer(), color);
+  }
 
-        GlowManager.addPlayer(staffPlayer.getPlayer(), color);
-    }
+  @Override
+  public void disableGlow() {
+    GlowManager.removePlayer(staffPlayer.getPlayer());
 
-    @Override
-    public void disableGlow() {
-        GlowManager.removePlayer(staffPlayer.getPlayer());
+    staffPlayer.getPlayer().setGlowing(false);
+  }
 
-        staffPlayer.getPlayer().setGlowing(false);
-    }
-
-
-    @Override
-    public ChatColor getColor() {
-        return color;
-    }
+  @Override
+  public ChatColor getColor() {
+    return color;
+  }
 }

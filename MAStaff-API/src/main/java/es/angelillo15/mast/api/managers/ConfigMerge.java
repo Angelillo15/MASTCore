@@ -1,13 +1,9 @@
 package es.angelillo15.mast.api.managers;
 
-import lombok.SneakyThrows;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import ru.vyarus.yaml.updater.YamlUpdater;
-import ru.vyarus.yaml.updater.report.UpdateReport;
-
 import java.io.File;
 import java.io.InputStream;
+import lombok.SneakyThrows;
+import ru.vyarus.yaml.updater.YamlUpdater;
 
 public class ConfigMerge {
     public static void loggerSetup() {

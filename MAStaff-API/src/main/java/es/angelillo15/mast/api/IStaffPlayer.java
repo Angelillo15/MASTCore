@@ -5,14 +5,11 @@ import es.angelillo15.mast.api.exceptions.AlreadyEnableException;
 import es.angelillo15.mast.api.items.StaffItem;
 import es.angelillo15.mast.api.player.IGlowPlayer;
 import es.angelillo15.mast.api.player.IVanishPlayer;
-import org.bukkit.ChatColor;
+import java.util.List;
+import java.util.Map;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-
-import javax.annotation.Nullable;
-import java.util.List;
-import java.util.Map;
 
 /**
 * This interface allows to you to interact with the staff players
@@ -170,4 +167,14 @@ public interface IStaffPlayer {
      * @return the glow player or null if is disabled
      */
     IGlowPlayer getGlowPlayer();
+
+    /**
+     * Save health and food
+     */
+    void saveHealthAndFood();
+
+    /**
+     * Restore health and food
+     */
+    void restoreHealthAndFood();
 }

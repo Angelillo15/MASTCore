@@ -25,18 +25,18 @@ package es.angelillo15.mast.api.material;
 import com.google.common.base.Enums;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
-import org.bukkit.Bukkit;
-import org.bukkit.Material;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.SpawnEggMeta;
-import org.bukkit.potion.Potion;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 import java.util.stream.Collectors;
+import org.bukkit.Bukkit;
+import org.bukkit.Material;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.SpawnEggMeta;
+import org.bukkit.potion.Potion;
 
 /**
  * <b>XMaterial</b> - Data Values/Pre-flattening<br>
@@ -2231,6 +2231,12 @@ public enum XMaterial {
          * @since 1.0.0
          */
         private static final int VERSION;
+        /**
+         * Cached result if the server version is after the v1.13 flattening update.
+         *
+         * @since 3.0.0
+         */
+        private static final boolean ISFLAT = supports(13);
 
         static { // This needs to be right below VERSION because of initialization order.
             String version = Bukkit.getVersion();
@@ -2239,12 +2245,5 @@ public enum XMaterial {
             if (matcher.find()) VERSION = Integer.parseInt(matcher.group(1));
             else throw new IllegalArgumentException("Failed to parse server version from: " + version);
         }
-
-        /**
-         * Cached result if the server version is after the v1.13 flattening update.
-         *
-         * @since 3.0.0
-         */
-        private static final boolean ISFLAT = supports(13);
     }
 }

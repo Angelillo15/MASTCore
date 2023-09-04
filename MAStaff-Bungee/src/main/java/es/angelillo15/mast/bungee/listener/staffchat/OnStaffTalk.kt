@@ -7,12 +7,12 @@ import net.md_5.bungee.api.plugin.Listener
 import net.md_5.bungee.event.EventHandler
 
 class OnStaffTalk : Listener, OnStaffMessageEvent() {
-    @EventHandler
-    fun onStaffTalk(event: ChatEvent) {
-        if (event.isCommand) return
-        if (event.sender !is ProxiedPlayer) return
-        val player = event.sender as ProxiedPlayer
+  @EventHandler
+  fun onStaffTalk(event: ChatEvent) {
+    if (event.isCommand) return
+    if (event.sender !is ProxiedPlayer) return
+    val player = event.sender as ProxiedPlayer
 
-        event.isCancelled = onStaffMessageEvent(player.name, event.message, player.server.info.name)
-    }
+    event.isCancelled = onStaffMessageEvent(player.name, event.message, player.server.info.name)
+  }
 }

@@ -9,62 +9,62 @@ import java.io.File
 
 @Singleton
 class VelocityConfig {
-    @Inject
-    private lateinit var plugin: MAStaffInject;
-    lateinit var config: ConfigManager
-        private set
-    lateinit var messages: ConfigManager
-        private set
+  @Inject
+  private lateinit var plugin: MAStaffInject;
+  lateinit var config: ConfigManager
+    private set
+  lateinit var messages: ConfigManager
+    private set
 
-    fun load() {
-        loadConfig()
-        loadLanguages()
-        loadMessage()
-    }
+  fun load() {
+    loadConfig()
+    loadLanguages()
+    loadMessage()
+  }
 
-    private fun loadConfig() {
-        ConfigMerge.merge(
+  private fun loadConfig() {
+    ConfigMerge.merge(
             File(plugin.pluginDataFolder.toPath().toString() + File.separator + "config.yml"),
             plugin.getPluginResource("Velocity/config.yml")
-        )
+    )
 
-        config = ConfigManager(plugin.pluginDataFolder.toPath(), "Velocity/config.yml", "config.yml")
-        config.registerConfig()
-        plugin.isDebug = config.config.getBoolean("Config.debug");
+    config = ConfigManager(plugin.pluginDataFolder.toPath(), "Velocity/config.yml", "config.yml")
+    config.registerConfig()
+    plugin.isDebug = config.config.getBoolean("Config.debug");
+  }
+
+  private fun loadLanguages() {
+    val file = File(plugin.pluginDataFolder.toPath().toString() + File.separator + "lang")
+
+    if (!file.exists()) {
+      file.mkdirs()
     }
 
-    private fun loadLanguages() {
-        val file = File(plugin.pluginDataFolder.toPath().toString() + File.separator + "lang")
-
-        if (!file.exists()) {
-            file.mkdirs()
-        }
-
-        val es = ConfigManager(
+    val es = ConfigManager(
             plugin.pluginDataFolder.toPath(),
             "BungeeCord/lang/spanish.yml",
             "/lang/spanish.yml"
-        )
+    )
 
-        val en = ConfigManager(
+    val en = ConfigManager(
             plugin.pluginDataFolder.toPath(),
             "BungeeCord/lang/english.yml",
             "/lang/english.yml"
-        )
+    )
 
-        es.registerConfig()
-        en.registerConfig()
-    }
+    es.registerConfig()
+    en.registerConfig()
+  }
 
-    private fun loadMessage() {
-        val lang = config.config.getString("Config.language")
+  private fun loadMessage() {
+    val lang = config.config.getString("Config.language")
 
-        ConfigMerge.merge(
+    ConfigMerge.merge(
             File(plugin.pluginDataFolder.toPath().toString() + File.separator + "/lang/$lang"),
             plugin.getPluginResource("BungeeCord/lang/$lang")
-        )
+    )
 
-        messages = ConfigManager(plugin.pluginDataFolder.toPath(), "BungeeCord/lang/$lang", "/lang/$lang")
-        messages.registerConfig()
-    }
+    messages = ConfigManager(plugin.pluginDataFolder.toPath(), "BungeeCord/lang/$lang", "/lang/$lang")
+    messages.registerConfig()
+  }
 }

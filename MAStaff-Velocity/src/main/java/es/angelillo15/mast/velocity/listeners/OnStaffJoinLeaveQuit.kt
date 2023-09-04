@@ -9,38 +9,39 @@ import es.angelillo15.mast.api.managers.PreviousServerManager
 import es.angelillo15.mast.handler.StaffJoinLeaveChangeHandler
 
 class OnStaffJoinLeaveQuit : StaffJoinLeaveChangeHandler() {
-    @Inject
-    private lateinit var serverManger: PreviousServerManager
-    @Subscribe
-    fun onStaffJoin(event: PostLoginEvent) {
-        val player = event.player
+  @Inject
+  private lateinit var serverManger: PreviousServerManager
 
-        if (!player.hasPermission("mast.staff.join"))
-            return
+  @Subscribe
+  fun onStaffJoin(event: PostLoginEvent) {
+    val player = event.player
 
-        staffJoin(player.username)
-    }
+    if (!player.hasPermission("mast.staff.join"))
+      return
 
-    @Subscribe
-    fun onStaffLeave(event: DisconnectEvent) {
-        val player = event.player
+    staffJoin(player.username)
+  }
 
-        if (!player.hasPermission("mast.staff.leave"))
-            return
+  @Subscribe
+  fun onStaffLeave(event: DisconnectEvent) {
+    val player = event.player
 
-        staffLeave(player.username)
-    }
+    if (!player.hasPermission("mast.staff.leave"))
+      return
 
-    @Subscribe
-    fun onStaffSwitch(event: ServerConnectedEvent) {
-        val player = event.player
+    staffLeave(player.username)
+  }
 
-        if (!player.hasPermission("mast.staff.change"))
-            return
+  @Subscribe
+  fun onStaffSwitch(event: ServerConnectedEvent) {
+    val player = event.player
 
-        staffSwitch(player.username, event.server.serverInfo.name)
+    if (!player.hasPermission("mast.staff.change"))
+      return
 
-        serverManger.setPreviousServer(player.username, event.server.serverInfo.name)
-    }
+    staffSwitch(player.username, event.server.serverInfo.name)
+
+    serverManger.setPreviousServer(player.username, event.server.serverInfo.name)
+  }
 
 }

@@ -2,30 +2,28 @@ package es.angelillo15.mast.api.cmd.sender;
 
 import net.kyori.adventure.audience.Audience;
 
-import java.util.UUID;
-
 public interface CommandSender {
-    void sendMessage(String message);
+  void sendMessage(String message);
 
-    boolean hasPermission(String permission);
+  boolean hasPermission(String permission);
 
-    String getName();
+  String getName();
 
-    String getUniqueId();
+  String getUniqueId();
 
-    String getAddress();
+  String getAddress();
 
-    boolean isPlayer();
+  boolean isPlayer();
 
-    boolean isConsole();
+  boolean isConsole();
 
-    boolean isProxy();
+  boolean isProxy();
 
-    boolean isBungee();
+  boolean isBungee();
 
-    boolean isSpigot();
+  boolean isSpigot();
 
-    Audience getAudience();
+  Audience getAudience();
 
-    String getServerName();
+  String getServerName();
 }

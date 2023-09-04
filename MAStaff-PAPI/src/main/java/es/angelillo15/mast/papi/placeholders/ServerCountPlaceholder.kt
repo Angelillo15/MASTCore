@@ -9,19 +9,19 @@ import org.bukkit.entity.Player
 
 @PlaceholderData(key = "servercount")
 class ServerCountPlaceholder : Placeholder() {
-    @Inject
-    private var manager: StaffManager? = null;
-    override fun onPlaceholderRequest(player: Player?, params: String?): String {
-        val serverCount = Bukkit.getOnlinePlayers().size
+  @Inject
+  private var manager: StaffManager? = null;
+  override fun onPlaceholderRequest(player: Player?, params: String?): String {
+    val serverCount = Bukkit.getOnlinePlayers().size
 
-        var staffVanishedCount = 0
+    var staffVanishedCount = 0
 
-        manager!!.staffPlayers.forEach { (key, staff) ->
-            if (!staff.player.isOnline) return@forEach
+    manager!!.staffPlayers.asMap().forEach { (key, staff) ->
+      if (!staff.player.isOnline) return@forEach
 
-            if (staff.isVanished) staffVanishedCount++
-        }
-
-        return (serverCount - staffVanishedCount).toString()
+      if (staff.isVanished) staffVanishedCount++
     }
+
+    return (serverCount - staffVanishedCount).toString()
+  }
 }

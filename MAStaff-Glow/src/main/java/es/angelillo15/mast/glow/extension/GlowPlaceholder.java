@@ -9,23 +9,22 @@ import org.bukkit.entity.Player;
 
 @PlaceholderData(key = "glow:color")
 public class GlowPlaceholder extends Placeholder {
-    @Inject
-    private StaffManager staffManager;
+  @Inject private StaffManager staffManager;
 
-    @Override
-    public String onPlaceholderRequest(Player player, String params) {
-        if (player == null) return "";
+  @Override
+  public String onPlaceholderRequest(Player player, String params) {
+    if (player == null) return "";
 
-        if (!staffManager.isStaffPlayer(player)) {
-            return "";
-        }
-
-        IStaffPlayer staffPlayer = staffManager.getStaffPlayer(player);
-
-        if (staffPlayer.isStaffMode()) {
-            return staffPlayer.getGlowPlayer().getColor().toString();
-        }
-
-        return "";
+    if (!staffManager.isStaffPlayer(player)) {
+      return "";
     }
+
+    IStaffPlayer staffPlayer = staffManager.getStaffPlayer(player);
+
+    if (staffPlayer.isStaffMode()) {
+      return staffPlayer.getGlowPlayer().getColor().toString();
+    }
+
+    return "";
+  }
 }

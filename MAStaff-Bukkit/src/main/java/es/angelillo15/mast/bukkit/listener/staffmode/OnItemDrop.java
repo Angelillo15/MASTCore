@@ -9,22 +9,21 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerDropItemEvent;
 
 public class OnItemDrop implements Listener {
-    @Inject
-    private StaffManager staffManager;
+  @Inject private StaffManager staffManager;
 
-    @EventHandler
-    public void onDrop(PlayerDropItemEvent event){
-        Player player = event.getPlayer();
+  @EventHandler
+  public void onDrop(PlayerDropItemEvent event) {
+    Player player = event.getPlayer();
 
-        if(!staffManager.isStaffPlayer(player)){
-            return;
-        }
-
-        IStaffPlayer staffPlayer = staffManager.getStaffPlayer(player);
-
-        if(staffPlayer.isStaffMode()){
-            event.setCancelled(true);
-            staffPlayer.setItems();
-        }
+    if (!staffManager.isStaffPlayer(player)) {
+      return;
     }
+
+    IStaffPlayer staffPlayer = staffManager.getStaffPlayer(player);
+
+    if (staffPlayer.isStaffMode()) {
+      event.setCancelled(true);
+      staffPlayer.setItems();
+    }
+  }
 }

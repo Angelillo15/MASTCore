@@ -19,6 +19,10 @@ public class StaffChatTalkEvent extends Event {
         this.message = message;
     }
 
+    public static HandlerList getHandlerList() {
+        return HANDLERS;
+    }
+
     /**
      * Get the staffchat message
      * @return String
@@ -35,13 +39,8 @@ public class StaffChatTalkEvent extends Event {
         return sender;
     }
 
-
     @Override
     public HandlerList getHandlers() {
-        return HANDLERS;
-    }
-
-    public static HandlerList getHandlerList() {
         return HANDLERS;
     }
 }

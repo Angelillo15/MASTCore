@@ -7,24 +7,25 @@ import com.velocitypowered.api.event.connection.PluginMessageEvent
 import com.velocitypowered.api.proxy.ProxyServer
 
 class CommandBackendExecutor {
-    @Inject
-    lateinit var server: ProxyServer
-    @Subscribe
-    fun onCommand(event: PluginMessageEvent) {
-        if (event.identifier.id != "mastaff:commands") return
+  @Inject
+  lateinit var server: ProxyServer
 
-        val input = ByteStreams.newDataInput(event.data)
+  @Subscribe
+  fun onCommand(event: PluginMessageEvent) {
+    if (event.identifier.id != "mastaff:commands") return
 
-        val subChannel = input.readUTF()
+    val input = ByteStreams.newDataInput(event.data)
 
-        if (subChannel != "mast-command") return
+    val subChannel = input.readUTF()
 
-        var command = input.readUTF()
+    if (subChannel != "mast-command") return
 
-        if (command.startsWith("bungee:")) {
-            command = command.replace("bungee:", "")
-        }
+    var command = input.readUTF()
 
-        server.commandManager.executeAsync(server.consoleCommandSource, command)
+    if (command.startsWith("bungee:")) {
+      command = command.replace("bungee:", "")
     }
+
+    server.commandManager.executeAsync(server.consoleCommandSource, command)
+  }
 }

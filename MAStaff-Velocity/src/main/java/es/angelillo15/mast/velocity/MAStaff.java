@@ -35,215 +35,246 @@ import es.angelillo15.mast.velocity.listeners.OnStaffChange;
 import es.angelillo15.mast.velocity.listeners.OnStaffJoinLeaveQuit;
 import es.angelillo15.mast.velocity.listeners.staffchat.OnPlayerChat;
 import es.angelillo15.mast.velocity.utils.LibsLoader;
-import lombok.Getter;
-import lombok.SneakyThrows;
-import org.slf4j.Logger;
-
 import java.io.File;
 import java.io.InputStream;
 import java.nio.file.Path;
+import lombok.Getter;
+import lombok.SneakyThrows;
+import lombok.val;
+import org.slf4j.Logger;
 
 @Plugin(
-        id = "mastaff",
-        name = "MAStaff Velocity",
-        version = Constants.VERSION,
-        description = "MAStaff Velocity module",
-        authors = {"angelillo15"}
-)
+    id = "mastaff",
+    name = "MAStaff Velocity",
+    version = Constants.VERSION,
+    description = "MAStaff Velocity module",
+    authors = {"angelillo15"})
 public class MAStaff implements MAStaffInstance<ProxyServer> {
-    @Getter
-    private static MAStaff instance;
-    @Getter
-    private final ProxyServer proxyServer;
-    @Getter
-    private final Logger Slf4jLogger;
-    @Getter
-    private final Path dataDirectory;
-    @Getter
-    private ILogger logger;
-    @Getter
-    private PluginConnection connection;
-    @Getter
-    private CommonConfigLoader commonConfigLoader;
-    @Getter
-    private VelocityConfig velocityConfig;
-    private Injector injector;
-    private boolean debug;
-    ClassLoader classLoader = getClass().getClassLoader();
+  @Getter private static MAStaff instance;
+  @Getter private final ProxyServer proxyServer;
+  @Getter private final Logger Slf4jLogger;
+  @Getter private final Path dataDirectory;
+  ClassLoader classLoader = getClass().getClassLoader();
+  @Getter private ILogger logger;
+  @Getter private PluginConnection connection;
+  @Getter private CommonConfigLoader commonConfigLoader;
+  @Getter private VelocityConfig velocityConfig;
+  private Injector injector;
+  private boolean debug;
 
-    @Inject
-    public MAStaff(ProxyServer proxyServer, Logger Slf4jLogger, @DataDirectory Path dataDirectory) {
-        instance = this;
-        this.Slf4jLogger = Slf4jLogger;
-        this.proxyServer = proxyServer;
-        logger = new es.angelillo15.mast.velocity.utils.Logger();
-        this.dataDirectory = dataDirectory;
+  @Inject
+  public MAStaff(ProxyServer proxyServer, Logger Slf4jLogger, @DataDirectory Path dataDirectory) {
+    instance = this;
+    this.Slf4jLogger = Slf4jLogger;
+    this.proxyServer = proxyServer;
+    logger = new es.angelillo15.mast.velocity.utils.Logger();
+    this.dataDirectory = dataDirectory;
+  }
+
+  @Subscribe
+  public void onProxyInitialization(ProxyInitializeEvent event) {
+    drawLogo();
+    LibsLoader.load();
+    injector = Guice.createInjector(new VelocityInjector());
+    loadConfig();
+    registerCommands();
+    registerListeners();
+    loadDatabase();
+    loadModules();
+    AsyncThreadKt.start();
+    proxyServer.getChannelRegistrar().register(MinecraftChannelIdentifier.from("mastaff:staff"));
+
+    logger.info("&aMAStaff &7v" + Constants.VERSION + " &ahas been loaded correctly!");
+  }
+
+  @Override
+  public ILogger getPLogger() {
+    return logger;
+  }
+
+  @Override
+  public IServerUtils getServerUtils() {
+    return null;
+  }
+
+  @Override
+  public boolean isDebug() {
+    return debug;
+  }
+
+  @Override
+  public void setDebug(boolean debug) {
+    this.debug = debug;
+  }
+
+  @Override
+  public void drawLogo() {
+    logger.info("&a ███▄ ▄███▓ ▄▄▄        ██████ ▄▄▄█████▓ ▄▄▄        █████▒ █████▒");
+    logger.info("&a ▓██▒▀█▀ ██▒▒████▄    ▒██    ▒ ▓  ██▒ ▓▒▒████▄    ▓██   ▒▓██   ▒");
+    logger.info("&a ▓██    ▓██░▒██  ▀█▄  ░ ▓██▄   ▒ ▓██░ ▒░▒██  ▀█▄  ▒████ ░▒████ ░");
+    logger.info("&a ▒██    ▒██ ░██▄▄▄▄██   ▒   ██▒░ ▓██▓ ░ ░██▄▄▄▄██ ░▓█▒  ░░▓█▒  ░");
+    logger.info("&a ▒██▒   ░██▒ ▓█   ▓██▒▒██████▒▒  ▒██▒ ░  ▓█   ▓██▒░▒█░   ░▒█░");
+    logger.info("&a ░ ▒░   ░  ░ ▒▒   ▓▒█░▒ ▒▓▒ ▒ ░  ▒ ░░    ▒▒   ▓▒█░ ▒ ░    ▒ ░");
+    logger.info("&a ░  ░      ░  ▒   ▒▒ ░░ ░▒  ░ ░    ░      ▒   ▒▒ ░ ░      ░");
+    logger.info("&a ░      ░     ░   ▒   ░  ░  ░    ░        ░   ▒    ░ ░    ░ ░");
+    logger.info("&a ░         ░  ░      ░                 ░  ░");
+    logger.info("&a                                                version: " + Constants.VERSION);
+  }
+
+  @Override
+  public void loadConfig() {
+    injector.getInstance(VelocityConfig.class).load();
+    StaticMembersInjector.injectStatics(injector, Config.class);
+    StaticMembersInjector.injectStatics(injector, Messages.class);
+    StaticMembersInjector.injectStatics(injector, CommonMessages.class);
+    StaticMembersInjector.injectStatics(
+        injector, es.angelillo15.mast.api.config.common.CommonConfig.class);
+    velocityConfig = injector.getInstance(VelocityConfig.class);
+    velocityConfig.load();
+    commonConfigLoader = injector.getInstance(CommonConfigLoader.class);
+    commonConfigLoader.load();
+  }
+
+  @Override
+  public void registerCommands() {
+    if (CommonConfig.Helpop.INSTANCE.enabled()) registerCommand(injector.getInstance(HelpOP.class));
+    if (CommonConfig.StaffChat.INSTANCE.enabled())
+      registerCommand(injector.getInstance(StaffChat.class));
+
+    registerCommand(injector.getInstance(MastParent.class));
+  }
+
+  @Override
+  public void registerListeners() {
+    proxyServer.getEventManager().register(this, injector.getInstance(OnStaffChange.class));
+    proxyServer.getEventManager().register(this, injector.getInstance(OnPlayerJoin.class));
+    proxyServer
+        .getEventManager()
+        .register(this, injector.getInstance(CommandBackendExecutor.class));
+    proxyServer.getEventManager().register(this, injector.getInstance(OnStaffJoinLeaveQuit.class));
+    proxyServer.getEventManager().register(this, injector.getInstance(OnPlayerChat.class));
+  }
+
+  @SneakyThrows
+  @Override
+  public void loadDatabase() {
+    if (Config.Database.type().equalsIgnoreCase("MYSQL")) {
+      new PluginConnection(
+          Config.Database.host(),
+          Config.Database.port(),
+          Config.Database.database(),
+          Config.Database.username(),
+          Config.Database.password());
+    } else {
+      new PluginConnection(getPluginDataFolder().getPath());
     }
 
-    @Subscribe
-    public void onProxyInitialization(ProxyInitializeEvent event) {
-        drawLogo();
-        LibsLoader.load();
-        injector = Guice.createInjector(new VelocityInjector());
-        loadConfig();
-        registerCommands();
-        registerListeners();
-        loadDatabase();
-        loadModules();
-        AsyncThreadKt.start();
-        proxyServer.getChannelRegistrar().register(MinecraftChannelIdentifier.from("mastaff:staff"));
+    PluginConnection.getStorm().runMigrations();
 
-        logger.info("&aMAStaff &7v" + Constants.VERSION + " &ahas been loaded correctly!");
+    DataManager.load();
+
+    MAStaff.getInstance().getPLogger().info("Database loaded!");
+  }
+
+  @Override
+  public void loadModules() {}
+
+  @Override
+  public void unregisterCommands() {
+    proxyServer
+        .getCommandManager()
+        .getAliases()
+        .forEach(
+            s -> {
+              val cmd = proxyServer.getCommandManager().getCommandMeta(s);
+
+              if (cmd == null) return;
+
+              if (cmd.getPlugin() != this) {
+                return;
+              }
+
+              proxyServer.getCommandManager().unregister(cmd);
+            });
+  }
+
+  @Override
+  public void unregisterListeners() {
+    proxyServer.getEventManager().unregisterListeners(this);
+  }
+
+  @SneakyThrows
+  @Override
+  public void unloadDatabase() {
+    PluginConnection.getConnection().close();
+  }
+
+  @Override
+  public void reload() {
+    long start = System.currentTimeMillis();
+    logger.debug("Reloading...");
+    logger.debug("Unregistering listeners...");
+    unregisterListeners();
+    logger.debug("Unregistering commands...");
+    unregisterListeners();
+    logger.debug("Unloading database...");
+    unloadDatabase();
+    logger.debug("Loading config...");
+    loadConfig();
+    logger.debug("Loading database...");
+    loadDatabase();
+    logger.debug("Registering commands...");
+    registerCommands();
+    logger.debug("Registering listeners...");
+    registerListeners();
+    logger.debug("Reloading complete on " + (System.currentTimeMillis() - start) + "ms");
+  }
+
+  @Override
+  public void registerCommand(Command command) {
+    CommandData commandData;
+
+    CommandManager commandManager = proxyServer.getCommandManager();
+
+    try {
+      commandData = command.getClass().getAnnotation(CommandData.class);
+    } catch (Exception e) {
+      MAStaff.getInstance()
+          .getPLogger()
+          .error(
+              "Command " + command.getClass().getSimpleName() + " has no CommandData annotation!");
+      return;
     }
 
-    @Override
-    public ILogger getPLogger() {
-        return logger;
-    }
+    CommandMeta commandMeta =
+        commandManager
+            .metaBuilder(commandData.name())
+            .aliases(commandData.aliases())
+            .plugin(this)
+            .build();
 
-    @Override
-    public IServerUtils getServerUtils() {
-        return null;
-    }
+    CustomCommand customCommand = new CustomCommand(command, commandData.permission());
 
-    @Override
-    public boolean isDebug() {
-        return debug;
-    }
+    commandManager.register(commandMeta, customCommand);
+  }
 
-    @Override
-    public void drawLogo() {
-        logger.info("&a ███▄ ▄███▓ ▄▄▄        ██████ ▄▄▄█████▓ ▄▄▄        █████▒ █████▒");
-        logger.info("&a ▓██▒▀█▀ ██▒▒████▄    ▒██    ▒ ▓  ██▒ ▓▒▒████▄    ▓██   ▒▓██   ▒");
-        logger.info("&a ▓██    ▓██░▒██  ▀█▄  ░ ▓██▄   ▒ ▓██░ ▒░▒██  ▀█▄  ▒████ ░▒████ ░");
-        logger.info("&a ▒██    ▒██ ░██▄▄▄▄██   ▒   ██▒░ ▓██▓ ░ ░██▄▄▄▄██ ░▓█▒  ░░▓█▒  ░");
-        logger.info("&a ▒██▒   ░██▒ ▓█   ▓██▒▒██████▒▒  ▒██▒ ░  ▓█   ▓██▒░▒█░   ░▒█░");
-        logger.info("&a ░ ▒░   ░  ░ ▒▒   ▓▒█░▒ ▒▓▒ ▒ ░  ▒ ░░    ▒▒   ▓▒█░ ▒ ░    ▒ ░");
-        logger.info("&a ░  ░      ░  ▒   ▒▒ ░░ ░▒  ░ ░    ░      ▒   ▒▒ ░ ░      ░");
-        logger.info("&a ░      ░     ░   ▒   ░  ░  ░    ░        ░   ▒    ░ ░    ░ ░");
-        logger.info("&a ░         ░  ░      ░                 ░  ░");
-        logger.info("&a                                                version: " + Constants.VERSION);
-    }
+  @Override
+  public File getPluginDataFolder() {
+    return dataDirectory.toFile();
+  }
 
-    @Override
-    public void loadConfig() {
-        injector.getInstance(VelocityConfig.class).load();
-        StaticMembersInjector.injectStatics(injector, Config.class);
-        StaticMembersInjector.injectStatics(injector, Messages.class);
-        StaticMembersInjector.injectStatics(injector, CommonMessages.class);
-        StaticMembersInjector.injectStatics(injector, es.angelillo15.mast.api.config.common.CommonConfig.class);
-        velocityConfig = injector.getInstance(VelocityConfig.class);
-        velocityConfig.load();
-        commonConfigLoader = injector.getInstance(CommonConfigLoader.class);
-        commonConfigLoader.load();
-    }
+  @Override
+  public InputStream getPluginResource(String s) {
+    return classLoader.getResourceAsStream(s);
+  }
 
-    @Override
-    public void registerCommands() {
-        if (CommonConfig.Helpop.INSTANCE.enabled())
-            registerCommand(injector.getInstance(HelpOP.class));
-        if (CommonConfig.StaffChat.INSTANCE.enabled())
-            registerCommand(injector.getInstance(StaffChat.class));
+  @Override
+  public ProxyServer getPluginInstance() {
+    return this.proxyServer;
+  }
 
-        registerCommand(injector.getInstance(MastParent.class));
-    }
-
-    @Override
-    public void registerListeners() {
-        proxyServer.getEventManager().register(this, injector.getInstance(OnStaffChange.class));
-        proxyServer.getEventManager().register(this, injector.getInstance(OnPlayerJoin.class));
-        proxyServer.getEventManager().register(this, injector.getInstance(CommandBackendExecutor.class));
-        proxyServer.getEventManager().register(this, injector.getInstance(OnStaffJoinLeaveQuit.class));
-        if (proxyServer.getPluginManager().isLoaded("unsignedvelocity"))
-            proxyServer.getEventManager().register(this, injector.getInstance(OnPlayerChat.class));
-    }
-
-    @SneakyThrows
-    @Override
-    public void loadDatabase() {
-        if (Config.Database.type().equalsIgnoreCase("MYSQL")) {
-            new PluginConnection(Config.Database.host(), Config.Database.port(), Config.Database.database(), Config.Database.username(), Config.Database.password());
-        } else {
-            new PluginConnection(getPluginDataFolder().getPath());
-        }
-
-        PluginConnection.getStorm().runMigrations();
-
-        DataManager.load();
-
-        MAStaff.getInstance().getPLogger().info("Database loaded!");
-    }
-
-    @Override
-    public void loadModules() {
-
-    }
-
-    @Override
-    public void unregisterCommands() {
-
-    }
-
-    @Override
-    public void unregisterListeners() {
-
-    }
-
-    @Override
-    public void unloadDatabase() {
-
-    }
-
-    @Override
-    public void reload() {
-
-    }
-
-    @Override
-    public void registerCommand(Command command) {
-        CommandData commandData;
-
-        CommandManager commandManager = proxyServer.getCommandManager();
-
-        try {
-            commandData = command.getClass().getAnnotation(CommandData.class);
-        } catch (Exception e) {
-            MAStaff.getInstance().getPLogger().error("Command " + command.getClass().getSimpleName() + " has no CommandData annotation!");
-            return;
-        }
-
-        CommandMeta commandMeta = commandManager.metaBuilder(commandData.name())
-                .aliases(commandData.aliases())
-                .plugin(this)
-                .build();
-
-        CustomCommand customCommand = new CustomCommand(command, commandData.permission());
-
-        commandManager.register(commandMeta, customCommand);
-    }
-
-    @Override
-    public File getPluginDataFolder() {
-        return dataDirectory.toFile();
-    }
-
-    @Override
-    public InputStream getPluginResource(String s) {
-        return classLoader.getResourceAsStream(s);
-    }
-
-    @Override
-    public void setDebug(boolean debug) {
-        this.debug = debug;
-    }
-
-    @Override
-    public ProxyServer getPluginInstance() {
-        return this.proxyServer;
-    }
-
-    @Override
-    public Injector getInjector() {
-        return injector;
-    }
+  @Override
+  public Injector getInjector() {
+    return injector;
+  }
 }

@@ -6,36 +6,41 @@ import es.angelillo15.mast.api.managers.StaffManager;
 import org.bukkit.command.CommandSender;
 
 public class DebugARG extends LegacySubCommand {
-    @Inject
-    private StaffManager staffManager;
-    @Override
-    public String getName() {
-        return "debug";
-    }
+  @Inject private StaffManager staffManager;
 
-    @Override
-    public String getDescription() {
-        return "Debug command";
-    }
+  @Override
+  public String getName() {
+    return "debug";
+  }
 
-    @Override
-    public String getSyntax() {
-        return "/mast debug";
-    }
+  @Override
+  public String getDescription() {
+    return "Debug command";
+  }
 
-    @Override
-    public String getPermission() {
-        return "mast.debug";
-    }
+  @Override
+  public String getSyntax() {
+    return "/mast debug";
+  }
 
-    @Override
-    public void execute(CommandSender sender, String[] args) {
-        staffManager.getStaffPlayers().forEach((s, iStaffPlayer) -> {
-            sender.sendMessage("-------------------------------------");
-            sender.sendMessage("Name: " + iStaffPlayer.getPlayer().getName());
-            sender.sendMessage("Vanished: " + iStaffPlayer.isVanished());
-            sender.sendMessage("Staff mode: " + iStaffPlayer.isStaffMode());
-            sender.sendMessage("Object id " + iStaffPlayer.hashCode());
-        });
-    }
+  @Override
+  public String getPermission() {
+    return "mast.debug";
+  }
+
+  @Override
+  public void execute(CommandSender sender, String[] args) {
+    sender.sendMessage("Staff players: " + staffManager.getStaffPlayers().asMap().size());
+    staffManager
+        .getStaffPlayers()
+        .asMap()
+        .forEach(
+            (s, iStaffPlayer) -> {
+              sender.sendMessage("-------------------------------------");
+              sender.sendMessage("Name: " + iStaffPlayer.getPlayer().getName());
+              sender.sendMessage("Vanished: " + iStaffPlayer.isVanished());
+              sender.sendMessage("Staff mode: " + iStaffPlayer.isStaffMode());
+              sender.sendMessage("Object id " + iStaffPlayer.hashCode());
+            });
+  }
 }

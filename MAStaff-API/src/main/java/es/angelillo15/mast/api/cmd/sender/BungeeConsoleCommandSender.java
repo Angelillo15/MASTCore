@@ -4,63 +4,63 @@ import es.angelillo15.mast.api.MAStaffInstance;
 import net.kyori.adventure.audience.Audience;
 
 public class BungeeConsoleCommandSender implements CommandSender {
-    @Override
-    public void sendMessage(String message) {
-        MAStaffInstance.getLogger().info(message);
-    }
+  @Override
+  public void sendMessage(String message) {
+    MAStaffInstance.getLogger().info(message);
+  }
 
-    @Override
-    public boolean hasPermission(String permission) {
-        return true;
-    }
+  @Override
+  public boolean hasPermission(String permission) {
+    return true;
+  }
 
-    @Override
-    public String getName() {
-        return "Console";
-    }
+  @Override
+  public String getName() {
+    return "Console";
+  }
 
-    @Override
-    public String getUniqueId() {
-        return "CONSOLE";
-    }
+  @Override
+  public String getUniqueId() {
+    return "CONSOLE";
+  }
 
-    @Override
-    public boolean isPlayer() {
-        return false;
-    }
+  @Override
+  public boolean isPlayer() {
+    return false;
+  }
 
-    @Override
-    public boolean isConsole() {
-        return true;
-    }
+  @Override
+  public boolean isConsole() {
+    return true;
+  }
 
-    @Override
-    public boolean isProxy() {
-        return true;
-    }
+  @Override
+  public boolean isProxy() {
+    return true;
+  }
 
-    @Override
-    public boolean isBungee() {
-        return true;
-    }
+  @Override
+  public boolean isBungee() {
+    return true;
+  }
 
-    @Override
-    public boolean isSpigot() {
-        return false;
-    }
+  @Override
+  public boolean isSpigot() {
+    return false;
+  }
 
-    @Override
-    public String getAddress() {
-        return "0.0.0.0";
-    }
+  @Override
+  public String getAddress() {
+    return "0.0.0.0";
+  }
 
-    @Override
-    public Audience getAudience() {
-        return null;
-    }
+  @Override
+  public Audience getAudience() {
+    return null;
+  }
 
-    @Override
-    public String getServerName() {
-        return "Proxy";
-    }
+  @Override
+  public String getServerName() {
+    return "Proxy";
+  }
 }

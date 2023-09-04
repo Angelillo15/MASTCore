@@ -14,25 +14,33 @@ import es.angelillo15.mast.api.utils.NumberUtils
         aliases = ["tban"]
 )
 class TempBanCMD : PunishTargetReasonCommand(2, Messages.Default.defaultBanReason()) {
-    override fun onCommand(sender: IPunishPlayer, target: String, label: String, args: Array<out String>, reason: String) {
-        if (args.size < 2) {
-            sender.sendMessage(Messages.Commands.TempBan.usage())
-            return
-        }
-
-        val time: Long = try {
-            System.currentTimeMillis() + NumberUtils.parseToMilis(args[1])
-        } catch (e: NumberFormatException) {
-            sender.sendMessage("Invalid time")
-            return
-        }
-
-        sender.ban(target, reason, time)
-        sender.sendMessage(Messages.Commands.TempBan.success(
-                target,
-                TextUtils.formatDate(time, Config.dateFormat()),
-                reason,
-                sender.name)
-        )
+  override fun onCommand(
+          sender: IPunishPlayer,
+          target: String,
+          label: String,
+          args: Array<out String>,
+          reason: String
+  ) {
+    if (args.size < 2) {
+      sender.sendMessage(Messages.Commands.TempBan.usage())
+      return
     }
+
+    val time: Long = try {
+      System.currentTimeMillis() + NumberUtils.parseToMilis(args[1])
+    } catch (e: NumberFormatException) {
+      sender.sendMessage("Invalid time")
+      return
+    }
+
+    sender.ban(target, reason, time)
+    sender.sendMessage(
+            Messages.Commands.TempBan.success(
+                    target,
+                    TextUtils.formatDate(time, Config.dateFormat()),
+                    reason,
+                    sender.name
+            )
+    )
+  }
 }

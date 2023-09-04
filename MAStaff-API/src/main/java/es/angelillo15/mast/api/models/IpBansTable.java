@@ -7,11 +7,10 @@ import com.craftmend.storm.api.enums.Where;
 import com.craftmend.storm.api.markers.Column;
 import com.craftmend.storm.api.markers.Table;
 import es.angelillo15.mast.api.database.PluginConnection;
+import java.util.Collection;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.SneakyThrows;
-
-import java.util.Collection;
 
 @Data
 @Table(name="mastaff_ipbans")
@@ -25,18 +24,6 @@ public class IpBansTable extends StormModel {
             references = { BansTable.class }
     )
     private Integer banId;
-
-    @SneakyThrows
-    public BansTable getBanTable() {
-        Storm storm = PluginConnection.getStorm();
-        Collection<BansTable> bans = storm.buildQuery(BansTable.class)
-                .where("id", Where.EQUAL, banId)
-                .limit(1)
-                .execute()
-                .join();
-
-        return bans.isEmpty() ? null : bans.iterator().next();
-    }
 
     public static BansTable getIpBanned(String ip) {
         Storm storm = PluginConnection.getStorm();
@@ -68,6 +55,18 @@ public class IpBansTable extends StormModel {
         } catch (Exception e) {
             return null;
         }
+    }
+
+    @SneakyThrows
+    public BansTable getBanTable() {
+        Storm storm = PluginConnection.getStorm();
+        Collection<BansTable> bans = storm.buildQuery(BansTable.class)
+                .where("id", Where.EQUAL, banId)
+                .limit(1)
+                .execute()
+                .join();
+
+        return bans.isEmpty() ? null : bans.iterator().next();
     }
 
 }

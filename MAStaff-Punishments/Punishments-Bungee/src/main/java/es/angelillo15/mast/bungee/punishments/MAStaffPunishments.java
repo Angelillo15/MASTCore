@@ -2,15 +2,15 @@ package es.angelillo15.mast.bungee.punishments;
 
 import com.google.inject.Inject;
 import com.google.inject.Injector;
-import es.angelillo15.mast.api.MAStaffInstance;
 import es.angelillo15.mast.api.addons.MAStaffAddon;
+import es.angelillo15.mast.api.config.punishments.ConfigLoader;
 import es.angelillo15.mast.api.punishments.cmd.KickCMD;
 import es.angelillo15.mast.api.punishments.cmd.ban.*;
 import es.angelillo15.mast.api.punishments.cmd.cache.ClearCacheCMD;
-import es.angelillo15.mast.api.config.punishments.ConfigLoader;
 import es.angelillo15.mast.api.punishments.cmd.warn.UnWarnCMD;
 import es.angelillo15.mast.api.punishments.cmd.warn.WarnCMD;
 import es.angelillo15.mast.api.punishments.data.DataManager;
+import es.angelillo15.mast.api.punishments.loader.TemplateLoaders;
 import es.angelillo15.mast.api.utils.MAStaffInject;
 import es.angelillo15.mast.bungee.punishments.listeners.BroadcastListener;
 import es.angelillo15.mast.bungee.punishments.listeners.PlayerBanListener;
@@ -70,5 +70,7 @@ public class MAStaffPunishments extends MAStaffAddon<Plugin> {
         DataManager.load();
     }
 
-
+    public void loadTemplates() {
+        injector.getInstance(TemplateLoaders.class).loadAll();
+    }
 }

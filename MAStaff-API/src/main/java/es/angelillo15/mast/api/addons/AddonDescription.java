@@ -8,25 +8,15 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AddonDescription {
-    /**
-     * Friendly name of the plugin.
-     */
-    private String name;
-    /**
-     * Addon main class. Needs to extend {@link MAStaffAddon}.
-     */
-    private String main;
-    /**
-     * Plugin version.
-     */
-    private String version;
-    /**
-     * Plugin author.
-     */
-    private String author;
+  /** Friendly name of the plugin. */
+  private String name;
+  /** Addon main class. Needs to extend {@link MAStaffAddon}. */
+  private String main;
+  /** Plugin version. */
+  private String version;
+  /** Plugin author. */
+  private String author;
 
-    /**
-     * Plugin description.
-     */
-    private String description;
+  /** Plugin description. */
+  private String description;
 }

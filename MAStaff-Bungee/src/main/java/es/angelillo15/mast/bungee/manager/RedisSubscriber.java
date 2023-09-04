@@ -1,7 +1,7 @@
 package es.angelillo15.mast.bungee.manager;
 
-import es.angelillo15.mast.api.managers.ManagerExecutor;
 import es.angelillo15.mast.api.event.Event;
+import es.angelillo15.mast.api.managers.ManagerExecutor;
 import es.angelillo15.mast.api.redis.RedisEventManager;
 import es.angelillo15.mast.bungee.MAStaff;
 import es.angelillo15.mast.bungee.config.Config;

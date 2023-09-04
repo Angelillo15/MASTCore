@@ -9,19 +9,16 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockReceiveGameEvent;
 
 public class OnBlockReceiveGameEvent implements Listener {
-    @Inject
-    private StaffManager staffManager;
+  @Inject private StaffManager staffManager;
 
-    @EventHandler
-    public void onBlockReceiveGameEvent(BlockReceiveGameEvent event) {
-        if(!(event.getEntity() instanceof Player)) return;
+  @EventHandler
+  public void onBlockReceiveGameEvent(BlockReceiveGameEvent event) {
+    if (!(event.getEntity() instanceof Player player)) return;
 
-        Player player = (Player) event.getEntity();
+    if (!staffManager.isStaffPlayer(player)) return;
 
-        if (!staffManager.isStaffPlayer(player)) return;
+    IStaffPlayer staffPlayer = staffManager.getStaffPlayer(player);
 
-        IStaffPlayer staffPlayer = staffManager.getStaffPlayer(player);
-
-        if(staffPlayer.isVanished()) event.setCancelled(true);
-    }
+    if (staffPlayer.isVanished()) event.setCancelled(true);
+  }
 }

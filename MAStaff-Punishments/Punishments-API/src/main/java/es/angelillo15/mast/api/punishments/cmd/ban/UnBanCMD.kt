@@ -13,18 +13,18 @@ import es.angelillo15.mast.api.punishments.cmd.PunishTargetReasonCommand
         aliases = ["ub"]
 )
 class UnBanCMD : PunishTargetReasonCommand(1, Messages.Default.defaultUnbanReason()) {
-    override fun onCommand(sender: IPunishPlayer, target: String, label: String, args: Array<out String>, reason: String) {
-        if (args.isEmpty()) {
-            sender.sendMessage(Messages.Commands.Unban.usage())
-            return
-        }
-
-        sender.unban(target, reason)
-
-        sender.sendMessage(Messages.Commands.Unban.success(
-                target,
-                reason,
-                sender.name
-        ))
+  override fun onCommand(
+          sender: IPunishPlayer,
+          target: String,
+          label: String,
+          args: Array<out String>,
+          reason: String
+  ) {
+    if (args.isEmpty()) {
+      sender.sendMessage(Messages.Commands.Unban.usage())
+      return
     }
+
+    sender.unban(target, reason)
+  }
 }

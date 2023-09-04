@@ -9,17 +9,16 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 
 public class OnAchievement implements Listener {
-    @Inject
-    private StaffManager staffManager;
+  @Inject private StaffManager staffManager;
 
-    @EventHandler
-    public void onAchievement(PlayerAdvancementCriterionGrantEvent event) {
-        Player player = event.getPlayer();
+  @EventHandler
+  public void onAchievement(PlayerAdvancementCriterionGrantEvent event) {
+    Player player = event.getPlayer();
 
-        if (!staffManager.isStaffPlayer(player)) return;
+    if (!staffManager.isStaffPlayer(player)) return;
 
-        IStaffPlayer staffPlayer = staffManager.getStaffPlayer(player);
+    IStaffPlayer staffPlayer = staffManager.getStaffPlayer(player);
 
-        if(staffPlayer.isStaffMode()) event.setCancelled(true);
-    }
+    if (staffPlayer.isStaffMode()) event.setCancelled(true);
+  }
 }

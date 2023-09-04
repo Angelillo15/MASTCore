@@ -4,9 +4,8 @@ import com.github.benmanes.caffeine.cache.Cache;
 import com.github.benmanes.caffeine.cache.Caffeine;
 import es.angelillo15.mast.api.config.punishments.Config;
 import es.angelillo15.mast.api.models.BansTable;
-import lombok.Getter;
-
 import java.util.concurrent.TimeUnit;
+import lombok.Getter;
 
 public class BanCache {
     @Getter

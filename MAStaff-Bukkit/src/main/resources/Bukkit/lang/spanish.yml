@@ -5,12 +5,20 @@
 # Recuerda unirte a mi servidor de Discord si necesitas ayuda:
 # https://discord.angelillo15.es/
 #
-Prefix: '&a&lSTAFF &8&l»&r' # Esto aparecerá delante de todos los mensajes.
-NoPermission: "&7No tienes permiso para ejecutar este comando." # Esto aparecerá cuando un jugador que no tenga permisos utilice un comando.
-Reloaded: "{prefix} &7MAStaff ha sido recargado exitosamente." # Esto aparecerá cuando el plugin sea recargado.
+# Esto aparecerá delante de todos los mensajes.
+# Puedes usar {prefix} en un mensaje para mostrar el prefijo.
+Prefix: '&a&lSTAFF &8&l»&r'
+# Esto aparecerá cuando un jugador que no tenga permisos utilice un comando.
+NoPermission: "&7No tienes permiso para ejecutar este comando."
+# Esto aparecerá cuando el plugin sea recargado.
+Reloaded: "{prefix} &7MAStaff ha sido recargado exitosamente."
+# Estos son los mensajes generales.
 General:
-  noPlayerFound: '{prefix} &7Ese jugador está desconectado.' # Mensaje enviado cuando el jugador mencionado no está conectado.
-  noPlayerOnline: '{prefix} &7No hay jugadores conectados.' # Mensaje enviado cuando no hay jugadores conectados.
+  # Mensaje enviado cuando el jugador mencionado no está conectado.
+  noPlayerFound: '{prefix} &7Ese jugador está desconectado.'
+  # Mensaje enviado cuando no hay jugadores conectados.
+  noPlayerOnline: '{prefix} &7No hay jugadores conectados.'
+# Mensajes del módulo Vanish.
 Vanish:
   # Mensaje enviado cuando un jugador desactiva el vanish.
   joinMessage: '&a{player} &7ha entrado'
@@ -34,6 +42,10 @@ StaffMode:
   toggledOn: '{prefix} &7Modo de staff &aactivado&7.'
   # Mensaje enviado al desactivar el Modo de Staff.
   toggledOff: '{prefix} &7Modo de staff &adesactivado&7.'
+  # Mensaje enviado cuando alguien activa la visión nocturna.
+  nightVisionOn: '{prefix} &7Has activado la &bvisión nocturna&7.'
+  # Mensaje enviado cuando alguien desactiva la visión nocturna.
+  nightVisionOff: '{prefix} &7Has desactivado la &bvisión nocturna&7.'
 Freeze:
   # Mensaje enviado cuando el comando no se utiliza correctamente.
   correctUse: '{prefix} &7Debes de usar &a/freeze <jugador>&7.'
@@ -47,6 +59,7 @@ Freeze:
   unfrozenBy: '{prefix} &7El jugador &a{player} &7ha sido &adescongelado &7por &a{staff}&7.'
   # Mensaje enviado cuando un jugador es congelado por un staff.
   frozenByOther: '{prefix} &7El jugador &a{player} &7ha sido &afrozen &7por &a{staff}&7.'
+  # Mensaje enviado cuando un jugador es congelado por un staff.
   playerSpamMessage:
     - ''
     - '&7████&c█&7████'
@@ -62,12 +75,13 @@ Freeze:
   confirmPunishMessage: |
     <gray>El <green>jugador</green> <red>{player}</red> se ha salido del servidor mientras se encontraba congelado.
     <reset>
-    ¿Quieres ejecuutar los comandos especificados para cuando un jugador abandona estando congelado?
+    ¿Quieres ejecutar los comandos especificados para cuando un jugador abandona estando congelado?
     <hover:show_text:'Forgive the player'><red><click:run_command:'/freeze /remove {player}'>[x]</click></red></hover> <click:run_command:/freeze /exec {player}><green><hover:show_text:'Punish that player'>[✔]</hover></green> </click>
   # Mensaje que se manda cuando un staff intenta congelar a uu jugador con el permiso mast.freeze.bypass
   freezeBypassMessage: '{prefix} &7No puedes congelar a este jugador.'
 StaffList:
-  title: '&a&lSTAFF &8&l» &7Online Staff' # El título de la lista de Staff.
+  # El título de la lista de Staff.
+  title: '&a&lSTAFF &8&l» &7Online Staff'
   staffLore:
     - ""
     - "&6&l» &7Nombre: &a%player_name%"
@@ -77,6 +91,7 @@ StaffList:
   previousPage: '&a&l« &7Pagina Anterior'
   # Nombre del botón de la página siguiente.
   nextPage: '&a&l» &7Pagina siguiente'
+# Mensajes del staff vault
 StaffVault:
   # Mensaje mandado cuando un item se guarda en el inventario de staff
   itemSaved: "{prefix} &7Un item ha sido guardado en tu invetario de staff. \n <gray>Click <gold><u><click:run_command:'/staff vault'>aquí</click></u></gold> para abrirlo</gray>"

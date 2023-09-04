@@ -1,7 +1,6 @@
 package es.angelillo15.mast.api.vanish;
 
 import es.angelillo15.mast.api.IStaffPlayer;
-
 import java.util.ArrayList;
 
 public class VanishDataManager {
@@ -9,7 +8,7 @@ public class VanishDataManager {
 
     /**
      * Returns the list of vanished players
-     * @return ArrayList<IStaffPlayer>
+     * @return ArrayList of IStaffPlayer
      */
     public static ArrayList<IStaffPlayer> getVanishedPlayers() {
         return vanishedPlayers;
@@ -17,7 +16,7 @@ public class VanishDataManager {
 
     /**
      * Adds a player to the vanished players list
-     * @param player
+     * @param player the player to add
      */
     public static void addVanishedPlayer(IStaffPlayer player) {
         vanishedPlayers.add(player);
@@ -25,7 +24,7 @@ public class VanishDataManager {
 
     /**
      * Removes a player from the vanished players list
-     * @param player
+     * @param player the player to remove
      */
     public static void removeVanishedPlayer(IStaffPlayer player) {
         vanishedPlayers.remove(player);
@@ -35,7 +34,7 @@ public class VanishDataManager {
 
     /**
      * Checks if a player is vanished
-     * @param player
+     * @param player IStaffPlayer to check
      * @return boolean
      */
     public static boolean isVanished(IStaffPlayer player) {
@@ -44,7 +43,7 @@ public class VanishDataManager {
 
     /**
      * Checks if a player is vanished
-     * @param player
+     * @param player Player name to check
      * @return boolean
      */
     public static boolean isVanished(String player) {

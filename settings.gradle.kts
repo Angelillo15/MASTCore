@@ -25,3 +25,5 @@ include("MAStaff-PAPI")
 include("MAStaff-Velocity")
 include("MAStaff-Common")
 include("MAStaff-Lite")
+include("MAStaff-Punishments:Punishments-Velocity")
+findProject(":MAStaff-Punishments:Punishments-Velocity")?.name = "Punishments-Velocity"

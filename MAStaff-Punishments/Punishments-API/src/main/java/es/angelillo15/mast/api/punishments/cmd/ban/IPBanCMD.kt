@@ -12,13 +12,19 @@ import es.angelillo15.mast.api.punishments.cmd.PunishTargetReasonCommand
         description = "Ban an IP"
 )
 class IPBanCMD : PunishTargetReasonCommand(1, Messages.Default.defaultBanReason()) {
-    override fun onCommand(sender: IPunishPlayer, target: String, label: String, args: Array<out String>, reason: String) {
-        if (args.isEmpty()) {
-            sender.sendMessage(Messages.Commands.IpBan.usage())
-            return
-        }
-
-        sender.ban(args[0], reason.toString(), true)
-        sender.sendMessage(Messages.Commands.IpBan.success(target, reason.toString(), sender.name))
+  override fun onCommand(
+          sender: IPunishPlayer,
+          target: String,
+          label: String,
+          args: Array<out String>,
+          reason: String
+  ) {
+    if (args.isEmpty()) {
+      sender.sendMessage(Messages.Commands.IpBan.usage())
+      return
     }
+
+    sender.ban(args[0], reason.toString(), true)
+    sender.sendMessage(Messages.Commands.IpBan.success(target, reason.toString(), sender.name))
+  }
 }

@@ -14,50 +14,48 @@ import org.bukkit.event.player.PlayerInteractEntityEvent;
 
 @SuppressWarnings({"deprecation", "ConstantValue"})
 public class OnItemClickInteract implements Listener {
-    @Inject
-    private StaffManager staffManager;
-    static boolean clicked = false;
+  static boolean clicked = false;
+  @Inject private StaffManager staffManager;
 
-    @EventHandler
-    public void onEntityInteract(PlayerInteractEntityEvent event) {
-        Player player = event.getPlayer();
+  @EventHandler
+  public void onEntityInteract(PlayerInteractEntityEvent event) {
+    Player player = event.getPlayer();
 
-        if (!staffManager.isStaffPlayer(player)) return;
-        if (!player.hasPermission(Permissions.STAFF.getPermission())) return;
+    if (!staffManager.isStaffPlayer(player)) return;
+    if (!player.hasPermission(Permissions.STAFF.getPermission())) return;
 
-        IStaffPlayer staffPlayer = staffManager.getStaffPlayer(player);
+    IStaffPlayer staffPlayer = staffManager.getStaffPlayer(player);
 
-        if (staffPlayer.isStaffMode()) {
-            event.setCancelled(true);
-        }
-
-        if (player.getItemInHand() == null) return;
-        if (player.getItemInHand().getItemMeta() == null) return;
-        if (player.getItemInHand().getItemMeta().getDisplayName() == null) return;
-        if (event.getRightClicked() == null) return;
-        if (!(event.getRightClicked() instanceof Player)) return;
-
-        Player target = (Player) event.getRightClicked();
-
-        StaffItem item = staffPlayer.getItems().get(player.getItemInHand().getItemMeta().getDisplayName());
-        if (item == null) return;
-
-        if (item instanceof IPlayerInteractItem) {
-            MAStaff.getPlugin().getPLogger().debug("Executing item " +
-                    item.getItem().getItemMeta().getDisplayName() +
-                    " for player " + player.getName()
-            );
-            if (clicked) {
-                clicked = false;
-                return;
-            }
-
-            IPlayerInteractItem interactItem = (IPlayerInteractItem) item;
-
-            interactItem.interact(player, target);
-
-            clicked = true;
-        }
-
+    if (staffPlayer.isStaffMode()) {
+      event.setCancelled(true);
     }
+
+    if (player.getItemInHand() == null) return;
+    if (player.getItemInHand().getItemMeta() == null) return;
+    if (player.getItemInHand().getItemMeta().getDisplayName() == null) return;
+    if (event.getRightClicked() == null) return;
+    if (!(event.getRightClicked() instanceof Player target)) return;
+
+    StaffItem item =
+        staffPlayer.getItems().get(player.getItemInHand().getItemMeta().getDisplayName());
+    if (item == null) return;
+
+    if (item instanceof IPlayerInteractItem interactItem) {
+      MAStaff.getPlugin()
+          .getPLogger()
+          .debug(
+              "Executing item "
+                  + item.getItem().getItemMeta().getDisplayName()
+                  + " for player "
+                  + player.getName());
+      if (clicked) {
+        clicked = false;
+        return;
+      }
+
+      interactItem.interact(player, target);
+
+      clicked = true;
+    }
+  }
 }

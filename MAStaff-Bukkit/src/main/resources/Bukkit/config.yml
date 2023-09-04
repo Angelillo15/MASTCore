@@ -50,6 +50,15 @@ Config:
   # when all Staff enable Actions has finished.
   commandsOnExit:
     - "vanish"
+  # Enable night vision when the player enters the staff mode.
+  nightVision: true
+  # Add custom potion effects when the player enters the staff mode.
+  customPotionEffects: false
+  # Potion effects to add when the player enters the staff mode.
+  # Format: "effect:level:duration"
+  potionEffects:
+    - "speed:1:999999"
+    - "jump:1:999999"
 # Here you can configure the plugin addons.
 Addons:
   # Enable or disable the Vanish addon.

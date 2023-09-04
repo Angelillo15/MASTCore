@@ -1,6 +1,5 @@
 package es.angelillo15.mast.api.event;
 
-import es.angelillo15.mast.api.event.Event;
 import es.angelillo15.mast.api.redis.events.server.ServerConnectedEvent;
 import es.angelillo15.mast.api.redis.events.server.ServerDisconnectedEvent;
 import es.angelillo15.mast.api.redis.events.staff.StaffChatMessageEvent;

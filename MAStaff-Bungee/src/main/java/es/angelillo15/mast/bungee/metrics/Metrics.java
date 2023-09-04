@@ -1,25 +1,18 @@
 /**
- * This Metrics class was auto-generated and can be copied into your project if you are
- * not using a build tool like Gradle or Maven for dependency management.
+ * This Metrics class was auto-generated and can be copied into your project if you are not using a
+ * build tool like Gradle or Maven for dependency management.
  *
- * IMPORTANT: You are not allowed to modify this class, except changing the package.
+ * <p>IMPORTANT: You are not allowed to modify this class, except changing the package.
  *
- * Unallowed modifications include but are not limited to:
- *  - Remove the option for users to opt-out
- *  - Change the frequency for data submission
- *  - Obfuscate the code (every obfucator should allow you to make an exception for specific files)
- *  - Reformat the code (if you use a linter, add an exception)
+ * <p>Unallowed modifications include but are not limited to: - Remove the option for users to
+ * opt-out - Change the frequency for data submission - Obfuscate the code (every obfucator should
+ * allow you to make an exception for specific files) - Reformat the code (if you use a linter, add
+ * an exception)
  *
- * Violations will result in a ban of your plugin and account from bStats.
+ * <p>Violations will result in a ban of your plugin and account from bStats.
  */
 package es.angelillo15.mast.bungee.metrics;
 
-import net.md_5.bungee.api.plugin.Plugin;
-import net.md_5.bungee.config.Configuration;
-import net.md_5.bungee.config.ConfigurationProvider;
-import net.md_5.bungee.config.YamlConfiguration;
-
-import javax.net.ssl.HttpsURLConnection;
 import java.io.*;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
@@ -34,6 +27,11 @@ import java.util.function.Supplier;
 import java.util.logging.Level;
 import java.util.stream.Collectors;
 import java.util.zip.GZIPOutputStream;
+import javax.net.ssl.HttpsURLConnection;
+import net.md_5.bungee.api.plugin.Plugin;
+import net.md_5.bungee.config.Configuration;
+import net.md_5.bungee.config.ConfigurationProvider;
+import net.md_5.bungee.config.YamlConfiguration;
 
 public class Metrics {
 
@@ -241,6 +239,23 @@ public class Metrics {
       }
     }
 
+    /**
+     * Gzips the given string.
+     *
+     * @param str The string to gzip.
+     * @return The gzipped string.
+     */
+    private static byte[] compress(final String str) throws IOException {
+      if (str == null) {
+        return null;
+      }
+      ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+      try (GZIPOutputStream gzip = new GZIPOutputStream(outputStream)) {
+        gzip.write(str.getBytes(StandardCharsets.UTF_8));
+      }
+      return outputStream.toByteArray();
+    }
+
     public void addCustomChart(CustomChart chart) {
       this.customCharts.add(chart);
     }
@@ -353,23 +368,6 @@ public class Metrics {
           throw new IllegalStateException("bStats Metrics class has not been relocated correctly!");
         }
       }
-    }
-
-    /**
-     * Gzips the given string.
-     *
-     * @param str The string to gzip.
-     * @return The gzipped string.
-     */
-    private static byte[] compress(final String str) throws IOException {
-      if (str == null) {
-        return null;
-      }
-      ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-      try (GZIPOutputStream gzip = new GZIPOutputStream(outputStream)) {
-        gzip.write(str.getBytes(StandardCharsets.UTF_8));
-      }
-      return outputStream.toByteArray();
     }
   }
 
@@ -670,6 +668,34 @@ public class Metrics {
     }
 
     /**
+     * Escapes the given string like stated in https://www.ietf.org/rfc/rfc4627.txt.
+     *
+     * <p>This method escapes only the necessary characters '"', '\'. and '\u0000' - '\u001F'.
+     * Compact escapes are not used (e.g., '\n' is escaped as "\u000a" and not as "\n").
+     *
+     * @param value The value to escape.
+     * @return The escaped value.
+     */
+    private static String escape(String value) {
+      final StringBuilder builder = new StringBuilder();
+      for (int i = 0; i < value.length(); i++) {
+        char c = value.charAt(i);
+        if (c == '"') {
+          builder.append("\\\"");
+        } else if (c == '\\') {
+          builder.append("\\\\");
+        } else if (c <= '\u000F') {
+          builder.append("\\u000").append(Integer.toHexString(c));
+        } else if (c <= '\u001F') {
+          builder.append("\\u00").append(Integer.toHexString(c));
+        } else {
+          builder.append(c);
+        }
+      }
+      return builder.toString();
+    }
+
+    /**
      * Appends a null field to the JSON.
      *
      * @param key The key of the field.
@@ -807,34 +833,6 @@ public class Metrics {
       JsonObject object = new JsonObject(builder.append("}").toString());
       builder = null;
       return object;
-    }
-
-    /**
-     * Escapes the given string like stated in https://www.ietf.org/rfc/rfc4627.txt.
-     *
-     * <p>This method escapes only the necessary characters '"', '\'. and '\u0000' - '\u001F'.
-     * Compact escapes are not used (e.g., '\n' is escaped as "\u000a" and not as "\n").
-     *
-     * @param value The value to escape.
-     * @return The escaped value.
-     */
-    private static String escape(String value) {
-      final StringBuilder builder = new StringBuilder();
-      for (int i = 0; i < value.length(); i++) {
-        char c = value.charAt(i);
-        if (c == '"') {
-          builder.append("\\\"");
-        } else if (c == '\\') {
-          builder.append("\\\\");
-        } else if (c <= '\u000F') {
-          builder.append("\\u000").append(Integer.toHexString(c));
-        } else if (c <= '\u001F') {
-          builder.append("\\u00").append(Integer.toHexString(c));
-        } else {
-          builder.append(c);
-        }
-      }
-      return builder.toString();
     }
 
     /**

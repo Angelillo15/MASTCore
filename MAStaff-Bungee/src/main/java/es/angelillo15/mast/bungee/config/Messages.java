@@ -2,9 +2,8 @@ package es.angelillo15.mast.bungee.config;
 
 import es.angelillo15.configmanager.ConfigManager;
 import es.angelillo15.mast.bungee.utils.TextUtils;
-import net.md_5.bungee.api.ChatColor;
-
 import java.util.ArrayList;
+import net.md_5.bungee.api.ChatColor;
 
 public class Messages {
     private static ConfigManager messages = ConfigLoader.getMessages();

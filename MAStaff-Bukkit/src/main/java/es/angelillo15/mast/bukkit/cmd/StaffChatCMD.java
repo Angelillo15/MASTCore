@@ -1,8 +1,8 @@
 package es.angelillo15.mast.bukkit.cmd;
 
 import es.angelillo15.mast.api.TextUtils;
-import es.angelillo15.mast.api.event.bukkit.staff.StaffChatTalkEvent;
 import es.angelillo15.mast.api.config.bukkit.Messages;
+import es.angelillo15.mast.api.event.bukkit.staff.StaffChatTalkEvent;
 import es.angelillo15.mast.bukkit.utils.StaffUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;

@@ -52,6 +52,15 @@ StaffItems:
     lore:
       - '&7Click to view the inventory of'
       - '&7the player you are looking at.'
+  NIGHT_VISION:
+    enabled: true
+    permission: 'mast.item.nightvision'
+    name: '&bNight Vision'
+    material: 'POTION'
+    slot: 7
+    lore:
+      - '&7Click to enable or disable'
+      - '&7the night vision.'
   THRU:
     enabled: true
     permission: 'mast.item.thru'
@@ -59,4 +68,4 @@ StaffItems:
     material: 'COMPASS'
     slot: 8
     lore:
-      - '&7Click to passthrough a wall.'
+      - '&7Click to pass through a wall.'
