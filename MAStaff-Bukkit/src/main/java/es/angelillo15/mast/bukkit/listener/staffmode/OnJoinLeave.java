@@ -82,6 +82,7 @@ public class OnJoinLeave implements Listener {
       player.setAllowFlight(false);
       player.setInvulnerable(false);
       staffPlayer.changeGamemode(GameMode.SURVIVAL);
+      staffPlayer.removeEffects();
     }
 
     staffManager.removeStaffPlayer(staffPlayer);

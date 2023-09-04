@@ -14,6 +14,8 @@ open class OnStaffMessageEvent {
   private lateinit var serverUtils: IServerUtils
 
   fun onStaffMessageEvent(player: String, message: String, server: String): Boolean {
+    if (!CommonConfig.StaffChat.enabled()) return false
+
     val key = CommonConfig.StaffChat.Prefix.key()
     var strippedMessage = message
     if (!message.startsWith(key) && !staffChatManager.isStaffChatEnabled(player)) return false

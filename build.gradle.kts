@@ -94,14 +94,24 @@ allprojects {
     annotationProcessor("org.projectlombok:lombok:1.18.28")
     compileOnly("org.reflections:reflections:0.10.2")
     compileOnly(rootProject.libs.kotlin)
+    compileOnly(rootProject.libs.caffeine)
     testImplementation("org.projectlombok:lombok:1.18.28")
     testAnnotationProcessor("org.projectlombok:lombok:1.18.28")
-    testImplementation("org.junit.jupiter:junit-jupiter-api:5.7.0")
+    testImplementation(platform("org.junit:junit-bom:5.10.0"))
+    testImplementation("org.junit.jupiter:junit-jupiter")
+    testImplementation(rootProject.libs.paperApi)
+    testImplementation(rootProject.libs.guice)
     testImplementation(rootProject.libs.kotlin)
+    testImplementation(rootProject.libs.caffeine)
+    testImplementation(rootProject.libs.storm)
     compileOnly(rootProject.libs.guice)
   }
 
   kotlin {
     jvmToolchain(17);
+  }
+
+  tasks.test {
+    useJUnitPlatform()
   }
 }

@@ -30,8 +30,10 @@ public class DebugARG extends LegacySubCommand {
 
   @Override
   public void execute(CommandSender sender, String[] args) {
+    sender.sendMessage("Staff players: " + staffManager.getStaffPlayers().asMap().size());
     staffManager
         .getStaffPlayers()
+        .asMap()
         .forEach(
             (s, iStaffPlayer) -> {
               sender.sendMessage("-------------------------------------");

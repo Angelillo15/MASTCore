@@ -152,8 +152,7 @@ public class MAStaff implements MAStaffInstance<ProxyServer> {
         .getEventManager()
         .register(this, injector.getInstance(CommandBackendExecutor.class));
     proxyServer.getEventManager().register(this, injector.getInstance(OnStaffJoinLeaveQuit.class));
-    if (proxyServer.getPluginManager().isLoaded("unsignedvelocity"))
-      proxyServer.getEventManager().register(this, injector.getInstance(OnPlayerChat.class));
+    proxyServer.getEventManager().register(this, injector.getInstance(OnPlayerChat.class));
   }
 
   @SneakyThrows

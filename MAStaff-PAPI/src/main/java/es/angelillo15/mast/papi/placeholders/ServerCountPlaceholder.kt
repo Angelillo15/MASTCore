@@ -16,7 +16,7 @@ class ServerCountPlaceholder : Placeholder() {
 
     var staffVanishedCount = 0
 
-    manager!!.staffPlayers.forEach { (key, staff) ->
+    manager!!.staffPlayers.asMap().forEach { (key, staff) ->
       if (!staff.player.isOnline) return@forEach
 
       if (staff.isVanished) staffVanishedCount++

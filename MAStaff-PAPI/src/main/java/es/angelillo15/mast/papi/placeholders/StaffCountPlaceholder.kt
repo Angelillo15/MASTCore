@@ -11,6 +11,6 @@ class StaffCountPlaceholder : Placeholder() {
   @Inject
   private var manager: StaffManager? = null;
   override fun onPlaceholderRequest(player: Player?, params: String?): String {
-    return manager!!.getStaffPlayers().size.toString()
+    return manager!!.getStaffPlayers().asMap().count().toString()
   }
 }
