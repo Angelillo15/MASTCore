@@ -29,8 +29,12 @@ class CustomCommand(private var command: Command, private var permission: String
   override fun hasPermission(invocation: SimpleCommand.Invocation?): Boolean {
     if (permission.isNullOrBlank()) return true
 
-    if (invocation is Player) {
-      return invocation.hasPermission(permission)
+    if (invocation == null) {
+      return false
+    }
+
+    if (invocation.source() is Player) {
+      return invocation.source().hasPermission(permission)
     }
 
     return true
