@@ -7,6 +7,8 @@ import es.angelillo15.mast.handler.OnStaffMessageEvent
 class OnPlayerChat : OnStaffMessageEvent() {
   @Subscribe
   fun onPlayerChat(event: PlayerChatEvent) {
+    if (!event.player.hasPermission("mast.staffchat")) return
+
     if (onStaffMessageEvent(
                     event.player.username, event.message, event.player.currentServer.get().serverInfo.name
             )

@@ -10,7 +10,7 @@ import es.angelillo15.mast.api.cmd.sender.CommandSender
 import es.angelillo15.mast.api.cmd.sender.VelocityConsoleCommandSender
 import es.angelillo15.mast.api.cmd.sender.VelocityPlayerCommandSender
 
-class CustomCommand(private var command: Command, private var permission: String?) : SimpleCommand {
+class CustomCommand(private var command: Command, private var permission: String) : SimpleCommand {
   @Inject
   private lateinit var logger: ILogger;
   override fun execute(invocation: SimpleCommand.Invocation?) {
@@ -23,16 +23,12 @@ class CustomCommand(private var command: Command, private var permission: String
       return
     }
 
-    command.onCommand(sender, invocation.alias(), invocation.arguments())
+    if (invocation.source().hasPermission(permission)) {
+      command.onCommand(sender, invocation.alias(), invocation.arguments())
+    }
   }
 
-  override fun hasPermission(invocation: SimpleCommand.Invocation?): Boolean {
-    if (permission.isNullOrBlank()) return true
-
-    if (invocation is Player) {
-      return invocation.hasPermission(permission)
-    }
-
-    return true
+  override fun hasPermission(invocation: SimpleCommand.Invocation): Boolean {
+    return invocation.source().hasPermission(permission)
   }
 }

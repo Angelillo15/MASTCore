@@ -33,6 +33,7 @@ import javax.annotation.Nullable;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.SneakyThrows;
+import lombok.val;
 import org.bukkit.*;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -565,7 +566,11 @@ public class StaffPlayer implements IStaffPlayer {
   @Override
   public void restoreHealthAndFood() {
     if (!playerInventoryConfig.contains("health")) return;
-    player.setHealth(playerInventoryConfig.getDouble("health"));
     player.setFoodLevel(playerInventoryConfig.getInt("food"));
+    val health = playerInventoryConfig.getDouble("health");
+    if (health > 20)
+      player.setHealth(20);
+    else
+      player.setHealth(health);
   }
 }
