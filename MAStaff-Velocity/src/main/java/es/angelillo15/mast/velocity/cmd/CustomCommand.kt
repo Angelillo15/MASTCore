@@ -22,6 +22,9 @@ class CustomCommand(private var command: Command, private var permission: String
       logger.error("Unknown command sender: ${invocation.source()}")
       return
     }
+    if (!hasPermission(invocation)) {
+      return
+    }
 
     command.onCommand(sender, invocation.alias(), invocation.arguments())
   }
@@ -33,10 +36,7 @@ class CustomCommand(private var command: Command, private var permission: String
       return false
     }
 
-    if (invocation.source() is Player) {
-      return invocation.source().hasPermission(permission)
-    }
-
+    invocation.source().hasPermission(permission)
     return true
   }
 }

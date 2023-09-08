@@ -15,6 +15,7 @@ open class OnStaffMessageEvent {
 
   fun onStaffMessageEvent(player: String, message: String, server: String): Boolean {
     if (!CommonConfig.StaffChat.enabled()) return false
+    if (!CommonConfig.StaffChat.Prefix.enabled()) return false
 
     val key = CommonConfig.StaffChat.Prefix.key()
     var strippedMessage = message
