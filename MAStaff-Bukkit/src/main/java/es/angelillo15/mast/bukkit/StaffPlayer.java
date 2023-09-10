@@ -2,6 +2,7 @@ package es.angelillo15.mast.bukkit;
 
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
+import com.google.inject.Inject;
 import es.angelillo15.mast.api.IStaffPlayer;
 import es.angelillo15.mast.api.MAStaffInstance;
 import es.angelillo15.mast.api.TextUtils;
@@ -17,7 +18,6 @@ import es.angelillo15.mast.api.items.StaffItem;
 import es.angelillo15.mast.api.managers.freeze.FreezeManager;
 import es.angelillo15.mast.api.player.IGlowPlayer;
 import es.angelillo15.mast.api.player.IVanishPlayer;
-import es.angelillo15.mast.api.utils.MAStaffInject;
 import es.angelillo15.mast.api.utils.VersionUtils;
 import es.angelillo15.mast.bukkit.cmd.utils.CommandManager;
 import es.angelillo15.mast.bukkit.gui.StaffVault;
@@ -27,7 +27,6 @@ import es.angelillo15.mast.glow.GlowPlayer;
 import es.angelillo15.mast.vanish.VanishPlayer;
 import io.papermc.lib.PaperLib;
 import java.io.File;
-import java.io.IOException;
 import java.util.*;
 import javax.annotation.Nullable;
 import lombok.Getter;
@@ -44,6 +43,8 @@ import org.bukkit.potion.PotionEffectType;
 
 @SuppressWarnings({"deprecation", "UnstableApiUsage", "unchecked"})
 public class StaffPlayer implements IStaffPlayer {
+  @Inject
+  private MAStaff instance;
   private final Map<String, StaffItem> items = new HashMap<>();
   @Getter @Setter private boolean quit;
   @Getter private File playerInventoryFile;
@@ -177,7 +178,8 @@ public class StaffPlayer implements IStaffPlayer {
 
   public StaffPlayer setPlayer(Player player) {
     this.player = player;
-    if (Config.Addons.vanish()) this.vanishPlayer = new VanishPlayer(this);
+    if (Config.Addons.vanish())
+      this.vanishPlayer = instance.getInjector().getInstance(VanishPlayer.class).createStaffPlayer(this);
 
     if (VersionUtils.getBukkitVersion() > 8) {
       if (Config.Addons.glow()
