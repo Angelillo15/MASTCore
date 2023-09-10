@@ -14,38 +14,38 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.Inventory;
 
 public class OnOpenChest implements Listener {
-   @Inject
-   private StaffManager staffManager;
+  @Inject
+  private StaffManager staffManager;
 
-   @EventHandler(priority = EventPriority.HIGHEST)
-   public void onPlayerInteract(PlayerInteractEvent event) {
-      Player player = event.getPlayer();
+  @EventHandler(priority = EventPriority.HIGHEST)
+  public void onPlayerInteract(PlayerInteractEvent event) {
+    Player player = event.getPlayer();
 
-      if (!staffManager.isStaffPlayer(player)) {
-         return;
-      }
+    if (!staffManager.isStaffPlayer(player)) {
+      return;
+    }
 
-      IStaffPlayer staffPlayer = staffManager.getStaffPlayer(player);
+    IStaffPlayer staffPlayer = staffManager.getStaffPlayer(player);
 
-      if (!staffPlayer.isStaffMode()) {
-         return;
-      }
+    if (!staffPlayer.isStaffMode()) {
+      return;
+    }
 
-      if (event.getClickedBlock() == null) {
-         return;
-      }
+    if (event.getClickedBlock() == null) {
+      return;
+    }
 
-      if (!event.getClickedBlock().getType().name().contains("CHEST")) {
-         return;
-      }
+    if (!event.getClickedBlock().getType().name().contains("CHEST")) {
+      return;
+    }
 
-      Container container = (Container) event.getClickedBlock().getState();
+    Container container = (Container) event.getClickedBlock().getState();
 
-      if (container instanceof Chest chest) {
-         Inventory cInv = Bukkit.createInventory(null, chest.getInventory().getSize(), chest.getInventory().getType().name());
-         cInv.setContents(chest.getInventory().getContents());
-         player.openInventory(cInv);
-         event.setCancelled(true);
-      }
-   }
+    if (container instanceof Chest chest) {
+      Inventory cInv = Bukkit.createInventory(null, chest.getInventory().getSize(), chest.getInventory().getType().name());
+      cInv.setContents(chest.getInventory().getContents());
+      player.openInventory(cInv);
+      event.setCancelled(true);
+    }
+  }
 }
