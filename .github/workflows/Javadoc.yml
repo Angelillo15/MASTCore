@@ -10,8 +10,6 @@ name: JavaDoc Generator
 on:
   push:
     branches: [ 2.x ]
-  pull_request:
-    branches: [ 2.x ]
 jobs:
 
   build-on-ubuntu:
