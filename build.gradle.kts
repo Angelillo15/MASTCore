@@ -68,6 +68,7 @@ tasks.shadowJar {
 allprojects {
   apply(plugin = "java")
   apply(plugin = "org.jetbrains.kotlin.jvm")
+  apply(plugin = "com.github.johnrengelman.shadow")
 
   repositories {
     mavenCentral()

@@ -15,6 +15,8 @@ dependencies {
   compileOnly(project(":MAStaff-Vanish"))
   compileOnly(project(":MAStaff-PAPI"))
   compileOnly(project(":MAStaff-Glow"))
+  implementation(project(":MAStaff-NMS"))
+  implementation(project(":MAStaff-NMS:NMS-1.20.1_R0", "reobf"))
   compileOnlyApi(libs.spigot)
   compileOnlyApi(libs.paperApi)
   compileOnlyApi(libs.snakeYaml)
