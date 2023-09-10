@@ -139,6 +139,7 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance<JavaPlugin> {
     registerListener(injector.getInstance(OnItemGet.class));
     registerListener(injector.getInstance(OnPlayerInteractAtEntityEvent.class));
     registerListener(injector.getInstance(OnAttack.class));
+    registerListener(injector.getInstance(OnDamage.class));
     if (Config.silentOpenChest()) registerListener(injector.getInstance(OnOpenChest.class));
     if (version >= 19) registerListener(injector.getInstance(OnBlockReceiveGameEvent.class));
     if (version >= 9) registerListener(injector.getInstance(OnSwapHand.class));
