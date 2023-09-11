@@ -127,7 +127,6 @@ public class StaffPlayer implements IStaffPlayer {
   public void disableStaffMode() {
     TextUtils.colorize(Messages.GET_STAFF_MODE_DISABLE_MESSAGE(), player);
     player.setAllowFlight(false);
-    player.setInvulnerable(false);
     removeEffects();
     setModeData(false);
     clearInventory();
@@ -164,7 +163,6 @@ public class StaffPlayer implements IStaffPlayer {
     setGlowing(true);
     addEffects();
     player.setAllowFlight(true);
-    player.setInvulnerable(true);
     saveHealthAndFood();
     saveLocation();
     staffModeAsyncInventoryChecker();
