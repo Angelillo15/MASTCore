@@ -40,6 +40,6 @@ Redis:
   serverID: "p1"
 ```
 
-Change enable from false -> true and config  the datapase with your credentials and restart the server! Thats all
+Change enable from false -> true and config  the database with your credentials and restart the server! Thats all
 
 &#x20;
