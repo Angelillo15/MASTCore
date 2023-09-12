@@ -2,7 +2,7 @@
 description: Plugin configuration for bukkit/paper/folia/purpur
 ---
 
-# Config
+# 🖇 Config
 
 * If you modify something remeber to reload the plugin with **/mast reload**
 

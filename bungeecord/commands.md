@@ -2,7 +2,7 @@
 description: Bungeecord commands list
 ---
 
-# Commands
+# 🧭 Commands
 
 |                   |                                |
 | ----------------- | ------------------------------ |

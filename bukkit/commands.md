@@ -2,7 +2,7 @@
 description: Command list for bukkit
 ---
 
-# Commands
+# 🧭 Commands
 
 |                         |                             |
 | ----------------------- | --------------------------- |

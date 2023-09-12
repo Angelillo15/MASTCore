@@ -1,4 +1,4 @@
-# Databases
+# 💾 Databases
 
 MAStaff supports MySQL and SQLite databases.
 
@@ -13,14 +13,14 @@ MAStaff supports MySQL and SQLite databases.
 | Staff Mode        | ✔     | ✔      |
 | Staff Chat        | ✔     | ✔      |
 
-* Recomendation, if you have a network use MySQL
+> For greater scalability
 
 ## MySQL
 
 To use MySQL you need to have a MySQL or MariaDB server running. You can use a local server or a remote server.
 
 1. First go to the config and change the type from SQLite to MySQL
-2.  Fill the params with your host database data acces, then restart the server
+2.  Fill the params with your host database data access, then restart the server
 
     ![](https://i.imgur.com/Ox0lMhQ.png)
 

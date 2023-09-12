@@ -2,7 +2,7 @@
 description: Plugin configuration for bungeecord/waterfall
 ---
 
-# Config
+# 🖇 Config
 
 If you modify something remeber to reload the plugin with **/mastb reload**
 

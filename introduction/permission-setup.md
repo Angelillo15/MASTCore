@@ -2,7 +2,7 @@
 description: Here you will learn how to setup the permissions
 ---
 
-# Permission Setup
+# 🗝 Permission Setup
 
 For me the best permission management plugin is [LuckPerms](https://luckperms.net/)
 
