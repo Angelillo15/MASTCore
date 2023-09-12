@@ -27,7 +27,7 @@ Yes, you can request the acces in the official [discord](https://discord.nookure
 
 
 
-<table><thead><tr><th width="258">Branch name</th><th>Info</th></tr></thead><tbody><tr><td>2.x</td><td>Releases</td></tr><tr><td>feature/&#x3C;feature></td><td>Feature in work</td></tr><tr><td>fix/&#x3C;fix></td><td>Fix in work</td></tr></tbody></table>
+<table><thead><tr><th width="258">Branch name</th><th>Info</th></tr></thead><tbody><tr><td>2.x</td><td>Releases</td></tr><tr><td>feature/&#x3C;feature></td><td>Feature in progress</td></tr><tr><td>fix/&#x3C;fix></td><td>Fix in progress</td></tr></tbody></table>
 
 ## Modules
 
