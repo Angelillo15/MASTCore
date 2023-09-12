@@ -17,7 +17,7 @@ configurations["apiElements"].extendsFrom(compileOnlyApi)
 
 dependencies {
   compileOnly(libs.waterfall)
-  compileOnly(libs.spigot)
+  compileOnly(libs.paperApi)
   compileOnly(libs.placeholderApi)
   compileOnly(libs.liblyBukkit)
   compileOnly(libs.bundles.invAPI)
@@ -36,7 +36,6 @@ dependencies {
   compileOnly(libs.protocolLib)
   compileOnly(libs.vault)
   compileOnly(libs.velocity)
-  compileOnly("org.spigotmc:spigot:1.20.1-R0.1-SNAPSHOT")
 }
 
 blossom {
