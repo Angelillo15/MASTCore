@@ -23,7 +23,6 @@ dependencies {
   implementation(project(":MAStaff-NMS:NMS-1.16.5_R0"))
   implementation(project(":MAStaff-NMS:NMS-1.12.2_R0"))
   implementation(project(":MAStaff-NMS:NMS-1.8.8_R0"))
-  compileOnlyApi(libs.spigot)
   compileOnlyApi(libs.paperApi)
   compileOnlyApi(libs.snakeYaml)
   compileOnlyApi(libs.simpleYaml)
