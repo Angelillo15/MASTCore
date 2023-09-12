@@ -1,81 +1,89 @@
 package es.angelillo15.mast.api.managers;
 
 
-import com.github.benmanes.caffeine.cache.Cache;
-import com.github.benmanes.caffeine.cache.Caffeine;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
-import es.angelillo15.mast.api.ILogger;
 import es.angelillo15.mast.api.IStaffPlayer;
 import es.angelillo15.mast.api.utils.MAStaffInject;
 import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.Map;
+import java.util.Objects;
+import java.util.concurrent.ConcurrentHashMap;
 
 @Singleton
 public class StaffManager {
   @Inject
   private MAStaffInject instance;
-  @Inject
-  private ILogger logger;
   @Getter
-  private Cache<String, IStaffPlayer> staffPlayers = Caffeine.newBuilder().build();
+  private final Map<String, IStaffPlayer> staffPlayers = new ConcurrentHashMap<>();
+
   /**
    * @param staffPlayer The staff player to add
    */
-  public void addStaffPlayer(IStaffPlayer staffPlayer) {
+  public void addStaffPlayer(@NotNull IStaffPlayer staffPlayer) {
     staffPlayers.put(staffPlayer.getPlayer().getName(), staffPlayer);
   }
+
   /**
    * @param staffPlayer The staff player to remove
    */
-  public void removeStaffPlayer(IStaffPlayer staffPlayer) {
+  public void removeStaffPlayer(@NotNull IStaffPlayer staffPlayer) {
     removeStaffPlayer(staffPlayer.getPlayer().getName());
   }
+
   /**
    * @param name The name of the staff player to remove
    */
-  public void removeStaffPlayer(String name) {
-    staffPlayers.invalidate(name);
+  public void removeStaffPlayer(@NotNull String name) {
+    staffPlayers.remove(name);
   }
+
   /**
    * @param name The name of the staff player to get
    * @return The staff player
    */
-  public IStaffPlayer getStaffPlayer(String name) {
-    if (staffPlayers.getIfPresent(name) == null)
-      return instance.createStaffPlayer(Bukkit.getPlayer(name));
-    return staffPlayers.getIfPresent(name);
+  @Nullable
+  public IStaffPlayer getStaffPlayer(@NotNull String name) {
+    return getStaffPlayer(Objects.requireNonNull(Bukkit.getPlayer(name)));
   }
+
   /**
    * @param player The name of the staff player to get
    * @return The staff player
    */
-  public IStaffPlayer getStaffPlayer(Player player) {
-    if (staffPlayers.getIfPresent(player.getName()) == null)
+  @Nullable
+  public IStaffPlayer getStaffPlayer(@NotNull Player player) {
+    if (!staffPlayers.containsKey(player.getName()))
       return instance.createStaffPlayer(player);
-    return staffPlayers.getIfPresent(player.getName());
+    return staffPlayers.get(player.getName());
   }
+
   /**
    * @param player The player to check if is in the map
    * @return true if the player is in the map or false if not
    */
-  public boolean isStaffPlayer(Player player) {
-    return staffPlayers.getIfPresent(player.getName()) != null;
+  public boolean isStaffPlayer(@NotNull Player player) {
+    return isStaffPlayer(player.getName());
   }
+
   /**
    * @param name The player to check if is in the map
    * @return true if the player is in the map or false if not
    */
-  public boolean isStaffPlayer(String name) {
-    return staffPlayers.getIfPresent(name) != null;
+  public boolean isStaffPlayer(@NotNull String name) {
+    return staffPlayers.containsKey(name);
   }
+
   /**
    * @param staffPlayer The staff player to check if is in the map
    * @return true if the player is in the map or false if not
    */
-  public boolean isStaffPlayer(IStaffPlayer staffPlayer) {
-    return staffPlayers.getIfPresent(staffPlayer.getPlayer().getName()) != null;
+  public boolean isStaffPlayer(@NotNull IStaffPlayer staffPlayer) {
+    return staffPlayers.containsValue(staffPlayer);
   }
 }
