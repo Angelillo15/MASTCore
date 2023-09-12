@@ -5,39 +5,31 @@ import es.angelillo15.mast.api.utils.MAStaffInject
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.nbt.StringTag
 import net.minecraft.network.protocol.Packet
-import net.minecraft.network.protocol.game.ClientboundAddPlayerPacket
-import net.minecraft.network.protocol.game.ClientboundPlayerInfoRemovePacket
-import net.minecraft.network.protocol.game.ClientboundPlayerInfoUpdatePacket
-import net.minecraft.network.protocol.game.ClientboundRemoveEntitiesPacket
-import net.minecraft.network.protocol.game.ClientboundSetEntityDataPacket
-import net.minecraft.network.protocol.game.ClientboundSetPlayerTeamPacket
 import net.minecraft.world.item.ItemStack
-import net.minecraft.world.scores.PlayerTeam
-import net.minecraft.world.scores.Team
-import org.bukkit.Bukkit
 import org.bukkit.craftbukkit.v1_20_R1.entity.CraftPlayer
 import org.bukkit.craftbukkit.v1_20_R1.inventory.CraftItemStack
-import org.bukkit.craftbukkit.v1_20_R1.scoreboard.CraftScoreboard
 import org.bukkit.entity.Player
 
 
 class V1_20_1_R0(val instance: MAStaffInject) : VersionSupport() {
-  override fun sendPacket(player: Player, packet: Packet<*>) {
+  override fun sendPacket(player: Player, packet: Any) {
     val craftPlayer = player as CraftPlayer
     val connection = craftPlayer.handle.connection
 
-    connection.send(packet)
+    connection.send(packet as Packet<*>)
   }
 
   override fun setTag(item: org.bukkit.inventory.ItemStack, key: String, value: String): org.bukkit.inventory.ItemStack {
-    val tag = getCreateTag(item);
-    tag!!.tags[key] = StringTag.valueOf(value);
-    return applyTag(item, tag);
+    val nmsItemStack = getNmsItemCopy(item)
+    val tag = nmsItemStack.tag ?: initializeTag(nmsItemStack).tag!!
+    tag.putString(key, value)
+
+    return applyTag(item, tag)
   }
 
   override fun getTag(item: org.bukkit.inventory.ItemStack, key: String): String? {
     val tag = getTag(item) ?: return null
-    return tag.get(key)!!.asString
+    return tag.getString(key)
   }
 
   override fun removeTag(item: org.bukkit.inventory.ItemStack, key: String): org.bukkit.inventory.ItemStack {
@@ -58,19 +50,23 @@ class V1_20_1_R0(val instance: MAStaffInject) : VersionSupport() {
   private fun initializeTag(itemStack: org.bukkit.inventory.ItemStack): CompoundTag? {
     val i = CraftItemStack.asNMSCopy(itemStack)
             ?: throw RuntimeException("Cannot convert given item to a NMS item")
-    return initializeTag(i)
+    return initializeTag(i).tag!!
   }
 
-  private fun initializeTag(itemStack: ItemStack): CompoundTag {
-    val tag = getTag(itemStack) ?: throw RuntimeException("Provided item already has a Tag")
-
+  private fun initializeTag(itemStack: ItemStack): ItemStack {
+    val tag = CompoundTag()
     itemStack.tag = tag
-    return tag
+    return itemStack
   }
 
-  private fun getCreateTag(itemStack: ItemStack): CompoundTag? {
+  private fun getCreateTag(itemStack: ItemStack): CompoundTag {
     val tag = getTag(itemStack)
-    return tag ?: initializeTag(itemStack)
+
+    if (tag != null) {
+      return tag
+    }
+
+    return initializeTag(itemStack).tag!!
   }
 
   private fun getCreateTag(itemStack: org.bukkit.inventory.ItemStack?): CompoundTag? {
