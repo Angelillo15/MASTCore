@@ -6,7 +6,7 @@ description: How to install MAStaff in Paper 1.17
 
 In this version on Paper the library adventure (minimessage) is with an old version, in order to make it work with MAStaff you will need to add MiniMessage to the jar
 
-{% embed url="https://youtu.be/x4hSMpARbh4" %}
+{% embed url="https://www.youtube.com/embed/x4hSMpARbh4" %}
 
 ### Useful links
 
