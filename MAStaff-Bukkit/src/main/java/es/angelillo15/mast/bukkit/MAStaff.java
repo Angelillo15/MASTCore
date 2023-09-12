@@ -354,7 +354,7 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance<JavaPlugin> {
 
   @Override
   public IServerUtils getServerUtils() {
-    return null;
+    return injector.getInstance(ServerUtils.class);
   }
 
   @Override

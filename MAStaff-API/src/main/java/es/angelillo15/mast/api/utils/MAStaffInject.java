@@ -7,6 +7,8 @@ import es.angelillo15.mast.api.IStaffPlayer;
 import es.angelillo15.mast.api.cmd.Command;
 import java.io.File;
 import java.io.InputStream;
+
+import es.angelillo15.mast.api.nms.VersionSupport;
 import org.bukkit.entity.Player;
 
 public interface MAStaffInject {
@@ -44,6 +46,10 @@ public interface MAStaffInject {
     InputStream getPluginResource(String s);
 
     default Injector getInjector() {
+        return null;
+    }
+
+    default VersionSupport getVersionSupport() {
         return null;
     }
 }
