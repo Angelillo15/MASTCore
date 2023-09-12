@@ -4,7 +4,8 @@ import es.angelillo15.mast.api.items.StaffItem;
 import java.util.ArrayList;
 import lombok.Getter;
 
-public class ItemManager {
+@Deprecated
+public class LegacyItemManager {
   @Getter private ArrayList<StaffItem> items = new ArrayList<>();
 
   /**

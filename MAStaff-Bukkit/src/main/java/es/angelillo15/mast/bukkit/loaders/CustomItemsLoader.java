@@ -1,25 +1,31 @@
 package es.angelillo15.mast.bukkit.loaders;
 
+import com.google.inject.Inject;
+import com.google.inject.Singleton;
 import es.angelillo15.mast.api.TextUtils;
 import es.angelillo15.mast.api.config.bukkit.ConfigLoader;
 import es.angelillo15.mast.api.items.ItemTypes;
-import es.angelillo15.mast.api.managers.ItemManager;
+import es.angelillo15.mast.api.managers.ItemsManager;
 import es.angelillo15.mast.api.material.XMaterial;
+import es.angelillo15.mast.api.nms.VersionSupport;
 import es.angelillo15.mast.bukkit.MAStaff;
 import es.angelillo15.mast.bukkit.items.custom.CustomCommandInteractionItem;
 import es.angelillo15.mast.bukkit.items.custom.CustomCommandItem;
-import java.util.ArrayList;
-import java.util.Objects;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.simpleyaml.configuration.file.YamlFile;
 
+import java.util.ArrayList;
+import java.util.Objects;
+
+@Singleton
 public class CustomItemsLoader {
-  private static ItemManager manager;
+  @Inject
+  private ItemsManager manager;
+  @Inject
+  private VersionSupport versionSupport;
 
-  public static void load() {
-    manager = ItemsLoader.getManager();
-
+  public void load() {
     YamlFile items = ConfigLoader.getCustomItems().getConfig();
 
     for (String s : items.getConfigurationSection("StaffItems").getKeys(false)) {
@@ -45,25 +51,21 @@ public class CustomItemsLoader {
 
       itemStack.setItemMeta(meta);
 
+      itemStack = versionSupport.setTag(itemStack, "mast-staff-item", s);
+
       MAStaff.getPlugin().getPLogger().debug("Loading custom item: " + s);
       MAStaff.getPlugin()
           .getPLogger()
           .debug("Type: " + items.getString("StaffItems." + s + ".type"));
 
       switch (ItemTypes.valueOf(items.getString("StaffItems." + s + ".type"))) {
-        case COMMAND:
-          manager.addItem(
-              new CustomCommandItem(
-                  s, itemStack, slot, permission, items.getString("StaffItems." + s + ".command")));
-          break;
-        case COMMAND_TARGET:
-          manager.addItem(
-              new CustomCommandInteractionItem(
-                  s, itemStack, slot, permission, items.getString("StaffItems." + s + ".command")));
-          break;
-        default:
-          MAStaff.getPlugin().getPLogger().warn("Unknown item type: " + s + ".type");
-          break;
+        case COMMAND -> manager.addItem(
+            new CustomCommandItem(
+                s, itemStack, slot, permission, items.getString("StaffItems." + s + ".command")), s);
+        case COMMAND_TARGET -> manager.addItem(
+            new CustomCommandInteractionItem(
+                s, itemStack, slot, permission, items.getString("StaffItems." + s + ".command")), s);
+        default -> MAStaff.getPlugin().getPLogger().warn("Unknown item type: " + s + ".type");
       }
     }
   }
