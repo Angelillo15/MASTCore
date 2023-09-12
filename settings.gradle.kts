@@ -30,3 +30,15 @@ findProject(":MAStaff-Punishments:Punishments-Velocity")?.name = "Punishments-Ve
 include("MAStaff-NMS")
 include("MAStaff-NMS:NMS-1.20.1_R0")
 findProject(":MAStaff-NMS:NMS-1.20.1_R0")?.name = "NMS-1.20.1_R0"
+include("MAStaff-NMS:NMS-1.19.4_R0")
+findProject(":MAStaff-NMS:NMS-1.19.4_R0")?.name = "NMS-1.19.4_R0"
+include("MAStaff-NMS:NMS-1.18.2_R0")
+findProject(":MAStaff-NMS:NMS-1.18.2_R0")?.name = "NMS-1.18.2_R0"
+include("MAStaff-NMS:NMS-1.17.1_R0")
+findProject(":MAStaff-NMS:NMS-1.17.1_R0")?.name = "NMS-1.17.1_R0"
+include("MAStaff-NMS:NMS-1.16.5_R0")
+findProject(":MAStaff-NMS:NMS-1.16.5_R0")?.name = "NMS-1.16.5_R0"
+include("MAStaff-NMS:NMS-1.12.2_R0")
+findProject(":MAStaff-NMS:NMS-1.12.2_R0")?.name = "NMS-1.12.2_R0"
+include("MAStaff-NMS:NMS-1.8.8_R0")
+findProject(":MAStaff-NMS:NMS-1.8.8_R0")?.name = "NMS-1.8.8_R0"
