@@ -13,7 +13,7 @@ layout:
     visible: true
 ---
 
-# Information
+# 🚀 Information
 
 ## Do I have the source code when I bought the plugin?
 
@@ -25,9 +25,9 @@ Yes, you can request the acces in the official [discord](https://discord.nookure
 
 > MAStaff use git branching, this is a feature that allows to developers to diverge from the production version of the code, that means that whe can have different versions of the code without break production branch
 
-MAStaff have the branch **2.x** to releases, **dev** when there is a little fix that doesn't need a branch because its simple or a simple feature, **feature/\<feature>** is when we are working in a feature, that feature can be not merged to the dev or 2.x branch.
 
 
+<table><thead><tr><th width="258">Branch name</th><th>Info</th></tr></thead><tbody><tr><td>2.x</td><td>Releases</td></tr><tr><td>feature/&#x3C;feature></td><td>Feature in work</td></tr><tr><td>fix/&#x3C;fix></td><td>Fix in work</td></tr></tbody></table>
 
 ## Modules
 
