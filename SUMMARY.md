@@ -15,9 +15,14 @@
 * [Config](bukkit/config.md)
 * [Glow](bukkit/glow.md)
 * [Staff Vault](bukkit/staff-vault.md)
+* [Placeholders](bukkit/placeholders.md)
 
 ## 🪢 BungeeCord
 
 * [Commands](bungeecord/commands.md)
 * [Config](bungeecord/config.md)
 * [Redis Sync](bungeecord/redis-sync.md)
+
+## 😻 GitHub
+
+* [Information](github/information.md)
