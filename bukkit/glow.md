@@ -2,7 +2,7 @@
 description: How to set-up the glow module
 ---
 
-# Glow
+# 🔆 Glow
 
 ### Config  of the module
 
@@ -25,7 +25,7 @@ Config:
       color: 'DARK_RED'
 ```
 
-Here you will config the glow module colors for each group, for this you will need vault, if you doesn't have a tab/scoreboard plugin thats all
+Here you will learn to set-up the glow module colors for each group, for this you will need vault, if you doesn't have a tab/scoreboard plugin thats all
 
 ## Tab settings
 
@@ -37,7 +37,7 @@ Here you will config the glow module colors for each group, for this you will ne
 >
 > From its oficial [wiki](https://github.com/NEZNAMY/TAB/wiki/How-to-make-TAB-compatible-with-glow-plugins#reason-for-compatibility-issue)
 
-You will need to go to the \*groups.yml\* and add this placeholder \`%mastaff\_glow\_color%\`
+You are going to need to go to the **groups.yml** and add this placeholder \`%mastaff\_glow\_color%\`
 
 ```yaml
 _DEFAULT_:

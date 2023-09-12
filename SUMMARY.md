@@ -1,6 +1,6 @@
 # Table of contents
 
-* [MAStaff](README.md)
+* [🛹 MAStaff](README.md)
 
 ## Introduction
 

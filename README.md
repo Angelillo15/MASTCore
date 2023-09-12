@@ -2,6 +2,6 @@
 description: Welcome to MAStaff Documentation
 ---
 
-# MAStaff
+# 🛹 MAStaff
 
 <figure><img src=".gitbook/assets/Thread 2.png" alt=""><figcaption></figcaption></figure>
