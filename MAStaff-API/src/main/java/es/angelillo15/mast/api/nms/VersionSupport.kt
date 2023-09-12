@@ -1,6 +1,5 @@
 package es.angelillo15.mast.api.nms
 
-import net.minecraft.network.protocol.Packet
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
 
