@@ -16,6 +16,7 @@
 * [Glow](bukkit/glow.md)
 * [Staff Vault](bukkit/staff-vault.md)
 * [Placeholders](bukkit/placeholders.md)
+* [Paper 1.17 Support](bukkit/paper-1.17-support.md)
 
 ## 🪢 BungeeCord
 
