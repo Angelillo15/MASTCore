@@ -6,7 +6,8 @@ import es.angelillo15.mast.api.managers.StaffManager;
 import org.bukkit.command.CommandSender;
 
 public class DebugARG extends LegacySubCommand {
-  @Inject private StaffManager staffManager;
+  @Inject
+  private StaffManager staffManager;
 
   @Override
   public String getName() {
@@ -30,10 +31,9 @@ public class DebugARG extends LegacySubCommand {
 
   @Override
   public void execute(CommandSender sender, String[] args) {
-    sender.sendMessage("Staff players: " + staffManager.getStaffPlayers().asMap().size());
+    sender.sendMessage("Staff players: " + staffManager.getStaffPlayers().size());
     staffManager
         .getStaffPlayers()
-        .asMap()
         .forEach(
             (s, iStaffPlayer) -> {
               sender.sendMessage("-------------------------------------");
