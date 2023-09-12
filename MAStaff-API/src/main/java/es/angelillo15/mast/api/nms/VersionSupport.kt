@@ -10,7 +10,7 @@ abstract class VersionSupport {
    * @param player The player to send the packet to.
    * @param packet The packet to send.
    */
-  abstract fun sendPacket(player: Player, packet: Packet<*>)
+  abstract fun sendPacket(player: Player, packet: Any)
 
   /**
    * Sets the tag of an item.
