@@ -19,7 +19,7 @@ public class RTPItem extends StaffItem implements IExecutableItem {
 
   @Override
   public String getName() {
-    return "RTP";
+    return "RANDOM_PLAYER_TELEPORT";
   }
 
   @Override
