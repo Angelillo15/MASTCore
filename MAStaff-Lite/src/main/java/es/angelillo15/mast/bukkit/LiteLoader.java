@@ -6,7 +6,7 @@ import es.angelillo15.mast.api.thread.AsyncThreadKt;
 import es.angelillo15.mast.api.utils.PermsUtils;
 import es.angelillo15.mast.bukkit.addons.AddonsLoader;
 import es.angelillo15.mast.bukkit.legacy.BukkitLegacyLoader;
-import es.angelillo15.mast.bukkit.loaders.ItemsLoader;
+import es.angelillo15.mast.bukkit.loaders.LegacyItemsLoader;
 import es.angelillo15.mast.bukkit.utils.LibsLoader;
 import es.angelillo15.mast.bukkit.utils.scheduler.Scheduler;
 import io.papermc.lib.PaperLib;
@@ -47,7 +47,7 @@ public class LiteLoader extends MAStaff {
 
     @Override
     public void loadModules() {
-        ItemsLoader.load();
+        LegacyItemsLoader.load();
         new InventoryAPI(this).init();
 
         if (version < 9) {

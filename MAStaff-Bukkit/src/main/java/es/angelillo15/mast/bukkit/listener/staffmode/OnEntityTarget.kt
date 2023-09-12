@@ -19,7 +19,7 @@ class OnEntityTarget : Listener {
 
     if(!staffManager.isStaffPlayer(player)) return
 
-    val staffPlayer = staffManager.getStaffPlayer(player)
+    val staffPlayer = staffManager.getStaffPlayer(player) ?: return
 
     event.isCancelled = staffPlayer.isStaffMode
   }

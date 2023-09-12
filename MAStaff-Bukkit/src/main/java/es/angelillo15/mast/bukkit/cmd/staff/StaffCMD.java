@@ -1,5 +1,6 @@
 package es.angelillo15.mast.bukkit.cmd.staff;
 
+import com.google.inject.Inject;
 import es.angelillo15.mast.api.IStaffPlayer;
 import es.angelillo15.mast.api.MAStaffInstance;
 import es.angelillo15.mast.api.TextUtils;
@@ -7,8 +8,9 @@ import es.angelillo15.mast.api.cmd.LegacySubCommand;
 import es.angelillo15.mast.api.config.bukkit.Config;
 import es.angelillo15.mast.api.config.bukkit.ConfigLoader;
 import es.angelillo15.mast.api.config.bukkit.Messages;
-import es.angelillo15.mast.api.managers.LegacyStaffPlayersManagers;
 import java.util.ArrayList;
+
+import es.angelillo15.mast.api.managers.StaffManager;
 import lombok.Getter;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -16,7 +18,8 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 public class StaffCMD implements CommandExecutor {
-  @Getter private static ArrayList<LegacySubCommand> legacySubCommands = new ArrayList<>();
+  @Getter private static final ArrayList<LegacySubCommand> legacySubCommands = new ArrayList<>();
+  @Inject private StaffManager staffManager;
 
   public StaffCMD() {
     legacySubCommands.clear();
@@ -50,7 +53,13 @@ public class StaffCMD implements CommandExecutor {
     if (!(sender instanceof Player)) return true;
     if (args.length == 0) {
       Player player = (Player) sender;
-      IStaffPlayer staffPlayer = LegacyStaffPlayersManagers.getStaffPlayer(player);
+
+      IStaffPlayer staffPlayer = staffManager.getStaffPlayer(player);
+
+      if (staffPlayer == null) {
+        sender.sendMessage(TextUtils.colorize(Messages.GET_NO_PERMISSION_MESSAGE()));
+        return false;
+      }
 
       staffPlayer.toggleStaffMode();
       return true;

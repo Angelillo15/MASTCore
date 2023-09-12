@@ -80,7 +80,6 @@ public class OnJoinLeave implements Listener {
       staffPlayer.restoreInventory();
       staffPlayer.restoreHealthAndFood();
       player.setAllowFlight(false);
-      player.setInvulnerable(false);
       staffPlayer.changeGamemode(GameMode.SURVIVAL);
       staffPlayer.removeEffects();
     }

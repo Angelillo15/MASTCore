@@ -20,7 +20,7 @@ public class VanishItem extends StaffItem implements IExecutableItem {
 
   @Override
   public String getName() {
-    return "FREEZE";
+    return "VANISH";
   }
 
   @Override

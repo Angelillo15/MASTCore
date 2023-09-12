@@ -6,7 +6,7 @@ plugins {
 }
 
 group = "es.angelillo15"
-version = "2.4.1"
+version = "2.4.2"
 
 tasks.shadowJar {
   relocate("es.angelillo15.configmanager", "es.angelillo15.mast.libs.config.manager")
@@ -68,6 +68,7 @@ tasks.shadowJar {
 allprojects {
   apply(plugin = "java")
   apply(plugin = "org.jetbrains.kotlin.jvm")
+  apply(plugin = "com.github.johnrengelman.shadow")
 
   repositories {
     mavenCentral()
@@ -83,6 +84,7 @@ allprojects {
     maven("https://mvn.exceptionflug.de/repository/exceptionflug-public/")
     maven("https://repo.simplix.dev/repository/simplixsoft-public")
     maven("https://repo.nookure.com/releases")
+    maven("https://repo.codemc.io/repository/nms/")
   }
 
   tasks.withType<JavaCompile> {

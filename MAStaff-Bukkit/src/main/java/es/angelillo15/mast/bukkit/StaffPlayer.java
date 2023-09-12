@@ -2,6 +2,7 @@ package es.angelillo15.mast.bukkit;
 
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
+import com.google.inject.Inject;
 import es.angelillo15.mast.api.IStaffPlayer;
 import es.angelillo15.mast.api.MAStaffInstance;
 import es.angelillo15.mast.api.TextUtils;
@@ -14,20 +15,19 @@ import es.angelillo15.mast.api.event.bukkit.freeze.UnFreezePlayerEvent;
 import es.angelillo15.mast.api.event.bukkit.staff.StaffDisableEvent;
 import es.angelillo15.mast.api.event.bukkit.staff.StaffEnableEvent;
 import es.angelillo15.mast.api.items.StaffItem;
+import es.angelillo15.mast.api.managers.ItemsManager;
 import es.angelillo15.mast.api.managers.freeze.FreezeManager;
+import es.angelillo15.mast.api.nms.VersionSupport;
 import es.angelillo15.mast.api.player.IGlowPlayer;
 import es.angelillo15.mast.api.player.IVanishPlayer;
-import es.angelillo15.mast.api.utils.MAStaffInject;
 import es.angelillo15.mast.api.utils.VersionUtils;
 import es.angelillo15.mast.bukkit.cmd.utils.CommandManager;
 import es.angelillo15.mast.bukkit.gui.StaffVault;
-import es.angelillo15.mast.bukkit.loaders.ItemsLoader;
 import es.angelillo15.mast.bukkit.utils.StaffUtils;
 import es.angelillo15.mast.glow.GlowPlayer;
 import es.angelillo15.mast.vanish.VanishPlayer;
 import io.papermc.lib.PaperLib;
 import java.io.File;
-import java.io.IOException;
 import java.util.*;
 import javax.annotation.Nullable;
 import lombok.Getter;
@@ -44,6 +44,12 @@ import org.bukkit.potion.PotionEffectType;
 
 @SuppressWarnings({"deprecation", "UnstableApiUsage", "unchecked"})
 public class StaffPlayer implements IStaffPlayer {
+  @Inject
+  private MAStaff instance;
+  @Inject
+  private ItemsManager itemsManager;
+  @Inject
+  private VersionSupport versionSupport;
   private final Map<String, StaffItem> items = new HashMap<>();
   @Getter @Setter private boolean quit;
   @Getter private File playerInventoryFile;
@@ -126,7 +132,6 @@ public class StaffPlayer implements IStaffPlayer {
   public void disableStaffMode() {
     TextUtils.colorize(Messages.GET_STAFF_MODE_DISABLE_MESSAGE(), player);
     player.setAllowFlight(false);
-    player.setInvulnerable(false);
     removeEffects();
     setModeData(false);
     clearInventory();
@@ -163,7 +168,6 @@ public class StaffPlayer implements IStaffPlayer {
     setGlowing(true);
     addEffects();
     player.setAllowFlight(true);
-    player.setInvulnerable(true);
     saveHealthAndFood();
     saveLocation();
     staffModeAsyncInventoryChecker();
@@ -177,7 +181,8 @@ public class StaffPlayer implements IStaffPlayer {
 
   public StaffPlayer setPlayer(Player player) {
     this.player = player;
-    if (Config.Addons.vanish()) this.vanishPlayer = new VanishPlayer(this);
+    if (Config.Addons.vanish())
+      this.vanishPlayer = instance.getInjector().getInstance(VanishPlayer.class).createStaffPlayer(this);
 
     if (VersionUtils.getBukkitVersion() > 8) {
       if (Config.Addons.glow()
@@ -200,18 +205,18 @@ public class StaffPlayer implements IStaffPlayer {
   @Override
   public void setItems() {
     if (items.isEmpty()) {
-      ItemsLoader.getManager()
-          .getItems()
+      itemsManager.getItems()
+          .values()
           .forEach(
               item -> {
                 if (player.hasPermission(item.getPermission())) {
                   item.setItem(player);
-                  items.put(item.getItem().getItemMeta().getDisplayName(), item);
+                  items.put(item.getName(), item);
                 }
               });
       return;
     }
-
+    player.getInventory().clear();
     items.forEach((key, item) -> item.setItem(player));
   }
 
@@ -347,21 +352,12 @@ public class StaffPlayer implements IStaffPlayer {
         player.getInventory().forEach(itemStack -> {
           if (itemStack == null) return;
           if (itemStack.getType() == Material.AIR) return;
-          if (itemStack.getItemMeta() == null) {
-            addItemToStaffVault(itemStack);
-            return;
-          }
-          if (!(itemStack.getItemMeta().hasDisplayName())) {
-            addItemToStaffVault(itemStack);
-            return;
-          }
-          if (!(items.containsKey(itemStack.getItemMeta().getDisplayName()))) {
-            addItemToStaffVault(itemStack);
-            return;
-          }
+          if (versionSupport.getTag(itemStack, "mast-staff-item") != null) return;
+
+          addItemToStaffVault(itemStack);
+          player.getInventory().clear();
+          setItems();
         });
-        player.getInventory().clear();
-        setItems();
       }
     }).start();
   }

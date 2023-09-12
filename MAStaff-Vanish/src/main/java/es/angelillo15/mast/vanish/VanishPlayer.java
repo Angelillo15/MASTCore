@@ -1,42 +1,45 @@
 package es.angelillo15.mast.vanish;
 
 import es.angelillo15.mast.api.IStaffPlayer;
+import es.angelillo15.mast.api.factory.StaffPlayerFactory;
 import es.angelillo15.mast.api.player.IVanishPlayer;
-import es.angelillo15.mast.api.vanish.VanishDataManager;
 import es.angelillo15.mast.vanish.listeners.VanishListener;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
-public class VanishPlayer implements IVanishPlayer {
-  private final IStaffPlayer player;
+public class VanishPlayer implements IVanishPlayer, StaffPlayerFactory<VanishPlayer> {
 
-  public VanishPlayer(IStaffPlayer player) {
-    this.player = player;
-  }
+  private IStaffPlayer player;
 
   @Override
   public void enableVanish() {
-    VanishDataManager.addVanishedPlayer(player);
+    Bukkit.getOnlinePlayers().forEach(p -> {
+      if (p == player.getPlayer()) {
+        return;
+      }
 
-    for (Player p : Bukkit.getOnlinePlayers()) {
       if (p.hasPermission("mast.vanish.see")) {
-        continue;
+        return;
       }
 
       hide(p);
-    }
+    });
   }
 
   @Override
   public void disableVanish() {
-    VanishDataManager.removeVanishedPlayer(player);
+    Bukkit.getOnlinePlayers().forEach(p -> {
+      if (p == player.getPlayer()) {
+        return;
+      }
 
-    Bukkit.getOnlinePlayers().forEach(this::show);
+      show(p);
+    });
   }
 
   @Override
   public boolean isVanished() {
-    return VanishDataManager.isVanished(player);
+    return player.isVanished();
   }
 
   public void hide(Player player) {
@@ -45,5 +48,11 @@ public class VanishPlayer implements IVanishPlayer {
 
   public void show(Player player) {
     VanishListener.show(this.player.getPlayer(), player);
+  }
+
+  @Override
+  public VanishPlayer createStaffPlayer(IStaffPlayer player) {
+    this.player = player;
+    return this;
   }
 }

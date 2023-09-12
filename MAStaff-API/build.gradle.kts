@@ -17,7 +17,7 @@ configurations["apiElements"].extendsFrom(compileOnlyApi)
 
 dependencies {
   compileOnly(libs.waterfall)
-  compileOnly(libs.spigot)
+  compileOnly(libs.paperApi)
   compileOnly(libs.placeholderApi)
   compileOnly(libs.liblyBukkit)
   compileOnly(libs.bundles.invAPI)
