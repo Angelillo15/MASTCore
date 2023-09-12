@@ -10,6 +10,7 @@ repositories {
 subprojects {
   dependencies {
     compileOnly(project(":MAStaff-NMS"))
+    compileOnly(project(":MAStaff-API"))
   }
 
   repositories {

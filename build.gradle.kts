@@ -84,6 +84,7 @@ allprojects {
     maven("https://mvn.exceptionflug.de/repository/exceptionflug-public/")
     maven("https://repo.simplix.dev/repository/simplixsoft-public")
     maven("https://repo.nookure.com/releases")
+    maven("https://repo.codemc.io/repository/nms/")
   }
 
   tasks.withType<JavaCompile> {
