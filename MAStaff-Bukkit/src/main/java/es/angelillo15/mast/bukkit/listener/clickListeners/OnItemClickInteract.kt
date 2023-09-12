@@ -1,61 +1,65 @@
-package es.angelillo15.mast.bukkit.listener.clickListeners;
+package es.angelillo15.mast.bukkit.listener.clickListeners
 
-import com.google.inject.Inject;
-import es.angelillo15.mast.api.IStaffPlayer;
-import es.angelillo15.mast.api.Permissions;
-import es.angelillo15.mast.api.items.IPlayerInteractItem;
-import es.angelillo15.mast.api.items.StaffItem;
-import es.angelillo15.mast.api.managers.StaffManager;
-import es.angelillo15.mast.bukkit.MAStaff;
-import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerInteractEntityEvent;
+import com.google.inject.Inject
+import es.angelillo15.mast.api.ILogger
+import es.angelillo15.mast.api.items.IPlayerInteractItem
+import es.angelillo15.mast.api.managers.StaffManager
+import es.angelillo15.mast.api.nms.VersionSupport
+import es.angelillo15.mast.api.thread.execute
+import org.bukkit.Material
+import org.bukkit.entity.Player
+import org.bukkit.event.EventHandler
+import org.bukkit.event.Listener
+import org.bukkit.event.player.PlayerInteractEntityEvent
 
-@SuppressWarnings({"deprecation", "ConstantValue"})
-public class OnItemClickInteract implements Listener {
-  static boolean clicked = false;
-  @Inject private StaffManager staffManager;
+@Suppress("deprecation")
+class OnItemClickInteract : Listener {
+  @Inject
+  private lateinit var staffManager: StaffManager
+  @Inject
+  private lateinit var versionSupport: VersionSupport
+  @Inject
+  private lateinit var logger: ILogger
+
+  private var clicked = false
 
   @EventHandler
-  public void onEntityInteract(PlayerInteractEntityEvent event) {
-    Player player = event.getPlayer();
+  fun onEntityInteract(event: PlayerInteractEntityEvent) {
+    val start = System.currentTimeMillis()
+    val player = event.player
 
-    if (!staffManager.isStaffPlayer(player)) return;
-    if (!player.hasPermission(Permissions.STAFF.getPermission())) return;
-
-    IStaffPlayer staffPlayer = staffManager.getStaffPlayer(player);
-
-    if (staffPlayer.isStaffMode()) {
-      event.setCancelled(true);
+    if (!staffManager.isStaffPlayer(player)) {
+      return
     }
 
-    if (player.getItemInHand() == null) return;
-    if (player.getItemInHand().getItemMeta() == null) return;
-    if (player.getItemInHand().getItemMeta().getDisplayName() == null) return;
-    if (event.getRightClicked() == null) return;
-    if (!(event.getRightClicked() instanceof Player target)) return;
+    val staffPlayer = staffManager.getStaffPlayer(player) ?: return
 
-    StaffItem item =
-        staffPlayer.getItems().get(player.getItemInHand().getItemMeta().getDisplayName());
-    if (item == null) return;
+    if (!staffPlayer.isStaffMode()) {
+      return
+    }
 
-    if (item instanceof IPlayerInteractItem interactItem) {
-      MAStaff.getPlugin()
-          .getPLogger()
-          .debug(
-              "Executing item "
-                  + item.getItem().getItemMeta().getDisplayName()
-                  + " for player "
-                  + player.getName());
+    if (event.rightClicked !is Player) return
+    if (player.itemInHand.type == Material.AIR) return
+
+    val tag = versionSupport.getTag(player.itemInHand, "mast-staff-item") ?: return
+
+    logger.debug("Item " + tag + " clicked by " + player.name)
+
+    val item = staffPlayer.getItems()[tag] ?: return
+
+    if (item is IPlayerInteractItem) {
       if (clicked) {
-        clicked = false;
-        return;
+        clicked = false
+        return
       }
 
-      interactItem.interact(player, target);
+      execute {
+        item.interact(player, event.rightClicked as Player)
+      }
 
-      clicked = true;
+      clicked = true
     }
+
+    logger.debug("Item " + tag + " clicked by " + player.name + " took " + (System.currentTimeMillis() - start) + "ms")
   }
 }
