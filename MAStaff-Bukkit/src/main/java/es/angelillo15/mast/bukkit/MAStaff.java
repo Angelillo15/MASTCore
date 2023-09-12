@@ -130,7 +130,7 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance<JavaPlugin> {
 
   @Override
   public void registerCommands() {
-    Objects.requireNonNull(getCommand("staff")).setExecutor(new StaffCMD());
+    Objects.requireNonNull(getCommand("staff")).setExecutor(injector.getInstance(StaffCMD.class));
     if (Config.Freeze.enabled())
       Objects.requireNonNull(getCommand("freeze")).setExecutor(injector.getInstance(FreezeCMD.class));
     Objects.requireNonNull(getCommand("mast")).setExecutor(injector.getInstance(MAStaffCMD.class));
@@ -359,7 +359,7 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance<JavaPlugin> {
 
   @Override
   public IStaffPlayer createStaffPlayer(Player player) {
-    if (player.hasPermission("mast.staff")) return null;
+    if (!player.hasPermission("mast.staff")) return null;
     IStaffPlayer staffPlayer = injector.getInstance(StaffPlayer.class).setPlayer(player);
     StaffManager manager = injector.getInstance(StaffManager.class);
     manager.addStaffPlayer(staffPlayer);
