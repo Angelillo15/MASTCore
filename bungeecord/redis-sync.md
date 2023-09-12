@@ -2,13 +2,13 @@
 description: Here you will learn all about how to config the server sync
 ---
 
-# Redis Sync
+# ⚖ Redis Sync
 
 ### When to use the Redis Sync ?
 
-We use the Redis Sync when we have 2 or more BungeeCord instances
+You should use the Redis Sync when we have 2 or more BungeeCord instances
 
-### How to config ?
+### How to setup ?
 
 In the Redis Config section
 
