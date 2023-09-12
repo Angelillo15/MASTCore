@@ -1,4 +1,4 @@
-package es.angelillo15.mast.bukkit.nms
+package es.angelillo15.mast.api.nms
 
 import net.minecraft.network.protocol.Packet
 import org.bukkit.entity.Player
@@ -33,18 +33,4 @@ abstract class VersionSupport {
    * @param key The key to remove.
    */
   abstract fun removeTag(item: ItemStack, key: String): ItemStack
-
-  /**
-   * Sends the vanishing on packets to a player.
-   * @param vanished The player that is vanished.
-   * @param player The player to send the packets to.
-   */
-  abstract fun sendVanishOnPackets(vanished: Player, player: Player)
-
-  /**
-   * Sends the vanishing off packets to a player.
-   * @param vanished The player that is vanished.
-   * @param player The player to send the packets to.
-   */
-  abstract fun sendVanishOffPackets(vanished: Player, player: Player)
 }

@@ -1,5 +1,7 @@
 package es.angelillo15.mast.bukkit.nms
 
+import es.angelillo15.mast.api.nms.VersionSupport
+import es.angelillo15.mast.api.utils.MAStaffInject
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.nbt.StringTag
 import net.minecraft.network.protocol.Packet
@@ -8,14 +10,18 @@ import net.minecraft.network.protocol.game.ClientboundPlayerInfoRemovePacket
 import net.minecraft.network.protocol.game.ClientboundPlayerInfoUpdatePacket
 import net.minecraft.network.protocol.game.ClientboundRemoveEntitiesPacket
 import net.minecraft.network.protocol.game.ClientboundSetEntityDataPacket
-import net.minecraft.network.syncher.SynchedEntityData
+import net.minecraft.network.protocol.game.ClientboundSetPlayerTeamPacket
 import net.minecraft.world.item.ItemStack
+import net.minecraft.world.scores.PlayerTeam
+import net.minecraft.world.scores.Team
+import org.bukkit.Bukkit
 import org.bukkit.craftbukkit.v1_20_R1.entity.CraftPlayer
 import org.bukkit.craftbukkit.v1_20_R1.inventory.CraftItemStack
+import org.bukkit.craftbukkit.v1_20_R1.scoreboard.CraftScoreboard
 import org.bukkit.entity.Player
 
 
-class V1_20_1_R0 : VersionSupport() {
+class V1_20_1_R0(val instance: MAStaffInject) : VersionSupport() {
   override fun sendPacket(player: Player, packet: Packet<*>) {
     val craftPlayer = player as CraftPlayer
     val connection = craftPlayer.handle.connection
@@ -38,23 +44,6 @@ class V1_20_1_R0 : VersionSupport() {
     val tag = getTag(item) ?: return item
     tag.remove(key)
     return applyTag(item, tag)
-  }
-
-  override fun sendVanishOnPackets(vanished: Player, player: Player) {
-    val entityDestroy = ClientboundRemoveEntitiesPacket(vanished.entityId)
-    sendPacket(player, entityDestroy)
-    val tabUpdate = ClientboundPlayerInfoRemovePacket(listOf(vanished.uniqueId))
-    sendPacket(player, tabUpdate)
-  }
-
-  override fun sendVanishOffPackets(vanished: Player, player: Player) {
-    val tabUpdate = ClientboundPlayerInfoUpdatePacket.createPlayerInitializing(listOf(getCraftPlayer(vanished).handle))
-    sendPacket(player, tabUpdate)
-    val entityCreate = ClientboundAddPlayerPacket(getCraftPlayer(vanished).handle)
-    sendPacket(player, entityCreate)
-    val handle = getCraftPlayer(vanished).handle
-    val entityDataPacket = handle.entityData.nonDefaultValues?.let { ClientboundSetEntityDataPacket(handle.id, it) }
-    sendPacket(player, entityDataPacket!!)
   }
 
   private fun getTag(itemStack: org.bukkit.inventory.ItemStack): CompoundTag? {
