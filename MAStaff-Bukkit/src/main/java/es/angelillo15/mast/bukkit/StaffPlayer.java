@@ -3,8 +3,8 @@ package es.angelillo15.mast.bukkit;
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
 import com.google.inject.Inject;
+import es.angelillo15.mast.api.ILogger;
 import es.angelillo15.mast.api.IStaffPlayer;
-import es.angelillo15.mast.api.MAStaffInstance;
 import es.angelillo15.mast.api.TextUtils;
 import es.angelillo15.mast.api.config.bukkit.Config;
 import es.angelillo15.mast.api.config.bukkit.ConfigLoader;
@@ -27,9 +27,11 @@ import es.angelillo15.mast.bukkit.utils.StaffUtils;
 import es.angelillo15.mast.glow.GlowPlayer;
 import es.angelillo15.mast.vanish.VanishPlayer;
 import io.papermc.lib.PaperLib;
+
 import java.io.File;
 import java.util.*;
 import javax.annotation.Nullable;
+
 import lombok.Getter;
 import lombok.Setter;
 import lombok.SneakyThrows;
@@ -50,10 +52,17 @@ public class StaffPlayer implements IStaffPlayer {
   private ItemsManager itemsManager;
   @Inject
   private VersionSupport versionSupport;
+  @Inject
+  private ILogger logger;
+
   private final Map<String, StaffItem> items = new HashMap<>();
-  @Getter @Setter private boolean quit;
-  @Getter private File playerInventoryFile;
-  @Getter private FileConfiguration playerInventoryConfig;
+  @Getter
+  @Setter
+  private boolean quit;
+  @Getter
+  private File playerInventoryFile;
+  @Getter
+  private FileConfiguration playerInventoryConfig;
   private boolean staffMode;
   private Player player;
   private IGlowPlayer glowPlayer;
@@ -81,13 +90,7 @@ public class StaffPlayer implements IStaffPlayer {
   @Override
   public void toggleStaffMode(boolean saveInventory) {
     setStaffMode(staffMode, saveInventory);
-    MAStaff.getPlugin()
-        .getPLogger()
-        .debug(
-            "Toggling staff mode for "
-                + player.getName()
-                + " with saveInventory = "
-                + saveInventory);
+    logger.debug("Toggling staff mode for " + player.getName() + " with saveInventory = " + saveInventory);
   }
 
   @Override
@@ -106,6 +109,7 @@ public class StaffPlayer implements IStaffPlayer {
   }
 
   public void enableVanish() {
+    if (vanished) return;
     vanished = true;
 
     if (vanishPlayer == null) {
@@ -146,7 +150,7 @@ public class StaffPlayer implements IStaffPlayer {
           Messages.GET_VANISH_JOIN_MESSAGE().replace("{player}", player.getName()));
     setGlowing(false);
     if (!restoreLocation()) {
-      MAStaffInstance.getLogger().debug("Error restoring location for " + player.getName());
+      logger.debug("Error restoring location for " + player.getName());
       // Todo send message of error to the player
     }
     Bukkit.getPluginManager().callEvent(new StaffDisableEvent(this));
@@ -187,7 +191,7 @@ public class StaffPlayer implements IStaffPlayer {
     if (VersionUtils.getBukkitVersion() > 8) {
       if (Config.Addons.glow()
           && !(MAStaff.getPlugin().getDescription().getPrefix() != null
-              && MAStaff.getPlugin().getDescription().getPrefix().toLowerCase().contains("lite")))
+          && MAStaff.getPlugin().getDescription().getPrefix().toLowerCase().contains("lite")))
         this.glowPlayer = new GlowPlayer(this);
     }
 
@@ -238,7 +242,7 @@ public class StaffPlayer implements IStaffPlayer {
   @SneakyThrows
   @Override
   public void saveInventory() {
-    MAStaff.getPlugin().getPLogger().debug("Saving inventory for " + player.getName());
+    logger.debug("Saving inventory for " + player.getName());
     playerInventoryConfig.set("inventory", null);
     playerInventoryConfig.set("inventory.content", player.getInventory().getContents());
     playerInventoryConfig.set("inventory.armor", player.getInventory().getArmorContents());
@@ -253,7 +257,7 @@ public class StaffPlayer implements IStaffPlayer {
 
   @Override
   public void restoreInventory() {
-    MAStaff.getPlugin().getPLogger().debug("Restoring inventory for " + player.getName());
+    logger.debug("Restoring inventory for " + player.getName());
     playerInventoryConfig = YamlConfiguration.loadConfiguration(playerInventoryFile);
     ItemStack[] content =
         ((List<ItemStack>) Objects.requireNonNull(playerInventoryConfig.get("inventory.armor")))
@@ -339,16 +343,15 @@ public class StaffPlayer implements IStaffPlayer {
     if (!Config.StaffVault.enabled()) return;
 
     new Thread(() -> {
-      MAStaffInstance.getLogger().debug("Starting staff mode inventory checker for " + player.getName());
+      logger.debug("Starting staff mode inventory checker for " + player.getName());
 
       while (isStaffMode()) {
         try {
           Thread.sleep(Config.StaffVault.checkTime() * 1000L);
         } catch (InterruptedException e) {
-          MAStaffInstance.getLogger().debug("Error while sleeping thread for " + player.getName());
+          logger.debug("Error while sleeping thread for " + player.getName());
         }
         if (!player.isOnline() || !isStaffMode()) break;
-        MAStaffInstance.getLogger().debug("Checking inventory for " + player.getName());
         player.getInventory().forEach(itemStack -> {
           if (itemStack == null) return;
           if (itemStack.getType() == Material.AIR) return;
@@ -371,12 +374,7 @@ public class StaffPlayer implements IStaffPlayer {
 
     if (!this.isStaffMode() || !this.player.isOnline()) return;
 
-    MAStaffInstance.getLogger()
-        .debug(
-            "Added item "
-                + item.getType().name()
-                + " to staff vault for player "
-                + player.getName());
+    logger.debug("Added item " + item.getType().name() + " to staff vault for player " + player.getName());
 
     List<ItemStack> staffVault = new ArrayList<>();
 
@@ -393,7 +391,7 @@ public class StaffPlayer implements IStaffPlayer {
 
     TextUtils.sendMessage(player, Messages.StaffVault.itemSaved());
     TextUtils.colorize(Messages.StaffVault.itemSaved());
-    MAStaffInstance.getLogger().debug("Saved staff vault for player " + player.getName());
+    logger.debug("Saved staff vault for player " + player.getName());
   }
 
   public boolean isStaffVaultFull() {
@@ -522,7 +520,7 @@ public class StaffPlayer implements IStaffPlayer {
       PotionEffectType potionEffectType = PotionEffectType.getByName(potionEffectName);
 
       if (potionEffectType == null) {
-        MAStaffInstance.getLogger().error("Potion effect " + potionEffectName + " not found");
+        logger.error("Potion effect " + potionEffectName + " not found");
         return;
       }
 
@@ -541,7 +539,7 @@ public class StaffPlayer implements IStaffPlayer {
       PotionEffectType potionEffectType = PotionEffectType.getByName(potionEffectName);
 
       if (potionEffectType == null) {
-        MAStaffInstance.getLogger().error("Potion effect " + potionEffectName + " not found");
+        logger.error("Potion effect " + potionEffectName + " not found");
         return;
       }
 
