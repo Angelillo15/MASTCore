@@ -4,6 +4,8 @@ import es.angelillo15.mast.api.TextUtils;
 import es.angelillo15.mast.api.config.bukkit.Messages;
 import es.angelillo15.mast.api.items.IExecutableItem;
 import es.angelillo15.mast.api.items.StaffItem;
+import es.angelillo15.mast.bukkit.MAStaff;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
@@ -21,13 +23,15 @@ public class NightVisionItem extends StaffItem implements IExecutableItem {
 
   @Override
   public void click(Player player) {
-    if (player.hasPotionEffect(PotionEffectType.NIGHT_VISION)) {
-      player.removePotionEffect(PotionEffectType.NIGHT_VISION);
-      TextUtils.sendMessage(player, Messages.StaffMessages.nightVisionOff());
-    } else {
-      player.addPotionEffect(PotionEffectType.NIGHT_VISION.createEffect(999999, 1));
-      TextUtils.sendMessage(player, Messages.StaffMessages.nightVisionOn());
-    }
+    Bukkit.getScheduler().runTaskLater(MAStaff.getPlugin(), () -> {
+      if (player.hasPotionEffect(PotionEffectType.NIGHT_VISION)) {
+        player.removePotionEffect(PotionEffectType.NIGHT_VISION);
+        TextUtils.sendMessage(player, Messages.StaffMessages.nightVisionOff());
+      } else {
+        player.addPotionEffect(PotionEffectType.NIGHT_VISION.createEffect(999999, 1));
+        TextUtils.sendMessage(player, Messages.StaffMessages.nightVisionOn());
+      }
+    }, 1L);
   }
 
   @Override
