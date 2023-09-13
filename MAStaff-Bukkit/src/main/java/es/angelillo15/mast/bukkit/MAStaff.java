@@ -20,7 +20,7 @@ import es.angelillo15.mast.api.utils.PermsUtils;
 import es.angelillo15.mast.bukkit.addons.AddonsLoader;
 import es.angelillo15.mast.bukkit.cmd.FreezeCMD;
 import es.angelillo15.mast.bukkit.cmd.StaffChatCMD;
-import es.angelillo15.mast.bukkit.cmd.mast.MAStaffCMD;
+import es.angelillo15.mast.bukkit.cmd.mast.MASTParent;
 import es.angelillo15.mast.bukkit.cmd.staff.StaffParent;
 import es.angelillo15.mast.bukkit.cmd.utils.CommandTemplate;
 import es.angelillo15.mast.bukkit.inject.BukkitInjector;
@@ -133,9 +133,9 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance<JavaPlugin> {
   @Override
   public void registerCommands() {
     registerCommand(injector.getInstance(StaffParent.class));
+    registerCommand(injector.getInstance(MASTParent.class));
     if (Config.Freeze.enabled())
       Objects.requireNonNull(getCommand("freeze")).setExecutor(injector.getInstance(FreezeCMD.class));
-    Objects.requireNonNull(getCommand("mast")).setExecutor(injector.getInstance(MAStaffCMD.class));
     Objects.requireNonNull(getCommand("staffchat")).setExecutor(new StaffChatCMD());
   }
 
@@ -237,7 +237,6 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance<JavaPlugin> {
   @Override
   public void unregisterCommands() {
     Objects.requireNonNull(getCommand("freeze")).setExecutor(null);
-    Objects.requireNonNull(getCommand("mast")).setExecutor(null);
     Objects.requireNonNull(getCommand("staffchat")).setExecutor(null);
   }
 
@@ -344,7 +343,6 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance<JavaPlugin> {
     injector = Guice.createInjector(new BukkitInjector());
     StaticMembersInjector.injectStatics(injector, LegacyStaffPlayersManagers.class);
     StaticMembersInjector.injectStatics(injector, LegacyUserDataManager.class);
-    StaticMembersInjector.injectStatics(injector, MAStaffCMD.class);
   }
 
   public void registerPlaceholderAPI() {

@@ -1,11 +1,12 @@
 package es.angelillo15.mast.bukkit.cmd.mast;
 
 import com.google.inject.Inject;
-import es.angelillo15.mast.api.cmd.LegacySubCommand;
+import es.angelillo15.mast.api.cmd.SubCommand;
+import es.angelillo15.mast.api.cmd.sender.CommandSender;
 import es.angelillo15.mast.api.managers.StaffManager;
-import org.bukkit.command.CommandSender;
+import org.jetbrains.annotations.NotNull;
 
-public class DebugARG extends LegacySubCommand {
+public class DebugARG extends SubCommand {
   @Inject
   private StaffManager staffManager;
 
@@ -30,17 +31,19 @@ public class DebugARG extends LegacySubCommand {
   }
 
   @Override
-  public void execute(CommandSender sender, String[] args) {
+  public void onCommand(@NotNull CommandSender sender, @NotNull String label, @NotNull String[] args) {
+    sender.sendMessage("-------------------------------------");
     sender.sendMessage("Staff players: " + staffManager.getStaffPlayers().size());
+    sender.sendMessage("-------------------------------------");
     staffManager
         .getStaffPlayers()
         .forEach(
             (s, iStaffPlayer) -> {
+              sender.sendMessage("Name: <gray>" + iStaffPlayer.getPlayer().getName());
+              sender.sendMessage("Vanished: <gray>" + iStaffPlayer.isVanished());
+              sender.sendMessage("Staff mode: <gray>" + iStaffPlayer.isStaffMode());
+              sender.sendMessage("Object id <gray>" + iStaffPlayer.hashCode());
               sender.sendMessage("-------------------------------------");
-              sender.sendMessage("Name: " + iStaffPlayer.getPlayer().getName());
-              sender.sendMessage("Vanished: " + iStaffPlayer.isVanished());
-              sender.sendMessage("Staff mode: " + iStaffPlayer.isStaffMode());
-              sender.sendMessage("Object id " + iStaffPlayer.hashCode());
             });
   }
 }
