@@ -3,12 +3,9 @@ package es.angelillo15.mast.api.cmd
 import es.angelillo15.mast.api.Constants
 import es.angelillo15.mast.api.TextUtils
 import es.angelillo15.mast.api.cmd.sender.CommandSender
-import lombok.Getter
-import lombok.Setter
 
 abstract class CommandParent : Command() {
-  @Getter
-  private val subCommands: MutableMap<String?, SubCommand> = HashMap()
+  val subCommands: MutableMap<String?, SubCommand> = HashMap()
   override fun onCommand(sender: CommandSender, label: String, args: Array<String>) {
     if (subCommands.isEmpty())
       registerSubCommands()
@@ -62,9 +59,7 @@ abstract class CommandParent : Command() {
   }
 
   companion object {
-    @Getter
-    @Setter
-    private val noPermission = "&cYou don't have permission to execute this command."
+    var noPermission = "&cYou don't have permission to execute this command."
   }
 
   fun registerHelpSubCommand(prefix: String) {
