@@ -17,10 +17,6 @@ commands:
     description: Staff Chat Command
     aliases: [ staffchat, sc ]
     permission: mast.staffchat
-  mast:
-    description: MAStaff Command
-    aliases: [ mastaff, mastcore ]
-    permission: mast.admin
 permissions:
   mast.staff:
     description: Staff Command
