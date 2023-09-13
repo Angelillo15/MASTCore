@@ -42,6 +42,7 @@ import es.angelillo15.mast.bukkit.utils.Logger;
 import es.angelillo15.mast.bukkit.utils.Metrics;
 import es.angelillo15.mast.bukkit.utils.NMSUtils;
 import es.angelillo15.mast.bukkit.utils.scheduler.Scheduler;
+import es.angelillo15.mast.cmd.HelpOP;
 import es.angelillo15.mast.cmd.StaffChat;
 import es.angelillo15.mast.papi.MAStaffExtension;
 import io.papermc.lib.PaperLib;
@@ -137,6 +138,7 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance<JavaPlugin> {
     registerCommand(injector.getInstance(StaffParent.class));
     registerCommand(injector.getInstance(StaffChat.class));
     registerCommand(injector.getInstance(MASTParent.class));
+    registerCommand(injector.getInstance(HelpOP.class));
     if (Config.Freeze.enabled())
       Objects.requireNonNull(getCommand("freeze")).setExecutor(injector.getInstance(FreezeCMD.class));
   }
@@ -212,7 +214,7 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance<JavaPlugin> {
             getPlugin().getDataFolder().getAbsolutePath()
         );
       } catch (Exception e1) {
-        e1.printStackTrace();
+        logger.error(e1.getMessage());
       }
     }
     PluginConnection.getQueries().createTables();
