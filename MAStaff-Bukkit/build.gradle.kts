@@ -15,6 +15,7 @@ dependencies {
   compileOnly(project(":MAStaff-Vanish"))
   compileOnly(project(":MAStaff-PAPI"))
   compileOnly(project(":MAStaff-Glow"))
+  compileOnly(project(":MAStaff-Common"))
   implementation(project(":MAStaff-NMS"))
   implementation(project(":MAStaff-NMS:NMS-1.20.1_R0", "reobf"))
   implementation(project(":MAStaff-NMS:NMS-1.19.4_R0", "reobf"))
