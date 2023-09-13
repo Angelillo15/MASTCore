@@ -3,6 +3,7 @@ package es.angelillo15.mast.bukkit;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import es.angelillo15.mast.api.*;
+import es.angelillo15.mast.api.cmd.Command;
 import es.angelillo15.mast.api.config.bukkit.Config;
 import es.angelillo15.mast.api.config.bukkit.ConfigLoader;
 import es.angelillo15.mast.api.config.bukkit.Messages;
@@ -20,7 +21,8 @@ import es.angelillo15.mast.bukkit.addons.AddonsLoader;
 import es.angelillo15.mast.bukkit.cmd.FreezeCMD;
 import es.angelillo15.mast.bukkit.cmd.StaffChatCMD;
 import es.angelillo15.mast.bukkit.cmd.mast.MAStaffCMD;
-import es.angelillo15.mast.bukkit.cmd.staff.StaffCMD;
+import es.angelillo15.mast.bukkit.cmd.staff.StaffParent;
+import es.angelillo15.mast.bukkit.cmd.utils.CommandTemplate;
 import es.angelillo15.mast.bukkit.inject.BukkitInjector;
 import es.angelillo15.mast.bukkit.legacy.BukkitLegacyLoader;
 import es.angelillo15.mast.bukkit.listener.FreezeListener;
@@ -130,7 +132,7 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance<JavaPlugin> {
 
   @Override
   public void registerCommands() {
-    Objects.requireNonNull(getCommand("staff")).setExecutor(injector.getInstance(StaffCMD.class));
+    registerCommand(injector.getInstance(StaffParent.class));
     if (Config.Freeze.enabled())
       Objects.requireNonNull(getCommand("freeze")).setExecutor(injector.getInstance(FreezeCMD.class));
     Objects.requireNonNull(getCommand("mast")).setExecutor(injector.getInstance(MAStaffCMD.class));
@@ -350,6 +352,11 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance<JavaPlugin> {
     if (!MAStaffInstance.placeholderCheck()) return;
     getPLogger().info("PlaceholderAPI found! Registering placeholders...");
     injector.getInstance(MAStaffExtension.class).register();
+  }
+
+  @Override
+  public void registerCommand(Command command) {
+    CommandTemplate.Companion.registerCommand(command);
   }
 
   @Override
