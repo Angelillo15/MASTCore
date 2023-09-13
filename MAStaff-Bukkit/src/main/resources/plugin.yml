@@ -13,10 +13,6 @@ commands:
     description: Freeze Command
     aliases: [ freeze ]
     permission: mast.freeze
-  staffchat:
-    description: Staff Chat Command
-    aliases: [ staffchat, sc ]
-    permission: mast.staffchat
 permissions:
   mast.staff:
     description: Staff Command
