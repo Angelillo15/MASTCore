@@ -72,4 +72,8 @@ public class PlayerCommandSender implements CommandSender {
   public String getServerName() {
     return player.getServer().getName();
   }
+
+  public Player getPlayer() {
+    return player;
+  }
 }
