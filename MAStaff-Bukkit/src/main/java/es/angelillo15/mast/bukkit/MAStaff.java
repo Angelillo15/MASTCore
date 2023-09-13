@@ -7,6 +7,7 @@ import es.angelillo15.mast.api.cmd.Command;
 import es.angelillo15.mast.api.config.bukkit.Config;
 import es.angelillo15.mast.api.config.bukkit.ConfigLoader;
 import es.angelillo15.mast.api.config.bukkit.Messages;
+import es.angelillo15.mast.api.config.common.CommonConfigLoader;
 import es.angelillo15.mast.api.database.DataProvider;
 import es.angelillo15.mast.api.database.PluginConnection;
 import es.angelillo15.mast.api.inject.StaticMembersInjector;
@@ -19,7 +20,6 @@ import es.angelillo15.mast.api.utils.BukkitUtils;
 import es.angelillo15.mast.api.utils.PermsUtils;
 import es.angelillo15.mast.bukkit.addons.AddonsLoader;
 import es.angelillo15.mast.bukkit.cmd.FreezeCMD;
-import es.angelillo15.mast.bukkit.cmd.StaffChatCMD;
 import es.angelillo15.mast.bukkit.cmd.mast.MASTParent;
 import es.angelillo15.mast.bukkit.cmd.staff.StaffParent;
 import es.angelillo15.mast.bukkit.cmd.utils.CommandTemplate;
@@ -29,6 +29,8 @@ import es.angelillo15.mast.bukkit.listener.FreezeListener;
 import es.angelillo15.mast.bukkit.listener.OnJoin;
 import es.angelillo15.mast.bukkit.listener.clickListeners.OnItemClick;
 import es.angelillo15.mast.bukkit.listener.clickListeners.OnItemClickInteract;
+import es.angelillo15.mast.bukkit.listener.staffchat.OnStaffLegacyTalk;
+import es.angelillo15.mast.bukkit.listener.staffchat.OnStaffPaperTalk;
 import es.angelillo15.mast.bukkit.listener.staffmode.*;
 import es.angelillo15.mast.bukkit.listener.staffmode.achivement.OnAchievement;
 import es.angelillo15.mast.bukkit.loaders.LegacyCustomItemsLoader;
@@ -40,6 +42,7 @@ import es.angelillo15.mast.bukkit.utils.Logger;
 import es.angelillo15.mast.bukkit.utils.Metrics;
 import es.angelillo15.mast.bukkit.utils.NMSUtils;
 import es.angelillo15.mast.bukkit.utils.scheduler.Scheduler;
+import es.angelillo15.mast.cmd.StaffChat;
 import es.angelillo15.mast.papi.MAStaffExtension;
 import io.papermc.lib.PaperLib;
 import kong.unirest.HttpResponse;
@@ -67,8 +70,6 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance<JavaPlugin> {
   static boolean isFree = false;
   @Getter
   private static MAStaff plugin;
-  @Getter
-  private static boolean glowEnabled = false;
   private static ILogger logger;
   @Getter
   private static PluginConnection pluginConnection;
@@ -128,15 +129,16 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance<JavaPlugin> {
   @Override
   public void loadConfig() {
     new ConfigLoader(this).load();
+    injector.getInstance(CommonConfigLoader.class).load();
   }
 
   @Override
   public void registerCommands() {
     registerCommand(injector.getInstance(StaffParent.class));
+    registerCommand(injector.getInstance(StaffChat.class));
     registerCommand(injector.getInstance(MASTParent.class));
     if (Config.Freeze.enabled())
       Objects.requireNonNull(getCommand("freeze")).setExecutor(injector.getInstance(FreezeCMD.class));
-    Objects.requireNonNull(getCommand("staffchat")).setExecutor(new StaffChatCMD());
   }
 
   @Override
@@ -150,16 +152,24 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance<JavaPlugin> {
     registerListener(injector.getInstance(OnItemDrop.class));
     registerListener(injector.getInstance(OnEntityTarget.class));
     registerListener(injector.getInstance(OnFoodLevelChange.class));
-    if (Config.Freeze.enabled()) registerListener(injector.getInstance(FreezeListener.class));
     registerListener(injector.getInstance(OnItemGet.class));
     registerListener(injector.getInstance(OnPlayerInteractAtEntityEvent.class));
     registerListener(injector.getInstance(OnAttack.class));
     registerListener(injector.getInstance(OnDamage.class));
+
+    if (Config.Freeze.enabled()) registerListener(injector.getInstance(FreezeListener.class));
     if (Config.silentOpenChest()) registerListener(injector.getInstance(OnOpenChest.class));
+
     if (version >= 19) registerListener(injector.getInstance(OnBlockReceiveGameEvent.class));
     if (version >= 9) registerListener(injector.getInstance(OnSwapHand.class));
-    if (version >= 9 && PaperLib.isPaper())
-      registerListener(injector.getInstance(OnAchievement.class));
+    if (version >= 9 && PaperLib.isPaper()) registerListener(injector.getInstance(OnAchievement.class));
+
+    if (version >= 16 && PaperLib.isPaper()) {
+      registerListener(injector.getInstance(OnStaffPaperTalk.class));
+    } else {
+      registerListener(injector.getInstance(OnStaffLegacyTalk.class));
+    }
+
     FreezeUtils.setupMessageSender();
     this.getServer().getMessenger().registerOutgoingPluginChannel(this, "mastaff:staff");
     this.getServer().getMessenger().registerOutgoingPluginChannel(this, "mastaff:commands");
@@ -303,7 +313,6 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance<JavaPlugin> {
     logger.debug("Debug info:");
     logger.debug("Server version: 1." + version);
     logger.debug("Plugin version: " + getDescription().getVersion());
-    logger.debug("Glow enabled: " + glowEnabled);
     logger.debug("Plugin connection: " + PluginConnection.getDataProvider().name());
   }
 
