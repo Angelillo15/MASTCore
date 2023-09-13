@@ -1,4 +1,4 @@
-# Let's get started
+# 🥕 Let's get started
 
 First you have to download the plugin from one of this pages
 
@@ -13,16 +13,7 @@ Polymart: [https://polymart.org/resource/mastaff.3051](https://polymart.org/reso
 * Spigot 1.7.10 - 1.20.X Server (2.4.2 =<)
 * Spigot 1.8.8, 1.12.2, 1.16.5, 1.17.1, 1.18.2, 1.19.4, 1.20.1 (2.5 or higher)&#x20;
 * MariaDB or MySQL for MultiServer
-* Bungeecord for global StaffChat
+* Bungeecord or Velocity for multiserver sync
 
 > In 2.5 NMS (net.minecraft.server) was included for a better performance granting to the plugin direct acces to mojang code, for that reason now is mandatory to make an implementation for each version of Mineacraft if you really need to use a version that isn't listed in the resource page you can request it in our [discord](https://discord.nookure.com/)
 
-|                                           | Spigot | Buggecord |
-| ----------------------------------------- | ------ | --------- |
-| Global staff chat                         | ❌      | ✔         |
-| Global staff mode enable/disable messages | ❌      | ✔         |
-| Vanish                                    | ✔      | ❌         |
-| Staff Mode                                | ✔      | ❌         |
-| Helpop                                    | ❌      | ✔         |
-
-* Bungeecord is only a bridge
