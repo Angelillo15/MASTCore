@@ -9,11 +9,6 @@ website: angelillo15.es
 softdepend: [ PlaceholderAPI, Vault ]
 folia-supported: true
 commands:
-  staff:
-    description: Staff Command
-    usage: /staff
-    aliases: [ staff, staffmode, sm ]
-    permission: mast.staff
   freeze:
     description: Freeze Command
     aliases: [ freeze ]
