@@ -6,7 +6,7 @@ plugins {
 }
 
 group = "es.angelillo15"
-version = "2.4.2"
+version = "3.0.0-BETA"
 
 tasks.shadowJar {
   relocate("es.angelillo15.configmanager", "es.angelillo15.mast.libs.config.manager")
