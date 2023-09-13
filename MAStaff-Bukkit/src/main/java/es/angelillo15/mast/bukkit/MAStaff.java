@@ -236,7 +236,6 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance<JavaPlugin> {
 
   @Override
   public void unregisterCommands() {
-    Objects.requireNonNull(getCommand("staff")).setExecutor(null);
     Objects.requireNonNull(getCommand("freeze")).setExecutor(null);
     Objects.requireNonNull(getCommand("mast")).setExecutor(null);
     Objects.requireNonNull(getCommand("staffchat")).setExecutor(null);
