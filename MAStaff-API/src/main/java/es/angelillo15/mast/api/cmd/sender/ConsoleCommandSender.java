@@ -1,12 +1,17 @@
 package es.angelillo15.mast.api.cmd.sender;
 
-import es.angelillo15.mast.api.MAStaffInstance;
+import com.google.inject.Inject;
+import com.google.inject.Singleton;
+import es.angelillo15.mast.api.ILogger;
 import net.kyori.adventure.audience.Audience;
 
-public class BungeeConsoleCommandSender implements CommandSender {
+@Singleton
+public class ConsoleCommandSender implements CommandSender {
+  @Inject
+  private ILogger logger;
   @Override
   public void sendMessage(String message) {
-    MAStaffInstance.getLogger().info(message);
+    logger.info(message);
   }
 
   @Override

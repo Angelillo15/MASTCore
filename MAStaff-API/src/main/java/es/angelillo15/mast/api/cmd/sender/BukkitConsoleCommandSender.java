@@ -1,6 +1,6 @@
 package es.angelillo15.mast.api.cmd.sender;
 
 
-public class BukkitConsoleCommandSender extends BungeeConsoleCommandSender {
+public class BukkitConsoleCommandSender extends ConsoleCommandSender {
 
 }
