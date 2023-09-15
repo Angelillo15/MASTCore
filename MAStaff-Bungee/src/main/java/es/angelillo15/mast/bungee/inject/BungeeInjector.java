@@ -4,6 +4,8 @@ import es.angelillo15.mast.api.IServerUtils;
 import es.angelillo15.mast.api.MAStaffInstance;
 import es.angelillo15.mast.api.config.common.CommonConfigLoader;
 import es.angelillo15.mast.api.inject.CommonModule;
+import es.angelillo15.mast.api.managers.CommandBungeeSenderManager;
+import es.angelillo15.mast.api.managers.CommandSenderManager;
 import es.angelillo15.mast.api.punishments.loader.TemplateLoaders;
 import es.angelillo15.mast.api.utils.MAStaffInject;
 import es.angelillo15.mast.bungee.MAStaff;
@@ -20,5 +22,6 @@ public class BungeeInjector extends CommonModule {
     bind(CommonConfigLoader.class).asEagerSingleton();
     bind(IServerUtils.class).to(BungeeServerUtils.class).asEagerSingleton();
     bind(TemplateLoaders.class).asEagerSingleton();
+    bind(CommandBungeeSenderManager.class).asEagerSingleton();
   }
 }

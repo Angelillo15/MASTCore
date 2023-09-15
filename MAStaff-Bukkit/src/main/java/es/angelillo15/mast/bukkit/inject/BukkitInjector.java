@@ -1,6 +1,7 @@
 package es.angelillo15.mast.bukkit.inject;
 
 import es.angelillo15.mast.api.IServerUtils;
+import es.angelillo15.mast.api.managers.CommandBukkitSenderManager;
 import es.angelillo15.mast.api.nms.VersionSupport;
 import es.angelillo15.mast.api.MAStaffInstance;
 import es.angelillo15.mast.api.inject.CommonModule;
@@ -22,5 +23,6 @@ public class BukkitInjector extends CommonModule {
     bind(IServerUtils.class).to(ServerUtils.class).asEagerSingleton();
     bind(VersionSupport.class).toInstance(NMSUtils.getVersionSupport());
     bind(Plugin.class).toInstance(MAStaff.getPlugin());
+    bind(CommandBukkitSenderManager.class).asEagerSingleton();
   }
 }
