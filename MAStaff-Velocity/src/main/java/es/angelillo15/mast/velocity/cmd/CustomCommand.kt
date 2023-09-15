@@ -1,25 +1,22 @@
 package es.angelillo15.mast.velocity.cmd
 
-import com.google.inject.Inject
 import com.velocitypowered.api.command.SimpleCommand
-import com.velocitypowered.api.proxy.ConsoleCommandSource
-import com.velocitypowered.api.proxy.Player
 import es.angelillo15.mast.api.ILogger
 import es.angelillo15.mast.api.cmd.Command
-import es.angelillo15.mast.api.cmd.sender.CommandSender
-import es.angelillo15.mast.api.cmd.sender.VelocityConsoleCommandSender
-import es.angelillo15.mast.api.cmd.sender.VelocityPlayerCommandSender
+import es.angelillo15.mast.api.managers.CommandVelocitySenderManager
+import java.util.concurrent.CompletableFuture
 
-class CustomCommand(private var command: Command, private var permission: String) : SimpleCommand {
-  @Inject
-  private lateinit var logger: ILogger;
-  override fun execute(invocation: SimpleCommand.Invocation?) {
-    val sender: CommandSender = if (invocation!!.source() is ConsoleCommandSource) {
-      VelocityConsoleCommandSender()
-    } else if (invocation.source() is Player) {
-      VelocityPlayerCommandSender(invocation.source() as Player)
-    } else {
-      logger.error("Unknown command sender: ${invocation.source()}")
+class CustomCommand(
+  private var logger: ILogger,
+  private val senderManager: CommandVelocitySenderManager,
+  private var command: Command,
+  private var permission: String
+) : SimpleCommand {
+  override fun execute(invocation: SimpleCommand.Invocation) {
+    val sender = senderManager.getSender(invocation.source())
+
+    if (sender == null) {
+      logger.error("An error occurred while executing a command. Sender is null.")
       return
     }
 
@@ -30,5 +27,16 @@ class CustomCommand(private var command: Command, private var permission: String
 
   override fun hasPermission(invocation: SimpleCommand.Invocation): Boolean {
     return invocation.source().hasPermission(permission)
+  }
+
+  override fun suggestAsync(invocation: SimpleCommand.Invocation): CompletableFuture<MutableList<String>> {
+    val sender = senderManager.getSender(invocation.source())
+
+    if (sender == null) {
+      logger.error("An error occurred while executing a command. Sender is null.")
+      return CompletableFuture.completedFuture(mutableListOf())
+    }
+
+    return CompletableFuture.completedFuture(command.onTabComplete(sender, invocation.arguments()).toMutableList())
   }
 }

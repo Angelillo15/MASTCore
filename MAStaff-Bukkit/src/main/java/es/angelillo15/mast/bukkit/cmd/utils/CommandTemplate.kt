@@ -3,13 +3,16 @@ package es.angelillo15.mast.bukkit.cmd.utils
 import es.angelillo15.mast.api.MAStaffInstance
 import es.angelillo15.mast.api.cmd.Command
 import es.angelillo15.mast.api.cmd.CommandData
-import es.angelillo15.mast.api.cmd.sender.BukkitConsoleCommandSender
-import es.angelillo15.mast.api.cmd.sender.PlayerCommandSender
+import es.angelillo15.mast.api.managers.CommandBukkitSenderManager
+import es.angelillo15.mast.bukkit.MAStaff
 import org.bukkit.command.CommandSender
-import org.bukkit.entity.Player
 
 class CommandTemplate : org.bukkit.command.Command {
   private val command: Command
+  private val senderManager: CommandBukkitSenderManager = MAStaff
+    .getPlugin()
+    .injector
+    .getInstance(CommandBukkitSenderManager::class.java)
 
   constructor(name: String, command: Command) : super(name) {
     this.command = command
@@ -27,22 +30,14 @@ class CommandTemplate : org.bukkit.command.Command {
   }
 
   override fun execute(sender: CommandSender, commandLabel: String, args: Array<String>): Boolean {
-    val commandSender = if (sender is Player) {
-      PlayerCommandSender(sender)
-    } else {
-      BukkitConsoleCommandSender()
-    }
+    val pluginSender = senderManager.getSender(sender)
 
-    command.onCommand(commandSender, commandLabel, args);
+    command.onCommand(pluginSender!!, commandLabel, args);
     return true
   }
 
   override fun tabComplete(sender: CommandSender, alias: String, args: Array<String>): MutableList<String> {
-    val commandSender = if (sender is Player) {
-      PlayerCommandSender(sender)
-    } else {
-      BukkitConsoleCommandSender()
-    }
+    val commandSender = senderManager.getSender(sender) ?: return mutableListOf()
 
     return command.onTabComplete(commandSender, args).toMutableList()
   }
