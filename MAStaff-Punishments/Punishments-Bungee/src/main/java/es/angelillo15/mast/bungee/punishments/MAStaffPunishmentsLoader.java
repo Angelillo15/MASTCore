@@ -1,13 +1,14 @@
 package es.angelillo15.mast.bungee.punishments;
 
 import es.angelillo15.mast.api.TextUtils;
-import es.angelillo15.mast.api.cmd.sender.BungeeConsoleCommandSender;
+import es.angelillo15.mast.api.cmd.sender.ConsoleCommandSender;
 import es.angelillo15.mast.api.punishments.PunishPlayer;
 import es.angelillo15.mast.api.punishments.PunishPlayersManager;
 import lombok.Getter;
 
 public class MAStaffPunishmentsLoader extends MAStaffPunishments {
-  @Getter private static MAStaffPunishmentsLoader instance;
+  @Getter
+  private static MAStaffPunishmentsLoader instance;
 
   @Override
   public void onEnable() {
@@ -24,7 +25,12 @@ public class MAStaffPunishmentsLoader extends MAStaffPunishments {
             .getMastaffInstance()
             .getInjector()
             .getInstance(PunishPlayer.class)
-            .setPlayer(new BungeeConsoleCommandSender()));
+            .setPlayer(
+                getInstance()
+                    .getInjector()
+                    .getInstance(ConsoleCommandSender.class)
+            )
+    );
   }
 
   @Override
