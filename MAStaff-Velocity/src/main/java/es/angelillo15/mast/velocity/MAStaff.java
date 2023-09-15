@@ -23,21 +23,21 @@ import es.angelillo15.mast.api.config.velocity.VelocityConfig;
 import es.angelillo15.mast.api.data.DataManager;
 import es.angelillo15.mast.api.database.PluginConnection;
 import es.angelillo15.mast.api.inject.StaticMembersInjector;
+import es.angelillo15.mast.api.managers.CommandVelocitySenderManager;
 import es.angelillo15.mast.api.thread.AsyncThreadKt;
 import es.angelillo15.mast.cmd.HelpOP;
 import es.angelillo15.mast.cmd.StaffChat;
 import es.angelillo15.mast.velocity.cmd.CustomCommand;
 import es.angelillo15.mast.velocity.cmd.mastv.MastParent;
 import es.angelillo15.mast.velocity.inject.VelocityInjector;
-import es.angelillo15.mast.velocity.listeners.CommandBackendExecutor;
-import es.angelillo15.mast.velocity.listeners.OnPlayerJoin;
-import es.angelillo15.mast.velocity.listeners.OnStaffChange;
-import es.angelillo15.mast.velocity.listeners.OnStaffJoinLeaveQuit;
+import es.angelillo15.mast.velocity.listeners.*;
 import es.angelillo15.mast.velocity.listeners.staffchat.OnPlayerChat;
 import es.angelillo15.mast.velocity.utils.LibsLoader;
+
 import java.io.File;
 import java.io.InputStream;
 import java.nio.file.Path;
+
 import lombok.Getter;
 import lombok.SneakyThrows;
 import lombok.val;
@@ -50,15 +50,23 @@ import org.slf4j.Logger;
     description = "MAStaff Velocity module",
     authors = {"angelillo15"})
 public class MAStaff implements MAStaffInstance<ProxyServer> {
-  @Getter private static MAStaff instance;
-  @Getter private final ProxyServer proxyServer;
-  @Getter private final Logger Slf4jLogger;
-  @Getter private final Path dataDirectory;
+  @Getter
+  private static MAStaff instance;
+  @Getter
+  private final ProxyServer proxyServer;
+  @Getter
+  private final Logger Slf4jLogger;
+  @Getter
+  private final Path dataDirectory;
   ClassLoader classLoader = getClass().getClassLoader();
-  @Getter private ILogger logger;
-  @Getter private PluginConnection connection;
-  @Getter private CommonConfigLoader commonConfigLoader;
-  @Getter private VelocityConfig velocityConfig;
+  @Getter
+  private ILogger logger;
+  @Getter
+  private PluginConnection connection;
+  @Getter
+  private CommonConfigLoader commonConfigLoader;
+  @Getter
+  private VelocityConfig velocityConfig;
   private Injector injector;
   private boolean debug;
 
@@ -148,6 +156,7 @@ public class MAStaff implements MAStaffInstance<ProxyServer> {
   public void registerListeners() {
     proxyServer.getEventManager().register(this, injector.getInstance(OnStaffChange.class));
     proxyServer.getEventManager().register(this, injector.getInstance(OnPlayerJoin.class));
+    proxyServer.getEventManager().register(this, injector.getInstance(CommandManagerHandler.class));
     proxyServer
         .getEventManager()
         .register(this, injector.getInstance(CommandBackendExecutor.class));
@@ -177,7 +186,8 @@ public class MAStaff implements MAStaffInstance<ProxyServer> {
   }
 
   @Override
-  public void loadModules() {}
+  public void loadModules() {
+  }
 
   @Override
   public void unregisterCommands() {
@@ -253,7 +263,12 @@ public class MAStaff implements MAStaffInstance<ProxyServer> {
             .plugin(this)
             .build();
 
-    CustomCommand customCommand = new CustomCommand(command, commandData.permission());
+    CustomCommand customCommand = new CustomCommand(
+        getLogger(),
+        injector.getInstance(CommandVelocitySenderManager.class),
+        command,
+        commandData.permission()
+    );
 
     commandManager.register(commandMeta, customCommand);
   }

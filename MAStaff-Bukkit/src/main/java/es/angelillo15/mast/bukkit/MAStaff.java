@@ -25,6 +25,7 @@ import es.angelillo15.mast.bukkit.cmd.staff.StaffParent;
 import es.angelillo15.mast.bukkit.cmd.utils.CommandTemplate;
 import es.angelillo15.mast.bukkit.inject.BukkitInjector;
 import es.angelillo15.mast.bukkit.legacy.BukkitLegacyLoader;
+import es.angelillo15.mast.bukkit.listener.CommandManagerHandler;
 import es.angelillo15.mast.bukkit.listener.FreezeListener;
 import es.angelillo15.mast.bukkit.listener.OnJoin;
 import es.angelillo15.mast.bukkit.listener.clickListeners.OnItemClick;
@@ -69,7 +70,6 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance<JavaPlugin> {
   static final int version = Integer.parseInt(Bukkit.getBukkitVersion().split("-")[0].split("\\.")[1]);
   @Getter
   static boolean isFree = false;
-  @Getter
   private static MAStaff plugin;
   private static ILogger logger;
   @Getter
@@ -158,6 +158,7 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance<JavaPlugin> {
     registerListener(injector.getInstance(OnPlayerInteractAtEntityEvent.class));
     registerListener(injector.getInstance(OnAttack.class));
     registerListener(injector.getInstance(OnDamage.class));
+    registerListener(injector.getInstance(CommandManagerHandler.class));
 
     if (Config.Freeze.enabled()) registerListener(injector.getInstance(FreezeListener.class));
     if (Config.silentOpenChest()) registerListener(injector.getInstance(OnOpenChest.class));
@@ -404,5 +405,9 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance<JavaPlugin> {
   @Override
   public VersionSupport getVersionSupport() {
     return NMSUtils.getVersionSupport();
+  }
+
+  public static MAStaff getPlugin() {
+    return plugin;
   }
 }

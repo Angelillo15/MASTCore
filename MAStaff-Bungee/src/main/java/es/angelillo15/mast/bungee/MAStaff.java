@@ -25,6 +25,7 @@ import es.angelillo15.mast.bungee.config.Config;
 import es.angelillo15.mast.bungee.config.ConfigLoader;
 import es.angelillo15.mast.bungee.inject.BungeeInjector;
 import es.angelillo15.mast.bungee.listener.CommandExecutor;
+import es.angelillo15.mast.bungee.listener.CommandManagerHandler;
 import es.angelillo15.mast.bungee.listener.OnStaffJoinLeaveQuit;
 import es.angelillo15.mast.bungee.listener.StaffChangeEvent;
 import es.angelillo15.mast.bungee.listener.redis.server.OnServer;
@@ -37,9 +38,11 @@ import es.angelillo15.mast.bungee.utils.BungeeServerUtils;
 import es.angelillo15.mast.bungee.utils.Logger;
 import es.angelillo15.mast.cmd.HelpOP;
 import es.angelillo15.mast.cmd.StaffChat;
+
 import java.io.File;
 import java.io.InputStream;
 import java.sql.SQLException;
+
 import lombok.Getter;
 import lombok.Setter;
 import lombok.SneakyThrows;
@@ -47,207 +50,208 @@ import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.plugin.Plugin;
 
 public class MAStaff extends Plugin implements MAStaffInstance<Plugin> {
-    @Getter
-    private static MAStaff instance;
-    @Getter
-    private static CommonConfigLoader configLoader;
-    private ILogger logger;
-    @Setter
-    private boolean debug;
-    private IServerUtils serverUtils;
-    private Injector injector;
+  @Getter
+  private static MAStaff instance;
+  @Getter
+  private static CommonConfigLoader configLoader;
+  private ILogger logger;
+  @Setter
+  private boolean debug;
+  private IServerUtils serverUtils;
+  private Injector injector;
 
-    @Override
-    public ILogger getPLogger() {
-        return logger;
+  @Override
+  public ILogger getPLogger() {
+    return logger;
+  }
+
+  @Override
+  public void registerCommand(Command command) {
+    CommandData data;
+
+    try {
+      data = command.getClass().getAnnotation(CommandData.class);
+    } catch (Exception e) {
+      logger.error("Error while registering command " + command.getClass().getName());
+      return;
     }
 
-    @Override
-    public void registerCommand(Command command) {
-        CommandData data;
-
-        try {
-            data = command.getClass().getAnnotation(CommandData.class);
-        } catch (Exception e) {
-            logger.error("Error while registering command " + command.getClass().getName());
-            return;
-        }
-
-        if (data.aliases().length == 0 && data.permission().isEmpty()) {
-            getProxy().getPluginManager().registerCommand(this, new CustomCommand(data.name(), command));
-            return;
-        }
-
-        if (data.aliases().length == 0) {
-            getProxy().getPluginManager().registerCommand(this, new CustomCommand(data.name(), data.permission(), command));
-            return;
-        }
-
-        if (data.permission().isEmpty()) {
-            getProxy().getPluginManager().registerCommand(this, new CustomCommand(data.name(), command, data.aliases()));
-            return;
-        }
-
-        getProxy().getPluginManager().registerCommand(this, new CustomCommand(data.name(), data.permission(), command, data.aliases()));
+    if (data.aliases().length == 0 && data.permission().isEmpty()) {
+      getProxy().getPluginManager().registerCommand(this, new CustomCommand(data.name(), command));
+      return;
     }
 
-    @Override
-    public boolean isDebug() {
-        return debug;
+    if (data.aliases().length == 0) {
+      getProxy().getPluginManager().registerCommand(this, new CustomCommand(data.name(), data.permission(), command));
+      return;
     }
 
-    @Override
-    public void drawLogo() {
-        instance = this;
-        logger = new Logger();
-        serverUtils = new BungeeServerUtils();
-
-        logger.info(TextUtils.simpleColorize("&a ███▄ ▄███▓ ▄▄▄        ██████ ▄▄▄█████▓ ▄▄▄        █████▒ █████▒"));
-        logger.info(TextUtils.simpleColorize("&a ▓██▒▀█▀ ██▒▒████▄    ▒██    ▒ ▓  ██▒ ▓▒▒████▄    ▓██   ▒▓██   ▒"));
-        logger.info(TextUtils.simpleColorize("&a ▓██    ▓██░▒██  ▀█▄  ░ ▓██▄   ▒ ▓██░ ▒░▒██  ▀█▄  ▒████ ░▒████ ░"));
-        logger.info(TextUtils.simpleColorize("&a ▒██    ▒██ ░██▄▄▄▄██   ▒   ██▒░ ▓██▓ ░ ░██▄▄▄▄██ ░▓█▒  ░░▓█▒  ░"));
-        logger.info(TextUtils.simpleColorize("&a ▒██▒   ░██▒ ▓█   ▓██▒▒██████▒▒  ▒██▒ ░  ▓█   ▓██▒░▒█░   ░▒█░"));
-        logger.info(TextUtils.simpleColorize("&a ░ ▒░   ░  ░ ▒▒   ▓▒█░▒ ▒▓▒ ▒ ░  ▒ ░░    ▒▒   ▓▒█░ ▒ ░    ▒ ░"));
-        logger.info(TextUtils.simpleColorize("&a ░  ░      ░  ▒   ▒▒ ░░ ░▒  ░ ░    ░      ▒   ▒▒ ░ ░      ░"));
-        logger.info(TextUtils.simpleColorize("&a ░      ░     ░   ▒   ░  ░  ░    ░        ░   ▒    ░ ░    ░ ░"));
-        logger.info(TextUtils.simpleColorize("&a ░         ░  ░      ░                 ░  ░"));
-        logger.info(TextUtils.simpleColorize("&a                                                version: " + getDescription().getVersion()));
-        AsyncThreadKt.start();
-
+    if (data.permission().isEmpty()) {
+      getProxy().getPluginManager().registerCommand(this, new CustomCommand(data.name(), command, data.aliases()));
+      return;
     }
 
-    @Override
-    public void loadConfig() {
-        new ConfigLoader(this).load();
-        configLoader = injector.getInstance(CommonConfigLoader.class);
-        configLoader.load();
+    getProxy().getPluginManager().registerCommand(this, new CustomCommand(data.name(), data.permission(), command, data.aliases()));
+  }
+
+  @Override
+  public boolean isDebug() {
+    return debug;
+  }
+
+  @Override
+  public void drawLogo() {
+    instance = this;
+    logger = new Logger();
+    serverUtils = new BungeeServerUtils();
+
+    logger.info(TextUtils.simpleColorize("&a ███▄ ▄███▓ ▄▄▄        ██████ ▄▄▄█████▓ ▄▄▄        █████▒ █████▒"));
+    logger.info(TextUtils.simpleColorize("&a ▓██▒▀█▀ ██▒▒████▄    ▒██    ▒ ▓  ██▒ ▓▒▒████▄    ▓██   ▒▓██   ▒"));
+    logger.info(TextUtils.simpleColorize("&a ▓██    ▓██░▒██  ▀█▄  ░ ▓██▄   ▒ ▓██░ ▒░▒██  ▀█▄  ▒████ ░▒████ ░"));
+    logger.info(TextUtils.simpleColorize("&a ▒██    ▒██ ░██▄▄▄▄██   ▒   ██▒░ ▓██▓ ░ ░██▄▄▄▄██ ░▓█▒  ░░▓█▒  ░"));
+    logger.info(TextUtils.simpleColorize("&a ▒██▒   ░██▒ ▓█   ▓██▒▒██████▒▒  ▒██▒ ░  ▓█   ▓██▒░▒█░   ░▒█░"));
+    logger.info(TextUtils.simpleColorize("&a ░ ▒░   ░  ░ ▒▒   ▓▒█░▒ ▒▓▒ ▒ ░  ▒ ░░    ▒▒   ▓▒█░ ▒ ░    ▒ ░"));
+    logger.info(TextUtils.simpleColorize("&a ░  ░      ░  ▒   ▒▒ ░░ ░▒  ░ ░    ░      ▒   ▒▒ ░ ░      ░"));
+    logger.info(TextUtils.simpleColorize("&a ░      ░     ░   ▒   ░  ░  ░    ░        ░   ▒    ░ ░    ░ ░"));
+    logger.info(TextUtils.simpleColorize("&a ░         ░  ░      ░                 ░  ░"));
+    logger.info(TextUtils.simpleColorize("&a                                                version: " + getDescription().getVersion()));
+    AsyncThreadKt.start();
+
+  }
+
+  @Override
+  public void loadConfig() {
+    new ConfigLoader(this).load();
+    configLoader = injector.getInstance(CommonConfigLoader.class);
+    configLoader.load();
+  }
+
+  @Override
+  public void registerCommands() {
+    registerCommand(injector.getInstance(InfoCMD.class));
+    registerCommand(injector.getInstance(MastParentCMD.class));
+    registerCommand(injector.getInstance(StaffChat.class));
+    registerCommand(injector.getInstance(HelpOP.class));
+  }
+
+  @Override
+  public void registerListeners() {
+    getProxy().getPluginManager().registerListener(this, new StaffChangeEvent());
+    getProxy().getPluginManager().registerListener(this, new UserJoinListener());
+    getProxy().getPluginManager().registerListener(this, new CommandExecutor());
+    getProxy().getPluginManager().registerListener(this, injector.getInstance(OnStaffJoinLeaveQuit.class));
+    getProxy().getPluginManager().registerListener(this, injector.getInstance(CommandManagerHandler.class));
+    getProxy().getPluginManager().registerListener(
+        this,
+        injector.getInstance(es.angelillo15.mast.bungee.listener.staffchat.OnStaffTalk.class)
+    );
+    if (Config.Redis.isEnabled()) registerRedisListeners();
+  }
+
+  public void registerRedisListeners() {
+    RedisEventManager em = RedisEventManager.getInstance();
+    em.registerListener(new OnServer());
+    em.registerListener(new OnStaffJoinLeave());
+    em.registerListener(new OnStaffSwitch());
+    em.registerListener(new OnStaffTalk());
+    ServerConnectedEvent event = new ServerConnectedEvent(Config.Redis.getServerName());
+
+    RedisManager.sendEvent(event);
+  }
+
+  @SneakyThrows
+  @Override
+  public void loadDatabase() {
+    new RedisManager().load();
+
+    if (Config.Database.type().equalsIgnoreCase("MYSQL")) {
+      new PluginConnection(
+          Config.Database.host(),
+          Config.Database.port(),
+          Config.Database.database(),
+          Config.Database.username(),
+          Config.Database.password()
+      );
+    } else {
+      new PluginConnection(getDataFolder().getPath());
     }
 
-    @Override
-    public void registerCommands() {
-        registerCommand(injector.getInstance(InfoCMD.class));
-        registerCommand(injector.getInstance(MastParentCMD.class));
-        registerCommand(injector.getInstance(StaffChat.class));
-        registerCommand(injector.getInstance(HelpOP.class));
+    PluginConnection.getStorm().runMigrations();
+
+    DataManager.load();
+
+    MAStaff.getInstance().getPLogger().info("Database loaded!");
+  }
+
+  @Override
+  public void loadModules() {
+    AddonsLoader.loadAddons(injector);
+  }
+
+  @Override
+  public void unregisterCommands() {
+    ProxyServer.getInstance().getPluginManager().unregisterCommands(this);
+  }
+
+  @Override
+  public void unregisterListeners() {
+    ProxyServer.getInstance().getPluginManager().unregisterListeners(this);
+  }
+
+  @Override
+  public void unloadDatabase() {
+    try {
+      PluginConnection.getConnection().close();
+    } catch (SQLException e) {
+      throw new RuntimeException(e);
     }
+  }
 
-    @Override
-    public void registerListeners() {
-        getProxy().getPluginManager().registerListener(this, new StaffChangeEvent());
-        getProxy().getPluginManager().registerListener(this, new UserJoinListener());
-        getProxy().getPluginManager().registerListener(this, new CommandExecutor());
-        getProxy().getPluginManager().registerListener(this, injector.getInstance(OnStaffJoinLeaveQuit.class));
-        getProxy().getPluginManager().registerListener(
-                this,
-                injector.getInstance(es.angelillo15.mast.bungee.listener.staffchat.OnStaffTalk.class)
-        );
-        if (Config.Redis.isEnabled()) registerRedisListeners();
-    }
+  @SneakyThrows
+  @Override
+  public void reload() {
+    unloadDatabase();
+    unregisterCommands();
+    unregisterListeners();
+    loadConfig();
+    loadDatabase();
+    registerCommands();
+    registerListeners();
+    AddonsLoader.reloadAddons();
+    PluginConnection.getStorm().runMigrations();
+  }
 
-    public void registerRedisListeners() {
-        RedisEventManager em = RedisEventManager.getInstance();
-        em.registerListener(new OnServer());
-        em.registerListener(new OnStaffJoinLeave());
-        em.registerListener(new OnStaffSwitch());
-        em.registerListener(new OnStaffTalk());
-        ServerConnectedEvent event = new ServerConnectedEvent(Config.Redis.getServerName());
+  public void loadInjector() {
+    this.injector = Guice.createInjector(new BungeeInjector());
 
-        RedisManager.sendEvent(event);
-    }
+    StaticMembersInjector.injectStatics(injector, LegacyUserDataManager.class);
+    StaticMembersInjector.injectStatics(injector, CommonMessages.class);
+    StaticMembersInjector.injectStatics(injector, CommonConfig.class);
+  }
 
-    @SneakyThrows
-    @Override
-    public void loadDatabase() {
-        new RedisManager().load();
+  @Override
+  public IServerUtils getServerUtils() {
+    return serverUtils;
+  }
 
-        if (Config.Database.type().equalsIgnoreCase("MYSQL")) {
-            new PluginConnection(
-                    Config.Database.host(),
-                    Config.Database.port(),
-                    Config.Database.database(),
-                    Config.Database.username(),
-                    Config.Database.password()
-            );
-        } else {
-            new PluginConnection(getDataFolder().getPath());
-        }
+  @Override
+  public Plugin getPluginInstance() {
+    return null;
+  }
 
-        PluginConnection.getStorm().runMigrations();
+  @Override
+  public File getPluginDataFolder() {
+    return getDataFolder();
+  }
 
-        DataManager.load();
+  @Override
+  public InputStream getPluginResource(String s) {
+    return getResourceAsStream(s);
+  }
 
-        MAStaff.getInstance().getPLogger().info("Database loaded!");
-    }
-
-    @Override
-    public void loadModules() {
-        AddonsLoader.loadAddons(injector);
-    }
-
-    @Override
-    public void unregisterCommands() {
-        ProxyServer.getInstance().getPluginManager().unregisterCommands(this);
-    }
-
-    @Override
-    public void unregisterListeners() {
-        ProxyServer.getInstance().getPluginManager().unregisterListeners(this);
-    }
-
-    @Override
-    public void unloadDatabase() {
-        try {
-            PluginConnection.getConnection().close();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    @SneakyThrows
-    @Override
-    public void reload() {
-        unloadDatabase();
-        unregisterCommands();
-        unregisterListeners();
-        loadConfig();
-        loadDatabase();
-        registerCommands();
-        registerListeners();
-        AddonsLoader.reloadAddons();
-        PluginConnection.getStorm().runMigrations();
-    }
-
-    public void loadInjector() {
-        this.injector = Guice.createInjector(new BungeeInjector());
-
-        StaticMembersInjector.injectStatics(injector, LegacyUserDataManager.class);
-        StaticMembersInjector.injectStatics(injector, CommonMessages.class);
-        StaticMembersInjector.injectStatics(injector, CommonConfig.class);
-    }
-
-    @Override
-    public IServerUtils getServerUtils() {
-        return serverUtils;
-    }
-
-    @Override
-    public Plugin getPluginInstance() {
-        return null;
-    }
-
-    @Override
-    public File getPluginDataFolder() {
-        return getDataFolder();
-    }
-
-    @Override
-    public InputStream getPluginResource(String s) {
-        return getResourceAsStream(s);
-    }
-
-    @Override
-    public Injector getInjector() {
-        return this.injector;
-    }
+  @Override
+  public Injector getInjector() {
+    return this.injector;
+  }
 
 }
