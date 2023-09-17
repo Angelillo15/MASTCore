@@ -36,6 +36,17 @@ dependencies {
   compileOnly(libs.protocolLib)
   compileOnly(libs.vault)
   compileOnly(libs.velocity)
+
+  testImplementation(platform("org.junit:junit-bom:5.9.1"))
+  testImplementation("org.junit.jupiter:junit-jupiter")
+  testImplementation(project(":MAStaff-Common"))
+  testImplementation(libs.guice)
+  testImplementation(libs.kotlin)
+  testImplementation(libs.reflections)
+}
+
+tasks.test {
+  useJUnitPlatform()
 }
 
 blossom {
