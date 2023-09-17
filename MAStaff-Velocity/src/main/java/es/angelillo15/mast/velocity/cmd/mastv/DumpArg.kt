@@ -7,8 +7,8 @@ import com.velocitypowered.api.proxy.ProxyServer
 import es.angelillo15.mast.api.Constants
 import es.angelillo15.mast.api.TextUtils
 import es.angelillo15.mast.api.addons.LegacyAddonsManager
-import es.angelillo15.mast.api.cmd.SubCommand
-import es.angelillo15.mast.api.cmd.sender.CommandSender
+import com.nookure.mast.api.cmd.SubCommand
+import com.nookure.mast.api.cmd.sender.CommandSender
 import es.angelillo15.mast.api.config.velocity.Messages
 import es.angelillo15.mast.api.thread.execute
 import kong.unirest.HttpResponse

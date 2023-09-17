@@ -1,9 +1,9 @@
 package es.angelillo15.mast.bukkit.cmd.utils
 
 import es.angelillo15.mast.api.MAStaffInstance
-import es.angelillo15.mast.api.cmd.Command
-import es.angelillo15.mast.api.cmd.CommandData
-import es.angelillo15.mast.api.managers.CommandBukkitSenderManager
+import com.nookure.mast.api.cmd.Command
+import com.nookure.mast.api.cmd.CommandData
+import com.nookure.mast.api.manager.cmd.CommandBukkitSenderManager
 import es.angelillo15.mast.bukkit.MAStaff
 import org.bukkit.command.CommandSender
 

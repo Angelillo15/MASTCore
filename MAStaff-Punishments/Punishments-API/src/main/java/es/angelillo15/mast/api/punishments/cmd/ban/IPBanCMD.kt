@@ -1,6 +1,6 @@
 package es.angelillo15.mast.api.punishments.cmd.ban
 
-import es.angelillo15.mast.api.cmd.CommandData
+import com.nookure.mast.api.cmd.CommandData
 import es.angelillo15.mast.api.config.punishments.Messages
 import es.angelillo15.mast.api.punishments.IPunishPlayer
 import es.angelillo15.mast.api.punishments.cmd.PunishTargetReasonCommand

@@ -3,7 +3,7 @@ package es.angelillo15.mast.velocity.listeners
 import com.google.inject.Inject
 import com.velocitypowered.api.event.Subscribe
 import com.velocitypowered.api.event.connection.PostLoginEvent
-import es.angelillo15.mast.api.managers.CommandVelocitySenderManager
+import com.nookure.mast.api.manager.cmd.CommandVelocitySenderManager
 
 class CommandManagerHandler {
   @Inject

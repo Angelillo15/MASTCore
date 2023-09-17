@@ -1,11 +1,11 @@
-package es.angelillo15.mast.api.managers;
+package com.nookure.mast.api.manager.cmd;
 
 import com.google.inject.Inject;
 import com.velocitypowered.api.command.CommandSource;
 import com.velocitypowered.api.proxy.Player;
-import es.angelillo15.mast.api.cmd.sender.CommandSender;
-import es.angelillo15.mast.api.cmd.sender.ConsoleCommandSender;
-import es.angelillo15.mast.api.cmd.sender.VelocityPlayerCommandSender;
+import com.nookure.mast.api.cmd.sender.CommandSender;
+import com.nookure.mast.api.cmd.sender.ConsoleCommandSender;
+import com.nookure.mast.api.cmd.sender.VelocityPlayerCommandSender;
 
 public class CommandVelocitySenderManager extends CommandSenderManager<CommandSource> {
   @Inject

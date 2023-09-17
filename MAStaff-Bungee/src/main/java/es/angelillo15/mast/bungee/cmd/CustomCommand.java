@@ -1,25 +1,25 @@
 package es.angelillo15.mast.bungee.cmd;
 
-import es.angelillo15.mast.api.cmd.sender.CommandSender;
-import es.angelillo15.mast.api.managers.CommandBungeeSenderManager;
+import com.nookure.mast.api.cmd.sender.CommandSender;
+import com.nookure.mast.api.manager.cmd.CommandBungeeSenderManager;
 import es.angelillo15.mast.bungee.MAStaff;
 import net.md_5.bungee.api.plugin.Command;
 import net.md_5.bungee.api.plugin.TabExecutor;
 
 public class CustomCommand extends Command implements TabExecutor {
-  private final es.angelillo15.mast.api.cmd.Command command;
+  private final com.nookure.mast.api.cmd.Command command;
   private final CommandBungeeSenderManager senderManager = MAStaff
       .getInstance()
       .getInjector()
       .getInstance(CommandBungeeSenderManager.class);
 
-  public CustomCommand(String name, es.angelillo15.mast.api.cmd.Command command) {
+  public CustomCommand(String name, com.nookure.mast.api.cmd.Command command) {
     super(name);
     this.command = command;
   }
 
   public CustomCommand(
-      String name, String permission, es.angelillo15.mast.api.cmd.Command command) {
+      String name, String permission, com.nookure.mast.api.cmd.Command command) {
     super(name, permission);
     this.command = command;
   }
@@ -27,14 +27,14 @@ public class CustomCommand extends Command implements TabExecutor {
   public CustomCommand(
       String name,
       String permission,
-      es.angelillo15.mast.api.cmd.Command command,
+      com.nookure.mast.api.cmd.Command command,
       String... aliases) {
     super(name, permission, aliases);
     this.command = command;
   }
 
   public CustomCommand(
-      String name, es.angelillo15.mast.api.cmd.Command command, String... aliases) {
+      String name, com.nookure.mast.api.cmd.Command command, String... aliases) {
     super(name, null, aliases);
     this.command = command;
   }

@@ -1,8 +1,8 @@
 package es.angelillo15.mast.api.inject;
 
 import com.google.inject.AbstractModule;
+import com.nookure.mast.api.event.EventManager;
 import es.angelillo15.mast.api.ILogger;
-import es.angelillo15.mast.api.managers.CommandSenderManager;
 import es.angelillo15.mast.api.managers.PreviousServerManager;
 import es.angelillo15.mast.api.managers.UserDataManager;
 import es.angelillo15.mast.api.templates.managers.BanTemplatesManager;
@@ -16,5 +16,6 @@ public class CommonModule extends AbstractModule {
     bind(PreviousServerManager.class).asEagerSingleton();
     bind(WarnTemplateManager.class).asEagerSingleton();
     bind(BanTemplatesManager.class).asEagerSingleton();
+    bind(EventManager.class).asEagerSingleton();
   }
 }

@@ -2,9 +2,9 @@ package es.angelillo15.mast.bukkit.cmd.staff
 
 import com.google.inject.Inject
 import es.angelillo15.mast.api.TextUtils
-import es.angelillo15.mast.api.cmd.CommandData
-import es.angelillo15.mast.api.cmd.CommandParent
-import es.angelillo15.mast.api.cmd.sender.CommandSender
+import com.nookure.mast.api.cmd.CommandData
+import com.nookure.mast.api.cmd.CommandParent
+import com.nookure.mast.api.cmd.sender.CommandSender
 import es.angelillo15.mast.api.utils.MAStaffInject
 import es.angelillo15.mast.bukkit.cmd.staff.args.Punishments
 import es.angelillo15.mast.bukkit.cmd.staff.args.StaffList

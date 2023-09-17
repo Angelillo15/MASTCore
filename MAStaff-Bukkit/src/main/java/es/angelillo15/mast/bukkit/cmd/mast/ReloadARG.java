@@ -1,7 +1,7 @@
 package es.angelillo15.mast.bukkit.cmd.mast;
 
-import es.angelillo15.mast.api.cmd.SubCommand;
-import es.angelillo15.mast.api.cmd.sender.CommandSender;
+import com.nookure.mast.api.cmd.SubCommand;
+import com.nookure.mast.api.cmd.sender.CommandSender;
 import es.angelillo15.mast.api.config.bukkit.Messages;
 import es.angelillo15.mast.bukkit.MAStaff;
 import org.jetbrains.annotations.NotNull;

@@ -1,6 +1,6 @@
-package es.angelillo15.mast.api.managers;
+package com.nookure.mast.api.manager.cmd;
 
-import es.angelillo15.mast.api.cmd.sender.CommandSender;
+import com.nookure.mast.api.cmd.sender.CommandSender;
 import kotlin.jvm.internal.Intrinsics;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;

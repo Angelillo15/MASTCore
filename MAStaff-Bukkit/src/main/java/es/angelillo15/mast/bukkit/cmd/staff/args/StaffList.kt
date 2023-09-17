@@ -1,8 +1,8 @@
 package es.angelillo15.mast.bukkit.cmd.staff.args
 
-import es.angelillo15.mast.api.cmd.SubCommand
-import es.angelillo15.mast.api.cmd.sender.CommandSender
-import es.angelillo15.mast.api.cmd.sender.PlayerCommandSender
+import com.nookure.mast.api.cmd.SubCommand
+import com.nookure.mast.api.cmd.sender.CommandSender
+import com.nookure.mast.api.cmd.sender.PlayerCommandSender
 import es.angelillo15.mast.bukkit.gui.StaffListGUI
 
 class StaffList : SubCommand() {

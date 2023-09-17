@@ -1,4 +1,4 @@
-package es.angelillo15.mast.api.cmd.sender;
+package com.nookure.mast.api.cmd.sender;
 
 import com.velocitypowered.api.proxy.Player;
 import es.angelillo15.mast.api.TextUtils;

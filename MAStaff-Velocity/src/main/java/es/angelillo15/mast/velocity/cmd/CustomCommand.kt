@@ -2,8 +2,8 @@ package es.angelillo15.mast.velocity.cmd
 
 import com.velocitypowered.api.command.SimpleCommand
 import es.angelillo15.mast.api.ILogger
-import es.angelillo15.mast.api.cmd.Command
-import es.angelillo15.mast.api.managers.CommandVelocitySenderManager
+import com.nookure.mast.api.cmd.Command
+import com.nookure.mast.api.manager.cmd.CommandVelocitySenderManager
 import java.util.concurrent.CompletableFuture
 
 class CustomCommand(

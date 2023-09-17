@@ -1,8 +1,8 @@
-package es.angelillo15.mast.api.cmd
+package com.nookure.mast.api.cmd
 
 import es.angelillo15.mast.api.Constants
 import es.angelillo15.mast.api.TextUtils
-import es.angelillo15.mast.api.cmd.sender.CommandSender
+import com.nookure.mast.api.cmd.sender.CommandSender
 
 abstract class CommandParent : Command() {
   val subCommands: MutableMap<String?, SubCommand> = HashMap()

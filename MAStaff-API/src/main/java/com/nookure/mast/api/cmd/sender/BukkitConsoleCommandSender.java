@@ -1,4 +1,4 @@
-package es.angelillo15.mast.api.cmd.sender;
+package com.nookure.mast.api.cmd.sender;
 
 
 public class BukkitConsoleCommandSender extends ConsoleCommandSender {

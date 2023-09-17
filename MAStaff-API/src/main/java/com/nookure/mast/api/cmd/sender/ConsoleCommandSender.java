@@ -1,4 +1,4 @@
-package es.angelillo15.mast.api.cmd.sender;
+package com.nookure.mast.api.cmd.sender;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;

@@ -3,7 +3,7 @@ package es.angelillo15.mast.velocity.inject;
 import com.velocitypowered.api.proxy.ProxyServer;
 import es.angelillo15.mast.api.IServerUtils;
 import es.angelillo15.mast.api.MAStaffInstance;
-import es.angelillo15.mast.api.cmd.sender.VelocityConsoleCommandSender;
+import com.nookure.mast.api.cmd.sender.VelocityConsoleCommandSender;
 import es.angelillo15.mast.api.config.common.CommonConfigLoader;
 import es.angelillo15.mast.api.config.velocity.VelocityConfig;
 import es.angelillo15.mast.api.inject.CommonModule;

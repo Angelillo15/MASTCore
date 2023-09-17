@@ -1,7 +1,7 @@
 package es.angelillo15.mast.bukkit.inject;
 
 import es.angelillo15.mast.api.IServerUtils;
-import es.angelillo15.mast.api.managers.CommandBukkitSenderManager;
+import com.nookure.mast.api.manager.cmd.CommandBukkitSenderManager;
 import es.angelillo15.mast.api.nms.VersionSupport;
 import es.angelillo15.mast.api.MAStaffInstance;
 import es.angelillo15.mast.api.inject.CommonModule;

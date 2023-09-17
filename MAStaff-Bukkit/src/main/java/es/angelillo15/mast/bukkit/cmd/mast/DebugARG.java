@@ -1,8 +1,8 @@
 package es.angelillo15.mast.bukkit.cmd.mast;
 
 import com.google.inject.Inject;
-import es.angelillo15.mast.api.cmd.SubCommand;
-import es.angelillo15.mast.api.cmd.sender.CommandSender;
+import com.nookure.mast.api.cmd.SubCommand;
+import com.nookure.mast.api.cmd.sender.CommandSender;
 import es.angelillo15.mast.api.managers.StaffManager;
 import org.jetbrains.annotations.NotNull;
 

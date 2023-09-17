@@ -1,7 +1,7 @@
 package es.angelillo15.mast.bungee.punishments;
 
 import es.angelillo15.mast.api.TextUtils;
-import es.angelillo15.mast.api.cmd.sender.ConsoleCommandSender;
+import com.nookure.mast.api.cmd.sender.ConsoleCommandSender;
 import es.angelillo15.mast.api.punishments.PunishPlayer;
 import es.angelillo15.mast.api.punishments.PunishPlayersManager;
 import lombok.Getter;

@@ -1,7 +1,7 @@
 package es.angelillo15.mast.bungee.cmd.mastb;
 
-import es.angelillo15.mast.api.cmd.SubCommand;
-import es.angelillo15.mast.api.cmd.sender.CommandSender;
+import com.nookure.mast.api.cmd.SubCommand;
+import com.nookure.mast.api.cmd.sender.CommandSender;
 import es.angelillo15.mast.bungee.MAStaff;
 import es.angelillo15.mast.bungee.config.Messages;
 

@@ -1,10 +1,10 @@
-package es.angelillo15.mast.api.managers;
+package com.nookure.mast.api.manager.cmd;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
-import es.angelillo15.mast.api.cmd.sender.ConsoleCommandSender;
-import es.angelillo15.mast.api.cmd.sender.CommandSender;
-import es.angelillo15.mast.api.cmd.sender.ProxiedPlayerCommandSender;
+import com.nookure.mast.api.cmd.sender.ConsoleCommandSender;
+import com.nookure.mast.api.cmd.sender.CommandSender;
+import com.nookure.mast.api.cmd.sender.ProxiedPlayerCommandSender;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 
 @Singleton

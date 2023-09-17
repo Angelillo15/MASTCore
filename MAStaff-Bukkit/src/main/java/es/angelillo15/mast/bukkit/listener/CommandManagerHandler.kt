@@ -1,7 +1,7 @@
 package es.angelillo15.mast.bukkit.listener
 
 import com.google.inject.Inject
-import es.angelillo15.mast.api.managers.CommandBukkitSenderManager
+import com.nookure.mast.api.manager.cmd.CommandBukkitSenderManager
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.player.PlayerJoinEvent

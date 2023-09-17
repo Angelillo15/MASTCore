@@ -1,21 +1,22 @@
-package es.angelillo15.mast.api.cmd.sender;
+package com.nookure.mast.api.cmd.sender;
 
 import es.angelillo15.mast.api.TextUtils;
 import net.kyori.adventure.audience.Audience;
-import org.bukkit.entity.Player;
+import net.md_5.bungee.api.chat.TextComponent;
+import net.md_5.bungee.api.connection.ProxiedPlayer;
 
-public class PlayerCommandSender implements CommandSender {
-  private final Player player;
+public class ProxiedPlayerCommandSender implements CommandSender {
+  private final ProxiedPlayer player;
   private final Audience audience;
 
-  public PlayerCommandSender(Player player) {
+  public ProxiedPlayerCommandSender(ProxiedPlayer player) {
     this.player = player;
     this.audience = TextUtils.getAudience(player);
   }
 
   @Override
   public void sendMessage(String message) {
-    audience.sendMessage(TextUtils.toComponent(message));
+    player.sendMessage(new TextComponent(TextUtils.colorize(message)));
   }
 
   @Override
@@ -40,17 +41,17 @@ public class PlayerCommandSender implements CommandSender {
 
   @Override
   public boolean isProxy() {
-    return false;
+    return true;
   }
 
   @Override
   public boolean isBungee() {
-    return false;
+    return true;
   }
 
   @Override
   public boolean isSpigot() {
-    return true;
+    return false;
   }
 
   @Override
@@ -70,10 +71,6 @@ public class PlayerCommandSender implements CommandSender {
 
   @Override
   public String getServerName() {
-    return player.getServer().getName();
-  }
-
-  public Player getPlayer() {
-    return player;
+    return player.getServer().getInfo().getName();
   }
 }

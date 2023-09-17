@@ -1,6 +1,6 @@
 package es.angelillo15.mast.api.event.bungee.ban;
 
-import es.angelillo15.mast.api.cmd.sender.CommandSender;
+import com.nookure.mast.api.cmd.sender.CommandSender;
 import es.angelillo15.mast.api.models.BansTable;
 import net.md_5.bungee.api.Callback;
 import net.md_5.bungee.api.event.AsyncEvent;

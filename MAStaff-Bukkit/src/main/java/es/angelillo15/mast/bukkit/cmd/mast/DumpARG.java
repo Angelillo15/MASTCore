@@ -5,8 +5,8 @@ import com.google.gson.JsonParser;
 import es.angelillo15.mast.api.Constants;
 import es.angelillo15.mast.api.TextUtils;
 import es.angelillo15.mast.api.addons.LegacyAddonsManager;
-import es.angelillo15.mast.api.cmd.SubCommand;
-import es.angelillo15.mast.api.cmd.sender.CommandSender;
+import com.nookure.mast.api.cmd.SubCommand;
+import com.nookure.mast.api.cmd.sender.CommandSender;
 import es.angelillo15.mast.api.config.bukkit.Messages;
 import es.angelillo15.mast.bukkit.MAStaff;
 

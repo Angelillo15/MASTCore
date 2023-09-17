@@ -1,4 +1,4 @@
-package es.angelillo15.mast.api.cmd;
+package com.nookure.mast.api.cmd;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
