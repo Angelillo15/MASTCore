@@ -1,4 +1,6 @@
-package es.angelillo15.mast.api.event;
+package es.angelillo15.mast.api.redis.events;
+
+import es.angelillo15.mast.api.event.Listener;
 
 import java.lang.reflect.Method;
 
