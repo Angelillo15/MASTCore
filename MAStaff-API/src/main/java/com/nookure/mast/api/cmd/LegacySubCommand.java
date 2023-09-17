@@ -1,4 +1,4 @@
-package es.angelillo15.mast.api.cmd;
+package com.nookure.mast.api.cmd;
 
 import org.bukkit.command.CommandSender;
 
