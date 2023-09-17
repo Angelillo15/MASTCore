@@ -3,6 +3,7 @@ package es.angelillo15.mast.velocity;
 import com.google.inject.Guice;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
+import com.nookure.mast.api.addons.annotations.Addon;
 import com.velocitypowered.api.command.CommandManager;
 import com.velocitypowered.api.command.CommandMeta;
 import com.velocitypowered.api.event.Subscribe;
@@ -12,8 +13,8 @@ import com.velocitypowered.api.plugin.annotation.DataDirectory;
 import com.velocitypowered.api.proxy.ProxyServer;
 import com.velocitypowered.api.proxy.messages.MinecraftChannelIdentifier;
 import es.angelillo15.mast.api.*;
-import es.angelillo15.mast.api.cmd.Command;
-import es.angelillo15.mast.api.cmd.CommandData;
+import com.nookure.mast.api.cmd.Command;
+import com.nookure.mast.api.cmd.CommandData;
 import es.angelillo15.mast.api.config.common.CommonConfig;
 import es.angelillo15.mast.api.config.common.CommonConfigLoader;
 import es.angelillo15.mast.api.config.common.CommonMessages;
@@ -23,7 +24,7 @@ import es.angelillo15.mast.api.config.velocity.VelocityConfig;
 import es.angelillo15.mast.api.data.DataManager;
 import es.angelillo15.mast.api.database.PluginConnection;
 import es.angelillo15.mast.api.inject.StaticMembersInjector;
-import es.angelillo15.mast.api.managers.CommandVelocitySenderManager;
+import com.nookure.mast.api.manager.cmd.CommandVelocitySenderManager;
 import es.angelillo15.mast.api.thread.AsyncThreadKt;
 import es.angelillo15.mast.cmd.HelpOP;
 import es.angelillo15.mast.cmd.StaffChat;
@@ -291,5 +292,10 @@ public class MAStaff implements MAStaffInstance<ProxyServer> {
   @Override
   public Injector getInjector() {
     return injector;
+  }
+
+  @Override
+  public Addon.AddonPlatform getPlatform() {
+    return Addon.AddonPlatform.VELOCITY;
   }
 }

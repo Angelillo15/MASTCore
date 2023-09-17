@@ -1,7 +1,11 @@
-package es.angelillo15.mast.api;
+package com.nookure.mast.api;
 
 import com.google.inject.Injector;
-import es.angelillo15.mast.api.cmd.Command;
+import com.nookure.mast.api.addons.annotations.Addon;
+import es.angelillo15.mast.api.ILogger;
+import es.angelillo15.mast.api.IServerUtils;
+import es.angelillo15.mast.api.IStaffPlayer;
+import com.nookure.mast.api.cmd.Command;
 import es.angelillo15.mast.api.nms.VersionSupport;
 import org.bukkit.entity.Player;
 
@@ -141,4 +145,11 @@ public interface MAStaff {
   default VersionSupport getVersionSupport() {
     return null;
   }
+
+  /**
+   * Gets the current supported platform
+   *
+   * @return The current supported platform
+   */
+  Addon.AddonPlatform getPlatform();
 }

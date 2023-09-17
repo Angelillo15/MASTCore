@@ -2,8 +2,9 @@ package es.angelillo15.mast.bukkit;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
+import com.nookure.mast.api.addons.annotations.Addon;
 import es.angelillo15.mast.api.*;
-import es.angelillo15.mast.api.cmd.Command;
+import com.nookure.mast.api.cmd.Command;
 import es.angelillo15.mast.api.config.bukkit.Config;
 import es.angelillo15.mast.api.config.bukkit.ConfigLoader;
 import es.angelillo15.mast.api.config.bukkit.Messages;
@@ -409,5 +410,10 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance<JavaPlugin> {
 
   public static MAStaff getPlugin() {
     return plugin;
+  }
+
+  @Override
+  public Addon.AddonPlatform getPlatform() {
+    return Addon.AddonPlatform.BUKKIT;
   }
 }

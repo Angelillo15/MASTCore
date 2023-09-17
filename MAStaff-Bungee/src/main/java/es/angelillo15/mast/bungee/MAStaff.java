@@ -2,12 +2,13 @@ package es.angelillo15.mast.bungee;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
+import com.nookure.mast.api.addons.annotations.Addon;
 import es.angelillo15.mast.api.ILogger;
 import es.angelillo15.mast.api.IServerUtils;
 import es.angelillo15.mast.api.MAStaffInstance;
 import es.angelillo15.mast.api.TextUtils;
-import es.angelillo15.mast.api.cmd.Command;
-import es.angelillo15.mast.api.cmd.CommandData;
+import com.nookure.mast.api.cmd.Command;
+import com.nookure.mast.api.cmd.CommandData;
 import es.angelillo15.mast.api.config.common.CommonConfig;
 import es.angelillo15.mast.api.config.common.CommonConfigLoader;
 import es.angelillo15.mast.api.config.common.CommonMessages;
@@ -254,4 +255,8 @@ public class MAStaff extends Plugin implements MAStaffInstance<Plugin> {
     return this.injector;
   }
 
+  @Override
+  public Addon.AddonPlatform getPlatform() {
+    return Addon.AddonPlatform.BUNGEECORD;
+  }
 }
