@@ -5,7 +5,7 @@ import es.angelillo15.mast.api.ILogger
 import es.angelillo15.mast.api.IServerUtils
 import es.angelillo15.mast.api.MAStaffInstance
 import es.angelillo15.mast.api.cache.BanCache
-import es.angelillo15.mast.api.cmd.sender.CommandSender
+import com.nookure.mast.api.cmd.sender.CommandSender
 import es.angelillo15.mast.api.config.punishments.Messages
 import es.angelillo15.mast.api.database.PluginConnection
 import es.angelillo15.mast.api.exceptions.user.PlayerNotOnlineException
