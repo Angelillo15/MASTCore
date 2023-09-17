@@ -1,6 +1,6 @@
 package es.angelillo15.mast.api.punishments;
 
-import es.angelillo15.mast.api.cmd.sender.CommandSender;
+import com.nookure.mast.api.cmd.sender.CommandSender;
 import es.angelillo15.mast.api.config.punishments.Config;
 import es.angelillo15.mast.api.config.punishments.Messages;
 import es.angelillo15.mast.api.templates.BanTemplate;
