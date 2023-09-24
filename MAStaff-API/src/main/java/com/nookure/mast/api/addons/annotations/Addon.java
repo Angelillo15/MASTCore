@@ -1,5 +1,7 @@
 package com.nookure.mast.api.addons.annotations;
 
+import com.nookure.mast.api.cmd.Command;
+
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -20,9 +22,9 @@ public @interface Addon {
 
   AddonPlatform platform() default AddonPlatform.COMMON;
 
-  Class[] listeners() default {};
+  Class<?>[] listeners() default {};
 
-  Class[] commands() default {};
+  Class<? extends Command>[] commands() default {};
 
   enum AddonPlatform {
     BUKKIT,
