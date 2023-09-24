@@ -163,4 +163,12 @@ public interface AddonManager {
    * @param addon   The addon
    */
   void registerCommand(Command command, AddonContainer addon);
+
+  /**
+   * Unregisters a command from the command manager
+   * The command must be annotated with {@link com.nookure.mast.api.cmd.CommandData}
+   *
+   * @param addon The addon
+   */
+  void unregisterCommands(AddonContainer addon);
 }

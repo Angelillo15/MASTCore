@@ -33,6 +33,7 @@ public class ServerAddonManager implements AddonManager {
   private final Map<String, AddonContainer> addonsById = new LinkedHashMap<>();
   private final Map<Object, AddonContainer> addonsInstances = new IdentityHashMap<>();
   private final Map<AddonContainer, List<Object>> listeners = new HashMap<>();
+  private final Map<AddonContainer, List<Command>> commands = new HashMap<>();
   private final ArrayList<URLClassLoader> loaded = new ArrayList<>();
 
   private void registerAddon(AddonContainer addonContainer) {
@@ -124,6 +125,7 @@ public class ServerAddonManager implements AddonManager {
       addonsById.remove(addonContainer.getDescription().getID());
       addonsInstances.remove(addonContainer.getInstance());
       unregisterListeners(addonContainer);
+      unregisterCommands(addonContainer);
 
       if (addon instanceof AddonActions actions) actions.onDisable();
 
@@ -192,6 +194,17 @@ public class ServerAddonManager implements AddonManager {
 
   @Override
   public void registerCommand(Command command, AddonContainer addon) {
+    if (!commands.containsKey(addon)) commands.put(addon, new ArrayList<>());
+    logger.debug("Registering command " + command.getClass().getSimpleName() + " for addon " + addon.getDescription().getID());
+    commands.get(addon).add(command);
     instance.registerCommand(command);
+  }
+
+  @Override
+  public void unregisterCommands(AddonContainer addon) {
+    if (commands.containsKey(addon)) {
+      commands.get(addon).forEach(command -> instance.unregisterCommand(command));
+      commands.remove(addon);
+    }
   }
 }
