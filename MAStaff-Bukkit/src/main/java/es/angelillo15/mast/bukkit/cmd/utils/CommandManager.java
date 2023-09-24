@@ -47,7 +47,7 @@ public class CommandManager {
   }
 
   @Nullable
-  private static CommandMap getCommandMap() {
+  public static CommandMap getCommandMap() {
     if (commandMap != null) {
       return commandMap;
     }
