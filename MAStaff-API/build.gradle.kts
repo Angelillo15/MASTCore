@@ -11,31 +11,34 @@ plugins {
 group = "es.angelillo15"
 version = parent?.version ?: "2.0.0"
 
-val compileOnlyApi: Configuration by configurations.creating
-configurations["compileClasspath"].extendsFrom(compileOnlyApi)
-configurations["apiElements"].extendsFrom(compileOnlyApi)
+val compileOnlyApi = configurations.maybeCreate("compileOnlyApi")
+configurations.getByName(JavaPlugin.COMPILE_CLASSPATH_CONFIGURATION_NAME).extendsFrom(compileOnlyApi);
+configurations.getByName(JavaPlugin.API_ELEMENTS_CONFIGURATION_NAME).extendsFrom(compileOnlyApi);
 
 dependencies {
   compileOnly(libs.waterfall)
   compileOnly(libs.paperApi)
   compileOnly(libs.placeholderApi)
-  compileOnly(libs.liblyBukkit)
-  compileOnly(libs.bundles.invAPI)
-  compileOnly(libs.configUpdater)
-  compileOnly(libs.snakeYaml)
-  compileOnly(libs.simpleYaml)
-  compileOnly(libs.jedis)
-  compileOnly(libs.hikariCP)
-  compileOnly(libs.caffeine)
-  compileOnly(libs.storm)
-  compileOnly(libs.configManager)
-  compileOnly(libs.adventureApi)
-  compileOnly(libs.adventureBukkit)
-  compileOnly(libs.adventureBungee)
-  compileOnly(libs.miniMessage)
-  compileOnly(libs.protocolLib)
   compileOnly(libs.vault)
   compileOnly(libs.velocity)
+  compileOnlyApi(libs.liblyBukkit)
+  compileOnlyApi(libs.bundles.invAPI)
+  compileOnlyApi(libs.configUpdater)
+  compileOnlyApi(libs.snakeYaml)
+  compileOnlyApi(libs.simpleYaml)
+  compileOnlyApi(libs.jedis)
+  compileOnlyApi(libs.hikariCP)
+  compileOnlyApi(libs.caffeine)
+  compileOnlyApi(libs.storm)
+  compileOnlyApi(libs.configManager)
+  compileOnlyApi(libs.adventureApi)
+  compileOnlyApi(libs.adventureBukkit)
+  compileOnlyApi(libs.adventureBungee)
+  compileOnlyApi(libs.miniMessage)
+  compileOnlyApi(libs.kotlin)
+  compileOnlyApi(libs.reflections)
+  compileOnlyApi(libs.guice)
+  apiElements(libs.guice)
 
   testImplementation(platform("org.junit:junit-bom:5.9.1"))
   testImplementation("org.junit.jupiter:junit-jupiter")
@@ -72,4 +75,26 @@ blossom {
 
 tasks.withType<Javadoc> {
   options.encoding = "UTF-8"
+}
+
+publishing {
+  repositories {
+    maven {
+      name = "nookureRepository"
+      url = uri("https://repo.nookure.com/releases")
+      credentials(PasswordCredentials::class)
+      authentication {
+        create<BasicAuthentication>("basic")
+      }
+    }
+  }
+
+  publications {
+    create<MavenPublication>("maven") {
+      groupId = "com.nookure.mast"
+      artifactId = "MAStaff-API"
+      version = "${rootProject.version}"
+      from(components["java"])
+    }
+  }
 }
