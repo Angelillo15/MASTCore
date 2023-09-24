@@ -43,6 +43,7 @@ class CommandTemplate : org.bukkit.command.Command {
   }
 
   companion object {
+    private val commandMap = mutableMapOf<Command, CommandTemplate>()
     fun registerCommand(command: Command) {
       val commandData: CommandData?
 
@@ -65,15 +66,21 @@ class CommandTemplate : org.bukkit.command.Command {
       if (commandData.aliases.isEmpty() && commandData.permission.isNotEmpty()) {
         CommandManager.registerIntoCommandMap(CommandTemplate(commandData.name, command, commandData.permission))
       }
-
-      CommandManager.registerIntoCommandMap(
-        CommandTemplate(
-          commandData.name,
-          command,
-          commandData.permission,
-          *commandData.aliases
-        )
+      val commandTemplate = CommandTemplate(
+        commandData.name,
+        command,
+        commandData.permission,
+        *commandData.aliases
       )
+
+      CommandManager.registerIntoCommandMap(commandTemplate)
+
+      commandMap[command] = commandTemplate
+    }
+
+    fun unregisterCommand(command: Command) {
+      val commandTemplate = commandMap[command] ?: return
+      commandMap.remove(command)
     }
   }
 }

@@ -29,6 +29,14 @@ public interface MAStaff {
   void registerCommand(Command command);
 
   /**
+   * Unregister a command
+   *
+   * @param command The command to unregister
+   * @see Command
+   */
+  void unregisterCommand(Command command);
+
+  /**
    * Checks if the plugin is in debug mode
    *
    * @return True if the plugin is in debug mode

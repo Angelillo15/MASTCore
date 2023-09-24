@@ -3,6 +3,7 @@ package es.angelillo15.mast.velocity;
 import com.google.inject.Guice;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
+import com.nookure.mast.api.addons.AddonManager;
 import com.nookure.mast.api.addons.annotations.Addon;
 import com.velocitypowered.api.command.CommandManager;
 import com.velocitypowered.api.command.CommandMeta;
@@ -36,6 +37,7 @@ import es.angelillo15.mast.velocity.listeners.staffchat.OnPlayerChat;
 import es.angelillo15.mast.velocity.utils.LibsLoader;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Path;
 
@@ -188,6 +190,17 @@ public class MAStaff implements MAStaffInstance<ProxyServer> {
 
   @Override
   public void loadModules() {
+    AddonManager addonManager = injector.getInstance(AddonManager.class);
+    File folder = new File(dataDirectory.toString() + "/addons");
+    if (folder.mkdir()) logger.debug("Created addons folder");
+
+    try {
+      addonManager.loadAddonsToClasspath(folder.toPath());
+    } catch (IOException e) {
+      getSlf4jLogger().error("Error while loading addons", e);
+    }
+
+    addonManager.enableAllAddonsFromTheClasspath();
   }
 
   @Override
@@ -272,6 +285,32 @@ public class MAStaff implements MAStaffInstance<ProxyServer> {
     );
 
     commandManager.register(commandMeta, customCommand);
+  }
+
+  @Override
+  public void unregisterCommand(Command command) {
+    CommandData data;
+
+    try {
+      data = command.getClass().getAnnotation(CommandData.class);
+    } catch (Exception e) {
+      logger.error("Error while unregistering command " + command.getClass().getName());
+      return;
+    }
+
+    proxyServer.getCommandManager().getAliases().forEach(s -> {
+      val cmd = proxyServer.getCommandManager().getCommandMeta(s);
+
+      if (cmd == null) return;
+
+      if (cmd.getPlugin() != this) {
+        return;
+      }
+
+      if (cmd.getAliases().contains(data.name())) {
+        proxyServer.getCommandManager().unregister(cmd);
+      }
+    });
   }
 
   @Override

@@ -96,6 +96,24 @@ public class MAStaff extends Plugin implements MAStaffInstance<Plugin> {
   }
 
   @Override
+  public void unregisterCommand(Command command) {
+    CommandData data;
+
+    try {
+      data = command.getClass().getAnnotation(CommandData.class);
+    } catch (Exception e) {
+      logger.error("Error while unregistering command " + command.getClass().getName());
+      return;
+    }
+
+    getProxy().getPluginManager().getCommands().forEach( cmd -> {
+      if (cmd.getKey().equals(data.name())) {
+        getProxy().getPluginManager().unregisterCommand(cmd.getValue());
+      }
+    });
+  }
+
+  @Override
   public boolean isDebug() {
     return debug;
   }

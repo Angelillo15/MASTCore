@@ -29,6 +29,11 @@ public class MAStaffMock implements MAStaff {
   }
 
   @Override
+  public void unregisterCommand(Command command) {
+    getPLogger().info("Unregistered command " + command);
+  }
+
+  @Override
   public boolean isDebug() {
     return true;
   }

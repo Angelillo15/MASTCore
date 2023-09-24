@@ -370,6 +370,11 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance<JavaPlugin> {
   }
 
   @Override
+  public void unregisterCommand(Command command) {
+    CommandTemplate.Companion.unregisterCommand(command);
+  }
+
+  @Override
   public IServerUtils getServerUtils() {
     return injector.getInstance(ServerUtils.class);
   }
