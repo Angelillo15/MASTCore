@@ -1,6 +1,7 @@
 package com.nookure.mast.addon;
 
 import com.google.inject.Inject;
+import com.google.inject.Injector;
 import com.google.inject.Singleton;
 import com.nookure.mast.api.MAStaff;
 import com.nookure.mast.api.addons.*;
@@ -74,26 +75,36 @@ public class ServerAddonManager implements AddonManager {
 
   @Override
   public void enableAllAddonsFromTheClasspath() {
-    AddonsUtils.getAddons(instance.getPlatform()).forEach(c -> {
-      enableAddon(instance.getInjector().getInstance(c));
-    });
+    AddonsUtils.getAddons(instance.getPlatform()).forEach(this::enableAddon);
   }
 
   @Override
-  public void enableAddon(Object addon) {
+  public void enableAddon(Class<?> addonClasss) {
+
     AddonContainer addonContainer = new ServerAddonContainer(new AddonDescriptionBuilder()
-        .setMain(addon)
-        .setAddon(addon.getClass().getAnnotation(Addon.class))
+        .setAddon(addonClasss.getAnnotation(Addon.class))
         .build()
     );
 
     logger.debug("Enabling addon " + addonContainer.getDescription().getID());
 
-    registerAddon(addonContainer);
+    Injector addonInjector = instance.getInjector().createChildInjector(
+        new AddonCommonModule(addonContainer, instance, addonClasss)
+    );
+
+    Object addon = addonInjector.getInstance(addonClasss);
+
+    addonContainer.setInstance(addon);
     addonContainer.setStatus(AddonStatus.ENABLED);
 
+    registerAddon(addonContainer);
+
     for (Class<?> listener : addonContainer.getAddon().listeners()) {
-      registerListener(listener, addonContainer);
+      registerListener(addonInjector.getInstance(listener), addonContainer);
+    }
+
+    for (Class<? extends Command> commands : addonContainer.getAddon().commands()) {
+      registerCommand(addonInjector.getInstance(commands), addonContainer);
     }
 
     if (addon instanceof AddonActions actions) actions.onEnable();
@@ -181,6 +192,6 @@ public class ServerAddonManager implements AddonManager {
 
   @Override
   public void registerCommand(Command command, AddonContainer addon) {
-
+    instance.registerCommand(command);
   }
 }

@@ -59,7 +59,7 @@ public interface AddonManager {
    *
    * @param addon The addon instance
    */
-  void enableAddon(Object addon);
+  void enableAddon(Class<?> addon);
 
   /**
    * Enables all the addons that are currently loaded
