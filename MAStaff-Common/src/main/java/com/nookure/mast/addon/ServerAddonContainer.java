@@ -7,7 +7,7 @@ import com.nookure.mast.api.addons.annotations.Addon;
 
 public class ServerAddonContainer implements AddonContainer {
   private final AddonDescription description;
-  private final Object instance;
+  private Object instance;
   private AddonStatus status = AddonStatus.LOADED;
 
   public ServerAddonContainer(AddonDescription description) {
@@ -38,5 +38,10 @@ public class ServerAddonContainer implements AddonContainer {
   @Override
   public Addon getAddon() {
     return description.getAddon();
+  }
+
+  @Override
+  public void setInstance(Object instance) {
+    this.instance = instance;
   }
 }
