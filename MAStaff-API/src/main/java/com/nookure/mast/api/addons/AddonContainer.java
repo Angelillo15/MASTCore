@@ -11,5 +11,7 @@ public interface AddonContainer {
 
   void setStatus(AddonStatus status);
 
+  void setInstance(Object instance);
+
   Addon getAddon();
 }
