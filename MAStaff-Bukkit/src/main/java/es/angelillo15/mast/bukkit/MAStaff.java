@@ -23,6 +23,7 @@ import es.angelillo15.mast.bukkit.addons.AddonsLoader;
 import es.angelillo15.mast.bukkit.cmd.FreezeCMD;
 import es.angelillo15.mast.bukkit.cmd.mast.MASTParent;
 import es.angelillo15.mast.bukkit.cmd.staff.StaffParent;
+import es.angelillo15.mast.bukkit.cmd.utils.CommandManager;
 import es.angelillo15.mast.bukkit.cmd.utils.CommandTemplate;
 import es.angelillo15.mast.bukkit.inject.BukkitInjector;
 import es.angelillo15.mast.bukkit.legacy.BukkitLegacyLoader;
@@ -54,6 +55,7 @@ import lombok.Getter;
 import lombok.SneakyThrows;
 import mc.obliviate.inventory.InventoryAPI;
 import org.bukkit.Bukkit;
+import org.bukkit.command.CommandMap;
 import org.bukkit.entity.Player;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
@@ -250,8 +252,12 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance<JavaPlugin> {
 
   @Override
   public void unregisterCommands() {
-    Objects.requireNonNull(getCommand("freeze")).setExecutor(null);
-    Objects.requireNonNull(getCommand("staffchat")).setExecutor(null);
+    if (CommandManager.getCommandMap() == null) return;
+
+    CommandTemplate.Companion.getCommandMap().forEach((s, command) -> {
+      CommandTemplate.Companion.unregisterCommand(s);
+    });
+
   }
 
   @Override
