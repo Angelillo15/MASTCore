@@ -1,3 +1,5 @@
+import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
+
 plugins {
   `maven-publish`
   id("com.github.johnrengelman.shadow") version "8.1.1"
@@ -41,7 +43,7 @@ publishing {
       groupId = "com.nookure.mast"
       artifactId = "MAStaff-API"
       version = "${rootProject.version}"
-      shadow.component(this)
+      artifact(tasks.withType(ShadowJar::class.java).getByName("shadowJar").archiveFile)
     }
   }
 }
@@ -51,4 +53,5 @@ tasks.shadowJar {
   Relocation.relocations.forEach { (from, to) ->
     relocate(from, to)
   }
+  exclude("META-INF/maven/**")
 }
