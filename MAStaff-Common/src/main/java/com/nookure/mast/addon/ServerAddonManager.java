@@ -13,6 +13,7 @@ import com.nookure.mast.api.event.addons.AddonEnableEvent;
 import com.nookure.mast.api.event.addons.AddonReloadEvent;
 import com.nookure.mast.api.exceptions.AddonException;
 import es.angelillo15.mast.api.ILogger;
+import es.angelillo15.mast.api.inject.InjectModule;
 
 import java.io.IOException;
 import java.net.URL;
@@ -89,9 +90,11 @@ public class ServerAddonManager implements AddonManager {
 
     logger.debug("Enabling addon " + addonContainer.getDescription().getID());
 
-    Injector addonInjector = instance.getInjector().createChildInjector(
+    Injector preInjector = instance.getInjector().createChildInjector(
         new AddonCommonModule(addonContainer, instance, addonClasss)
     );
+
+    Injector addonInjector = preInjector.createChildInjector(new InjectModule(preInjector));
 
     Object addon = addonInjector.getInstance(addonClasss);
 
