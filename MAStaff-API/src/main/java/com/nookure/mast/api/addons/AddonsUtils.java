@@ -7,7 +7,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 public class AddonsUtils {
-  private static final Reflections reflections = new Reflections("com.nookure");
+  private static final Reflections reflections = new Reflections();
 
   /**
    * Gets all the addons
@@ -27,6 +27,7 @@ public class AddonsUtils {
   public static Set<Class<?>> getAddons(Addon.AddonPlatform platform) {
     return getAddons().stream().filter(c -> {
       Addon addon = c.getAnnotation(Addon.class);
+      if (!addon.loadOnScan()) return false;
       return addon.platform() == platform || addon.platform() == Addon.AddonPlatform.COMMON;
     }).collect(Collectors.toSet());
   }
