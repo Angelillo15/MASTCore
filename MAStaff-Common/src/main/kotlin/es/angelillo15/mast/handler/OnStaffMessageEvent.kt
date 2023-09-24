@@ -18,12 +18,9 @@ open class OnStaffMessageEvent {
     if (!CommonConfig.StaffChat.Prefix.enabled()) return false
 
     val key = CommonConfig.StaffChat.Prefix.key()
-    var strippedMessage = message
     if (!message.startsWith(key) && !staffChatManager.isStaffChatEnabled(player)) return false
 
-    if (message.startsWith(key)) {
-      strippedMessage = message.substring(key.length)
-    }
+    val strippedMessage = message.substring(key.length)
 
     val formattedMessage = CommonMessages.StaffChat.format()
             .replace("{server}", server)
