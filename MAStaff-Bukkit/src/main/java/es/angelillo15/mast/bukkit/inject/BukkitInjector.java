@@ -18,6 +18,7 @@ public class BukkitInjector extends CommonModule {
     super.configure();
     bind(MAStaffInstance.class).toInstance(MAStaff.getPlugin());
     bind(MAStaff.class).toInstance(MAStaff.getPlugin());
+    bind(com.nookure.mast.api.MAStaff.class).toInstance(MAStaff.getPlugin());
     bind(MAStaffInject.class).toInstance(MAStaff.getPlugin());
     bind(StaffManager.class).asEagerSingleton();
     bind(IServerUtils.class).to(ServerUtils.class).asEagerSingleton();
