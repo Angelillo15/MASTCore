@@ -6,6 +6,7 @@ import com.nookure.mast.api.cmd.CommandData
 import com.nookure.mast.api.manager.cmd.CommandBukkitSenderManager
 import es.angelillo15.mast.bukkit.MAStaff
 import org.bukkit.command.CommandSender
+import java.util.concurrent.ConcurrentHashMap
 
 class CommandTemplate : org.bukkit.command.Command {
   private val command: Command
@@ -43,7 +44,7 @@ class CommandTemplate : org.bukkit.command.Command {
   }
 
   companion object {
-    private val commandMap = mutableMapOf<Command, CommandTemplate>()
+    val commandMap = ConcurrentHashMap<Command, CommandTemplate>()
     fun registerCommand(command: Command) {
       val commandData: CommandData?
 
@@ -79,8 +80,9 @@ class CommandTemplate : org.bukkit.command.Command {
     }
 
     fun unregisterCommand(command: Command) {
-      val commandTemplate = commandMap[command] ?: return
+      val bukkitCommand = commandMap[command] ?: return
       commandMap.remove(command)
+      CommandManager.getCommandMap()?.let { bukkitCommand.unregister(it) }
     }
   }
 }
