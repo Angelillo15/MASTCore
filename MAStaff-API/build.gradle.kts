@@ -3,7 +3,6 @@ import java.time.format.DateTimeFormatter
 
 plugins {
   id("java")
-  `maven-publish`
   id("net.kyori.blossom") version "1.3.1"
   id("org.ajoberstar.grgit") version "4.1.0"
 }
@@ -21,24 +20,23 @@ dependencies {
   compileOnly(libs.placeholderApi)
   compileOnly(libs.vault)
   compileOnly(libs.velocity)
-  compileOnlyApi(libs.liblyBukkit)
-  compileOnlyApi(libs.bundles.invAPI)
-  compileOnlyApi(libs.configUpdater)
-  compileOnlyApi(libs.snakeYaml)
-  compileOnlyApi(libs.simpleYaml)
-  compileOnlyApi(libs.jedis)
-  compileOnlyApi(libs.hikariCP)
-  compileOnlyApi(libs.caffeine)
-  compileOnlyApi(libs.storm)
-  compileOnlyApi(libs.configManager)
-  compileOnlyApi(libs.adventureApi)
-  compileOnlyApi(libs.adventureBukkit)
-  compileOnlyApi(libs.adventureBungee)
-  compileOnlyApi(libs.miniMessage)
-  compileOnlyApi(libs.kotlin)
-  compileOnlyApi(libs.reflections)
-  compileOnlyApi(libs.guice)
-  apiElements(libs.guice)
+  compileOnly(libs.liblyBukkit)
+  compileOnly(libs.bundles.invAPI)
+  compileOnly(libs.configUpdater)
+  compileOnly(libs.snakeYaml)
+  compileOnly(libs.simpleYaml)
+  compileOnly(libs.jedis)
+  compileOnly(libs.hikariCP)
+  compileOnly(libs.caffeine)
+  compileOnly(libs.storm)
+  compileOnly(libs.configManager)
+  compileOnly(libs.adventureApi)
+  compileOnly(libs.adventureBukkit)
+  compileOnly(libs.adventureBungee)
+  compileOnly(libs.miniMessage)
+  compileOnly(libs.kotlin)
+  compileOnly(libs.reflections)
+  compileOnly(libs.guice)
 
   testImplementation(platform("org.junit:junit-bom:5.9.1"))
   testImplementation("org.junit.jupiter:junit-jupiter")
@@ -75,26 +73,4 @@ blossom {
 
 tasks.withType<Javadoc> {
   options.encoding = "UTF-8"
-}
-
-publishing {
-  repositories {
-    maven {
-      name = "nookureRepository"
-      url = uri("https://repo.nookure.com/releases")
-      credentials(PasswordCredentials::class)
-      authentication {
-        create<BasicAuthentication>("basic")
-      }
-    }
-  }
-
-  publications {
-    create<MavenPublication>("maven") {
-      groupId = "com.nookure.mast"
-      artifactId = "MAStaff-API"
-      version = "${rootProject.version}"
-      from(components["java"])
-    }
-  }
 }
