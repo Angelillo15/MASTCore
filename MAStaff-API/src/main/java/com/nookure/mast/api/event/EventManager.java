@@ -61,6 +61,8 @@ public class EventManager {
         continue;
       }
 
+      logger.debug("Registering event handler " + method.getName() + " in " + clazz.getName());
+
       MastSubscribe mastSubscribe = method.getAnnotation(MastSubscribe.class);
 
       Class<?>[] parameterTypes = method.getParameterTypes();
