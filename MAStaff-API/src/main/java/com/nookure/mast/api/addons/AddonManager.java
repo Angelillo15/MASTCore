@@ -5,6 +5,7 @@ import com.nookure.mast.api.cmd.Command;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 
 public interface AddonManager {
@@ -171,4 +172,11 @@ public interface AddonManager {
    * @param addon The addon
    */
   void unregisterCommands(AddonContainer addon);
+
+  /**
+   * Gets all the loaded classloaders
+   *
+   * @return A list of all the loaded classloaders
+   */
+  List<ClassLoader> getLoaded();
 }

@@ -13,7 +13,6 @@ import com.nookure.mast.api.event.addons.AddonEnableEvent;
 import com.nookure.mast.api.event.addons.AddonReloadEvent;
 import com.nookure.mast.api.exceptions.AddonException;
 import es.angelillo15.mast.api.ILogger;
-import es.angelillo15.mast.api.inject.InjectModule;
 
 import java.io.IOException;
 import java.net.URL;
@@ -35,7 +34,7 @@ public class ServerAddonManager implements AddonManager {
   private final Map<Object, AddonContainer> addonsInstances = new IdentityHashMap<>();
   private final Map<AddonContainer, List<Object>> listeners = new HashMap<>();
   private final Map<AddonContainer, List<Command>> commands = new HashMap<>();
-  private final ArrayList<URLClassLoader> loaded = new ArrayList<>();
+  private final ArrayList<ClassLoader> loaded = new ArrayList<>();
 
   private void registerAddon(AddonContainer addonContainer) {
     addonsById.put(addonContainer.getDescription().getID(), addonContainer);
@@ -77,26 +76,24 @@ public class ServerAddonManager implements AddonManager {
 
   @Override
   public void enableAllAddonsFromTheClasspath() {
-    AddonsUtils.getAddons(instance.getPlatform()).forEach(this::enableAddon);
+    AddonsUtils.getAddons(this, instance.getPlatform()).forEach(this::enableAddon);
   }
 
   @Override
-  public void enableAddon(Class<?> addonClasss) {
+  public void enableAddon(Class<?> addonClass) {
 
     AddonContainer addonContainer = new ServerAddonContainer(new AddonDescriptionBuilder()
-        .setAddon(addonClasss.getAnnotation(Addon.class))
+        .setAddon(addonClass.getAnnotation(Addon.class))
         .build()
     );
 
     logger.debug("Enabling addon " + addonContainer.getDescription().getID());
 
-    Injector preInjector = instance.getInjector().createChildInjector(
-        new AddonCommonModule(addonContainer, instance, addonClasss)
+    Injector addonInjector = instance.getInjector().createChildInjector(
+        new AddonCommonModule(addonContainer, instance, addonClass)
     );
 
-    Injector addonInjector = preInjector.createChildInjector(new InjectModule(preInjector));
-
-    Object addon = addonInjector.getInstance(addonClasss);
+    Object addon = addonInjector.getInstance(addonClass);
 
     addonContainer.setInstance(addon);
     addonContainer.setStatus(AddonStatus.ENABLED);
@@ -159,7 +156,7 @@ public class ServerAddonManager implements AddonManager {
     disableAllAddons();
     loaded.forEach(loader -> {
       try {
-        loader.close();
+        if (loader instanceof URLClassLoader urlClassLoader) urlClassLoader.close();
       } catch (IOException e) {
         throw new AddonException("Error occurred while destroying addons ClassLoaders", e);
       }
@@ -209,5 +206,10 @@ public class ServerAddonManager implements AddonManager {
       commands.get(addon).forEach(command -> instance.unregisterCommand(command));
       commands.remove(addon);
     }
+  }
+
+  @Override
+  public List<ClassLoader> getLoaded() {
+    return loaded;
   }
 }
