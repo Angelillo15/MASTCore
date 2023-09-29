@@ -25,7 +25,7 @@ public class AddonTest {
     eventManager = injector.getInstance(EventManager.class);
 
     manager.enableAllAddonsFromTheClasspath();
-    AddonsUtils.getAddons(manager).forEach(addon -> {
+    AddonsUtils.getAddons().forEach(addon -> {
       System.out.println(addon.getName());
     });
 

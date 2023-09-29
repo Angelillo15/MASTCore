@@ -1,9 +1,12 @@
 package com.nookure.mast.api.addons;
 
+import com.nookure.mast.api.MAStaff;
 import com.nookure.mast.api.addons.annotations.Addon;
 import org.reflections.Reflections;
 import org.reflections.util.ConfigurationBuilder;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -15,8 +18,8 @@ public class AddonsUtils {
    *
    * @return A set of all the addons
    */
-  public static Set<Class<?>> getAddons(AddonManager manager) {
-    return getReflections(manager).getTypesAnnotatedWith(Addon.class);
+  public static Set<Class<?>> getAddons() {
+    return getReflections().getTypesAnnotatedWith(Addon.class);
   }
 
   /**
@@ -24,11 +27,8 @@ public class AddonsUtils {
    *
    * @return A set of all the addons for the platform
    */
-  public static Set<Class<?>> getLoadOnScanAddons(AddonManager manager) {
-    return getAddons(manager).stream().filter(c -> {
-      Addon addon = c.getAnnotation(Addon.class);
-      return !addon.loadOnScan();
-    }).collect(Collectors.toSet());
+  public static Set<Class<?>> getLoadOnScanAddons() {
+    return getAddons().stream().filter(c -> c.getAnnotation(Addon.class).loadOnScan()).collect(Collectors.toSet());
   }
 
   /**
@@ -37,20 +37,16 @@ public class AddonsUtils {
    * @param platform The platform {@link Addon.AddonPlatform}
    * @return A set of all the addons for the platform
    */
-  public static Set<Class<?>> getAddons(AddonManager manager, Addon.AddonPlatform platform) {
-    return getLoadOnScanAddons(manager).stream().filter(c -> {
+  public static Set<Class<?>> getAddons(Addon.AddonPlatform platform) {
+    return getLoadOnScanAddons().stream().filter(c -> {
       Addon addon = c.getAnnotation(Addon.class);
       return addon.platform() == platform;
     }).collect(Collectors.toSet());
   }
 
-  private static Reflections getReflections(AddonManager manager) {
+  private static Reflections getReflections() {
     if (reflections == null) {
-      if (manager.getLoaded().toArray() instanceof ClassLoader[] loader) {
-        return new Reflections(new ConfigurationBuilder().addClassLoaders(loader));
-      }
-
-      throw new RuntimeException("Could not get the class loaders");
+      reflections = new Reflections();
     }
 
     return reflections;

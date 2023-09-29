@@ -105,7 +105,7 @@ public class ServerAddonManager implements AddonManager {
 
   @Override
   public void enableAllAddonsFromTheClasspath() {
-    AddonsUtils.getAddons(this, instance.getPlatform()).forEach(this::enableAddon);
+    AddonsUtils.getAddons(instance.getPlatform()).forEach(this::enableAddon);
   }
 
   @Override
