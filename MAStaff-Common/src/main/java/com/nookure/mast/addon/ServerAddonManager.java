@@ -14,6 +14,7 @@ import com.nookure.mast.api.event.addons.AddonReloadEvent;
 import com.nookure.mast.api.exceptions.AddonException;
 import es.angelillo15.mast.api.ILogger;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.net.URLClassLoader;
@@ -21,6 +22,8 @@ import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.*;
+import java.util.jar.JarEntry;
+import java.util.jar.JarFile;
 
 @Singleton
 public class ServerAddonManager implements AddonManager {
@@ -62,15 +65,41 @@ public class ServerAddonManager implements AddonManager {
   }
 
   @Override
-  public void loadAddonsToClasspath(Path directory) throws IOException {
+  public void loadAddonsToClasspath(Path directory) {
     try (DirectoryStream<Path> stream = Files.newDirectoryStream(directory,
         p -> p.toFile().isFile() && p.toString().endsWith(".jar"))) {
       for (Path path : stream) {
         URL[] urls = new URL[]{path.toUri().toURL()};
         URLClassLoader loader = new URLClassLoader(urls, instance.getClass().getClassLoader());
+
+        getJarEntries(path.toFile()).forEach(entry -> {
+          try {
+            if (entry.isDirectory() || !entry.getName().endsWith(".class")) return;
+
+            Class<?> clazz = loader.loadClass(entry.getName()
+                .replace(".class", "")
+                .replace("/", ".")
+            );
+
+            if (clazz.isAnnotationPresent(Addon.class)) enableAddon(clazz);
+          } catch (ClassNotFoundException e) {
+            throw new AddonException("Error occurred while loading addons to classpath", e);
+          }
+        });
+
         loaded.add(loader);
         logger.debug("Addon " + path.getFileName() + " added to classpath");
       }
+    } catch (Exception e) {
+      throw new AddonException("Error occurred while loading addons to classpath", e);
+    }
+  }
+
+  private ArrayList<JarEntry> getJarEntries(File jarFile) {
+    try (JarFile jar = new JarFile(jarFile)) {
+      return Collections.list(jar.entries());
+    } catch (IOException e) {
+      throw new AddonException("Error occurred while getting jar entries", e);
     }
   }
 
