@@ -22,6 +22,7 @@ import es.angelillo15.mast.api.utils.BukkitUtils;
 import es.angelillo15.mast.api.utils.PermsUtils;
 import es.angelillo15.mast.bukkit.addons.AddonsLoader;
 import es.angelillo15.mast.bukkit.cmd.FreezeCMD;
+import es.angelillo15.mast.bukkit.cmd.VanishCMD;
 import es.angelillo15.mast.bukkit.cmd.mast.MASTParent;
 import es.angelillo15.mast.bukkit.cmd.staff.StaffParent;
 import es.angelillo15.mast.bukkit.cmd.utils.CommandManager;
@@ -144,6 +145,8 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance<JavaPlugin> {
     registerCommand(injector.getInstance(StaffChat.class));
     registerCommand(injector.getInstance(MASTParent.class));
     registerCommand(injector.getInstance(HelpOP.class));
+    if (Config.Addons.vanish())
+      registerCommand(injector.getInstance(VanishCMD.class));
     if (Config.Freeze.enabled())
       Objects.requireNonNull(getCommand("freeze")).setExecutor(injector.getInstance(FreezeCMD.class));
   }
