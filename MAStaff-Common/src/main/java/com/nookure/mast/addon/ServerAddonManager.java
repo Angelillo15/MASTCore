@@ -22,6 +22,7 @@ import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
@@ -33,7 +34,7 @@ public class ServerAddonManager implements AddonManager {
   private ILogger logger;
   @Inject
   private EventManager eventManager;
-  private final Map<String, AddonContainer> addonsById = new LinkedHashMap<>();
+  private final Map<String, AddonContainer> addonsById = new ConcurrentHashMap<>();
   private final Map<Object, AddonContainer> addonsInstances = new IdentityHashMap<>();
   private final Map<AddonContainer, List<Object>> listeners = new HashMap<>();
   private final Map<AddonContainer, List<Command>> commands = new HashMap<>();
