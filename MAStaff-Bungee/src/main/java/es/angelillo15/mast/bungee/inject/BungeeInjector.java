@@ -1,5 +1,7 @@
 package es.angelillo15.mast.bungee.inject;
 
+import com.nookure.mast.addon.ServerAddonManager;
+import com.nookure.mast.api.addons.AddonManager;
 import es.angelillo15.mast.api.IServerUtils;
 import es.angelillo15.mast.api.MAStaffInstance;
 import es.angelillo15.mast.api.config.common.CommonConfigLoader;
@@ -22,5 +24,6 @@ public class BungeeInjector extends CommonModule {
     bind(IServerUtils.class).to(BungeeServerUtils.class).asEagerSingleton();
     bind(TemplateLoaders.class).asEagerSingleton();
     bind(CommandBungeeSenderManager.class).asEagerSingleton();
+    bind(AddonManager.class).to(ServerAddonManager.class).asEagerSingleton();
   }
 }

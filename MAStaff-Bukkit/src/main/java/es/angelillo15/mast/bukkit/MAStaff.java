@@ -2,6 +2,7 @@ package es.angelillo15.mast.bukkit;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
+import com.nookure.mast.api.addons.AddonManager;
 import com.nookure.mast.api.addons.annotations.Addon;
 import es.angelillo15.mast.api.*;
 import com.nookure.mast.api.cmd.Command;
@@ -83,6 +84,7 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance<JavaPlugin> {
   private static int currentVersion;
   @Getter
   private static int spiVersion;
+  private AddonManager addonManager;
   private final ArrayList<Listener> listeners = new ArrayList<>();
   private boolean debug = false;
   private Injector injector;
@@ -236,6 +238,13 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance<JavaPlugin> {
   @SneakyThrows
   @Override
   public void loadModules() {
+    addonManager = injector.getInstance(AddonManager.class);
+
+    File folder = new File(getDataFolder() + "/addons");
+    if (folder.mkdir()) logger.debug("Created addons folder");
+    addonManager.loadAddonsToClasspath(folder.toPath());
+    addonManager.enableAllAddonsFromTheClasspath();
+
     LegacyItemsLoader.load();
     LegacyCustomItemsLoader.load();
     PunishmentGUILoader.load();
@@ -313,6 +322,9 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance<JavaPlugin> {
     logger.debug("Starting tasks...");
     AsyncThreadKt.start();
     new Thread(this::checkUpdates);
+    logger.debug("Reloading addons...");
+    addonManager.reloadAllAddons();
+    logger.debug("Addons reloaded successfully ✔️");
     long end = System.currentTimeMillis();
     logger.debug("Reloaded successfully in {time}ms ✔️"
         .replace("{time}", String.valueOf(end - start))
@@ -368,6 +380,10 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance<JavaPlugin> {
     if (!MAStaffInstance.placeholderCheck()) return;
     getPLogger().info("PlaceholderAPI found! Registering placeholders...");
     injector.getInstance(MAStaffExtension.class).register();
+  }
+
+  public void disableAddons() {
+    addonManager.disableAllAddons();
   }
 
   @Override

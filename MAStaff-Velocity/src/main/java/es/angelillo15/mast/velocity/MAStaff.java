@@ -9,6 +9,7 @@ import com.velocitypowered.api.command.CommandManager;
 import com.velocitypowered.api.command.CommandMeta;
 import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.proxy.ProxyInitializeEvent;
+import com.velocitypowered.api.event.proxy.ProxyShutdownEvent;
 import com.velocitypowered.api.plugin.Plugin;
 import com.velocitypowered.api.plugin.annotation.DataDirectory;
 import com.velocitypowered.api.proxy.ProxyServer;
@@ -96,6 +97,13 @@ public class MAStaff implements MAStaffInstance<ProxyServer> {
     proxyServer.getChannelRegistrar().register(MinecraftChannelIdentifier.from("mastaff:staff"));
 
     logger.info("&aMAStaff &7v" + Constants.VERSION + " &ahas been loaded correctly!");
+  }
+
+  @Subscribe
+  public void onProxyShutDown(ProxyShutdownEvent event) {
+    unloadDatabase();
+    injector.getInstance(AddonManager.class).disableAllAddons();
+    logger.info("&aMAStaff &7v" + Constants.VERSION + " &ahas been unloaded correctly!");
   }
 
   @Override
@@ -251,6 +259,9 @@ public class MAStaff implements MAStaffInstance<ProxyServer> {
     registerCommands();
     logger.debug("Registering listeners...");
     registerListeners();
+    logger.debug("Reloading addons...");
+    injector.getInstance(AddonManager.class).reloadAllAddons();
+    logger.debug("Addons reloaded!");
     logger.debug("Reloading complete on " + (System.currentTimeMillis() - start) + "ms");
   }
 

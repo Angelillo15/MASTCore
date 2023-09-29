@@ -31,6 +31,8 @@ public class MAStaffLoader extends MAStaff {
     @Override
     public void onDisable() {
         super.onDisable();
+        unloadDatabase();
         AddonsLoader.unloadAddons();
+        unloadAddons();
     }
 }

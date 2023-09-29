@@ -2,6 +2,7 @@ package es.angelillo15.mast.bungee;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
+import com.nookure.mast.api.addons.AddonManager;
 import com.nookure.mast.api.addons.annotations.Addon;
 import es.angelillo15.mast.api.ILogger;
 import es.angelillo15.mast.api.IServerUtils;
@@ -41,6 +42,7 @@ import es.angelillo15.mast.cmd.HelpOP;
 import es.angelillo15.mast.cmd.StaffChat;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
 import java.sql.SQLException;
 
@@ -106,7 +108,7 @@ public class MAStaff extends Plugin implements MAStaffInstance<Plugin> {
       return;
     }
 
-    getProxy().getPluginManager().getCommands().forEach( cmd -> {
+    getProxy().getPluginManager().getCommands().forEach(cmd -> {
       if (cmd.getKey().equals(data.name())) {
         getProxy().getPluginManager().unregisterCommand(cmd.getValue());
       }
@@ -205,6 +207,16 @@ public class MAStaff extends Plugin implements MAStaffInstance<Plugin> {
   @Override
   public void loadModules() {
     AddonsLoader.loadAddons(injector);
+    AddonManager addonManager = getInjector().getInstance(AddonManager.class);
+
+    File folder = new File(getDataFolder() + "/addons");
+    if (folder.mkdir()) logger.debug("Created addons folder");
+    try {
+      addonManager.loadAddonsToClasspath(folder.toPath());
+    } catch (IOException e) {
+      throw new RuntimeException(e);
+    }
+    addonManager.enableAllAddonsFromTheClasspath();
   }
 
   @Override
@@ -237,12 +249,17 @@ public class MAStaff extends Plugin implements MAStaffInstance<Plugin> {
     registerCommands();
     registerListeners();
     AddonsLoader.reloadAddons();
+    injector.getInstance(AddonManager.class).reloadAllAddons();
     PluginConnection.getStorm().runMigrations();
   }
 
+  public void unloadAddons() {
+    injector.getInstance(AddonManager.class).disableAllAddons();
+  }
+
+  @SuppressWarnings("deprecation")
   public void loadInjector() {
     this.injector = Guice.createInjector(new BungeeInjector());
-
     StaticMembersInjector.injectStatics(injector, LegacyUserDataManager.class);
     StaticMembersInjector.injectStatics(injector, CommonMessages.class);
     StaticMembersInjector.injectStatics(injector, CommonConfig.class);
