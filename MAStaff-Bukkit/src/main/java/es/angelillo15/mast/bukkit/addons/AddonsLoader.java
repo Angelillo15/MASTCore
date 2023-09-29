@@ -47,9 +47,6 @@ public class AddonsLoader {
         JarEntry jarEntry = jarFile.getJarEntry("addon.properties");
 
         if (jarEntry == null) {
-          MAStaff.getPlugin()
-              .getPLogger()
-              .error("Addon " + file.getName() + " doesn't have a addon.properties file!");
           continue;
         }
 
