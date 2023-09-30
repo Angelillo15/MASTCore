@@ -78,8 +78,11 @@ public interface StaffFeatureManager {
    */
   default List<StaffFeatureContainer> getFeatures(@NotNull IStaffPlayer player) {
     return getFeatures().stream().filter(feature -> {
-      assert feature.permission() != null;
-      return player.getPlayer().hasPermission(feature.permission());
+      if (feature.permission() != null) {
+        return player.getPlayer().hasPermission(feature.permission());
+      }
+
+      return true;
     }).toList();
   }
 }

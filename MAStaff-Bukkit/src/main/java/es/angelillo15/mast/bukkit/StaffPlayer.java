@@ -574,9 +574,10 @@ public class StaffPlayer implements IStaffPlayer {
   }
 
   public void enableStaffFeatures() {
-    featureManager.getFeatures(this).forEach(featureContainer ->  {
+    featureManager.getFeatures().forEach(featureContainer -> {
       try {
-        featureContainer.feature().onStaffEnable(this);
+        if (featureContainer.permission() == null || player.hasPermission(featureContainer.permission()))
+          featureContainer.feature().onStaffEnable(this);
       } catch (Exception e) {
         logger.error("Error while enabling feature " + featureContainer.feature().getClass().getSimpleName());
         if (featureContainer.hasAddon()) {
