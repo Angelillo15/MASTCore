@@ -21,7 +21,7 @@ class Punishments : SubCommand() {
     if (sender !is PlayerCommandSender) return
     val player = sender.player
 
-    SelectTargetGUI(player) { target: Player ->
+    SelectTargetGUI(player).callback { target: Player ->
       PunishmentsGUI(player, target, 1).open()
     }.open()
   }

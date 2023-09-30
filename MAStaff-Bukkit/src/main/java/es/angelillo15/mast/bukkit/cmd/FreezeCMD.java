@@ -34,7 +34,7 @@ public class FreezeCMD implements CommandExecutor {
         }
 
         if(args.length < 1){
-            new SelectTargetGUI(p, (target) -> {
+            new SelectTargetGUI(p).callback( (target) -> {
                 execute(staff, target);
                 p.closeInventory();
             }).open();
