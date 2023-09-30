@@ -3,6 +3,7 @@ package es.angelillo15.mast.bukkit;
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
 import com.google.inject.Inject;
+import com.nookure.mast.api.staff.StaffFeatureManager;
 import es.angelillo15.mast.api.ILogger;
 import es.angelillo15.mast.api.IStaffPlayer;
 import es.angelillo15.mast.api.TextUtils;
@@ -54,6 +55,8 @@ public class StaffPlayer implements IStaffPlayer {
   private VersionSupport versionSupport;
   @Inject
   private ILogger logger;
+  @Inject
+  private StaffFeatureManager featureManager;
 
   private final Map<String, StaffItem> items = new HashMap<>();
   @Getter
@@ -154,6 +157,7 @@ public class StaffPlayer implements IStaffPlayer {
       // Todo send message of error to the player
     }
     Bukkit.getPluginManager().callEvent(new StaffDisableEvent(this));
+    disableStaffFeatures();
   }
 
   public void enableStaffMode(boolean saveInventory) {
@@ -176,6 +180,7 @@ public class StaffPlayer implements IStaffPlayer {
     saveLocation();
     staffModeAsyncInventoryChecker();
     Bukkit.getPluginManager().callEvent(new StaffEnableEvent(this));
+    enableStaffFeatures();
   }
 
   @Override
@@ -566,5 +571,37 @@ public class StaffPlayer implements IStaffPlayer {
       player.setHealth(20);
     else
       player.setHealth(health);
+  }
+
+  public void enableStaffFeatures() {
+    featureManager.getFeatures(this).forEach(featureContainer ->  {
+      try {
+        featureContainer.feature().onStaffEnable(this);
+      } catch (Exception e) {
+        logger.error("Error while enabling feature " + featureContainer.feature().getClass().getSimpleName());
+        if (featureContainer.hasAddon()) {
+          assert featureContainer.addon() != null;
+          logger.error("Error occurred in addon " + featureContainer.addon().getDescription().getID());
+          logger.error("This error is not caused by MAStaff, please contact the addon developer");
+        }
+        logger.error("Error: " + e.getMessage());
+      }
+    });
+  }
+
+  public void disableStaffFeatures() {
+    featureManager.getFeatures(this).forEach(featureContainer -> {
+      try {
+        featureContainer.feature().onStaffDisable(this);
+      } catch (Exception e) {
+        logger.error("Error while disabling feature " + featureContainer.feature().getClass().getSimpleName());
+        if (featureContainer.hasAddon()) {
+          assert featureContainer.addon() != null;
+          logger.error("Error occurred in addon " + featureContainer.addon().getDescription().getID());
+          logger.error("This error is not caused by MAStaff, please contact the addon developer");
+        }
+        logger.error("Error: " + e.getMessage());
+      }
+    });
   }
 }
