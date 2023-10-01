@@ -15,7 +15,9 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
 import java.time.OffsetDateTime;
+import java.util.Arrays;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.atomic.AtomicReference;
 
 import static java.util.Objects.requireNonNull;
 
@@ -87,6 +89,19 @@ public final class WebHookClient {
     requireNonNull(config, "config");
 
     return sendRequest(config.toString());
+  }
+
+  public CompletableFuture<HttpResponse<String>> sendWebHook(final @NotNull JsonConfig config, @NotNull Replacer... replace) {
+    requireNonNull(config, "config");
+    AtomicReference<String> json = new AtomicReference<>(config.toString());
+
+    Arrays.stream(replace).forEach(replacer -> {
+      if (json.get().contains("{{ " + replacer.key() + " }}")) {
+        json.set(json.get().replace("{{ " + replacer.key() + " }}", replacer.value()));
+      }
+    });
+
+    return sendRequest(json.get());
   }
 
   private CompletableFuture<HttpResponse<String>> sendRequest(final String json) {
