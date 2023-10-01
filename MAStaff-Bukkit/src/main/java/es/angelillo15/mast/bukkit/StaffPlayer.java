@@ -3,6 +3,11 @@ package es.angelillo15.mast.bukkit;
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
 import com.google.inject.Inject;
+import com.nookure.mast.api.event.EventManager;
+import com.nookure.mast.api.event.staff.freeze.PlayerFreezeEvent;
+import com.nookure.mast.api.event.staff.freeze.PlayerUnfreezeEvent;
+import com.nookure.mast.api.event.staff.mode.StaffModeDisabledEvent;
+import com.nookure.mast.api.event.staff.mode.StaffModeEnabledEvent;
 import com.nookure.mast.api.staff.StaffFeatureManager;
 import es.angelillo15.mast.api.ILogger;
 import es.angelillo15.mast.api.IStaffPlayer;
@@ -57,6 +62,8 @@ public class StaffPlayer implements IStaffPlayer {
   private ILogger logger;
   @Inject
   private StaffFeatureManager featureManager;
+  @Inject
+  private EventManager eventManager;
 
   private final Map<String, StaffItem> items = new HashMap<>();
   @Getter
@@ -158,6 +165,7 @@ public class StaffPlayer implements IStaffPlayer {
     }
     Bukkit.getPluginManager().callEvent(new StaffDisableEvent(this));
     disableStaffFeatures();
+    eventManager.fireEvent(new StaffModeDisabledEvent(this));
   }
 
   public void enableStaffMode(boolean saveInventory) {
@@ -181,6 +189,7 @@ public class StaffPlayer implements IStaffPlayer {
     staffModeAsyncInventoryChecker();
     Bukkit.getPluginManager().callEvent(new StaffEnableEvent(this));
     enableStaffFeatures();
+    eventManager.fireEvent(new StaffModeEnabledEvent(this));
   }
 
   @Override
@@ -427,6 +436,7 @@ public class StaffPlayer implements IStaffPlayer {
             .replace("{staff}", this.player.getName()));
 
     Bukkit.getPluginManager().callEvent(new FreezePlayerEvent(player, this.player));
+    eventManager.fireEvent(new PlayerFreezeEvent(this.player.getName(), player.getName()));
   }
 
   @Override
@@ -444,6 +454,8 @@ public class StaffPlayer implements IStaffPlayer {
       Bukkit.getPluginManager()
           .callEvent(new UnFreezePlayerEvent(Bukkit.getPlayer(player), this.player));
     }
+
+    eventManager.fireEvent(new PlayerUnfreezeEvent(this.player.getName(), player));
   }
 
   @Override
