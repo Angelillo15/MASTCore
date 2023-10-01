@@ -5,6 +5,7 @@ import com.google.inject.Singleton;
 import com.nookure.mast.api.MAStaff;
 import com.nookure.mast.api.addons.annotations.AddonLogger;
 import com.nookure.mast.api.webhook.config.JsonConfig;
+import com.nookure.mast.webhook.Webhooks;
 import es.angelillo15.mast.api.ILogger;
 
 import java.io.File;
@@ -27,9 +28,9 @@ public class WebhookLoader {
   public void loadWebhooks() {
     webhooks.clear();
     Stream.of(new WebhookOrigin(
-        "common/webhooks/example.json",
-        dataFolder.getAbsolutePath() + "/webhooks/example.json",
-        "example")
+        "common/webhooks/staffchat.json",
+        dataFolder.getAbsolutePath() + "/webhooks/staffchat.json",
+        Webhooks.STAFF_CHAT)
     ).forEach(jsonOrigin -> {
       try {
         long start = System.currentTimeMillis();
