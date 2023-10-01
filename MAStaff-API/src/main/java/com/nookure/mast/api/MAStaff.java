@@ -12,6 +12,7 @@ import org.bukkit.entity.Player;
 import java.io.File;
 import java.io.InputStream;
 
+@SuppressWarnings("unused")
 public interface MAStaff {
   /**
    * Gets the plugin logger
