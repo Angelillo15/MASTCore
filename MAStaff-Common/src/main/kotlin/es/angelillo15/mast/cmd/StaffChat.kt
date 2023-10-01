@@ -5,21 +5,26 @@ import es.angelillo15.mast.api.IServerUtils
 import com.nookure.mast.api.cmd.Command
 import com.nookure.mast.api.cmd.CommandData
 import com.nookure.mast.api.cmd.sender.CommandSender
+import com.nookure.mast.api.event.EventManager
+import com.nookure.mast.api.event.staff.staffchat.StaffChatMessageSentEvent
 import es.angelillo15.mast.api.config.common.CommonMessages
 import es.angelillo15.mast.api.managers.StaffChatManager
 
 @CommandData(
-        name = "StaffChat",
-        permission = "mast.staffchat",
-        aliases = ["sc"],
-        description = "Send a message to all staff members.",
+  name = "StaffChat",
+  permission = "mast.staffchat",
+  aliases = ["sc"],
+  description = "Send a message to all staff members.",
 )
 class StaffChat : Command() {
   @Inject
-  private lateinit var serverUtils: IServerUtils;
+  private lateinit var serverUtils: IServerUtils
 
   @Inject
-  private lateinit var staffChatManager: StaffChatManager;
+  private lateinit var staffChatManager: StaffChatManager
+
+  @Inject
+  private lateinit var eventManager: EventManager
 
   override fun onCommand(sender: CommandSender, label: String, args: Array<String>) {
     if (args.isEmpty()) {
@@ -37,10 +42,12 @@ class StaffChat : Command() {
     val message = args.joinToString(" ")
 
     val formattedMessage = CommonMessages.StaffChat.format()
-            .replace("{server}", sender.serverName)
-            .replace("{player}", sender.name)
-            .replace("{message}", message)
+      .replace("{server}", sender.serverName)
+      .replace("{player}", sender.name)
+      .replace("{message}", message)
 
     serverUtils.broadcastMessage(formattedMessage, "mast.staffchat")
+
+    eventManager.fireEvent(StaffChatMessageSentEvent(message, sender.name, sender.serverName))
   }
 }

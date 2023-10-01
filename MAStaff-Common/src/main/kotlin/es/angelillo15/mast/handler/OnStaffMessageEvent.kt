@@ -1,6 +1,8 @@
 package es.angelillo15.mast.handler
 
 import com.google.inject.Inject
+import com.nookure.mast.api.event.EventManager
+import com.nookure.mast.api.event.staff.staffchat.StaffChatMessageSentEvent
 import es.angelillo15.mast.api.IServerUtils
 import es.angelillo15.mast.api.config.common.CommonConfig
 import es.angelillo15.mast.api.config.common.CommonMessages
@@ -12,6 +14,9 @@ open class OnStaffMessageEvent {
 
   @Inject
   private lateinit var serverUtils: IServerUtils
+
+  @Inject
+  private lateinit var eventManager: EventManager
 
   fun onStaffMessageEvent(player: String, message: String, server: String): Boolean {
     if (!CommonConfig.StaffChat.enabled()) return false
@@ -28,6 +33,8 @@ open class OnStaffMessageEvent {
             .replace("{message}", strippedMessage)
 
     serverUtils.broadcastMessage(formattedMessage, "mast.staffchat")
+
+    eventManager.fireEvent(StaffChatMessageSentEvent(message, player, server))
 
     return true
   }
