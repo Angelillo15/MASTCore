@@ -31,6 +31,7 @@ dependencies {
   implementation(libs.reflections)
   implementation(libs.paperLib)
   implementation(libs.configurateGson)
+  implementation(libs.configurateHocon)
 }
 
 tasks.withType<JavaCompile> {

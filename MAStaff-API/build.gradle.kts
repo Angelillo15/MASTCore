@@ -38,6 +38,7 @@ dependencies {
   compileOnly(libs.reflections)
   compileOnly(libs.guice)
   compileOnly(libs.configurateGson)
+  compileOnly(libs.configurateHocon)
 
   testImplementation(platform("org.junit:junit-bom:5.9.1"))
   testImplementation("org.junit.jupiter:junit-jupiter")
