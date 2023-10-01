@@ -2,6 +2,7 @@ package com.nookure.mast.api.webhook;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.nookure.mast.api.webhook.config.JsonConfig;
 import com.nookure.mast.api.webhook.serializer.DateSerializer;
 import com.nookure.mast.api.webhook.serializer.EmbedSerializer;
 import com.nookure.mast.api.webhook.serializer.WebHookSerializer;
@@ -80,6 +81,12 @@ public final class WebHookClient {
     final String json = gson.toJson(webHook);
 
     return sendRequest(json);
+  }
+
+  public CompletableFuture<HttpResponse<String>> sendWebHook(final @NotNull JsonConfig config) {
+    requireNonNull(config, "config");
+
+    return sendRequest(config.toString());
   }
 
   private CompletableFuture<HttpResponse<String>> sendRequest(final String json) {
