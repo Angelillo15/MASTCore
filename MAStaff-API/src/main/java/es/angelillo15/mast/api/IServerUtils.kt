@@ -88,7 +88,6 @@ interface IServerUtils {
     return kickPlayer(getUUID(name), reason)
   }
 
-
   /**
    * Broadcast a message to the players with the permission "mast.staff"
    * @param message The message to broadcast
