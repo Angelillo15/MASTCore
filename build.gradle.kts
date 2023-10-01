@@ -30,6 +30,7 @@ dependencies {
   implementation(libs.liblyBukkit)
   implementation(libs.reflections)
   implementation(libs.paperLib)
+  implementation(libs.configurateGson)
 }
 
 tasks.withType<JavaCompile> {
