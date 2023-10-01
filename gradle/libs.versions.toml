@@ -67,6 +67,7 @@ velocity = { group = "com.velocitypowered", name = "velocity-api", version.ref =
 guice = { group = "com.google.inject", name = "guice", version.ref = "guice" }
 protocolize = { group = "dev.simplix", name = "protocolize-api", version.ref = "protocolize" }
 configurateGson = { group = "org.spongepowered", name = "configurate-gson", version.ref = "configurate" }
+configurateHocon = { group = "org.spongepowered", name = "configurate-hocon", version.ref = "configurate" }
 
 [bundles]
 invAPI = ["invCore", "invAdvancedSlots", "invPagination", "configurableGui"]
