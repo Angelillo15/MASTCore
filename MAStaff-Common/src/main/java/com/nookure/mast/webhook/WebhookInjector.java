@@ -15,5 +15,6 @@ public class WebhookInjector extends AbstractModule {
   protected void configure() {
     bind(WebhookLoader.class).asEagerSingleton();
     bind(WebhookConfig.class).toInstance(config);
+    bind(WebhookLoader.class).asEagerSingleton();
   }
 }
