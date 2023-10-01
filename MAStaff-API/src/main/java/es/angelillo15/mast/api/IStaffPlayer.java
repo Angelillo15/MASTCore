@@ -5,176 +5,199 @@ import es.angelillo15.mast.api.exceptions.AlreadyEnableException;
 import es.angelillo15.mast.api.items.StaffItem;
 import es.angelillo15.mast.api.player.IGlowPlayer;
 import es.angelillo15.mast.api.player.IVanishPlayer;
+
 import java.util.List;
 import java.util.Map;
+
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 /**
-* This interface allows to you to interact with the staff players
-*/
+ * This interface allows to you to interact with the staff players
+ */
 public interface IStaffPlayer {
 
-    /**
-     * toggle the staff mode
-     */
-    void toggleStaffMode();
+  /**
+   * toggle the staff mode
+   */
+  void toggleStaffMode();
 
-    /**
-     * toggle the staff mode
-     */
-    void toggleStaffMode(boolean saveInventory);
+  /**
+   * toggle the staff mode
+   */
+  void toggleStaffMode(boolean saveInventory);
 
-    /**
-     * @return boolean
-     * Returns true if the player is in StaffMode
-     */
-    boolean isStaffMode();
+  /**
+   * @return boolean
+   * Returns true if the player is in StaffMode
+   */
+  boolean isStaffMode();
 
-    /**
-     * @param staffMode enable or disable the staff mode
-     * Method to enable or disable the StaffMode,
-     * ths method can throw exceptions
-     */
-    void setStaffMode(boolean staffMode, boolean saveInventory) throws AlreadyEnableException, AlreadyDisableException;
-    /**
-     * Toggle the vanish mode
-     */
-    void toggleVanish();
+  /**
+   * @param staffMode enable or disable the staff mode
+   *                  Method to enable or disable the StaffMode,
+   *                  ths method can throw exceptions
+   */
+  void setStaffMode(boolean staffMode, boolean saveInventory) throws AlreadyEnableException, AlreadyDisableException;
 
-    /**
-     * @return boolean
-     * Returns true if the p
-     */
-    boolean isVanished();
+  /**
+   * Toggle the vanish mode
+   */
+  void toggleVanish();
 
-    /**
-     * @return the player
-     * Method to get the Player under StaffPlayer
-     */
-    Player getPlayer();
+  /**
+   * @return boolean
+   * Returns true if the p
+   */
+  boolean isVanished();
 
-    /**
-     * Set staff items to the player
-     */
-    void setItems();
+  /**
+   * @return the player
+   * Method to get the Player under StaffPlayer
+   */
+  Player getPlayer();
 
-    /**
-     * Get staff items
-     */
-    Map<String, StaffItem> getItems();
+  /**
+   * Set staff items to the player
+   */
+  void setItems();
 
-    /**
-     * Send plugin message to the bungee
-     */
-    void sendPluginMessage();
+  /**
+   * Get staff items
+   */
+  Map<String, StaffItem> getItems();
 
-    /**
-     * Save inventory
-     */
-    void saveInventory();
+  /**
+   * Send plugin message to the bungee
+   */
+  void sendPluginMessage();
 
-    /**
-     * Clear inventory
-     */
-    void clearInventory();
+  /**
+   * Save inventory
+   */
+  void saveInventory();
 
-    /**
-     * Restore inventory
-     */
-    void restoreInventory();
+  /**
+   * Clear inventory
+   */
+  void clearInventory();
 
-    /**
-     * Exists data
-     * @return true if exists or false if not
-     */
-    boolean existsData();
+  /**
+   * Restore inventory
+   */
+  void restoreInventory();
 
-    /**
-     * Change gamemode
-     * @param gamemode gamemode to change
-     */
-    void changeGamemode(GameMode gamemode);
+  /**
+   * Exists data
+   *
+   * @return true if exists or false if not
+   */
+  boolean existsData();
 
-    /**
-     * enable / disable glow
-     * @param status status to set
-     */
-    void setGlowing(boolean status);
+  /**
+   * Change gamemode
+   *
+   * @param gamemode gamemode to change
+   */
+  void changeGamemode(GameMode gamemode);
 
-    /**
-     * Get the staff mode previus status
-     * @return the staff mode previus status
-     */
-    boolean wasInStaffMode();
+  /**
+   * enable / disable glow
+   *
+   * @param status status to set
+   */
+  void setGlowing(boolean status);
 
-    /**
-     * Is a checker that if there is a new item that isn't
-     * of the staff mode inventory, it will be removed
-     * and added to a staff mode vault
-     */
-    void staffModeAsyncInventoryChecker();
+  /**
+   * Get the staff mode previus status
+   *
+   * @return the staff mode previus status
+   */
+  boolean wasInStaffMode();
 
-    /**
-     * Get staff vault
-     * @return the staff vault
-     */
-    List<ItemStack> getStaffVault();
+  /**
+   * Is a checker that if there is a new item that isn't
+   * of the staff mode inventory, it will be removed
+   * and added to a staff mode vault
+   */
+  void staffModeAsyncInventoryChecker();
 
-    /**
-     * Open staff vault
-     */
-    void openStaffVault();
+  /**
+   * Get staff vault
+   *
+   * @return the staff vault
+   */
+  List<ItemStack> getStaffVault();
 
-    /**
-     * Freeze a player
-     * @param player - player to freeze
-     */
-    void freezePlayer(Player player);
+  /**
+   * Open staff vault
+   */
+  void openStaffVault();
 
-    /**
-     * Unfreeze a player
-     * @param player - player to unfreeze
-     */
-    void unfreezePlayer(String player);
+  /**
+   * Freeze a player
+   *
+   * @param player - player to freeze
+   */
+  void freezePlayer(Player player);
 
-    /**
-     * Execute punishs for a freezed player that has left the server
-     * @param player - player name to execute the punishs
-     */
-    void executeFreezedPunishments(String player);
+  /**
+   * Unfreeze a player
+   *
+   * @param player - player to unfreeze
+   */
+  void unfreezePlayer(String player);
 
-    /**
-     * Check if a player is freezed
-     * @param player - player to check
-     */
-    boolean isFreezed(Player player);
+  /**
+   * Execute punishs for a freezed player that has left the server
+   *
+   * @param player - player name to execute the punishs
+   */
+  void executeFreezedPunishments(String player);
 
-    /**
-     * Execute staff mode commands
-     */
-    void executeStaffModeCommands();
+  /**
+   * Check if a player is freezed
+   *
+   * @param player - player to check
+   */
+  boolean isFreezed(Player player);
 
-    /**
-     * Get the vanish player
-     * @return the vanish player or null if is disabled
-     */
-    IVanishPlayer getVanishPlayer();
+  /**
+   * Execute staff mode commands
+   */
+  void executeStaffModeCommands();
 
-    /**
-     * Get the glow player
-     * @return the glow player or null if is disabled
-     */
-    IGlowPlayer getGlowPlayer();
+  /**
+   * Get the vanish player
+   *
+   * @return the vanish player or null if is disabled
+   */
+  IVanishPlayer getVanishPlayer();
 
-    /**
-     * Save health and food
-     */
-    void saveHealthAndFood();
+  /**
+   * Get the glow player
+   *
+   * @return the glow player or null if is disabled
+   */
+  IGlowPlayer getGlowPlayer();
 
-    /**
-     * Restore health and food
-     */
-    void restoreHealthAndFood();
+  /**
+   * Save health and food
+   */
+  void saveHealthAndFood();
+
+  /**
+   * Restore health and food
+   */
+  void restoreHealthAndFood();
+
+  /**
+   * Get the player name
+   *
+   * @return the player name
+   */
+  default String getName() {
+    return getPlayer().getName();
+  }
 }
