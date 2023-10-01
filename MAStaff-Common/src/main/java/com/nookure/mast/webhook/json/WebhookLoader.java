@@ -4,6 +4,7 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.nookure.mast.api.MAStaff;
 import com.nookure.mast.api.addons.annotations.AddonLogger;
+import com.nookure.mast.api.webhook.WebHookClient;
 import com.nookure.mast.api.webhook.config.JsonConfig;
 import com.nookure.mast.webhook.Webhooks;
 import es.angelillo15.mast.api.ILogger;
@@ -27,10 +28,40 @@ public class WebhookLoader {
 
   public void loadWebhooks() {
     webhooks.clear();
-    Stream.of(new WebhookOrigin(
-        "common/webhooks/staffchat.json",
-        dataFolder.getAbsolutePath() + "/webhooks/staffchat.json",
-        Webhooks.STAFF_CHAT)
+    Stream.of(
+        new WebhookOrigin(
+            "common/webhooks/staffchat.json",
+            dataFolder.getAbsolutePath() + "/webhooks/staffchat.json",
+            Webhooks.STAFF_CHAT
+        ), new WebhookOrigin(
+            "common/webhooks/freeze.json",
+            dataFolder.getAbsolutePath() + "/webhooks/freeze.json",
+            Webhooks.FREEZE
+        ), new WebhookOrigin(
+            "common/webhooks/unfreeze.json",
+            dataFolder.getAbsolutePath() + "/webhooks/unfreeze.json",
+            Webhooks.UNFREEZE
+        ), new WebhookOrigin(
+            "common/webhooks/staffjoin.json",
+            dataFolder.getAbsolutePath() + "/webhooks/staffjoin.json",
+            Webhooks.STAFF_JOIN
+        ), new WebhookOrigin(
+            "common/webhooks/staffleft.json",
+            dataFolder.getAbsolutePath() + "/webhooks/staffleft.json",
+            Webhooks.STAFF_LEFT
+        ), new WebhookOrigin(
+            "common/webhooks/serverswitch.json",
+            dataFolder.getAbsolutePath() + "/webhooks/serverswitch.json",
+            Webhooks.SERVER_SWITCH
+        ), new WebhookOrigin(
+            "common/webhooks/staffenabled.json",
+            dataFolder.getAbsolutePath() + "/webhooks/staffenabled.json",
+            Webhooks.STAFF_ENABLED
+        ), new WebhookOrigin(
+            "common/webhooks/staffdisabled.json",
+            dataFolder.getAbsolutePath() + "/webhooks/staffdisabled.json",
+            Webhooks.STAFF_DISABLED
+        )
     ).forEach(jsonOrigin -> {
       try {
         long start = System.currentTimeMillis();
