@@ -5,6 +5,7 @@ import com.google.inject.Inject;
 import com.google.inject.Injector;
 import com.nookure.mast.api.addons.AddonManager;
 import com.nookure.mast.api.addons.annotations.Addon;
+import com.nookure.mast.webhook.DiscordWebhooks;
 import com.velocitypowered.api.command.CommandManager;
 import com.velocitypowered.api.command.CommandMeta;
 import com.velocitypowered.api.event.Subscribe;
@@ -52,7 +53,8 @@ import org.slf4j.Logger;
     name = "MAStaff Velocity",
     version = Constants.VERSION,
     description = "MAStaff Velocity module",
-    authors = {"angelillo15"})
+    authors = {"angelillo15"}
+)
 public class MAStaff implements MAStaffInstance<ProxyServer> {
   @Getter
   private static MAStaff instance;
@@ -209,6 +211,7 @@ public class MAStaff implements MAStaffInstance<ProxyServer> {
     }
 
     addonManager.enableAllAddonsFromTheClasspath();
+    addonManager.enableAddon(DiscordWebhooks.class);
   }
 
   @Override
