@@ -1,4 +1,4 @@
-package com.nookure.mast.webhook.handler;
+package com.nookure.mast.webhook.handler.staff;
 
 import com.google.inject.Inject;
 import com.nookure.mast.api.event.MastSubscribe;
@@ -8,7 +8,7 @@ import com.nookure.mast.webhook.Webhooks;
 import com.nookure.mast.webhook.json.WebhookLoader;
 import es.angelillo15.mast.api.factory.CommonFactory;
 
-public class StaffSwitch implements CommonFactory<StaffSwitch, WebHookClient> {
+public class OnStaffSwitch implements CommonFactory<OnStaffSwitch, WebHookClient> {
   @Inject
   private WebhookLoader loader;
   private WebHookClient client;
@@ -24,7 +24,7 @@ public class StaffSwitch implements CommonFactory<StaffSwitch, WebHookClient> {
   }
 
   @Override
-  public StaffSwitch create(WebHookClient factory) {
+  public OnStaffSwitch create(WebHookClient factory) {
     client = factory;
     return this;
   }
