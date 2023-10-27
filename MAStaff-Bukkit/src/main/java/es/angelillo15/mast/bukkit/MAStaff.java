@@ -5,6 +5,7 @@ import com.google.inject.Injector;
 import com.nookure.mast.api.addons.AddonManager;
 import com.nookure.mast.api.addons.annotations.Addon;
 import com.nookure.mast.api.event.EventManager;
+import com.nookure.mast.webhook.DiscordWebhooks;
 import es.angelillo15.mast.api.*;
 import com.nookure.mast.api.cmd.Command;
 import es.angelillo15.mast.api.config.bukkit.Config;
@@ -248,6 +249,7 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance<JavaPlugin> {
     File folder = new File(getDataFolder() + "/addons");
     if (folder.mkdir()) logger.debug("Created addons folder");
     addonManager.loadAddonsToClasspath(folder.toPath());
+    addonManager.enableAddon(DiscordWebhooks.class);
     addonManager.enableAllAddonsFromTheClasspath();
 
     LegacyItemsLoader.load();

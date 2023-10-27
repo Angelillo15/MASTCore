@@ -4,6 +4,7 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.nookure.mast.api.addons.AddonManager;
 import com.nookure.mast.api.addons.annotations.Addon;
+import com.nookure.mast.webhook.DiscordWebhooks;
 import es.angelillo15.mast.api.ILogger;
 import es.angelillo15.mast.api.IServerUtils;
 import es.angelillo15.mast.api.MAStaffInstance;
@@ -213,6 +214,7 @@ public class MAStaff extends Plugin implements MAStaffInstance<Plugin> {
     if (folder.mkdir()) logger.debug("Created addons folder");
     try {
       addonManager.loadAddonsToClasspath(folder.toPath());
+      addonManager.enableAddon(DiscordWebhooks.class);
     } catch (IOException e) {
       throw new RuntimeException(e);
     }
