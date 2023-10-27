@@ -18,7 +18,7 @@ public class OnPlayerFreeze implements CommonFactory<OnPlayerFreeze, WebHookClie
   public void onFreeze(PlayerFreezeEvent event) {
     client.sendWebHook(
         loader.getWebhook(Webhooks.FREEZE),
-        new Replacer("player", event.getPlayerName()),
+        new Replacer("staff", event.getStaffName()),
         new Replacer("username", event.getPlayerName())
     );
   }

@@ -2,7 +2,7 @@
   "content": null,
   "embeds": [
     {
-      "description": "Has frozen {{ player }}",
+      "description": "Has frozen {{ username }}",
       "color": 65311,
       "footer": {
         "text": "Nookure Network",
@@ -13,7 +13,7 @@
       }
     }
   ],
-  "username": "{{ username }}",
-  "avatar_url": "https://mc-heads.net/head/{{ username }}",
+  "username": "{{ staff }}",
+  "avatar_url": "https://mc-heads.net/head/{{ staff }}",
   "attachments": []
 }

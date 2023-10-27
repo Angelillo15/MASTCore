@@ -18,7 +18,7 @@ public class OnPlayerUnfreeze implements CommonFactory<OnPlayerUnfreeze, WebHook
   public void onUnFreeze(PlayerUnfreezeEvent event) {
     client.sendWebHook(
         loader.getWebhook(Webhooks.UNFREEZE),
-        new Replacer("player", event.getPlayerName()),
+        new Replacer("staff", event.getStaffName()),
         new Replacer("username", event.getPlayerName())
     );
   }
