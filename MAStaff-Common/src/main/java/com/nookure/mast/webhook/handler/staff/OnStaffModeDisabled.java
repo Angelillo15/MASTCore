@@ -8,7 +8,7 @@ import com.nookure.mast.api.webhook.WebHookClient;
 import com.nookure.mast.webhook.json.WebhookLoader;
 import es.angelillo15.mast.api.factory.CommonFactory;
 
-public class StaffModeDisabled implements CommonFactory<StaffModeDisabled, WebHookClient> {
+public class OnStaffModeDisabled implements CommonFactory<OnStaffModeDisabled, WebHookClient> {
   @Inject
   private WebhookLoader loader;
   private WebHookClient client;
@@ -22,7 +22,7 @@ public class StaffModeDisabled implements CommonFactory<StaffModeDisabled, WebHo
   }
 
   @Override
-  public StaffModeDisabled create(WebHookClient factory) {
+  public OnStaffModeDisabled create(WebHookClient factory) {
     client = factory;
     return this;
   }
