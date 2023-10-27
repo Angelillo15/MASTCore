@@ -44,3 +44,5 @@ include("MAStaff-NMS:NMS-1.8.8_R0")
 findProject(":MAStaff-NMS:NMS-1.8.8_R0")?.name = "NMS-1.8.8_R0"
 include("MAStaff-API:API-Publish")
 findProject(":MAStaff-API:API-Publish")?.name = "API-Publish"
+include("MAStaff-NMS:NMS-1.20.2_R0")
+findProject(":MAStaff-NMS:NMS-1.20.2_R0")?.name = "NMS-1.20.2_R0"

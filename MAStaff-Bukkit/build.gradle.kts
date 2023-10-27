@@ -17,6 +17,7 @@ dependencies {
   compileOnly(project(":MAStaff-Glow"))
   compileOnly(project(":MAStaff-Common"))
   implementation(project(":MAStaff-NMS"))
+  implementation(project(":MAStaff-NMS:NMS-1.20.2_R0", "reobf"))
   implementation(project(":MAStaff-NMS:NMS-1.20.1_R0", "reobf"))
   implementation(project(":MAStaff-NMS:NMS-1.19.4_R0", "reobf"))
   implementation(project(":MAStaff-NMS:NMS-1.18.2_R0", "reobf"))
