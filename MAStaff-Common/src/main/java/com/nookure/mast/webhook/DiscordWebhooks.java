@@ -133,4 +133,11 @@ public class DiscordWebhooks implements AddonActions {
       logger.error("Could not load config.conf file", e);
     }
   }
+
+  @Override
+  public void onReload() {
+    addonManager.unregisterListeners(addonContainer);
+    loadConfig();
+    loadListeners();
+  }
 }
