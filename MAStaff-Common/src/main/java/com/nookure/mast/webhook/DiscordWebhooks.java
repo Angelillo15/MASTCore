@@ -138,6 +138,7 @@ public class DiscordWebhooks implements AddonActions {
   public void onReload() {
     addonManager.unregisterListeners(addonContainer);
     loadConfig();
+    loadWebhooksFiles();
     loadListeners();
   }
 }
