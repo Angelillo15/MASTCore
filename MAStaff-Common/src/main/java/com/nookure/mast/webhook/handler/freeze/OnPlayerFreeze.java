@@ -9,7 +9,7 @@ import com.nookure.mast.webhook.Webhooks;
 import com.nookure.mast.webhook.json.WebhookLoader;
 import es.angelillo15.mast.api.factory.CommonFactory;
 
-public class FreezeListener implements CommonFactory<FreezeListener, WebHookClient> {
+public class OnPlayerFreeze implements CommonFactory<OnPlayerFreeze, WebHookClient> {
   @Inject
   private WebhookLoader loader;
   private WebHookClient client;
@@ -24,7 +24,7 @@ public class FreezeListener implements CommonFactory<FreezeListener, WebHookClie
   }
 
   @Override
-  public FreezeListener create(WebHookClient factory) {
+  public OnPlayerFreeze create(WebHookClient factory) {
     client = factory;
     return this;
   }
