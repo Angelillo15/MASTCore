@@ -18,6 +18,7 @@ import es.angelillo15.mast.api.inject.StaticMembersInjector;
 import es.angelillo15.mast.api.managers.LegacyStaffPlayersManagers;
 import es.angelillo15.mast.api.managers.LegacyUserDataManager;
 import es.angelillo15.mast.api.managers.StaffManager;
+import es.angelillo15.mast.api.managers.freeze.LegacyFreezeManager;
 import es.angelillo15.mast.api.nms.VersionSupport;
 import es.angelillo15.mast.api.thread.AsyncThreadKt;
 import es.angelillo15.mast.api.utils.BukkitUtils;
@@ -375,12 +376,13 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance<JavaPlugin> {
     logger.warn(TextUtils.colorize("You are using a development version!"));
   }
 
-  @SuppressWarnings("Deprecated")
+  @SuppressWarnings({"Deprecated", "deprecation"})
   public void inject() {
     getPLogger().debug("Injecting...");
     injector = Guice.createInjector(new BukkitInjector());
     StaticMembersInjector.injectStatics(injector, LegacyStaffPlayersManagers.class);
     StaticMembersInjector.injectStatics(injector, LegacyUserDataManager.class);
+    StaticMembersInjector.injectStatics(injector, LegacyFreezeManager.class);
   }
 
   public void registerPlaceholderAPI() {
