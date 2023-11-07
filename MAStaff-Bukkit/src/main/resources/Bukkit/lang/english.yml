@@ -68,7 +68,7 @@ Freeze:
     - '&7██&c█&6█&0█&6█&c█&7██   You have been frozen!'
     - '&7█&c█&6██&0█&6██&c█&7█  Join our discord server:'
     - '&7█&c█&6█████&c█&7█  http:/discord.example.com'
-    - '&c█&6███&0█&6███&c█'
+    - '&c█&6███&0█&6███&c█  You have {time} to join.'
     - '&c█████████'
     - ''
   # Message sent to the staff if he wants to punish the player.
@@ -79,6 +79,8 @@ Freeze:
     <hover:show_text:'Forgive the player'><red><click:run_command:'/freeze /remove {player}'>[x]</click></red></hover> <click:run_command:/freeze /exec {player}><green><hover:show_text:'Punish that player'>[✔]</hover></green> </click>
   # Message sent when a staff tries to freeze a player with mast.freeze.bypass permission.
   freezeBypassMessage: '{prefix} &7You can not freeze that player.'
+  # Chat format for frozen players.
+  freezeChatFormat: '&r{player} &7(&3frozen&7) &8&l» &r&7{message}'
 StaffList:
   # Title of the Staff List GUI.
   title: '&a&lSTAFF &8&l» &7Online Staff'
