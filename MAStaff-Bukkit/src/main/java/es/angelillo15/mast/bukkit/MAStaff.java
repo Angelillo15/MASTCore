@@ -18,7 +18,7 @@ import es.angelillo15.mast.api.inject.StaticMembersInjector;
 import es.angelillo15.mast.api.managers.LegacyStaffPlayersManagers;
 import es.angelillo15.mast.api.managers.LegacyUserDataManager;
 import es.angelillo15.mast.api.managers.StaffManager;
-import es.angelillo15.mast.api.managers.freeze.LegacyFreezeManager;
+import es.angelillo15.mast.api.managers.freeze.FreezeManager;
 import es.angelillo15.mast.api.nms.VersionSupport;
 import es.angelillo15.mast.api.thread.AsyncThreadKt;
 import es.angelillo15.mast.api.utils.BukkitUtils;
@@ -382,7 +382,7 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance<JavaPlugin> {
     injector = Guice.createInjector(new BukkitInjector());
     StaticMembersInjector.injectStatics(injector, LegacyStaffPlayersManagers.class);
     StaticMembersInjector.injectStatics(injector, LegacyUserDataManager.class);
-    StaticMembersInjector.injectStatics(injector, LegacyFreezeManager.class);
+    StaticMembersInjector.injectStatics(injector, FreezeManager.class);
   }
 
   public void registerPlaceholderAPI() {

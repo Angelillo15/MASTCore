@@ -5,7 +5,7 @@ import es.angelillo15.mast.api.IStaffPlayer;
 import es.angelillo15.mast.api.TextUtils;
 import es.angelillo15.mast.api.config.bukkit.Messages;
 import es.angelillo15.mast.api.managers.StaffManager;
-import es.angelillo15.mast.api.managers.freeze.FreezeManager;
+import com.nookure.mast.api.manager.FreezeManager;
 import es.angelillo15.mast.bukkit.gui.SelectTargetGUI;
 import java.util.Objects;
 import org.bukkit.Bukkit;

@@ -1,7 +1,7 @@
 package es.angelillo15.mast.bukkit.utils;
 
 import es.angelillo15.mast.api.event.bukkit.freeze.FreezeMessageEvent;
-import es.angelillo15.mast.api.managers.freeze.FreezeManager;
+import com.nookure.mast.api.manager.FreezeManager;
 import es.angelillo15.mast.bukkit.MAStaff;
 import es.angelillo15.mast.bukkit.utils.scheduler.Scheduler;
 import org.bukkit.Bukkit;

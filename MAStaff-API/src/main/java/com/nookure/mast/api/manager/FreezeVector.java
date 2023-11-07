@@ -1,4 +1,4 @@
-package es.angelillo15.mast.api.managers.freeze;
+package com.nookure.mast.api.manager;
 
 import es.angelillo15.mast.api.IStaffPlayer;
 import org.bukkit.OfflinePlayer;
