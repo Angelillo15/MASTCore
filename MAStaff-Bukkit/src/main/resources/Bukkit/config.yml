@@ -100,6 +100,14 @@ Freeze:
   # If you want the command to be executed as bungee console, add a "bungee:" prefix.
   commands:
     - "ban {player} &cYou have been perm-banned for leaving the server while you were frozen."
+  # Enable or disable the freeze chat.
+  # This is only available for MAStaff Premium version
+  freezeChat: true
+  # Freeze timer
+  # This is only available for MAStaff Premium version
+  # The value is with the following format: 1h 1m 1s
+  # Set false to disable the freeze timer.
+  freezeTimer: 3m
 #
 # Database configuration for the plugin. With the Bungee version, you must use MariaDB or MySQL.
 #
