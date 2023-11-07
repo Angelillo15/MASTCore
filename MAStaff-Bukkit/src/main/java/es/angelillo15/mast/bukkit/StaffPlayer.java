@@ -64,6 +64,8 @@ public class StaffPlayer implements IStaffPlayer {
   private StaffFeatureManager featureManager;
   @Inject
   private EventManager eventManager;
+  @Inject
+  private FreezeManager freezeManager;
 
   private final Map<String, StaffItem> items = new HashMap<>();
   @Getter
@@ -427,7 +429,7 @@ public class StaffPlayer implements IStaffPlayer {
 
   @Override
   public void freezePlayer(Player player) {
-    FreezeManager.freezePlayer(this, player);
+    freezeManager.freezePlayer(this, player);
     TextUtils.sendMessage(player, Messages.GET_FREEZE_FROZEN_MESSAGE());
 
     StaffUtils.asyncStaffBroadcastMessage(
@@ -441,7 +443,7 @@ public class StaffPlayer implements IStaffPlayer {
 
   @Override
   public void unfreezePlayer(String player) {
-    FreezeManager.unfreezePlayer(player);
+    freezeManager.unfreezePlayer(player);
 
     StaffUtils.asyncStaffBroadcastMessage(
         Messages.GET_FREEZE_UNFROZEN_BY_MESSAGE()
@@ -472,7 +474,7 @@ public class StaffPlayer implements IStaffPlayer {
                   punishment.replace("{player}", player).replace("{staff}", this.player.getName()));
             });
 
-    FreezeManager.unfreezePlayer(player);
+    freezeManager.unfreezePlayer(player);
   }
 
   @Override
@@ -503,7 +505,7 @@ public class StaffPlayer implements IStaffPlayer {
 
   @Override
   public boolean isFreezed(Player player) {
-    return FreezeManager.isFrozen(player);
+    return freezeManager.isFrozen(player);
   }
 
   @Override
