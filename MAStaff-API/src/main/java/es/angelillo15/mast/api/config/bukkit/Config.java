@@ -1,6 +1,8 @@
 package es.angelillo15.mast.api.config.bukkit;
 
 
+import es.angelillo15.mast.api.utils.NumberUtils;
+
 import java.util.List;
 
 public class Config {
@@ -107,6 +109,18 @@ public class Config {
 
     public static List<String> commands() {
       return ConfigLoader.getConfig().getConfig().getStringList("Freeze.commands");
+    }
+
+    public static boolean freezeChat() {
+      return ConfigLoader.getConfig().getConfig().getBoolean("Freeze.freezeChat");
+    }
+
+    public static long freezeTimer() {
+      String value = ConfigLoader.getConfig().getConfig().getString("Freeze.freezeTimer");
+      if (value == null) return -1;
+      if (value.equals("false")) return -1;
+
+      return NumberUtils.parseToMilis(value);
     }
   }
 
