@@ -143,6 +143,22 @@ public class Messages {
     return TextUtils.parseBukkitMessage(messages.getString("Freeze.freezeBypassMessage"));
   }
 
+  public static String FREEZE_CHAT_FORMAT() {
+    return TextUtils.parseBukkitMessage(messages.getString("Freeze.freezeChatFormat"));
+  }
+
+  public static String FREEZE_STAFF_CHAT_FORMAT() {
+    return TextUtils.parseBukkitMessage(messages.getString("Freeze.freezeStaffChatFormat"));
+  }
+
+  public static String FREEZE_CHAT_USAGE() {
+    return TextUtils.parseBukkitMessage(messages.getString("Freeze.freezeChatUsage"));
+  }
+
+  public static String FREEZE_CHAT_NOT_FROZEN() {
+    return TextUtils.parseBukkitMessage(messages.getString("Freeze.freezeChatNotFrozen"));
+  }
+
   public static class StaffVault {
     public static String itemSaved() {
       return TextUtils.parseBukkitMessage(messages.getString("StaffVault.itemSaved"));
