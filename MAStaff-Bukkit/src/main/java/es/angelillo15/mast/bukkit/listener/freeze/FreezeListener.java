@@ -1,4 +1,4 @@
-package es.angelillo15.mast.bukkit.listener;
+package es.angelillo15.mast.bukkit.listener.freeze;
 
 import com.google.inject.Inject;
 import es.angelillo15.mast.api.IStaffPlayer;
