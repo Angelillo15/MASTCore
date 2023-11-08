@@ -25,6 +25,7 @@ import es.angelillo15.mast.api.utils.BukkitUtils;
 import es.angelillo15.mast.api.utils.PermsUtils;
 import es.angelillo15.mast.bukkit.addons.AddonsLoader;
 import es.angelillo15.mast.bukkit.cmd.FreezeCMD;
+import es.angelillo15.mast.bukkit.cmd.FreezeChat;
 import es.angelillo15.mast.bukkit.cmd.VanishCMD;
 import es.angelillo15.mast.bukkit.cmd.mast.MASTParent;
 import es.angelillo15.mast.bukkit.cmd.staff.StaffParent;
@@ -34,7 +35,9 @@ import es.angelillo15.mast.bukkit.inject.BukkitInjector;
 import es.angelillo15.mast.bukkit.legacy.BukkitLegacyLoader;
 import es.angelillo15.mast.bukkit.listener.OnAddonDisable;
 import es.angelillo15.mast.bukkit.listener.CommandManagerHandler;
-import es.angelillo15.mast.bukkit.listener.FreezeListener;
+import es.angelillo15.mast.bukkit.listener.freeze.FreezeChatPaperListener;
+import es.angelillo15.mast.bukkit.listener.freeze.FreezeLegacyPaperListener;
+import es.angelillo15.mast.bukkit.listener.freeze.FreezeListener;
 import es.angelillo15.mast.bukkit.listener.OnJoin;
 import es.angelillo15.mast.bukkit.listener.clickListeners.OnItemClick;
 import es.angelillo15.mast.bukkit.listener.clickListeners.OnItemClickInteract;
@@ -152,6 +155,8 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance<JavaPlugin> {
       registerCommand(injector.getInstance(VanishCMD.class));
     if (Config.Freeze.enabled())
       Objects.requireNonNull(getCommand("freeze")).setExecutor(injector.getInstance(FreezeCMD.class));
+    if (Config.Freeze.enabled() && Config.Freeze.freezeChat())
+      registerCommand(injector.getInstance(FreezeChat.class));
   }
 
   @Override
@@ -183,6 +188,14 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance<JavaPlugin> {
       registerListener(injector.getInstance(OnStaffPaperTalk.class));
     } else {
       registerListener(injector.getInstance(OnStaffLegacyTalk.class));
+    }
+
+    if (Config.Freeze.enabled() && Config.Freeze.freezeChat()) {
+      if (version >= 16 && PaperLib.isPaper()) {
+        registerListener(injector.getInstance(FreezeChatPaperListener.class));
+      } else {
+        registerListener(injector.getInstance(FreezeLegacyPaperListener.class));
+      }
     }
 
     FreezeUtils.setupMessageSender();
