@@ -49,7 +49,8 @@ import es.angelillo15.mast.bukkit.loaders.LegacyCustomItemsLoader;
 import es.angelillo15.mast.bukkit.loaders.GlowLoader;
 import es.angelillo15.mast.bukkit.loaders.LegacyItemsLoader;
 import es.angelillo15.mast.bukkit.loaders.PunishmentGUILoader;
-import es.angelillo15.mast.bukkit.utils.FreezeUtils;
+import es.angelillo15.mast.bukkit.task.FreezeSpamTask;
+import es.angelillo15.mast.bukkit.task.FreezeTimerTask;
 import es.angelillo15.mast.bukkit.utils.Logger;
 import es.angelillo15.mast.bukkit.utils.Metrics;
 import es.angelillo15.mast.bukkit.utils.NMSUtils;
@@ -198,7 +199,14 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance<JavaPlugin> {
       }
     }
 
-    FreezeUtils.setupMessageSender();
+    if (Config.Freeze.enabled() && Config.Freeze.freezeTimer() > 0) {
+      Bukkit.getScheduler().runTaskTimerAsynchronously(this, injector.getInstance(FreezeTimerTask.class), 0, 20);
+    }
+
+    if (Config.Freeze.enabled()) {
+      Bukkit.getScheduler().runTaskTimerAsynchronously(this, injector.getInstance(FreezeSpamTask.class), 0, 20 * 5);
+    }
+
     this.getServer().getMessenger().registerOutgoingPluginChannel(this, "mastaff:staff");
     this.getServer().getMessenger().registerOutgoingPluginChannel(this, "mastaff:commands");
   }
