@@ -429,7 +429,9 @@ public class StaffPlayer implements IStaffPlayer {
 
   @Override
   public void freezePlayer(Player player) {
-    freezeManager.freezePlayer(this, player);
+    long timer = Config.Freeze.freezeTimer();
+    freezeManager.freezePlayer(this, player, timer > 0 ? System.currentTimeMillis() + timer : -1);
+
     TextUtils.sendMessage(player, Messages.GET_FREEZE_FROZEN_MESSAGE());
 
     StaffUtils.asyncStaffBroadcastMessage(
