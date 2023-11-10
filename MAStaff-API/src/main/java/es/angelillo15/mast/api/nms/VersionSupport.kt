@@ -1,5 +1,6 @@
 package es.angelillo15.mast.api.nms
 
+import net.kyori.adventure.text.Component
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
 
@@ -32,4 +33,11 @@ abstract class VersionSupport {
    * @param key The key to remove.
    */
   abstract fun removeTag(item: ItemStack, key: String): ItemStack
+
+  /**
+   * Send an action bar message to a player.
+   * @param player The player to send the action bar message to.
+   * @param message The message to send.
+   */
+  abstract fun sendActionBar(player: Player, message: Component)
 }

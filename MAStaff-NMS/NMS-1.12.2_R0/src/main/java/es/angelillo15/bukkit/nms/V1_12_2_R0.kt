@@ -2,6 +2,10 @@ package es.angelillo15.bukkit.nms
 
 import es.angelillo15.mast.api.nms.VersionSupport
 import es.angelillo15.mast.api.utils.MAStaffInject
+import net.kyori.adventure.text.Component
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer
+import net.md_5.bungee.api.ChatMessageType
+import net.md_5.bungee.api.chat.TextComponent
 import net.minecraft.server.v1_12_R1.ItemStack
 import net.minecraft.server.v1_12_R1.NBTTagCompound
 import net.minecraft.server.v1_12_R1.NBTTagString
@@ -82,5 +86,12 @@ class V1_12_2_R0(val instance: MAStaffInject) : VersionSupport() {
 
   private fun getCraftPlayer(player: Player): CraftPlayer {
     return player as CraftPlayer
+  }
+
+  override fun sendActionBar(player: Player, message: Component) {
+    player.spigot().sendMessage(
+        ChatMessageType.ACTION_BAR,
+        TextComponent.fromLegacyText(LegacyComponentSerializer.legacySection().serialize(message))[0]
+    )
   }
 }

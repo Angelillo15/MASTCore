@@ -1,11 +1,17 @@
-package es.angelillo15.bukkit.nms
+package es.angelillo15.mast.bukkit.nms
 
 import es.angelillo15.mast.api.nms.VersionSupport
 import es.angelillo15.mast.api.utils.MAStaffInject
+import net.kyori.adventure.text.Component
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer
+import net.md_5.bungee.api.ChatMessageType
+import net.md_5.bungee.api.chat.TextComponent
+import net.minecraft.server.v1_8_R3.IChatBaseComponent
 import net.minecraft.server.v1_8_R3.ItemStack
 import net.minecraft.server.v1_8_R3.NBTTagCompound
 import net.minecraft.server.v1_8_R3.NBTTagString
 import net.minecraft.server.v1_8_R3.Packet
+import net.minecraft.server.v1_8_R3.PacketPlayOutChat
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer
 import org.bukkit.craftbukkit.v1_8_R3.inventory.CraftItemStack
 import org.bukkit.entity.Player
@@ -84,4 +90,12 @@ class V1_8_8_R0(val instance: MAStaffInject) : VersionSupport() {
     return player as CraftPlayer
   }
 
+  override fun sendActionBar(player: Player, message: Component) {
+    val packet = PacketPlayOutChat(
+      IChatBaseComponent.ChatSerializer.a(
+        "{\"text\":\"" + LegacyComponentSerializer.legacySection().serialize(message) + "\"}"
+      ), 2.toByte()
+    )
+    sendPacket(player, packet)
+  }
 }

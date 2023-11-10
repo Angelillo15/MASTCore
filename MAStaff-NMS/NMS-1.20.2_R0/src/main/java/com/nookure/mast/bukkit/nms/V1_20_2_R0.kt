@@ -2,6 +2,7 @@ package com.nookure.mast.bukkit.nms
 
 import es.angelillo15.mast.api.nms.VersionSupport
 import es.angelillo15.mast.api.utils.MAStaffInject
+import net.kyori.adventure.text.Component
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.network.protocol.Packet
 import net.minecraft.world.item.ItemStack
@@ -87,5 +88,9 @@ class V1_20_2_R0(val instance: MAStaffInject) : VersionSupport() {
 
   private fun getCraftPlayer(player: Player): CraftPlayer {
     return player as CraftPlayer
+  }
+
+  override fun sendActionBar(player: Player, message: Component) {
+    player.sendActionBar(message)
   }
 }

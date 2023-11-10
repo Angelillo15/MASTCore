@@ -1,7 +1,7 @@
 package es.angelillo15.mast.bukkit.utils;
 
 import es.angelillo15.bukkit.nms.V1_12_2_R0;
-import es.angelillo15.bukkit.nms.V1_8_8_R0;
+import es.angelillo15.mast.bukkit.nms.V1_8_8_R0;
 import es.angelillo15.mast.bukkit.MAStaff;
 import es.angelillo15.mast.api.nms.VersionSupport;
 import es.angelillo15.mast.bukkit.nms.*;
