@@ -36,19 +36,6 @@ public class FreezeListener implements Listener {
   }
 
   @EventHandler
-  public void onFreezeMessage(FreezeMessageEvent e) {
-    Player player = e.getPlayer();
-    if (player == null || !player.isOnline()) {
-      return;
-    }
-
-    for (String message : Messages.spamMessage()) {
-      if (message == null) continue;
-      TextUtils.colorize(message, player);
-    }
-  }
-
-  @EventHandler
   public void onInteract(PlayerInteractEvent event) {
     if (freezeManager.isFrozen(event.getPlayer())) {
       event.setCancelled(true);
