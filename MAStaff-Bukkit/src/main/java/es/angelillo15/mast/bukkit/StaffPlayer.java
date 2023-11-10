@@ -22,7 +22,7 @@ import es.angelillo15.mast.api.event.bukkit.staff.StaffDisableEvent;
 import es.angelillo15.mast.api.event.bukkit.staff.StaffEnableEvent;
 import es.angelillo15.mast.api.items.StaffItem;
 import es.angelillo15.mast.api.managers.ItemsManager;
-import es.angelillo15.mast.api.managers.freeze.FreezeManager;
+import com.nookure.mast.api.manager.FreezeManager;
 import es.angelillo15.mast.api.nms.VersionSupport;
 import es.angelillo15.mast.api.player.IGlowPlayer;
 import es.angelillo15.mast.api.player.IVanishPlayer;
@@ -64,6 +64,8 @@ public class StaffPlayer implements IStaffPlayer {
   private StaffFeatureManager featureManager;
   @Inject
   private EventManager eventManager;
+  @Inject
+  private FreezeManager freezeManager;
 
   private final Map<String, StaffItem> items = new HashMap<>();
   @Getter
@@ -427,7 +429,9 @@ public class StaffPlayer implements IStaffPlayer {
 
   @Override
   public void freezePlayer(Player player) {
-    FreezeManager.freezePlayer(this, player);
+    long timer = Config.Freeze.freezeTimer();
+    freezeManager.freezePlayer(this, player, timer > 0 ? System.currentTimeMillis() + timer : -1);
+
     TextUtils.sendMessage(player, Messages.GET_FREEZE_FROZEN_MESSAGE());
 
     StaffUtils.asyncStaffBroadcastMessage(
@@ -441,7 +445,7 @@ public class StaffPlayer implements IStaffPlayer {
 
   @Override
   public void unfreezePlayer(String player) {
-    FreezeManager.unfreezePlayer(player);
+    freezeManager.unfreezePlayer(player);
 
     StaffUtils.asyncStaffBroadcastMessage(
         Messages.GET_FREEZE_UNFROZEN_BY_MESSAGE()
@@ -472,7 +476,7 @@ public class StaffPlayer implements IStaffPlayer {
                   punishment.replace("{player}", player).replace("{staff}", this.player.getName()));
             });
 
-    FreezeManager.unfreezePlayer(player);
+    freezeManager.unfreezePlayer(player);
   }
 
   @Override
@@ -503,7 +507,7 @@ public class StaffPlayer implements IStaffPlayer {
 
   @Override
   public boolean isFreezed(Player player) {
-    return FreezeManager.isFrozen(player);
+    return freezeManager.isFrozen(player);
   }
 
   @Override

@@ -1,12 +1,13 @@
-package es.angelillo15.mast.bukkit.listener;
+package es.angelillo15.mast.bukkit.listener.freeze;
 
+import com.google.inject.Inject;
 import es.angelillo15.mast.api.IStaffPlayer;
 import es.angelillo15.mast.api.TextUtils;
 import es.angelillo15.mast.api.config.bukkit.Config;
 import es.angelillo15.mast.api.config.bukkit.Messages;
 import es.angelillo15.mast.api.event.bukkit.freeze.FreezeMessageEvent;
-import es.angelillo15.mast.api.managers.freeze.FreezeManager;
-import es.angelillo15.mast.api.managers.freeze.FreezeVector;
+import com.nookure.mast.api.manager.FreezeManager;
+import com.nookure.mast.api.manager.FreezeVector;
 import es.angelillo15.mast.bukkit.MAStaff;
 import io.papermc.lib.PaperLib;
 import org.bukkit.Location;
@@ -18,9 +19,12 @@ import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
 public class FreezeListener implements Listener {
+  @Inject
+  private FreezeManager freezeManager;
+
   @EventHandler
   public void onFreezeEvent(PlayerMoveEvent event) {
-    if (FreezeManager.isFrozen(event.getPlayer())) {
+    if (freezeManager.isFrozen(event.getPlayer())) {
       if (event.getFrom().getX() != event.getTo().getX()
           || event.getFrom().getY() != event.getTo().getY()
           || event.getFrom().getZ() != event.getTo().getZ()) {
@@ -32,21 +36,8 @@ public class FreezeListener implements Listener {
   }
 
   @EventHandler
-  public void onFreezeMessage(FreezeMessageEvent e) {
-    Player player = e.getPlayer();
-    if (player == null || !player.isOnline()) {
-      return;
-    }
-
-    for (String message : Messages.spamMessage()) {
-      if (message == null) continue;
-      TextUtils.colorize(message, player);
-    }
-  }
-
-  @EventHandler
   public void onInteract(PlayerInteractEvent event) {
-    if (FreezeManager.isFrozen(event.getPlayer())) {
+    if (freezeManager.isFrozen(event.getPlayer())) {
       event.setCancelled(true);
     }
   }
@@ -54,16 +45,16 @@ public class FreezeListener implements Listener {
   @EventHandler
   public void freezedPlayerExit(PlayerQuitEvent event) {
     if (!Config.Freeze.executeCommandOnExit()) {
-      FreezeManager.unfreezePlayer(event.getPlayer());
+      freezeManager.unfreezePlayer(event.getPlayer());
       return;
     }
 
-    if (!FreezeManager.isFrozen(event.getPlayer())) return;
+    if (!freezeManager.isFrozen(event.getPlayer())) return;
 
     if (MAStaff.isFree()) return;
 
     Player player = event.getPlayer();
-    FreezeVector vector = FreezeManager.getFreezeVector(player);
+    FreezeVector vector = freezeManager.getFreezeVector(player);
 
     if (vector == null) return;
 
@@ -72,7 +63,7 @@ public class FreezeListener implements Listener {
     if (staffPlayer == null) return;
 
     if (!Config.Freeze.askToExecuteCommands()) {
-      FreezeManager.unfreezePlayer(player);
+      freezeManager.unfreezePlayer(player);
 
       staffPlayer.executeFreezedPunishments(player.getName());
 

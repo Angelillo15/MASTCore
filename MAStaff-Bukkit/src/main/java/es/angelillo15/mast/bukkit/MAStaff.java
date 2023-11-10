@@ -18,12 +18,14 @@ import es.angelillo15.mast.api.inject.StaticMembersInjector;
 import es.angelillo15.mast.api.managers.LegacyStaffPlayersManagers;
 import es.angelillo15.mast.api.managers.LegacyUserDataManager;
 import es.angelillo15.mast.api.managers.StaffManager;
+import es.angelillo15.mast.api.managers.freeze.FreezeManager;
 import es.angelillo15.mast.api.nms.VersionSupport;
 import es.angelillo15.mast.api.thread.AsyncThreadKt;
 import es.angelillo15.mast.api.utils.BukkitUtils;
 import es.angelillo15.mast.api.utils.PermsUtils;
 import es.angelillo15.mast.bukkit.addons.AddonsLoader;
 import es.angelillo15.mast.bukkit.cmd.FreezeCMD;
+import es.angelillo15.mast.bukkit.cmd.FreezeChat;
 import es.angelillo15.mast.bukkit.cmd.VanishCMD;
 import es.angelillo15.mast.bukkit.cmd.mast.MASTParent;
 import es.angelillo15.mast.bukkit.cmd.staff.StaffParent;
@@ -33,7 +35,9 @@ import es.angelillo15.mast.bukkit.inject.BukkitInjector;
 import es.angelillo15.mast.bukkit.legacy.BukkitLegacyLoader;
 import es.angelillo15.mast.bukkit.listener.OnAddonDisable;
 import es.angelillo15.mast.bukkit.listener.CommandManagerHandler;
-import es.angelillo15.mast.bukkit.listener.FreezeListener;
+import es.angelillo15.mast.bukkit.listener.freeze.FreezeChatPaperListener;
+import es.angelillo15.mast.bukkit.listener.freeze.FreezeLegacyPaperListener;
+import es.angelillo15.mast.bukkit.listener.freeze.FreezeListener;
 import es.angelillo15.mast.bukkit.listener.OnJoin;
 import es.angelillo15.mast.bukkit.listener.clickListeners.OnItemClick;
 import es.angelillo15.mast.bukkit.listener.clickListeners.OnItemClickInteract;
@@ -45,7 +49,8 @@ import es.angelillo15.mast.bukkit.loaders.LegacyCustomItemsLoader;
 import es.angelillo15.mast.bukkit.loaders.GlowLoader;
 import es.angelillo15.mast.bukkit.loaders.LegacyItemsLoader;
 import es.angelillo15.mast.bukkit.loaders.PunishmentGUILoader;
-import es.angelillo15.mast.bukkit.utils.FreezeUtils;
+import es.angelillo15.mast.bukkit.task.FreezeSpamTask;
+import es.angelillo15.mast.bukkit.task.FreezeTimerTask;
 import es.angelillo15.mast.bukkit.utils.Logger;
 import es.angelillo15.mast.bukkit.utils.Metrics;
 import es.angelillo15.mast.bukkit.utils.NMSUtils;
@@ -151,6 +156,8 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance<JavaPlugin> {
       registerCommand(injector.getInstance(VanishCMD.class));
     if (Config.Freeze.enabled())
       Objects.requireNonNull(getCommand("freeze")).setExecutor(injector.getInstance(FreezeCMD.class));
+    if (Config.Freeze.enabled() && Config.Freeze.freezeChat())
+      registerCommand(injector.getInstance(FreezeChat.class));
   }
 
   @Override
@@ -184,7 +191,22 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance<JavaPlugin> {
       registerListener(injector.getInstance(OnStaffLegacyTalk.class));
     }
 
-    FreezeUtils.setupMessageSender();
+    if (Config.Freeze.enabled() && Config.Freeze.freezeChat()) {
+      if (version >= 16 && PaperLib.isPaper()) {
+        registerListener(injector.getInstance(FreezeChatPaperListener.class));
+      } else {
+        registerListener(injector.getInstance(FreezeLegacyPaperListener.class));
+      }
+    }
+
+    if (Config.Freeze.enabled() && Config.Freeze.freezeTimer() > 0) {
+      Bukkit.getScheduler().runTaskTimerAsynchronously(this, injector.getInstance(FreezeTimerTask.class), 0, 20);
+    }
+
+    if (Config.Freeze.enabled()) {
+      Bukkit.getScheduler().runTaskTimerAsynchronously(this, injector.getInstance(FreezeSpamTask.class), 0, 20 * 5);
+    }
+
     this.getServer().getMessenger().registerOutgoingPluginChannel(this, "mastaff:staff");
     this.getServer().getMessenger().registerOutgoingPluginChannel(this, "mastaff:commands");
   }
@@ -375,12 +397,13 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance<JavaPlugin> {
     logger.warn(TextUtils.colorize("You are using a development version!"));
   }
 
-  @SuppressWarnings("Deprecated")
+  @SuppressWarnings({"Deprecated", "deprecation"})
   public void inject() {
     getPLogger().debug("Injecting...");
     injector = Guice.createInjector(new BukkitInjector());
     StaticMembersInjector.injectStatics(injector, LegacyStaffPlayersManagers.class);
     StaticMembersInjector.injectStatics(injector, LegacyUserDataManager.class);
+    StaticMembersInjector.injectStatics(injector, FreezeManager.class);
   }
 
   public void registerPlaceholderAPI() {

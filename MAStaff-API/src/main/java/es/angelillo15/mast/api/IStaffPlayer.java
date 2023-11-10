@@ -200,4 +200,12 @@ public interface IStaffPlayer {
   default String getName() {
     return getPlayer().getName();
   }
+
+  /**
+   * Send a message to the player
+   * @param message - message to send
+   */
+  default void sendMessage(String message) {
+    TextUtils.sendMessage(getPlayer(), TextUtils.toMM(message));
+  }
 }
