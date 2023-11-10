@@ -20,12 +20,14 @@ public abstract class FreezeCommonChatListener {
       return false;
     }
 
-    String formattedMessage = Messages.FREEZE_STAFF_CHAT_FORMAT()
+    String formattedMessage = Messages.FREEZE_CHAT_FORMAT()
         .replace("{player}", player.getName())
         .replace("{message}", message);
 
     serverUtils.broadcastMessage(formattedMessage, "mast.freeze");
     player.sendMessage(formattedMessage);
+
+    freezeManager.getFreezeVector(player).setHasTalked(true);
     return true;
   }
 
