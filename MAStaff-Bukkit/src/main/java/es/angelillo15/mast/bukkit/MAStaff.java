@@ -176,6 +176,7 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance<JavaPlugin> {
     registerListener(injector.getInstance(OnAttack.class));
     registerListener(injector.getInstance(OnDamage.class));
     registerListener(injector.getInstance(CommandManagerHandler.class));
+    registerListener(injector.getInstance(OnWorldChange.class));
     injector.getInstance(EventManager.class).registerListener(injector.getInstance(OnAddonDisable.class));
 
     if (Config.Freeze.enabled()) registerListener(injector.getInstance(FreezeListener.class));
