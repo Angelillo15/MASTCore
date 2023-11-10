@@ -25,10 +25,10 @@ public class FreezeManager {
    * Freeze the player
    * @param staff IStaffPlayer who freeze the player
    * @param target Player to freeze
-   * @param time Time to freeze the player (in ms)
+   * @param time Time to freeze expire
    */
   public void freezePlayer(IStaffPlayer staff, Player target, long time) {
-    frozenPlayers.put(target.getName(), new FreezeVector(staff, target, System.currentTimeMillis() + time));
+    frozenPlayers.put(target.getName(), new FreezeVector(staff, target, time));
   }
 
   /**
@@ -72,6 +72,16 @@ public class FreezeManager {
   public ArrayList<OfflinePlayer> getFrozenPlayers() {
     ArrayList<OfflinePlayer> frozen = new ArrayList<>();
     frozenPlayers.forEach((name, vector) -> frozen.add(vector.getTarget()));
+    return frozen;
+  }
+
+  /**
+   * Gets the frozen players list
+   * @return ArrayList of FreezeVector with the frozen players
+   */
+  public ArrayList<FreezeVector> getFreezeVectors() {
+    ArrayList<FreezeVector> frozen = new ArrayList<>();
+    frozenPlayers.forEach((name, vector) -> frozen.add(vector));
     return frozen;
   }
 
