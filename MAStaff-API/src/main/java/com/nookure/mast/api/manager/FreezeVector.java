@@ -5,9 +5,10 @@ import org.bukkit.OfflinePlayer;
 
 
 public class FreezeVector {
-  IStaffPlayer staffPlayer;
-  OfflinePlayer target;
-  long timeLeft;
+  private final IStaffPlayer staffPlayer;
+  private final OfflinePlayer target;
+  private long timeLeft;
+  private boolean hasTalked = false;
 
   public FreezeVector(IStaffPlayer staffPlayer, OfflinePlayer target, long timeLeft) {
     this.staffPlayer = staffPlayer;
@@ -19,23 +20,29 @@ public class FreezeVector {
     return staffPlayer;
   }
 
-  public void setStaffPlayer(IStaffPlayer staffPlayer) {
-    this.staffPlayer = staffPlayer;
-  }
-
   public OfflinePlayer getTarget() {
     return target;
   }
 
-  public void setTarget(OfflinePlayer target) {
-    this.target = target;
-  }
-
+  /**
+   * Get the time left to unfreeze the player
+   * -1 disabled
+   * -2 expired
+   * @return long time left
+   */
   public long getTimeLeft() {
     return timeLeft;
   }
 
   public void setTimeLeft(int timeLeft) {
     this.timeLeft = timeLeft;
+  }
+
+  public boolean hasTalked() {
+    return hasTalked;
+  }
+
+  public void setHasTalked(boolean hasTalked) {
+    this.hasTalked = hasTalked;
   }
 }
