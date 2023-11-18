@@ -2,39 +2,27 @@ package es.angelillo15.mast.bukkit.gui;
 
 import es.angelillo15.mast.api.config.bukkit.Messages;
 import es.angelillo15.mast.api.gui.GuiUtils;
-import es.angelillo15.mast.api.gui.TargetGUI;
 import es.angelillo15.mast.api.material.XMaterial;
-import es.angelillo15.mast.bukkit.MAStaff;
+
 import java.util.function.Consumer;
-import lombok.Getter;
+
 import mc.obliviate.inventory.Gui;
 import mc.obliviate.inventory.Icon;
 import mc.obliviate.inventory.pagination.PaginationManager;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
-import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+@SuppressWarnings("deprecation")
 public class SelectTargetGUI extends Gui {
   private final PaginationManager pagination = new PaginationManager(this);
-  private CallbackType callbackType;
   private Consumer<Player> callback;
-  private TargetGUI targetGui;
-  @Getter private Player targetPlayer;
 
-  public SelectTargetGUI(Player player, TargetGUI targetGUI) {
+  public SelectTargetGUI(Player player) {
     super(player, "select-target", "Select a target", 6);
-    this.targetGui = targetGUI;
-    this.callbackType = CallbackType.GUI;
-  }
-
-  public SelectTargetGUI(Player player, Consumer<Player> callback) {
-    super(player, "select-target", "Select a target", 6);
-    this.callback = callback;
-    this.callbackType = CallbackType.RUNNABLE;
   }
 
   @Override
@@ -44,7 +32,7 @@ public class SelectTargetGUI extends Gui {
         .forEach(
             people -> {
               ItemStack item = GuiUtils.getPlayerHead(people, Messages.GET_STAFFLIST_LORE());
-              pagination.addItem(new Icon(item));
+              pagination.addItem(new Icon(item).onClick(e -> callback.accept(people)));
             });
 
     this.pagination.registerPageSlotsBetween(10, 16);
@@ -55,64 +43,26 @@ public class SelectTargetGUI extends Gui {
     this.pagination.update();
 
     ItemStack previousPage = XMaterial.ARROW.parseItem();
+    assert previousPage != null;
     ItemMeta previousPageMeta = previousPage.getItemMeta();
     previousPageMeta.setDisplayName(Messages.GET_STAFFLIST_PREVIUS());
     previousPage.setItemMeta(previousPageMeta);
 
     ItemStack nextPage = XMaterial.ARROW.parseItem();
+    assert nextPage != null;
     ItemMeta nextPageMeta = nextPage.getItemMeta();
     nextPageMeta.setDisplayName(Messages.GET_STAFFLIST_NEXT());
     nextPage.setItemMeta(nextPageMeta);
 
-    addItem(45, previousPage);
-    addItem(53, nextPage);
-  }
-
-  @Override
-  public boolean onClick(InventoryClickEvent event) {
-    super.onClick(event);
-    ItemStack clickedItem = event.getCurrentItem();
-    if (clickedItem == null) return false;
-    if (clickedItem.getItemMeta() == null) return false;
-
-    ItemMeta clickedItemMeta = clickedItem.getItemMeta();
-
-    if (clickedItemMeta.getDisplayName() == null) return false;
-
-    Player target = MAStaff.getPlugin().getServer().getPlayer(clickedItemMeta.getDisplayName());
-
-    if (target == null) return false;
-
-    this.targetPlayer = target;
-
-    String clickedItemDisplayName = clickedItemMeta.getDisplayName();
-
-    if (clickedItemDisplayName.equals(Messages.GET_STAFFLIST_NEXT())) {
-      this.pagination.goNextPage();
+    addItem(45, new Icon(previousPage).onClick(e -> {
+      pagination.goPreviousPage();
       pagination.update();
-      return false;
-    }
+    }));
 
-    if (clickedItemDisplayName.equals(Messages.GET_STAFFLIST_PREVIUS())) {
-      this.pagination.goPreviousPage();
+    addItem(53, new Icon(nextPage).onClick(e -> {
+      pagination.goNextPage();
       pagination.update();
-      return false;
-    }
-
-    if (this.callbackType == CallbackType.RUNNABLE) {
-      this.callback.accept(target);
-      return false;
-    }
-
-    if (this.callbackType == CallbackType.GUI) {
-      targetGui.setTarget(target);
-      player.closeInventory();
-
-      targetGui.open();
-      return false;
-    }
-
-    return false;
+    }));
   }
 
   @Override
@@ -120,8 +70,8 @@ public class SelectTargetGUI extends Gui {
     super.onClose(event);
   }
 
-  enum CallbackType {
-    GUI,
-    RUNNABLE
+  public SelectTargetGUI callback(Consumer<Player> callback) {
+    this.callback = callback;
+    return this;
   }
 }

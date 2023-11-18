@@ -2,6 +2,8 @@ package es.angelillo15.mast.bukkit.items;
 
 import es.angelillo15.mast.api.items.IPlayerInteractItem;
 import es.angelillo15.mast.api.items.StaffItem;
+import es.angelillo15.mast.bukkit.MAStaff;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -18,7 +20,9 @@ public class ChestItem extends StaffItem implements IPlayerInteractItem {
 
   @Override
   public void interact(Player player, Player target) {
-    player.openInventory(target.getInventory());
+    Bukkit.getScheduler().runTaskLater(MAStaff.getPlugin(), () -> {
+      player.openInventory(target.getInventory());
+    }, 1L);
   }
 
   @Override

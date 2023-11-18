@@ -2,6 +2,8 @@ package es.angelillo15.mast.bukkit.items;
 
 import es.angelillo15.mast.api.items.IPlayerInteractItem;
 import es.angelillo15.mast.api.items.StaffItem;
+import es.angelillo15.mast.bukkit.MAStaff;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -44,7 +46,9 @@ public class FreezeItem extends StaffItem implements IPlayerInteractItem {
   @Override
   public void interact(Player player, Player target) {
     if (target != null) {
-      player.performCommand("freeze " + target.getName());
+      Bukkit.getScheduler().runTaskLater(MAStaff.getPlugin(), () -> {
+        player.performCommand("freeze " + target.getName());
+      }, 1L);
     }
   }
 }

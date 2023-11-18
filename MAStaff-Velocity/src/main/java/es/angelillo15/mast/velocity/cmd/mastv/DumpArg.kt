@@ -7,8 +7,8 @@ import com.velocitypowered.api.proxy.ProxyServer
 import es.angelillo15.mast.api.Constants
 import es.angelillo15.mast.api.TextUtils
 import es.angelillo15.mast.api.addons.LegacyAddonsManager
-import es.angelillo15.mast.api.cmd.SubCommand
-import es.angelillo15.mast.api.cmd.sender.CommandSender
+import com.nookure.mast.api.cmd.SubCommand
+import com.nookure.mast.api.cmd.sender.CommandSender
 import es.angelillo15.mast.api.config.velocity.Messages
 import es.angelillo15.mast.api.thread.execute
 import kong.unirest.HttpResponse
@@ -107,7 +107,7 @@ class DumpArg : SubCommand() {
         val key = json["key"].asString
         val url = "https://nookure.com/dump/$key"
 
-        sender!!.sendMessage(
+        sender.sendMessage(
                 TextUtils.simpleColorize(
                         Messages.prefix() +
                                 " &aDump url: &6 <click:open_url:'${url}'>${url}</click>"
@@ -115,7 +115,7 @@ class DumpArg : SubCommand() {
         )
       } catch (e: Exception) {
         e.printStackTrace()
-        sender!!.sendMessage(TextUtils.simpleColorize(Messages.prefix() + " &cError while dumping plugin info"))
+        sender.sendMessage(TextUtils.simpleColorize(Messages.prefix() + " &cError while dumping plugin info"))
       }
     }
   }

@@ -1,7 +1,7 @@
 package es.angelillo15.mast.bungee.punishments.listeners;
 
 import com.google.inject.Inject;
-import es.angelillo15.mast.api.cmd.sender.ProxiedPlayerCommandSender;
+import com.nookure.mast.api.cmd.sender.ProxiedPlayerCommandSender;
 import es.angelillo15.mast.api.punishments.PunishPlayer;
 import es.angelillo15.mast.api.punishments.PunishPlayersManager;
 import es.angelillo15.mast.api.utils.MAStaffInject;

@@ -46,9 +46,6 @@ public class AddonsLoader {
       JarEntry jarEntry = jarFile.getJarEntry("addon-bungee.properties");
 
       if (jarEntry == null) {
-        MAStaff.getInstance()
-            .getLogger()
-            .severe("Addon " + file.getName() + " doesn't have a addon-bungee.properties file!");
         return;
       }
 

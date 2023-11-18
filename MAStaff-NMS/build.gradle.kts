@@ -11,6 +11,8 @@ subprojects {
   dependencies {
     compileOnly(project(":MAStaff-NMS"))
     compileOnly(project(":MAStaff-API"))
+    compileOnly(rootProject.libs.adventureApi)
+    compileOnly(rootProject.libs.adventureLegacy)
   }
 
   repositories {

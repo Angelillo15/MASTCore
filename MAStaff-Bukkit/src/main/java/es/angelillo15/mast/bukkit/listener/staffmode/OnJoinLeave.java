@@ -1,6 +1,8 @@
 package es.angelillo15.mast.bukkit.listener.staffmode;
 
 import com.google.inject.Inject;
+import com.nookure.mast.api.event.EventManager;
+import com.nookure.mast.api.event.staff.StaffLeaveEvent;
 import es.angelillo15.mast.api.IStaffPlayer;
 import es.angelillo15.mast.api.config.bukkit.Config;
 import es.angelillo15.mast.api.config.bukkit.Messages;
@@ -19,7 +21,10 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
 public class OnJoinLeave implements Listener {
-  @Inject private StaffManager staffManager;
+  @Inject
+  private StaffManager staffManager;
+  @Inject
+  private EventManager eventManager;
 
   @EventHandler(priority = EventPriority.HIGHEST)
   public void onJoin(PlayerJoinEvent event) {
@@ -57,6 +62,8 @@ public class OnJoinLeave implements Listener {
     if (!staffManager.isStaffPlayer(player)) {
       return;
     }
+
+    eventManager.fireEvent(new StaffLeaveEvent(player.getName()));
 
     StaffPlayer staffPlayer = (StaffPlayer) staffManager.getStaffPlayer(player);
 

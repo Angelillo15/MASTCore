@@ -1,8 +1,8 @@
 package es.angelillo15.mast.api.punishments.cmd;
 
-import es.angelillo15.mast.api.cmd.Command;
-import es.angelillo15.mast.api.cmd.CommandData;
-import es.angelillo15.mast.api.cmd.sender.CommandSender;
+import com.nookure.mast.api.cmd.Command;
+import com.nookure.mast.api.cmd.CommandData;
+import com.nookure.mast.api.cmd.sender.CommandSender;
 import es.angelillo15.mast.api.config.punishments.Messages;
 import es.angelillo15.mast.api.exceptions.user.PlayerNotOnlineException;
 import es.angelillo15.mast.api.punishments.IPunishPlayer;

@@ -5,7 +5,7 @@ import es.angelillo15.mast.api.IStaffPlayer;
 import es.angelillo15.mast.api.TextUtils;
 import es.angelillo15.mast.api.config.bukkit.Messages;
 import es.angelillo15.mast.api.managers.StaffManager;
-import es.angelillo15.mast.api.managers.freeze.FreezeManager;
+import com.nookure.mast.api.manager.FreezeManager;
 import es.angelillo15.mast.bukkit.gui.SelectTargetGUI;
 import java.util.Objects;
 import org.bukkit.Bukkit;
@@ -17,16 +17,18 @@ import org.bukkit.entity.Player;
 public class FreezeCMD implements CommandExecutor {
     @Inject
     private StaffManager staffManager;
+    @Inject
+    private FreezeManager freezeManager;
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        if(!(sender instanceof Player)) return false;
-
-        Player p = (Player) sender;
+        if(!(sender instanceof Player p)) return false;
 
         if (!staffManager.isStaffPlayer(p.getName())) return false;
 
         IStaffPlayer staff = staffManager.getStaffPlayer(p.getName());
+
+        assert staff != null;
 
         if(!p.hasPermission("mast.freeze")){
             TextUtils.colorize(Messages.GET_NO_PERMISSION_MESSAGE(), p);
@@ -34,7 +36,7 @@ public class FreezeCMD implements CommandExecutor {
         }
 
         if(args.length < 1){
-            new SelectTargetGUI(p, (target) -> {
+            new SelectTargetGUI(p).callback( (target) -> {
                 execute(staff, target);
                 p.closeInventory();
             }).open();
@@ -42,13 +44,13 @@ public class FreezeCMD implements CommandExecutor {
         }
 
         if (args[0].equalsIgnoreCase("/remove")) {
-            if (FreezeManager.isFrozen(args[1]))
+            if (freezeManager.isFrozen(args[1]))
                 staff.unfreezePlayer(args[1]);
             return true;
         }
 
         if (args[0].equalsIgnoreCase("/exec")) {
-            if (FreezeManager.isFrozen(args[1]))
+            if (freezeManager.isFrozen(args[1]))
                 staff.executeFreezedPunishments(args[1]);
             return true;
         }

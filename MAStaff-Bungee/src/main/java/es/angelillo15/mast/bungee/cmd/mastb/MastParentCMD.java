@@ -1,9 +1,9 @@
 package es.angelillo15.mast.bungee.cmd.mastb;
 
-import es.angelillo15.mast.api.cmd.CommandData;
-import es.angelillo15.mast.api.cmd.CommandParent;
-import es.angelillo15.mast.api.cmd.SubCommand;
-import es.angelillo15.mast.api.cmd.sender.CommandSender;
+import com.nookure.mast.api.cmd.CommandData;
+import com.nookure.mast.api.cmd.CommandParent;
+import com.nookure.mast.api.cmd.SubCommand;
+import com.nookure.mast.api.cmd.sender.CommandSender;
 
 @CommandData(
         name = "mastb",

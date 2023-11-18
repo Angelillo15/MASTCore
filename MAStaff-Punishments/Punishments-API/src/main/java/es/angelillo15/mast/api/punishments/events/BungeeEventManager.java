@@ -1,6 +1,6 @@
 package es.angelillo15.mast.api.punishments.events;
 
-import es.angelillo15.mast.api.cmd.sender.CommandSender;
+import com.nookure.mast.api.cmd.sender.CommandSender;
 import es.angelillo15.mast.api.event.bungee.ban.BannedPlayerTriesToJoin;
 import es.angelillo15.mast.api.event.bungee.ban.PlayerBannedEvent;
 import es.angelillo15.mast.api.models.BansTable;
