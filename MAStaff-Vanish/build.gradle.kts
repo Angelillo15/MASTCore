@@ -13,7 +13,6 @@ repositories {
 
 dependencies {
   compileOnly(project(":MAStaff-API"))
-  compileOnly(project(":MAStaff-NMS"))
   compileOnly(libs.spigot)
   compileOnly("org.spigotmc:spigot:1.20.1-R0.1-SNAPSHOT")
 }
