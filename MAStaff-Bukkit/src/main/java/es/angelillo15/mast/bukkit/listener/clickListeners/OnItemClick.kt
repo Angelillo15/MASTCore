@@ -15,8 +15,10 @@ import org.bukkit.event.player.PlayerInteractEvent
 class OnItemClick : Listener {
   @Inject
   private lateinit var staffManager: StaffManager
+
   @Inject
   private lateinit var versionSupport: VersionSupport
+
   @Inject
   private lateinit var logger: ILogger
 
@@ -59,9 +61,7 @@ class OnItemClick : Listener {
     }
 
     if (item is IExecutableItem) {
-      execute {
-        (item as IExecutableItem).click(player)
-      }
+      (item as IExecutableItem).click(player)
     }
 
     if (item is IExecutableLocationItem) {

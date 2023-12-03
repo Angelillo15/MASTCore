@@ -1,0 +1,16 @@
+{
+  "content": null,
+  "embeds": [
+    {
+      "description": "Has enabled the staff mode",
+      "color": 65311,
+      "footer": {
+        "text": "Nookure Network",
+        "icon_url": "https://docs.nookure.com/img/logo.png"
+      }
+    }
+  ],
+  "username": "{{ username }}",
+  "avatar_url": "https://mc-heads.net/head/{{ username }}",
+  "attachments": []
+}

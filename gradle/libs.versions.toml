@@ -27,6 +27,7 @@ kotlin = "1.9.0"
 velocity = "3.1.1"
 guice = "7.0.0"
 protocolize = "2.2.5"
+configurate = "4.1.2"
 
 [libraries]
 snakeYaml = { group = "org.yaml", name = "snakeyaml", version.ref = "snakeYaml" }
@@ -65,6 +66,8 @@ kotlin = { group = "org.jetbrains.kotlin", name = "kotlin-stdlib-jdk8", version.
 velocity = { group = "com.velocitypowered", name = "velocity-api", version.ref = "velocity" }
 guice = { group = "com.google.inject", name = "guice", version.ref = "guice" }
 protocolize = { group = "dev.simplix", name = "protocolize-api", version.ref = "protocolize" }
+configurateGson = { group = "org.spongepowered", name = "configurate-gson", version.ref = "configurate" }
+configurateHocon = { group = "org.spongepowered", name = "configurate-hocon", version.ref = "configurate" }
 
 [bundles]
 invAPI = ["invCore", "invAdvancedSlots", "invPagination", "configurableGui"]

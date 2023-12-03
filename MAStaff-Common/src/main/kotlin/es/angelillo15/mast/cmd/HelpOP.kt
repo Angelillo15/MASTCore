@@ -2,9 +2,9 @@ package es.angelillo15.mast.cmd
 
 import com.google.inject.Inject
 import es.angelillo15.mast.api.IServerUtils
-import es.angelillo15.mast.api.cmd.CommandData
-import es.angelillo15.mast.api.cmd.CooldownCommand
-import es.angelillo15.mast.api.cmd.sender.CommandSender
+import com.nookure.mast.api.cmd.CommandData
+import com.nookure.mast.api.cmd.CooldownCommand
+import com.nookure.mast.api.cmd.sender.CommandSender
 import es.angelillo15.mast.api.config.common.CommonConfig
 import es.angelillo15.mast.api.config.common.CommonMessages
 

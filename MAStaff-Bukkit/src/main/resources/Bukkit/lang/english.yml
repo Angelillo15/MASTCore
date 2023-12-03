@@ -48,17 +48,17 @@ StaffMode:
   nightVisionOff: '{prefix} &7You have &adisabled &7the night vision.'
 Freeze:
   # Message sent when the command is not used correctly.
-  correctUse: '{prefix} &7You must use &a/freeze <player>&7.'
+  correctUse: '&3&lFreeze &8&l» &r&7You must use &a/freeze <player>&7.'
   # Message sent when the command is not used correctly.
-  correctUseOther: '{prefix} &7You must use &a/freeze <player>&7.'
+  correctUseOther: '&3&lFreeze &8&l» &r&7You must use &a/freeze <player>&7.'
   # Message sent when the player is frozen.
-  frozen: '{prefix} &7You have been &afrozen&7.'
+  frozen: '&3&lFreeze &8&l» &r&7You have been &afrozen&7.'
   # Message sent when the player is unfrozen.
-  unfrozen: '{prefix} &7You have been &aunfrozen&7.'
+  unfrozen: '&3&lFreeze &8&l» &r&7You have been &aunfrozen&7.'
   # Message sent when the player is unfrozen by a staff.
-  unfrozenBy: '{prefix} &7The player &a{player} &7has been &aunfrozen &7by &a{staff}&7.'
+  unfrozenBy: '&3&lFreeze &8&l» &r&7The player &a{player} &7has been &aunfrozen &7by &a{staff}&7.'
   # Message sent when the player is frozen by a staff.
-  frozenByOther: '{prefix} &7The player &a{player} &7has been &afrozen &7by &a{staff}&7.'
+  frozenByOther: '&3&lFreeze &8&l» &r&7The player &a{player} &7has been &afrozen &7by &a{staff}&7.'
   # Message sent to the player chat when he is frozen.
   playerSpamMessage:
     - ''
@@ -68,7 +68,7 @@ Freeze:
     - '&7██&c█&6█&0█&6█&c█&7██   You have been frozen!'
     - '&7█&c█&6██&0█&6██&c█&7█  Join our discord server:'
     - '&7█&c█&6█████&c█&7█  http:/discord.example.com'
-    - '&c█&6███&0█&6███&c█'
+    - '&c█&6███&0█&6███&c█  You have {time} to join.'
     - '&c█████████'
     - ''
   # Message sent to the staff if he wants to punish the player.
@@ -78,7 +78,15 @@ Freeze:
     Do you want to execute the commands specified when a player leaves ?
     <hover:show_text:'Forgive the player'><red><click:run_command:'/freeze /remove {player}'>[x]</click></red></hover> <click:run_command:/freeze /exec {player}><green><hover:show_text:'Punish that player'>[✔]</hover></green> </click>
   # Message sent when a staff tries to freeze a player with mast.freeze.bypass permission.
-  freezeBypassMessage: '{prefix} &7You can not freeze that player.'
+  freezeBypassMessage: '&3&lFreeze &8&l» &r&7You can not freeze that player.'
+  # Chat format for frozen players.
+  freezeChatFormat: '&r{player} &7(&3frozen&7) &8&l» &r&7{message}'
+  # Chat format for staff members that are talking to frozen players.
+  freezeStaffChatFormat: '&r{player} &7(&astaff&7) &8&l» &r&7{message}'
+  # FreezeChat command usage.
+  freezeChatUsage: '&3&lFreeze &8&l» &r&7You must use &a/freezechat <player> <message>&7.'
+  # Freeze Chat when a player isn't frozen and you try to use it.
+  freezeChatNotFrozen: '&3&lFreeze &8&l» &r&7That player is not frozen.'
 StaffList:
   # Title of the Staff List GUI.
   title: '&a&lSTAFF &8&l» &7Online Staff'

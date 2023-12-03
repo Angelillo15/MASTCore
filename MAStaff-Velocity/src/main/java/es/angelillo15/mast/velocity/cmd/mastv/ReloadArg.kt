@@ -1,8 +1,8 @@
 package es.angelillo15.mast.velocity.cmd.mastv
 
 import com.google.inject.Inject
-import es.angelillo15.mast.api.cmd.SubCommand
-import es.angelillo15.mast.api.cmd.sender.CommandSender
+import com.nookure.mast.api.cmd.SubCommand
+import com.nookure.mast.api.cmd.sender.CommandSender
 import es.angelillo15.mast.api.config.velocity.Messages
 import es.angelillo15.mast.api.utils.MAStaffInject
 

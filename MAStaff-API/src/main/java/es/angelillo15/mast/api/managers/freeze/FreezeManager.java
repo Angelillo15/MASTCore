@@ -1,13 +1,20 @@
 package es.angelillo15.mast.api.managers.freeze;
 
+import com.google.inject.Inject;
+import com.nookure.mast.api.manager.FreezeVector;
 import es.angelillo15.mast.api.IStaffPlayer;
 import java.util.ArrayList;
-import java.util.HashMap;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
+/**
+ * This class is deprecated, use {@link com.nookure.mast.api.manager.FreezeManager} instead
+ * @since 3.0.0
+ */
+@Deprecated
 public class FreezeManager {
-    public static HashMap<String, FreezeVector> frozenPlayers = new HashMap<>();
+    @Inject
+    private static com.nookure.mast.api.manager.FreezeManager freezeManager;
 
     /**
      * Freeze the player
@@ -15,7 +22,17 @@ public class FreezeManager {
      * @param target Player to freeze
      */
     public static void freezePlayer(IStaffPlayer staff, Player target) {
-        frozenPlayers.put(target.getName(), new FreezeVector(staff, target));
+        freezeManager.freezePlayer(staff, target, -1);
+    }
+
+    /**
+     * Freeze the player
+     * @param staff IStaffPlayer who freeze the player
+     * @param target Player to freeze
+     * @param time Time to freeze the player (in ms)
+     */
+    public static void freezePlayer(IStaffPlayer staff, Player target, long time) {
+        freezeManager.freezePlayer(staff, target, time);
     }
 
     /**
@@ -23,7 +40,7 @@ public class FreezeManager {
      * @param target Player
      */
     public static void unfreezePlayer(Player target) {
-        frozenPlayers.remove(target.getName());
+        freezeManager.unfreezePlayer(target);
     }
 
     /**
@@ -31,7 +48,7 @@ public class FreezeManager {
      * @param target Player
      */
     public static void unfreezePlayer(String target) {
-        frozenPlayers.remove(target);
+        freezeManager.unfreezePlayer(target);
     }
 
     /**
@@ -40,7 +57,7 @@ public class FreezeManager {
      * @return boolean
      */
     public static boolean isFrozen(Player target) {
-        return frozenPlayers.containsKey(target.getName());
+        return freezeManager.isFrozen(target);
     }
 
     /**
@@ -49,7 +66,7 @@ public class FreezeManager {
      * @return boolean
      */
     public static boolean isFrozen(String target) {
-        return frozenPlayers.containsKey(target);
+        return freezeManager.isFrozen(target);
     }
 
     /**
@@ -57,12 +74,10 @@ public class FreezeManager {
      * @return ArrayList of OfflinePlayer
      */
     public static ArrayList<OfflinePlayer> getFrozenPlayers() {
-        ArrayList<OfflinePlayer> frozen = new ArrayList<>();
-        frozenPlayers.forEach((name, vector) -> frozen.add(vector.getTarget()));
-        return frozen;
+        return freezeManager.getFrozenPlayers();
     }
 
     public static FreezeVector getFreezeVector(Player target) {
-        return frozenPlayers.get(target.getName());
+        return freezeManager.getFreezeVector(target);
     }
 }

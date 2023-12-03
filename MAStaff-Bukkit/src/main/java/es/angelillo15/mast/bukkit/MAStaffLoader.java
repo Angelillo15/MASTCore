@@ -35,5 +35,6 @@ public class MAStaffLoader extends MAStaff {
     AddonsLoader.disableAddons();
     super.onDisable();
     AsyncThreadKt.stop();
+    disableAddons();
   }
 }

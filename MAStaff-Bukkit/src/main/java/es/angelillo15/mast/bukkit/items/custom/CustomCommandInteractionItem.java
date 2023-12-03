@@ -2,6 +2,8 @@ package es.angelillo15.mast.bukkit.items.custom;
 
 import es.angelillo15.mast.api.items.IPlayerInteractItem;
 import es.angelillo15.mast.api.items.StaffItem;
+import es.angelillo15.mast.bukkit.MAStaff;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -23,8 +25,8 @@ public class CustomCommandInteractionItem extends StaffItem implements IPlayerIn
 
   @Override
   public void interact(Player player, Player target) {
-    player.performCommand(
-        command.replace("{target}", target.getName()).replace("{player}", player.getName()));
+    Bukkit.getScheduler().runTaskLater(MAStaff.getPlugin(), () -> player.performCommand(
+        command.replace("{target}", target.getName()).replace("{player}", player.getName())), 1L);
   }
 
   @Override

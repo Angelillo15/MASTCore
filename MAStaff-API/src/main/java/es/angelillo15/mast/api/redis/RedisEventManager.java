@@ -2,7 +2,7 @@ package es.angelillo15.mast.api.redis;
 
 import es.angelillo15.mast.api.event.Event;
 import es.angelillo15.mast.api.event.EventHandler;
-import es.angelillo15.mast.api.event.EventVector;
+import es.angelillo15.mast.api.redis.events.EventVector;
 import es.angelillo15.mast.api.event.Listener;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;

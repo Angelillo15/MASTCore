@@ -1,7 +1,7 @@
 package es.angelillo15.velocity.punishments
 
 import es.angelillo15.mast.api.Constants
-import es.angelillo15.mast.api.addons.annotations.Addon
+import com.nookure.mast.api.addons.annotations.Addon
 
 @Addon(
         name = "MAStaff-Punishments",

@@ -5,17 +5,20 @@ import com.google.gson.JsonParser;
 import es.angelillo15.mast.api.Constants;
 import es.angelillo15.mast.api.TextUtils;
 import es.angelillo15.mast.api.addons.LegacyAddonsManager;
-import es.angelillo15.mast.api.cmd.LegacySubCommand;
+import com.nookure.mast.api.cmd.SubCommand;
+import com.nookure.mast.api.cmd.sender.CommandSender;
 import es.angelillo15.mast.api.config.bukkit.Messages;
 import es.angelillo15.mast.bukkit.MAStaff;
+
 import java.lang.management.ManagementFactory;
 import java.util.ArrayList;
+
 import kong.unirest.HttpResponse;
 import kong.unirest.Unirest;
-import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.Plugin;
+import org.jetbrains.annotations.NotNull;
 
-public class DumpARG extends LegacySubCommand {
+public class DumpARG extends SubCommand {
   @Override
   public String getName() {
     return "dump";
@@ -37,7 +40,7 @@ public class DumpARG extends LegacySubCommand {
   }
 
   @Override
-  public void execute(CommandSender sender, String[] args) {
+  public void onCommand(@NotNull CommandSender sender, @NotNull String label, @NotNull String[] args) {
 
     JsonObject dump = new JsonObject();
 
@@ -103,26 +106,26 @@ public class DumpARG extends LegacySubCommand {
     dump.add("plugins", JsonParser.parseString(plugins.toString()));
 
     new Thread(
-            () -> {
-              try {
-                HttpResponse<String> response =
-                    Unirest.post("https://api.pastes.dev/post")
-                        .header("Content-Type", "application/json")
-                        .body(dump.toString())
-                        .asString();
+        () -> {
+          try {
+            HttpResponse<String> response =
+                Unirest.post("https://api.pastes.dev/post")
+                    .header("Content-Type", "application/json")
+                    .body(dump.toString())
+                    .asString();
 
-                JsonObject json = JsonParser.parseString(response.getBody()).getAsJsonObject();
+            JsonObject json = JsonParser.parseString(response.getBody()).getAsJsonObject();
 
-                String key = json.get("key").getAsString();
-                String url = "https://nookure.com/dump/" + key;
+            String key = json.get("key").getAsString();
+            String url = "https://nookure.com/dump/" + key;
 
-                sender.sendMessage(TextUtils.colorize(Messages.PREFIX() + " &aDump url: &6" + url));
-              } catch (Exception e) {
-                e.printStackTrace();
-                sender.sendMessage(
-                    TextUtils.colorize(Messages.PREFIX() + " &cError while dumping plugin info"));
-              }
-            })
+            sender.sendMessage(TextUtils.colorize(Messages.PREFIX() + " &aDump url: &6" + url));
+          } catch (Exception e) {
+            e.printStackTrace();
+            sender.sendMessage(
+                TextUtils.colorize(Messages.PREFIX() + " &cError while dumping plugin info"));
+          }
+        })
         .start();
   }
 }

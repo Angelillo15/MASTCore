@@ -49,7 +49,7 @@ public class StaffManager {
    */
   @Nullable
   public IStaffPlayer getStaffPlayer(@NotNull String name) {
-    return getStaffPlayer(Objects.requireNonNull(Bukkit.getPlayer(name)));
+    return staffPlayers.getOrDefault(name, null);
   }
 
   /**

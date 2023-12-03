@@ -3,7 +3,6 @@ import java.time.format.DateTimeFormatter
 
 plugins {
   id("java")
-  `maven-publish`
   id("net.kyori.blossom") version "1.3.1"
   id("org.ajoberstar.grgit") version "4.1.0"
 }
@@ -11,14 +10,16 @@ plugins {
 group = "es.angelillo15"
 version = parent?.version ?: "2.0.0"
 
-val compileOnlyApi: Configuration by configurations.creating
-configurations["compileClasspath"].extendsFrom(compileOnlyApi)
-configurations["apiElements"].extendsFrom(compileOnlyApi)
+val compileOnlyApi = configurations.maybeCreate("compileOnlyApi")
+configurations.getByName(JavaPlugin.COMPILE_CLASSPATH_CONFIGURATION_NAME).extendsFrom(compileOnlyApi);
+configurations.getByName(JavaPlugin.API_ELEMENTS_CONFIGURATION_NAME).extendsFrom(compileOnlyApi);
 
 dependencies {
   compileOnly(libs.waterfall)
   compileOnly(libs.paperApi)
   compileOnly(libs.placeholderApi)
+  compileOnly(libs.vault)
+  compileOnly(libs.velocity)
   compileOnly(libs.liblyBukkit)
   compileOnly(libs.bundles.invAPI)
   compileOnly(libs.configUpdater)
@@ -33,9 +34,22 @@ dependencies {
   compileOnly(libs.adventureBukkit)
   compileOnly(libs.adventureBungee)
   compileOnly(libs.miniMessage)
-  compileOnly(libs.protocolLib)
-  compileOnly(libs.vault)
-  compileOnly(libs.velocity)
+  compileOnly(libs.kotlin)
+  compileOnly(libs.reflections)
+  compileOnly(libs.guice)
+  compileOnly(libs.configurateGson)
+  compileOnly(libs.configurateHocon)
+
+  testImplementation(platform("org.junit:junit-bom:5.9.1"))
+  testImplementation("org.junit.jupiter:junit-jupiter")
+  testImplementation(project(":MAStaff-Common"))
+  testImplementation(libs.guice)
+  testImplementation(libs.kotlin)
+  testImplementation(libs.reflections)
+}
+
+tasks.test {
+  useJUnitPlatform()
 }
 
 blossom {

@@ -2,6 +2,8 @@ package es.angelillo15.mast.bukkit.items.custom;
 
 import es.angelillo15.mast.api.items.IExecutableItem;
 import es.angelillo15.mast.api.items.StaffItem;
+import es.angelillo15.mast.bukkit.MAStaff;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -23,7 +25,10 @@ public class CustomCommandItem extends StaffItem implements IExecutableItem {
 
   @Override
   public void click(Player player) {
-    player.performCommand(this.command.replace("{player}", player.getName()));
+    Bukkit.getScheduler().runTaskLater(
+        MAStaff.getPlugin(), () -> player.performCommand(this.command.replace("{player}", player.getName())),
+        1L
+    );
   }
 
   @Override

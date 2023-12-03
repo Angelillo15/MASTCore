@@ -2,8 +2,8 @@ package es.angelillo15.mast.api.punishments.cmd.cache;
 
 import es.angelillo15.mast.api.TextUtils;
 import es.angelillo15.mast.api.cache.BanCache;
-import es.angelillo15.mast.api.cmd.SubCommand;
-import es.angelillo15.mast.api.cmd.sender.CommandSender;
+import com.nookure.mast.api.cmd.SubCommand;
+import com.nookure.mast.api.cmd.sender.CommandSender;
 import es.angelillo15.mast.api.config.punishments.Messages;
 
 public class BansCache extends SubCommand {

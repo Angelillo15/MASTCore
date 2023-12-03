@@ -19,19 +19,19 @@ public abstract class ILogger {
 
   public abstract void debug(String message);
 
-  void info(String message, Object... args) {
+  public void info(String message, Object... args) {
     info(format(message, args));
   }
 
-  void warn(String message, Object... args) {
+  public void warn(String message, Object... args) {
     warn(format(message, args));
   }
 
-  void error(String message, Object... args) {
+  public void error(String message, Object... args) {
     error(format(message, args));
   }
 
-  void debug(String message, Object... args) {
+  public void debug(String message, Object... args) {
     debug(format(message, args));
   }
 

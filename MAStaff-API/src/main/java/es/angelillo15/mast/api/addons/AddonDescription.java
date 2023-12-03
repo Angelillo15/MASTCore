@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Deprecated(forRemoval = false, since = "3.0.0")
 public class AddonDescription {
   /** Friendly name of the plugin. */
   private String name;
