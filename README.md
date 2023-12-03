@@ -9,4 +9,22 @@ This repository contains the source code for the MAStaff plugin.
 2. Place the downloaded jar file in your server's `plugins` folder
 3. Restart your server
 
+## Compile
+Bash
+```shell
+MASTAFF_NMS=TRUE ./gradlew MAStaff-NMS:publishToMavenLocal shadowJar
+```
+
+CMD
+```shell
+set MASTAFF_NMS=TRUE
+gradlew.bat MAStaff-NMS:publishToMavenLocal shadowJar
+```
+
+PowerShell
+```shell
+$env:MASTAFF_NMS=TRUE
+.\gradlew.bat MAStaff-NMS:publishToMavenLocal shadowJar
+```
+
 [![Discord](https://discordapp.com/api/guilds/918181438879305748/widget.png)](https://discord.angelillo15.es) 
