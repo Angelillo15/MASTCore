@@ -19,6 +19,7 @@ public class BungeeInjector extends CommonModule {
     bind(MAStaffInstance.class).toInstance(MAStaff.getInstance());
     bind(MAStaffInject.class).toInstance(MAStaff.getInstance());
     bind(MAStaff.class).toInstance(MAStaff.getInstance());
+    bind(com.nookure.mast.api.MAStaff.class).toInstance(MAStaff.getInstance());
     bind(BungeeServerUtils.class).asEagerSingleton();
     bind(CommonConfigLoader.class).asEagerSingleton();
     bind(IServerUtils.class).to(BungeeServerUtils.class).asEagerSingleton();
