@@ -53,9 +53,8 @@ class OnItemClickInteract : Listener {
         return
       }
 
-      execute {
-        item.interact(player, event.rightClicked as Player)
-      }
+      item.interact(player, event.rightClicked as Player)
+
 
       clicked = true
     }
