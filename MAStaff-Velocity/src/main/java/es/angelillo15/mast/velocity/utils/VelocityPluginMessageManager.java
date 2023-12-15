@@ -5,6 +5,7 @@ import com.nookure.mast.api.event.Channels;
 import com.nookure.mast.api.event.Event;
 import com.nookure.mast.api.event.PluginMessageManager;
 import com.velocitypowered.api.proxy.Player;
+import com.velocitypowered.api.proxy.ServerConnection;
 import com.velocitypowered.api.proxy.messages.MinecraftChannelIdentifier;
 import es.angelillo15.mast.api.ILogger;
 import es.angelillo15.mast.velocity.MAStaff;
@@ -14,6 +15,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.util.Objects;
+import java.util.Optional;
 
 public class VelocityPluginMessageManager extends PluginMessageManager<Player> {
   @Inject
@@ -32,6 +34,23 @@ public class VelocityPluginMessageManager extends PluginMessageManager<Player> {
       ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStream);
       objectOutputStream.writeObject(event);
 
+      Optional<ServerConnection> connection = player.getCurrentServer();
+      connection.ifPresent(serverConnection -> {
+        if (serverConnection.sendPluginMessage(CHANNEL_IDENTIFIER, outputStream.toByteArray())) {
+          logger.debug(
+              "Sent event " +
+                  event.getClass().getSimpleName() +
+                  " using player " + player.getUsername() +
+                  " on channel " + Channels.EVENTS
+          );
+        } else {
+          logger.error("Error while sending event " +
+              event.getClass().getSimpleName() +
+              " using player " + player.getUsername() +
+              " on channel " + Channels.EVENTS
+          );
+        }
+      });
       player.sendPluginMessage(CHANNEL_IDENTIFIER, outputStream.toByteArray());
     } catch (IOException e) {
       logger.error(
