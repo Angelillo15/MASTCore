@@ -35,6 +35,7 @@ public class BukkitInjector extends CommonModule {
     bind(AddonManager.class).to(ServerAddonManager.class).asEagerSingleton();
     bind(StaffFeatureManager.class).to(BukkitStaffFeatureManager.class).asEagerSingleton();
     bind(FreezeManager.class).asEagerSingleton();
+    bind(BukkitPluginMessageManager.class).asEagerSingleton();
     bind(PluginMessageManager.class).to(BukkitPluginMessageManager.class).asEagerSingleton();
   }
 }
