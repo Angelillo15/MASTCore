@@ -40,7 +40,7 @@ import es.angelillo15.mast.bungee.manager.RedisManager;
 import es.angelillo15.mast.bungee.utils.BungeeServerUtils;
 import es.angelillo15.mast.bungee.utils.Logger;
 import es.angelillo15.mast.cmd.HelpOP;
-import es.angelillo15.mast.cmd.StaffChat;
+import com.nookure.mast.cmd.StaffChat;
 
 import java.io.File;
 import java.io.IOException;
