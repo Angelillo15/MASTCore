@@ -163,10 +163,6 @@ public class MAStaff extends Plugin implements MAStaffInstance<Plugin> {
     getProxy().getPluginManager().registerListener(this, new CommandExecutor());
     getProxy().getPluginManager().registerListener(this, injector.getInstance(OnStaffJoinLeaveQuit.class));
     getProxy().getPluginManager().registerListener(this, injector.getInstance(CommandManagerHandler.class));
-    getProxy().getPluginManager().registerListener(
-        this,
-        injector.getInstance(es.angelillo15.mast.bungee.listener.staffchat.OnStaffTalk.class)
-    );
     if (Config.Redis.isEnabled()) registerRedisListeners();
   }
 
