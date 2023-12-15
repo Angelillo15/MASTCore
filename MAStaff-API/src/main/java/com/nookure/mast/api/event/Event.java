@@ -1,4 +1,6 @@
 package com.nookure.mast.api.event;
 
-public abstract class Event {
+import java.io.Serializable;
+
+public abstract class Event implements Serializable {
 }
