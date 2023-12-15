@@ -5,6 +5,7 @@ import com.google.inject.Inject;
 import com.google.inject.Injector;
 import com.nookure.mast.api.addons.AddonManager;
 import com.nookure.mast.api.addons.annotations.Addon;
+import com.nookure.mast.api.event.Channels;
 import com.nookure.mast.webhook.DiscordWebhooks;
 import com.velocitypowered.api.command.CommandManager;
 import com.velocitypowered.api.command.CommandMeta;
@@ -97,6 +98,7 @@ public class MAStaff implements MAStaffInstance<ProxyServer> {
     loadModules();
     AsyncThreadKt.start();
     proxyServer.getChannelRegistrar().register(MinecraftChannelIdentifier.from("mastaff:staff"));
+    proxyServer.getChannelRegistrar().register(MinecraftChannelIdentifier.from(Channels.EVENTS));
 
     logger.info("&aMAStaff &7v" + Constants.VERSION + " &ahas been loaded correctly!");
   }
@@ -175,6 +177,7 @@ public class MAStaff implements MAStaffInstance<ProxyServer> {
         .register(this, injector.getInstance(CommandBackendExecutor.class));
     proxyServer.getEventManager().register(this, injector.getInstance(OnStaffJoinLeaveQuit.class));
     proxyServer.getEventManager().register(this, injector.getInstance(OnPlayerChat.class));
+    proxyServer.getEventManager().register(this, injector.getInstance(PluginMessageListener.class));
   }
 
   @SneakyThrows

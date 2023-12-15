@@ -4,6 +4,7 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.nookure.mast.api.addons.AddonManager;
 import com.nookure.mast.api.addons.annotations.Addon;
+import com.nookure.mast.api.event.Channels;
 import com.nookure.mast.api.event.EventManager;
 import com.nookure.mast.webhook.DiscordWebhooks;
 import es.angelillo15.mast.api.*;
@@ -210,6 +211,7 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance<JavaPlugin> {
 
     this.getServer().getMessenger().registerOutgoingPluginChannel(this, "mastaff:staff");
     this.getServer().getMessenger().registerOutgoingPluginChannel(this, "mastaff:commands");
+    this.getServer().getMessenger().registerOutgoingPluginChannel(this, Channels.EVENTS);
   }
 
   public void registerListener(Listener listener) {
