@@ -17,9 +17,9 @@ public class OnStaffSwitch implements CommonFactory<OnStaffSwitch, WebHookClient
   public void onStaffSwitch(StaffServerSwitchEvent event) {
     client.sendWebHook(
         loader.getWebhook(Webhooks.SERVER_SWITCH),
-        new com.nookure.mast.api.webhook.Replacer("previousServer", event.getFromServer()),
-        new com.nookure.mast.api.webhook.Replacer("server", event.getToServer()),
-        new com.nookure.mast.api.webhook.Replacer("username", event.getUsername())
+        new com.nookure.mast.api.webhook.Replacer("previousServer", event.fromServer()),
+        new com.nookure.mast.api.webhook.Replacer("server", event.toServer()),
+        new com.nookure.mast.api.webhook.Replacer("username", event.username())
     );
   }
 

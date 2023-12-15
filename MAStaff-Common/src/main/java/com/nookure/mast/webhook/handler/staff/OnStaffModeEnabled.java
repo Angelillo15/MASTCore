@@ -18,7 +18,7 @@ public class OnStaffModeEnabled implements CommonFactory<OnStaffModeEnabled, Web
   public void onStaffModeEnable(StaffModeEnabledEvent event) {
     client.sendWebHook(
         loader.getWebhook(Webhooks.STAFF_ENABLED),
-        new Replacer("username", event.getStaffPlayer().getName())
+        new Replacer("username", event.staffPlayer().getName())
     );
   }
 
