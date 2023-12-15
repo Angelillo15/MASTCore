@@ -15,7 +15,7 @@ public abstract class CommandSenderManager<S> {
    * @param sender The sender to get
    * @return The sender from the manager
    */
-  @Nullable
+  @NotNull
   public CommandSender getSender(S sender) {
     return senders.computeIfAbsent(sender, this::createCommandSender);
   }
