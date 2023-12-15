@@ -1,8 +1,8 @@
 package com.nookure.mast.api.cmd.sender;
 
-import net.kyori.adventure.audience.Audience;
+import java.io.Serializable;
 
-public interface CommandSender {
+public interface CommandSender extends Serializable {
   void sendMessage(String message);
 
   boolean hasPermission(String permission);
@@ -22,8 +22,6 @@ public interface CommandSender {
   boolean isBungee();
 
   boolean isSpigot();
-
-  Audience getAudience();
 
   String getServerName();
 }
