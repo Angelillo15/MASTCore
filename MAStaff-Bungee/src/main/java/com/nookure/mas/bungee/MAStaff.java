@@ -1,9 +1,13 @@
-package es.angelillo15.mast.bungee;
+package com.nookure.mas.bungee;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
+import com.nookure.mas.bungee.listener.OnPlayerChat;
+import com.nookure.mas.bungee.listener.PluginMessageListener;
 import com.nookure.mast.api.addons.AddonManager;
 import com.nookure.mast.api.addons.annotations.Addon;
+import com.nookure.mast.api.event.Channels;
+import com.nookure.mast.api.event.EventManager;
 import com.nookure.mast.webhook.DiscordWebhooks;
 import es.angelillo15.mast.api.ILogger;
 import es.angelillo15.mast.api.IServerUtils;
@@ -138,7 +142,6 @@ public class MAStaff extends Plugin implements MAStaffInstance<Plugin> {
     logger.info(TextUtils.simpleColorize("&a ░         ░  ░      ░                 ░  ░"));
     logger.info(TextUtils.simpleColorize("&a                                                version: " + getDescription().getVersion()));
     AsyncThreadKt.start();
-
   }
 
   @Override
@@ -158,11 +161,19 @@ public class MAStaff extends Plugin implements MAStaffInstance<Plugin> {
 
   @Override
   public void registerListeners() {
+    getProxy().registerChannel(Channels.EVENTS);
+
     getProxy().getPluginManager().registerListener(this, new StaffChangeEvent());
     getProxy().getPluginManager().registerListener(this, new UserJoinListener());
     getProxy().getPluginManager().registerListener(this, new CommandExecutor());
     getProxy().getPluginManager().registerListener(this, injector.getInstance(OnStaffJoinLeaveQuit.class));
     getProxy().getPluginManager().registerListener(this, injector.getInstance(CommandManagerHandler.class));
+    getProxy().getPluginManager().registerListener(this, injector.getInstance(PluginMessageListener.class));
+
+    EventManager eventManager = injector.getInstance(EventManager.class);
+
+    eventManager.registerListener(injector.getInstance(OnPlayerChat.class));
+
     if (Config.Redis.isEnabled()) registerRedisListeners();
   }
 

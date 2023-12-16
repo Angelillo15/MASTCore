@@ -1,6 +1,6 @@
 package es.angelillo15.mast.bungee.utils;
 
-import es.angelillo15.mast.bungee.MAStaff;
+import com.nookure.mas.bungee.MAStaff;
 import net.md_5.bungee.api.chat.TextComponent;
 
 public class StaffUtils {
