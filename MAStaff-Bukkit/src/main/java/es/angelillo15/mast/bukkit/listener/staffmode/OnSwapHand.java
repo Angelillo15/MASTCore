@@ -6,13 +6,17 @@ import es.angelillo15.mast.api.Permissions;
 import es.angelillo15.mast.api.managers.StaffManager;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerSwapHandItemsEvent;
 
 public class OnSwapHand implements Listener {
   @Inject private StaffManager staffManager;
 
-  @EventHandler
+  @EventHandler(
+      ignoreCancelled = true,
+      priority = EventPriority.HIGHEST
+  )
   public void onSwapHand(PlayerSwapHandItemsEvent event) {
     Player player = event.getPlayer();
 

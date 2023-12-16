@@ -5,6 +5,7 @@ import com.google.inject.Singleton
 import es.angelillo15.mast.api.ILogger
 import es.angelillo15.mast.api.IServerUtils
 import es.angelillo15.mast.api.TextUtils
+import es.angelillo15.mast.api.thread.AsyncThread
 import es.angelillo15.mast.api.thread.execute
 import org.bukkit.Bukkit
 import java.util.*
@@ -52,7 +53,7 @@ class ServerUtils : IServerUtils {
   override fun broadcastMessage(message: String, permission: String) {
     if (message.isEmpty()) return
 
-    execute {
+    AsyncThread.getThreadPoolExecutor().execute {
       Bukkit.getOnlinePlayers().forEach { player ->
         if (!player.hasPermission(permission)) return@forEach
 

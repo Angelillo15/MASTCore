@@ -12,6 +12,7 @@ class OnStaffTalk : Listener, OnStaffMessageEvent() {
     if (event.isCommand) return
     if (event.sender !is ProxiedPlayer) return
     val player = event.sender as ProxiedPlayer
+    if (!player.hasPermission("mast.staffchat")) return
 
     event.isCancelled = onStaffMessageEvent(player.name, event.message, player.server.info.name)
   }
