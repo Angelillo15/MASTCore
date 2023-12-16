@@ -43,6 +43,7 @@ import es.angelillo15.mast.bukkit.listener.freeze.FreezeListener;
 import es.angelillo15.mast.bukkit.listener.OnJoin;
 import es.angelillo15.mast.bukkit.listener.clickListeners.OnItemClick;
 import es.angelillo15.mast.bukkit.listener.clickListeners.OnItemClickInteract;
+import es.angelillo15.mast.bukkit.listener.freeze.OnFreezeDamage;
 import es.angelillo15.mast.bukkit.listener.staffchat.OnStaffChatToggle;
 import es.angelillo15.mast.bukkit.listener.staffchat.OnStaffLegacyTalk;
 import es.angelillo15.mast.bukkit.listener.staffchat.OnStaffPaperTalk;
@@ -180,6 +181,8 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance<JavaPlugin> {
     registerListener(injector.getInstance(OnDamage.class));
     registerListener(injector.getInstance(CommandManagerHandler.class));
     registerListener(injector.getInstance(OnWorldChange.class));
+    registerListener(injector.getInstance(OnFreezeDamage.class));
+
     injector.getInstance(EventManager.class).registerListener(injector.getInstance(OnAddonDisable.class));
 
     if (Config.Freeze.enabled()) registerListener(injector.getInstance(FreezeListener.class));
