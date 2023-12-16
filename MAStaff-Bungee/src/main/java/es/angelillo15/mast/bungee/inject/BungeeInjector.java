@@ -8,7 +8,6 @@ import es.angelillo15.mast.api.MAStaffInstance;
 import es.angelillo15.mast.api.config.common.CommonConfigLoader;
 import es.angelillo15.mast.api.inject.CommonModule;
 import com.nookure.mast.api.manager.cmd.CommandBungeeSenderManager;
-import es.angelillo15.mast.api.punishments.loader.TemplateLoaders;
 import es.angelillo15.mast.api.utils.MAStaffInject;
 import com.nookure.mas.bungee.MAStaff;
 import es.angelillo15.mast.bungee.utils.BungeePluginMessageManager;
@@ -25,7 +24,7 @@ public class BungeeInjector extends CommonModule {
     bind(BungeeServerUtils.class).asEagerSingleton();
     bind(CommonConfigLoader.class).asEagerSingleton();
     bind(IServerUtils.class).to(BungeeServerUtils.class).asEagerSingleton();
-    bind(TemplateLoaders.class).asEagerSingleton();
+    // bind(TemplateLoaders.class).asEagerSingleton();
     bind(CommandBungeeSenderManager.class).asEagerSingleton();
     bind(AddonManager.class).to(ServerAddonManager.class).asEagerSingleton();
     bind(BungeePluginMessageManager.class).asEagerSingleton();
