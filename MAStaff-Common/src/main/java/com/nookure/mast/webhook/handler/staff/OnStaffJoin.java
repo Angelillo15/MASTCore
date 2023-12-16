@@ -18,7 +18,7 @@ public class OnStaffJoin implements CommonFactory<OnStaffJoin, WebHookClient> {
   public void onStaffJoin(StaffJoinEvent event) {
     client.sendWebHook(
         loader.getWebhook(Webhooks.STAFF_JOIN),
-        new Replacer("username", event.getStaffName())
+        new Replacer("username", event.staffName())
     );
   }
 

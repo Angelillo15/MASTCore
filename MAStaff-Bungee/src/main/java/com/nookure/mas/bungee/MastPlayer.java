@@ -1,4 +1,4 @@
-package es.angelillo15.mast.bungee;
+package com.nookure.mas.bungee;
 
 import es.angelillo15.mast.api.TextUtils;
 import es.angelillo15.mast.api.player.IMastPlayer;

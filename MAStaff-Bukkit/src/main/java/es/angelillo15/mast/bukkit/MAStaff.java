@@ -4,6 +4,7 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.nookure.mast.api.addons.AddonManager;
 import com.nookure.mast.api.addons.annotations.Addon;
+import com.nookure.mast.api.event.Channels;
 import com.nookure.mast.api.event.EventManager;
 import com.nookure.mast.webhook.DiscordWebhooks;
 import es.angelillo15.mast.api.*;
@@ -35,12 +36,14 @@ import es.angelillo15.mast.bukkit.inject.BukkitInjector;
 import es.angelillo15.mast.bukkit.legacy.BukkitLegacyLoader;
 import es.angelillo15.mast.bukkit.listener.OnAddonDisable;
 import es.angelillo15.mast.bukkit.listener.CommandManagerHandler;
+import es.angelillo15.mast.bukkit.listener.PluginMessageListener;
 import es.angelillo15.mast.bukkit.listener.freeze.FreezeChatPaperListener;
 import es.angelillo15.mast.bukkit.listener.freeze.FreezeLegacyPaperListener;
 import es.angelillo15.mast.bukkit.listener.freeze.FreezeListener;
 import es.angelillo15.mast.bukkit.listener.OnJoin;
 import es.angelillo15.mast.bukkit.listener.clickListeners.OnItemClick;
 import es.angelillo15.mast.bukkit.listener.clickListeners.OnItemClickInteract;
+import es.angelillo15.mast.bukkit.listener.staffchat.OnStaffChatToggle;
 import es.angelillo15.mast.bukkit.listener.staffchat.OnStaffLegacyTalk;
 import es.angelillo15.mast.bukkit.listener.staffchat.OnStaffPaperTalk;
 import es.angelillo15.mast.bukkit.listener.staffmode.*;
@@ -56,7 +59,7 @@ import es.angelillo15.mast.bukkit.utils.Metrics;
 import es.angelillo15.mast.bukkit.utils.NMSUtils;
 import es.angelillo15.mast.bukkit.utils.scheduler.Scheduler;
 import es.angelillo15.mast.cmd.HelpOP;
-import es.angelillo15.mast.cmd.StaffChat;
+import com.nookure.mast.cmd.StaffChat;
 import es.angelillo15.mast.papi.MAStaffExtension;
 import io.papermc.lib.PaperLib;
 import kong.unirest.HttpResponse;
@@ -210,6 +213,15 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance<JavaPlugin> {
 
     this.getServer().getMessenger().registerOutgoingPluginChannel(this, "mastaff:staff");
     this.getServer().getMessenger().registerOutgoingPluginChannel(this, "mastaff:commands");
+    this.getServer().getMessenger().registerOutgoingPluginChannel(this, Channels.EVENTS);
+
+    injector.getInstance(EventManager.class).registerListener(injector.getInstance(OnStaffChatToggle.class));
+
+    this.getServer().getMessenger().registerIncomingPluginChannel(
+        this,
+        Channels.EVENTS,
+        injector.getInstance(PluginMessageListener.class)
+    );
   }
 
   public void registerListener(Listener listener) {

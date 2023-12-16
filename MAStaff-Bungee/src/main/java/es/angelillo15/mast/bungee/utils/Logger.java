@@ -1,7 +1,7 @@
 package es.angelillo15.mast.bungee.utils;
 
 import es.angelillo15.mast.api.ILogger;
-import es.angelillo15.mast.bungee.MAStaff;
+import com.nookure.mas.bungee.MAStaff;
 
 public class Logger extends ILogger {
     public Logger() {

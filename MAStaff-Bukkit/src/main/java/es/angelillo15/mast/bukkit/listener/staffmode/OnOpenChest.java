@@ -27,6 +27,8 @@ public class OnOpenChest implements Listener {
 
     IStaffPlayer staffPlayer = staffManager.getStaffPlayer(player);
 
+    assert staffPlayer != null;
+
     if (!staffPlayer.isStaffMode()) {
       return;
     }
@@ -39,13 +41,17 @@ public class OnOpenChest implements Listener {
       return;
     }
 
-    Container container = (Container) event.getClickedBlock().getState();
-
-    if (container instanceof Chest chest) {
-      Inventory cInv = Bukkit.createInventory(null, chest.getInventory().getSize(), chest.getInventory().getType().name());
-      cInv.setContents(chest.getInventory().getContents());
-      player.openInventory(cInv);
-      event.setCancelled(true);
+    if (!(event.getClickedBlock().getState() instanceof Container container)) {
+      return;
     }
+
+    if (!(container instanceof Chest chest)) {
+      return;
+    }
+
+    Inventory cInv = Bukkit.createInventory(null, chest.getInventory().getSize(), chest.getInventory().getType().name());
+    cInv.setContents(chest.getInventory().getContents());
+    player.openInventory(cInv);
+    event.setCancelled(true);
   }
 }

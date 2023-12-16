@@ -2,7 +2,7 @@ package es.angelillo15.mast.bungee.cmd.mastb;
 
 import com.nookure.mast.api.cmd.SubCommand;
 import com.nookure.mast.api.cmd.sender.CommandSender;
-import es.angelillo15.mast.bungee.MAStaff;
+import com.nookure.mas.bungee.MAStaff;
 import es.angelillo15.mast.bungee.config.Messages;
 
 public class ReloadARG extends SubCommand {

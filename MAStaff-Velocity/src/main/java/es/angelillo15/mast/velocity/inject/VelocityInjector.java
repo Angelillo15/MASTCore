@@ -2,6 +2,7 @@ package es.angelillo15.mast.velocity.inject;
 
 import com.nookure.mast.addon.ServerAddonManager;
 import com.nookure.mast.api.addons.AddonManager;
+import com.nookure.mast.api.event.PluginMessageManager;
 import com.velocitypowered.api.proxy.ProxyServer;
 import es.angelillo15.mast.api.IServerUtils;
 import es.angelillo15.mast.api.MAStaffInstance;
@@ -11,6 +12,7 @@ import es.angelillo15.mast.api.config.velocity.VelocityConfig;
 import es.angelillo15.mast.api.inject.CommonModule;
 import es.angelillo15.mast.api.utils.MAStaffInject;
 import es.angelillo15.mast.velocity.MAStaff;
+import es.angelillo15.mast.velocity.utils.VelocityPluginMessageManager;
 import es.angelillo15.mast.velocity.utils.VelocityServerUtils;
 
 public class VelocityInjector extends CommonModule {
@@ -27,5 +29,6 @@ public class VelocityInjector extends CommonModule {
     bind(ProxyServer.class).toInstance(MAStaff.getInstance().getProxyServer());
     bind(VelocityConsoleCommandSender.class).asEagerSingleton();
     bind(AddonManager.class).to(ServerAddonManager.class).asEagerSingleton();
+    bind(PluginMessageManager.class).to(VelocityPluginMessageManager.class).asEagerSingleton();
   }
 }

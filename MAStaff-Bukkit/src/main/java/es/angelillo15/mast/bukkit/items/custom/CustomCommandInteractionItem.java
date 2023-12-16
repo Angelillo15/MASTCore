@@ -25,8 +25,9 @@ public class CustomCommandInteractionItem extends StaffItem implements IPlayerIn
 
   @Override
   public void interact(Player player, Player target) {
-    Bukkit.getScheduler().runTaskLater(MAStaff.getPlugin(), () -> player.performCommand(
-        command.replace("{target}", target.getName()).replace("{player}", player.getName())), 1L);
+    player.performCommand(
+        command.replace("{target}", target.getName()).replace("{player}", player.getName())
+    );
   }
 
   @Override
