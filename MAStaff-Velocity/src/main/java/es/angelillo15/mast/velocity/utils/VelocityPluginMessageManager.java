@@ -1,6 +1,7 @@
 package es.angelillo15.mast.velocity.utils;
 
 import com.google.inject.Inject;
+import com.google.inject.Singleton;
 import com.nookure.mast.api.event.Channels;
 import com.nookure.mast.api.event.Event;
 import com.nookure.mast.api.event.PluginMessageManager;
@@ -17,6 +18,7 @@ import java.io.ObjectOutputStream;
 import java.util.Objects;
 import java.util.Optional;
 
+@Singleton
 public class VelocityPluginMessageManager extends PluginMessageManager<Player> {
   @Inject
   private MAStaff plugin;
