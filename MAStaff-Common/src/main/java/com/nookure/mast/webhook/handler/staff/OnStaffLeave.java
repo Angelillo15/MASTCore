@@ -18,7 +18,7 @@ public class OnStaffLeave implements CommonFactory<OnStaffLeave, WebHookClient> 
   public void onStaffLeave(StaffLeaveEvent event) {
     client.sendWebHook(
         loader.getWebhook(Webhooks.STAFF_LEFT),
-        new Replacer("username", event.getStaffName())
+        new Replacer("username", event.staffName())
     );
   }
 

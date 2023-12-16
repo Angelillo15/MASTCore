@@ -11,6 +11,6 @@ public class OnAddonDisable {
 
   @MastSubscribe
   public void onAddonDisable(AddonDisableEvent event) {
-    manager.unregisterAllFeatures(event.getContainer());
+    manager.unregisterAllFeatures(event.container());
   }
 }

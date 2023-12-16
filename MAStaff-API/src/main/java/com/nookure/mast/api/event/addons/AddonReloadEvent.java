@@ -3,19 +3,15 @@ package com.nookure.mast.api.event.addons;
 import com.nookure.mast.api.addons.AddonContainer;
 import com.nookure.mast.api.event.Event;
 
-public class AddonReloadEvent extends Event {
-  private final AddonContainer container;
-
-  public AddonReloadEvent(AddonContainer container) {
-    this.container = container;
-  }
+public record AddonReloadEvent(AddonContainer container) implements Event {
 
   /**
    * Get the addon container
    *
    * @return addon container
    */
-  public AddonContainer getContainer() {
+  @Override
+  public AddonContainer container() {
     return container;
   }
 }

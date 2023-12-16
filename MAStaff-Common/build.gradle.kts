@@ -6,4 +6,7 @@ dependencies {
   compileOnly(libs.simpleYaml)
   compileOnly(libs.snakeYaml)
   compileOnly(libs.configurateHocon)
+  compileOnly(libs.waterfall)
+  compileOnly(libs.velocity)
+  compileOnly(libs.paperApi)
 }

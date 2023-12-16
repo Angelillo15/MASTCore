@@ -1,6 +1,6 @@
 package es.angelillo15.mast.bungee.listener;
 
-import es.angelillo15.mast.bungee.MAStaff;
+import com.nookure.mas.bungee.MAStaff;
 import es.angelillo15.mast.bungee.config.Messages;
 import es.angelillo15.mast.bungee.utils.TextUtils;
 import java.io.ByteArrayInputStream;

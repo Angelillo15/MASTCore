@@ -2,7 +2,6 @@ package com.nookure.mast.api.cmd.sender;
 
 import com.velocitypowered.api.proxy.Player;
 import es.angelillo15.mast.api.TextUtils;
-import net.kyori.adventure.audience.Audience;
 
 public class VelocityPlayerCommandSender implements CommandSender {
     private final Player player;
@@ -62,16 +61,15 @@ public class VelocityPlayerCommandSender implements CommandSender {
     }
 
     @Override
-    public Audience getAudience() {
-        return player;
-    }
-
-    @Override
     public String getServerName() {
         if (player.getCurrentServer().isPresent()) {
             return player.getCurrentServer().get().getServerInfo().getName();
         }
 
         return "Proxy";
+    }
+
+    public Player getPlayer() {
+        return player;
     }
 }

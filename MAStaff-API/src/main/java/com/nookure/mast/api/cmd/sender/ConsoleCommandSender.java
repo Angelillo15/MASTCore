@@ -3,7 +3,6 @@ package com.nookure.mast.api.cmd.sender;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import es.angelillo15.mast.api.ILogger;
-import net.kyori.adventure.audience.Audience;
 
 @Singleton
 public class ConsoleCommandSender implements CommandSender {
@@ -57,11 +56,6 @@ public class ConsoleCommandSender implements CommandSender {
   @Override
   public String getAddress() {
     return "0.0.0.0";
-  }
-
-  @Override
-  public Audience getAudience() {
-    return null;
   }
 
   @Override

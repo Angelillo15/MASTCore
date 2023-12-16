@@ -6,7 +6,7 @@ import es.angelillo15.mast.api.MAStaffInstance;
 import es.angelillo15.mast.api.addons.AddonDescription;
 import es.angelillo15.mast.api.addons.LegacyAddonsManager;
 import es.angelillo15.mast.api.addons.MAStaffAddon;
-import es.angelillo15.mast.bungee.MAStaff;
+import com.nookure.mas.bungee.MAStaff;
 import es.angelillo15.mast.bungee.config.Config;
 import es.angelillo15.mast.bungee.punishments.MAStaffPunishmentsLoader;
 import java.io.File;
