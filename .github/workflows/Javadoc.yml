@@ -9,7 +9,7 @@ name: JavaDoc Generator
 
 on:
   push:
-    branches: [ 2.x ]
+    branches: [ 3.x ]
 jobs:
 
   build-on-ubuntu:
