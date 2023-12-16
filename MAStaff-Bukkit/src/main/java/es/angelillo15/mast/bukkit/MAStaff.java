@@ -49,6 +49,7 @@ import es.angelillo15.mast.bukkit.listener.staffchat.OnStaffLegacyTalk;
 import es.angelillo15.mast.bukkit.listener.staffchat.OnStaffPaperTalk;
 import es.angelillo15.mast.bukkit.listener.staffmode.*;
 import es.angelillo15.mast.bukkit.listener.staffmode.achivement.OnAchievement;
+import es.angelillo15.mast.bukkit.listener.vanish.OnVanishAttack;
 import es.angelillo15.mast.bukkit.loaders.LegacyCustomItemsLoader;
 import es.angelillo15.mast.bukkit.loaders.GlowLoader;
 import es.angelillo15.mast.bukkit.loaders.LegacyItemsLoader;
@@ -182,6 +183,7 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance<JavaPlugin> {
     registerListener(injector.getInstance(CommandManagerHandler.class));
     registerListener(injector.getInstance(OnWorldChange.class));
     registerListener(injector.getInstance(OnFreezeDamage.class));
+    registerListener(injector.getInstance(OnVanishAttack.class));
 
     injector.getInstance(EventManager.class).registerListener(injector.getInstance(OnAddonDisable.class));
 
