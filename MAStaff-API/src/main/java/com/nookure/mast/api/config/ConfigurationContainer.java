@@ -9,18 +9,19 @@ import java.util.concurrent.atomic.AtomicReference;
 
 import org.spongepowered.configurate.CommentedConfigurationNode;
 import org.spongepowered.configurate.ConfigurateException;
-import org.spongepowered.configurate.hocon.HoconConfigurationLoader;
+import org.spongepowered.configurate.yaml.NodeStyle;
+import org.spongepowered.configurate.yaml.YamlConfigurationLoader;
 
 public final class ConfigurationContainer<C> {
   private final AtomicReference<C> config;
-  private final HoconConfigurationLoader loader;
+  private final YamlConfigurationLoader loader;
   private final Class<C> clazz;
   private final String fileName;
 
   private ConfigurationContainer(
       final C config,
       final Class<C> clazz,
-      final HoconConfigurationLoader loader,
+      final YamlConfigurationLoader loader,
       final String fileName
   ) {
     this.config = new AtomicReference<>(config);
@@ -57,13 +58,15 @@ public final class ConfigurationContainer<C> {
   }
 
   public static <C> ConfigurationContainer<C> load(Path path, Class<C> clazz) throws IOException {
-    return load(path, clazz, "config.conf");
+    return load(path, clazz, "config.yml");
   }
 
   public static <C> ConfigurationContainer<C> load(Path path, Class<C> clazz, String fileName) throws IOException {
     path = path.resolve(fileName);
     final boolean firstCreation = Files.notExists(path);
-    final HoconConfigurationLoader loader = HoconConfigurationLoader.builder()
+    final YamlConfigurationLoader loader = YamlConfigurationLoader.builder()
+        .nodeStyle(NodeStyle.BLOCK)
+        .indent(2)
         .defaultOptions(opts -> opts
             .shouldCopyDefaults(true)
             .header("""
@@ -93,6 +96,7 @@ public final class ConfigurationContainer<C> {
       node.set(clazz, config);
       loader.save(node);
     }
+
     ConfigurationContainer<C> container = new ConfigurationContainer<>(config, clazz, loader, fileName);
     container.save().join();
 

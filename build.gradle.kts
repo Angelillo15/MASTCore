@@ -32,6 +32,7 @@ dependencies {
   implementation(libs.configurateGson)
   implementation(libs.configurateHocon)
   implementation(libs.bundles.scoreboard)
+  implementation(libs.configurateYaml)
 }
 
 tasks.withType<JavaCompile> {
