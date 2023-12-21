@@ -17,7 +17,12 @@ import es.angelillo15.mast.bukkit.MAStaff;
 import es.angelillo15.mast.bukkit.ServerUtils;
 import es.angelillo15.mast.bukkit.manager.BukkitStaffFeatureManager;
 import es.angelillo15.mast.bukkit.utils.NMSUtils;
+import net.megavex.scoreboardlibrary.api.ScoreboardLibrary;
+import net.megavex.scoreboardlibrary.api.exception.NoPacketAdapterAvailableException;
+import net.megavex.scoreboardlibrary.api.noop.NoopScoreboardLibrary;
 import org.bukkit.plugin.Plugin;
+
+import java.util.Optional;
 
 public class BukkitInjector extends CommonModule {
   @Override
@@ -37,5 +42,19 @@ public class BukkitInjector extends CommonModule {
     bind(FreezeManager.class).asEagerSingleton();
     bind(BukkitPluginMessageManager.class).asEagerSingleton();
     bind(PluginMessageManager.class).to(BukkitPluginMessageManager.class).asEagerSingleton();
+    getScoreboardLibrary().ifPresent(scoreboardLibrary ->
+        bind(ScoreboardLibrary.class).toInstance(scoreboardLibrary)
+    );
+  }
+
+  private static Optional<ScoreboardLibrary> getScoreboardLibrary() {
+    ScoreboardLibrary library;
+    try {
+      library = ScoreboardLibrary.loadScoreboardLibrary(MAStaff.getPlugin());
+    } catch (NoPacketAdapterAvailableException e) {
+      library = new NoopScoreboardLibrary();
+    }
+
+    return Optional.of(library);
   }
 }
