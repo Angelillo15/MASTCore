@@ -31,6 +31,7 @@ dependencies {
   implementation(libs.paperLib)
   implementation(libs.configurateGson)
   implementation(libs.configurateHocon)
+  implementation(libs.bundles.scoreboard)
 }
 
 tasks.withType<JavaCompile> {
