@@ -1,6 +1,7 @@
 package com.nookure.mast.api.config.bukkit;
 
 import org.spongepowered.configurate.objectmapping.ConfigSerializable;
+import org.spongepowered.configurate.objectmapping.meta.Setting;
 
 import java.util.List;
 
@@ -12,14 +13,18 @@ public class ScoreboardConfig {
     return enabled;
   }
 
+  public final Scoreboard scoreboard = new Scoreboard();
+
   @ConfigSerializable
   public static final class Scoreboard {
+    @Setting
     private String title = "<b><dark_aqua>Staff Mode</dark_aqua></b>";
 
     public String title() {
       return title;
     }
 
+    @Setting
     private List<String> lines = List.of(
         "<b><yellow>|</yellow></b> <white>Rank:</white> <b><red>%vault_prefix%</red></b>",
         "<b><yellow>|</yellow></b> <white>Vanished:</white> <green>True</green>",

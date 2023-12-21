@@ -4,6 +4,8 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.nookure.mast.api.addons.AddonManager;
 import com.nookure.mast.api.addons.annotations.Addon;
+import com.nookure.mast.api.config.ConfigurationContainer;
+import com.nookure.mast.api.config.bukkit.ScoreboardConfig;
 import com.nookure.mast.api.event.Channels;
 import com.nookure.mast.api.event.EventManager;
 import com.nookure.mast.webhook.DiscordWebhooks;
@@ -77,6 +79,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.simpleyaml.configuration.file.YamlFile;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Connection;
 import java.util.ArrayList;
@@ -101,6 +104,7 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance<JavaPlugin> {
   private final ArrayList<Listener> listeners = new ArrayList<>();
   private boolean debug = false;
   private Injector injector;
+  private ConfigurationContainer<ScoreboardConfig> scoreboardConfig;
 
   @Override
   public void onEnable() {
@@ -346,6 +350,7 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance<JavaPlugin> {
     AsyncThreadKt.stop();
     logger.debug("Reloading Config...");
     loadConfig();
+    scoreboardConfig.reload().join();
     Messages.setMessages(ConfigLoader.getMessages().getConfig());
     logger.debug("Loading Database...");
     loadDatabase();
@@ -418,6 +423,11 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance<JavaPlugin> {
   @SuppressWarnings({"Deprecated", "deprecation"})
   public void inject() {
     getPLogger().debug("Injecting...");
+    try {
+      scoreboardConfig = ConfigurationContainer.load(getDataFolder().toPath(), ScoreboardConfig.class, "modules/scoreboard.yml");
+    } catch (IOException e) {
+      throw new RuntimeException(e);
+    }
     injector = Guice.createInjector(new BukkitInjector());
     StaticMembersInjector.injectStatics(injector, LegacyStaffPlayersManagers.class);
     StaticMembersInjector.injectStatics(injector, LegacyUserDataManager.class);
@@ -490,5 +500,9 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance<JavaPlugin> {
   @Override
   public Addon.AddonPlatform getPlatform() {
     return Addon.AddonPlatform.BUKKIT;
+  }
+
+  public ConfigurationContainer<ScoreboardConfig> getScoreboardConfig() {
+    return scoreboardConfig;
   }
 }

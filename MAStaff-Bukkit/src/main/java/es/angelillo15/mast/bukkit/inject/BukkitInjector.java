@@ -2,6 +2,7 @@ package es.angelillo15.mast.bukkit.inject;
 
 import com.nookure.mast.addon.ServerAddonManager;
 import com.nookure.mast.api.addons.AddonManager;
+import com.nookure.mast.api.config.bukkit.ScoreboardConfig;
 import com.nookure.mast.api.event.PluginMessageManager;
 import com.nookure.mast.api.manager.FreezeManager;
 import com.nookure.mast.api.staff.StaffFeatureManager;
@@ -45,6 +46,7 @@ public class BukkitInjector extends CommonModule {
     getScoreboardLibrary().ifPresent(scoreboardLibrary ->
         bind(ScoreboardLibrary.class).toInstance(scoreboardLibrary)
     );
+    bind(ScoreboardConfig.class).toInstance(MAStaff.getPlugin().getScoreboardConfig().get());
   }
 
   private static Optional<ScoreboardLibrary> getScoreboardLibrary() {
