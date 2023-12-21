@@ -13,6 +13,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Singleton
@@ -85,5 +86,13 @@ public class StaffManager {
    */
   public boolean isStaffPlayer(@NotNull IStaffPlayer staffPlayer) {
     return staffPlayers.containsValue(staffPlayer);
+  }
+
+  public Optional<IStaffPlayer> getOptionalStaffPlayer(@NotNull Player player) {
+    return Optional.ofNullable(getStaffPlayer(player));
+  }
+
+  public Optional<IStaffPlayer> getOptionalStaffPlayer(@NotNull String name) {
+    return Optional.ofNullable(getStaffPlayer(name));
   }
 }

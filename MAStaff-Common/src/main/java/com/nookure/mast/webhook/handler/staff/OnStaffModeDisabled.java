@@ -17,7 +17,7 @@ public class OnStaffModeDisabled implements CommonFactory<OnStaffModeDisabled, W
   public void onStaffModeDisable(StaffModeDisabledEvent event) {
     client.sendWebHook(
         loader.getWebhook(com.nookure.mast.webhook.Webhooks.STAFF_DISABLED),
-        new Replacer("username", event.getStaffPlayer().getName())
+        new Replacer("username", event.staffPlayer().getName())
     );
   }
 

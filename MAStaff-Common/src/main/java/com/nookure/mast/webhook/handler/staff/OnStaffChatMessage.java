@@ -18,9 +18,9 @@ public class OnStaffChatMessage implements CommonFactory<OnStaffChatMessage, Web
   public void onStaffChat(StaffChatMessageSentEvent event) {
     client.sendWebHook(
         loader.getWebhook(Webhooks.STAFF_CHAT),
-        new Replacer("message", event.getMessage()),
-        new Replacer("username", event.getUsername()),
-        new Replacer("server", event.getServer())
+        new Replacer("message", event.message()),
+        new Replacer("username", event.username()),
+        new Replacer("server", event.server())
     );
   }
 

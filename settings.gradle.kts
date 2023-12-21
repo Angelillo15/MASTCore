@@ -14,21 +14,24 @@ include("MAStaff-API")
 include("MAStaff-Bukkit")
 include("MAStaff-Bungee")
 include("MAStaff-Legacy")
-include("MAStaff-Punishments")
-include("MAStaff-Punishments:Punishments-Bukkit")
-findProject(":MAStaff-Punishments:Punishments-Bukkit")?.name = "Punishments-Bukkit"
-include("MAStaff-Punishments:Punishments-Bungee")
-findProject(":MAStaff-Punishments:Punishments-Bungee")?.name = "Punishments-Bungee"
-include("MAStaff-Punishments:Punishments-API")
-findProject(":MAStaff-Punishments:Punishments-API")?.name = "Punishments-API"
+
 include("MAStaff-Vanish")
 include("MAStaff-Glow")
 include("MAStaff-PAPI")
 include("MAStaff-Velocity")
 include("MAStaff-Common")
 include("MAStaff-Lite")
-include("MAStaff-Punishments:Punishments-Velocity")
-findProject(":MAStaff-Punishments:Punishments-Velocity")?.name = "Punishments-Velocity"
+
+// Disabled for now
+// include("MAStaff-Punishments")
+// include("MAStaff-Punishments:Punishments-Bukkit")
+// findProject(":MAStaff-Punishments:Punishments-Bukkit")?.name = "Punishments-Bukkit"
+// include("MAStaff-Punishments:Punishments-Bungee")
+// findProject(":MAStaff-Punishments:Punishments-Bungee")?.name = "Punishments-Bungee"
+// include("MAStaff-Punishments:Punishments-API")
+// findProject(":MAStaff-Punishments:Punishments-API")?.name = "Punishments-API"
+// findProject(":MAStaff-Punishments:Punishments-Velocity")?.name = "Punishments-Velocity"
+// include("MAStaff-Punishments:Punishments-Velocity")
 
 val MASTAFF_NMS = System.getenv("MASTAFF_NMS")?: "false"
 

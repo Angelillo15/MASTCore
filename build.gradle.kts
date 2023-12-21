@@ -6,7 +6,7 @@ plugins {
 }
 
 group = "es.angelillo15"
-version = "3.0.3"
+version = "3.1.0"
 
 tasks.shadowJar {
   Relocation.registerAll()
@@ -20,7 +20,6 @@ dependencies {
   implementation(project(":MAStaff-Bukkit"))
   implementation(project(":MAStaff-Bungee"))
   implementation(project(":MAStaff-Legacy"))
-  implementation(project(":MAStaff-Punishments"))
   implementation(project(":MAStaff-Vanish"))
   implementation(project(":MAStaff-PAPI"))
   implementation(project(":MAStaff-Glow"))
@@ -32,6 +31,8 @@ dependencies {
   implementation(libs.paperLib)
   implementation(libs.configurateGson)
   implementation(libs.configurateHocon)
+  implementation(libs.bundles.scoreboard)
+  implementation(libs.configurateYaml)
 }
 
 tasks.withType<JavaCompile> {

@@ -30,6 +30,8 @@ Config:
   # Enable or disable the debug mode.
   # If enabled, the plugin will send more information about the plugin status.
   debug: false
+  # Enable or disable if the plugin is under proxy mode (BungeeCord/Velocity).
+  proxy: false
   # Teleport to the previous location when the player leaves the staff mode.
   teleportBack: true
   # Disable the staff mode on exit.

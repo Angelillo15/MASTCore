@@ -27,7 +27,8 @@ kotlin = "1.9.0"
 velocity = "3.1.1"
 guice = "7.0.0"
 protocolize = "2.2.5"
-configurate = "4.1.2"
+configurate = "4.2.0-SNAPSHOT"
+scoreboard = "2.0.1"
 
 [libraries]
 snakeYaml = { group = "org.yaml", name = "snakeyaml", version.ref = "snakeYaml" }
@@ -68,8 +69,15 @@ guice = { group = "com.google.inject", name = "guice", version.ref = "guice" }
 protocolize = { group = "dev.simplix", name = "protocolize-api", version.ref = "protocolize" }
 configurateGson = { group = "org.spongepowered", name = "configurate-gson", version.ref = "configurate" }
 configurateHocon = { group = "org.spongepowered", name = "configurate-hocon", version.ref = "configurate" }
-
+configurateYaml = { group = "org.spongepowered", name = "configurate-yaml", version.ref = "configurate" }
+# Scoreboard stuff
+scoreboard = { group = "com.github.megavexnetwork.scoreboard-library", name = "scoreboard-library-api", version.ref = "scoreboard"}
+scoreboard-implementation = { group = "com.github.megavexnetwork.scoreboard-library", name = "scoreboard-library-implementation", version.ref = "scoreboard"}
+# Scoreboard packets adapter
+scoreboard-modern = { group = "com.github.megavexnetwork.scoreboard-library", name = "scoreboard-library-modern", version.ref = "scoreboard"}
+scoreboard-packetevents = { group = "com.github.megavexnetwork.scoreboard-library", name = "scoreboard-library-packetevents", version.ref = "scoreboard"}
+scoreboard-8 = { group = "com.github.megavexnetwork.scoreboard-library", name = "scoreboard-library-v1_8_R3", version.ref = "scoreboard"}
 [bundles]
 invAPI = ["invCore", "invAdvancedSlots", "invPagination", "configurableGui"]
-
+scoreboard = ["scoreboard", "scoreboard-implementation", "scoreboard-modern", "scoreboard-packetevents", "scoreboard-8"]
 [plugins]

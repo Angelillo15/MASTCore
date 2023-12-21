@@ -32,6 +32,7 @@ dependencies {
   compileOnlyApi(libs.adventureBukkit)
   compileOnlyApi(libs.adventureApi)
   compileOnlyApi(libs.guice)
+  compileOnlyApi(libs.bundles.scoreboard)
 }
 
 tasks.processResources {

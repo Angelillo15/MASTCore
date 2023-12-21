@@ -3,6 +3,7 @@ package es.angelillo15.mast.bukkit;
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
 import com.google.inject.Inject;
+import com.nookure.mast.api.config.bukkit.ScoreboardConfig;
 import com.nookure.mast.api.event.EventManager;
 import com.nookure.mast.api.event.staff.freeze.PlayerFreezeEvent;
 import com.nookure.mast.api.event.staff.freeze.PlayerUnfreezeEvent;
@@ -36,12 +37,15 @@ import io.papermc.lib.PaperLib;
 
 import java.io.File;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
 import javax.annotation.Nullable;
 
 import lombok.Getter;
 import lombok.Setter;
 import lombok.SneakyThrows;
 import lombok.val;
+import net.megavex.scoreboardlibrary.api.ScoreboardLibrary;
+import net.megavex.scoreboardlibrary.api.sidebar.Sidebar;
 import org.bukkit.*;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -66,6 +70,11 @@ public class StaffPlayer implements IStaffPlayer {
   private EventManager eventManager;
   @Inject
   private FreezeManager freezeManager;
+  @Inject
+  private ScoreboardConfig scoreboardConfig;
+  @Inject
+  private ScoreboardLibrary sbLib;
+  private Sidebar sidebar;
 
   private final Map<String, StaffItem> items = new HashMap<>();
   @Getter
@@ -167,6 +176,7 @@ public class StaffPlayer implements IStaffPlayer {
     }
     Bukkit.getPluginManager().callEvent(new StaffDisableEvent(this));
     disableStaffFeatures();
+    disableScoreboard();
     eventManager.fireEvent(new StaffModeDisabledEvent(this));
   }
 
@@ -191,6 +201,7 @@ public class StaffPlayer implements IStaffPlayer {
     staffModeAsyncInventoryChecker();
     Bukkit.getPluginManager().callEvent(new StaffEnableEvent(this));
     enableStaffFeatures();
+    enableScoreboard();
     eventManager.fireEvent(new StaffModeEnabledEvent(this));
   }
 
@@ -620,5 +631,35 @@ public class StaffPlayer implements IStaffPlayer {
         logger.error("Error: " + e.getMessage());
       }
     });
+  }
+
+  public void enableScoreboard() {
+    if (!scoreboardConfig.enabled()) return;
+    if (sbLib == null) return;
+    if (sidebar != null) return;
+
+    sidebar = sbLib.createSidebar();
+
+    sidebar.title(TextUtils.toComponent(scoreboardConfig.scoreboard.title()));
+
+    AtomicInteger i = new AtomicInteger();
+
+    scoreboardConfig.scoreboard.lines().forEach(line -> {
+      sidebar.line(i.get(), TextUtils.toComponent(TextUtils.processPlaceholders(player, line)));
+
+      i.getAndIncrement();
+    });
+
+    sidebar.addPlayer(player);
+  }
+
+  public void disableScoreboard() {
+    if (!scoreboardConfig.enabled()) return;
+    if (sbLib == null) return;
+    if (sidebar == null) return;
+
+    sidebar.removePlayer(player);
+    sidebar.close();
+    sidebar = null;
   }
 }

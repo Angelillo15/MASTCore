@@ -6,9 +6,7 @@ import es.angelillo15.mast.api.MAStaffInstance;
 import es.angelillo15.mast.api.addons.AddonDescription;
 import es.angelillo15.mast.api.addons.LegacyAddonsManager;
 import es.angelillo15.mast.api.addons.MAStaffAddon;
-import es.angelillo15.mast.bungee.MAStaff;
-import es.angelillo15.mast.bungee.config.Config;
-import es.angelillo15.mast.bungee.punishments.MAStaffPunishmentsLoader;
+import com.nookure.mas.bungee.MAStaff;
 import java.io.File;
 import java.io.InputStream;
 import java.net.URL;
@@ -28,8 +26,6 @@ public class AddonsLoader {
     if (!addonsFolder.exists()) {
       addonsFolder.mkdir();
     }
-
-    loadDefaultAddons();
 
     for (File file : Objects.requireNonNull(addonsFolder.listFiles())) {
       if (!file.isFile() || !file.getName().endsWith(".jar")) {
@@ -117,13 +113,6 @@ public class AddonsLoader {
 
   public static void reloadAddons() {
     LegacyAddonsManager.getAddons().values().forEach(MAStaffAddon::reload);
-  }
-
-  public static void loadDefaultAddons() {
-    if (Config.Modules.isPunishmentsEnabled())
-      registerAddon(
-          "Punishments",
-          MAStaff.getInstance().getInjector().getInstance(MAStaffPunishmentsLoader.class));
   }
 
   public static void registerAddon(AddonDescription addonDescription, MAStaffAddon<Plugin> addon) {

@@ -22,6 +22,10 @@ public class Config {
     return ConfigLoader.getConfig().getConfig().getBoolean("Config.disableStaffModeOnExit");
   }
 
+  public static boolean isProxy() {
+    return ConfigLoader.getConfig().getConfig().getBoolean("Config.proxy");
+  }
+
   public static boolean silentOpenChest() {
     return ConfigLoader.getConfig().getConfig().getBoolean("Config.silentChestOpening");
   }

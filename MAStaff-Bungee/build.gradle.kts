@@ -1,7 +1,5 @@
 dependencies {
   compileOnly(project(":MAStaff-API"))
-  compileOnly(project(":MAStaff-Punishments:Punishments-Bungee"))
-  compileOnly(project(":MAStaff-Punishments:Punishments-API"))
   compileOnly(project(":MAStaff-Common"))
   compileOnly(libs.waterfall)
   compileOnly(libs.snakeYaml)

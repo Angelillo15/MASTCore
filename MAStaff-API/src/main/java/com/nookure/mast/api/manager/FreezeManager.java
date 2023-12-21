@@ -7,6 +7,7 @@ import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Optional;
 
 @Singleton
 public class FreezeManager {
@@ -87,5 +88,9 @@ public class FreezeManager {
 
   public FreezeVector getFreezeVector(Player target) {
     return frozenPlayers.get(target.getName());
+  }
+
+  public Optional<FreezeVector> getFreezeOptional(Player target) {
+    return Optional.ofNullable(frozenPlayers.get(target.getName()));
   }
 }
