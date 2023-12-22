@@ -70,6 +70,8 @@ public class FreezeListener implements Listener {
       return;
     }
 
+    freezeManager.unfreezePlayer(event.getPlayer());
+
     TextUtils.sendMessage(
         staffPlayer.getPlayer(),
         Messages.CONFIRM_PUNISH_MESSAGE().replace("{player}", player.getName()));
