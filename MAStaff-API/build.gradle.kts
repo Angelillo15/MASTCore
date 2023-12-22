@@ -4,7 +4,7 @@ import java.time.format.DateTimeFormatter
 plugins {
   id("java")
   id("net.kyori.blossom") version "1.3.1"
-  id("org.ajoberstar.grgit") version "4.1.0"
+  id("org.ajoberstar.grgit") version "5.2.1"
 }
 
 group = "es.angelillo15"

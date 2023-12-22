@@ -3,6 +3,8 @@ import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 plugins {
   `maven-publish`
   id("com.github.johnrengelman.shadow") version "8.1.1"
+  id("org.ajoberstar.grgit") version "5.2.1"
+  id("org.ajoberstar.git-publish") version "4.2.1"
 }
 
 dependencies {
@@ -29,12 +31,8 @@ dependencies {
 publishing {
   repositories {
     maven {
-      name = "nookureRepository"
-      url = uri("https://repo.nookure.com/releases")
-      credentials(PasswordCredentials::class)
-      authentication {
-        create<BasicAuthentication>("basic")
-      }
+      name = "local"
+      url = uri("${rootProject.rootDir}/maven")
     }
   }
 
@@ -54,4 +52,19 @@ tasks.shadowJar {
     relocate(from, to)
   }
   exclude("META-INF/maven/**")
+}
+
+gitPublish {
+  repoUri = "https://github.com/Nookure/maven.git"
+  branch = "main"
+  fetchDepth = null
+  commitMessage = "MAStaff-API ${parent!!.version}"
+
+  contents {
+    from("${rootProject.rootDir}/maven")
+  }
+
+  preserve {
+    include("**")
+  }
 }

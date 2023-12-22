@@ -22,6 +22,9 @@ include("MAStaff-Velocity")
 include("MAStaff-Common")
 include("MAStaff-Lite")
 
+include("MAStaff-API:API-Publish")
+findProject(":MAStaff-API:API-Publish")?.name = "API-Publish"
+
 // Disabled for now
 // include("MAStaff-Punishments")
 // include("MAStaff-Punishments:Punishments-Bukkit")
@@ -51,8 +54,6 @@ if (MASTAFF_NMS.toBoolean()) {
   findProject(":MAStaff-NMS:NMS-1.12.2_R0")?.name = "NMS-1.12.2_R0"
   include("MAStaff-NMS:NMS-1.8.8_R0")
   findProject(":MAStaff-NMS:NMS-1.8.8_R0")?.name = "NMS-1.8.8_R0"
-  include("MAStaff-API:API-Publish")
-  findProject(":MAStaff-API:API-Publish")?.name = "API-Publish"
   include("MAStaff-NMS:NMS-1.20.2_R0")
   findProject(":MAStaff-NMS:NMS-1.20.2_R0")?.name = "NMS-1.20.2_R0"
 }
