@@ -9,6 +9,7 @@ import es.angelillo15.mast.api.player.IVanishPlayer;
 import java.util.List;
 import java.util.Map;
 
+import net.kyori.adventure.text.Component;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -207,5 +208,13 @@ public interface IStaffPlayer {
    */
   default void sendMessage(String message) {
     TextUtils.sendMessage(getPlayer(), TextUtils.toMM(message));
+  }
+
+  /**
+   * Send a message to the player
+   * @param component - message to send
+   */
+  default void sendMessage(Component component) {
+    TextUtils.getAudience(getPlayer()).sendMessage(component);
   }
 }

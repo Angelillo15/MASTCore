@@ -9,6 +9,9 @@
 /MAStaff-API/build/
 /.idea/
 
+# Maven exclude paths
+maven
+
 # Ignore Gradle project-specific cache directory
 .gradle
 

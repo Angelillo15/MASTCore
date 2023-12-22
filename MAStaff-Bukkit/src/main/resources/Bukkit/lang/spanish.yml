@@ -107,3 +107,11 @@ StaffVault:
   staffVaultFull: "{prefix} &7Tu inventario de staff esta lleno."
   # Mensaje que se manda cuando intentas abrir el vault en modo staff
   staffVaultInStaffMode: "{prefix} &7No puedes abrir el vault en modo staff."
+# Teleport section.
+Teleport:
+  tp:
+    badUsage: '{prefix} &7Tienes que usar &a/mtp <jugador>'
+    teleported: '{prefix} Teletransportando a &a{player}'
+  tph:
+    badUsage: '{prefix} &7Tienes que usar &a/mtph <player>'
+    teleported: '{prefix} Teletransportando &a{player} &7hacia ti'

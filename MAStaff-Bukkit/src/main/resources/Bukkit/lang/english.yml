@@ -107,3 +107,11 @@ StaffVault:
   staffVaultFull: "{prefix} &7Your Staff Vault is full."
   # Message sent when the Staff tries to open the Staff Vault on StaffMode.
   staffVaultInStaffMode: "{prefix} &7You can't open your Staff Vault while in Staff Mode."
+# Teleport section.
+Teleport:
+  tp:
+    badUsage: '{prefix} &7You must use &a/mtp <player>'
+    teleported: '{prefix} Teleporting to &a{player}'
+  tph:
+    badUsage: '{prefix} &7You must use &a/mtph <player>'
+    teleported: '{prefix} Teleporting &a{player} &7to you'
