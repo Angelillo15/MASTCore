@@ -18,6 +18,7 @@ public class ConfigLoader {
   @Getter private static ConfigManager en;
   @Getter private static ConfigManager customItems;
   @Getter private static ConfigManager punishmentsGUI;
+  @Getter private static ConfigManager commands;
   private final MAStaffInstance<JavaPlugin> plugin;
   private final boolean isFree;
 
@@ -41,6 +42,8 @@ public class ConfigLoader {
     loadMessage();
     logger.debug("Loading internal staff items...");
     loadInternal();
+    logger.debug("Loading commands...");
+    loadCommands();
 
     if (!isFree) {
       logger.debug("Loading glow module...");
@@ -132,6 +135,15 @@ public class ConfigLoader {
             "Bukkit/modules/items/custom.yml",
             "/modules/items/custom.yml");
     customItems.registerConfig();
+  }
+
+  public void loadCommands() {
+    commands =
+        new ConfigManager(
+            plugin.getPluginDataFolder().toPath(),
+            "Bukkit/commands.yml",
+            "/commands.yml");
+    commands.registerConfig();
   }
 
   public void loadGlowModule() {
