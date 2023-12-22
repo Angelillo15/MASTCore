@@ -77,6 +77,10 @@ class CommandTemplate : org.bukkit.command.Command {
         MAStaffInstance.getLogger().debug("Command ${command.javaClass.simpleName} has been edited from config")
       }
 
+      if (commandData != null) {
+        insertIntoCommandFileIfNot(commandData)
+      }
+
       if (commandData == null) {
         MAStaffInstance.getLogger().warn("Command ${command.javaClass.simpleName} doesn't have CommandData annotation")
         return
@@ -106,6 +110,24 @@ class CommandTemplate : org.bukkit.command.Command {
       val bukkitCommand = commandMap[command] ?: return
       commandMap.remove(command)
       CommandManager.getCommandMap()?.let { bukkitCommand.unregister(it) }
+    }
+
+    fun insertIntoCommandFileIfNot(commandData: CommandData) {
+      val commands = ConfigLoader.getCommands().config
+
+      if (commands.contains("Commands.${commandData.name}")) {
+        MAStaffInstance.getLogger().debug("Command ${commandData.name} has been found in config")
+        return
+      }
+
+      commands.set("Commands.${commandData.name}.name", commandData.name)
+      commands.set("Commands.${commandData.name}.aliases", commandData.aliases)
+      commands.set("Commands.${commandData.name}.permission", commandData.permission)
+      commands.set("Commands.${commandData.name}.usage", commandData.usage)
+      commands.set("Commands.${commandData.name}.description", commandData.description)
+      commands.set("Commands.${commandData.name}.enabled", true)
+
+      ConfigLoader.getCommands().config.save()
     }
   }
 }
