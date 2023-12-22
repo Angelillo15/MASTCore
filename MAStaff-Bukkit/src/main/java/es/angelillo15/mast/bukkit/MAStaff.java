@@ -164,7 +164,7 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance<JavaPlugin> {
     if (Config.Addons.vanish())
       registerCommand(injector.getInstance(VanishCMD.class));
     if (Config.Freeze.enabled())
-      Objects.requireNonNull(getCommand("freeze")).setExecutor(injector.getInstance(FreezeCMD.class));
+      registerCommand(injector.getInstance(FreezeCMD.class));
     if (Config.Freeze.enabled() && Config.Freeze.freezeChat())
       registerCommand(injector.getInstance(FreezeChat.class));
   }
