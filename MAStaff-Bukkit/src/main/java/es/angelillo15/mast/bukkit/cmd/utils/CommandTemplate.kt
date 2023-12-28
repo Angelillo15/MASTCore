@@ -112,7 +112,7 @@ class CommandTemplate : org.bukkit.command.Command {
       CommandManager.getCommandMap()?.let { bukkitCommand.unregister(it) }
     }
 
-    fun insertIntoCommandFileIfNot(commandData: CommandData) {
+    private fun insertIntoCommandFileIfNot(commandData: CommandData) {
       val commands = ConfigLoader.getCommands().config
 
       if (commands.contains("Commands.${commandData.name}")) {
