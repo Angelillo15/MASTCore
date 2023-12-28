@@ -1,14 +1,12 @@
 package es.angelillo15.mast.bukkit.cmd;
 
 import com.google.inject.Inject;
-import com.nookure.mast.api.cmd.Command;
 import com.nookure.mast.api.cmd.CommandData;
+import com.nookure.mast.api.cmd.StaffCommand;
 import com.nookure.mast.api.cmd.sender.CommandSender;
-import com.nookure.mast.api.cmd.sender.PlayerCommandSender;
 import es.angelillo15.mast.api.IStaffPlayer;
 import es.angelillo15.mast.api.TextUtils;
 import es.angelillo15.mast.api.config.bukkit.Messages;
-import es.angelillo15.mast.api.managers.StaffManager;
 import com.nookure.mast.api.manager.FreezeManager;
 import es.angelillo15.mast.bukkit.gui.SelectTargetGUI;
 
@@ -26,23 +24,12 @@ import org.jetbrains.annotations.NotNull;
     usage = "/freeze <player>",
     description = "Freeze a player"
 )
-public class FreezeCMD extends Command {
-  @Inject
-  private StaffManager staffManager;
+public class FreezeCMD extends StaffCommand {
   @Inject
   private FreezeManager freezeManager;
-
   @Override
-  public void onCommand(@NotNull CommandSender sender, @NotNull String label, @NotNull String[] args) {
-    if (!(sender instanceof PlayerCommandSender pcs)) return;
-
-    Player p = pcs.getPlayer();
-
-    if (!staffManager.isStaffPlayer(p.getName())) return;
-
-    IStaffPlayer staff = staffManager.getStaffPlayer(p.getName());
-
-    assert staff != null;
+  public void onStaffCommand(@NotNull IStaffPlayer sender, @NotNull String label, @NotNull String[] args) {
+    Player p = sender.getPlayer();
 
     if (!p.hasPermission("mast.freeze")) {
       TextUtils.colorize(Messages.GET_NO_PERMISSION_MESSAGE(), p);
@@ -51,7 +38,7 @@ public class FreezeCMD extends Command {
 
     if (args.length < 1) {
       new SelectTargetGUI(p).callback((target) -> {
-        execute(staff, target);
+        execute(sender, target);
         p.closeInventory();
       }).open();
       return;
@@ -59,13 +46,13 @@ public class FreezeCMD extends Command {
 
     if (args[0].equalsIgnoreCase("/remove")) {
       if (freezeManager.isFrozen(args[1]))
-        staff.unfreezePlayer(args[1]);
+        sender.unfreezePlayer(args[1]);
       return;
     }
 
     if (args[0].equalsIgnoreCase("/exec")) {
       if (freezeManager.isFrozen(args[1]))
-        staff.executeFreezedPunishments(args[1]);
+        sender.executeFreezedPunishments(args[1]);
       return;
     }
 
@@ -76,7 +63,7 @@ public class FreezeCMD extends Command {
       return;
     }
 
-    execute(staff, Bukkit.getPlayer(args[0]));
+    execute(sender, Bukkit.getPlayer(args[0]));
   }
 
   public void execute(IStaffPlayer staff, Player target) {
