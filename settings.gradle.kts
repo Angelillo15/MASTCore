@@ -56,4 +56,6 @@ if (MASTAFF_NMS.toBoolean()) {
   findProject(":MAStaff-NMS:NMS-1.8.8_R0")?.name = "NMS-1.8.8_R0"
   include("MAStaff-NMS:NMS-1.20.2_R0")
   findProject(":MAStaff-NMS:NMS-1.20.2_R0")?.name = "NMS-1.20.2_R0"
+  include("MAStaff-NMS:NMS-1.20.4_R0")
+  findProject(":MAStaff-NMS:NMS-1.20.4_R0")?.name = "NMS-1.20.4_R0"
 }

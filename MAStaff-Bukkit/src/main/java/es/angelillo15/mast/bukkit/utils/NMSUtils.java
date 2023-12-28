@@ -1,5 +1,6 @@
 package es.angelillo15.mast.bukkit.utils;
 
+import com.nookure.mast.bukkit.nms.V1_20_4_R0;
 import es.angelillo15.bukkit.nms.V1_12_2_R0;
 import es.angelillo15.mast.bukkit.nms.V1_8_8_R0;
 import es.angelillo15.mast.bukkit.MAStaff;
@@ -21,6 +22,7 @@ public class NMSUtils {
       return versionSupport;
     }
     return switch (VERSION) {
+      case "v1_20_R3" -> versionSupport = new V1_20_4_R0(MAStaff.getPlugin());
       case "v1_20_R2" -> versionSupport = new V1_20_2_R0(MAStaff.getPlugin());
       case "v1_20_R1" -> versionSupport = new V1_20_1_R0(MAStaff.getPlugin());
       case "v1_18_R2" -> versionSupport = new V1_18_2_R0(MAStaff.getPlugin());

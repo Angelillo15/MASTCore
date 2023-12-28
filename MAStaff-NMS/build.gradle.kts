@@ -8,6 +8,7 @@ plugins {
 dependencies {
   compileOnly(libs.paperApi)
   compileOnly("org.spigotmc:spigot:1.20.1-R0.1-SNAPSHOT")
+  implementation(project(":MAStaff-NMS:NMS-1.20.4_R0", "reobf"))
   implementation(project(":MAStaff-NMS:NMS-1.20.2_R0", "reobf"))
   implementation(project(":MAStaff-NMS:NMS-1.20.1_R0", "reobf"))
   implementation(project(":MAStaff-NMS:NMS-1.19.4_R0", "reobf"))
