@@ -193,7 +193,7 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance<JavaPlugin> {
     registerListener(injector.getInstance(OnFreezeDamage.class));
     registerListener(injector.getInstance(OnVanishAttack.class));
 
-    injector.getInstance(EventManager.class).registerListener(injector.getInstance(OnAddonDisable.class));
+    this.getServer().getMessenger().unregisterIncomingPluginChannel(this);
 
     if (Config.Freeze.enabled()) registerListener(injector.getInstance(FreezeListener.class));
     if (Config.silentOpenChest()) registerListener(injector.getInstance(OnOpenChest.class));
@@ -228,7 +228,12 @@ public class MAStaff extends JavaPlugin implements MAStaffInstance<JavaPlugin> {
     this.getServer().getMessenger().registerOutgoingPluginChannel(this, "mastaff:commands");
     this.getServer().getMessenger().registerOutgoingPluginChannel(this, Channels.EVENTS);
 
-    injector.getInstance(EventManager.class).registerListener(injector.getInstance(OnStaffChatToggle.class));
+    EventManager em = injector.getInstance(EventManager.class);
+
+    em.unregisterAllListeners();
+
+    em.registerListener(injector.getInstance(OnAddonDisable.class));
+    em.registerListener(injector.getInstance(OnStaffChatToggle.class));
 
     this.getServer().getMessenger().registerIncomingPluginChannel(
         this,
