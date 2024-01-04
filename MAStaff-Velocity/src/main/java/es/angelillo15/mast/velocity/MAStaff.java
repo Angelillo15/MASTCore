@@ -181,6 +181,8 @@ public class MAStaff implements MAStaffInstance<ProxyServer> {
 
     EventManager eventManager = injector.getInstance(EventManager.class);
 
+    eventManager.unregisterAllListeners();
+
     eventManager.registerListener(injector.getInstance(OnPlayerChat.class));
   }
 
