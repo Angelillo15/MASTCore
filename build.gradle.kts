@@ -6,7 +6,7 @@ plugins {
 }
 
 group = "es.angelillo15"
-version = "3.1.1"
+version = "3.1.2"
 
 tasks.shadowJar {
   Relocation.registerAll()
