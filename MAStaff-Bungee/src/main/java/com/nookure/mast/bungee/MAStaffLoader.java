@@ -2,6 +2,7 @@ package com.nookure.mast.bungee;
 
 import es.angelillo15.mast.api.database.PluginConnection;
 import es.angelillo15.mast.api.managers.loader.ReflectionLoader;
+import es.angelillo15.mast.api.thread.AsyncThreadKt;
 import es.angelillo15.mast.api.utils.BungeeUtils;
 import es.angelillo15.mast.bungee.addons.AddonsLoader;
 import es.angelillo15.mast.bungee.metrics.Metrics;
@@ -15,6 +16,7 @@ public class MAStaffLoader extends MAStaff {
         super.onEnable();
         drawLogo();
         LibsLoader.loadLibs();
+        AsyncThreadKt.start();
         BungeeUtils.setAudienceBungee(this);
         loadInjector();
         loadConfig();
