@@ -1,6 +1,6 @@
 name: MAStaff
 version: '$version'
-main: com.nookure.mas.bungee.MAStaffLoader
+main: com.nookure.mast.bungee.MAStaffLoader
 author: Angelillo15
 libraries:
   - org.xerial:sqlite-jdbc:3.41.2.1
