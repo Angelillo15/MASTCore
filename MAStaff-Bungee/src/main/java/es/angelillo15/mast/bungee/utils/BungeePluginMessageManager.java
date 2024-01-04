@@ -6,7 +6,7 @@ import com.nookure.mast.api.event.Channels;
 import com.nookure.mast.api.event.Event;
 import com.nookure.mast.api.event.PluginMessageManager;
 import es.angelillo15.mast.api.ILogger;
-import com.nookure.mas.bungee.MAStaff;
+import com.nookure.mast.bungee.MAStaff;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import org.jetbrains.annotations.NotNull;
 

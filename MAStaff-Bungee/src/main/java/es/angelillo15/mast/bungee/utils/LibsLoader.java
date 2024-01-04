@@ -1,7 +1,7 @@
 package es.angelillo15.mast.bungee.utils;
 
 import es.angelillo15.mast.api.libs.LibsManager;
-import com.nookure.mas.bungee.MAStaff;
+import com.nookure.mast.bungee.MAStaff;
 import net.byteflux.libby.BungeeLibraryManager;
 
 public class LibsLoader {

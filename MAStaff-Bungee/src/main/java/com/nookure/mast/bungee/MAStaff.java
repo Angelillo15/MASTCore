@@ -1,9 +1,9 @@
-package com.nookure.mas.bungee;
+package com.nookure.mast.bungee;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
-import com.nookure.mas.bungee.listener.OnPlayerChat;
-import com.nookure.mas.bungee.listener.PluginMessageListener;
+import com.nookure.mast.bungee.listener.OnPlayerChat;
+import com.nookure.mast.bungee.listener.PluginMessageListener;
 import com.nookure.mast.api.addons.AddonManager;
 import com.nookure.mast.api.addons.annotations.Addon;
 import com.nookure.mast.api.event.Channels;

@@ -9,7 +9,7 @@ import es.angelillo15.mast.api.config.common.CommonConfigLoader;
 import es.angelillo15.mast.api.inject.CommonModule;
 import com.nookure.mast.api.manager.cmd.CommandBungeeSenderManager;
 import es.angelillo15.mast.api.utils.MAStaffInject;
-import com.nookure.mas.bungee.MAStaff;
+import com.nookure.mast.bungee.MAStaff;
 import es.angelillo15.mast.bungee.utils.BungeePluginMessageManager;
 import es.angelillo15.mast.bungee.utils.BungeeServerUtils;
 

@@ -1,7 +1,7 @@
 package es.angelillo15.mast.bungee.listener;
 
 import es.angelillo15.mast.api.MAStaffInstance;
-import com.nookure.mas.bungee.MAStaff;
+import com.nookure.mast.bungee.MAStaff;
 
 import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;

@@ -5,7 +5,7 @@ import es.angelillo15.mast.api.event.EventHandler;
 import es.angelillo15.mast.api.event.Listener;
 import es.angelillo15.mast.api.redis.events.server.ServerConnectedEvent;
 import es.angelillo15.mast.api.redis.events.server.ServerDisconnectedEvent;
-import com.nookure.mas.bungee.MAStaff;
+import com.nookure.mast.bungee.MAStaff;
 import es.angelillo15.mast.bungee.config.Messages;
 
 public class OnServer implements Listener {

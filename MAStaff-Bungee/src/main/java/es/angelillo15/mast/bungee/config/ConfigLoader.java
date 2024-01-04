@@ -3,7 +3,7 @@ package es.angelillo15.mast.bungee.config;
 import es.angelillo15.configmanager.ConfigManager;
 import es.angelillo15.mast.api.ILogger;
 import es.angelillo15.mast.api.managers.ConfigMerge;
-import com.nookure.mas.bungee.MAStaff;
+import com.nookure.mast.bungee.MAStaff;
 import java.io.File;
 import java.io.IOException;
 import lombok.Getter;

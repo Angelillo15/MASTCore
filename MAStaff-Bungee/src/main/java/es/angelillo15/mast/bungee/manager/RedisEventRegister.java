@@ -2,7 +2,7 @@ package es.angelillo15.mast.bungee.manager;
 
 import es.angelillo15.mast.api.event.Events;
 import es.angelillo15.mast.api.redis.RedisEventManager;
-import com.nookure.mas.bungee.MAStaff;
+import com.nookure.mast.bungee.MAStaff;
 
 public class RedisEventRegister {
   public static void registerEvents() {

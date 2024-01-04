@@ -3,7 +3,7 @@ package es.angelillo15.mast.bungee.manager;
 import es.angelillo15.mast.api.TextUtils;
 import es.angelillo15.mast.api.managers.ManagerExecutor;
 import es.angelillo15.mast.api.redis.RedisEvent;
-import com.nookure.mas.bungee.MAStaff;
+import com.nookure.mast.bungee.MAStaff;
 import es.angelillo15.mast.bungee.config.Config;
 import lombok.Getter;
 import redis.clients.jedis.Jedis;

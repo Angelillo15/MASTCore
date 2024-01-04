@@ -6,7 +6,7 @@ import es.angelillo15.mast.api.MAStaffInstance;
 import es.angelillo15.mast.api.addons.AddonDescription;
 import es.angelillo15.mast.api.addons.LegacyAddonsManager;
 import es.angelillo15.mast.api.addons.MAStaffAddon;
-import com.nookure.mas.bungee.MAStaff;
+import com.nookure.mast.bungee.MAStaff;
 import java.io.File;
 import java.io.InputStream;
 import java.net.URL;

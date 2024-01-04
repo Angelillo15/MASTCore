@@ -1,4 +1,4 @@
-package com.nookure.mas.bungee.listener;
+package com.nookure.mast.bungee.listener;
 
 import com.google.inject.Inject;
 import com.nookure.mast.api.MAStaff;

@@ -2,7 +2,7 @@ package es.angelillo15.mast.bungee.cmd;
 
 import com.nookure.mast.api.cmd.sender.CommandSender;
 import com.nookure.mast.api.manager.cmd.CommandBungeeSenderManager;
-import com.nookure.mas.bungee.MAStaff;
+import com.nookure.mast.bungee.MAStaff;
 import net.md_5.bungee.api.plugin.Command;
 import net.md_5.bungee.api.plugin.TabExecutor;
 

@@ -1,4 +1,4 @@
-package com.nookure.mas.bungee;
+package com.nookure.mast.bungee;
 
 import es.angelillo15.mast.api.database.PluginConnection;
 import es.angelillo15.mast.api.managers.loader.ReflectionLoader;
