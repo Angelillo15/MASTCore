@@ -45,6 +45,13 @@ public class EventManager {
   }
 
   /**
+   * Unregister all listeners
+   */
+  public void unregisterAllListeners() {
+    listeners.clear();
+  }
+
+  /**
    * Register a listener object
    * The class must have methods annotated with {@link MastSubscribe}
    * in order to work, otherwise it will be ignored
