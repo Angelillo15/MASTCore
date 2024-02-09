@@ -13,4 +13,10 @@ public class Permissions {
    * instead of a {@link PlayerWrapper}.
    */
   public static final String STAFF_PERMISSION = "nookure.staff";
+
+  /**
+   * Permission to use the admin commands.
+   * This permission is required to use any admin command.
+   */
+  public static final String STAFF_ADMIN_PERMISSION = "nookure.staff.admin";
 }
