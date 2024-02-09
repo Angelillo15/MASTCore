@@ -38,6 +38,14 @@ public abstract class Command {
   }
 
   /**
+   * This method is called when the command is registered
+   * here you can prepare the command (e.g. register sub-commands)
+   */
+  public void prepare() {
+    // Override this method to prepare the command
+  }
+
+  /**
    * Get the command data of the command
    *
    * @return the command data of the command

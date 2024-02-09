@@ -34,5 +34,5 @@ public abstract class StaffCommand extends Command {
    * @param label  The label of the command
    * @param args   The arguments of the command
    */
-  abstract void onStaffCommand(@NotNull StaffPlayerWrapper sender, @NotNull String label, @NotNull List<String> args);
+  protected abstract void onStaffCommand(@NotNull StaffPlayerWrapper sender, @NotNull String label, @NotNull List<String> args);
 }

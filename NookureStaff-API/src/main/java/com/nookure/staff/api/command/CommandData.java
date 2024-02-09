@@ -17,4 +17,6 @@ public @interface CommandData {
   String usage() default "";
 
   String description() default "";
+
+  Class<? extends Command>[] subCommands() default {};
 }
