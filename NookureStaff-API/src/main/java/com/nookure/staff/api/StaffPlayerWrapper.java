@@ -48,24 +48,34 @@ public interface StaffPlayerWrapper extends PlayerWrapper {
   void setItems();
 
   /**
-   * Get the player's items.
-   * @return the player's items
-   */
-  @NotNull Map<String, StaffItem> getItems();
-
-  /**
    * Save the player's items.
    */
-  void saveItems();
+  void saveInventory();
+
+  /**
+   * Restore the player's items.
+   */
+  void restoreInventory();
 
   /**
    * Clear the player's items.
    */
-  void clearItems();
+  void clearInventory();
 
   /**
-   * This will restore the player's items.
-   * from the binary user file.
+   * Enable the player's perks.
    */
-  void restoreItems();
+  void disablePlayerPerks();
+
+  /**
+   * Disable the player's perks.
+   */
+  void enablePlayerPerks();
+
+  /**
+   * Get the player's items.
+   *
+   * @return the player's items
+   */
+  @NotNull Map<String, StaffItem> getItems();
 }
