@@ -1,10 +1,13 @@
 package com.nookure.staff.paper.bootstrap;
 
 import com.google.inject.Guice;
+import com.google.inject.Inject;
 import com.google.inject.Injector;
 import com.nookure.staff.Constants;
 import com.nookure.staff.api.Logger;
 import com.nookure.staff.api.NookureStaffPlatform;
+import com.nookure.staff.api.config.ConfigurationContainer;
+import com.nookure.staff.api.config.bukkit.BukkitMessages;
 import com.nookure.staff.paper.NookureStaff;
 import com.nookure.staff.paper.util.PaperLoggerImpl;
 import net.kyori.adventure.text.Component;
@@ -16,6 +19,8 @@ import java.io.File;
 import java.io.InputStream;
 
 public class StaffBootstrapper extends JavaPlugin implements NookureStaffPlatform<JavaPlugin> {
+  @Inject
+  private ConfigurationContainer<BukkitMessages> messages;
   private boolean debug = false;
   private Injector injector;
   private Logger logger;
@@ -55,6 +60,7 @@ public class StaffBootstrapper extends JavaPlugin implements NookureStaffPlatfor
 
   public void loadInjector() {
     injector = Guice.createInjector(new PaperPluginModule(this));
+    injector.injectMembers(this);
   }
 
   public void loadPlugin() {
@@ -101,5 +107,10 @@ public class StaffBootstrapper extends JavaPlugin implements NookureStaffPlatfor
   @Override
   public Injector getInjector() {
     return injector;
+  }
+
+  @Override
+  public String getPrefix() {
+    return messages.get().prefix();
   }
 }
