@@ -19,4 +19,6 @@ public interface NookureStaff {
   InputStream getPluginResource(String s);
 
   Injector getInjector();
+
+  String getPrefix();
 }
