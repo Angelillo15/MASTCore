@@ -12,9 +12,11 @@ import com.nookure.staff.api.database.AbstractPluginConnection;
 import com.nookure.staff.api.manager.PlayerWrapperManager;
 import com.nookure.staff.api.manager.StaffItemsManager;
 import com.nookure.staff.api.util.PluginModule;
+import com.nookure.staff.api.util.Scheduler;
 import com.nookure.staff.command.sender.ConsoleCommandSender;
 import com.nookure.staff.database.PluginConnection;
 import com.nookure.staff.paper.command.PaperCommandManager;
+import com.nookure.staff.paper.util.PaperScheduler;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandMap;
 import org.bukkit.entity.Player;
@@ -43,6 +45,7 @@ public class PaperPluginModule extends PluginModule {
     bind(StaffItemsManager.class).asEagerSingleton();
     bind(ConsoleCommandSender.class).asEagerSingleton();
     bind(CommandManager.class).to(PaperCommandManager.class).asEagerSingleton();
+    bind(Scheduler.class).to(PaperScheduler.class).asEagerSingleton();
 
     try {
       /*
