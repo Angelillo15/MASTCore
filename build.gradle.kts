@@ -13,6 +13,7 @@ dependencies {
   implementation(libs.storm)
   implementation(libs.hikariCP)
   implementation(libs.apacheCommons)
+  implementation(libs.caffeine)
 }
 
 tasks.shadowJar {
@@ -41,6 +42,7 @@ allprojects {
     compileOnly(rootProject.libs.storm)
     compileOnly(rootProject.libs.adventureApi)
     compileOnly(rootProject.libs.miniMessage)
+    compileOnly(rootProject.libs.caffeine)
   }
 
   tasks {
