@@ -1,26 +1,33 @@
 package com.nookure.staff.paper.data;
 
-import org.bukkit.inventory.Inventory;
+import org.bukkit.Location;
 import org.bukkit.inventory.ItemStack;
 
+import java.io.Serial;
 import java.io.Serializable;
+import java.util.Arrays;
 
 public class StaffModeDataRecord implements Serializable {
+  @Serial
+  private static final long serialVersionUID = 2222L;
   private ItemStack[] playerInventory;
   private ItemStack[] playerInventoryArmor;
   private ItemStack[] staffVault;
   private boolean staffMode;
+  private Location enabledLocation;
 
   public StaffModeDataRecord(
       ItemStack[] playerInventory,
       ItemStack[] playerInventoryArmor,
       ItemStack[] staffVault,
-      boolean staffMode
+      boolean staffMode,
+      Location enabledLocation
   ) {
     this.playerInventory = playerInventory;
     this.playerInventoryArmor = playerInventoryArmor;
     this.staffVault = staffVault;
     this.staffMode = staffMode;
+    this.enabledLocation = enabledLocation;
   }
 
   public ItemStack[] playerInventory() {
@@ -53,5 +60,23 @@ public class StaffModeDataRecord implements Serializable {
 
   public void staffMode(boolean staffMode) {
     this.staffMode = staffMode;
+  }
+
+  public Location enabledLocation() {
+    return enabledLocation;
+  }
+
+  public void enabledLocation(Location enabledLocation) {
+    this.enabledLocation = enabledLocation;
+  }
+
+  @Override
+  public String toString() {
+    return "StaffModeDataRecord{" +
+        "playerInventory=" + Arrays.toString(playerInventory) +
+        ", playerInventoryArmor=" + Arrays.toString(playerInventoryArmor) +
+        ", staffVault=" + Arrays.toString(staffVault) +
+        ", staffMode=" + staffMode +
+        '}';
   }
 }

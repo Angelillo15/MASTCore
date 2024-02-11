@@ -135,7 +135,8 @@ public class StaffModeData {
           bukkitPlayer.getInventory().getContents(),
           bukkitPlayer.getInventory().getArmorContents(),
           new ItemStack[0],
-          false
+          false,
+          ((PaperPlayerWrapper) player).getPlayer().getLocation()
       ), player);
     }
 
