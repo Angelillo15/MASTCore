@@ -3,7 +3,8 @@ package com.nookure.staff.command.sender;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.nookure.staff.api.Logger;
-import com.nookure.staff.api.command.sender.CommandSender;
+import com.nookure.staff.api.NookureStaff;
+import com.nookure.staff.api.command.CommandSender;
 import net.kyori.adventure.text.Component;
 import org.jetbrains.annotations.NotNull;
 
@@ -13,10 +14,17 @@ import java.util.UUID;
 public class ConsoleCommandSender implements CommandSender {
   @Inject
   private Logger logger;
+  @Inject
+  private NookureStaff plugin;
 
   @Override
   public void sendMessage(@NotNull Component component) {
     logger.info(component);
+  }
+
+  @Override
+  public void sendMiniMessage(@NotNull String message, String... placeholders) {
+    CommandSender.super.sendMiniMessage(message.replace("{prefix}", plugin.getPrefix()), placeholders);
   }
 
   @Override

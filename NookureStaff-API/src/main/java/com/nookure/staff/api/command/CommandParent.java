@@ -3,7 +3,6 @@ package com.nookure.staff.api.command;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
 import com.nookure.staff.Constants;
-import com.nookure.staff.api.command.sender.CommandSender;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.*;

@@ -1,4 +1,4 @@
-package com.nookure.staff.api.command.sender;
+package com.nookure.staff.api.command;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
@@ -20,7 +20,17 @@ public interface CommandSender {
    *
    * @param message the message to send
    */
-  default void sendMiniMessage(@NotNull String message) {
+  default void sendMiniMessage(@NotNull String message, String... placeholders) {
+    if (message.isBlank()) return;
+
+    if (placeholders.length % 2 != 0) {
+      throw new IllegalArgumentException("Placeholders must be in pairs");
+    }
+
+    for (int i = 0; i < placeholders.length; i += 2) {
+      message = message.replace("{" + placeholders[i] + "}", placeholders[i + 1]);
+    }
+
     sendMessage(MiniMessage.miniMessage().deserialize(message));
   }
 
