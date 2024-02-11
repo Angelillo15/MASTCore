@@ -19,4 +19,10 @@ public class Permissions {
    * This permission is required to use any admin command.
    */
   public static final String STAFF_ADMIN_PERMISSION = "nookure.staff.admin";
+
+  /**
+   * Permission to build in staff mode.
+   * This permission is required to build in staff mode.
+   */
+  public static final String STAFF_MODE_BUILD = "nookure.staff.build";
 }
