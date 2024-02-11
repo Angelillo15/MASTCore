@@ -25,4 +25,9 @@ public class Permissions {
    * This permission is required to build in staff mode.
    */
   public static final String STAFF_MODE_BUILD = "nookure.staff.build";
+
+  /**
+   * Permission to see the players in vanish.
+   */
+  public static final String STAFF_VANISH_SEE = "nookure.staff.vanish.see";
 }
