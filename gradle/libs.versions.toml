@@ -72,3 +72,4 @@ shadowJar = { id = "com.github.johnrengelman.shadow", version.ref = "shadowJar" 
 pluginYmlBukkit = { id = "net.minecrell.plugin-yml.bukkit", version.ref = "pluginYml" }
 pluginYmlBungee = { id = "net.minecrell.plugin-yml.bungeecord", version.ref = "pluginYml" }
 pluginYmlPaper = { id = "net.minecrell.plugin-yml.paper", version.ref = "pluginYml" }
+grgit = { id = "org.ajoberstar.grgit", version = "5.2.1" }
