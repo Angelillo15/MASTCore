@@ -11,7 +11,7 @@ public interface StaffPlayerWrapper extends PlayerWrapper {
    * and save the inventory.
    */
   default void toggleStaffMode() {
-    toggleStaffMode(true);
+    toggleStaffMode(false);
   }
 
   /**
@@ -77,5 +77,5 @@ public interface StaffPlayerWrapper extends PlayerWrapper {
    *
    * @return the player's items
    */
-  @NotNull Map<String, StaffItem> getItems();
+  @NotNull Map<Integer, StaffItem> getItems();
 }
