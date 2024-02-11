@@ -8,16 +8,17 @@ import com.nookure.staff.api.StaffPlayerWrapper;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
+import java.util.stream.Stream;
 
 /**
  * Manages all the player wrappers.
  * <p>
  * You can get the instance of this class by injecting it,
  * see {@link com.google.inject.Injector#getInstance(Class)}
- * <p>
+ * <br>
  *
  * @param <T> The player class of the player wrapper implementation
- *            (e.g. PlayerWrapper<Player> or PlayerWrapper<ProxiedPlayer>)
+ *            (e.g. PlayerWrapper@Player or PlayerWrapper@ProxiedPlayer>)
  *            This is used to get the player wrapper by its player class.
  *            But you can also use the unique id of the player wrapper.
  *            see {@link #getPlayerWrapper(UUID)}
@@ -128,6 +129,15 @@ public class PlayerWrapperManager<T> {
     playerWrappersByUUID.remove(playerWrapper.getUniqueId());
 
     if (playerWrapper instanceof StaffPlayerWrapper) staffPlayers.remove(playerWrapper.getUniqueId());
+  }
+
+  /**
+   * Gets the values as a stream.
+   *
+   * @return a stream of player wrappers
+   */
+  public Stream<PlayerWrapper> stream() {
+    return playerWrappersByUUID.values().stream();
   }
 
   public boolean isStaffPlayer(@NotNull UUID uuid) {
