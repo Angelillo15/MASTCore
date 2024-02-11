@@ -14,8 +14,6 @@
  * }
  * </pre>
  *
- * </pre>
- *
  * @since 1.0.0
  */
 package com.nookure.staff.api.config;
