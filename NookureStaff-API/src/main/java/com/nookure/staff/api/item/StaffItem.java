@@ -3,9 +3,11 @@ package com.nookure.staff.api.item;
 import com.nookure.staff.api.config.bukkit.partials.ItemPartial;
 import com.nookure.staff.api.util.TextUtils;
 import net.kyori.adventure.text.Component;
+import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.persistence.PersistentDataType;
 
 import java.util.List;
 
@@ -17,6 +19,7 @@ import java.util.List;
  * @since 1.0.0
  */
 public abstract class StaffItem {
+  public static final NamespacedKey key = new NamespacedKey("nkstaff-item", "staffitem");
   private final ItemPartial itemConfig;
   private final ItemStack itemStack;
   private final int slot;
@@ -28,6 +31,7 @@ public abstract class StaffItem {
 
     meta.displayName(TextUtils.toComponent(itemConfig.getName()));
     meta.lore(itemConfig.lore());
+    meta.getPersistentDataContainer().set(key, PersistentDataType.INTEGER, itemConfig.getSlot());
 
     slot = itemConfig.getSlot();
 
