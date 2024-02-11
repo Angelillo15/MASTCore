@@ -9,6 +9,7 @@ import com.nookure.staff.paper.PaperPlayerWrapper;
 import com.nookure.staff.paper.StaffPaperPlayerWrapper;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
@@ -20,7 +21,9 @@ public class OnPlayerJoin implements Listener {
   @Inject
   private Logger logger;
 
-  @EventHandler
+  @EventHandler(
+      priority = EventPriority.LOWEST
+  )
   public void onPlayerJoin(PlayerJoinEvent event) {
     logger.debug("Player %s has joined the server", event.getPlayer().getName());
     logger.debug("Creating player wrapper for %s", event.getPlayer().getName());
