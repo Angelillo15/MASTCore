@@ -39,7 +39,7 @@ public class ModulesPartials {
   @Setting
   @Comment("""
       Enable or disable the StaffChat module.
-      This include /staffchat command and 
+      This include /staffchat command and
       the staff chat prefix.
       """)
   private boolean staffChat = true;
