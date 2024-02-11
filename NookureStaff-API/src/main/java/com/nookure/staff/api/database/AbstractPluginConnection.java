@@ -6,6 +6,10 @@ import org.jetbrains.annotations.NotNull;
 
 import java.sql.Connection;
 
+/**
+ * This class represents a connection to the database.
+ * Use {@link #connect(DatabaseConfig)} to connect to the database.
+ */
 public abstract class AbstractPluginConnection {
   /**
    * Connects to the database.
