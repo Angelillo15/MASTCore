@@ -1,4 +1,4 @@
-package com.nookure.staff.paper.handler;
+package com.nookure.staff.paper.listener;
 
 import com.google.inject.Inject;
 import com.google.inject.Injector;

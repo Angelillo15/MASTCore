@@ -1,4 +1,4 @@
-package com.nookure.staff.paper.handler.staff;
+package com.nookure.staff.paper.listener.staff;
 
 import com.google.inject.Inject;
 import com.nookure.staff.api.StaffPlayerWrapper;
