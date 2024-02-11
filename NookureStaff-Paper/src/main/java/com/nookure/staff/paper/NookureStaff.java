@@ -13,9 +13,13 @@ import com.nookure.staff.api.util.AbstractLoader;
 import com.nookure.staff.paper.command.PaperCommandManager;
 import com.nookure.staff.paper.command.StaffModeCommand;
 import com.nookure.staff.paper.command.main.NookureStaffCommand;
-import com.nookure.staff.paper.handler.OnPlayerJoin;
-import com.nookure.staff.paper.handler.OnPlayerLeave;
-import com.nookure.staff.paper.handler.staff.OnStaffLeave;
+import com.nookure.staff.paper.listener.OnPlayerJoin;
+import com.nookure.staff.paper.listener.OnPlayerLeave;
+import com.nookure.staff.paper.listener.staff.OnStaffLeave;
+import com.nookure.staff.paper.listener.staff.items.OnInventoryClick;
+import com.nookure.staff.paper.listener.staff.items.OnPlayerEntityInteract;
+import com.nookure.staff.paper.listener.staff.items.OnPlayerInteract;
+import com.nookure.staff.paper.listener.staff.state.*;
 import com.nookure.staff.paper.loader.ItemsLoader;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -57,13 +61,35 @@ public class NookureStaff {
   }
 
   private void loadListeners() {
-    registerListener(OnPlayerJoin.class);
-    registerListener(OnPlayerLeave.class);
-    registerListener(OnStaffLeave.class);
+    Stream.of(
+        OnPlayerJoin.class,
+        OnPlayerLeave.class
+    ).forEach(this::registerListener);
+
+    if (config.get().modules.isStaffMode()) {
+      Stream.of(
+          OnStaffLeave.class,
+          OnInventoryClick.class,
+          OnPlayerInteract.class,
+          OnPlayerEntityInteract.class,
+          OnBlockReceiveGameEvent.class,
+          OnEntityTarget.class,
+          OnFoodLevelChange.class,
+          OnItemDrop.class,
+          OnItemGet.class,
+          OnItemSwap.class,
+          OnPlayerAttack.class,
+          OnWorldChange.class
+      ).forEach(this::registerListener);
+    }
+
+    if (config.get().staffMode.silentChestOpen()) {
+      registerListener(OnOpenChest.class);
+    }
   }
 
   public void registerListener(Class<? extends Listener> listener) {
-    logger.debug("Registering listener %s", listener.getSimpleName());
+    logger.debug("Registering listener %s", listener.getName());
 
     Listener instance = injector.getInstance(listener);
     listeners.add(instance);
