@@ -15,7 +15,21 @@ public class StaffModePartial {
   @Setting
   private boolean silentChestOpen = true;
 
+  @Comment(
+      """
+          If true when a staff disables staff mode, they will be teleported to their previous location.
+          This is useful for preventing staff members abusing the staff mode to teleport to a player or
+          fly to a location.
+          """
+  )
+  @Setting
+  private boolean teleportToPreviousLocation = true;
+
   public boolean silentChestOpen() {
     return silentChestOpen;
+  }
+
+  public boolean teleportToPreviousLocation() {
+    return teleportToPreviousLocation;
   }
 }

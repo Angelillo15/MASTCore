@@ -18,11 +18,31 @@ public class StaffModePartial {
   )
   private String toggledOff = "{prefix} <gray>Staff mode has been toggled <red>off</red>.";
 
+  @Setting
+  @Comment(
+      "Message sent to the player when there are no players online."
+  )
+  private String noPlayersOnline = "{prefix} <red>There are no players online.";
+
+  @Setting
+  @Comment(
+      "Message sent to the player when teleporting to another player."
+  )
+  private String teleportingTo = "{prefix} <gray>Teleporting to <red>{player}</red>.";
+
   public String toggledOn() {
     return toggledOn;
   }
 
   public String toggledOff() {
     return toggledOff;
+  }
+
+  public String noPlayersOnline() {
+    return noPlayersOnline;
+  }
+
+  public String teleportingTo() {
+    return teleportingTo;
   }
 }
