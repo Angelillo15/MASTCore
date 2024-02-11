@@ -1,10 +1,15 @@
 plugins {
   id("java")
   alias(libs.plugins.shadowJar)
+  alias(libs.plugins.grgit)
 }
 
 group = "com.nookure.staff"
-version = "1.0.0"
+version = "1.0.0-${grgit.branch.current().name}-${grgit.head().abbreviatedId}"
+
+if (System.getenv("nookure_staff_version") != null) {
+  version = System.getenv("nookure_staff_version")
+}
 
 dependencies {
   implementation(project(":NookureStaff-Paper"))
