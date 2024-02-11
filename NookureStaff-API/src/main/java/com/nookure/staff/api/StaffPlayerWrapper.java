@@ -53,6 +53,36 @@ public interface StaffPlayerWrapper extends PlayerWrapper {
   void saveInventory();
 
   /**
+   * Enable the vanish mode.
+   *
+   * @param silent if true, the message will not be sent
+   */
+  void enableVanish(boolean silent);
+
+  /**
+   * Disable the vanish mode.
+   *
+   * @param silent if true, the message will not be sent
+   */
+  void disableVanish(boolean silent);
+
+  /**
+   * Enable the vanish mode.
+   * The message will be sent.
+   */
+  default void enableVanish() {
+    enableVanish(false);
+  }
+
+  /**
+   * Disable the vanish mode.
+   * The message will be sent.
+   */
+  default void disableVanish() {
+    disableVanish(false);
+  }
+
+  /**
    * Restore the player's items.
    */
   void restoreInventory();
