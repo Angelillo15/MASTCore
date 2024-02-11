@@ -1,6 +1,7 @@
 package com.nookure.staff.api.config.bukkit;
 
 import com.nookure.staff.api.config.bukkit.partials.ModulesPartials;
+import com.nookure.staff.api.config.bukkit.partials.StaffModePartial;
 import com.nookure.staff.api.config.partials.DatabaseConfig;
 import org.spongepowered.configurate.objectmapping.ConfigSerializable;
 import org.spongepowered.configurate.objectmapping.meta.Comment;
@@ -29,4 +30,11 @@ public class BukkitConfig {
       of that module will be disabled.
       """)
   public final ModulesPartials modules = new ModulesPartials();
+
+  @Setting
+  @Comment("""
+      Here you can configure some settings for the staffmode
+      """
+  )
+  public final StaffModePartial staffMode = new StaffModePartial();
 }
