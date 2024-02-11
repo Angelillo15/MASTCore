@@ -1,6 +1,6 @@
 package com.nookure.staff.api;
 
-import com.nookure.staff.api.command.sender.CommandSender;
+import com.nookure.staff.api.command.CommandSender;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.Serializable;
@@ -22,4 +22,11 @@ public interface PlayerWrapper extends Serializable, CommandSender {
    * @return a set containing all the plugin channels
    */
   @NotNull Set<String> getListeningPluginChannels();
+
+  /**
+   * Teleport the player to another player.
+   *
+   * @param to the player to teleport to
+   */
+  void teleport(@NotNull PlayerWrapper to);
 }

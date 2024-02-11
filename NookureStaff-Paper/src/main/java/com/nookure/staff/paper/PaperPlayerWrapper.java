@@ -2,6 +2,7 @@ package com.nookure.staff.paper;
 
 import com.google.inject.Inject;
 import com.google.inject.Injector;
+import com.nookure.staff.api.NookureStaff;
 import com.nookure.staff.api.PlayerWrapper;
 import net.kyori.adventure.text.Component;
 import org.bukkit.entity.Player;
@@ -15,7 +16,11 @@ import java.util.UUID;
 public class PaperPlayerWrapper implements PlayerWrapper {
   @Inject
   private JavaPlugin plugin;
-  @Comment("Package protected value") Player player;
+  @Inject
+  private NookureStaff nookPlugin;
+
+  @Comment("Package protected value")
+  Player player;
 
   @Override
   public void sendMessage(@NotNull Component component) {
@@ -25,6 +30,16 @@ public class PaperPlayerWrapper implements PlayerWrapper {
   @Override
   public void sendPluginMessage(@NotNull String channel, byte @NotNull [] message) {
     player.sendPluginMessage(plugin, channel, message);
+  }
+
+  @Override
+  public void teleport(@NotNull PlayerWrapper to) {
+    player.teleportAsync(((PaperPlayerWrapper) to).getPlayer().getLocation());
+  }
+
+  @Override
+  public void sendMiniMessage(@NotNull String message, String... placeholders) {
+    PlayerWrapper.super.sendMiniMessage(message.replace("{prefix}", nookPlugin.getPrefix()), placeholders);
   }
 
   @Override
