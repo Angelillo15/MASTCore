@@ -2,7 +2,7 @@ package com.nookure.staff.paper.command.main;
 
 import com.nookure.staff.api.command.Command;
 import com.nookure.staff.api.command.CommandData;
-import com.nookure.staff.api.command.sender.CommandSender;
+import com.nookure.staff.api.command.CommandSender;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;

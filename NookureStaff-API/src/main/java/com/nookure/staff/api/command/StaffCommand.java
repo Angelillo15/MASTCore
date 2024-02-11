@@ -2,7 +2,6 @@ package com.nookure.staff.api.command;
 
 
 import com.nookure.staff.api.StaffPlayerWrapper;
-import com.nookure.staff.api.command.sender.CommandSender;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
