@@ -15,11 +15,13 @@ import com.nookure.staff.paper.command.StaffModeCommand;
 import com.nookure.staff.paper.command.main.NookureStaffCommand;
 import com.nookure.staff.paper.listener.OnPlayerJoin;
 import com.nookure.staff.paper.listener.OnPlayerLeave;
+import com.nookure.staff.paper.listener.staff.vanish.PlayerVanishListener;
 import com.nookure.staff.paper.listener.staff.OnStaffLeave;
 import com.nookure.staff.paper.listener.staff.items.OnInventoryClick;
 import com.nookure.staff.paper.listener.staff.items.OnPlayerEntityInteract;
 import com.nookure.staff.paper.listener.staff.items.OnPlayerInteract;
 import com.nookure.staff.paper.listener.staff.state.*;
+import com.nookure.staff.paper.listener.staff.vanish.StaffVanishListener;
 import com.nookure.staff.paper.loader.ItemsLoader;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -85,6 +87,13 @@ public class NookureStaff {
 
     if (config.get().staffMode.silentChestOpen()) {
       registerListener(OnOpenChest.class);
+    }
+
+    if (config.get().modules.isVanish()) {
+      Stream.of(
+          PlayerVanishListener.class,
+          StaffVanishListener.class
+      ).forEach(this::registerListener);
     }
   }
 
