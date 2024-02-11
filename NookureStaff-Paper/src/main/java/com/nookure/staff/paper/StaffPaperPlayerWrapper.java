@@ -1,6 +1,5 @@
 package com.nookure.staff.paper;
 
-import com.craftmend.storm.Storm;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
 import com.nookure.staff.api.NookureStaff;
@@ -27,7 +26,7 @@ public class StaffPaperPlayerWrapper extends PaperPlayerWrapper implements Staff
   private StaffItemsManager itemsManager;
   @Inject
   private AbstractPluginConnection connection;
-  private final Map<String, StaffItem> items = new HashMap<>();
+  private final Map<Integer, StaffItem> items = new HashMap<>();
   private StaffDataModel staffDataModel;
   private boolean staffMode = false;
   private boolean vanish = false;
@@ -37,8 +36,6 @@ public class StaffPaperPlayerWrapper extends PaperPlayerWrapper implements Staff
   public void toggleStaffMode(boolean silentJoin) {
     if (!staffMode) enableStaffMode(silentJoin);
     else disableStaffMode();
-
-    staffMode = !staffMode;
   }
 
   @Override
@@ -62,7 +59,7 @@ public class StaffPaperPlayerWrapper extends PaperPlayerWrapper implements Staff
       itemsManager.getItems().forEach((identifier, item) -> {
         if (item.getPermission() != null && !player.hasPermission(item.getPermission())) return;
 
-        items.put(identifier, item);
+        items.put(item.getSlot(), item);
       });
     }
 
@@ -70,22 +67,23 @@ public class StaffPaperPlayerWrapper extends PaperPlayerWrapper implements Staff
   }
 
   @Override
-  public @NotNull Map<String, StaffItem> getItems() {
-    return itemsManager.getItems();
+  public @NotNull Map<Integer, StaffItem> getItems() {
+    return items;
   }
 
   private void enableStaffMode(boolean silentJoin) {
-    staffMode = true;
     enablePlayerPerks();
     saveInventory();
     setItems();
     sendMiniMessage(messages.get().staffMode.toggledOn());
+    staffMode = true;
   }
 
   private void disableStaffMode() {
     disablePlayerPerks();
     restoreInventory();
     sendMiniMessage(messages.get().staffMode.toggledOff());
+    staffMode = false;
   }
 
   public void enablePlayerPerks() {
