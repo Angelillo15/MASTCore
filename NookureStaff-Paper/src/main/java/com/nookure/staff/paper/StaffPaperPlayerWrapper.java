@@ -272,6 +272,7 @@ public class StaffPaperPlayerWrapper extends PaperPlayerWrapper implements Staff
     }
 
     vanish = staffDataModel.isVanished();
+    enableVanish(true);
   }
 
   public static class Builder {
