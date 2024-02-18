@@ -10,8 +10,11 @@ import com.nookure.staff.api.config.ConfigurationContainer;
 import com.nookure.staff.api.config.bukkit.BukkitConfig;
 import com.nookure.staff.api.config.bukkit.BukkitMessages;
 import com.nookure.staff.api.database.AbstractPluginConnection;
+import com.nookure.staff.api.event.staff.StaffModeDisabledEvent;
+import com.nookure.staff.api.event.staff.StaffModeEnabledEvent;
 import com.nookure.staff.api.item.StaffItem;
 import com.nookure.staff.api.manager.StaffItemsManager;
+import com.nookure.staff.api.messaging.EventMessenger;
 import com.nookure.staff.api.model.StaffDataModel;
 import com.nookure.staff.api.util.Scheduler;
 import com.nookure.staff.paper.data.StaffModeData;
@@ -41,6 +44,8 @@ public class StaffPaperPlayerWrapper extends PaperPlayerWrapper implements Staff
   private AbstractPluginConnection connection;
   @Inject
   private Scheduler scheduler;
+  @Inject
+  private EventMessenger eventMessenger;
   private final Map<Integer, StaffItem> items = new HashMap<>();
   private StaffDataModel staffDataModel;
   private boolean staffMode = false;
@@ -129,6 +134,8 @@ public class StaffPaperPlayerWrapper extends PaperPlayerWrapper implements Staff
     writeStaffModeState(true);
     enableVanish();
 
+    eventMessenger.publish(this, new StaffModeEnabledEvent(getUniqueId()));
+
     logger.debug("Staff mode enabled for %s in %dms", player.getName(), System.currentTimeMillis() - time);
   }
 
@@ -139,6 +146,8 @@ public class StaffPaperPlayerWrapper extends PaperPlayerWrapper implements Staff
     loadPreviousLocation();
     sendMiniMessage(messages.get().staffMode.toggledOff());
     writeStaffModeState(false);
+
+    eventMessenger.publish(this, new StaffModeDisabledEvent(getUniqueId()));
 
     logger.debug("Staff mode disabled for %s in %dms", player.getName(), System.currentTimeMillis() - time);
   }
