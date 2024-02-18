@@ -50,14 +50,11 @@ public class RedisMessenger extends EventMessenger {
     @Override
     public void onMessage(byte[] channel, byte[] message) {
       try {
-        ByteArrayInputStream inputStream = new ByteArrayInputStream(message);
-        ObjectInputStream objectInputStream = new ObjectInputStream(inputStream);
-
-        eventTransport.decodeEvent(objectInputStream).ifPresent(event -> {
+        eventTransport.decodeEvent(message).ifPresent(event -> {
           logger.debug("Received event " + event.getClass().getSimpleName() + " from plugin message");
           eventManager.fireEvent(event);
         });
-      } catch (IOException e) {
+      } catch (Exception e) {
         throw new RuntimeException(e);
       }
     }
