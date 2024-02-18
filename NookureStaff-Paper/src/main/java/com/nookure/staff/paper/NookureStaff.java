@@ -7,8 +7,10 @@ import com.nookure.staff.api.Logger;
 import com.nookure.staff.api.Permissions;
 import com.nookure.staff.api.config.ConfigurationContainer;
 import com.nookure.staff.api.config.bukkit.BukkitConfig;
+import com.nookure.staff.api.config.messaging.MessengerConfig;
 import com.nookure.staff.api.database.AbstractPluginConnection;
 import com.nookure.staff.api.manager.PlayerWrapperManager;
+import com.nookure.staff.api.messaging.Channels;
 import com.nookure.staff.api.util.AbstractLoader;
 import com.nookure.staff.paper.command.PaperCommandManager;
 import com.nookure.staff.paper.command.StaffModeCommand;
@@ -23,6 +25,7 @@ import com.nookure.staff.paper.listener.staff.items.OnPlayerInteract;
 import com.nookure.staff.paper.listener.staff.state.*;
 import com.nookure.staff.paper.listener.staff.vanish.StaffVanishListener;
 import com.nookure.staff.paper.loader.ItemsLoader;
+import com.nookure.staff.paper.messaging.BackendMessageMessenger;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
@@ -37,6 +40,8 @@ public class NookureStaff {
   private AbstractPluginConnection connection;
   @Inject
   private ConfigurationContainer<BukkitConfig> config;
+  @Inject
+  private ConfigurationContainer<MessengerConfig> messengerConfig;
   @Inject
   private JavaPlugin plugin;
   @Inject
@@ -95,6 +100,9 @@ public class NookureStaff {
           StaffVanishListener.class
       ).forEach(this::registerListener);
     }
+
+    Bukkit.getMessenger().registerIncomingPluginChannel(plugin, Channels.EVENTS, injector.getInstance(BackendMessageMessenger.class));
+    Bukkit.getMessenger().registerOutgoingPluginChannel(plugin, Channels.EVENTS);
   }
 
   public void registerListener(Class<? extends Listener> listener) {
