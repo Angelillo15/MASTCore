@@ -2,6 +2,7 @@ package com.nookure.staff.paper;
 
 import com.google.inject.Inject;
 import com.google.inject.Injector;
+import com.nookure.staff.api.Logger;
 import com.nookure.staff.api.NookureStaff;
 import com.nookure.staff.api.PlayerWrapper;
 import net.kyori.adventure.text.Component;
@@ -18,6 +19,8 @@ public class PaperPlayerWrapper implements PlayerWrapper {
   private JavaPlugin plugin;
   @Inject
   private NookureStaff nookPlugin;
+  @Inject
+  private Logger logger;
 
   @Comment("Package protected value")
   Player player;
@@ -29,6 +32,7 @@ public class PaperPlayerWrapper implements PlayerWrapper {
 
   @Override
   public void sendPluginMessage(@NotNull String channel, byte @NotNull [] message) {
+    logger.debug("Sending plugin message to " + player.getName() + " on channel " + channel);
     player.sendPluginMessage(plugin, channel, message);
   }
 
