@@ -104,6 +104,7 @@ public class EventManager {
    */
   public void fireEvent(@NotNull Event event) {
     Objects.requireNonNull(event, "Event cannot be null");
+    logger.debug("Firing event " + event.getClass().getName());
 
     List<EventVector> eventVectors = listeners.get(event.getClass());
 
