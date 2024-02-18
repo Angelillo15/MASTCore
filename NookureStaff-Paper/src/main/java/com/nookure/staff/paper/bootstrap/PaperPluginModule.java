@@ -8,14 +8,17 @@ import com.nookure.staff.api.config.ConfigurationContainer;
 import com.nookure.staff.api.config.bukkit.BukkitConfig;
 import com.nookure.staff.api.config.bukkit.ItemsConfig;
 import com.nookure.staff.api.config.bukkit.BukkitMessages;
+import com.nookure.staff.api.config.messaging.MessengerConfig;
 import com.nookure.staff.api.database.AbstractPluginConnection;
 import com.nookure.staff.api.manager.PlayerWrapperManager;
 import com.nookure.staff.api.manager.StaffItemsManager;
+import com.nookure.staff.api.messaging.EventMessenger;
 import com.nookure.staff.api.util.PluginModule;
 import com.nookure.staff.api.util.Scheduler;
 import com.nookure.staff.command.sender.ConsoleCommandSender;
 import com.nookure.staff.database.PluginConnection;
 import com.nookure.staff.paper.command.PaperCommandManager;
+import com.nookure.staff.paper.messaging.BackendMessageMessenger;
 import com.nookure.staff.paper.util.PaperScheduler;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandMap;
@@ -26,6 +29,7 @@ import java.io.IOException;
 
 public class PaperPluginModule extends PluginModule {
   private final StaffBootstrapper boot;
+  private MessengerConfig.MessengerType messengerType;
 
   public PaperPluginModule(StaffBootstrapper boot) {
     this.boot = boot;
@@ -57,6 +61,8 @@ public class PaperPluginModule extends PluginModule {
       }).toInstance(loadItemConfig());
       bind(new TypeLiteral<ConfigurationContainer<BukkitMessages>>() {
       }).toInstance(loadMessages());
+      bind(new TypeLiteral<ConfigurationContainer<MessengerConfig>>() {
+      }).toInstance(loadMessenger());
 
       /*
        * PlayerWrapperManager related area
@@ -68,6 +74,12 @@ public class PaperPluginModule extends PluginModule {
     } catch (IOException e) {
       boot.getPLogger().severe("Could not load config");
       throw new RuntimeException(e);
+    }
+
+    switch (messengerType) {
+      case PM -> bind(EventMessenger.class).to(BackendMessageMessenger.class).asEagerSingleton();
+      case REDIS -> throw new RuntimeException("Redis not supported yet");
+      default -> throw new RuntimeException("Unknown messenger type");
     }
   }
 
@@ -91,5 +103,11 @@ public class PaperPluginModule extends PluginModule {
 
   private ConfigurationContainer<BukkitMessages> loadMessages() throws IOException {
     return ConfigurationContainer.load(boot.getDataFolder().toPath(), BukkitMessages.class, "messages.yml");
+  }
+
+  private ConfigurationContainer<MessengerConfig> loadMessenger() throws IOException {
+    ConfigurationContainer<MessengerConfig> config = ConfigurationContainer.load(boot.getDataFolder().toPath(), MessengerConfig.class, "messenger.yml");
+    messengerType = config.get().getType();
+    return config;
   }
 }
