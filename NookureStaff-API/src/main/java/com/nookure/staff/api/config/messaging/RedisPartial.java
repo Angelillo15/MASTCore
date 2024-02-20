@@ -10,11 +10,20 @@ public class RedisPartial {
   @Comment(
       """
           The address of the Redis server.
-          This should be in the format of `host:port`.
-          For example, `localhost:6379`.
+          This should be in the format of `host`.
+          For example, `localhost`.
               """
   )
-  private String address = "localhost:6379";
+  private String address = "localhost";
+
+  @Setting
+  @Comment(
+      """
+          The port of the Redis server.
+          This should be a number between 1 and 65535.
+              """
+  )
+  private int port = 6379;
 
   @Setting
   @Comment(
@@ -34,12 +43,40 @@ public class RedisPartial {
   )
   private int database = 0;
 
+  @Setting
+  @Comment(
+      """
+          The pool size to use when connecting to the Redis server.
+          """
+  )
+  private int poolSize = 10;
+
+  @Setting
+  @Comment(
+      """
+          The timeout to use when connecting to the Redis server.
+          """
+  )
+  private int timeout = 2000;
+
   public String getAddress() {
     return address;
   }
 
   public String getPassword() {
     return password;
+  }
+
+  public int getPort() {
+    return port;
+  }
+
+  public int getPoolSize() {
+    return poolSize;
+  }
+
+  public int getTimeout() {
+    return timeout;
   }
 
   public int getDatabase() {
