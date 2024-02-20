@@ -25,7 +25,7 @@ public class MessengerConfig {
           and you only have 1 server.
               """
   )
-  private MessengerType type = MessengerType.PM;
+  private MessengerType type = MessengerType.NONE;
 
   @Setting
   @Comment(
