@@ -5,7 +5,11 @@ package com.nookure.staff.api;
  *
  * @since 1.0.0
  */
-public class Permissions {
+public final class Permissions {
+  private Permissions() {
+    throw new UnsupportedOperationException("This class cannot be instantiated");
+  }
+
   /**
    * General permission for staff members.
    * This permission is required to use any staff command.
