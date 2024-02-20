@@ -6,7 +6,7 @@ import com.nookure.staff.api.util.Scheduler;
 import org.bukkit.plugin.java.JavaPlugin;
 
 @Singleton
-public class PaperScheduler extends Scheduler {
+public final class PaperScheduler extends Scheduler {
   @Inject
   private JavaPlugin plugin;
 
