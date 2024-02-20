@@ -9,14 +9,17 @@ import com.nookure.staff.api.config.ConfigurationContainer;
 import com.nookure.staff.api.config.bukkit.BukkitConfig;
 import com.nookure.staff.api.config.messaging.MessengerConfig;
 import com.nookure.staff.api.database.AbstractPluginConnection;
+import com.nookure.staff.api.event.EventManager;
 import com.nookure.staff.api.manager.PlayerWrapperManager;
 import com.nookure.staff.api.messaging.Channels;
+import com.nookure.staff.api.messaging.EventMessenger;
 import com.nookure.staff.api.util.AbstractLoader;
 import com.nookure.staff.paper.command.PaperCommandManager;
 import com.nookure.staff.paper.command.StaffModeCommand;
 import com.nookure.staff.paper.command.main.NookureStaffCommand;
 import com.nookure.staff.paper.listener.OnPlayerJoin;
 import com.nookure.staff.paper.listener.OnPlayerLeave;
+import com.nookure.staff.paper.listener.server.OnServerBroadcast;
 import com.nookure.staff.paper.listener.staff.vanish.PlayerVanishListener;
 import com.nookure.staff.paper.listener.staff.OnStaffLeave;
 import com.nookure.staff.paper.listener.staff.items.OnInventoryClick;
@@ -52,6 +55,8 @@ public class NookureStaff {
   private PlayerWrapperManager<Player> playerWrapperManager;
   @Inject
   private PaperCommandManager commandManager;
+  @Inject
+  private EventManager eventManager;
   private final ArrayList<Listener> listeners = new ArrayList<>();
 
   public void onEnable() {
@@ -101,8 +106,21 @@ public class NookureStaff {
       ).forEach(this::registerListener);
     }
 
-    Bukkit.getMessenger().registerIncomingPluginChannel(plugin, Channels.EVENTS, injector.getInstance(BackendMessageMessenger.class));
-    Bukkit.getMessenger().registerOutgoingPluginChannel(plugin, Channels.EVENTS);
+    switch (messengerConfig.get().getType()) {
+      case PM -> {
+        logger.debug("Registering PM messenger");
+        Bukkit.getMessenger().registerIncomingPluginChannel(plugin, Channels.EVENTS, injector.getInstance(BackendMessageMessenger.class));
+        Bukkit.getMessenger().registerOutgoingPluginChannel(plugin, Channels.EVENTS);
+      }
+      case REDIS -> {
+        logger.debug("Registering Redis messenger...");
+        injector.getInstance(EventMessenger.class).prepare();
+        logger.debug("Redis messenger registered");
+      }
+      case NONE -> logger.debug("No messenger type was found, events will not be sent");
+    }
+
+    eventManager.registerListener(injector.getInstance(OnServerBroadcast.class));
   }
 
   public void registerListener(Class<? extends Listener> listener) {
@@ -160,7 +178,11 @@ public class NookureStaff {
   }
 
   public void onDisable() {
-
+    try {
+      injector.getInstance(EventMessenger.class).close();
+    } catch (Exception e) {
+      logger.severe("An error occurred while closing the event messenger, %s", e);
+    }
   }
 
   public void reload() {
