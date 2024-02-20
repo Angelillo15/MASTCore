@@ -10,6 +10,7 @@ import com.nookure.staff.api.config.ConfigurationContainer;
 import com.nookure.staff.api.config.bukkit.BukkitConfig;
 import com.nookure.staff.api.config.bukkit.BukkitMessages;
 import com.nookure.staff.api.database.AbstractPluginConnection;
+import com.nookure.staff.api.event.server.BroadcastMessageExcept;
 import com.nookure.staff.api.event.staff.StaffModeDisabledEvent;
 import com.nookure.staff.api.event.staff.StaffModeEnabledEvent;
 import com.nookure.staff.api.item.StaffItem;
@@ -135,6 +136,10 @@ public class StaffPaperPlayerWrapper extends PaperPlayerWrapper implements Staff
     enableVanish();
 
     eventMessenger.publish(this, new StaffModeEnabledEvent(getUniqueId()));
+    eventMessenger.publish(this, new BroadcastMessageExcept(messages.get().staffMode.toggledOnOthers()
+        .replace("{player}", player.getName()),
+        getUniqueId())
+    );
 
     logger.debug("Staff mode enabled for %s in %dms", player.getName(), System.currentTimeMillis() - time);
   }
@@ -148,6 +153,10 @@ public class StaffPaperPlayerWrapper extends PaperPlayerWrapper implements Staff
     writeStaffModeState(false);
 
     eventMessenger.publish(this, new StaffModeDisabledEvent(getUniqueId()));
+    eventMessenger.publish(this, new BroadcastMessageExcept(messages.get().staffMode.toggledOffOthers()
+        .replace("{player}", player.getName()),
+        getUniqueId())
+    );
 
     logger.debug("Staff mode disabled for %s in %dms", player.getName(), System.currentTimeMillis() - time);
   }
