@@ -20,6 +20,18 @@ public class StaffModePartial {
 
   @Setting
   @Comment(
+      "Message sent to others when a player toggles staff mode on."
+  )
+  private String toggledOnOthers = "{prefix} <red>{player}</red> <gray>has toggled staff mode <green>on</green>.";
+
+  @Setting
+  @Comment(
+      "Message sent to others when a player toggles staff mode off."
+  )
+  private String toggledOffOthers = "{prefix} <red>{player}</red> <gray>has toggled staff mode <red>off</red>.";
+
+  @Setting
+  @Comment(
       "Message sent to the player when there are no players online."
   )
   private String noPlayersOnline = "{prefix} <red>There are no players online.";
@@ -44,5 +56,13 @@ public class StaffModePartial {
 
   public String teleportingTo() {
     return teleportingTo;
+  }
+
+  public String toggledOnOthers() {
+    return toggledOnOthers;
+  }
+
+  public String toggledOffOthers() {
+    return toggledOffOthers;
   }
 }
