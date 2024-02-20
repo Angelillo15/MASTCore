@@ -6,7 +6,7 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Bukkit;
 
-public class PaperLoggerImpl implements Logger {
+public final class PaperLoggerImpl implements Logger {
   private final StaffBootstrapper boot;
 
   public PaperLoggerImpl(StaffBootstrapper boot) {
