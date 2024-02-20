@@ -18,6 +18,7 @@ dependencies {
   implementation(project(":NookureStaff-Velocity"))
   implementation(libs.configurateYaml)
   implementation(libs.guice)
+  implementation(libs.jedis)
   implementation(libs.storm)
   implementation(libs.hikariCP)
   implementation(libs.apacheCommons)

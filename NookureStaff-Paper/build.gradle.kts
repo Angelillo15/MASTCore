@@ -10,6 +10,7 @@ dependencies {
   implementation(project(":NookureStaff-Common"))
   compileOnly(libs.paperApi)
   compileOnly(libs.configurateYaml)
+  compileOnly(libs.jedis)
 }
 
 bukkit {
