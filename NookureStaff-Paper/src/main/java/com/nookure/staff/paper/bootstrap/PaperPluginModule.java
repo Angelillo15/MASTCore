@@ -3,33 +3,42 @@ package com.nookure.staff.paper.bootstrap;
 import com.google.inject.TypeLiteral;
 import com.nookure.staff.api.Logger;
 import com.nookure.staff.api.NookureStaff;
+import com.nookure.staff.api.annotation.RedisPublish;
+import com.nookure.staff.api.annotation.RedisSubscribe;
 import com.nookure.staff.api.command.CommandManager;
 import com.nookure.staff.api.config.ConfigurationContainer;
 import com.nookure.staff.api.config.bukkit.BukkitConfig;
-import com.nookure.staff.api.config.bukkit.ItemsConfig;
 import com.nookure.staff.api.config.bukkit.BukkitMessages;
+import com.nookure.staff.api.config.bukkit.ItemsConfig;
 import com.nookure.staff.api.config.messaging.MessengerConfig;
+import com.nookure.staff.api.config.messaging.RedisPartial;
 import com.nookure.staff.api.database.AbstractPluginConnection;
 import com.nookure.staff.api.manager.PlayerWrapperManager;
 import com.nookure.staff.api.manager.StaffItemsManager;
 import com.nookure.staff.api.messaging.EventMessenger;
 import com.nookure.staff.api.util.PluginModule;
 import com.nookure.staff.api.util.Scheduler;
+import com.nookure.staff.api.util.ServerUtils;
 import com.nookure.staff.command.sender.ConsoleCommandSender;
 import com.nookure.staff.database.PluginConnection;
+import com.nookure.staff.messaging.NoneEventManager;
+import com.nookure.staff.messaging.RedisMessenger;
 import com.nookure.staff.paper.command.PaperCommandManager;
 import com.nookure.staff.paper.messaging.BackendMessageMessenger;
 import com.nookure.staff.paper.util.PaperScheduler;
+import com.nookure.staff.paper.util.PaperServerUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandMap;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
+import redis.clients.jedis.Jedis;
 
 import java.io.IOException;
 
 public class PaperPluginModule extends PluginModule {
   private final StaffBootstrapper boot;
   private MessengerConfig.MessengerType messengerType;
+  private RedisPartial redisPartial;
 
   public PaperPluginModule(StaffBootstrapper boot) {
     this.boot = boot;
@@ -50,6 +59,7 @@ public class PaperPluginModule extends PluginModule {
     bind(ConsoleCommandSender.class).asEagerSingleton();
     bind(CommandManager.class).to(PaperCommandManager.class).asEagerSingleton();
     bind(Scheduler.class).to(PaperScheduler.class).asEagerSingleton();
+    bind(ServerUtils.class).to(PaperServerUtils.class).asEagerSingleton();
 
     try {
       /*
@@ -78,7 +88,13 @@ public class PaperPluginModule extends PluginModule {
 
     switch (messengerType) {
       case PM -> bind(EventMessenger.class).to(BackendMessageMessenger.class).asEagerSingleton();
-      case REDIS -> throw new RuntimeException("Redis not supported yet");
+      case REDIS -> {
+        bind(Jedis.class).annotatedWith(RedisPublish.class).toInstance(getJedis());
+        bind(Jedis.class).annotatedWith(RedisSubscribe.class).toInstance(getJedis());
+        boot.getPLogger().info("<green>Successfully connected to Redis");
+        bind(EventMessenger.class).to(RedisMessenger.class).asEagerSingleton();
+      }
+      case NONE -> bind(EventMessenger.class).to(NoneEventManager.class).asEagerSingleton();
       default -> throw new RuntimeException("Unknown messenger type");
     }
   }
@@ -105,9 +121,26 @@ public class PaperPluginModule extends PluginModule {
     return ConfigurationContainer.load(boot.getDataFolder().toPath(), BukkitMessages.class, "messages.yml");
   }
 
+  private Jedis getJedis() {
+    try (Jedis jedis = new Jedis(redisPartial.getAddress(), redisPartial.getPort(), redisPartial.getTimeout(), redisPartial.getPoolSize())) {
+
+      if (!redisPartial.getPassword().isEmpty()) {
+        jedis.auth(redisPartial.getPassword());
+      }
+
+      jedis.select(redisPartial.getDatabase());
+
+      return jedis;
+    } catch (Exception e) {
+      boot.getPLogger().severe("Could not connect to Redis");
+      throw new RuntimeException(e);
+    }
+  }
+
   private ConfigurationContainer<MessengerConfig> loadMessenger() throws IOException {
     ConfigurationContainer<MessengerConfig> config = ConfigurationContainer.load(boot.getDataFolder().toPath(), MessengerConfig.class, "messenger.yml");
     messengerType = config.get().getType();
+    redisPartial = config.get().redis;
     return config;
   }
 }
