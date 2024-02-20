@@ -12,10 +12,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Singleton
-public class EventManager {
+public final class EventManager {
   @Inject
   private NookureStaff instance;
   @Inject
@@ -102,14 +103,15 @@ public class EventManager {
    *
    * @param event Event to call
    */
-  public void fireEvent(@NotNull Event event) {
+  @SuppressWarnings("UnusedReturnValue")
+  public <T extends Event> CompletableFuture<T> fireEvent(@NotNull T event) {
     Objects.requireNonNull(event, "Event cannot be null");
     logger.debug("Firing event " + event.getClass().getName());
 
     List<EventVector> eventVectors = listeners.get(event.getClass());
 
-    if (eventVectors == null) return;
-    if (eventVectors.isEmpty()) return;
+    if (eventVectors == null) return CompletableFuture.completedFuture(event);
+    if (eventVectors.isEmpty()) return CompletableFuture.completedFuture(event);
 
     eventVectors.sort((o1, o2) -> {
       NookSubscribe nookSubscribe1 = o1.nookSubscribe();
@@ -118,12 +120,17 @@ public class EventManager {
       return Integer.compare(nookSubscribe1.priority().getSlot(), nookSubscribe2.priority().getSlot());
     });
 
-    eventVectors.forEach(eventVector -> {
-      try {
-        eventVector.method().invoke(eventVector.listener(), event);
-      } catch (Exception e) {
-        throw new EventHandlerException("Could not invoke event handler", e);
-      }
+    return CompletableFuture.supplyAsync(() -> {
+      eventVectors.forEach(eventVector -> {
+        try {
+          eventVector.method().invoke(eventVector.listener(), event);
+        } catch (Exception e) {
+          throw new EventHandlerException("Could not invoke event handler", e);
+        }
+      });
+
+      return event;
     });
+
   }
 }
