@@ -44,4 +44,9 @@ public final class Permissions {
    * Permission to bypass the freeze.
    */
   public static final String STAFF_FREEZE_BYPASS = "nookure.staff.freeze.bypass";
+
+  /**
+   * Permission to use the staff chat.
+   */
+  public static final String STAFF_CHAT = "nookure.staff.staffchat";
 }
