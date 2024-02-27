@@ -1,9 +1,11 @@
 package com.nookure.staff.api;
 
+import com.nookure.staff.api.extension.StaffPlayerExtension;
 import com.nookure.staff.api.item.StaffItem;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Map;
+import java.util.Optional;
 
 public interface StaffPlayerWrapper extends PlayerWrapper {
   /**
@@ -102,6 +104,13 @@ public interface StaffPlayerWrapper extends PlayerWrapper {
    */
   void enablePlayerPerks();
 
+  /**
+   * Return the player's staff mode extension.
+   *
+   * @param extension the extension class that you want to get
+   * @return the extension
+   */
+  <T extends StaffPlayerExtension> Optional<T> getExtension(Class<T> extension);
   /**
    * Get the player's items.
    *
