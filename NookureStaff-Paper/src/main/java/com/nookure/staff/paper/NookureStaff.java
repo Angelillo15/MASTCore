@@ -10,15 +10,23 @@ import com.nookure.staff.api.config.bukkit.BukkitConfig;
 import com.nookure.staff.api.config.messaging.MessengerConfig;
 import com.nookure.staff.api.database.AbstractPluginConnection;
 import com.nookure.staff.api.event.EventManager;
+import com.nookure.staff.api.extension.StaffPlayerExtensionManager;
 import com.nookure.staff.api.manager.PlayerWrapperManager;
 import com.nookure.staff.api.messaging.Channels;
 import com.nookure.staff.api.messaging.EventMessenger;
 import com.nookure.staff.api.util.AbstractLoader;
+import com.nookure.staff.paper.command.FreezeChatCommand;
+import com.nookure.staff.paper.command.FreezeCommand;
 import com.nookure.staff.paper.command.PaperCommandManager;
 import com.nookure.staff.paper.command.StaffModeCommand;
 import com.nookure.staff.paper.command.main.NookureStaffCommand;
+import com.nookure.staff.paper.extension.FreezePlayerExtension;
 import com.nookure.staff.paper.listener.OnPlayerJoin;
 import com.nookure.staff.paper.listener.OnPlayerLeave;
+import com.nookure.staff.paper.listener.freeze.OnFreezePlayerInteract;
+import com.nookure.staff.paper.listener.freeze.OnFreezePlayerMove;
+import com.nookure.staff.paper.listener.freeze.OnFreezePlayerQuit;
+import com.nookure.staff.paper.listener.freeze.OnPlayerChatFreeze;
 import com.nookure.staff.paper.listener.server.OnServerBroadcast;
 import com.nookure.staff.paper.listener.staff.vanish.PlayerVanishListener;
 import com.nookure.staff.paper.listener.staff.OnStaffLeave;
@@ -29,6 +37,8 @@ import com.nookure.staff.paper.listener.staff.state.*;
 import com.nookure.staff.paper.listener.staff.vanish.StaffVanishListener;
 import com.nookure.staff.paper.loader.ItemsLoader;
 import com.nookure.staff.paper.messaging.BackendMessageMessenger;
+import com.nookure.staff.paper.task.FreezeSpamMessage;
+import com.nookure.staff.paper.task.FreezeTimerTask;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
@@ -57,6 +67,8 @@ public class NookureStaff {
   private PaperCommandManager commandManager;
   @Inject
   private EventManager eventManager;
+  @Inject
+  private StaffPlayerExtensionManager extensionManager;
   private final ArrayList<Listener> listeners = new ArrayList<>();
 
   public void onEnable() {
@@ -64,6 +76,8 @@ public class NookureStaff {
     loadListeners();
     loadLoaders();
     loadCommands();
+    loadExtensions();
+    loadTasks();
 
     registeringOnlinePlayers();
   }
@@ -106,12 +120,16 @@ public class NookureStaff {
       ).forEach(this::registerListener);
     }
 
+    if (config.get().modules.isFreeze()) {
+      Stream.of(
+          OnFreezePlayerInteract.class,
+          OnFreezePlayerMove.class,
+          OnFreezePlayerQuit.class,
+          OnPlayerChatFreeze.class
+      ).forEach(this::registerListener);
+    }
+
     switch (messengerConfig.get().getType()) {
-      case PM -> {
-        logger.debug("Registering PM messenger");
-        Bukkit.getMessenger().registerIncomingPluginChannel(plugin, Channels.EVENTS, injector.getInstance(BackendMessageMessenger.class));
-        Bukkit.getMessenger().registerOutgoingPluginChannel(plugin, Channels.EVENTS);
-      }
       case REDIS -> {
         logger.debug("Registering Redis messenger...");
         injector.getInstance(EventMessenger.class).prepare();
@@ -120,6 +138,10 @@ public class NookureStaff {
       case NONE -> logger.debug("No messenger type was found, events will not be sent");
     }
 
+    Bukkit.getMessenger().registerIncomingPluginChannel(plugin, Channels.EVENTS, injector.getInstance(BackendMessageMessenger.class));
+    Bukkit.getMessenger().registerOutgoingPluginChannel(plugin, Channels.EVENTS);
+
+    logger.debug("Registering PM");
     eventManager.registerListener(injector.getInstance(OnServerBroadcast.class));
   }
 
@@ -169,12 +191,32 @@ public class NookureStaff {
     ).forEach(AbstractLoader::load);
   }
 
+  private void loadTasks() {
+    if (config.get().modules.isFreeze() && config.get().freeze.freezeTimer() != -1) {
+      Bukkit.getScheduler().runTaskTimerAsynchronously(plugin, injector.getInstance(FreezeTimerTask.class), 0, 20);
+    }
+
+    if (config.get().modules.isFreeze()) {
+      Bukkit.getScheduler().runTaskTimerAsynchronously(plugin, injector.getInstance(FreezeSpamMessage.class), 0, 20 * 5);
+    }
+  }
+
   private void loadCommands() {
     commandManager.registerCommand(injector.getInstance(NookureStaffCommand.class));
 
     if (config.get().modules.isStaffMode()) {
       commandManager.registerCommand(injector.getInstance(StaffModeCommand.class));
     }
+
+    if (config.get().modules.isFreeze()) {
+      commandManager.registerCommand(injector.getInstance(FreezeCommand.class));
+      commandManager.registerCommand(injector.getInstance(FreezeChatCommand.class));
+    }
+  }
+
+  private void loadExtensions() {
+    if (config.get().modules.isFreeze())
+      extensionManager.registerExtension(FreezePlayerExtension.class);
   }
 
   public void onDisable() {
