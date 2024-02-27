@@ -7,6 +7,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class TextUtils {
+  private static final long SECOND = 1000;
+  private static final long MINUTE = 60 * SECOND;
+  private static final long HOUR = 60 * MINUTE;
+  private static final long DAY = 24 * HOUR;
+
   /**
    * Converts a string to a mini message string
    *
@@ -66,5 +71,50 @@ public abstract class TextUtils {
     }
 
     return components;
+  }
+
+
+  /**
+   * Formats a time in milliseconds to a human readable string
+   *
+   * @param time the time to format
+   * @return the formatted time
+   */
+  public static String formatTime(long time) {
+    StringBuilder buf = new StringBuilder();
+    if (time > DAY) {
+      long days = (time - time % DAY) / DAY;
+      buf.append(days);
+      buf.append("d");
+      time = time % DAY;
+    }
+    if (time > HOUR) {
+      long hours = (time - time % HOUR) / HOUR;
+      if (!buf.isEmpty()) {
+        buf.append(", ");
+      }
+      buf.append(hours);
+      buf.append("h");
+      time = time % HOUR;
+    }
+    if (time > MINUTE) {
+      long minutes = (time - time % MINUTE) / MINUTE;
+      if (!buf.isEmpty()) {
+        buf.append(", ");
+      }
+      buf.append(minutes);
+      buf.append("m");
+      time = time % MINUTE;
+    }
+    if (time > SECOND) {
+      long seconds = (time - time % SECOND) / SECOND;
+      if (!buf.isEmpty()) {
+        buf.append(", ");
+      }
+      buf.append(seconds);
+      buf.append("s");
+      time = time % SECOND;
+    }
+    return buf.toString();
   }
 }
