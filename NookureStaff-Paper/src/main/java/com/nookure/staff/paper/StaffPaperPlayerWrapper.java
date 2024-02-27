@@ -13,6 +13,8 @@ import com.nookure.staff.api.database.AbstractPluginConnection;
 import com.nookure.staff.api.event.server.BroadcastMessageExcept;
 import com.nookure.staff.api.event.staff.StaffModeDisabledEvent;
 import com.nookure.staff.api.event.staff.StaffModeEnabledEvent;
+import com.nookure.staff.api.extension.StaffPlayerExtension;
+import com.nookure.staff.api.extension.StaffPlayerExtensionManager;
 import com.nookure.staff.api.item.StaffItem;
 import com.nookure.staff.api.manager.StaffItemsManager;
 import com.nookure.staff.api.messaging.EventMessenger;
@@ -27,6 +29,7 @@ import org.jetbrains.annotations.NotNull;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 public class StaffPaperPlayerWrapper extends PaperPlayerWrapper implements StaffPlayerWrapper {
   @Inject
@@ -47,6 +50,11 @@ public class StaffPaperPlayerWrapper extends PaperPlayerWrapper implements Staff
   private Scheduler scheduler;
   @Inject
   private EventMessenger eventMessenger;
+  @Inject
+  private StaffPlayerExtensionManager extensionManager;
+  @Inject
+  private Injector injector;
+  private final Map<Class<? extends StaffPlayerExtension>, StaffPlayerExtension> extensionMap = new HashMap<>();
   private final Map<Integer, StaffItem> items = new HashMap<>();
   private StaffDataModel staffDataModel;
   private boolean staffMode = false;
@@ -128,12 +136,16 @@ public class StaffPaperPlayerWrapper extends PaperPlayerWrapper implements Staff
     long time = System.currentTimeMillis();
 
     enablePlayerPerks();
-    saveInventory();
-    if (silentJoin) saveLocation();
+
+    if (!silentJoin) {
+      saveLocation();
+      saveInventory();
+    }
+
     setItems();
     sendMiniMessage(messages.get().staffMode.toggledOn());
     writeStaffModeState(true);
-    enableVanish();
+    enableVanish(true);
 
     eventMessenger.publish(this, new StaffModeEnabledEvent(getUniqueId()));
     eventMessenger.publish(this, new BroadcastMessageExcept(messages.get().staffMode.toggledOnOthers()
@@ -141,11 +153,18 @@ public class StaffPaperPlayerWrapper extends PaperPlayerWrapper implements Staff
         getUniqueId())
     );
 
+    try {
+      extensionMap.values().forEach(StaffPlayerExtension::onStaffModeEnabled);
+    } catch (Exception e) {
+      logger.severe("An error occurred while enabling staff mode for %s: %s", player.getName(), e.getMessage());
+    }
+
     logger.debug("Staff mode enabled for %s in %dms", player.getName(), System.currentTimeMillis() - time);
   }
 
   private void disableStaffMode() {
     long time = System.currentTimeMillis();
+    disableVanish(true);
     disablePlayerPerks();
     restoreInventory();
     loadPreviousLocation();
@@ -157,6 +176,12 @@ public class StaffPaperPlayerWrapper extends PaperPlayerWrapper implements Staff
         .replace("{player}", player.getName()),
         getUniqueId())
     );
+
+    try {
+      extensionMap.values().forEach(StaffPlayerExtension::onStaffModeDisabled);
+    } catch (Exception e) {
+      logger.severe("An error occurred while enabling staff mode for %s: %s", player.getName(), e.getMessage());
+    }
 
     logger.debug("Staff mode disabled for %s in %dms", player.getName(), System.currentTimeMillis() - time);
   }
@@ -293,6 +318,29 @@ public class StaffPaperPlayerWrapper extends PaperPlayerWrapper implements Staff
     enableVanish(true);
   }
 
+  public void addExtensions() {
+    extensionManager.getExtensionsStream().forEach(extension -> {
+      try {
+        StaffPlayerExtension instance = extension.getConstructor(StaffPlayerWrapper.class).newInstance(this);
+        injector.injectMembers(instance);
+
+        extensionMap.put(extension, instance);
+      } catch (Exception e) {
+        logger.severe("An error occurred while adding extension %s for %s: %s", extension.getName(), player.getName(), e.getMessage());
+      }
+    });
+  }
+
+  @Override
+  @SuppressWarnings("unchecked")
+  public <T extends StaffPlayerExtension> Optional<T> getExtension(Class<T> extension) {
+    StaffPlayerExtension staffPlayerExtension = extensionMap.get(extension);
+
+    if (staffPlayerExtension == null) return Optional.empty();
+
+    return Optional.of((T) staffPlayerExtension);
+  }
+
   public static class Builder {
     private final StaffPaperPlayerWrapper playerWrapper;
 
@@ -316,6 +364,7 @@ public class StaffPaperPlayerWrapper extends PaperPlayerWrapper implements Staff
 
       playerWrapper.checkStaffModeState();
       playerWrapper.checkVanishState();
+      playerWrapper.addExtensions();
 
       return playerWrapper;
     }
