@@ -35,6 +35,12 @@ public interface CommandSender {
   }
 
   /**
+   * Send an actionbar to the player.
+   * @param component the component to send
+   */
+  void sendActionbar(@NotNull Component component);
+
+  /**
    * Send a plain message to the player.
    *
    * @param message the plain message to send
