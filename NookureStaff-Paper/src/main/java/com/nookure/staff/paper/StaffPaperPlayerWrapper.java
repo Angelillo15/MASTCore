@@ -59,6 +59,7 @@ public class StaffPaperPlayerWrapper extends PaperPlayerWrapper implements Staff
   private StaffDataModel staffDataModel;
   private boolean staffMode = false;
   private boolean vanish = false;
+  private boolean staffChatAsDefault = false;
   private StaffModeData staffModeData;
 
   @Override
@@ -282,6 +283,28 @@ public class StaffPaperPlayerWrapper extends PaperPlayerWrapper implements Staff
     staffModeData.write();
   }
 
+  @Override
+  public boolean isStaffChatAsDefault() {
+    return staffChatAsDefault;
+  }
+
+  @Override
+  public void setStaffChatAsDefault(boolean staffChatAsDefault) {
+    this.staffChatAsDefault = staffChatAsDefault;
+
+    StaffDataModel staffDataModel = StaffDataModel.getFromUUID(connection.getStorm(), player.getUniqueId());
+
+    staffDataModel.setStaffChatEnabled(staffChatAsDefault);
+
+    scheduler.async(() -> {
+      try {
+        connection.getStorm().save(staffDataModel);
+      } catch (SQLException e) {
+        logger.severe("An error occurred while saving staff chat state for %s: %s", player.getName(), e.getMessage());
+      }
+    });
+  }
+
   private void checkStaffModeState() {
     if (staffModeData == null) {
       staffModeData = StaffModeData.read(plugin, this);
@@ -301,6 +324,8 @@ public class StaffPaperPlayerWrapper extends PaperPlayerWrapper implements Staff
     if (staffDataModel.isStaffMode()) {
       enableStaffMode(true);
     }
+
+    staffChatAsDefault = staffDataModel.isStaffChatEnabled();
   }
 
   public void checkVanishState() {

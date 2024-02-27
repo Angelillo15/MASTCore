@@ -22,6 +22,9 @@ public class StaffDataModel extends StormModel {
   @Column
   private Boolean vanished;
 
+  @Column
+  private Boolean staffChatEnabled = false;
+
   public String getUUID() {
     return UUID;
   }
@@ -44,6 +47,14 @@ public class StaffDataModel extends StormModel {
 
   public void setVanished(boolean vanished) {
     this.vanished = vanished;
+  }
+
+  public Boolean isStaffChatEnabled() {
+    return staffChatEnabled;
+  }
+
+  public void setStaffChatEnabled(boolean staffChatEnabled) {
+    this.staffChatEnabled = staffChatEnabled;
   }
 
   public static StaffDataModel getFromUUID(@NotNull Storm storm, @NotNull UUID uuid) {
