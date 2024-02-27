@@ -1,5 +1,6 @@
 package com.nookure.staff.api.config.bukkit;
 
+import com.nookure.staff.api.config.bukkit.partials.FreezePartial;
 import com.nookure.staff.api.config.bukkit.partials.ModulesPartials;
 import com.nookure.staff.api.config.bukkit.partials.StaffModePartial;
 import com.nookure.staff.api.config.partials.DatabaseConfig;
@@ -17,8 +18,19 @@ public class BukkitConfig {
       """)
   private boolean debug = false;
 
+  @Setting
+  @Comment("""
+      The name of the server.
+      This will be used in the messages or identifiers.
+      """)
+  private String serverName = "Server 1";
+
   public boolean isDebug() {
     return debug;
+  }
+
+  public String getServerName() {
+    return serverName;
   }
 
   @Setting
@@ -34,7 +46,12 @@ public class BukkitConfig {
   @Setting
   @Comment("""
       Here you can configure some settings for the staffmode
-      """
-  )
+      """)
   public final StaffModePartial staffMode = new StaffModePartial();
+
+  @Setting
+  @Comment("""
+      Here you can configure some settings for the freeze module
+      """)
+  public final FreezePartial freeze = new FreezePartial();
 }
