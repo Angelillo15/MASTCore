@@ -28,6 +28,11 @@ public class ConsoleCommandSender implements CommandSender {
   }
 
   @Override
+  public void sendActionbar(@NotNull Component component) {
+    // Do nothing
+  }
+
+  @Override
   public int getPing() {
     return -1;
   }
