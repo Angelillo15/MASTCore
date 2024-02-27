@@ -6,7 +6,10 @@ import com.nookure.staff.api.Logger;
 import com.nookure.staff.api.NookureStaffPlatform;
 import com.nookure.staff.api.config.ConfigurationContainer;
 import com.nookure.staff.api.config.velocity.VelocityConfig;
+import com.nookure.staff.api.event.EventManager;
+import com.nookure.staff.api.messaging.EventMessenger;
 import com.nookure.staff.velocity.NookureStaff;
+import com.nookure.staff.velocity.messaging.DecoderPluginMessenger;
 import com.velocitypowered.api.proxy.ProxyServer;
 
 import java.io.IOException;
@@ -22,6 +25,8 @@ public class VelocityPluginModule extends AbstractModule {
   protected void configure() {
     bind(Logger.class).toInstance(plugin.getPLogger());
     bind(com.nookure.staff.api.NookureStaff.class).toInstance(plugin);
+    bind(EventManager.class).asEagerSingleton();
+    bind(EventMessenger.class).to(DecoderPluginMessenger.class).asEagerSingleton();
 
     bind(new TypeLiteral<NookureStaffPlatform<ProxyServer>>() {
     }).toInstance(plugin);
