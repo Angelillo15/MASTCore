@@ -43,6 +43,21 @@ public interface StaffPlayerWrapper extends PlayerWrapper {
    * @see #toggleVanish()
    */
   boolean isInVanish();
+  
+  /**
+   * Check if the player is in staff chat.
+   *
+   * @return true if the player is in staff chat mode
+   * @see #setStaffChatAsDefault(boolean) ()
+   */
+  boolean isStaffChatAsDefault();
+
+  /**
+   * Set the player's staff chat mode.
+   *
+   * @param staffChatAsDefault if true, the player will be in staff chat mode
+   */
+  void setStaffChatAsDefault(boolean staffChatAsDefault);
 
   /**
    * Reload/load the player's items.
