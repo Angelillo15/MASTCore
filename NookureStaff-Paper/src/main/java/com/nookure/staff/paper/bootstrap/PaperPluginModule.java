@@ -3,6 +3,7 @@ package com.nookure.staff.paper.bootstrap;
 import com.google.inject.TypeLiteral;
 import com.nookure.staff.api.Logger;
 import com.nookure.staff.api.NookureStaff;
+import com.nookure.staff.api.annotation.PluginMessageMessenger;
 import com.nookure.staff.api.annotation.RedisPublish;
 import com.nookure.staff.api.annotation.RedisSubscribe;
 import com.nookure.staff.api.command.CommandManager;
@@ -13,6 +14,8 @@ import com.nookure.staff.api.config.bukkit.ItemsConfig;
 import com.nookure.staff.api.config.messaging.MessengerConfig;
 import com.nookure.staff.api.config.messaging.RedisPartial;
 import com.nookure.staff.api.database.AbstractPluginConnection;
+import com.nookure.staff.api.extension.StaffPlayerExtensionManager;
+import com.nookure.staff.api.manager.FreezeManager;
 import com.nookure.staff.api.manager.PlayerWrapperManager;
 import com.nookure.staff.api.manager.StaffItemsManager;
 import com.nookure.staff.api.messaging.EventMessenger;
@@ -60,6 +63,8 @@ public class PaperPluginModule extends PluginModule {
     bind(CommandManager.class).to(PaperCommandManager.class).asEagerSingleton();
     bind(Scheduler.class).to(PaperScheduler.class).asEagerSingleton();
     bind(ServerUtils.class).to(PaperServerUtils.class).asEagerSingleton();
+    bind(StaffPlayerExtensionManager.class).asEagerSingleton();
+    bind(FreezeManager.class).asEagerSingleton();
 
     try {
       /*
@@ -97,6 +102,11 @@ public class PaperPluginModule extends PluginModule {
       case NONE -> bind(EventMessenger.class).to(NoneEventManager.class).asEagerSingleton();
       default -> throw new RuntimeException("Unknown messenger type");
     }
+
+    if (messengerType != MessengerConfig.MessengerType.NONE)
+      bind(EventMessenger.class).annotatedWith(PluginMessageMessenger.class).to(BackendMessageMessenger.class).asEagerSingleton();
+    else
+      bind(EventMessenger.class).annotatedWith(PluginMessageMessenger.class).to(NoneEventManager.class).asEagerSingleton();
   }
 
   private CommandMap getCommandMap() {
