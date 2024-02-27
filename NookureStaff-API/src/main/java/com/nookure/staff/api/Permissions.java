@@ -34,4 +34,14 @@ public final class Permissions {
    * Permission to see the players in vanish.
    */
   public static final String STAFF_VANISH_SEE = "nookure.staff.vanish.see";
+
+  /**
+   * Permission to freeze a player.
+   */
+  public static final String STAFF_FREEZE = "nookure.staff.freeze";
+
+  /**
+   * Permission to bypass the freeze.
+   */
+  public static final String STAFF_FREEZE_BYPASS = "nookure.staff.freeze.bypass";
 }
