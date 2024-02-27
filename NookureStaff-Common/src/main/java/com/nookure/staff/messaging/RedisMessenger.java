@@ -53,8 +53,12 @@ public class RedisMessenger extends EventMessenger {
   }
 
   @Override
+  @SuppressWarnings("SynchronizeOnNonFinalField")
   public void publish(@NotNull PlayerWrapper sender, byte @NotNull [] data) {
-    scheduler.async(() -> jedisPublish.publish(CHANNEL, data));
+    synchronized (jedisPublish) {
+      logger.debug("Publishing event to redis");
+      jedisPublish.publish(CHANNEL, data);
+    }
   }
 
   private static class RedisEventMessenger extends BinaryJedisPubSub {
