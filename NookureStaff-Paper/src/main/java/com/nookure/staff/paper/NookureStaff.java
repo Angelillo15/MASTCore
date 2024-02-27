@@ -15,10 +15,7 @@ import com.nookure.staff.api.manager.PlayerWrapperManager;
 import com.nookure.staff.api.messaging.Channels;
 import com.nookure.staff.api.messaging.EventMessenger;
 import com.nookure.staff.api.util.AbstractLoader;
-import com.nookure.staff.paper.command.FreezeChatCommand;
-import com.nookure.staff.paper.command.FreezeCommand;
-import com.nookure.staff.paper.command.PaperCommandManager;
-import com.nookure.staff.paper.command.StaffModeCommand;
+import com.nookure.staff.paper.command.*;
 import com.nookure.staff.paper.command.main.NookureStaffCommand;
 import com.nookure.staff.paper.extension.FreezePlayerExtension;
 import com.nookure.staff.paper.listener.OnPlayerJoin;
@@ -28,6 +25,7 @@ import com.nookure.staff.paper.listener.freeze.OnFreezePlayerMove;
 import com.nookure.staff.paper.listener.freeze.OnFreezePlayerQuit;
 import com.nookure.staff.paper.listener.freeze.OnPlayerChatFreeze;
 import com.nookure.staff.paper.listener.server.OnServerBroadcast;
+import com.nookure.staff.paper.listener.staff.OnPlayerInStaffChatTalk;
 import com.nookure.staff.paper.listener.staff.vanish.PlayerVanishListener;
 import com.nookure.staff.paper.listener.staff.OnStaffLeave;
 import com.nookure.staff.paper.listener.staff.items.OnInventoryClick;
@@ -129,6 +127,10 @@ public class NookureStaff {
       ).forEach(this::registerListener);
     }
 
+    if (config.get().modules.isStaffChat()) {
+      registerListener(OnPlayerInStaffChatTalk.class);
+    }
+
     switch (messengerConfig.get().getType()) {
       case REDIS -> {
         logger.debug("Registering Redis messenger...");
@@ -211,6 +213,10 @@ public class NookureStaff {
     if (config.get().modules.isFreeze()) {
       commandManager.registerCommand(injector.getInstance(FreezeCommand.class));
       commandManager.registerCommand(injector.getInstance(FreezeChatCommand.class));
+    }
+
+    if (config.get().modules.isStaffChat()) {
+      commandManager.registerCommand(injector.getInstance(StaffChatCommand.class));
     }
   }
 
