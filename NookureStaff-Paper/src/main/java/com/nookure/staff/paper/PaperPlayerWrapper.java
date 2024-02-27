@@ -31,6 +31,11 @@ public class PaperPlayerWrapper implements PlayerWrapper {
   }
 
   @Override
+  public void sendActionbar(@NotNull Component component) {
+    player.sendActionBar(component);
+  }
+
+  @Override
   public void sendPluginMessage(@NotNull String channel, byte @NotNull [] message) {
     logger.debug("Sending plugin message to " + player.getName() + " on channel " + channel);
     player.sendPluginMessage(plugin, channel, message);
