@@ -1,5 +1,6 @@
 package com.nookure.staff.api.config.bukkit;
 
+import com.nookure.staff.api.config.bukkit.partials.messages.FreezeMessagePartial;
 import com.nookure.staff.api.config.bukkit.partials.messages.StaffModePartial;
 import com.nookure.staff.api.config.bukkit.partials.messages.VanishPartial;
 import org.spongepowered.configurate.objectmapping.ConfigSerializable;
@@ -18,6 +19,7 @@ public class BukkitMessages {
   private String prefix = "<b><red>Staff</red> <gray>»</gray></b>";
   public final StaffModePartial staffMode = new StaffModePartial();
   public final VanishPartial vanish = new VanishPartial();
+  public final FreezeMessagePartial freeze = new FreezeMessagePartial();
 
   public String prefix() {
     return prefix;
