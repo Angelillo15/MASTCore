@@ -43,7 +43,7 @@ public interface StaffPlayerWrapper extends PlayerWrapper {
    * @see #toggleVanish()
    */
   boolean isInVanish();
-  
+
   /**
    * Check if the player is in staff chat.
    *
@@ -120,12 +120,18 @@ public interface StaffPlayerWrapper extends PlayerWrapper {
   void enablePlayerPerks();
 
   /**
+   * Toggle the night vision.
+   */
+  void toggleNightVision();
+
+  /**
    * Return the player's staff mode extension.
    *
    * @param extension the extension class that you want to get
    * @return the extension
    */
   <T extends StaffPlayerExtension> Optional<T> getExtension(Class<T> extension);
+
   /**
    * Get the player's items.
    *
