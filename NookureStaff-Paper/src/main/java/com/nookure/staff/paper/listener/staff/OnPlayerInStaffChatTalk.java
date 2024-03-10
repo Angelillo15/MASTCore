@@ -34,8 +34,8 @@ public class OnPlayerInStaffChatTalk implements Listener {
 
     StaffPlayerWrapper staffPlayerWrapper = optionalStaffPlayerWrapper.get();
 
-    if (staffPlayerWrapper.isStaffChatAsDefault()) {
-      event.setCancelled(true);
+    if (!staffPlayerWrapper.isStaffChatAsDefault()) {
+      return;
     }
 
     String message = messages.get().staffChat.format()
@@ -44,5 +44,7 @@ public class OnPlayerInStaffChatTalk implements Listener {
         .replace("{message}", PlainTextComponentSerializer.plainText().serialize(event.message()));
 
     serverUtils.broadcast(message, Permissions.STAFF_CHAT);
+
+    event.setCancelled(true);
   }
 }
