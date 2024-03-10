@@ -1,5 +1,6 @@
 plugins {
   id("net.kyori.blossom") version "2.1.0"
+  alias(libs.plugins.grgit)
 }
 
 dependencies {
@@ -23,6 +24,8 @@ sourceSets {
     blossom {
       javaSources {
         property("version", rootProject.version.toString())
+        property("branch",  grgit.branch.current().name)
+        property("commit", grgit.head().abbreviatedId)
       }
     }
   }
