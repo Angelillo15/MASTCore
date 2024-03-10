@@ -22,13 +22,19 @@ import com.nookure.staff.api.model.StaffDataModel;
 import com.nookure.staff.api.util.Scheduler;
 import com.nookure.staff.paper.data.StaffModeData;
 import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
+import org.bukkit.NamespacedKey;
+import org.bukkit.Registry;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 import org.jetbrains.annotations.NotNull;
 
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 
 public class StaffPaperPlayerWrapper extends PaperPlayerWrapper implements StaffPlayerWrapper {
@@ -168,7 +174,7 @@ public class StaffPaperPlayerWrapper extends PaperPlayerWrapper implements Staff
     disableVanish(true);
     disablePlayerPerks();
     restoreInventory();
-    loadPreviousLocation();
+    if (config.get().staffMode.teleportToPreviousLocation()) loadPreviousLocation();
     sendMiniMessage(messages.get().staffMode.toggledOff());
     writeStaffModeState(false);
 
@@ -191,12 +197,18 @@ public class StaffPaperPlayerWrapper extends PaperPlayerWrapper implements Staff
     player.setAllowFlight(true);
     player.setFlying(true);
     player.setInvulnerable(true);
+    loadPotionEffects();
   }
 
   public void disablePlayerPerks() {
     player.setAllowFlight(false);
     player.setFlying(false);
     player.setInvulnerable(false);
+    unloadPotionEffects();
+
+    if (player.getGameMode() == GameMode.CREATIVE) {
+      player.setFoodLevel(20);
+    }
   }
 
   @Override
@@ -328,6 +340,16 @@ public class StaffPaperPlayerWrapper extends PaperPlayerWrapper implements Staff
     staffChatAsDefault = staffDataModel.isStaffChatEnabled();
   }
 
+  @Override
+  public void toggleNightVision() {
+    if (player.hasPotionEffect(PotionEffectType.NIGHT_VISION)) {
+      player.removePotionEffect(PotionEffectType.NIGHT_VISION);
+      return;
+    }
+
+    player.addPotionEffect(new PotionEffect(PotionEffectType.NIGHT_VISION, Integer.MAX_VALUE, 0, true, false));
+  }
+
   public void checkVanishState() {
     if (!config.get().modules.isVanish()) return;
 
@@ -354,6 +376,62 @@ public class StaffPaperPlayerWrapper extends PaperPlayerWrapper implements Staff
         logger.severe("An error occurred while adding extension %s for %s: %s", extension.getName(), player.getName(), e.getMessage());
       }
     });
+  }
+
+  public void loadPotionEffects() {
+    if (config.get().staffMode.nightVision()) {
+      if (!player.hasPotionEffect(PotionEffectType.NIGHT_VISION)) toggleNightVision();
+    }
+
+    if (config.get().staffMode.customPotionEffects()) {
+      config.get().staffMode.potionEffects().forEach(potionEffect -> {
+        String[] split = potionEffect.split(":");
+
+        if (split.length < 3) {
+          logger.warning("Invalid potion effect format: %s", potionEffect);
+          return;
+        }
+
+        PotionEffectType potionEffectType = Registry.EFFECT.get(Objects.requireNonNull(NamespacedKey.fromString(split[0].toLowerCase())));
+
+        if (potionEffectType == null) {
+          logger.warning("Invalid potion effect type: %s", split[0]);
+          return;
+        }
+
+        int duration = Integer.parseInt(split[1]);
+
+        int amplifier = Integer.parseInt(split[2]);
+
+        player.addPotionEffect(new PotionEffect(potionEffectType, duration, amplifier, true, false));
+      });
+    }
+  }
+
+  public void unloadPotionEffects() {
+    if (config.get().staffMode.nightVision()) {
+      if (player.hasPotionEffect(PotionEffectType.NIGHT_VISION)) toggleNightVision();
+    }
+
+    if (config.get().staffMode.customPotionEffects()) {
+      config.get().staffMode.potionEffects().forEach(potionEffect -> {
+        String[] split = potionEffect.split(":");
+
+        if (split.length < 3) {
+          logger.warning("Invalid potion effect format: %s", potionEffect);
+          return;
+        }
+
+        PotionEffectType potionEffectType = Registry.EFFECT.get(Objects.requireNonNull(NamespacedKey.fromString(split[0].toLowerCase())));
+
+        if (potionEffectType == null) {
+          logger.warning("Invalid potion effect type: %s", split[0]);
+          return;
+        }
+
+        player.removePotionEffect(potionEffectType);
+      });
+    }
   }
 
   @Override
