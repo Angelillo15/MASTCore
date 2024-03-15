@@ -1,0 +1,7 @@
+[*.{yml,yaml,java,kts}]
+tab_width = 4
+indent_size = 2
+continuation_indent_size = 4
+indent_style = space
+end_of_line = lf
+charset = utf-8
