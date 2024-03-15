@@ -356,9 +356,9 @@ public class StaffPaperPlayerWrapper extends PaperPlayerWrapper implements Staff
     StaffDataModel staffDataModel = StaffDataModel.getFromUUID(connection.getStorm(), player.getUniqueId());
 
     if (staffDataModel.isVanished()) {
-      enableVanish();
+      enableVanish(staffMode);
     } else {
-      disableVanish();
+      disableVanish(staffMode);
     }
 
     vanish = staffDataModel.isVanished();
