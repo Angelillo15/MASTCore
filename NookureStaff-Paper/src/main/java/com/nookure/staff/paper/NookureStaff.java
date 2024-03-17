@@ -7,6 +7,8 @@ import com.nookure.staff.api.Logger;
 import com.nookure.staff.api.Permissions;
 import com.nookure.staff.api.config.ConfigurationContainer;
 import com.nookure.staff.api.config.bukkit.BukkitConfig;
+import com.nookure.staff.api.config.bukkit.BukkitMessages;
+import com.nookure.staff.api.config.bukkit.ItemsConfig;
 import com.nookure.staff.api.config.messaging.MessengerConfig;
 import com.nookure.staff.api.database.AbstractPluginConnection;
 import com.nookure.staff.api.event.EventManager;
@@ -53,6 +55,10 @@ public class NookureStaff {
   private ConfigurationContainer<BukkitConfig> config;
   @Inject
   private ConfigurationContainer<MessengerConfig> messengerConfig;
+  @Inject
+  private ConfigurationContainer<ItemsConfig> itemsConfig;
+  @Inject
+  private ConfigurationContainer<BukkitMessages> messagesConfig;
   @Inject
   private JavaPlugin plugin;
   @Inject
@@ -218,6 +224,10 @@ public class NookureStaff {
     if (config.get().modules.isStaffChat()) {
       commandManager.registerCommand(injector.getInstance(StaffChatCommand.class));
     }
+
+    if (config.get().modules.isVanish()) {
+      commandManager.registerCommand(injector.getInstance(VanishCommand.class));
+    }
   }
 
   private void loadExtensions() {
@@ -234,6 +244,15 @@ public class NookureStaff {
   }
 
   public void reload() {
+    Stream.of(
+        config,
+        messengerConfig,
+        messagesConfig,
+        itemsConfig
+    ).forEach(c -> c.reload().join());
+  }
 
+  public String getPrefix() {
+    return messagesConfig.get().prefix();
   }
 }
