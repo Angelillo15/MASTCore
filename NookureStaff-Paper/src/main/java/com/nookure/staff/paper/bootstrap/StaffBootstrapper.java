@@ -1,13 +1,14 @@
 package com.nookure.staff.paper.bootstrap;
 
+import com.alessiodp.libby.BukkitLibraryManager;
+import com.alessiodp.libby.LibraryManager;
+import com.alessiodp.libby.PaperLibraryManager;
 import com.google.inject.Guice;
-import com.google.inject.Inject;
 import com.google.inject.Injector;
 import com.nookure.staff.Constants;
 import com.nookure.staff.api.Logger;
 import com.nookure.staff.api.NookureStaffPlatform;
-import com.nookure.staff.api.config.ConfigurationContainer;
-import com.nookure.staff.api.config.bukkit.BukkitMessages;
+import com.nookure.staff.lib.DefaultLibRepo;
 import com.nookure.staff.paper.NookureStaff;
 import com.nookure.staff.paper.util.PaperLoggerImpl;
 import net.kyori.adventure.text.Component;
@@ -19,8 +20,6 @@ import java.io.File;
 import java.io.InputStream;
 
 public class StaffBootstrapper extends JavaPlugin implements NookureStaffPlatform<JavaPlugin> {
-  @Inject
-  private ConfigurationContainer<BukkitMessages> messages;
   private boolean debug = false;
   private Injector injector;
   private Logger logger;
@@ -42,11 +41,29 @@ public class StaffBootstrapper extends JavaPlugin implements NookureStaffPlatfor
         Component.text("NookureStaff v" + Constants.VERSION + " by Angelillo15").color(NamedTextColor.LIGHT_PURPLE)
     );
 
+    loadDependencies();
+
     loadLogger();
     loadInjector();
     loadPlugin();
 
     plugin.onEnable();
+  }
+
+  private void loadDependencies() {
+    LibraryManager manager;
+
+    try {
+      Class.forName("com.nookure.staff.paper.bootstrap.PaperPluginModule");
+      manager = new PaperLibraryManager(this);
+    } catch (ClassNotFoundException e) {
+      manager = new BukkitLibraryManager(this);
+    }
+
+    manager.addMavenCentral();
+    manager.addJitPack();
+
+    DefaultLibRepo.getInstance().getLibraries().forEach(manager::loadLibrary);
   }
 
   @Override
@@ -111,6 +128,6 @@ public class StaffBootstrapper extends JavaPlugin implements NookureStaffPlatfor
 
   @Override
   public String getPrefix() {
-    return messages.get().prefix();
+    return plugin.getPrefix();
   }
 }
