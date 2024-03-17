@@ -18,6 +18,13 @@ public class BukkitMessages {
               """
   )
   private String prefix = "<b><red>Staff</red> <gray>»</gray></b>";
+  @Setting
+  @Comment(
+      """
+          Reload message
+          """
+  )
+  private String reload = "{prefix} <gray>Configuration reloaded, mayor changes may not take effect until the server is restarted.";
   public final StaffModePartial staffMode = new StaffModePartial();
   public final VanishPartial vanish = new VanishPartial();
   public final FreezeMessagePartial freeze = new FreezeMessagePartial();
@@ -25,5 +32,9 @@ public class BukkitMessages {
 
   public String prefix() {
     return prefix;
+  }
+
+  public String reload() {
+    return reload;
   }
 }
