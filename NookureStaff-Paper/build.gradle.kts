@@ -9,6 +9,7 @@ dependencies {
   implementation(project(":NookureStaff-API"))
   implementation(project(":NookureStaff-Common"))
   compileOnly(libs.paperApi)
+  compileOnly(libs.libbyPaper)
   compileOnly(libs.configurateYaml)
   compileOnly(libs.jedis)
 }

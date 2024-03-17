@@ -16,18 +16,20 @@ if (System.getenv("nookure_staff_version") != null) {
 dependencies {
   implementation(project(":NookureStaff-Paper"))
   implementation(project(":NookureStaff-Velocity"))
-  implementation(libs.configurateYaml)
+  implementation(libs.liblyBukkit)
+  implementation(libs.libbyPaper)
+  implementation(libs.libbyVelocity)
   implementation(libs.guice)
-  implementation(libs.jedis)
-  implementation(libs.storm)
-  implementation(libs.hikariCP)
-  implementation(libs.apacheCommons)
-  implementation(libs.caffeine)
+  implementation(libs.configurateYaml)
 }
 
 tasks.shadowJar {
   archiveFileName.set("NookureStaff-${rootProject.version}.jar")
+  relocate("com.zaxxer", "com.nookure.staff.libs")
+  relocate("com.craftmend.storm", "com.nookure.staff.libs.storm")
+  relocate("com.github.benmanes.caffeine", "com.nookure.staff.libs.caffeine")
   relocate("org.spongepowered.configurate", "com.nookure.staff.libs.configurate")
+  relocate("com.alessiodp.libby", "com.nookure.staff.libs.libby")
 }
 
 allprojects {
@@ -41,7 +43,7 @@ allprojects {
     maven("https://maven.nookure.com")
     maven("https://mvn.exceptionflug.de/repository/exceptionflug-public/")
     maven("https://repo.extendedclip.com/content/repositories/placeholderapi/")
-    maven("https://repo.alessiodp.com/releases/")
+    maven("https://s01.oss.sonatype.org/content/repositories/snapshots/")
     maven("https://repo.dmulloy2.net/repository/public/")
     maven("https://repo.aikar.co/content/groups/aikar/")
   }
@@ -52,6 +54,7 @@ allprojects {
     compileOnly(rootProject.libs.adventureApi)
     compileOnly(rootProject.libs.miniMessage)
     compileOnly(rootProject.libs.caffeine)
+    compileOnly(rootProject.libs.liblyBukkit)
   }
 
   tasks {
