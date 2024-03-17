@@ -3,10 +3,10 @@ configManager = "1.4"
 hikariCP = "4.0.3"
 invApiVer = "4.1.10"
 gson = "2.10.1"
-libly = "1.1.5"
+libly = "2.0.0-SNAPSHOT"
 reflections = "0.10.2"
 paperLib = "1.0.7"
-caffeine = "2.9.2"
+caffeine = "3.1.8"
 paper = "1.20.4-R0.1-SNAPSHOT"
 vault = "1.7.1"
 placeholderApi = "2.11.2"
@@ -31,9 +31,10 @@ invAdvancedSlots = { group = "com.github.hamza-cskn.obliviate-invs", name = "adv
 invPagination = { group = "com.github.hamza-cskn.obliviate-invs", name = "pagination", version.ref = "invApiVer" }
 configurableGui = { group = "com.github.hamza-cskn.obliviate-invs", name = "configurablegui", version.ref = "invApiVer" }
 gson = { group = "com.google.code.gson", name = "gson", version.ref = "gson" }
-liblyBukkit = { group = "net.byteflux", name = "libby-bukkit", version.ref = "libly" }
-liblyBungee = { group = "net.byteflux", name = "libby-bungee", version.ref = "libly" }
-libbyVelocity = { group = "net.byteflux", name = "libby-velocity", version.ref = "libly" }
+liblyBukkit = { group = "com.alessiodp.libby", name = "libby-bukkit", version.ref = "libly" }
+liblyBungee = { group = "com.alessiodp.libby", name = "libby-bungee", version.ref = "libly" }
+libbyVelocity = { group = "com.alessiodp.libby", name = "libby-velocity", version.ref = "libly" }
+libbyPaper = { group = "com.alessiodp.libby", name = "libby-paper", version.ref = "libly" }
 reflections = { group = "org.reflections", name = "reflections", version.ref = "reflections" }
 paperLib = { group = "io.papermc", name = "paperlib", version.ref = "paperLib" }
 caffeine = { group = "com.github.ben-manes.caffeine", name = "caffeine", version.ref = "caffeine" }
@@ -54,7 +55,6 @@ configurateGson = { group = "org.spongepowered", name = "configurate-gson", vers
 configurateHocon = { group = "org.spongepowered", name = "configurate-hocon", version.ref = "configurate" }
 configurateYaml = { group = "org.spongepowered", name = "configurate-yaml", version.ref = "configurate" }
 apacheCommons = { group = "org.apache.commons", name = "commons-lang3", version.ref = "apacheCommons" }
-
 # Scoreboard stuff
 scoreboard = { group = "com.github.megavexnetwork.scoreboard-library", name = "scoreboard-library-api", version.ref = "scoreboard" }
 scoreboard-implementation = { group = "com.github.megavexnetwork.scoreboard-library", name = "scoreboard-library-implementation", version.ref = "scoreboard" }
