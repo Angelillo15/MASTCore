@@ -140,6 +140,24 @@ public class PlayerWrapperManager<T> {
     return playerWrappersByUUID.values().stream();
   }
 
+  /**
+   * Gets the amount of staff players.
+   *
+   * @return the amount of staff players
+   */
+  public int getStaffCount() {
+    return staffPlayers.size();
+  }
+
+  /**
+   * Gets the amount of player wrappers.
+   *
+   * @return the amount of player wrappers
+   */
+  public int getPlayerCount() {
+    return playerWrappersByUUID.size();
+  }
+
   public boolean isStaffPlayer(@NotNull UUID uuid) {
     Objects.requireNonNull(uuid, "UUID cannot be null");
     return staffPlayers.contains(uuid);
