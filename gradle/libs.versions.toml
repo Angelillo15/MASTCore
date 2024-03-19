@@ -13,7 +13,7 @@ placeholderApi = "2.11.2"
 waterfall = "1.19-R0.1-SNAPSHOT"
 jedis = "4.4.0-m2"
 storm = "e1f961b"
-adventure = "4.14.0"
+adventure = "4.16.0"
 adventurePlatform = "4.3.0"
 velocity = "3.1.1"
 guice = "7.0.0"
@@ -48,6 +48,8 @@ miniMessage = { group = "net.kyori", name = "adventure-text-minimessage", versio
 adventureApi = { group = "net.kyori", name = "adventure-api", version.ref = "adventure" }
 adventureBukkit = { group = "net.kyori", name = "adventure-platform-bukkit", version.ref = "adventurePlatform" }
 adventureBungee = { group = "net.kyori", name = "adventure-platform-bungeecord", version.ref = "adventurePlatform" }
+textPlainSerializer = { group = "net.kyori", name = "adventure-text-serializer-plain", version.ref = "adventure" }
+textLegacySerializer = { group = "net.kyori", name = "adventure-text-serializer-legacy", version.ref = "adventure" }
 velocity = { group = "com.velocitypowered", name = "velocity-api", version.ref = "velocity" }
 guice = { group = "com.google.inject", name = "guice", version.ref = "guice" }
 guava = { group = "com.google.guava", name = "guava", version.ref = "guava" }
@@ -70,6 +72,6 @@ scoreboard = ["scoreboard", "scoreboard-implementation", "scoreboard-modern", "s
 [plugins]
 shadowJar = { id = "com.github.johnrengelman.shadow", version.ref = "shadowJar" }
 pluginYmlBukkit = { id = "net.minecrell.plugin-yml.bukkit", version.ref = "pluginYml" }
-pluginYmlBungee = { id = "net.minecrell.plugin-yml.bungeecord", version.ref = "pluginYml" }
+pluginYmlBungee = { id = "net.minecrell.plugin-yml.bungee", version.ref = "pluginYml" }
 pluginYmlPaper = { id = "net.minecrell.plugin-yml.paper", version.ref = "pluginYml" }
 grgit = { id = "org.ajoberstar.grgit", version = "5.2.1" }
