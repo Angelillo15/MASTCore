@@ -8,8 +8,8 @@ import com.nookure.staff.api.config.ConfigurationContainer;
 import com.nookure.staff.api.config.velocity.VelocityConfig;
 import com.nookure.staff.api.event.EventManager;
 import com.nookure.staff.api.messaging.EventMessenger;
+import com.nookure.staff.messaging.DecoderPluginMessenger;
 import com.nookure.staff.velocity.NookureStaff;
-import com.nookure.staff.velocity.messaging.DecoderPluginMessenger;
 import com.velocitypowered.api.proxy.ProxyServer;
 
 import java.io.IOException;
