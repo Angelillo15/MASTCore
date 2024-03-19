@@ -1,3 +1,5 @@
+import net.minecrell.pluginyml.paper.PaperPluginDescription
+
 plugins {
   alias(libs.plugins.pluginYmlPaper)
   alias(libs.plugins.pluginYmlBukkit)
@@ -12,6 +14,7 @@ dependencies {
   compileOnly(libs.libbyPaper)
   compileOnly(libs.configurateYaml)
   compileOnly(libs.jedis)
+  compileOnly(libs.placeholderApi)
 }
 
 bukkit {
@@ -21,7 +24,8 @@ bukkit {
   description = "A staff plugin by Nookure"
   website = "https://angelillo15.es/"
   authors = listOf("Angelillo15")
-  main = "com.nookure.staff.bukkit.bootstrap.StaffBootstrapper"
+  main = "com.nookure.staff.paper.bootstrap.StaffBootstrapper"
+  softDepend = listOf("PlaceholderAPI")
 }
 
 paper {
@@ -32,4 +36,10 @@ paper {
   website = "https://angelillo15.es/"
   authors = listOf("Angelillo15")
   main = "com.nookure.staff.paper.bootstrap.StaffBootstrapper"
+  serverDependencies {
+    register("PlaceholderAPI") {
+      required = false
+      load = PaperPluginDescription.RelativeLoadOrder.BEFORE
+    }
+  }
 }
