@@ -11,6 +11,7 @@ import com.nookure.staff.api.config.ConfigurationContainer;
 import com.nookure.staff.api.config.bukkit.BukkitConfig;
 import com.nookure.staff.api.config.bukkit.BukkitMessages;
 import com.nookure.staff.api.config.bukkit.ItemsConfig;
+import com.nookure.staff.api.config.common.CommandConfig;
 import com.nookure.staff.api.config.messaging.MessengerConfig;
 import com.nookure.staff.api.config.messaging.RedisPartial;
 import com.nookure.staff.api.database.AbstractPluginConnection;
@@ -19,6 +20,7 @@ import com.nookure.staff.api.manager.FreezeManager;
 import com.nookure.staff.api.manager.PlayerWrapperManager;
 import com.nookure.staff.api.manager.StaffItemsManager;
 import com.nookure.staff.api.messaging.EventMessenger;
+import com.nookure.staff.api.placeholder.PlaceholderManager;
 import com.nookure.staff.api.util.PluginModule;
 import com.nookure.staff.api.util.Scheduler;
 import com.nookure.staff.api.util.ServerUtils;
@@ -65,6 +67,7 @@ public class PaperPluginModule extends PluginModule {
     bind(ServerUtils.class).to(PaperServerUtils.class).asEagerSingleton();
     bind(StaffPlayerExtensionManager.class).asEagerSingleton();
     bind(FreezeManager.class).asEagerSingleton();
+    bind(PlaceholderManager.class).asEagerSingleton();
 
     try {
       /*
@@ -78,6 +81,8 @@ public class PaperPluginModule extends PluginModule {
       }).toInstance(loadMessages());
       bind(new TypeLiteral<ConfigurationContainer<MessengerConfig>>() {
       }).toInstance(loadMessenger());
+      bind(new TypeLiteral<ConfigurationContainer<CommandConfig>>() {
+      }).toInstance(loadCommands());
 
       /*
        * PlayerWrapperManager related area
@@ -129,6 +134,10 @@ public class PaperPluginModule extends PluginModule {
 
   private ConfigurationContainer<BukkitMessages> loadMessages() throws IOException {
     return ConfigurationContainer.load(boot.getDataFolder().toPath(), BukkitMessages.class, "messages.yml");
+  }
+
+  private ConfigurationContainer<CommandConfig> loadCommands() throws IOException {
+    return ConfigurationContainer.load(boot.getDataFolder().toPath(), CommandConfig.class, "commands.yml");
   }
 
   private Jedis getJedis() {
