@@ -36,6 +36,7 @@ import com.nookure.staff.paper.listener.staff.items.OnPlayerInteract;
 import com.nookure.staff.paper.listener.staff.state.*;
 import com.nookure.staff.paper.listener.staff.vanish.StaffVanishListener;
 import com.nookure.staff.paper.loader.ItemsLoader;
+import com.nookure.staff.paper.loader.PlaceholderApiLoader;
 import com.nookure.staff.paper.messaging.BackendMessageMessenger;
 import com.nookure.staff.paper.task.FreezeSpamMessage;
 import com.nookure.staff.paper.task.FreezeTimerTask;
@@ -195,7 +196,8 @@ public class NookureStaff {
 
   private void loadLoaders() {
     Stream.of(
-        injector.getInstance(ItemsLoader.class)
+        injector.getInstance(ItemsLoader.class),
+        injector.getInstance(PlaceholderApiLoader.class)
     ).forEach(AbstractLoader::load);
   }
 
