@@ -1,4 +1,4 @@
-package com.nookure.staff.velocity.messaging;
+package com.nookure.staff.messaging;
 
 import com.nookure.staff.api.PlayerWrapper;
 import com.nookure.staff.api.messaging.EventMessenger;
