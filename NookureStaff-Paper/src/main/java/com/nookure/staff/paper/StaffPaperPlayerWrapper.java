@@ -325,6 +325,7 @@ public class StaffPaperPlayerWrapper extends PaperPlayerWrapper implements Staff
     assert staffModeData != null;
 
     if (staffModeData.record().staffMode()) {
+      clearInventory();
       enableStaffMode(true);
       return;
     }
@@ -358,7 +359,7 @@ public class StaffPaperPlayerWrapper extends PaperPlayerWrapper implements Staff
     if (staffDataModel.isVanished()) {
       enableVanish(staffMode);
     } else {
-      disableVanish(staffMode);
+      disableVanish(true);
     }
 
     vanish = staffDataModel.isVanished();
