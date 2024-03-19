@@ -10,7 +10,7 @@ import com.nookure.staff.api.manager.StaffItemsManager;
 import com.nookure.staff.api.util.AbstractLoader;
 import com.nookure.staff.paper.item.*;
 
-public class ItemsLoader extends AbstractLoader {
+public class ItemsLoader implements AbstractLoader {
   @Inject
   private StaffItemsManager manager;
   @Inject
