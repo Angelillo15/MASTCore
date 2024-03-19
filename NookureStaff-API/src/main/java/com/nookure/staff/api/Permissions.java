@@ -31,6 +31,11 @@ public final class Permissions {
   public static final String STAFF_MODE_BUILD = "nookure.staff.build";
 
   /**
+   * Permission to enter in vanish.
+   */
+  public static final String STAFF_VANISH = "nookure.staff.vanish";
+
+  /**
    * Permission to see the players in vanish.
    */
   public static final String STAFF_VANISH_SEE = "nookure.staff.vanish.see";
