@@ -6,9 +6,9 @@ package com.nookure.staff.api.util;
  *
  * @since 1.0.0
  */
-public abstract class AbstractLoader {
+public interface AbstractLoader {
   /**
    * load the instance.
    */
-  public abstract void load();
+  void load();
 }
