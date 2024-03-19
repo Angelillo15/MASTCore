@@ -2,6 +2,7 @@ package com.nookure.staff.paper.item;
 
 import com.google.inject.Inject;
 import com.nookure.staff.api.PlayerWrapper;
+import com.nookure.staff.api.StaffPlayerWrapper;
 import com.nookure.staff.api.config.ConfigurationContainer;
 import com.nookure.staff.api.config.bukkit.ItemsConfig;
 import com.nookure.staff.api.item.ExecutableItem;
@@ -17,6 +18,8 @@ public class NightVisionItem extends StaffItem implements ExecutableItem {
 
   @Override
   public void click(@NotNull PlayerWrapper player) {
-
+    if (player instanceof StaffPlayerWrapper staff) {
+      staff.toggleNightVision();
+    }
   }
 }
