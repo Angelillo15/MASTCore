@@ -53,7 +53,6 @@ fun start() {
 
     shuttingDown = false
     MAStaffInstance.getLogger().debug("Parallel thread stopped!")
-    threadPoolExecutor.shutdownNow()
   }, "MAStaff-ParallelThread").start()
 }
 
