@@ -7,7 +7,7 @@ plugins {
 group = "com.nookure.staff"
 val versionCode = "1.0.0"
 
-version = "${versionCode}-${grgit.branch.current().name}-${grgit.head().abbreviatedId}"
+version = "${versionCode}-${grgit.branch.current().name.replace("/", "-")}-${grgit.head().abbreviatedId}"
 
 if (System.getenv("nookure_staff_version") != null) {
   version = "${versionCode}-dev"
