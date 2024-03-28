@@ -9,7 +9,7 @@ name: JavaDoc Generator
 
 on:
   push:
-    branches: [ 3.x ]
+    branches: [ release/1.x ]
 jobs:
 
   build-on-ubuntu:
@@ -34,20 +34,20 @@ jobs:
       - name: Execute Gradle build
         run: |
           chmod +x gradlew
-          ./gradlew MAStaff-API:javadoc
+          ./gradlew NookureStaff-API:javadoc
       - name: clone JavaDoc
         run: |
           ls
           cd ..
           git clone https://github.com/Angelillo15/javadocs.git
-          cd javadocs
+          cd  ..javadocs
           git checkout master
-          cd ..
-          rm -r javadocs/javadocs/mastaff/
+          cd
+          rm -r javadocs/javadocs/NookureStaff/
           ls javadocs/javadocs/
           
-          cp -r MAStaff/MAStaff-API/build/docs/javadoc javadocs/javadocs/mastaff/
-          ls javadocs/javadocs/mastaff
+          cp -r NookureStaff/MNookureStaff-API/build/docs/javadoc javadocs/javadocs/NookureStaff/
+          ls javadocs/javadocs/NookureStaff
           cd javadocs
           git config --global user.email angelrizosrubios@gmail.com
           git config --global user.name Angelillo15
@@ -58,5 +58,5 @@ jobs:
         with:
           github_token: ${{ secrets.TOKEN }}
           branch: master
-          directory: /home/runner/work/MAStaff/javadocs
+          directory: /home/runner/work/NookureStaff/javadocs
           repository: Angelillo15/javadocs
