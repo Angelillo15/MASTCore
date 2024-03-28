@@ -1,6 +1,7 @@
 package com.nookure.staff.paper.listener.staff;
 
 import com.google.inject.Inject;
+import com.nookure.staff.api.Logger;
 import com.nookure.staff.api.Permissions;
 import com.nookure.staff.api.StaffPlayerWrapper;
 import com.nookure.staff.api.config.ConfigurationContainer;
@@ -12,6 +13,7 @@ import io.papermc.paper.event.player.AsyncChatEvent;
 import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 
 import java.util.Optional;
@@ -26,7 +28,10 @@ public class OnPlayerInStaffChatTalk implements Listener {
   @Inject
   private ServerUtils serverUtils;
 
-  @EventHandler
+  @EventHandler(
+      priority = EventPriority.HIGH,
+      ignoreCancelled = true
+  )
   private void onPlayerInStaffChatTalk(AsyncChatEvent event) {
     Optional<StaffPlayerWrapper> optionalStaffPlayerWrapper = playerWrapperManager.getStaffPlayer(event.getPlayer().getUniqueId());
 
