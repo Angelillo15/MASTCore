@@ -16,6 +16,7 @@ import com.nookure.staff.api.event.staff.StaffModeEnabledEvent;
 import com.nookure.staff.api.extension.StaffPlayerExtension;
 import com.nookure.staff.api.extension.StaffPlayerExtensionManager;
 import com.nookure.staff.api.item.StaffItem;
+import com.nookure.staff.api.manager.PlayerWrapperManager;
 import com.nookure.staff.api.manager.StaffItemsManager;
 import com.nookure.staff.api.messaging.EventMessenger;
 import com.nookure.staff.api.model.StaffDataModel;
@@ -60,6 +61,8 @@ public class StaffPaperPlayerWrapper extends PaperPlayerWrapper implements Staff
   private StaffPlayerExtensionManager extensionManager;
   @Inject
   private Injector injector;
+  @Inject
+  private PlayerWrapperManager<Player> playerWrapperManager;
   private final Map<Class<? extends StaffPlayerExtension>, StaffPlayerExtension> extensionMap = new HashMap<>();
   private final Map<Integer, StaffItem> items = new HashMap<>();
   private StaffDataModel staffDataModel;
@@ -97,7 +100,14 @@ public class StaffPaperPlayerWrapper extends PaperPlayerWrapper implements Staff
 
     logger.debug("Enabling vanish for %s", player.getName());
 
-    if (!silent) sendMiniMessage(messages.get().vanish.vanishEnabled());
+    if (!silent) {
+      sendMiniMessage(messages.get().vanish.vanishEnabled());
+
+      playerWrapperManager.stream()
+          .forEach(p ->
+              p.sendMiniMessage(messages.get().vanish.vanishEnabledBroadcast(), "{player}", player.getName())
+          );
+    }
 
     Bukkit.getOnlinePlayers().stream()
         .filter(p -> !p.hasPermission(Permissions.STAFF_VANISH_SEE))
@@ -110,7 +120,14 @@ public class StaffPaperPlayerWrapper extends PaperPlayerWrapper implements Staff
 
     logger.debug("Disabling vanish for %s", player.getName());
 
-    if (!silent) sendMiniMessage(messages.get().vanish.vanishDisabled());
+    if (!silent) {
+      sendMiniMessage(messages.get().vanish.vanishDisabled());
+
+      playerWrapperManager.stream()
+          .forEach(p ->
+              p.sendMiniMessage(messages.get().vanish.vanishDisabledBroadcast(), "{player}", player.getName())
+          );
+    }
 
     Bukkit.getOnlinePlayers()
         .forEach(p -> p.showPlayer(javaPlugin, player));
