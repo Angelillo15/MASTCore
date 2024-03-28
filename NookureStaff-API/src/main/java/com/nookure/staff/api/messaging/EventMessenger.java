@@ -40,7 +40,6 @@ public abstract class EventMessenger implements AutoCloseable {
       objectOutputStream.writeObject(event);
       objectOutputStream.flush();
 
-
       publish(sender, byteArrayOutputStream.toByteArray());
     } catch (IOException e) {
       logger.severe("Error while serializing event");
