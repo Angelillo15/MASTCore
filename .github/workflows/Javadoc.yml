@@ -40,9 +40,9 @@ jobs:
           ls
           cd ..
           git clone https://github.com/Angelillo15/javadocs.git
-          cd  ..javadocs
+          cd  javadocs
           git checkout master
-          cd
+          cd ..
           rm -r javadocs/javadocs/NookureStaff/
           ls javadocs/javadocs/
           
