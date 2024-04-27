@@ -105,7 +105,7 @@ public class StaffPaperPlayerWrapper extends PaperPlayerWrapper implements Staff
 
       playerWrapperManager.stream()
           .forEach(p ->
-              p.sendMiniMessage(messages.get().vanish.vanishEnabledBroadcast(), "{player}", player.getName())
+              p.sendMiniMessage(messages.get().vanish.vanishEnabledBroadcast(), "player", player.getName())
           );
     }
 
@@ -125,7 +125,7 @@ public class StaffPaperPlayerWrapper extends PaperPlayerWrapper implements Staff
 
       playerWrapperManager.stream()
           .forEach(p ->
-              p.sendMiniMessage(messages.get().vanish.vanishDisabledBroadcast(), "{player}", player.getName())
+              p.sendMiniMessage(messages.get().vanish.vanishDisabledBroadcast(), "player", player.getName())
           );
     }
 
