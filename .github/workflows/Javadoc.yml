@@ -46,7 +46,7 @@ jobs:
           rm -r javadocs/javadocs/NookureStaff/
           ls javadocs/javadocs/
           
-          cp -r NookureStaff/MNookureStaff-API/build/docs/javadoc javadocs/javadocs/NookureStaff/
+          cp -r NookureStaff/NookureStaff-API/build/docs/javadoc javadocs/javadocs/NookureStaff/
           ls javadocs/javadocs/NookureStaff
           cd javadocs
           git config --global user.email angelrizosrubios@gmail.com
