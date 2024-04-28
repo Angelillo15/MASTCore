@@ -5,7 +5,7 @@ plugins {
 }
 
 group = "com.nookure.staff"
-val versionCode = "1.0.0"
+val versionCode = "1.0.1"
 
 version = "${versionCode}-${grgit.head().abbreviatedId}"
 
