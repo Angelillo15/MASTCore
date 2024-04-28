@@ -10,6 +10,7 @@ import com.nookure.staff.api.Logger;
 import com.nookure.staff.api.NookureStaffPlatform;
 import com.nookure.staff.lib.DefaultLibRepo;
 import com.nookure.staff.paper.NookureStaff;
+import com.nookure.staff.paper.util.Metrics;
 import com.nookure.staff.paper.util.PaperLoggerImpl;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
@@ -48,6 +49,7 @@ public class StaffBootstrapper extends JavaPlugin implements NookureStaffPlatfor
     loadLogger();
     loadInjector();
     loadPlugin();
+    new Metrics(this, 16548);
 
     plugin.onEnable();
   }
