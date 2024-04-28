@@ -27,6 +27,8 @@ public class StaffBootstrapper extends JavaPlugin implements NookureStaffPlatfor
 
   @Override
   public void onEnable() {
+    checkMAStaff();
+
     Bukkit.getConsoleSender().sendMessage(Component.text("""
          
          ▐ ▄             ▄ •▄ ▄• ▄▌▄▄▄  ▄▄▄ .    .▄▄ · ▄▄▄▄▄ ▄▄▄· ·▄▄▄·▄▄▄
@@ -48,6 +50,15 @@ public class StaffBootstrapper extends JavaPlugin implements NookureStaffPlatfor
     loadPlugin();
 
     plugin.onEnable();
+  }
+
+  public void checkMAStaff() {
+    if (Bukkit.getPluginManager().getPlugin("MAStaff") != null) {
+      Bukkit.getConsoleSender().sendMessage(Component.text("MAStaff detected!").color(NamedTextColor.RED));
+      Bukkit.getConsoleSender().sendMessage(Component.text("Please remove it to avoid conflicts.").color(NamedTextColor.RED));
+      Bukkit.getConsoleSender().sendMessage(Component.text("Disabling NookureStaff...").color(NamedTextColor.RED));
+      Bukkit.getPluginManager().disablePlugin(this);
+    }
   }
 
   private void loadDependencies() {
