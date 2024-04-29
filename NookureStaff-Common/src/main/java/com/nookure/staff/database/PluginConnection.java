@@ -43,12 +43,10 @@ public class PluginConnection extends AbstractPluginConnection {
       return;
     }
 
-    if (config.getType() == DataProvider.MYSQL) {
+    if (config.getType() == DataProvider.MYSQL)
       loadMySQL(config);
-      return;
-    }
-
-    loadSqlite();
+    else
+      loadSqlite();
 
     try {
       storm.registerModel(new StaffDataModel());
