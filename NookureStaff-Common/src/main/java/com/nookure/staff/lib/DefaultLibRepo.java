@@ -32,6 +32,7 @@ public class DefaultLibRepo {
         .version("e1f961b")
         .isolatedLoad(false)
         .relocate("com{}craftmend{}storm", "com{}nookure{}staff{}libs{}storm")
+        .relocate("com{}zaxxer", "com{}nookure{}staff{}libs")
         .build();
 
     Library caffeine = Library.builder()
