@@ -57,6 +57,7 @@ configurateGson = { group = "org.spongepowered", name = "configurate-gson", vers
 configurateHocon = { group = "org.spongepowered", name = "configurate-hocon", version.ref = "configurate" }
 configurateYaml = { group = "org.spongepowered", name = "configurate-yaml", version.ref = "configurate" }
 apacheCommons = { group = "org.apache.commons", name = "commons-lang3", version.ref = "apacheCommons" }
+jarRelocator = { group = "me.lucko", name = "jar-relocator", version = "1.7" }
 # Scoreboard stuff
 scoreboard = { group = "com.github.megavexnetwork.scoreboard-library", name = "scoreboard-library-api", version.ref = "scoreboard" }
 scoreboard-implementation = { group = "com.github.megavexnetwork.scoreboard-library", name = "scoreboard-library-implementation", version.ref = "scoreboard" }
@@ -64,6 +65,9 @@ scoreboard-implementation = { group = "com.github.megavexnetwork.scoreboard-libr
 scoreboard-modern = { group = "com.github.megavexnetwork.scoreboard-library", name = "scoreboard-library-modern", version.ref = "scoreboard" }
 scoreboard-packetevents = { group = "com.github.megavexnetwork.scoreboard-library", name = "scoreboard-library-packetevents", version.ref = "scoreboard" }
 scoreboard-8 = { group = "com.github.megavexnetwork.scoreboard-library", name = "scoreboard-library-v1_8_R3", version.ref = "scoreboard" }
+# Auto service
+auto-service = "com.google.auto.service:auto-service:1.0.1"
+auto-service-annotations = "com.google.auto.service:auto-service-annotations:1.0.1"
 
 [bundles]
 invAPI = ["invCore", "invAdvancedSlots", "invPagination", "configurableGui"]
@@ -75,3 +79,4 @@ pluginYmlBukkit = { id = "net.minecrell.plugin-yml.bukkit", version.ref = "plugi
 pluginYmlBungee = { id = "net.minecrell.plugin-yml.bungee", version.ref = "pluginYml" }
 pluginYmlPaper = { id = "net.minecrell.plugin-yml.paper", version.ref = "pluginYml" }
 grgit = { id = "org.ajoberstar.grgit", version = "5.2.1" }
+grgitPublish = { id = "org.ajoberstar.git-publish", version = "4.2.1" }
