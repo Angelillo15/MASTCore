@@ -5,6 +5,7 @@ import com.google.inject.Injector;
 import com.google.inject.Singleton;
 import com.nookure.staff.api.Logger;
 import com.nookure.staff.api.Permissions;
+import com.nookure.staff.api.command.Command;
 import com.nookure.staff.api.config.ConfigurationContainer;
 import com.nookure.staff.api.config.bukkit.BukkitConfig;
 import com.nookure.staff.api.config.bukkit.BukkitMessages;
@@ -35,6 +36,7 @@ import com.nookure.staff.paper.listener.staff.items.OnPlayerEntityInteract;
 import com.nookure.staff.paper.listener.staff.items.OnPlayerInteract;
 import com.nookure.staff.paper.listener.staff.state.*;
 import com.nookure.staff.paper.listener.staff.vanish.StaffVanishListener;
+import com.nookure.staff.paper.loader.AddonsLoader;
 import com.nookure.staff.paper.loader.ItemsLoader;
 import com.nookure.staff.paper.loader.PlaceholderApiLoader;
 import com.nookure.staff.paper.messaging.BackendMessageMessenger;
@@ -197,7 +199,8 @@ public class NookureStaff {
   private void loadLoaders() {
     Stream.of(
         injector.getInstance(ItemsLoader.class),
-        injector.getInstance(PlaceholderApiLoader.class)
+        injector.getInstance(PlaceholderApiLoader.class),
+        injector.getInstance(AddonsLoader.class)
     ).forEach(AbstractLoader::load);
   }
 
@@ -252,6 +255,14 @@ public class NookureStaff {
         messagesConfig,
         itemsConfig
     ).forEach(c -> c.reload().join());
+  }
+
+  public void registerCommand(Command command) {
+    commandManager.registerCommand(command);
+  }
+
+  public void unregisterCommand(Command command) {
+    commandManager.unregisterCommand(command);
   }
 
   public String getPrefix() {
