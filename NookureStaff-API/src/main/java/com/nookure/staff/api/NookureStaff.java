@@ -1,6 +1,7 @@
 package com.nookure.staff.api;
 
 import com.google.inject.Injector;
+import com.nookure.staff.api.command.Command;
 
 import java.io.File;
 import java.io.InputStream;
@@ -21,4 +22,8 @@ public interface NookureStaff {
   Injector getInjector();
 
   String getPrefix();
+
+  default void registerCommand(Command command) {}
+
+  default void unregisterCommand(Command command) {}
 }
