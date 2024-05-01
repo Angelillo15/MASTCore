@@ -2,7 +2,7 @@
  * This piece of code is a processor that processes the Addon annotation
  * and generates the necessary data for the addon to be loaded.
  * <p>
- * This code is inspird by the Velocity Plugin Annotations Processor
+ * This code is inspired by the Velocity Plugin Annotations Processor
  * </p>
  */
 package com.nookure.staff.ap.addon;
