@@ -106,6 +106,11 @@ public class FreezeCommand extends StaffCommand {
       return;
     }
 
+    if (player.hasPermission(Permissions.STAFF_FREEZE_BYPASS)) {
+      sender.sendMiniMessage(messages.get().freeze.freezeBypassMessage());
+      return;
+    }
+
     Optional<PlayerWrapper> optionalTarget = playerWrapperManager.getPlayerWrapper(player);
 
     if (optionalTarget.isEmpty()) {
