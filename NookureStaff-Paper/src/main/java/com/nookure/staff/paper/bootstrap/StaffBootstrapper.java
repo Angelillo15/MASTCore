@@ -8,6 +8,7 @@ import com.google.inject.Injector;
 import com.nookure.staff.Constants;
 import com.nookure.staff.api.Logger;
 import com.nookure.staff.api.NookureStaffPlatform;
+import com.nookure.staff.api.command.Command;
 import com.nookure.staff.lib.DefaultLibRepo;
 import com.nookure.staff.paper.NookureStaff;
 import com.nookure.staff.paper.util.Metrics;
@@ -142,5 +143,15 @@ public class StaffBootstrapper extends JavaPlugin implements NookureStaffPlatfor
   @Override
   public String getPrefix() {
     return plugin.getPrefix();
+  }
+
+  @Override
+  public void registerCommand(Command command) {
+    plugin.registerCommand(command);
+  }
+
+  @Override
+  public void unregisterCommand(Command command) {
+    plugin.unregisterCommand(command);
   }
 }

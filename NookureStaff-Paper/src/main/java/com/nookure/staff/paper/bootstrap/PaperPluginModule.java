@@ -3,6 +3,7 @@ package com.nookure.staff.paper.bootstrap;
 import com.google.inject.TypeLiteral;
 import com.nookure.staff.api.Logger;
 import com.nookure.staff.api.NookureStaff;
+import com.nookure.staff.api.addons.AddonManager;
 import com.nookure.staff.api.annotation.PluginMessageMessenger;
 import com.nookure.staff.api.annotation.RedisPublish;
 import com.nookure.staff.api.annotation.RedisSubscribe;
@@ -28,6 +29,7 @@ import com.nookure.staff.command.sender.ConsoleCommandSender;
 import com.nookure.staff.database.PluginConnection;
 import com.nookure.staff.messaging.NoneEventManager;
 import com.nookure.staff.messaging.RedisMessenger;
+import com.nookure.staff.paper.addon.ServerAddonManager;
 import com.nookure.staff.paper.command.PaperCommandManager;
 import com.nookure.staff.paper.messaging.BackendMessageMessenger;
 import com.nookure.staff.paper.util.PaperScheduler;
@@ -68,6 +70,7 @@ public class PaperPluginModule extends PluginModule {
     bind(StaffPlayerExtensionManager.class).asEagerSingleton();
     bind(FreezeManager.class).asEagerSingleton();
     bind(PlaceholderManager.class).asEagerSingleton();
+    bind(AddonManager.class).to(ServerAddonManager.class).asEagerSingleton();
 
     try {
       /*
