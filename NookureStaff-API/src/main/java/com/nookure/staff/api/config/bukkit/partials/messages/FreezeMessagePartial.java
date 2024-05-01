@@ -74,6 +74,14 @@ public class FreezeMessagePartial {
   @Comment("Freeze Chat when a player isn't online and you try to use it.")
   private String playerNotOnline = "<bold><dark_aqua>Freeze <dark_gray>»</bold> <red>That player is not online.</red>";
 
+  @Setting
+  @Comment("Message sent when a player is forgiven")
+  private String forgiveMessage = "<bold><dark_aqua>Freeze <dark_gray>»</bold> <gray>You have forgiven {player}.</gray>";
+
+  @Setting
+  @Comment("Message sent when a player is punished")
+  private String punishMessage = "<bold><dark_aqua>Freeze <dark_gray>»</bold> <gray>You have punished {player}.</gray>";
+
   public String frozenMessage() {
     return frozenMessage;
   }
@@ -124,5 +132,13 @@ public class FreezeMessagePartial {
 
   public String playerNotOnline() {
     return playerNotOnline;
+  }
+
+  public String forgiveMessage() {
+    return forgiveMessage;
+  }
+
+  public String punishMessage() {
+    return punishMessage;
   }
 }
