@@ -6,6 +6,7 @@ import com.nookure.staff.api.NookureStaff;
 import com.nookure.staff.api.addons.AddonContainer;
 import com.nookure.staff.api.addons.AddonLogger;
 import com.nookure.staff.api.addons.annotations.Addon;
+import com.nookure.staff.api.addons.annotations.AddonDataFolder;
 
 import java.io.File;
 
@@ -33,7 +34,7 @@ public class AddonCommonModule extends AbstractModule {
   protected void configure() {
     bind(AddonContainer.class).toInstance(addonContainer);
     bind(Addon.AddonPlatform.class).toInstance(addonPlatform);
-    bind(File.class).toInstance(addonDataFolder);
+    bind(File.class).annotatedWith(AddonDataFolder.class).toInstance(addonDataFolder);
     bind(Logger.class)
         .annotatedWith(com.nookure.staff.api.addons.annotations.AddonLogger.class)
         .toInstance(new AddonLogger(addonContainer.getDescription().getID(), instance.getPLogger()));
