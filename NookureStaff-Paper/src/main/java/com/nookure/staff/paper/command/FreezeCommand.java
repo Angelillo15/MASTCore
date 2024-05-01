@@ -7,6 +7,7 @@ import com.nookure.staff.api.StaffPlayerWrapper;
 import com.nookure.staff.api.command.CommandData;
 import com.nookure.staff.api.command.StaffCommand;
 import com.nookure.staff.api.config.ConfigurationContainer;
+import com.nookure.staff.api.config.bukkit.BukkitConfig;
 import com.nookure.staff.api.config.bukkit.BukkitMessages;
 import com.nookure.staff.api.manager.FreezeManager;
 import com.nookure.staff.api.manager.PlayerWrapperManager;
@@ -31,6 +32,8 @@ public class FreezeCommand extends StaffCommand {
   private ConfigurationContainer<BukkitMessages> messages;
   @Inject
   private FreezeManager freezeManager;
+  @Inject
+  private ConfigurationContainer<BukkitConfig> config;
 
   @Override
   protected void onStaffCommand(@NotNull StaffPlayerWrapper sender, @NotNull String label, @NotNull List<String> args) {
@@ -46,6 +49,8 @@ public class FreezeCommand extends StaffCommand {
     }
 
     if (Objects.equals(args.get(0), "/exec") && args.size() > 1) {
+      if (!config.get().freeze.askToExecuteCommandOnExit()) return;
+
       OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(args.get(1));
 
       if (!freezeManager.isFrozen(offlinePlayer.getUniqueId())) {
@@ -64,9 +69,10 @@ public class FreezeCommand extends StaffCommand {
         return;
       }
 
-      if (freezeContainer.timeLeft() < System.currentTimeMillis()) {
-        freezeExtension.executeFreezeCommands(sender, args.get(1));
-      }
+      freezeExtension.executeFreezeCommands(sender, args.get(1));
+      freezeManager.removeFreezeContainer(offlinePlayer.getUniqueId());
+      sender.sendMiniMessage(messages.get().freeze.punishMessage(), "player", args.get(1));
+      return;
     }
 
     if (Objects.equals(args.get(0), "/remove") && args.size() > 1) {
@@ -89,6 +95,8 @@ public class FreezeCommand extends StaffCommand {
       }
 
       freezeManager.removeFreezeContainer(offlinePlayer.getUniqueId());
+      sender.sendMiniMessage(messages.get().freeze.forgiveMessage(), "player", args.get(1));
+      return;
     }
 
     Player player = Bukkit.getPlayer(args.get(0));
