@@ -73,20 +73,22 @@ public class ServerAddonManager implements AddonManager {
         URL[] urls = new URL[]{path.toUri().toURL()};
         URLClassLoader loader = new URLClassLoader(urls, instance.getClass().getClassLoader());
 
-        getJarEntries(path.toFile()).forEach(entry -> {
-          try {
-            if (entry.isDirectory() || !entry.getName().endsWith(".class")) return;
+        Properties properties = getAddonProperties(path.toFile());
 
-            Class<?> clazz = loader.loadClass(entry.getName()
-                .replace(".class", "")
-                .replace("/", ".")
-            );
+        if (properties == null) {
+          logger.severe("Could not load addon %s properties", path.getFileName());
+          return;
+        }
 
-            if (clazz.isAnnotationPresent(Addon.class)) enableAddon(clazz);
-          } catch (ClassNotFoundException e) {
-            throw new AddonException("Error occurred while loading addons to classpath", e);
-          }
-        });
+        String main = properties.getProperty("main-class");
+        if (main == null) throw new AddonException("Main class not found in addon properties");
+
+        try {
+          Class<?> clazz = loader.loadClass(main);
+          if (clazz.isAnnotationPresent(Addon.class)) enableAddon(clazz);
+        } catch (ClassNotFoundException e) {
+          throw new AddonException("Error occurred while loading addons to classpath", e);
+        }
 
         loaded.add(loader);
         logger.debug("Addon " + path.getFileName() + " added to classpath");
@@ -104,6 +106,20 @@ public class ServerAddonManager implements AddonManager {
     }
   }
 
+  private Properties getAddonProperties(File file) {
+    Properties properties = new Properties();
+    try (JarFile jarFile = new JarFile(file)) {
+      JarEntry entry = jarFile.getJarEntry("addon.properties");
+      properties.load(jarFile.getInputStream(entry));
+      return properties;
+    } catch (IOException e) {
+      logger.severe("Could not load addon %s", file.getName());
+      logger.severe("An error ocurred while reading the file, please check the file and try again");
+      logger.severe(e);
+      return null;
+    }
+  }
+
   @Override
   public void enableAllAddonsFromTheClasspath() {
     AddonsUtils.getAddons(Addon.AddonPlatform.BUKKIT).forEach(this::enableAddon);
@@ -111,7 +127,6 @@ public class ServerAddonManager implements AddonManager {
 
   @Override
   public void enableAddon(Class<?> addonClass) {
-
     AddonContainer addonContainer = new ServerAddonContainer(new AddonDescriptionBuilder()
         .setAddon(addonClass.getAnnotation(Addon.class))
         .build()
