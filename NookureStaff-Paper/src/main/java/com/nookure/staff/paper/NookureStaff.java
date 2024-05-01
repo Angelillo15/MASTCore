@@ -5,6 +5,7 @@ import com.google.inject.Injector;
 import com.google.inject.Singleton;
 import com.nookure.staff.api.Logger;
 import com.nookure.staff.api.Permissions;
+import com.nookure.staff.api.addons.AddonManager;
 import com.nookure.staff.api.command.Command;
 import com.nookure.staff.api.config.ConfigurationContainer;
 import com.nookure.staff.api.config.bukkit.BukkitConfig;
@@ -76,6 +77,8 @@ public class NookureStaff {
   private EventManager eventManager;
   @Inject
   private StaffPlayerExtensionManager extensionManager;
+  @Inject
+  private AddonManager addonManager;
   private final ArrayList<Listener> listeners = new ArrayList<>();
 
   public void onEnable() {
@@ -246,6 +249,8 @@ public class NookureStaff {
     } catch (Exception e) {
       logger.severe("An error occurred while closing the event messenger, %s", e);
     }
+
+    addonManager.disableAllAddons();
   }
 
   public void reload() {
@@ -255,6 +260,8 @@ public class NookureStaff {
         messagesConfig,
         itemsConfig
     ).forEach(c -> c.reload().join());
+
+    addonManager.reloadAllAddons();
   }
 
   public void registerCommand(Command command) {
