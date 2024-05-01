@@ -52,10 +52,8 @@ public class OnFreezePlayerQuit implements Listener {
 
     FreezePlayerExtension extension = optionalExtension.get();
 
-
     if (!config.get().freeze.askToExecuteCommandOnExit()) {
       freezeManager.removeFreezeContainer(event.getPlayer().getUniqueId());
-
       extension.executeFreezeCommands(staff, event.getPlayer().getName());
       return;
     }
