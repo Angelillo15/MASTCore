@@ -169,7 +169,11 @@ public class StaffPaperPlayerWrapper extends PaperPlayerWrapper implements Staff
     setItems();
     sendMiniMessage(messages.get().staffMode.toggledOn());
     writeStaffModeState(true);
-    enableVanish(true);
+
+    if (config.get().staffMode.enableVanishOnStaffEnable()) {
+      writeVanishState(true);
+      enableVanish(true);
+    }
 
     eventMessenger.publish(this, new StaffModeEnabledEvent(getUniqueId()));
     eventMessenger.publish(this, new BroadcastMessageExcept(messages.get().staffMode.toggledOnOthers()
@@ -188,12 +192,16 @@ public class StaffPaperPlayerWrapper extends PaperPlayerWrapper implements Staff
 
   private void disableStaffMode() {
     long time = System.currentTimeMillis();
-    disableVanish(true);
     disablePlayerPerks();
     restoreInventory();
     if (config.get().staffMode.teleportToPreviousLocation()) loadPreviousLocation();
     sendMiniMessage(messages.get().staffMode.toggledOff());
     writeStaffModeState(false);
+
+    if (config.get().staffMode.disableVanishOnStaffDisable()) {
+      writeVanishState(false);
+      disableVanish(true);
+    }
 
     eventMessenger.publish(this, new StaffModeDisabledEvent(getUniqueId()));
     eventMessenger.publish(this, new BroadcastMessageExcept(messages.get().staffMode.toggledOffOthers()
