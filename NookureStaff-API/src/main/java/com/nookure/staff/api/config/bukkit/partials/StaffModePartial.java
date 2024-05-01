@@ -48,6 +48,18 @@ public class StaffModePartial {
       "jump:1:999999"
   );
 
+  @Setting
+  @Comment("""
+      Enable the vanish when the staff member enables the staff mode.
+      """)
+  private boolean enableVanishOnStaffEnable = true;
+
+  @Setting
+  @Comment("""
+      Disable the vanish when the staff member disables the staff mode.
+      """)
+  private boolean disableVanishOnStaffDisable = true;
+
   public boolean silentChestOpen() {
     return silentChestOpen;
   }
@@ -66,5 +78,13 @@ public class StaffModePartial {
 
   public List<String> potionEffects() {
     return potionEffects;
+  }
+
+  public boolean enableVanishOnStaffEnable() {
+    return enableVanishOnStaffEnable;
+  }
+
+  public boolean disableVanishOnStaffDisable() {
+    return disableVanishOnStaffDisable;
   }
 }
