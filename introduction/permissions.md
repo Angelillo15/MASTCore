@@ -4,6 +4,12 @@ description: This page include al permissions for the plugin including all modul
 
 # 👮 Permissions
 
+{% hint style="danger" %}
+**This project has reached end of life and is no longer maintained.**
+
+**We recommend you transition to** [**NookureStaff**](https://builtbybit.com/resources/nookurestaff-staffmode-utils.25460/)**, it's free**
+{% endhint %}
+
 Permission table
 
 <table><thead><tr><th width="252">Permission</th><th>Explanation</th></tr></thead><tbody><tr><td>mast.staff</td><td>Perm to staff mode</td></tr><tr><td>mast.admin</td><td>Perm to use the /mast command</td></tr><tr><td>mast.dump</td><td>Perm to Dump plugin info</td></tr><tr><td>mast.reload</td><td>Perm to Reload plugin</td></tr><tr><td>mast.staff.gui.punishments</td><td>Punishments gui perm</td></tr><tr><td>mast.*</td><td>Full perms</td></tr><tr><td>mast.staffchat</td><td>Perm to chat in staff chat</td></tr><tr><td>mast.vanish.see</td><td>View players in vanish</td></tr><tr><td>mast.build</td><td>Can destroy blocks in staff mode</td></tr><tr><td>mast.staff.stafflist</td><td>acces to /staff staffList</td></tr><tr><td>mast.freeze</td><td>Perm to freeze players</td></tr><tr><td>mast.freeze.bypass</td><td>Bypass freeze</td></tr><tr><td>mast.staff.join</td><td>Announce join</td></tr><tr><td>mast.staff.leave</td><td>Announce leave</td></tr><tr><td>mast.staff.change</td><td>Announce server change</td></tr><tr><td>mast.staff.notify.join</td><td>View staff join message</td></tr><tr><td>mast.staff.notify.change</td><td>View staff change message</td></tr><tr><td>mast.staff.leave</td><td>View staff leave message</td></tr><tr><td>mast.helpop</td><td>Acces to helpop</td></tr><tr><td>mast.helpop.recive</td><td>Recive helpop messages</td></tr><tr><td>mast.staff.vault</td><td>Permission to open StaffVault</td></tr></tbody></table>

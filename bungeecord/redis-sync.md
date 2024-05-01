@@ -2,9 +2,17 @@
 description: Here you will learn all about how to config the server sync
 ---
 
-# ⚖ Redis Sync
+# ⚖️ Redis Sync
 
-### When to use the Redis Sync ?
+###
+
+{% hint style="danger" %}
+**This project has reached end of life and is no longer maintained.**
+
+**We recommend you transition to** [**NookureStaff**](https://builtbybit.com/resources/nookurestaff-staffmode-utils.25460/)**, it's free**
+{% endhint %}
+
+When to use the Redis Sync ?
 
 You should use the Redis Sync when we have 2 or more BungeeCord instances
 
@@ -40,6 +48,6 @@ Redis:
   serverID: "p1"
 ```
 
-Change enable from false -> true and config  the database with your credentials and restart the server! Thats all
+Change enable from false -> true and config the database with your credentials and restart the server! Thats all
 
 &#x20;
