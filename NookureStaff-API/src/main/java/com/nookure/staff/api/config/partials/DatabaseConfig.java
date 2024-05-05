@@ -10,10 +10,10 @@ public class DatabaseConfig {
   @Setting
   @Comment("""
       The type of the database.
-      This can be either MYSQL or SQLITE.
-      For MariaDB, use MYSQL driver.
+      This can be either MYSQL, MARIADB or SQLITE.
+      For MariaDB, use MARIADB driver.
       ¿When use MYSQL or SQLITE?
-      - If you have more than 1 server, use MYSQL.
+      - If you have more than 1 server, use MYSQL or MARIADB.
       - If you have only 1 server, but you want
       to be able to scale, use MYSQL.
       """)

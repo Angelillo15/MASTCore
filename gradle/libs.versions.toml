@@ -23,6 +23,8 @@ shadowJar = "8.1.1"
 pluginYml = "0.6.0"
 guava = "33.0.0-jre"
 apacheCommons = "3.14.0"
+hibernate = "6.5.0.Final"
+jakarta-persistence = "3.1.0"
 
 [libraries]
 hikariCP = { group = "com.zaxxer", name = "HikariCP", version.ref = "hikariCP" }
@@ -68,6 +70,9 @@ scoreboard-8 = { group = "com.github.megavexnetwork.scoreboard-library", name = 
 # Auto service
 auto-service = "com.google.auto.service:auto-service:1.0.1"
 auto-service-annotations = "com.google.auto.service:auto-service-annotations:1.0.1"
+hibernate = { group = "org.hibernate.orm", name = "hibernate-core", version.ref = "hibernate" }
+jakarta-persistence = { group = "jakarta.persistence", name = "jakarta.persistence-api", version.ref = "jakarta-persistence" }
+hibernate-hikari = { group = "org.hibernate.orm", name = "hibernate-hikaricp", version.ref = "hibernate" }
 
 [bundles]
 invAPI = ["invCore", "invAdvancedSlots", "invPagination", "configurableGui"]

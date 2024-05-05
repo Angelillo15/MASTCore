@@ -13,6 +13,7 @@ java {
 
   sourceSets["main"].java {
     srcDir("src/ap/java")
+    srcDir("src/model/java")
   }
 }
 
@@ -33,6 +34,9 @@ dependencies {
   compileOnlyApi(rootProject.libs.miniMessage)
   compileOnlyApi(rootProject.libs.caffeine)
   compileOnlyApi(rootProject.libs.liblyBukkit)
+  compileOnlyApi(rootProject.libs.hibernate)
+  compileOnlyApi(rootProject.libs.hikariCP)
+  compileOnlyApi(rootProject.libs.hibernate.hikari)
 
   compileOnly(libs.auto.service.annotations)
   annotationProcessor(libs.auto.service)
@@ -78,6 +82,7 @@ tasks.test {
 tasks {
   withType<Javadoc> {
     val o = options as StandardJavadocDocletOptions
+    exclude("com/nookure/staff/ap/**")
     o.encoding = "UTF-8"
     o.source = "17"
 

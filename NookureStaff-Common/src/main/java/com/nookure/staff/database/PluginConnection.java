@@ -31,6 +31,8 @@ public class PluginConnection extends AbstractPluginConnection {
   private Storm storm;
   private Connection connection;
   private HikariDataSource hikariDataSource;
+  private DataProvider dataProvider;
+  private DatabaseConfig config;
 
   @Override
   public void connect(@NotNull DatabaseConfig config) {
@@ -43,7 +45,10 @@ public class PluginConnection extends AbstractPluginConnection {
       return;
     }
 
-    if (config.getType() == DataProvider.MYSQL)
+    this.config = config;
+    this.dataProvider = config.getType();
+
+    if (config.getType() == DataProvider.MYSQL || config.getType() == DataProvider.MARIADB)
       loadMySQL(config);
     else
       loadSqlite();
@@ -74,27 +79,6 @@ public class PluginConnection extends AbstractPluginConnection {
     }
   }
 
-  @NotNull
-  private static HikariConfig getHikariConfig(@NotNull DatabaseConfig config) {
-    Objects.requireNonNull(config, "config is null");
-
-    HikariConfig hikariConfig = new HikariConfig();
-    hikariConfig.setJdbcUrl(
-        "jdbc:mysql://"
-            + config.getHost()
-            + ":"
-            + config.getPort()
-            + "/"
-            + config.getDatabase()
-            + "?autoReconnect=true&useUnicode=yes");
-    hikariConfig.setUsername(config.getUsername());
-    hikariConfig.setPassword(config.getPassword());
-    hikariConfig.setMaximumPoolSize(20);
-    hikariConfig.setConnectionTimeout(30000);
-    hikariConfig.setLeakDetectionThreshold(0);
-    return hikariConfig;
-  }
-
   private void loadSqlite() {
     try {
       Class.forName("org.sqlite.JDBC");
@@ -113,9 +97,18 @@ public class PluginConnection extends AbstractPluginConnection {
       String url = "jdbc:sqlite:" + plugin.getPluginDataFolder() + "/database.db";
       connection = DriverManager.getConnection(url);
       storm = new Storm(getStormOptions(logger), new SqliteFileDriver(connection));
+
+      HikariConfig hikariConfig = new HikariConfig();
+      hikariConfig.setPoolName("SQLiteConnectionPool");
+      hikariConfig.setDriverClassName("org.sqlite.JDBC");
+      hikariConfig.setJdbcUrl(url);
+
+      hikariDataSource = new HikariDataSource(hikariConfig);
     } catch (SQLException e) {
       throw new RuntimeException(e);
     }
+
+    dataProvider = DataProvider.SQLITE;
   }
 
   @NotNull
@@ -168,5 +161,24 @@ public class PluginConnection extends AbstractPluginConnection {
     }
 
     return connection;
+  }
+
+  @Override
+  public @NotNull HikariDataSource getHikariDataSource() {
+    if (hikariDataSource == null) {
+      throw new IllegalStateException("The connection is not established");
+    }
+
+    return hikariDataSource;
+  }
+
+  @Override
+  public @NotNull DataProvider getDataProvider() {
+    return dataProvider;
+  }
+
+  @Override
+  public @NotNull DatabaseConfig getDatabaseConfig() {
+    return config;
   }
 }

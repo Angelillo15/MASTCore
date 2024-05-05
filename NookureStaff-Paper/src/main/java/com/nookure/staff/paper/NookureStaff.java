@@ -13,11 +13,14 @@ import com.nookure.staff.api.config.bukkit.BukkitMessages;
 import com.nookure.staff.api.config.bukkit.ItemsConfig;
 import com.nookure.staff.api.config.messaging.MessengerConfig;
 import com.nookure.staff.api.database.AbstractPluginConnection;
+import com.nookure.staff.api.database.TableContainer;
 import com.nookure.staff.api.event.EventManager;
+import com.nookure.staff.api.exception.database.DatabaseException;
 import com.nookure.staff.api.extension.StaffPlayerExtensionManager;
 import com.nookure.staff.api.manager.PlayerWrapperManager;
 import com.nookure.staff.api.messaging.Channels;
 import com.nookure.staff.api.messaging.EventMessenger;
+import com.nookure.staff.api.model.PlayerRow;
 import com.nookure.staff.api.util.AbstractLoader;
 import com.nookure.staff.paper.command.*;
 import com.nookure.staff.paper.command.main.NookureStaffCommand;
@@ -66,6 +69,8 @@ public class NookureStaff {
   @Inject
   private JavaPlugin plugin;
   @Inject
+  private com.nookure.staff.api.NookureStaff api;
+  @Inject
   private Injector injector;
   @Inject
   private Logger logger;
@@ -79,6 +84,8 @@ public class NookureStaff {
   private StaffPlayerExtensionManager extensionManager;
   @Inject
   private AddonManager addonManager;
+  @Inject
+  private TableContainer<PlayerRow> playerTableContainer;
   private final ArrayList<Listener> listeners = new ArrayList<>();
 
   public void onEnable() {
@@ -90,6 +97,19 @@ public class NookureStaff {
     loadTasks();
 
     registeringOnlinePlayers();
+    playerTableContainer.setUpDatabase(connection, api);
+
+    try {
+      playerTableContainer.insert(new PlayerRow()
+          .setFirstJoin(0L)
+          .setLastJoin(System.currentTimeMillis())
+          .setName("CONSOLE")
+          .setUuid("CONSOLE")
+          .setLastIp("")
+      );
+    } catch (DatabaseException e) {
+      throw new RuntimeException(e);
+    }
   }
 
   private void loadDatabase() {

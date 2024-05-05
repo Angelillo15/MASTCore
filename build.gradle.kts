@@ -5,7 +5,7 @@ plugins {
 }
 
 group = "com.nookure.staff"
-val versionCode = "1.1.0"
+val versionCode = "hibernate"
 
 version = "${versionCode}-${grgit.head().abbreviatedId}"
 
@@ -30,6 +30,7 @@ tasks.shadowJar {
   relocate("com.github.benmanes.caffeine", "com.nookure.staff.libs.caffeine")
   relocate("org.spongepowered.configurate", "com.nookure.staff.libs.configurate")
   relocate("com.alessiodp.libby", "com.nookure.staff.libs.libby")
+  relocate("org.hibernate", "com.nookure.staff.libs.hibernate")
 }
 
 allprojects {
@@ -55,6 +56,7 @@ allprojects {
     compileOnly(rootProject.libs.miniMessage)
     compileOnly(rootProject.libs.caffeine)
     compileOnly(rootProject.libs.liblyBukkit)
+    compileOnly(rootProject.libs.hibernate)
   }
 
   tasks {

@@ -16,11 +16,13 @@ import com.nookure.staff.api.config.common.CommandConfig;
 import com.nookure.staff.api.config.messaging.MessengerConfig;
 import com.nookure.staff.api.config.messaging.RedisPartial;
 import com.nookure.staff.api.database.AbstractPluginConnection;
+import com.nookure.staff.api.database.TableContainer;
 import com.nookure.staff.api.extension.StaffPlayerExtensionManager;
 import com.nookure.staff.api.manager.FreezeManager;
 import com.nookure.staff.api.manager.PlayerWrapperManager;
 import com.nookure.staff.api.manager.StaffItemsManager;
 import com.nookure.staff.api.messaging.EventMessenger;
+import com.nookure.staff.api.model.PlayerRow;
 import com.nookure.staff.api.placeholder.PlaceholderManager;
 import com.nookure.staff.api.util.PluginModule;
 import com.nookure.staff.api.util.Scheduler;
@@ -94,6 +96,12 @@ public class PaperPluginModule extends PluginModule {
       }).toInstance(playerWrapperManager);
       bind(new TypeLiteral<PlayerWrapperManager<?>>() {
       }).toInstance(playerWrapperManager);
+
+      /*
+       * Database table related area
+       */
+      bind(new TypeLiteral<TableContainer<PlayerRow>>() {
+      }).toInstance(TableContainer.create(PlayerRow.class));
     } catch (IOException e) {
       boot.getPLogger().severe("Could not load config");
       throw new RuntimeException(e);

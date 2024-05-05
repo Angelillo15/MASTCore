@@ -64,13 +64,145 @@ public class DefaultLibRepo {
         .isolatedLoad(false)
         .build();
 
+    Library jboss = Library.builder()
+        .groupId("org{}jboss{}logging")
+        .artifactId("jboss-logging")
+        .version("3.5.3.Final")
+        .isolatedLoad(false)
+        .build();
+
+    Library jakartaPersistence = Library.builder()
+        .groupId("jakarta{}persistence")
+        .artifactId("jakarta.persistence-api")
+        .version("3.1.0")
+        .isolatedLoad(false)
+        .build();
+
+    Library jakartaTransaction = Library.builder()
+        .groupId("jakarta{}transaction")
+        .artifactId("jakarta.transaction-api")
+        .version("2.0.1")
+        .isolatedLoad(false)
+        .build();
+
+    Library jakartaXML = Library.builder()
+        .groupId("jakarta{}xml.bind")
+        .artifactId("jakarta.xml.bind-api")
+        .version("4.0.2")
+        .isolatedLoad(false)
+        .build();
+
+    Library hibernateCommonsAnnotations = Library.builder()
+        .groupId("org{}hibernate{}common")
+        .artifactId("hibernate-commons-annotations")
+        .version("6.0.6.Final")
+        .relocate("org{}hibernate", "com{}nookure{}staff{}libs{}hibernate")
+        .isolatedLoad(false)
+        .build();
+
+    Library hibernate = Library.builder()
+        .groupId("org{}hibernate{}orm")
+        .artifactId("hibernate-core")
+        .version("6.5.0.Final")
+        .relocate("org{}hibernate", "com{}nookure{}staff{}libs{}hibernate")
+        .isolatedLoad(false)
+        .build();
+
+    Library jackson = Library.builder()
+        .groupId("com{}fasterxml.jackson.core")
+        .artifactId("jackson-databind")
+        .version("2.17.0")
+        .isolatedLoad(false)
+        .build();
+
+    Library classmate = Library.builder()
+        .groupId("com{}fasterxml")
+        .artifactId("classmate")
+        .version("1.7.0")
+        .isolatedLoad(false)
+        .build();
+
+    Library hibernateCommunityDialects = Library.builder()
+        .groupId("org{}hibernate{}orm")
+        .artifactId("hibernate-community-dialects")
+        .relocate("org{}hibernate", "com{}nookure{}staff{}libs{}hibernate")
+        .version("6.5.0.Final")
+        .isolatedLoad(false)
+        .build();
+
+    Library bytebuddy = Library.builder()
+        .groupId("net{}bytebuddy")
+        .artifactId("byte-buddy")
+        .version("1.14.14")
+        .isolatedLoad(false)
+        .build();
+
+    Library antlr = Library.builder()
+        .groupId("org{}antlr")
+        .artifactId("antlr4")
+        .version("4.13.1")
+        .isolatedLoad(false)
+        .build();
+
+    Library antlrRuntime = Library.builder()
+        .groupId("org{}antlr")
+        .artifactId("antlr4-runtime")
+        .version("4.13.1")
+        .isolatedLoad(false)
+        .build();
+
+    Library jandex = Library.builder()
+        .groupId("io{}smallrye")
+        .artifactId("jandex")
+        .version("3.1.7")
+        .isolatedLoad(false)
+        .build();
+
+    Library hibernateHikariCP = Library.builder()
+        .groupId("org{}hibernate{}orm")
+        .artifactId("hibernate-hikaricp")
+        .relocate("org{}hibernate", "com{}nookure{}staff{}libs{}hibernate")
+        .relocate("com{}zaxxer", "com{}nookure{}staff{}libs")
+        .version("6.5.0.Final")
+        .isolatedLoad(false)
+        .build();
+
+    Library mariadb = Library.builder()
+        .groupId("org{}mariadb{}jdbc")
+        .artifactId("mariadb-java-client")
+        .version("3.3.3")
+        .isolatedLoad(false)
+        .build();
+
     try {
       Class.forName("org.sqlite.JDBC");
     } catch (ClassNotFoundException e) {
       libraries.add(sqlite);
     }
 
-    Stream.of(hikariCP, storm, caffeine, jedis, commons, commonsPool2).forEach(libraries::add);
+    Stream.of(
+        jakartaPersistence,
+        jakartaTransaction,
+        jakartaXML,
+        classmate,
+        jackson,
+        hibernateCommonsAnnotations,
+        jboss,
+        hikariCP,
+        storm,
+        caffeine,
+        jedis,
+        commons,
+        commonsPool2,
+        hibernateCommunityDialects,
+        hibernate,
+        bytebuddy,
+        antlr,
+        antlrRuntime,
+        jandex,
+        hibernateHikariCP,
+        mariadb
+    ).forEach(libraries::add);
   }
 
   public ArrayList<Library> getLibraries() {
