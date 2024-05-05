@@ -35,6 +35,7 @@ paper {
   apiVersion = "1.19"
   website = "https://angelillo15.es/"
   authors = listOf("Angelillo15")
+  loader = "com.nookure.staff.paper.bootstrap.StaffPaperPluginLoader"
   main = "com.nookure.staff.paper.bootstrap.StaffBootstrapper"
   serverDependencies {
     register("PlaceholderAPI") {

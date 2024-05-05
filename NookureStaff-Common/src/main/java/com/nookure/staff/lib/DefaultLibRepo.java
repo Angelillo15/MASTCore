@@ -1,6 +1,7 @@
 package com.nookure.staff.lib;
 
 import com.alessiodp.libby.Library;
+import com.nookure.staff.api.NookureStaff;
 
 import java.util.ArrayList;
 import java.util.stream.Stream;
@@ -41,6 +42,7 @@ public class DefaultLibRepo {
         .version("3.1.8")
         .isolatedLoad(false)
         .relocate("com{}github{}benmanes{}caffeine", "com{}nookure{}staff{}libs{}caffeine")
+        .resolveTransitiveDependencies(true)
         .build();
 
     Library sqlite = Library.builder()
@@ -64,6 +66,46 @@ public class DefaultLibRepo {
         .isolatedLoad(false)
         .build();
 
+    Library ebean = Library.builder()
+        .groupId("io{}ebean")
+        .artifactId("ebean")
+        .version("15.1.0")
+        .isolatedLoad(false)
+        .resolveTransitiveDependencies(true)
+        .build();
+
+    Library ebeanMigration = Library.builder()
+        .groupId("io{}ebean")
+        .artifactId("ebean-migration")
+        .version("14.0.0")
+        .isolatedLoad(false)
+        .resolveTransitiveDependencies(true)
+        .build();
+
+    Library ebeanDDLMigration = Library.builder()
+        .groupId("io{}ebean")
+        .artifactId("ebean-ddl-generator")
+        .version("15.1.0")
+        .isolatedLoad(false)
+        .resolveTransitiveDependencies(true)
+        .build();
+
+    Library flyway = Library.builder()
+        .groupId("org{}flywaydb")
+        .artifactId("flyway-core")
+        .version("10.12.0")
+        .resolveTransitiveDependencies(true)
+        .isolatedLoad(false)
+        .build();
+
+    Library flywayMysql = Library.builder()
+        .groupId("org{}flywaydb")
+        .artifactId("flyway-mysql")
+        .version("10.12.0")
+        .resolveTransitiveDependencies(true)
+        .isolatedLoad(false)
+        .build();
+
     try {
       Class.forName("org.sqlite.JDBC");
     } catch (ClassNotFoundException e) {
@@ -71,6 +113,12 @@ public class DefaultLibRepo {
     }
 
     Stream.of(hikariCP, storm, caffeine, jedis, commons, commonsPool2).forEach(libraries::add);
+
+    try {
+      Class.forName("io.ebean.Database");
+    } catch (ClassNotFoundException e) {
+      Stream.of(ebean, flyway, flywayMysql, ebeanMigration, ebeanDDLMigration).forEach(libraries::add);
+    }
   }
 
   public ArrayList<Library> getLibraries() {
