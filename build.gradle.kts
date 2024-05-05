@@ -4,8 +4,12 @@ plugins {
   alias(libs.plugins.grgit)
 }
 
+val major: String by project
+val minor: String by project
+val patch: String by project
+
 group = "com.nookure.staff"
-val versionCode = "1.1.0"
+val versionCode = "${major}.${minor}.${patch}"
 
 version = "${versionCode}-${grgit.head().abbreviatedId}"
 
@@ -55,6 +59,7 @@ allprojects {
     compileOnly(rootProject.libs.miniMessage)
     compileOnly(rootProject.libs.caffeine)
     compileOnly(rootProject.libs.liblyBukkit)
+    compileOnly(rootProject.libs.ebean)
   }
 
   tasks {
