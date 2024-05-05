@@ -2,6 +2,7 @@ package com.nookure.staff.api.database;
 
 import com.craftmend.storm.Storm;
 import com.nookure.staff.api.config.partials.DatabaseConfig;
+import io.ebean.Database;
 import org.jetbrains.annotations.NotNull;
 
 import java.sql.Connection;
@@ -26,7 +27,7 @@ public abstract class AbstractPluginConnection {
    * @param config the database config
    * @see DatabaseConfig
    */
-  public abstract void connect(@NotNull DatabaseConfig config);
+  public abstract void connect(@NotNull DatabaseConfig config, ClassLoader classLoader);
 
   /**
    * Closes the connection to the database.
@@ -40,7 +41,7 @@ public abstract class AbstractPluginConnection {
 
   /**
    * Returns the Storm instance.
-   * This should be called after {@link #connect(DatabaseConfig)}.
+   * This should be called after {@link #connect(DatabaseConfig, ClassLoader)}.
    * <p>
    * If the connection is not established, this method should throw an exception.
    * If the connection is established, this method should return the Storm instance.
@@ -52,7 +53,7 @@ public abstract class AbstractPluginConnection {
 
   /**
    * Returns the connection to the database.
-   * this should be called after {@link #connect(DatabaseConfig)}.
+   * this should be called after {@link #connect(DatabaseConfig, ClassLoader)}.
    * <p>
    * If the connection is not established, this method should throw an exception.
    * If the connection is established, this method should return the connection.
@@ -61,4 +62,16 @@ public abstract class AbstractPluginConnection {
    * @return the connection to the database
    */
   public abstract @NotNull Connection getConnection();
+
+  /**
+   * Returns the Ebean database.
+   * This should be called after {@link #connect(DatabaseConfig, ClassLoader)}.
+   * <p>
+   * If the connection is not established, this method should throw an exception.
+   * If the connection is established, this method should return the Ebean database.
+   * </p>
+   *
+   * @return the Ebean database
+   */
+  public abstract Database getEbeanDatabase();
 }
