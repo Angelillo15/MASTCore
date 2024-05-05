@@ -2,10 +2,14 @@ plugins {
   id("net.kyori.blossom") version "2.1.0"
   alias(libs.plugins.grgit)
   alias(libs.plugins.grgitPublish)
-  id("java")
+  alias(libs.plugins.ebean)
   id("java-library")
   id("maven-publish")
 }
+
+val major: String by project
+val minor: String by project
+val patch: String by project
 
 java {
   withJavadocJar()
@@ -33,6 +37,8 @@ dependencies {
   compileOnlyApi(rootProject.libs.miniMessage)
   compileOnlyApi(rootProject.libs.caffeine)
   compileOnlyApi(rootProject.libs.liblyBukkit)
+  compileOnlyApi(rootProject.libs.ebean)
+  annotationProcessor(rootProject.libs.ebean)
 
   compileOnly(libs.auto.service.annotations)
   annotationProcessor(libs.auto.service)
@@ -96,9 +102,15 @@ sourceSets {
     blossom {
       javaSources {
         property("version", rootProject.version.toString())
+        property("versionCode", "${major}.${minor}.${patch}")
         property("branch", grgit.branch.current().name)
         property("commit", grgit.head().abbreviatedId)
+        property("time", System.currentTimeMillis().toString())
       }
     }
   }
+}
+
+ebean {
+  debugLevel = 1
 }
