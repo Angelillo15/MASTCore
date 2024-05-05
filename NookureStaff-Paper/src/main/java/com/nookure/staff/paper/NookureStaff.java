@@ -93,7 +93,7 @@ public class NookureStaff {
   }
 
   private void loadDatabase() {
-    connection.connect(config.get().database);
+    connection.connect(config.get().database, plugin.getClass().getClassLoader());
   }
 
   private void loadListeners() {
