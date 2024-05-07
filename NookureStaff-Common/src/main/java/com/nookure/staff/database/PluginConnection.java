@@ -24,11 +24,11 @@ import io.ebean.platform.mysql.MySqlPlatform;
 import io.ebean.platform.sqlite.SQLitePlatform;
 import org.jetbrains.annotations.NotNull;
 
-import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 
 import static java.util.Objects.requireNonNull;
 
@@ -38,6 +38,8 @@ public class PluginConnection extends AbstractPluginConnection {
   private Logger logger;
   @Inject
   private NookureStaff plugin;
+  @Inject
+  private AtomicReference<Database> databaseReference;
   @Inject
   private MigrationService migrationService;
   private Storm storm;
@@ -71,6 +73,7 @@ public class PluginConnection extends AbstractPluginConnection {
       throw new RuntimeException(e);
     }
 
+    databaseReference.set(database);
     logger.info("<green>Successfully connected to the database!");
   }
 
@@ -86,7 +89,6 @@ public class PluginConnection extends AbstractPluginConnection {
       storm = new Storm(getStormOptions(logger), new HikariDriver(hikariDataSource));
 
       loadEbean(config);
-      loadMigrations(config);
     } catch (Exception e) {
       logger.severe("An error occurred while connecting to the database");
       logger.severe("Now trying to connect to SQLite");
@@ -122,6 +124,7 @@ public class PluginConnection extends AbstractPluginConnection {
     ebeanConfig.setDataSourceConfig(dataSourceConfig);
 
     ebeanConfig.setName("nkstaff");
+    ebeanConfig.setRunMigration(true);
     ebeanConfig.setClasses(List.of(PlayerModel.class));
     ebeanConfig.setDataSource(hikariDataSource);
     ebeanConfig.setDefaultServer(true);
@@ -133,14 +136,6 @@ public class PluginConnection extends AbstractPluginConnection {
     }
 
     return ebeanConfig;
-  }
-
-  private void loadMigrations(DatabaseConfig config) {
-    migrationService.generateMigrations(new File(plugin.getPluginDataFolder(), "database"));
-    File migrationsFolder = new File(plugin.getPluginDataFolder(), "database/dbmigration");
-    logger.debug("Migrations folder: " + migrationsFolder.getAbsolutePath());
-
-    migrationService.loadMigrations(config, hikariDataSource, migrationsFolder);
   }
 
   @NotNull
@@ -165,6 +160,7 @@ public class PluginConnection extends AbstractPluginConnection {
 
     hikariConfig.setMaximumPoolSize(20);
     hikariConfig.setConnectionTimeout(30000);
+    hikariConfig.setAutoCommit(false);
     hikariConfig.setLeakDetectionThreshold(0);
     return hikariConfig;
   }
@@ -190,7 +186,6 @@ public class PluginConnection extends AbstractPluginConnection {
       hikariDataSource = new HikariDataSource(getHikariConfig(config));
 
       loadEbean(config);
-      loadMigrations(config);
     } catch (SQLException e) {
       throw new RuntimeException(e);
     }
