@@ -7,7 +7,6 @@ create table nookure_staff_players (
   first_login                   timestamp not null,
   last_ip                       varchar(255) not null,
   first_ip                      varchar(255) not null,
-  pene                          varchar(255),
   version                       integer not null,
   when_created                  timestamp not null,
   when_modified                 timestamp not null,
