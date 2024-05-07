@@ -11,6 +11,10 @@ import java.time.Instant;
 
 @MappedSuperclass
 public class BaseDomain extends Model {
+  public BaseDomain() {
+    super("nkstaff");
+  }
+
   @Id
   Long id;
 
