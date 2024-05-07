@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<migration xmlns="http://ebean-orm.github.io/xml/ns/dbmigration">
+    <changeSet type="apply">
+        <createTable name="nookure_staff_players" pkName="pk_nookure_staff_players">
+            <column name="id" type="bigint" primaryKey="true"/>
+            <column name="name" type="varchar"/>
+            <column name="uuid" type="uuid" unique="uq_nookure_staff_players_uuid"/>
+            <column name="last_login" type="timestamp" notnull="true"/>
+            <column name="first_login" type="timestamp" notnull="true"/>
+            <column name="last_ip" type="varchar" notnull="true"/>
+            <column name="first_ip" type="varchar" notnull="true"/>
+            <column name="pene" type="varchar"/>
+            <column name="version" type="bigint" notnull="true"/>
+            <column name="when_created" type="timestamp" notnull="true"/>
+            <column name="when_modified" type="timestamp" notnull="true"/>
+        </createTable>
+    </changeSet>
+</migration>
