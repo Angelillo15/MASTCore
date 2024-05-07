@@ -1,0 +1,44 @@
+package com.nookure.staff.paper.listener.staff.vanish;
+
+import com.google.inject.Inject;
+import com.nookure.staff.api.StaffPlayerWrapper;
+import com.nookure.staff.api.manager.PlayerWrapperManager;
+import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
+import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
+
+import java.util.Optional;
+
+public class StaffVanishListener implements Listener {
+  @Inject
+  private PlayerWrapperManager<Player> playerWrapperManager;
+
+  @EventHandler(
+      priority = EventPriority.HIGH
+  )
+  public void onPlayerJoin(PlayerJoinEvent event) {
+    Optional<StaffPlayerWrapper> playerWrapper = playerWrapperManager.getStaffPlayer(event.getPlayer().getUniqueId());
+
+    if (playerWrapper.isEmpty()) return;
+
+    if (playerWrapper.get().isInVanish()) {
+      event.joinMessage(null);
+    }
+  }
+
+  @EventHandler(
+      priority = EventPriority.HIGH
+  )
+  public void onPlayerLeave(PlayerQuitEvent event) {
+    Optional<StaffPlayerWrapper> playerWrapper = playerWrapperManager.getStaffPlayer(event.getPlayer().getUniqueId());
+
+    if (playerWrapper.isEmpty()) return;
+
+    if (playerWrapper.get().isInVanish()) {
+      event.quitMessage(null);
+    }
+  }
+}
