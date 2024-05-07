@@ -44,6 +44,15 @@ public class ModulesPartials {
       """)
   private boolean staffChat = true;
 
+  @Setting
+  @Comment("""
+      This module is required to be enabled
+      if you want to use any module that requires
+      player data like user notes
+      """
+  )
+  private boolean playerData = true;
+
   public boolean isStaffMode() {
     return staffMode;
   }
@@ -62,5 +71,9 @@ public class ModulesPartials {
 
   public boolean isStaffChat() {
     return staffChat;
+  }
+
+  public boolean isPlayerData() {
+    return playerData;
   }
 }
