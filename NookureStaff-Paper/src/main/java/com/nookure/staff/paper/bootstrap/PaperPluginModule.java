@@ -34,6 +34,7 @@ import com.nookure.staff.paper.command.PaperCommandManager;
 import com.nookure.staff.paper.messaging.BackendMessageMessenger;
 import com.nookure.staff.paper.util.PaperScheduler;
 import com.nookure.staff.paper.util.PaperServerUtils;
+import io.ebean.Database;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandMap;
 import org.bukkit.entity.Player;
@@ -41,6 +42,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import redis.clients.jedis.Jedis;
 
 import java.io.IOException;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class PaperPluginModule extends PluginModule {
   private final StaffBootstrapper boot;
@@ -94,6 +96,12 @@ public class PaperPluginModule extends PluginModule {
       }).toInstance(playerWrapperManager);
       bind(new TypeLiteral<PlayerWrapperManager<?>>() {
       }).toInstance(playerWrapperManager);
+
+      /*
+       * AtomicReference related area
+       */
+      bind(new TypeLiteral<AtomicReference<Database>>() {
+      }).toInstance(new AtomicReference<>(null));
     } catch (IOException e) {
       boot.getPLogger().severe("Could not load config");
       throw new RuntimeException(e);
