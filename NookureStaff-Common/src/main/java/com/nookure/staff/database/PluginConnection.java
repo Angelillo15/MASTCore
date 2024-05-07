@@ -110,7 +110,7 @@ public class PluginConnection extends AbstractPluginConnection {
       dataSourceConfig.setPassword(hikariDataSource.getPassword());
     }
 
-    dataSourceConfig.setName("db");
+    dataSourceConfig.setName("nkstaff");
 
     io.ebean.config.DatabaseConfig ebeanConfig = new io.ebean.config.DatabaseConfig();
 
@@ -121,7 +121,7 @@ public class PluginConnection extends AbstractPluginConnection {
 
     ebeanConfig.setDataSourceConfig(dataSourceConfig);
 
-    ebeanConfig.setName("db");
+    ebeanConfig.setName("nkstaff");
     ebeanConfig.setClasses(List.of(PlayerModel.class));
     ebeanConfig.setDataSource(hikariDataSource);
     ebeanConfig.setDefaultServer(true);
@@ -196,6 +196,12 @@ public class PluginConnection extends AbstractPluginConnection {
     }
   }
 
+  @Override
+  public void reload(@NotNull DatabaseConfig config, @NotNull ClassLoader classLoader) {
+    close();
+    connect(config, classLoader);
+  }
+
   @NotNull
   private static StormOptions getStormOptions(Logger logger) {
     StormOptions options = new StormOptions();
@@ -216,7 +222,7 @@ public class PluginConnection extends AbstractPluginConnection {
   }
 
   @Override
-  protected void close() {
+  public void close() {
     try {
       if (connection != null && !connection.isClosed()) {
         connection.close();
@@ -227,6 +233,10 @@ public class PluginConnection extends AbstractPluginConnection {
 
     if (hikariDataSource != null) {
       hikariDataSource.close();
+    }
+
+    if (database != null) {
+      database.shutdown(true, false);
     }
   }
 

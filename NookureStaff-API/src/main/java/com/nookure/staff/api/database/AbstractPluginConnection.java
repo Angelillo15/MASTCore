@@ -9,7 +9,7 @@ import java.sql.Connection;
 
 /**
  * This class represents a connection to the database.
- * Use {@link #connect(DatabaseConfig)} to connect to the database.
+ * Use {@link #connect(DatabaseConfig, ClassLoader)} to connect to the database.
  */
 public abstract class AbstractPluginConnection {
   /**
@@ -37,7 +37,7 @@ public abstract class AbstractPluginConnection {
    * If the connection is already closed, this method should do nothing.
    * </p>
    */
-  protected abstract void close();
+  public abstract void close();
 
   /**
    * Returns the Storm instance.
@@ -74,4 +74,12 @@ public abstract class AbstractPluginConnection {
    * @return the Ebean database
    */
   public abstract Database getEbeanDatabase();
+
+  /**
+   * Reloads the connection to the database.
+   *
+   * @param config      the database config
+   * @param classLoader the class loader
+   */
+  public abstract void reload(@NotNull DatabaseConfig config, @NotNull ClassLoader classLoader);
 }
