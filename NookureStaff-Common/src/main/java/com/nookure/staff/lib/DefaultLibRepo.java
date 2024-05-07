@@ -90,22 +90,6 @@ public class DefaultLibRepo {
         .resolveTransitiveDependencies(true)
         .build();
 
-    Library flyway = Library.builder()
-        .groupId("org{}flywaydb")
-        .artifactId("flyway-core")
-        .version("10.12.0")
-        .resolveTransitiveDependencies(true)
-        .isolatedLoad(false)
-        .build();
-
-    Library flywayMysql = Library.builder()
-        .groupId("org{}flywaydb")
-        .artifactId("flyway-mysql")
-        .version("10.12.0")
-        .resolveTransitiveDependencies(true)
-        .isolatedLoad(false)
-        .build();
-
     try {
       Class.forName("org.sqlite.JDBC");
     } catch (ClassNotFoundException e) {
@@ -117,7 +101,7 @@ public class DefaultLibRepo {
     try {
       Class.forName("io.ebean.Database");
     } catch (ClassNotFoundException e) {
-      Stream.of(ebean, flyway, flywayMysql, ebeanMigration, ebeanDDLMigration).forEach(libraries::add);
+      Stream.of(ebean, ebeanMigration, ebeanDDLMigration).forEach(libraries::add);
     }
   }
 
