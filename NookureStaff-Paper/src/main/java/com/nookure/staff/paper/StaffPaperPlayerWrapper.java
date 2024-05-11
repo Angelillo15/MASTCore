@@ -360,6 +360,8 @@ public class StaffPaperPlayerWrapper extends PaperPlayerWrapper implements Staff
     }
 
     if (staffDataModel.isStaffMode()) {
+      saveInventory();
+      saveLocation();
       enableStaffMode(true);
     }
 
