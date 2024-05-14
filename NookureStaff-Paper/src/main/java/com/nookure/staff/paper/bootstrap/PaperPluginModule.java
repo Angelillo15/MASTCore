@@ -22,6 +22,7 @@ import com.nookure.staff.api.manager.PlayerWrapperManager;
 import com.nookure.staff.api.manager.StaffItemsManager;
 import com.nookure.staff.api.messaging.EventMessenger;
 import com.nookure.staff.api.placeholder.PlaceholderManager;
+import com.nookure.staff.api.service.UserNoteService;
 import com.nookure.staff.api.util.PluginModule;
 import com.nookure.staff.api.util.Scheduler;
 import com.nookure.staff.api.util.ServerUtils;
@@ -34,6 +35,7 @@ import com.nookure.staff.paper.command.PaperCommandManager;
 import com.nookure.staff.paper.messaging.BackendMessageMessenger;
 import com.nookure.staff.paper.util.PaperScheduler;
 import com.nookure.staff.paper.util.PaperServerUtils;
+import com.nookure.staff.service.UserNoteServiceImpl;
 import io.ebean.Database;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandMap;
@@ -73,6 +75,7 @@ public class PaperPluginModule extends PluginModule {
     bind(FreezeManager.class).asEagerSingleton();
     bind(PlaceholderManager.class).asEagerSingleton();
     bind(AddonManager.class).to(ServerAddonManager.class).asEagerSingleton();
+    bind(UserNoteService.class).to(UserNoteServiceImpl.class);
 
     try {
       /*
