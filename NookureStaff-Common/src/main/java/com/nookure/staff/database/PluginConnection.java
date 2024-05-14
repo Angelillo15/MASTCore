@@ -11,6 +11,7 @@ import com.nookure.staff.api.NookureStaff;
 import com.nookure.staff.api.config.partials.DatabaseConfig;
 import com.nookure.staff.api.database.AbstractPluginConnection;
 import com.nookure.staff.api.database.DataProvider;
+import com.nookure.staff.api.model.NoteModel;
 import com.nookure.staff.api.model.PlayerModel;
 import com.nookure.staff.api.model.StaffDataModel;
 import com.nookure.staff.database.driver.SqliteFileDriver;
@@ -83,7 +84,6 @@ public class PluginConnection extends AbstractPluginConnection {
     HikariConfig hikariConfig = getHikariConfig(config);
 
     try {
-      Thread.currentThread().setContextClassLoader(classLoader);
       hikariDataSource = new HikariDataSource(hikariConfig);
       connection = hikariDataSource.getConnection();
       storm = new Storm(getStormOptions(logger), new HikariDriver(hikariDataSource));
@@ -99,6 +99,7 @@ public class PluginConnection extends AbstractPluginConnection {
 
   private void loadEbean(DatabaseConfig config) {
     io.ebean.config.DatabaseConfig ebeanConfig = getDatabaseConfig(config);
+    Thread.currentThread().setContextClassLoader(classLoader);
     database = DatabaseFactory.create(ebeanConfig);
   }
 
@@ -125,7 +126,10 @@ public class PluginConnection extends AbstractPluginConnection {
 
     ebeanConfig.setName("nkstaff");
     ebeanConfig.setRunMigration(true);
-    ebeanConfig.setClasses(List.of(PlayerModel.class));
+    ebeanConfig.setClasses(List.of(
+        PlayerModel.class,
+        NoteModel.class
+    ));
     ebeanConfig.setDataSource(hikariDataSource);
     ebeanConfig.setDefaultServer(true);
 
