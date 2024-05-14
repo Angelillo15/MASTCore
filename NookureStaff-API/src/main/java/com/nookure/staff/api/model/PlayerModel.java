@@ -1,5 +1,7 @@
 package com.nookure.staff.api.model;
 
+import com.nookure.staff.api.util.Object2Text;
+import com.nookure.staff.api.util.TextUtils;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
@@ -9,7 +11,7 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "nookure_staff_players")
-public class PlayerModel extends BaseDomain {
+public class PlayerModel extends BaseDomain implements Object2Text {
   @Column
   String name;
   @Column(unique = true)
@@ -75,5 +77,16 @@ public class PlayerModel extends BaseDomain {
   public PlayerModel setFirstIp(String firstIp) {
     this.firstIp = firstIp;
     return this;
+  }
+
+  @Override
+  public String replaceText(String text) {
+    return text.replace("{player.name}", name)
+        .replace("{player.uuid}", uuid.toString())
+        .replace("{player.lastLogin}", TextUtils.formatTime(lastLogin.toEpochMilli())
+        .replace("{player.firstLogin}", TextUtils.formatTime(firstLogin.toEpochMilli()))
+        .replace("{player.lastIp}", lastIp)
+        .replace("{player.id}", id.toString())
+        .replace("{player.firstIp}", firstIp));
   }
 }
