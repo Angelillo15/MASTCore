@@ -53,6 +53,14 @@ public class ModulesPartials {
   )
   private boolean playerData = true;
 
+  @Setting
+  @Comment("""
+      Enable or disable the user notes module.
+      This include /note command and the user notes
+      vault.
+      """)
+  private boolean userNotes = true;
+
   public boolean isStaffMode() {
     return staffMode;
   }
@@ -75,5 +83,9 @@ public class ModulesPartials {
 
   public boolean isPlayerData() {
     return playerData;
+  }
+
+  public boolean isUserNotes() {
+    return userNotes;
   }
 }
