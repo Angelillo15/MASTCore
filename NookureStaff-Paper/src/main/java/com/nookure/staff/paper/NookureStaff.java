@@ -42,6 +42,7 @@ import com.nookure.staff.paper.loader.AddonsLoader;
 import com.nookure.staff.paper.loader.ItemsLoader;
 import com.nookure.staff.paper.loader.PlaceholderApiLoader;
 import com.nookure.staff.paper.messaging.BackendMessageMessenger;
+import com.nookure.staff.paper.note.command.ParentNoteCommand;
 import com.nookure.staff.paper.task.FreezeSpamMessage;
 import com.nookure.staff.paper.task.FreezeTimerTask;
 import org.bukkit.Bukkit;
@@ -252,6 +253,10 @@ public class NookureStaff {
 
     if (config.get().modules.isVanish()) {
       commandManager.registerCommand(injector.getInstance(VanishCommand.class));
+    }
+
+    if (config.get().modules.isPlayerData() && config.get().modules.isUserNotes()) {
+      commandManager.registerCommand(injector.getInstance(ParentNoteCommand.class));
     }
   }
 
