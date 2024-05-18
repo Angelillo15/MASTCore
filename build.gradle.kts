@@ -9,7 +9,6 @@ val minor: String by project
 val patch: String by project
 
 group = "com.nookure.staff"
-
 val versionCode = "${major}.${minor}.${patch}"
 
 version = "${versionCode}-${grgit.head().abbreviatedId}"
