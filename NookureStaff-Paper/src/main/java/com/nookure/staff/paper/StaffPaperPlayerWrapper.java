@@ -22,10 +22,7 @@ import com.nookure.staff.api.messaging.EventMessenger;
 import com.nookure.staff.api.model.StaffDataModel;
 import com.nookure.staff.api.util.Scheduler;
 import com.nookure.staff.paper.data.StaffModeData;
-import org.bukkit.Bukkit;
-import org.bukkit.GameMode;
-import org.bukkit.NamespacedKey;
-import org.bukkit.Registry;
+import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.potion.PotionEffect;
@@ -258,7 +255,9 @@ public class StaffPaperPlayerWrapper extends PaperPlayerWrapper implements Staff
   }
 
   public void loadPreviousLocation() {
-    player.teleport(staffModeData.record().enabledLocation());
+    Location location = staffModeData.record().enabledLocation();
+    if (location == null) return;
+    player.teleport(location);
   }
 
   private void writeVanishState(boolean state) {
@@ -360,6 +359,8 @@ public class StaffPaperPlayerWrapper extends PaperPlayerWrapper implements Staff
     }
 
     if (staffDataModel.isStaffMode()) {
+      saveInventory();
+      saveLocation();
       enableStaffMode(true);
     }
 
