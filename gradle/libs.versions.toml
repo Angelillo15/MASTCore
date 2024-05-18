@@ -23,6 +23,8 @@ shadowJar = "8.1.1"
 pluginYml = "0.6.0"
 guava = "33.0.0-jre"
 apacheCommons = "3.14.0"
+ebean = "15.1.0"
+flyway = "10.12.0"
 
 [libraries]
 hikariCP = { group = "com.zaxxer", name = "HikariCP", version.ref = "hikariCP" }
@@ -68,6 +70,10 @@ scoreboard-8 = { group = "com.github.megavexnetwork.scoreboard-library", name = 
 # Auto service
 auto-service = "com.google.auto.service:auto-service:1.0.1"
 auto-service-annotations = "com.google.auto.service:auto-service-annotations:1.0.1"
+ebean = { group = "io.ebean", name = "ebean", version.ref = "ebean" }
+ebean-ddl-generator = { group = "io.ebean", name = "ebean-ddl-generator", version.ref = "ebean" }
+ebean-migration = { group = "io.ebean", name = "ebean-migration", version = "14.0.0" }
+flyway = { group = "org.flywaydb", name = "flyway-core", version.ref = "flyway" }
 
 [bundles]
 invAPI = ["invCore", "invAdvancedSlots", "invPagination", "configurableGui"]
@@ -80,3 +86,4 @@ pluginYmlBungee = { id = "net.minecrell.plugin-yml.bungee", version.ref = "plugi
 pluginYmlPaper = { id = "net.minecrell.plugin-yml.paper", version.ref = "pluginYml" }
 grgit = { id = "org.ajoberstar.grgit", version = "5.2.1" }
 grgitPublish = { id = "org.ajoberstar.git-publish", version = "4.2.1" }
+ebean = { id = "io.ebean", version.ref = "ebean" }

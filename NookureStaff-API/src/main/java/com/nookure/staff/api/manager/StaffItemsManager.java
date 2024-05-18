@@ -16,7 +16,7 @@ import java.util.Objects;
  * @since 1.0.0
  */
 @Singleton
-public class StaffItemsManager {
+public final class StaffItemsManager {
   private final Map<String, StaffItem> items = new HashMap<>();
 
   /**

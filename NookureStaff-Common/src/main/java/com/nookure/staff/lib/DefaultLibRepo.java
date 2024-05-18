@@ -1,6 +1,7 @@
 package com.nookure.staff.lib;
 
 import com.alessiodp.libby.Library;
+import com.nookure.staff.api.NookureStaff;
 
 import java.util.ArrayList;
 import java.util.stream.Stream;
@@ -41,6 +42,7 @@ public class DefaultLibRepo {
         .version("3.1.8")
         .isolatedLoad(false)
         .relocate("com{}github{}benmanes{}caffeine", "com{}nookure{}staff{}libs{}caffeine")
+        .resolveTransitiveDependencies(true)
         .build();
 
     Library sqlite = Library.builder()
@@ -64,6 +66,30 @@ public class DefaultLibRepo {
         .isolatedLoad(false)
         .build();
 
+    Library ebean = Library.builder()
+        .groupId("io{}ebean")
+        .artifactId("ebean")
+        .version("15.1.0")
+        .isolatedLoad(false)
+        .resolveTransitiveDependencies(true)
+        .build();
+
+    Library ebeanMigration = Library.builder()
+        .groupId("io{}ebean")
+        .artifactId("ebean-migration")
+        .version("14.0.0")
+        .isolatedLoad(false)
+        .resolveTransitiveDependencies(true)
+        .build();
+
+    Library ebeanDDLMigration = Library.builder()
+        .groupId("io{}ebean")
+        .artifactId("ebean-ddl-generator")
+        .version("15.1.0")
+        .isolatedLoad(false)
+        .resolveTransitiveDependencies(true)
+        .build();
+
     try {
       Class.forName("org.sqlite.JDBC");
     } catch (ClassNotFoundException e) {
@@ -71,6 +97,12 @@ public class DefaultLibRepo {
     }
 
     Stream.of(hikariCP, storm, caffeine, jedis, commons, commonsPool2).forEach(libraries::add);
+
+    try {
+      Class.forName("io.ebean.Database");
+    } catch (ClassNotFoundException e) {
+      Stream.of(ebean, ebeanMigration, ebeanDDLMigration).forEach(libraries::add);
+    }
   }
 
   public ArrayList<Library> getLibraries() {

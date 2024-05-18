@@ -11,16 +11,27 @@ import com.nookure.staff.api.NookureStaff;
 import com.nookure.staff.api.config.partials.DatabaseConfig;
 import com.nookure.staff.api.database.AbstractPluginConnection;
 import com.nookure.staff.api.database.DataProvider;
+import com.nookure.staff.api.model.NoteModel;
+import com.nookure.staff.api.model.PlayerModel;
 import com.nookure.staff.api.model.StaffDataModel;
 import com.nookure.staff.database.driver.SqliteFileDriver;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
+import io.ebean.Database;
+import io.ebean.DatabaseFactory;
+import io.ebean.config.ContainerConfig;
+import io.ebean.datasource.DataSourceConfig;
+import io.ebean.platform.mysql.MySqlPlatform;
+import io.ebean.platform.sqlite.SQLitePlatform;
 import org.jetbrains.annotations.NotNull;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.Objects;
+import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
+
+import static java.util.Objects.requireNonNull;
 
 @Singleton
 public class PluginConnection extends AbstractPluginConnection {
@@ -28,13 +39,21 @@ public class PluginConnection extends AbstractPluginConnection {
   private Logger logger;
   @Inject
   private NookureStaff plugin;
+  @Inject
+  private AtomicReference<Database> databaseReference;
+  @Inject
+  private MigrationService migrationService;
   private Storm storm;
+  private ClassLoader classLoader;
   private Connection connection;
   private HikariDataSource hikariDataSource;
+  private Database database;
 
   @Override
-  public void connect(@NotNull DatabaseConfig config) {
-    Objects.requireNonNull(config, "config is null");
+  public void connect(@NotNull DatabaseConfig config, ClassLoader classLoader) {
+    requireNonNull(config, "config is null");
+
+    this.classLoader = classLoader;
 
     logger.debug("Connecting to the database");
     logger.debug("Debug database data: " + config);
@@ -46,7 +65,7 @@ public class PluginConnection extends AbstractPluginConnection {
     if (config.getType() == DataProvider.MYSQL)
       loadMySQL(config);
     else
-      loadSqlite();
+      loadSqlite(config);
 
     try {
       storm.registerModel(new StaffDataModel());
@@ -55,11 +74,12 @@ public class PluginConnection extends AbstractPluginConnection {
       throw new RuntimeException(e);
     }
 
+    databaseReference.set(database);
     logger.info("<green>Successfully connected to the database!");
   }
 
   private void loadMySQL(@NotNull DatabaseConfig config) {
-    Objects.requireNonNull(config, "config is null");
+    requireNonNull(config, "config is null");
 
     HikariConfig hikariConfig = getHikariConfig(config);
 
@@ -67,35 +87,89 @@ public class PluginConnection extends AbstractPluginConnection {
       hikariDataSource = new HikariDataSource(hikariConfig);
       connection = hikariDataSource.getConnection();
       storm = new Storm(getStormOptions(logger), new HikariDriver(hikariDataSource));
+
+      loadEbean(config);
     } catch (Exception e) {
       logger.severe("An error occurred while connecting to the database");
       logger.severe("Now trying to connect to SQLite");
-      loadSqlite();
+      logger.severe(e);
+      loadSqlite(config);
     }
   }
 
+  private void loadEbean(DatabaseConfig config) {
+    io.ebean.config.DatabaseConfig ebeanConfig = getDatabaseConfig(config);
+    Thread.currentThread().setContextClassLoader(classLoader);
+    database = DatabaseFactory.create(ebeanConfig);
+  }
+
   @NotNull
-  private static HikariConfig getHikariConfig(@NotNull DatabaseConfig config) {
-    Objects.requireNonNull(config, "config is null");
+  private io.ebean.config.DatabaseConfig getDatabaseConfig(DatabaseConfig config) {
+    DataSourceConfig dataSourceConfig = new DataSourceConfig();
+    dataSourceConfig.setUrl(hikariDataSource.getJdbcUrl());
+
+    if (config.getType() == DataProvider.MYSQL) {
+      dataSourceConfig.setUsername(hikariDataSource.getUsername());
+      dataSourceConfig.setPassword(hikariDataSource.getPassword());
+    }
+
+    dataSourceConfig.setName("nkstaff");
+
+    io.ebean.config.DatabaseConfig ebeanConfig = new io.ebean.config.DatabaseConfig();
+
+    ebeanConfig.loadFromProperties();
+
+    ContainerConfig containerConfig = new ContainerConfig();
+    containerConfig.setActive(false);
+
+    ebeanConfig.setDataSourceConfig(dataSourceConfig);
+
+    ebeanConfig.setName("nkstaff");
+    ebeanConfig.setRunMigration(true);
+    ebeanConfig.setClasses(List.of(
+        PlayerModel.class,
+        NoteModel.class
+    ));
+    ebeanConfig.setDataSource(hikariDataSource);
+    ebeanConfig.setDefaultServer(true);
+
+    if (config.getType() == DataProvider.MYSQL) {
+      ebeanConfig.setDatabasePlatform(new MySqlPlatform());
+    } else {
+      ebeanConfig.setDatabasePlatform(new SQLitePlatform());
+    }
+
+    return ebeanConfig;
+  }
+
+  @NotNull
+  private HikariConfig getHikariConfig(@NotNull DatabaseConfig config) {
+    requireNonNull(config, "config is null");
 
     HikariConfig hikariConfig = new HikariConfig();
-    hikariConfig.setJdbcUrl(
-        "jdbc:mysql://"
-            + config.getHost()
-            + ":"
-            + config.getPort()
-            + "/"
-            + config.getDatabase()
-            + "?autoReconnect=true&useUnicode=yes");
-    hikariConfig.setUsername(config.getUsername());
-    hikariConfig.setPassword(config.getPassword());
+    if (config.getType() == DataProvider.MYSQL) {
+      hikariConfig.setJdbcUrl(
+          "jdbc:mysql://"
+              + config.getHost()
+              + ":"
+              + config.getPort()
+              + "/"
+              + config.getDatabase()
+              + "?autoReconnect=true&useUnicode=yes");
+      hikariConfig.setUsername(config.getUsername());
+      hikariConfig.setPassword(config.getPassword());
+    } else {
+      hikariConfig.setJdbcUrl("jdbc:sqlite:" + plugin.getPluginDataFolder() + "/database.db");
+    }
+
     hikariConfig.setMaximumPoolSize(20);
     hikariConfig.setConnectionTimeout(30000);
+    hikariConfig.setAutoCommit(false);
     hikariConfig.setLeakDetectionThreshold(0);
     return hikariConfig;
   }
 
-  private void loadSqlite() {
+  private void loadSqlite(DatabaseConfig config) {
     try {
       Class.forName("org.sqlite.JDBC");
     } catch (ClassNotFoundException e) {
@@ -113,9 +187,18 @@ public class PluginConnection extends AbstractPluginConnection {
       String url = "jdbc:sqlite:" + plugin.getPluginDataFolder() + "/database.db";
       connection = DriverManager.getConnection(url);
       storm = new Storm(getStormOptions(logger), new SqliteFileDriver(connection));
+      hikariDataSource = new HikariDataSource(getHikariConfig(config));
+
+      loadEbean(config);
     } catch (SQLException e) {
       throw new RuntimeException(e);
     }
+  }
+
+  @Override
+  public void reload(@NotNull DatabaseConfig config, @NotNull ClassLoader classLoader) {
+    close();
+    connect(config, classLoader);
   }
 
   @NotNull
@@ -138,7 +221,7 @@ public class PluginConnection extends AbstractPluginConnection {
   }
 
   @Override
-  protected void close() {
+  public void close() {
     try {
       if (connection != null && !connection.isClosed()) {
         connection.close();
@@ -149,6 +232,10 @@ public class PluginConnection extends AbstractPluginConnection {
 
     if (hikariDataSource != null) {
       hikariDataSource.close();
+    }
+
+    if (database != null) {
+      database.shutdown(true, false);
     }
   }
 
@@ -168,5 +255,14 @@ public class PluginConnection extends AbstractPluginConnection {
     }
 
     return connection;
+  }
+
+  @Override
+  public Database getEbeanDatabase() {
+    if (connection == null) {
+      throw new IllegalStateException("The connection is not established");
+    }
+
+    return database;
   }
 }
