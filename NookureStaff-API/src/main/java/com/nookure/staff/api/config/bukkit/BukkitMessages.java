@@ -22,11 +22,21 @@ public class BukkitMessages {
           """
   )
   private String reload = "{prefix} <gray>Configuration reloaded, mayor changes may not take effect until the server is restarted.";
+
+  @Setting
+  @Comment(
+      """
+          Player not found message
+          """
+  )
+  private String playerNotFound = "{prefix} <red>Could not find the player {player}.";
+
   public final StaffModePartial staffMode = new StaffModePartial();
   public final VanishPartial vanish = new VanishPartial();
   public final FreezeMessagePartial freeze = new FreezeMessagePartial();
   public final StaffChatPartial staffChat = new StaffChatPartial();
   public final PlaceholderPartial placeholder = new PlaceholderPartial();
+  public final NoteMessages note = new NoteMessages();
 
   public String prefix() {
     return prefix;
@@ -34,5 +44,9 @@ public class BukkitMessages {
 
   public String reload() {
     return reload;
+  }
+
+  public String playerNotFound() {
+    return playerNotFound;
   }
 }

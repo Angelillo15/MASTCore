@@ -27,7 +27,7 @@ import java.util.stream.Stream;
  * @since 1.0.0
  */
 @Singleton
-public class PlayerWrapperManager<T> {
+public final class PlayerWrapperManager<T> {
   private final BiMap<T, PlayerWrapper> playerWrappersByPlayerClass = HashBiMap.create();
   private final LinkedHashMap<UUID, PlayerWrapper> playerWrappersByUUID = new LinkedHashMap<>();
   private final ArrayList<UUID> staffPlayers = new ArrayList<>();

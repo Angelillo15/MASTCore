@@ -6,7 +6,7 @@ import com.nookure.staff.api.command.CommandParent;
 
 @CommandData(
     name = "NookureStaff",
-    aliases = {"nstaff", "ns"},
+    aliases = {"nkstaff", "ns"},
     description = "Main command for NookureStaff",
     permission = Permissions.STAFF_ADMIN_PERMISSION,
     subCommands = {

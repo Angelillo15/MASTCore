@@ -28,6 +28,7 @@ import com.nookure.staff.paper.listener.freeze.OnFreezePlayerInteract;
 import com.nookure.staff.paper.listener.freeze.OnFreezePlayerMove;
 import com.nookure.staff.paper.listener.freeze.OnFreezePlayerQuit;
 import com.nookure.staff.paper.listener.freeze.OnPlayerChatFreeze;
+import com.nookure.staff.paper.listener.player.OnPlayerDataJoin;
 import com.nookure.staff.paper.listener.server.OnServerBroadcast;
 import com.nookure.staff.paper.listener.staff.OnPlayerInStaffChatTalk;
 import com.nookure.staff.paper.listener.staff.vanish.PlayerVanishListener;
@@ -41,6 +42,7 @@ import com.nookure.staff.paper.loader.AddonsLoader;
 import com.nookure.staff.paper.loader.ItemsLoader;
 import com.nookure.staff.paper.loader.PlaceholderApiLoader;
 import com.nookure.staff.paper.messaging.BackendMessageMessenger;
+import com.nookure.staff.paper.note.command.ParentNoteCommand;
 import com.nookure.staff.paper.task.FreezeSpamMessage;
 import com.nookure.staff.paper.task.FreezeTimerTask;
 import org.bukkit.Bukkit;
@@ -161,6 +163,10 @@ public class NookureStaff {
     if (config.get().modules.isStaffChat()) {
       registerListener(OnPlayerInStaffChatTalk.class);
     }
+
+    if (config.get().modules.isPlayerData()) {
+      registerListener(OnPlayerDataJoin.class);
+    }
   }
 
   public void registerListener(Class<? extends Listener> listener) {
@@ -247,6 +253,10 @@ public class NookureStaff {
 
     if (config.get().modules.isVanish()) {
       commandManager.registerCommand(injector.getInstance(VanishCommand.class));
+    }
+
+    if (config.get().modules.isPlayerData() && config.get().modules.isUserNotes()) {
+      commandManager.registerCommand(injector.getInstance(ParentNoteCommand.class));
     }
   }
 

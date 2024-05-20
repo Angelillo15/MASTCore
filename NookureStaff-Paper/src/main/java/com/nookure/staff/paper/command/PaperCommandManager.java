@@ -63,7 +63,7 @@ public class PaperCommandManager extends CommandManager {
     if (commandPartial.usage() != null && !commandPartial.usage().isEmpty())
       templateCommand.setUsage(commandPartial.usage());
 
-    commandMap.register(command.getCommandData().name(), templateCommand);
+    commandMap.register("nkstaff", templateCommand);
     command.prepare();
   }
 

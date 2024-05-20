@@ -75,7 +75,7 @@ public abstract class TextUtils {
 
 
   /**
-   * Formats a time in milliseconds to a human readable string
+   * Formats a time in milliseconds to a human-readable string
    *
    * @param time the time to format
    * @return the formatted time

@@ -54,4 +54,9 @@ public final class Permissions {
    * Permission to use the staff chat.
    */
   public static final String STAFF_CHAT = "nookure.staff.staffchat";
+
+  /**
+   * Permissions to have administrator notes.
+   */
+  public static final String STAFF_NOTES_ADMIN = "nookure.staff.notes.admin";
 }
