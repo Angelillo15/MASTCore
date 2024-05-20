@@ -13,6 +13,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 public class OnFreezePlayerInteract implements Listener {
   @Inject
   private FreezeManager freezeManager;
+
   @EventHandler(
       priority = EventPriority.HIGHEST
   )

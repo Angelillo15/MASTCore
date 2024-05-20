@@ -10,13 +10,13 @@ import com.velocitypowered.api.proxy.ProxyServer;
 import com.velocitypowered.api.proxy.messages.MinecraftChannelIdentifier;
 
 public class PluginMessageRouter {
+  public static final MinecraftChannelIdentifier EVENTS = MinecraftChannelIdentifier.from(Channels.EVENTS);
   @Inject
   private ProxyServer server;
   @Inject
   private Logger logger;
   @Inject
   private EventMessenger messenger;
-  public static final MinecraftChannelIdentifier EVENTS = MinecraftChannelIdentifier.from(Channels.EVENTS);
 
   @Subscribe
   public void onPluginMessageFromPlayer(PluginMessageEvent event) {

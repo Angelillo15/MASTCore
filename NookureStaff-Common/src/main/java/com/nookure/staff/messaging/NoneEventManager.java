@@ -10,6 +10,7 @@ import org.jetbrains.annotations.NotNull;
 public class NoneEventManager extends EventMessenger {
   @Inject
   private EventManager eventManager;
+
   @Override
   public void prepare() {
     // Nothing to do here

@@ -2,14 +2,6 @@ package com.nookure.staff.api.util;
 
 public interface Object2Text {
   /**
-   * Replace the text with the object
-   *
-   * @param text The text to replace
-   * @return The replaced text
-   */
-  String replaceText(String text);
-
-  /**
    * Replace the text with all the objects
    *
    * @param text    The text to replace
@@ -23,4 +15,12 @@ public interface Object2Text {
 
     return text;
   }
+
+  /**
+   * Replace the text with the object
+   *
+   * @param text The text to replace
+   * @return The replaced text
+   */
+  String replaceText(String text);
 }

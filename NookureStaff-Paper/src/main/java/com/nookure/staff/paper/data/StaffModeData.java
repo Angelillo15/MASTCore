@@ -6,7 +6,6 @@ import com.nookure.staff.api.PlayerWrapper;
 import com.nookure.staff.paper.PaperPlayerWrapper;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.util.io.BukkitObjectInputStream;
 import org.bukkit.util.io.BukkitObjectOutputStream;
 
 import java.io.File;
@@ -42,6 +41,54 @@ public class StaffModeData {
     this.logger = plugin.getPLogger();
     this.record = record;
     this.player = player;
+  }
+
+  /**
+   * Read a staff mode user record from the database.
+   *
+   * @param plugin the plugin instance
+   * @param player the player
+   * @return the staff mode user data container
+   */
+  public static StaffModeData read(NookureStaff plugin, PlayerWrapper player) {
+    Logger logger = plugin.getPLogger();
+
+    logger.debug("Reading staff mode user record for player %s from database", player.getName());
+
+    long start = System.currentTimeMillis();
+
+    String file = plugin.getPluginDataFolder().getAbsolutePath() + "/data/" + player.getUniqueId() + ".nookdata";
+
+    if (!new File(file).exists()) {
+      logger.debug("Staff mode user record for player %s does not exist in database", player.getName());
+      if (!(player instanceof PaperPlayerWrapper playerWrapper)) return null;
+      Player bukkitPlayer = playerWrapper.getPlayer();
+
+      return new StaffModeData(plugin, new StaffModeDataRecord(
+          bukkitPlayer.getInventory().getContents(),
+          bukkitPlayer.getInventory().getArmorContents(),
+          new ItemStack[0],
+          false,
+          ((PaperPlayerWrapper) player).getPlayer().getLocation()
+      ), player);
+    }
+
+    StaffModeDataRecord record;
+
+    try {
+      record = (StaffModeDataRecord) new PluginObjectInputStream(Files.newInputStream(Path.of(file))).readObject();
+    } catch (IOException | ClassNotFoundException e) {
+      logger.severe(
+          "Failed to read staff mode user record for player %s from database, \n %s",
+          player.getName(),
+          e.getMessage()
+      );
+      throw new RuntimeException(e);
+    }
+
+    logger.debug("Read staff mode user record for player %s from database in %dms", player.getName(), System.currentTimeMillis() - start);
+
+    return new StaffModeData(plugin, record, player);
   }
 
   public void write() {
@@ -108,53 +155,5 @@ public class StaffModeData {
 
   public StaffModeDataRecord record() {
     return record;
-  }
-
-  /**
-   * Read a staff mode user record from the database.
-   *
-   * @param plugin the plugin instance
-   * @param player the player
-   * @return the staff mode user data container
-   */
-  public static StaffModeData read(NookureStaff plugin, PlayerWrapper player) {
-    Logger logger = plugin.getPLogger();
-
-    logger.debug("Reading staff mode user record for player %s from database", player.getName());
-
-    long start = System.currentTimeMillis();
-
-    String file = plugin.getPluginDataFolder().getAbsolutePath() + "/data/" + player.getUniqueId() + ".nookdata";
-
-    if (!new File(file).exists()) {
-      logger.debug("Staff mode user record for player %s does not exist in database", player.getName());
-      if (!(player instanceof PaperPlayerWrapper playerWrapper)) return null;
-      Player bukkitPlayer = playerWrapper.getPlayer();
-
-      return new StaffModeData(plugin, new StaffModeDataRecord(
-          bukkitPlayer.getInventory().getContents(),
-          bukkitPlayer.getInventory().getArmorContents(),
-          new ItemStack[0],
-          false,
-          ((PaperPlayerWrapper) player).getPlayer().getLocation()
-      ), player);
-    }
-
-    StaffModeDataRecord record;
-
-    try {
-      record = (StaffModeDataRecord) new BukkitObjectInputStream(Files.newInputStream(Path.of(file))).readObject();
-    } catch (IOException | ClassNotFoundException e) {
-      logger.severe(
-          "Failed to read staff mode user record for player %s from database, \n %s",
-          player.getName(),
-          e.getMessage()
-      );
-      throw new RuntimeException(e);
-    }
-
-    logger.debug("Read staff mode user record for player %s from database in %dms", player.getName(), System.currentTimeMillis() - start);
-
-    return new StaffModeData(plugin, record, player);
   }
 }

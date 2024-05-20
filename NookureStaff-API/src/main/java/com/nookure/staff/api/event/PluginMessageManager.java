@@ -15,6 +15,7 @@ public abstract class PluginMessageManager<P> {
   private Logger logger;
   @Inject
   private NookureStaff plugin;
+
   abstract public void sendEvent(@NotNull Event event, @NotNull P player);
 
   @NotNull

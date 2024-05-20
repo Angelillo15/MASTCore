@@ -128,12 +128,12 @@ public class DefaultLibRepo {
     }
   }
 
-  public ArrayList<Library> getLibraries() {
-    return libraries;
-  }
-
   public static DefaultLibRepo getInstance() {
     return INSTANCE;
+  }
+
+  public ArrayList<Library> getLibraries() {
+    return libraries;
   }
 
 }

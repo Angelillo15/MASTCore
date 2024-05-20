@@ -10,6 +10,7 @@ import java.lang.annotation.Target;
 public @interface NookSubscribe {
   /**
    * The event priority
+   *
    * @return The event priority
    */
   EventPriority priority() default EventPriority.NORMAL;

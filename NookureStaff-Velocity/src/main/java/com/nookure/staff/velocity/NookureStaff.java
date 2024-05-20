@@ -2,6 +2,7 @@ package com.nookure.staff.velocity;
 
 import com.google.inject.Inject;
 import com.google.inject.Injector;
+import com.nookure.staff.Constants;
 import com.nookure.staff.api.Logger;
 import com.nookure.staff.api.NookureStaffPlatform;
 import com.nookure.staff.api.event.EventManager;
@@ -12,7 +13,6 @@ import com.nookure.staff.velocity.module.VelocityPluginModule;
 import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.proxy.ProxyInitializeEvent;
 import com.velocitypowered.api.plugin.Plugin;
-import com.nookure.staff.Constants;
 import com.velocitypowered.api.plugin.annotation.DataDirectory;
 import com.velocitypowered.api.proxy.ProxyServer;
 
@@ -29,6 +29,7 @@ import java.nio.file.Path;
     version = Constants.VERSION
 )
 public class NookureStaff implements NookureStaffPlatform<ProxyServer> {
+  private final ClassLoader classLoader = getClass().getClassLoader();
   @Inject
   private ProxyServer server;
   @Inject
@@ -36,7 +37,6 @@ public class NookureStaff implements NookureStaffPlatform<ProxyServer> {
   @Inject
   @DataDirectory
   private Path dataDirectory;
-  private final ClassLoader classLoader = getClass().getClassLoader();
   private Logger logger;
   private boolean debug;
 

@@ -18,6 +18,7 @@ import java.util.Arrays;
 
 @Singleton
 public class RedisMessenger extends EventMessenger {
+  private static final byte[] CHANNEL = "nkstaff_events".getBytes();
   @Inject
   @RedisPublish
   private Jedis jedisPublish;
@@ -31,8 +32,6 @@ public class RedisMessenger extends EventMessenger {
   @Inject
   private Scheduler scheduler;
   private BinaryJedisPubSub messenger;
-  private static final byte[] CHANNEL = "nkstaff_events".getBytes();
-
   private int subscribeTaskID;
 
   @Override
@@ -59,6 +58,15 @@ public class RedisMessenger extends EventMessenger {
       logger.debug("Publishing event to redis");
       jedisPublish.publish(CHANNEL, data);
     }
+  }
+
+  @Override
+  public void close() throws Exception {
+    messenger.unsubscribe();
+    scheduler.cancel(subscribeTaskID);
+
+    jedisSubscribe.close();
+    jedisPublish.close();
   }
 
   private static class RedisEventMessenger extends BinaryJedisPubSub {
@@ -91,14 +99,5 @@ public class RedisMessenger extends EventMessenger {
         throw new RuntimeException(e);
       }
     }
-  }
-
-  @Override
-  public void close() throws Exception {
-    messenger.unsubscribe();
-    scheduler.cancel(subscribeTaskID);
-
-    jedisSubscribe.close();
-    jedisPublish.close();
   }
 }

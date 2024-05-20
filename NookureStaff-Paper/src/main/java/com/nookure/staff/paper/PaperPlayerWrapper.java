@@ -15,15 +15,14 @@ import java.util.Set;
 import java.util.UUID;
 
 public class PaperPlayerWrapper implements PlayerWrapper {
+  @Comment("Package protected value")
+  Player player;
   @Inject
   private JavaPlugin plugin;
   @Inject
   private NookureStaff nookPlugin;
   @Inject
   private Logger logger;
-
-  @Comment("Package protected value")
-  Player player;
 
   @Override
   public void sendMessage(@NotNull Component component) {
@@ -86,6 +85,15 @@ public class PaperPlayerWrapper implements PlayerWrapper {
     return true;
   }
 
+  @NotNull
+  public Player getPlayer() {
+    if (player == null) {
+      throw new IllegalStateException("Player cannot be null");
+    }
+
+    return player;
+  }
+
   public static class Builder {
     private final PaperPlayerWrapper playerWrapper;
 
@@ -109,14 +117,5 @@ public class PaperPlayerWrapper implements PlayerWrapper {
 
       return playerWrapper;
     }
-  }
-
-  @NotNull
-  public Player getPlayer() {
-    if (player == null) {
-      throw new IllegalStateException("Player cannot be null");
-    }
-
-    return player;
   }
 }

@@ -8,6 +8,12 @@ import java.util.List;
 
 @ConfigSerializable
 public class BaseUI {
+  @Setting
+  private String title = "Your inventory title here";
+  @Setting
+  private int row = 5;
+  @Setting
+  private List<UIItem> items;
   public BaseUI() {
   }
 
@@ -15,12 +21,4 @@ public class BaseUI {
     this.title = title;
     this.row = row;
   }
-
-  @Setting
-  private String title = "Your inventory title here";
-  @Setting
-  private int row = 5;
-
-  @Setting
-  private List<UIItem> items;
 }

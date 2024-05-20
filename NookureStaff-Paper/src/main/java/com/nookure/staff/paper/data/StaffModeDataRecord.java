@@ -15,20 +15,20 @@ public class StaffModeDataRecord implements Serializable {
   private ItemStack[] playerInventoryArmor;
   private ItemStack[] staffVault;
   private boolean staffMode;
-  private LocationWrapper enabledLocation;
+  private LocationWrapper enabledLocationWrapper;
 
   public StaffModeDataRecord(
       ItemStack[] playerInventory,
       ItemStack[] playerInventoryArmor,
       ItemStack[] staffVault,
       boolean staffMode,
-      Location enabledLocation
+      Location enabledLocationWrapper
   ) {
     this.playerInventory = playerInventory;
     this.playerInventoryArmor = playerInventoryArmor;
     this.staffVault = staffVault;
     this.staffMode = staffMode;
-    this.enabledLocation = new LocationWrapper(enabledLocation);
+    this.enabledLocationWrapper = new LocationWrapper(enabledLocationWrapper);
   }
 
   public ItemStack[] playerInventory() {
@@ -64,11 +64,11 @@ public class StaffModeDataRecord implements Serializable {
   }
 
   public Location enabledLocation() {
-    return LocationWrapper.toLocation(enabledLocation);
+    return LocationWrapper.toLocation(enabledLocationWrapper);
   }
 
   public void enabledLocation(Location enabledLocation) {
-    this.enabledLocation = new LocationWrapper(enabledLocation);
+    this.enabledLocationWrapper = new LocationWrapper(enabledLocation);
   }
 
   @Override

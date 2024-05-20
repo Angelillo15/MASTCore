@@ -36,6 +36,8 @@ import java.util.Objects;
 import java.util.Optional;
 
 public class StaffPaperPlayerWrapper extends PaperPlayerWrapper implements StaffPlayerWrapper {
+  private final Map<Class<? extends StaffPlayerExtension>, StaffPlayerExtension> extensionMap = new HashMap<>();
+  private final Map<Integer, StaffItem> items = new HashMap<>();
   @Inject
   private NookureStaff plugin;
   @Inject
@@ -60,8 +62,6 @@ public class StaffPaperPlayerWrapper extends PaperPlayerWrapper implements Staff
   private Injector injector;
   @Inject
   private PlayerWrapperManager<Player> playerWrapperManager;
-  private final Map<Class<? extends StaffPlayerExtension>, StaffPlayerExtension> extensionMap = new HashMap<>();
-  private final Map<Integer, StaffItem> items = new HashMap<>();
   private StaffDataModel staffDataModel;
   private boolean staffMode = false;
   private boolean vanish = false;

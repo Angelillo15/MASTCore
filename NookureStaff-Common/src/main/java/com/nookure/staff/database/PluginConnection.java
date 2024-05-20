@@ -49,6 +49,25 @@ public class PluginConnection extends AbstractPluginConnection {
   private HikariDataSource hikariDataSource;
   private Database database;
 
+  @NotNull
+  private static StormOptions getStormOptions(Logger logger) {
+    StormOptions options = new StormOptions();
+
+    options.setLogger(new StormLogger() {
+      @Override
+      public void warning(String s) {
+        logger.warning(s);
+      }
+
+      @Override
+      public void info(String s) {
+        logger.info(s);
+      }
+    });
+
+    return options;
+  }
+
   @Override
   public void connect(@NotNull DatabaseConfig config, ClassLoader classLoader) {
     requireNonNull(config, "config is null");
@@ -199,25 +218,6 @@ public class PluginConnection extends AbstractPluginConnection {
   public void reload(@NotNull DatabaseConfig config, @NotNull ClassLoader classLoader) {
     close();
     connect(config, classLoader);
-  }
-
-  @NotNull
-  private static StormOptions getStormOptions(Logger logger) {
-    StormOptions options = new StormOptions();
-
-    options.setLogger(new StormLogger() {
-      @Override
-      public void warning(String s) {
-        logger.warning(s);
-      }
-
-      @Override
-      public void info(String s) {
-        logger.info(s);
-      }
-    });
-
-    return options;
   }
 
   @Override

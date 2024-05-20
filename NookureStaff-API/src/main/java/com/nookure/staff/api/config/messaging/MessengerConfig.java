@@ -6,12 +6,13 @@ import org.spongepowered.configurate.objectmapping.meta.Setting;
 
 @ConfigSerializable
 public class MessengerConfig {
-  public enum MessengerType {
-    REDIS,
-    PM,
-    NONE
-  }
-
+  @Setting
+  @Comment(
+      """
+          The configuration for the Redis messenger.
+              """
+  )
+  public final RedisPartial redis = new RedisPartial();
   @Setting
   @Comment(
       """
@@ -27,15 +28,13 @@ public class MessengerConfig {
   )
   private MessengerType type = MessengerType.NONE;
 
-  @Setting
-  @Comment(
-      """
-          The configuration for the Redis messenger.
-              """
-  )
-  public final RedisPartial redis = new RedisPartial();
-
   public MessengerType getType() {
     return type;
+  }
+
+  public enum MessengerType {
+    REDIS,
+    PM,
+    NONE
   }
 }

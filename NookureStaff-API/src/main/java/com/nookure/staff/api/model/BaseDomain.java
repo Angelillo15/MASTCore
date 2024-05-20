@@ -11,21 +11,18 @@ import java.time.Instant;
 
 @MappedSuperclass
 public class BaseDomain extends Model {
+  @Id
+  Long id;
+  @Version
+  Long version;
+  @WhenCreated
+  Instant whenCreated;
+  @WhenModified
+  Instant whenModified;
+
   public BaseDomain() {
     super("nkstaff");
   }
-
-  @Id
-  Long id;
-
-  @Version
-  Long version;
-
-  @WhenCreated
-  Instant whenCreated;
-
-  @WhenModified
-  Instant whenModified;
 
   public Long getId() {
     return id;

@@ -14,22 +14,22 @@ public final class AddonLogger implements Logger {
 
   @Override
   public void info(String message) {
-    Logger.super.info("["+ prefix +"] " + message);
+    Logger.super.info("[" + prefix + "] " + message);
   }
 
   @Override
   public void warning(String message) {
-    Logger.super.warning("["+ prefix +"] " + message);
+    Logger.super.warning("[" + prefix + "] " + message);
   }
 
   @Override
   public void severe(String message) {
-    Logger.super.severe("["+ prefix +"] " + message);
+    Logger.super.severe("[" + prefix + "] " + message);
   }
 
   @Override
   public void debug(String message) {
-    Logger.super.debug("["+ prefix +"] " + message);
+    Logger.super.debug("[" + prefix + "] " + message);
   }
 
   @Override

@@ -50,6 +50,26 @@ public final class LocationWrapper implements Serializable {
     this.world = location.getWorld().getName();
   }
 
+  @Nullable
+  public static org.bukkit.Location toLocation(@NotNull LocationWrapper locationWrapper) {
+    Objects.requireNonNull(locationWrapper, "LocationWrapper cannot be null.");
+
+    org.bukkit.World world = org.bukkit.Bukkit.getWorld(locationWrapper.getWorld());
+
+    if (world == null) {
+      return null;
+    }
+
+    return new org.bukkit.Location(
+        org.bukkit.Bukkit.getWorld(locationWrapper.getWorld()),
+        locationWrapper.getX(),
+        locationWrapper.getY(),
+        locationWrapper.getZ(),
+        locationWrapper.getYaw(),
+        locationWrapper.getPitch()
+    );
+  }
+
   public double getX() {
     return x;
   }
@@ -72,25 +92,5 @@ public final class LocationWrapper implements Serializable {
 
   public String getWorld() {
     return world;
-  }
-
-  @Nullable
-  public static org.bukkit.Location toLocation(@NotNull LocationWrapper locationWrapper) {
-    Objects.requireNonNull(locationWrapper, "LocationWrapper cannot be null.");
-
-    org.bukkit.World world = org.bukkit.Bukkit.getWorld(locationWrapper.getWorld());
-
-    if (world == null) {
-      return null;
-    }
-
-    return new org.bukkit.Location(
-        org.bukkit.Bukkit.getWorld(locationWrapper.getWorld()),
-        locationWrapper.getX(),
-        locationWrapper.getY(),
-        locationWrapper.getZ(),
-        locationWrapper.getYaw(),
-        locationWrapper.getPitch()
-    );
   }
 }

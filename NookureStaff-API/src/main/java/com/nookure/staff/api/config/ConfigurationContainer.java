@@ -30,33 +30,6 @@ public class ConfigurationContainer<C> {
     this.fileName = fileName;
   }
 
-  public C get() {
-    return this.config.get();
-  }
-
-  public CompletableFuture<Void> reload() {
-    return CompletableFuture.runAsync(() -> {
-      try {
-        final CommentedConfigurationNode node = loader.load();
-        config.set(node.get(clazz));
-      } catch (ConfigurateException exception) {
-        throw new CompletionException("Could not load " + fileName + " file", exception);
-      }
-    });
-  }
-
-  public CompletableFuture<Void> save() {
-    return CompletableFuture.runAsync(() -> {
-      try {
-        final CommentedConfigurationNode node = loader.load();
-        node.set(clazz, config.get());
-        loader.save(node);
-      } catch (ConfigurateException exception) {
-        throw new CompletionException("Could not save " + fileName + " file", exception);
-      }
-    });
-  }
-
   public static <C> ConfigurationContainer<C> load(Path path, Class<C> clazz) throws IOException {
     return load(path, clazz, "config.yml");
   }
@@ -98,5 +71,32 @@ public class ConfigurationContainer<C> {
     container.save().join();
 
     return container;
+  }
+
+  public C get() {
+    return this.config.get();
+  }
+
+  public CompletableFuture<Void> reload() {
+    return CompletableFuture.runAsync(() -> {
+      try {
+        final CommentedConfigurationNode node = loader.load();
+        config.set(node.get(clazz));
+      } catch (ConfigurateException exception) {
+        throw new CompletionException("Could not load " + fileName + " file", exception);
+      }
+    });
+  }
+
+  public CompletableFuture<Void> save() {
+    return CompletableFuture.runAsync(() -> {
+      try {
+        final CommentedConfigurationNode node = loader.load();
+        node.set(clazz, config.get());
+        loader.save(node);
+      } catch (ConfigurateException exception) {
+        throw new CompletionException("Could not save " + fileName + " file", exception);
+      }
+    });
   }
 }

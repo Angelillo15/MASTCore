@@ -10,6 +10,7 @@ import org.bukkit.event.block.BlockReceiveGameEvent;
 public class OnBlockReceiveGameEvent implements Listener {
   @Inject
   private PlayerWrapperManager<Player> playerWrapperManager;
+
   @EventHandler
   public void onBlockReceiveGameEvent(BlockReceiveGameEvent event) {
     if (!(event.getEntity() instanceof Player player)) {
