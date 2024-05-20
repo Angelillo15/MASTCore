@@ -7,11 +7,11 @@ public interface AddonContainer {
 
   Object getInstance();
 
+  void setInstance(Object instance);
+
   AddonStatus getStatus();
 
   void setStatus(AddonStatus status);
-
-  void setInstance(Object instance);
 
   Addon getAddon();
 }

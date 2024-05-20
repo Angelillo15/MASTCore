@@ -1,5 +1,6 @@
 package com.nookure.staff.paper.data;
 
+import com.nookure.staff.api.util.LocationWrapper;
 import org.bukkit.Location;
 import org.bukkit.inventory.ItemStack;
 
@@ -14,20 +15,20 @@ public class StaffModeDataRecord implements Serializable {
   private ItemStack[] playerInventoryArmor;
   private ItemStack[] staffVault;
   private boolean staffMode;
-  private Location enabledLocation;
+  private LocationWrapper enabledLocationWrapper;
 
   public StaffModeDataRecord(
       ItemStack[] playerInventory,
       ItemStack[] playerInventoryArmor,
       ItemStack[] staffVault,
       boolean staffMode,
-      Location enabledLocation
+      Location enabledLocationWrapper
   ) {
     this.playerInventory = playerInventory;
     this.playerInventoryArmor = playerInventoryArmor;
     this.staffVault = staffVault;
     this.staffMode = staffMode;
-    this.enabledLocation = enabledLocation;
+    this.enabledLocationWrapper = new LocationWrapper(enabledLocationWrapper);
   }
 
   public ItemStack[] playerInventory() {
@@ -63,11 +64,11 @@ public class StaffModeDataRecord implements Serializable {
   }
 
   public Location enabledLocation() {
-    return enabledLocation;
+    return LocationWrapper.toLocation(enabledLocationWrapper);
   }
 
   public void enabledLocation(Location enabledLocation) {
-    this.enabledLocation = enabledLocation;
+    this.enabledLocationWrapper = new LocationWrapper(enabledLocation);
   }
 
   @Override

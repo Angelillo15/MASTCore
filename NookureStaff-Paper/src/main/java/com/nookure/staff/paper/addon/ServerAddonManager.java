@@ -28,17 +28,17 @@ import java.util.jar.JarFile;
 
 @Singleton
 public class ServerAddonManager implements AddonManager {
+  private final Map<String, AddonContainer> addonsById = new ConcurrentHashMap<>();
+  private final Map<Object, AddonContainer> addonsInstances = new IdentityHashMap<>();
+  private final Map<AddonContainer, List<Object>> listeners = new HashMap<>();
+  private final Map<AddonContainer, List<Command>> commands = new HashMap<>();
+  private final ArrayList<ClassLoader> loaded = new ArrayList<>();
   @Inject
   private NookureStaff instance;
   @Inject
   private Logger logger;
   @Inject
   private EventManager eventManager;
-  private final Map<String, AddonContainer> addonsById = new ConcurrentHashMap<>();
-  private final Map<Object, AddonContainer> addonsInstances = new IdentityHashMap<>();
-  private final Map<AddonContainer, List<Object>> listeners = new HashMap<>();
-  private final Map<AddonContainer, List<Command>> commands = new HashMap<>();
-  private final ArrayList<ClassLoader> loaded = new ArrayList<>();
 
   private void registerAddon(AddonContainer addonContainer) {
     addonsById.put(addonContainer.getDescription().getID(), addonContainer);

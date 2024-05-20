@@ -1,7 +1,6 @@
 package com.nookure.staff.paper.listener.staff;
 
 import com.google.inject.Inject;
-import com.nookure.staff.api.Logger;
 import com.nookure.staff.api.Permissions;
 import com.nookure.staff.api.StaffPlayerWrapper;
 import com.nookure.staff.api.config.ConfigurationContainer;

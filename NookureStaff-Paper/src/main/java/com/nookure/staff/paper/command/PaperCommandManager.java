@@ -16,10 +16,6 @@ import java.util.List;
 
 @Singleton
 public class PaperCommandManager extends CommandManager {
-  @Inject
-  private Injector injector;
-  @Inject
-  private ConfigurationContainer<CommandConfig> commandConfig;
   private static final CommandMap commandMap;
 
   static {
@@ -29,6 +25,11 @@ public class PaperCommandManager extends CommandManager {
       throw new RuntimeException("Failed to get command map");
     }
   }
+
+  @Inject
+  private Injector injector;
+  @Inject
+  private ConfigurationContainer<CommandConfig> commandConfig;
 
   @Override
   public void registerCommand(@NotNull Command command) {

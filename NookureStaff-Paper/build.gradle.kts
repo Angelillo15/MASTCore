@@ -15,6 +15,7 @@ dependencies {
   compileOnly(libs.configurateYaml)
   compileOnly(libs.jedis)
   compileOnly(libs.placeholderApi)
+  compileOnly(libs.bundles.invAPI)
 }
 
 bukkit {

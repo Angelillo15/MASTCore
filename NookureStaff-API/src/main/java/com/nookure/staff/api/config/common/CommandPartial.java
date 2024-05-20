@@ -8,6 +8,25 @@ import java.util.List;
 
 @ConfigSerializable
 public class CommandPartial {
+  @Setting
+  @Comment("The name of the command")
+  private String name;
+  @Setting
+  @Comment("The aliases of the command")
+  private List<String> aliases;
+  @Setting
+  @Comment("The permission required to execute the command")
+  private String permission;
+  @Setting
+  @Comment("The description of the command")
+  private String description;
+  @Setting
+  @Comment("The usage of the command")
+  private String usage;
+  @Setting
+  @Comment("Whether the command is enabled")
+  private boolean enabled;
+
   public CommandPartial(String name, List<String> aliases, String permission, String description, String usage, boolean enabled) {
     this.name = name;
     this.aliases = aliases;
@@ -19,30 +38,6 @@ public class CommandPartial {
 
   public CommandPartial() {
   }
-
-  @Setting
-  @Comment("The name of the command")
-  private String name;
-
-  @Setting
-  @Comment("The aliases of the command")
-  private List<String> aliases;
-
-  @Setting
-  @Comment("The permission required to execute the command")
-  private String permission;
-
-  @Setting
-  @Comment("The description of the command")
-  private String description;
-
-  @Setting
-  @Comment("The usage of the command")
-  private String usage;
-
-  @Setting
-  @Comment("Whether the command is enabled")
-  private boolean enabled;
 
   public String name() {
     return name;

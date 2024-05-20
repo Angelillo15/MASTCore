@@ -23,7 +23,9 @@ public interface NookureStaff {
 
   String getPrefix();
 
-  default void registerCommand(Command command) {}
+  default void registerCommand(Command command) {
+  }
 
-  default void unregisterCommand(Command command) {}
+  default void unregisterCommand(Command command) {
+  }
 }

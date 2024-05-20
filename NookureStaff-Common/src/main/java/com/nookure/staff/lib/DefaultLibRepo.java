@@ -1,7 +1,6 @@
 package com.nookure.staff.lib;
 
 import com.alessiodp.libby.Library;
-import com.nookure.staff.api.NookureStaff;
 
 import java.util.ArrayList;
 import java.util.stream.Stream;
@@ -90,13 +89,37 @@ public class DefaultLibRepo {
         .resolveTransitiveDependencies(true)
         .build();
 
+    Library json = Library.builder()
+        .groupId("org{}json")
+        .artifactId("json")
+        .version("20240303")
+        .isolatedLoad(false)
+        .build();
+
+
+    Library obliviateInventories = Library.builder()
+        .groupId("com{}github{}hamza-cskn{}obliviate-invs")
+        .artifactId("core")
+        .version("4.3.0")
+        .isolatedLoad(false)
+        .resolveTransitiveDependencies(true)
+        .build();
+
+    Library obliviateInventoriesPagination = Library.builder()
+        .groupId("com{}github{}hamza-cskn{}obliviate-invs")
+        .artifactId("pagination")
+        .version("4.3.0")
+        .isolatedLoad(false)
+        .resolveTransitiveDependencies(true)
+        .build();
+
     try {
       Class.forName("org.sqlite.JDBC");
     } catch (ClassNotFoundException e) {
       libraries.add(sqlite);
     }
 
-    Stream.of(hikariCP, storm, caffeine, jedis, commons, commonsPool2).forEach(libraries::add);
+    Stream.of(hikariCP, storm, caffeine, jedis, commons, commonsPool2, json, obliviateInventoriesPagination, obliviateInventories).forEach(libraries::add);
 
     try {
       Class.forName("io.ebean.Database");
@@ -105,12 +128,12 @@ public class DefaultLibRepo {
     }
   }
 
-  public ArrayList<Library> getLibraries() {
-    return libraries;
-  }
-
   public static DefaultLibRepo getInstance() {
     return INSTANCE;
+  }
+
+  public ArrayList<Library> getLibraries() {
+    return libraries;
   }
 
 }

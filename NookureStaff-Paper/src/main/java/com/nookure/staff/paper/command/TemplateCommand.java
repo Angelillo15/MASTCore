@@ -15,11 +15,11 @@ import java.util.List;
 import java.util.Optional;
 
 public class TemplateCommand extends Command {
+  private final com.nookure.staff.api.command.Command command;
   @Inject
   private PlayerWrapperManager<Player> playerWrapperManager;
   @Inject
   private ConsoleCommandSender consoleCommandSender;
-  private final com.nookure.staff.api.command.Command command;
 
   protected TemplateCommand(@NotNull com.nookure.staff.api.command.Command command) {
 

@@ -17,11 +17,11 @@ import java.util.concurrent.ConcurrentHashMap;
 
 @Singleton
 public final class EventManager {
+  private final Map<Class<? extends Event>, List<EventVector>> listeners = new ConcurrentHashMap<>();
   @Inject
   private NookureStaff instance;
   @Inject
   private Logger logger;
-  private final Map<Class<? extends Event>, List<EventVector>> listeners = new ConcurrentHashMap<>();
 
   /**
    * Register a listener class

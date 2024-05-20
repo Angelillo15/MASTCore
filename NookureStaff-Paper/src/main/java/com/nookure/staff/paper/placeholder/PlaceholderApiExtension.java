@@ -13,11 +13,11 @@ import java.util.Optional;
 import java.util.stream.Stream;
 
 public class PlaceholderApiExtension extends PlaceholderExpansion {
+  public static final String IDENTIFIER = "nkstaff";
   @Inject
   private PlaceholderManager placeholderManager;
   @Inject
   private Injector in;
-  public static final String IDENTIFIER = "nkstaff";
 
   @Override
   public @NotNull String getIdentifier() {

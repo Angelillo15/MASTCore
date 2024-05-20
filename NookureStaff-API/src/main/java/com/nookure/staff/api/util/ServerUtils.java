@@ -32,6 +32,7 @@ public abstract class ServerUtils {
 
   /**
    * Broadcast a message to the players with the permission {@link Permissions#STAFF_PERMISSION}
+   *
    * @param message The message to broadcast
    */
   public void broadcastStaffMessage(@NotNull String message) {

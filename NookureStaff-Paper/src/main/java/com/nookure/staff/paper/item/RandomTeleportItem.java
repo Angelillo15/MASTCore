@@ -18,11 +18,11 @@ import java.util.Random;
 import java.util.stream.Stream;
 
 public class RandomTeleportItem extends StaffItem implements ExecutableItem {
+  private final Random random = new Random();
   @Inject
   private PlayerWrapperManager<Player> playerWrapperManager;
   @Inject
   private ConfigurationContainer<BukkitMessages> messages;
-  private final Random random = new Random();
 
   @Inject
   public RandomTeleportItem(ConfigurationContainer<ItemsConfig> itemsConfig) {

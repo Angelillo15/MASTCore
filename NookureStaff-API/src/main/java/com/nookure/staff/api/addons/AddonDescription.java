@@ -23,6 +23,7 @@ public class AddonDescription {
 
   /**
    * Gets the addon id
+   *
    * @return The addon id
    */
   public String getID() {
@@ -31,6 +32,7 @@ public class AddonDescription {
 
   /**
    * Gets the addon version
+   *
    * @return addon version
    */
   public String getVersion() {
@@ -39,6 +41,7 @@ public class AddonDescription {
 
   /**
    * Gets the addon description
+   *
    * @return addon description {@link Optional}
    */
   public Optional<String> getDescription() {
@@ -47,6 +50,7 @@ public class AddonDescription {
 
   /**
    * Gets the addon main class
+   *
    * @return addon main class
    */
   public Object getMain() {
@@ -55,6 +59,7 @@ public class AddonDescription {
 
   /**
    * Gets the addon platform
+   *
    * @return addon platform
    */
   public Addon.AddonPlatform getPlatform() {
@@ -63,6 +68,7 @@ public class AddonDescription {
 
   /**
    * Gets the addon annotation
+   *
    * @return addon annotation
    */
   public Addon getAddon() {

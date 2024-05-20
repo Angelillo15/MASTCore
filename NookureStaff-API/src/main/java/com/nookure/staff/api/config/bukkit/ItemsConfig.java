@@ -6,7 +6,9 @@ import org.bukkit.Material;
 import org.spongepowered.configurate.objectmapping.ConfigSerializable;
 import org.spongepowered.configurate.objectmapping.meta.Setting;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @ConfigSerializable
 public class ItemsConfig {
@@ -14,6 +16,9 @@ public class ItemsConfig {
 
   @ConfigSerializable
   public static class StaffItems {
+    @Setting
+    private Map<String, ItemPartial> items = new HashMap<>();
+
     public StaffItems() {
       items.put(Items.RANDOM_PLAYER_TELEPORT.toString(), new ItemPartial(
           true,
@@ -78,9 +83,6 @@ public class ItemsConfig {
           "nookurestaff.item.thru"
       ));
     }
-
-    @Setting
-    private Map<String, ItemPartial> items = new HashMap<>();
 
     public Map<String, ItemPartial> getItems() {
       return items;

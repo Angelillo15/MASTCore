@@ -26,6 +26,11 @@ public class ServerAddonContainer implements AddonContainer {
   }
 
   @Override
+  public void setInstance(Object instance) {
+    this.instance = instance;
+  }
+
+  @Override
   public AddonStatus getStatus() {
     return status;
   }
@@ -38,10 +43,5 @@ public class ServerAddonContainer implements AddonContainer {
   @Override
   public Addon getAddon() {
     return description.getAddon();
-  }
-
-  @Override
-  public void setInstance(Object instance) {
-    this.instance = instance;
   }
 }

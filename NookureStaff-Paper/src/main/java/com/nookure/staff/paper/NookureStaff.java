@@ -31,12 +31,12 @@ import com.nookure.staff.paper.listener.freeze.OnPlayerChatFreeze;
 import com.nookure.staff.paper.listener.player.OnPlayerDataJoin;
 import com.nookure.staff.paper.listener.server.OnServerBroadcast;
 import com.nookure.staff.paper.listener.staff.OnPlayerInStaffChatTalk;
-import com.nookure.staff.paper.listener.staff.vanish.PlayerVanishListener;
 import com.nookure.staff.paper.listener.staff.OnStaffLeave;
 import com.nookure.staff.paper.listener.staff.items.OnInventoryClick;
 import com.nookure.staff.paper.listener.staff.items.OnPlayerEntityInteract;
 import com.nookure.staff.paper.listener.staff.items.OnPlayerInteract;
 import com.nookure.staff.paper.listener.staff.state.*;
+import com.nookure.staff.paper.listener.staff.vanish.PlayerVanishListener;
 import com.nookure.staff.paper.listener.staff.vanish.StaffVanishListener;
 import com.nookure.staff.paper.loader.AddonsLoader;
 import com.nookure.staff.paper.loader.ItemsLoader;
@@ -56,6 +56,7 @@ import java.util.stream.Stream;
 
 @Singleton
 public class NookureStaff {
+  private final ArrayList<Listener> listeners = new ArrayList<>();
   @Inject
   private AbstractPluginConnection connection;
   @Inject
@@ -82,7 +83,6 @@ public class NookureStaff {
   private StaffPlayerExtensionManager extensionManager;
   @Inject
   private AddonManager addonManager;
-  private final ArrayList<Listener> listeners = new ArrayList<>();
 
   public void onEnable() {
     loadDatabase();

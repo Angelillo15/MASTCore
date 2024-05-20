@@ -1,6 +1,5 @@
 package com.nookure.staff.velocity.module;
 
-import com.google.inject.Inject;
 import com.nookure.staff.api.Logger;
 import com.nookure.staff.api.NookureStaffPlatform;
 import com.velocitypowered.api.proxy.ProxyServer;

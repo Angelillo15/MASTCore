@@ -20,11 +20,11 @@ import java.util.*;
  * @since 1.0.0
  */
 public abstract class CommandParent extends Command {
-  @Inject
-  private Injector injector;
   private final Map<String, Command> subCommands = new TreeMap<>();
   private final Map<String, CommandData> subCommandData = new TreeMap<>();
   private final ArrayList<String> subCommandNames = new ArrayList<>();
+  @Inject
+  private Injector injector;
 
   @Override
   public void onCommand(@NotNull CommandSender sender, @NotNull String label, @NotNull List<String> args) {
@@ -89,6 +89,10 @@ public abstract class CommandParent extends Command {
     return optionalCommand.map(command -> command.onTabComplete(sender, label, args.subList(1, args.size()))).orElseGet(List::of);
   }
 
+  public String getNoPermissionMessage() {
+    return "<red>You don't have permission to execute this sub-command";
+  }
+
   @CommandData(
       name = "help",
       description = "Shows the help message"
@@ -104,9 +108,5 @@ public abstract class CommandParent extends Command {
     public void onCommand(@NotNull CommandSender sender, @NotNull String label, @NotNull List<String> args) {
       parent.sendHelp(sender, label);
     }
-  }
-
-  public String getNoPermissionMessage() {
-    return "<red>You don't have permission to execute this sub-command";
   }
 }

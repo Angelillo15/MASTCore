@@ -25,6 +25,35 @@ public class StaffDataModel extends StormModel {
   @Column
   private Boolean staffChatEnabled = false;
 
+  public static StaffDataModel getFromUUID(@NotNull Storm storm, @NotNull UUID uuid) {
+    Objects.requireNonNull(storm, "storm is null");
+    Objects.requireNonNull(uuid, "uuid is null");
+
+    try {
+      Iterator<StaffDataModel> iterator = storm
+          .buildQuery(StaffDataModel.class)
+          .where("UUID", Where.EQUAL, uuid.toString())
+          .execute()
+          .join()
+          .iterator();
+
+      if (iterator.hasNext()) {
+        return iterator.next();
+      } else {
+        StaffDataModel staffDataModel = new StaffDataModel();
+        staffDataModel.setUUID(uuid);
+        staffDataModel.setStaffMode(false);
+        staffDataModel.setVanished(false);
+
+        storm.save(staffDataModel);
+
+        return staffDataModel;
+      }
+    } catch (Exception e) {
+      throw new RuntimeException(e);
+    }
+  }
+
   public String getUUID() {
     return UUID;
   }
@@ -55,34 +84,5 @@ public class StaffDataModel extends StormModel {
 
   public void setStaffChatEnabled(boolean staffChatEnabled) {
     this.staffChatEnabled = staffChatEnabled;
-  }
-
-  public static StaffDataModel getFromUUID(@NotNull Storm storm, @NotNull UUID uuid) {
-    Objects.requireNonNull(storm, "storm is null");
-    Objects.requireNonNull(uuid, "uuid is null");
-
-    try {
-      Iterator<StaffDataModel> iterator = storm
-          .buildQuery(StaffDataModel.class)
-          .where("UUID", Where.EQUAL, uuid.toString())
-          .execute()
-          .join()
-          .iterator();
-
-      if (iterator.hasNext()) {
-        return iterator.next();
-      } else {
-        StaffDataModel staffDataModel = new StaffDataModel();
-        staffDataModel.setUUID(uuid);
-        staffDataModel.setStaffMode(false);
-        staffDataModel.setVanished(false);
-
-        storm.save(staffDataModel);
-
-        return staffDataModel;
-      }
-    } catch (Exception e) {
-      throw new RuntimeException(e);
-    }
   }
 }

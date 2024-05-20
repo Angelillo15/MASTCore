@@ -27,7 +27,7 @@ public class SqliteFileDriver implements StormDriver {
     try {
       int i = 0;
 
-      while(true) {
+      while (true) {
         if (i >= arguments.length) {
           callback.onAccept(ps.executeQuery());
           break;
@@ -83,18 +83,20 @@ public class SqliteFileDriver implements StormDriver {
     PreparedStatement ps = this.conn.prepareStatement(query, 1);
 
     int var6;
-    label79: {
+    label79:
+    {
       int var12;
       try {
         int o;
-        for(o = 0; o < arguments.length; ++o) {
+        for (o = 0; o < arguments.length; ++o) {
           ps.setObject(o + 1, arguments[o]);
         }
 
         o = ps.executeUpdate();
         ResultSet generated = ps.getGeneratedKeys();
 
-        label81: {
+        label81:
+        {
           try {
             if (!generated.next()) {
               break label81;

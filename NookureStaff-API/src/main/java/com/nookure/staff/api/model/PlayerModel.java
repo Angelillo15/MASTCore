@@ -84,9 +84,9 @@ public class PlayerModel extends BaseDomain implements Object2Text {
     return text.replace("{player.name}", name)
         .replace("{player.uuid}", uuid.toString())
         .replace("{player.lastLogin}", TextUtils.formatTime(lastLogin.toEpochMilli())
-        .replace("{player.firstLogin}", TextUtils.formatTime(firstLogin.toEpochMilli()))
-        .replace("{player.lastIp}", lastIp)
-        .replace("{player.id}", id.toString())
-        .replace("{player.firstIp}", firstIp));
+            .replace("{player.firstLogin}", TextUtils.formatTime(firstLogin.toEpochMilli()))
+            .replace("{player.lastIp}", lastIp)
+            .replace("{player.id}", id.toString())
+            .replace("{player.firstIp}", firstIp));
   }
 }
