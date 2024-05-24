@@ -42,7 +42,27 @@ public class NoteMessages {
       <b>⚡</b> <click:suggest_command:'/note remove {note.id}'><hover:show_text:'<red>Delete'><u><red>🗑</red></u></hover></click> <b>│</b> <click:run_command:'/note toggle-show {note.id}'><hover:show_text:'<yellow>Toggle Show on Join'><u><yellow>👁</yellow></u></hover></click>
       """;
 
+  @Setting
   private String noteNotFound = "{prefix} <red>Could not find the note with the id {note.id}.";
+
+  @Setting
+  private String userWithoutNotes = "{prefix} <red>{player.name} does not have any notes.";
+
+  @Setting
+  private String paginationPrevious = "<click:run_command:/note list {player.name} {prev_page}><hover:show_text:'<red>Previous Page'><red>«</red></hover></click> ";
+
+  @Setting
+  private String paginationNext = " <click:run_command:/note list {player.name} {next_page}><hover:show_text:'<red>Next Page'><red>»</red></hover></click>";
+
+  @Setting
+  private String paginationHeader = "<gray>Notes for <red>{player.name}</red> <gray>Page <red>{page}</red> <gray>of <red>{total_pages}</red>.";
+
+  @Setting
+  private String paginationFooterNumber = "<click:run_command:/note list {player.name} {page}><hover:show_text:'<red>Go to Page {page}'><red>{page}</red></hover></click>";
+
+  private String currentPaginationNumber = "<u><red>{page}</red></u>";
+  @Setting
+  private String separator = "<gray> │ </gray>";
 
   public String loadingData() {
     return loadingData;
@@ -82,5 +102,33 @@ public class NoteMessages {
 
   public String noteDeleted() {
     return noteDeleted;
+  }
+
+  public String userWithoutNotes() {
+    return userWithoutNotes;
+  }
+
+  public String paginationPrevious() {
+    return paginationPrevious;
+  }
+
+  public String paginationNext() {
+    return paginationNext;
+  }
+
+  public String paginationHeader() {
+    return paginationHeader;
+  }
+
+  public String paginationFooterNumber() {
+    return paginationFooterNumber;
+  }
+
+  public String separator() {
+    return separator;
+  }
+
+  public String currentPaginationNumber() {
+    return currentPaginationNumber;
   }
 }
