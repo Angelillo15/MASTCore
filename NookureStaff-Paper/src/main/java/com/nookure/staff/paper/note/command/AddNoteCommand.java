@@ -40,8 +40,8 @@ public class AddNoteCommand extends Command {
       return;
     }
 
-    if (args.get(args.size() - 1).equalsIgnoreCase("true")) {
-      showOnlyToAdmins = true;
+    if (args.get(args.size() - 1).equalsIgnoreCase("true") || args.get(args.size() - 1).equalsIgnoreCase("false")) {
+      showOnlyToAdmins = Boolean.parseBoolean(args.get(args.size() - 1));
       note = String.join(" ", args.subList(2, args.size() - 1));
     } else {
       note = String.join(" ", args.subList(2, args.size()));
@@ -57,12 +57,13 @@ public class AddNoteCommand extends Command {
           .map(Player::getName)
           .filter(name -> name.startsWith(args.get(0) == null ? "" : args.get(0)))
           .toList();
-      case 2 -> List.of("<show on join>", "true", "false");
+      case 2 -> getSuggestionFilter(List.of("<show on join>", "true", "false"), args.get(1));
+      case 3 -> getSuggestionFilter(List.of("<note>"), args.get(2));
       default -> {
         if (sender.hasPermission(Permissions.STAFF_NOTES_ADMIN)) {
-          yield List.of("<note> | <show only to admins>", "true", "false");
+          yield getSuggestionFilter(List.of("<note> | <show only to admins>", "true", "false"), args.get(args.size() - 1));
         } else {
-          yield List.of("<note>");
+          yield getSuggestionFilter(List.of("<note>"), args.get(args.size() - 1));
         }
       }
     };
