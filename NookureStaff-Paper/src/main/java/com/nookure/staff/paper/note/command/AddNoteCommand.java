@@ -14,7 +14,8 @@ import java.util.List;
 
 @CommandData(
     name = "add",
-    description = "Add a note to a user"
+    description = "Add a note to a user",
+    permission = Permissions.STAFF_NOTES_ADD
 )
 public class AddNoteCommand extends Command {
   @Inject
@@ -23,6 +24,7 @@ public class AddNoteCommand extends Command {
   @Override
   public void onCommand(@NotNull CommandSender sender, @NotNull String label, @NotNull List<String> args) {
     if (args.size() < 3) {
+      // todo add usage messages for all commands
       sender.sendMiniMessage("Bad");
     }
 
