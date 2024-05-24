@@ -10,6 +10,10 @@ public class NoteMessages {
   @Setting
   private String savingData = "{prefix} <gray>Saving data, please wait ⌚...";
   @Setting
+  private String deletingNote = "{prefix} <gray>Deleting note, please wait ⌚...";
+  @Setting
+  private String noteDeleted = "{prefix} <green>Successfully deleted the note with the id {note.id}.";
+  @Setting
   private String loadingData = "{prefix} <gray>Loading data, please wait ⌚...";
   @Setting
   private String noteDisplayHeader = """
@@ -38,6 +42,8 @@ public class NoteMessages {
       <b>⚡</b> <click:suggest_command:'/note remove {note.id}'><hover:show_text:'<red>Delete'><u><red>🗑</red></u></hover></click> <b>│</b> <click:run_command:'/note toggle-show {note.id}'><hover:show_text:'<yellow>Toggle Show on Join'><u><yellow>👁</yellow></u></hover></click>
       """;
 
+  private String noteNotFound = "{prefix} <red>Could not find the note with the id {note.id}.";
+
   public String loadingData() {
     return loadingData;
   }
@@ -64,5 +70,17 @@ public class NoteMessages {
 
   public String successfullyCreated() {
     return successfullyCreated;
+  }
+
+  public String noteNotFound() {
+    return noteNotFound;
+  }
+
+  public String deletingNote() {
+    return deletingNote;
+  }
+
+  public String noteDeleted() {
+    return noteDeleted;
   }
 }

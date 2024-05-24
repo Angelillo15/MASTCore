@@ -52,7 +52,17 @@ public class UserNoteServiceImpl implements UserNoteService {
 
   @Override
   public void removeNote(@NotNull CommandSender staff, @NotNull Long id) {
+    NoteModel note = db.get().find(NoteModel.class).where().eq("id", id).findOne();
 
+    if (note == null) {
+      staff.sendMiniMessage(messages.get().note.noteNotFound(), "note.id", id.toString());
+      return;
+    }
+
+    staff.sendMiniMessage(messages.get().note.deletingNote());
+
+    note.delete();
+    staff.sendMiniMessage(Object2Text.replaceText(messages.get().note.noteDeleted(), note));
   }
 
   @Override
