@@ -11,6 +11,7 @@ import com.nookure.staff.api.model.PlayerModel;
 import com.nookure.staff.api.service.UserNoteService;
 import com.nookure.staff.api.util.Object2Text;
 import io.ebean.Database;
+import io.ebean.PagedList;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -24,6 +25,8 @@ public class UserNoteServiceImpl implements UserNoteService {
   private AtomicReference<Database> db;
   @Inject
   private ConfigurationContainer<BukkitMessages> messages;
+
+  private static final int PER_PAGE = 1;
 
   @Override
   public void addNote(@NotNull CommandSender staff, @NotNull String targetUsername, @NotNull String note, boolean showOnJoin, boolean showOnlyToAdministrators) {
@@ -67,7 +70,90 @@ public class UserNoteServiceImpl implements UserNoteService {
 
   @Override
   public void displayNotes(@NotNull CommandSender staff, @NotNull String targetUsername, int page) {
+    PlayerModel player = getByUsername(targetUsername);
 
+    if (player == null) {
+      staff.sendMiniMessage(messages.get().playerNotFound(), "player", targetUsername);
+      return;
+    }
+
+    displayNotesChat(staff, player, page);
+  }
+
+  public void displayNotesChat(@NotNull CommandSender staff, @NotNull PlayerModel player, int page) {
+    PagedList<NoteModel> notes = db.get().find(NoteModel.class)
+        .where()
+        .eq("player", player)
+        .orderBy("whenCreated desc")
+        .setFirstRow(page * PER_PAGE)
+        .setMaxRows(PER_PAGE)
+        .findPagedList();
+
+    if (notes.getTotalCount() == 0) {
+      staff.sendMiniMessage(messages.get().note.userWithoutNotes(), "player", player.getName());
+      return;
+    }
+
+    staff.sendMiniMessage(
+        Object2Text.replaceText(
+            getNotesPaginationHeader(player, notes, page),
+            player
+        )
+    );
+
+    notes.getList().forEach(note -> displayNote(
+        staff,
+        player,
+        note
+    ));
+
+    if (staff.isConsole()) return;
+
+    staff.sendMiniMessage(
+        Object2Text.replaceText(
+            getNotesPaginationFooter(notes, page),
+            player
+        )
+    );
+  }
+
+  private String getNotesPaginationFooter(@NotNull PagedList<NoteModel> notes, int page) {
+    StringBuilder noteFooterMessage = new StringBuilder();
+
+    if (notes.hasPrev()) {
+      noteFooterMessage.append(
+          messages.get().note.paginationPrevious()
+              .replace("{prev_page}", String.valueOf(page - 1))
+      );
+    }
+
+    for (int i = 0; i < notes.getTotalPageCount(); i++) {
+      if (i == page) {
+        noteFooterMessage.append(messages.get().note.currentPaginationNumber().replace("{page}", String.valueOf(i)));
+      } else {
+        noteFooterMessage.append(messages.get().note.paginationFooterNumber().replace("{page}", String.valueOf(i)));
+      }
+
+      if (i < notes.getTotalPageCount() - 1) {
+        noteFooterMessage.append(messages.get().note.separator());
+      }
+    }
+
+    if (notes.hasNext()) {
+      noteFooterMessage.append(
+          messages.get().note.paginationNext()
+              .replace("{next_page}", String.valueOf(page + 1))
+      );
+    }
+
+    return noteFooterMessage.toString();
+  }
+
+  private String getNotesPaginationHeader(@NotNull PlayerModel player, PagedList<NoteModel> notes, int page) {
+    return messages.get().note.paginationHeader()
+        .replace("{player.name}", player.getName())
+        .replace("{page}", String.valueOf(page + 1))
+        .replace("{total_pages}", String.valueOf(notes.getTotalPageCount()));
   }
 
   @Override
