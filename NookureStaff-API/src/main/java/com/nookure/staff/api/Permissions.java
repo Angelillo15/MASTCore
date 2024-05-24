@@ -48,6 +48,14 @@ public final class Permissions {
    */
   public static final String STAFF_NOTES_ADMIN = "nookure.staff.notes.admin";
 
+  public static final String STAFF_NOTES_LIST = "nookure.staff.notes.list";
+
+  public static final String STAFF_NOTES_ADD = "nookure.staff.notes.add";
+
+  public static final String STAFF_NOTES_REMOVE = "nookure.staff.notes.remove";
+
+  public static final String STAFF_NOTES_EDIT = "nookure.staff.notes.edit";
+
   private Permissions() {
     throw new UnsupportedOperationException("This class cannot be instantiated");
   }
