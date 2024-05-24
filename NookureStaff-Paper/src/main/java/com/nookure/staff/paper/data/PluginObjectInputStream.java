@@ -24,11 +24,6 @@ public class PluginObjectInputStream extends BukkitObjectInputStream {
 
   @Override
   protected Object resolveObject(Object obj) throws IOException {
-
-    if (wrapper.isInstance(obj)) {
-      return obj;
-    }
-
     return super.resolveObject(obj);
   }
 }
