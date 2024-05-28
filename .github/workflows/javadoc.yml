@@ -5,13 +5,12 @@
 # This workflow will build a Java project with Gradle and cache/restore any dependencies to improve the workflow execution time
 # For more information see: https://help.github.com/actions/language-and-framework-guides/building-and-testing-java-with-gradle
 
-name: JavaDoc Generator
+name: Update Javadoc
 
 on:
   push:
     branches: [ release/1.x ]
 jobs:
-
   build-on-ubuntu:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest

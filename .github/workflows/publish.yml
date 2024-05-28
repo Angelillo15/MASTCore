@@ -6,8 +6,6 @@ name: NookureStaff build
 on:
   push:
     branches: [ release/1.x ]
-  pull_request:
-    branches: [ release/1.x]
 jobs:
   build-on-ubuntu:
     # The type of runner that the job will run on
@@ -23,17 +21,12 @@ jobs:
         uses: actions/setup-java@v4
         with:
           java-version: 17
-
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v3
-
       - name: Execute Gradle build
+        env:
+          GRGIT_USER: "Angelillo15"
+          GRGIT_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
         run: |
           chmod +x gradlew
-          ./gradlew shadowJar
-          mkdir staging && cp build/libs/*.jar staging
-      - name: Upload the jar
-        uses: actions/upload-artifact@v2
-        with:
-          name: NookureStaff
-          path: staging
+          ./gradlew NookureStaff-API:publish NookureStaff-API:gitPublishPushAll
