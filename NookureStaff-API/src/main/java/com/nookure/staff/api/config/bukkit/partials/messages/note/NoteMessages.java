@@ -1,4 +1,4 @@
-package com.nookure.staff.api.config.bukkit.partials.messages;
+package com.nookure.staff.api.config.bukkit.partials.messages.note;
 
 import org.spongepowered.configurate.objectmapping.ConfigSerializable;
 import org.spongepowered.configurate.objectmapping.meta.Comment;
@@ -126,6 +126,8 @@ public class NoteMessages {
   @Setting
   @Comment("Message indicating that the show on join status of a note has been toggled off.")
   private String setShowOnJoinOff = "{prefix} <green>Successfully toggled off the show on join status for the note with the id {note.id}.";
+
+  public final NoteCommandsMessages commands = new NoteCommandsMessages();
 
   public String loadingData() {
     return loadingData;
