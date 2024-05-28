@@ -46,6 +46,7 @@ public final class Permissions {
   /**
    * Permissions to have administrator notes.
    */
+  public static final String STAFF_NOTES = "nookure.staff.notes";
   public static final String STAFF_NOTES_ADMIN = "nookure.staff.notes.admin";
 
   public static final String STAFF_NOTES_LIST = "nookure.staff.notes.list";
