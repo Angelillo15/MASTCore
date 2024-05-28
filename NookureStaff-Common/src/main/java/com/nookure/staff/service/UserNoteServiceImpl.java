@@ -6,7 +6,7 @@ import com.nookure.staff.api.Permissions;
 import com.nookure.staff.api.command.CommandSender;
 import com.nookure.staff.api.config.ConfigurationContainer;
 import com.nookure.staff.api.config.bukkit.BukkitMessages;
-import com.nookure.staff.api.config.bukkit.partials.messages.NoteMessages;
+import com.nookure.staff.api.config.bukkit.partials.messages.note.NoteMessages;
 import com.nookure.staff.api.model.NoteModel;
 import com.nookure.staff.api.model.PlayerModel;
 import com.nookure.staff.api.service.UserNoteService;
