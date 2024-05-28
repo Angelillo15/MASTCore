@@ -27,7 +27,7 @@ jobs:
       - name: Execute Gradle build
         env:
           GRGIT_USER: "Angelillo15"
-          GRGIT_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
+          GRGIT_PASSWORD: ${{ secrets.TOKEN }}
         run: |
           chmod +x gradlew
           ./gradlew NookureStaff-API:publish NookureStaff-API:gitPublishPushAll
