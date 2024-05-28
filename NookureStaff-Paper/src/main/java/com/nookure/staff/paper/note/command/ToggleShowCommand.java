@@ -12,11 +12,11 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 
 @CommandData(
-    name = "remove",
-    description = "Remove a note from a user",
-    permission = Permissions.STAFF_NOTES_REMOVE
+    name = "toggle-show",
+    description = "Toggle show on join for a note",
+    permission = Permissions.STAFF_NOTES_EDIT
 )
-public class RemoveNoteCommand extends Command {
+public class ToggleShowCommand extends Command {
   @Inject
   private UserNoteService userNoteService;
   @Inject
@@ -25,19 +25,19 @@ public class RemoveNoteCommand extends Command {
   @Override
   public void onCommand(@NotNull CommandSender sender, @NotNull String label, @NotNull List<String> args) {
     if (args.isEmpty()) {
-      sender.sendMiniMessage(noteMessages.commands.getRemoveNoteUsage());
+      sender.sendMiniMessage(noteMessages.commands.getToggleShowUsage());
       return;
     }
 
-    long noteId;
+    long id;
 
     try {
-      noteId = Long.parseLong(args.get(0));
+      id = Long.parseLong(args.get(0));
     } catch (NumberFormatException e) {
-      sender.sendMiniMessage("Invalid note ID");
+      sender.sendMiniMessage("Invalid note id");
       return;
     }
 
-    userNoteService.removeNote(sender, noteId);
+    userNoteService.toggleShowOnJoin(sender, id);
   }
 }

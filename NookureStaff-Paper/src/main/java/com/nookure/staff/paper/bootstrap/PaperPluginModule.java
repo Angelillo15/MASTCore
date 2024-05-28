@@ -12,6 +12,7 @@ import com.nookure.staff.api.config.ConfigurationContainer;
 import com.nookure.staff.api.config.bukkit.BukkitConfig;
 import com.nookure.staff.api.config.bukkit.BukkitMessages;
 import com.nookure.staff.api.config.bukkit.ItemsConfig;
+import com.nookure.staff.api.config.bukkit.partials.messages.note.NoteMessages;
 import com.nookure.staff.api.config.common.CommandConfig;
 import com.nookure.staff.api.config.messaging.MessengerConfig;
 import com.nookure.staff.api.config.messaging.RedisPartial;
@@ -91,6 +92,8 @@ public class PaperPluginModule extends PluginModule {
       }).toInstance(loadMessenger());
       bind(new TypeLiteral<ConfigurationContainer<CommandConfig>>() {
       }).toInstance(loadCommands());
+      bind(new TypeLiteral<ConfigurationContainer<NoteMessages>>() {
+      }).toInstance(loadNoteMessages());
 
       /*
        * PlayerWrapperManager related area
@@ -175,5 +178,9 @@ public class PaperPluginModule extends PluginModule {
     messengerType = config.get().getType();
     redisPartial = config.get().redis;
     return config;
+  }
+
+  private ConfigurationContainer<NoteMessages> loadNoteMessages() throws IOException {
+    return ConfigurationContainer.load(boot.getDataFolder().toPath(), NoteMessages.class, "partial/note-messages.yml");
   }
 }

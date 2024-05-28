@@ -43,6 +43,7 @@ import com.nookure.staff.paper.loader.ItemsLoader;
 import com.nookure.staff.paper.loader.PlaceholderApiLoader;
 import com.nookure.staff.paper.messaging.BackendMessageMessenger;
 import com.nookure.staff.paper.note.command.ParentNoteCommand;
+import com.nookure.staff.paper.note.listener.OnPlayerNoteJoin;
 import com.nookure.staff.paper.task.FreezeSpamMessage;
 import com.nookure.staff.paper.task.FreezeTimerTask;
 import org.bukkit.Bukkit;
@@ -166,6 +167,10 @@ public class NookureStaff {
 
     if (config.get().modules.isPlayerData()) {
       registerListener(OnPlayerDataJoin.class);
+    }
+
+    if (config.get().modules.isPlayerData() && config.get().modules.isUserNotes()) {
+      registerListener(OnPlayerNoteJoin.class);
     }
   }
 
