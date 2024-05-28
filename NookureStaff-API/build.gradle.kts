@@ -32,15 +32,15 @@ dependencies {
   compileOnlyApi(libs.adventureApi)
   compileOnlyApi(libs.miniMessage)
   compileOnlyApi(libs.reflections)
-  compileOnlyApi(rootProject.libs.storm)
   compileOnlyApi(rootProject.libs.adventureApi)
   compileOnlyApi(rootProject.libs.miniMessage)
   compileOnlyApi(rootProject.libs.caffeine)
-  compileOnlyApi(rootProject.libs.liblyBukkit)
   compileOnlyApi(rootProject.libs.ebean)
   annotationProcessor(rootProject.libs.ebean)
 
   compileOnly(libs.auto.service.annotations)
+  compileOnly(rootProject.libs.liblyBukkit)
+  compileOnly(rootProject.libs.storm)
   annotationProcessor(libs.auto.service)
 }
 
