@@ -66,4 +66,12 @@ public interface UserNoteService {
    * @param note   the note to display
    */
   void displayNote(@NotNull CommandSender staff, @NotNull PlayerModel player, @NotNull NoteModel note);
+
+  /**
+   * Toggle the show on join status of a note.
+   *
+   * @param staff the staff member who is toggling the show on join status
+   * @param id    the id of the note to toggle
+   */
+  void toggleShowOnJoin(@NotNull CommandSender staff, @NotNull Long id);
 }
