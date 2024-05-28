@@ -6,6 +6,8 @@ import com.nookure.staff.api.command.Command;
 import com.nookure.staff.api.command.CommandData;
 import com.nookure.staff.api.command.CommandSender;
 import com.nookure.staff.api.service.UserNoteService;
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
@@ -40,5 +42,10 @@ public class ListNoteCommand extends Command {
     }
 
     userNoteService.displayNotes(sender, username, page);
+  }
+
+  @Override
+  public @NotNull List<String> onTabComplete(@NotNull CommandSender sender, @NotNull String label, @NotNull List<String> args) {
+    return getSuggestionFilter(Bukkit.getOnlinePlayers().stream().map(Player::getName).toList(), args.get(0));
   }
 }
