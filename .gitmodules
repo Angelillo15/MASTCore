@@ -1,0 +1,3 @@
+[submodule "NookureStaff-Protobuf"]
+	path = NookureStaff-Protobuf
+	url = https://github.com/Nookure/NookureStaff-Proto
