@@ -68,8 +68,19 @@ public class StaffBootstrapper extends JavaPlugin implements NookureStaffPlatfor
     LibraryManager manager;
 
     try {
-      Class.forName("com.nookure.staff.paper.bootstrap.PaperPluginModule");
-      manager = new PaperLibraryManager(this);
+      Class.forName("io.papermc.paper.plugin.entrypoint.classloader.PaperPluginClassLoader");
+      try {
+        manager = new PaperLibraryManager(this);
+      } catch (Exception e) {
+        manager = new BukkitLibraryManager(this);
+        logger.severe(e);
+        logger.warning("------------------------------------------------------------------");
+        logger.warning("DONT IGNORE THIS MESSAGE, IT'S IMPORTANT!");
+        logger.warning("There was several issues while trying to load some paper-plugin related stuff.");
+        logger.warning("If you are using Paper >= 1.8 <= 1.19.4, you might experience some issues.");
+        logger.warning("Please, report this in the discord server.");
+        logger.warning("------------------------------------------------------------------");
+      }
     } catch (ClassNotFoundException e) {
       manager = new BukkitLibraryManager(this);
     }

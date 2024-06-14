@@ -93,7 +93,7 @@ public class UserNoteServiceImpl implements UserNoteService {
         .findPagedList();
 
     if (notes.getTotalCount() == 0) {
-      staff.sendMiniMessage(noteMessages.get().userWithoutNotes(), "player", player.getName());
+      staff.sendMiniMessage(Object2Text.replaceText(noteMessages.get().userWithoutNotes(), player));
       return;
     }
 
