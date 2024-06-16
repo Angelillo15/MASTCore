@@ -11,7 +11,7 @@ import java.util.List;
 @CommandData(
     name = "staff",
     description = "Main command for staff",
-    permission = Permissions.STAFF_PERMISSION
+    permission = Permissions.STAFF_MODE_PERMISSION
 )
 public class StaffModeCommand extends StaffCommand {
   @Override
