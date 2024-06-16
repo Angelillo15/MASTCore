@@ -14,6 +14,11 @@ public final class Permissions {
    */
   public static final String STAFF_PERMISSION = "nookure.staff";
   /**
+   * Permission to use the staff mode.
+   * This permission is required to use the staff mode.
+   */
+  public static final String STAFF_MODE_PERMISSION = "nookure.staff.mode";
+  /**
    * Permission to use the admin commands.
    * This permission is required to use any admin command.
    */

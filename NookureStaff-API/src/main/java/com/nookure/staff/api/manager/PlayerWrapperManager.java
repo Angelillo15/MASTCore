@@ -2,7 +2,9 @@ package com.nookure.staff.api.manager;
 
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
+import com.google.inject.Inject;
 import com.google.inject.Singleton;
+import com.nookure.staff.api.Logger;
 import com.nookure.staff.api.PlayerWrapper;
 import com.nookure.staff.api.StaffPlayerWrapper;
 import org.jetbrains.annotations.NotNull;
@@ -28,6 +30,8 @@ import java.util.stream.Stream;
  */
 @Singleton
 public final class PlayerWrapperManager<T> {
+  @Inject
+  private Logger logger;
   private final BiMap<T, PlayerWrapper> playerWrappersByPlayerClass = HashBiMap.create();
   private final LinkedHashMap<UUID, PlayerWrapper> playerWrappersByUUID = new LinkedHashMap<>();
   private final ArrayList<UUID> staffPlayers = new ArrayList<>();
@@ -101,10 +105,29 @@ public final class PlayerWrapperManager<T> {
     Objects.requireNonNull(player, "Player cannot be null");
     Objects.requireNonNull(playerWrapper, "PlayerWrapper cannot be null");
 
-    playerWrappersByPlayerClass.put(player, playerWrapper);
-    playerWrappersByUUID.put(playerWrapper.getUniqueId(), playerWrapper);
+    synchronized (playerWrappersByPlayerClass) {
+      if (playerWrappersByPlayerClass.containsKey(player)) {
+        logger.warning("PlayerWrapper already exists for player: %s", player);
+        return;
+      }
 
-    if (isStaff) staffPlayers.add(playerWrapper.getUniqueId());
+      playerWrappersByPlayerClass.put(player, playerWrapper);
+    }
+
+    synchronized (playerWrappersByUUID) {
+      if (playerWrappersByUUID.containsKey(playerWrapper.getUniqueId())) {
+        logger.warning("PlayerWrapper already exists for UUID: %s", playerWrapper.getUniqueId());
+        return;
+      }
+
+      playerWrappersByUUID.put(playerWrapper.getUniqueId(), playerWrapper);
+    }
+
+    if (isStaff) {
+      synchronized (staffPlayers) {
+        staffPlayers.add(playerWrapper.getUniqueId());
+      }
+    }
   }
 
   /**
@@ -124,11 +147,18 @@ public final class PlayerWrapperManager<T> {
    */
   public void removePlayerWrapper(@NotNull T player) {
     Objects.requireNonNull(player, "Player cannot be null");
+    synchronized (playerWrappersByPlayerClass) {
+      PlayerWrapper playerWrapper = playerWrappersByPlayerClass.remove(player);
+      if (playerWrapper == null) {
+        logger.warning("PlayerWrapper not found for player: %s", player);
+        return;
+      }
+      if (playerWrapper instanceof StaffPlayerWrapper) staffPlayers.remove(playerWrapper.getUniqueId());
 
-    PlayerWrapper playerWrapper = playerWrappersByPlayerClass.remove(player);
-    playerWrappersByUUID.remove(playerWrapper.getUniqueId());
-
-    if (playerWrapper instanceof StaffPlayerWrapper) staffPlayers.remove(playerWrapper.getUniqueId());
+      synchronized (playerWrappersByUUID) {
+        playerWrappersByUUID.remove(playerWrapper.getUniqueId());
+      }
+    }
   }
 
   /**
