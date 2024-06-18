@@ -25,6 +25,7 @@ guava = "33.0.0-jre"
 apacheCommons = "3.14.0"
 ebean = "15.1.0"
 flyway = "10.12.0"
+protoc = "4.27.1"
 
 [libraries]
 hikariCP = { group = "com.zaxxer", name = "HikariCP", version.ref = "hikariCP" }
@@ -73,7 +74,7 @@ auto-service-annotations = "com.google.auto.service:auto-service-annotations:1.0
 ebean = { group = "io.ebean", name = "ebean", version.ref = "ebean" }
 ebean-ddl-generator = { group = "io.ebean", name = "ebean-ddl-generator", version.ref = "ebean" }
 ebean-migration = { group = "io.ebean", name = "ebean-migration", version = "14.0.0" }
-flyway = { group = "org.flywaydb", name = "flyway-core", version.ref = "flyway" }
+protocol-buffers-lite = { group = "com.google.protobuf", name = "protobuf-javalite", version.ref = "protoc" }
 
 [bundles]
 invAPI = ["invCore", "invAdvancedSlots", "invPagination", "configurableGui"]
