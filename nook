@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+
+case $1 in
+    "build" | "b")
+        scripts/build.sh --full || exit 1
+        ;;
+    "genProto" | "gp")
+        scripts/genProto.sh || exit 1
+        ;;
+    "miniBuild" | "mb")
+        scripts/build.sh || exit 1
+        ;;
+    "migrate" | "m")
+        scripts/migrate.sh || exit 1
+        ;;
+    "close")
+        exit 0
+        ;;
+    *)
+        echo "This is the NookureStaff build tool. Please specify a command to run."
+        echo ""
+        echo "Commands:"
+        echo "  * b, build         | Builds the project"
+        echo "  * gp, genProto     | Generates the protobuf classes"
+        echo "  * mb, miniBuild    | Builds the project without running the full build"
+        echo "  * m, migrate       | Migrates the project to the latest version"
+        echo "  * close            | Closes the build tool"
+        exit 1
+        ;;
+esac
