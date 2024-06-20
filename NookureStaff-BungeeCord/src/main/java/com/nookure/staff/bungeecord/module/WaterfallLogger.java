@@ -1,4 +1,4 @@
-package com.nookure.staff.waterfall.module;
+package com.nookure.staff.bungeecord.module;
 
 import com.nookure.staff.api.Logger;
 import net.kyori.adventure.text.Component;

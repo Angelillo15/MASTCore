@@ -2,7 +2,7 @@ rootProject.name = "NookureStaff"
 include("NookureStaff-Paper")
 include("NookureStaff-API")
 include("NookureStaff-Velocity")
-include("NookureStaff-Waterfall")
+include("NookureStaff-BungeeCord")
 include("NookureStaff-Common")
 
 pluginManagement {

@@ -1,10 +1,10 @@
-package com.nookure.staff.waterfall.messaging;
+package com.nookure.staff.bungeecord.messaging;
 
 import com.google.inject.Inject;
 import com.nookure.staff.api.Logger;
 import com.nookure.staff.api.messaging.Channels;
 import com.nookure.staff.api.messaging.EventMessenger;
-import com.nookure.staff.waterfall.NookureStaff;
+import com.nookure.staff.bungeecord.NookureStaff;
 import net.md_5.bungee.api.event.PluginMessageEvent;
 import net.md_5.bungee.api.plugin.Listener;
 import net.md_5.bungee.event.EventHandler;
@@ -29,7 +29,7 @@ public class PluginMessageRouter implements Listener {
 
     messenger.decodeEvent(event.getData());
 
-    plugin.getProxy().getServersCopy().values().forEach(server -> {
+    plugin.getProxy().getServers().values().forEach(server -> {
       server.sendData(Channels.EVENTS, event.getData());
       logger.debug("Sent plugin message to %s", server.getName());
     });
