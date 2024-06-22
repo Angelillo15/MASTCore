@@ -9,6 +9,7 @@ dependencies {
   implementation(libs.miniMessage)
   implementation(libs.adventureApi)
   implementation(libs.textLegacySerializer)
+  implementation(libs.guice)
 }
 
 bungee {
