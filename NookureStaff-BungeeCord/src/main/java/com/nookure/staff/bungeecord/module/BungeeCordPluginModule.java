@@ -10,10 +10,10 @@ import com.nookure.staff.messaging.DecoderPluginMessenger;
 import com.nookure.staff.bungeecord.NookureStaff;
 import net.md_5.bungee.api.plugin.Plugin;
 
-public class WaterfallPluginModule extends AbstractModule {
+public class BungeeCordPluginModule extends AbstractModule {
   private final NookureStaff plugin;
 
-  public WaterfallPluginModule(NookureStaff plugin) {
+  public BungeeCordPluginModule(NookureStaff plugin) {
     this.plugin = plugin;
   }
 
@@ -21,6 +21,7 @@ public class WaterfallPluginModule extends AbstractModule {
   protected void configure() {
     bind(Logger.class).toInstance(plugin.getPLogger());
     bind(com.nookure.staff.api.NookureStaff.class).toInstance(plugin);
+    bind(NookureStaff.class).toInstance(plugin);
     bind(EventManager.class).asEagerSingleton();
     bind(EventMessenger.class).to(DecoderPluginMessenger.class).asEagerSingleton();
 
