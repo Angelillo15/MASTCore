@@ -12,6 +12,7 @@ import com.nookure.staff.api.config.ConfigurationContainer;
 import com.nookure.staff.api.config.bukkit.BukkitConfig;
 import com.nookure.staff.api.config.bukkit.BukkitMessages;
 import com.nookure.staff.api.config.bukkit.ItemsConfig;
+import com.nookure.staff.api.config.bukkit.partials.StaffModeBlockedCommands;
 import com.nookure.staff.api.config.bukkit.partials.messages.note.NoteMessages;
 import com.nookure.staff.api.config.common.CommandConfig;
 import com.nookure.staff.api.config.messaging.MessengerConfig;
@@ -94,6 +95,8 @@ public class PaperPluginModule extends PluginModule {
       }).toInstance(loadCommands());
       bind(new TypeLiteral<ConfigurationContainer<NoteMessages>>() {
       }).toInstance(loadNoteMessages());
+      bind(new TypeLiteral<ConfigurationContainer<StaffModeBlockedCommands>>() {
+      }).toInstance(loadStaffModeBlockedCommands());
 
       /*
        * PlayerWrapperManager related area
@@ -182,5 +185,9 @@ public class PaperPluginModule extends PluginModule {
 
   private ConfigurationContainer<NoteMessages> loadNoteMessages() throws IOException {
     return ConfigurationContainer.load(boot.getDataFolder().toPath(), NoteMessages.class, "partial/note-messages.yml");
+  }
+
+  private ConfigurationContainer<StaffModeBlockedCommands> loadStaffModeBlockedCommands() throws IOException {
+    return ConfigurationContainer.load(boot.getDataFolder().toPath(), StaffModeBlockedCommands.class, "staff-mode-blocked-commands.yml");
   }
 }
