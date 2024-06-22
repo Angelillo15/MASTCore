@@ -19,6 +19,7 @@ import com.nookure.staff.api.manager.PlayerWrapperManager;
 import com.nookure.staff.api.messaging.Channels;
 import com.nookure.staff.api.messaging.EventMessenger;
 import com.nookure.staff.api.util.AbstractLoader;
+import com.nookure.staff.paper.bootstrap.StaffBootstrapper;
 import com.nookure.staff.paper.command.*;
 import com.nookure.staff.paper.command.main.NookureStaffCommand;
 import com.nookure.staff.paper.extension.FreezePlayerExtension;
@@ -156,12 +157,15 @@ public class NookureStaff {
       Stream.of(
           OnFreezePlayerInteract.class,
           OnFreezePlayerMove.class,
-          OnFreezePlayerQuit.class,
-          OnPlayerChatFreeze.class
+          OnFreezePlayerQuit.class
       ).forEach(this::registerListener);
+
+      if (StaffBootstrapper.isPaper) {
+        registerListener(OnPlayerChatFreeze.class);
+      }
     }
 
-    if (config.get().modules.isStaffChat()) {
+    if (config.get().modules.isStaffChat() && StaffBootstrapper.isPaper) {
       registerListener(OnPlayerInStaffChatTalk.class);
     }
 
