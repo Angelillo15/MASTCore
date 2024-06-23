@@ -6,6 +6,22 @@ import org.jetbrains.annotations.NotNull;
 import java.util.UUID;
 
 public abstract class ServerUtils {
+  public static final boolean isPaper;
+
+  static {
+    isPaper = hasClass("com.destroystokyo.paper.PaperConfig") ||
+        hasClass("io.papermc.paper.configuration.Configuration");
+  }
+
+  private static boolean hasClass(String className) {
+    try {
+      Class.forName(className);
+      return true;
+    } catch (ClassNotFoundException e) {
+      return false;
+    }
+  }
+
   /**
    * Check if a player is online
    *

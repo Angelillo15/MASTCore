@@ -9,6 +9,7 @@ import com.nookure.staff.Constants;
 import com.nookure.staff.api.Logger;
 import com.nookure.staff.api.NookureStaffPlatform;
 import com.nookure.staff.api.command.Command;
+import com.nookure.staff.api.util.ServerUtils;
 import com.nookure.staff.lib.DefaultLibRepo;
 import com.nookure.staff.paper.NookureStaff;
 import com.nookure.staff.paper.util.BukkitLoggerImpl;
@@ -27,8 +28,7 @@ public class StaffBootstrapper extends JavaPlugin implements NookureStaffPlatfor
   public static final boolean isPaper;
 
   static {
-    isPaper = hasClass("com.destroystokyo.paper.PaperConfig") ||
-        hasClass("io.papermc.paper.configuration.Configuration");
+    isPaper = ServerUtils.isPaper;
   }
 
   private boolean debug = false;
@@ -126,15 +126,6 @@ public class StaffBootstrapper extends JavaPlugin implements NookureStaffPlatfor
     logger.info("💉  Injecting plugin...");
     plugin = injector.getInstance(NookureStaff.class);
     logger.info("💉  Plugin injected!");
-  }
-
-  private static boolean hasClass(String className) {
-    try {
-      Class.forName(className);
-      return true;
-    } catch (ClassNotFoundException e) {
-      return false;
-    }
   }
 
   @Override
