@@ -19,6 +19,10 @@ public abstract class CommonPlayerInteraction {
       .build();
 
   public Optional<StaffItem> getItem(ItemStack item, StaffPlayerWrapper player) {
+    if (!item.hasItemMeta()) {
+      return Optional.empty();
+    }
+
     PersistentDataContainer container = item.getItemMeta().getPersistentDataContainer();
 
     if (container.has(StaffItem.key, PersistentDataType.INTEGER)) {

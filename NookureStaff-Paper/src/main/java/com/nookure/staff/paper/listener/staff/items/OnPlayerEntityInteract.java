@@ -53,7 +53,6 @@ public class OnPlayerEntityInteract extends CommonPlayerInteraction implements L
       }
     });
 
-
     logger.debug("PlayerInteractEntityEvent took " + (System.currentTimeMillis() - start) + "ms");
   }
 }
