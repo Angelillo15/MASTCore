@@ -38,9 +38,10 @@ public class StaffBootstrapper extends JavaPlugin implements NookureStaffPlatfor
 
   @Override
   public void onEnable() {
-    checkMAStaff();
+    checkSpigot();
+
     Component cmp = Component.text("""
-         
+
          ▐ ▄             ▄ •▄ ▄• ▄▌▄▄▄  ▄▄▄ .    .▄▄ · ▄▄▄▄▄ ▄▄▄· ·▄▄▄·▄▄▄
         •█▌▐█▪     ▪     █▌▄▌▪█▪██▌▀▄ █·▀▄.▀·    ▐█ ▀. •██  ▐█ ▀█ ▐▄▄·▐▄▄·
         ▐█▐▐▌ ▄█▀▄  ▄█▀▄ ▐▀▀▄·█▌▐█▌▐▀▀▄ ▐▀▀▪▄    ▄▀▀▀█▄ ▐█.▪▄█▀▀█ ██▪ ██▪
@@ -55,6 +56,7 @@ public class StaffBootstrapper extends JavaPlugin implements NookureStaffPlatfor
     );
 
     loadDependencies();
+    checkMAStaff();
 
     loadLogger();
     loadInjector();
@@ -66,11 +68,27 @@ public class StaffBootstrapper extends JavaPlugin implements NookureStaffPlatfor
 
   public void checkMAStaff() {
     if (Bukkit.getPluginManager().getPlugin("MAStaff") != null) {
-      Bukkit.getConsoleSender().sendMessage(Component.text("MAStaff detected!").color(NamedTextColor.RED));
-      Bukkit.getConsoleSender().sendMessage(Component.text("Please remove it to avoid conflicts.").color(NamedTextColor.RED));
-      Bukkit.getConsoleSender().sendMessage(Component.text("Disabling NookureStaff...").color(NamedTextColor.RED));
+      sendComponent(Component.text("MAStaff detected!").color(NamedTextColor.RED));
+      sendComponent(Component.text("Please remove it to avoid conflicts.").color(NamedTextColor.RED));
+      sendComponent(Component.text("Disabling NookureStaff...").color(NamedTextColor.RED));
       Bukkit.getPluginManager().disablePlugin(this);
     }
+  }
+
+  public void checkSpigot() {
+    if ((isPaper) || (Bukkit.getPluginManager().getPlugin("NookureStaff-Compatibility") != null)) {
+      return;
+    }
+
+    getLogger().severe("------------------------------------------------------------------");
+    getLogger().severe("DONT IGNORE THIS MESSAGE, IT'S IMPORTANT!");
+    getLogger().severe("You are using Spigot, which is not recommended for NookureStaff.");
+    getLogger().severe("Please, use Paper instead in most cases.");
+    getLogger().severe("If you still want to use Spigot, you can download the compatibility plugin.");
+    getLogger().severe("Download it from here -> https://github.com/Nookure/NookureStaff-Compatibility/releases/download/NookureStaff-Compatibility-1.0.0/NookureStaff-Compatibility-1.0.0.jar");
+    getLogger().severe("------------------------------------------------------------------");
+
+    Bukkit.getPluginManager().disablePlugin(this);
   }
 
   private void sendComponent(Component component) {
