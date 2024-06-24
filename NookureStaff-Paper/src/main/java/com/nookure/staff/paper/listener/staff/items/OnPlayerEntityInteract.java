@@ -35,7 +35,9 @@ public class OnPlayerEntityInteract extends CommonPlayerInteraction implements L
 
     ItemStack currentItem = player.getInventory().getItemInMainHand();
 
-    if (currentItem.isEmpty() && player.hasPermission(Permissions.STAFF_MODE_BUILD)) {
+    if ((currentItem.getType().isAir() || (currentItem.getAmount() <= 0))
+            && player.hasPermission(Permissions.STAFF_MODE_BUILD)
+    ) {
       event.setCancelled(false);
       return;
     }
