@@ -9,12 +9,15 @@ import com.nookure.staff.Constants;
 import com.nookure.staff.api.Logger;
 import com.nookure.staff.api.NookureStaffPlatform;
 import com.nookure.staff.api.command.Command;
+import com.nookure.staff.api.util.ServerUtils;
 import com.nookure.staff.lib.DefaultLibRepo;
 import com.nookure.staff.paper.NookureStaff;
+import com.nookure.staff.paper.util.BukkitLoggerImpl;
 import com.nookure.staff.paper.util.Metrics;
 import com.nookure.staff.paper.util.PaperLoggerImpl;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -22,6 +25,12 @@ import java.io.File;
 import java.io.InputStream;
 
 public class StaffBootstrapper extends JavaPlugin implements NookureStaffPlatform<JavaPlugin> {
+  public static final boolean isPaper;
+
+  static {
+    isPaper = ServerUtils.isPaper;
+  }
+
   private boolean debug = false;
   private Injector injector;
   private Logger logger;
@@ -29,23 +38,25 @@ public class StaffBootstrapper extends JavaPlugin implements NookureStaffPlatfor
 
   @Override
   public void onEnable() {
-    checkMAStaff();
+    checkSpigot();
 
-    Bukkit.getConsoleSender().sendMessage(Component.text("""
-         
+    Component cmp = Component.text("""
+
          ▐ ▄             ▄ •▄ ▄• ▄▌▄▄▄  ▄▄▄ .    .▄▄ · ▄▄▄▄▄ ▄▄▄· ·▄▄▄·▄▄▄
         •█▌▐█▪     ▪     █▌▄▌▪█▪██▌▀▄ █·▀▄.▀·    ▐█ ▀. •██  ▐█ ▀█ ▐▄▄·▐▄▄·
         ▐█▐▐▌ ▄█▀▄  ▄█▀▄ ▐▀▀▄·█▌▐█▌▐▀▀▄ ▐▀▀▪▄    ▄▀▀▀█▄ ▐█.▪▄█▀▀█ ██▪ ██▪
         ██▐█▌▐█▌.▐▌▐█▌.▐▌▐█.█▌▐█▄█▌▐█•█▌▐█▄▄▌    ▐█▄▪▐█ ▐█▌·▐█ ▪▐▌██▌.██▌.
         ▀▀ █▪ ▀█▄▀▪ ▀█▄▀▪·▀  ▀ ▀▀▀ .▀  ▀ ▀▀▀      ▀▀▀▀  ▀▀▀  ▀  ▀ ▀▀▀ ▀▀▀
-        """).color(NamedTextColor.LIGHT_PURPLE)
-    );
+        """).color(NamedTextColor.LIGHT_PURPLE);
 
-    Bukkit.getConsoleSender().sendMessage(
+    sendComponent(cmp);
+
+    sendComponent(
         Component.text("NookureStaff v" + Constants.VERSION + " by Angelillo15").color(NamedTextColor.LIGHT_PURPLE)
     );
 
     loadDependencies();
+    checkMAStaff();
 
     loadLogger();
     loadInjector();
@@ -57,10 +68,34 @@ public class StaffBootstrapper extends JavaPlugin implements NookureStaffPlatfor
 
   public void checkMAStaff() {
     if (Bukkit.getPluginManager().getPlugin("MAStaff") != null) {
-      Bukkit.getConsoleSender().sendMessage(Component.text("MAStaff detected!").color(NamedTextColor.RED));
-      Bukkit.getConsoleSender().sendMessage(Component.text("Please remove it to avoid conflicts.").color(NamedTextColor.RED));
-      Bukkit.getConsoleSender().sendMessage(Component.text("Disabling NookureStaff...").color(NamedTextColor.RED));
+      sendComponent(Component.text("MAStaff detected!").color(NamedTextColor.RED));
+      sendComponent(Component.text("Please remove it to avoid conflicts.").color(NamedTextColor.RED));
+      sendComponent(Component.text("Disabling NookureStaff...").color(NamedTextColor.RED));
       Bukkit.getPluginManager().disablePlugin(this);
+    }
+  }
+
+  public void checkSpigot() {
+    if ((isPaper) || (Bukkit.getPluginManager().getPlugin("NookureStaff-Compatibility") != null)) {
+      return;
+    }
+
+    getLogger().severe("------------------------------------------------------------------");
+    getLogger().severe("DONT IGNORE THIS MESSAGE, IT'S IMPORTANT!");
+    getLogger().severe("You are using Spigot, which is not recommended for NookureStaff.");
+    getLogger().severe("Please, use Paper instead in most cases.");
+    getLogger().severe("If you still want to use Spigot, you can download the compatibility plugin.");
+    getLogger().severe("Download it from here -> https://github.com/Nookure/NookureStaff-Compatibility/releases/download/NookureStaff-Compatibility-1.0.0/NookureStaff-Compatibility-1.0.0.jar");
+    getLogger().severe("------------------------------------------------------------------");
+
+    Bukkit.getPluginManager().disablePlugin(this);
+  }
+
+  private void sendComponent(Component component) {
+    if (isPaper) {
+      Bukkit.getConsoleSender().sendMessage(component);
+    } else {
+      Bukkit.getConsoleSender().sendMessage(LegacyComponentSerializer.legacySection().serialize(component));
     }
   }
 
@@ -97,7 +132,7 @@ public class StaffBootstrapper extends JavaPlugin implements NookureStaffPlatfor
   }
 
   public void loadLogger() {
-    logger = new PaperLoggerImpl(this);
+    logger = isPaper ? new PaperLoggerImpl(this) : new BukkitLoggerImpl(this);
   }
 
   public void loadInjector() {

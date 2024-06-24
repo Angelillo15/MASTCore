@@ -11,6 +11,8 @@ import com.nookure.staff.api.config.ConfigurationContainer;
 import com.nookure.staff.api.config.bukkit.BukkitConfig;
 import com.nookure.staff.api.config.bukkit.BukkitMessages;
 import com.nookure.staff.api.config.bukkit.ItemsConfig;
+import com.nookure.staff.api.config.bukkit.partials.StaffModeBlockedCommands;
+import com.nookure.staff.api.config.bukkit.partials.messages.note.NoteMessages;
 import com.nookure.staff.api.config.messaging.MessengerConfig;
 import com.nookure.staff.api.database.AbstractPluginConnection;
 import com.nookure.staff.api.event.EventManager;
@@ -19,6 +21,7 @@ import com.nookure.staff.api.manager.PlayerWrapperManager;
 import com.nookure.staff.api.messaging.Channels;
 import com.nookure.staff.api.messaging.EventMessenger;
 import com.nookure.staff.api.util.AbstractLoader;
+import com.nookure.staff.paper.bootstrap.StaffBootstrapper;
 import com.nookure.staff.paper.command.*;
 import com.nookure.staff.paper.command.main.NookureStaffCommand;
 import com.nookure.staff.paper.extension.FreezePlayerExtension;
@@ -32,6 +35,7 @@ import com.nookure.staff.paper.listener.player.OnPlayerDataJoin;
 import com.nookure.staff.paper.listener.server.OnServerBroadcast;
 import com.nookure.staff.paper.listener.staff.OnPlayerInStaffChatTalk;
 import com.nookure.staff.paper.listener.staff.OnStaffLeave;
+import com.nookure.staff.paper.listener.staff.command.OnStaffPlayerCommand;
 import com.nookure.staff.paper.listener.staff.items.OnInventoryClick;
 import com.nookure.staff.paper.listener.staff.items.OnPlayerEntityInteract;
 import com.nookure.staff.paper.listener.staff.items.OnPlayerInteract;
@@ -68,6 +72,10 @@ public class NookureStaff {
   private ConfigurationContainer<ItemsConfig> itemsConfig;
   @Inject
   private ConfigurationContainer<BukkitMessages> messagesConfig;
+  @Inject
+  private ConfigurationContainer<StaffModeBlockedCommands> staffModeBlockedCommands;
+  @Inject
+  private ConfigurationContainer<NoteMessages> noteMessages;
   @Inject
   private JavaPlugin plugin;
   @Inject
@@ -137,7 +145,8 @@ public class NookureStaff {
           OnItemGet.class,
           OnItemSwap.class,
           OnPlayerAttack.class,
-          OnWorldChange.class
+          OnWorldChange.class,
+          OnStaffPlayerCommand.class
       ).forEach(this::registerListener);
     }
 
@@ -156,12 +165,15 @@ public class NookureStaff {
       Stream.of(
           OnFreezePlayerInteract.class,
           OnFreezePlayerMove.class,
-          OnFreezePlayerQuit.class,
-          OnPlayerChatFreeze.class
+          OnFreezePlayerQuit.class
       ).forEach(this::registerListener);
+
+      if (StaffBootstrapper.isPaper) {
+        registerListener(OnPlayerChatFreeze.class);
+      }
     }
 
-    if (config.get().modules.isStaffChat()) {
+    if (config.get().modules.isStaffChat() && StaffBootstrapper.isPaper) {
       registerListener(OnPlayerInStaffChatTalk.class);
     }
 
@@ -286,7 +298,9 @@ public class NookureStaff {
         config,
         messengerConfig,
         messagesConfig,
-        itemsConfig
+        itemsConfig,
+        staffModeBlockedCommands,
+        noteMessages
     ).forEach(c -> c.reload().join());
 
     unregisterListeners();

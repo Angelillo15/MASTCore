@@ -1,14 +1,14 @@
-package com.nookure.staff.waterfall.module;
+package com.nookure.staff.bungeecord.module;
 
 import com.nookure.staff.api.Logger;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import net.md_5.bungee.api.plugin.Plugin;
 
-public class WaterfallLogger implements Logger {
+public class BungeeCordLogger implements Logger {
   private final Plugin plugin;
 
-  public WaterfallLogger(Plugin plugin) {
+  public BungeeCordLogger(Plugin plugin) {
     this.plugin = plugin;
   }
 

@@ -22,25 +22,27 @@ public class OnPlayerDataJoin implements Listener {
 
   @EventHandler
   public void onPlayerJoin(PlayerJoinEvent event) {
-    Optional<PlayerModel> optional = db.get().find(PlayerModel.class).where().eq("uuid", event.getPlayer().getUniqueId())
-        .findOneOrEmpty();
+    scheduler.async(() -> {
+      Optional<PlayerModel> optional = db.get().find(PlayerModel.class).where().eq("uuid", event.getPlayer().getUniqueId())
+          .findOneOrEmpty();
 
-    if (optional.isPresent()) {
-      scheduler.async(() -> updatePlayer(optional.get(), event.getPlayer()).update());
-      return;
-    }
+      if (optional.isPresent()) {
+        updatePlayer(optional.get(), event.getPlayer()).update();
+        return;
+      }
 
-    PlayerModel player = updatePlayer(new PlayerModel(), event.getPlayer());
-    player.setUuid(event.getPlayer().getUniqueId());
-    player.setFirstLogin(Instant.now());
+      PlayerModel player = updatePlayer(new PlayerModel(), event.getPlayer());
+      player.setUuid(event.getPlayer().getUniqueId());
+      player.setFirstLogin(Instant.now());
 
-    try {
-      player.setFirstIp(Objects.requireNonNull(event.getPlayer().getAddress()).getAddress().getHostAddress());
-    } catch (NullPointerException e) {
-      player.setFirstIp("0.0.0.0");
-    }
+      try {
+        player.setFirstIp(Objects.requireNonNull(event.getPlayer().getAddress()).getAddress().getHostAddress());
+      } catch (NullPointerException e) {
+        player.setFirstIp("0.0.0.0");
+      }
 
-    scheduler.async(player::save);
+      player.save();
+    });
   }
 
   private PlayerModel updatePlayer(PlayerModel player, Player bukkitPlayer) {

@@ -113,13 +113,21 @@ public class DefaultLibRepo {
         .resolveTransitiveDependencies(true)
         .build();
 
+    Library protobuf = Library.builder()
+        .groupId("com{}google{}protobuf")
+        .artifactId("protobuf-javalite")
+        .version("4.27.1")
+        .isolatedLoad(false)
+        .resolveTransitiveDependencies(true)
+        .build();
+
     try {
       Class.forName("org.sqlite.JDBC");
     } catch (ClassNotFoundException e) {
       libraries.add(sqlite);
     }
 
-    Stream.of(hikariCP, storm, caffeine, jedis, commons, commonsPool2, json, obliviateInventoriesPagination, obliviateInventories).forEach(libraries::add);
+    Stream.of(hikariCP, storm, caffeine, jedis, commons, commonsPool2, json, obliviateInventoriesPagination, obliviateInventories, protobuf).forEach(libraries::add);
 
     try {
       Class.forName("io.ebean.Database");

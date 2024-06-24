@@ -5,7 +5,9 @@ import com.google.inject.Injector;
 import com.nookure.staff.api.Logger;
 import com.nookure.staff.api.NookureStaff;
 import com.nookure.staff.api.PlayerWrapper;
+import com.nookure.staff.api.util.ServerUtils;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
@@ -26,11 +28,20 @@ public class PaperPlayerWrapper implements PlayerWrapper {
 
   @Override
   public void sendMessage(@NotNull Component component) {
-    player.sendMessage(component);
+    if (ServerUtils.isPaper) {
+      player.sendMessage(component);
+      return;
+    }
+
+    player.sendMessage(LegacyComponentSerializer.legacySection().serialize(component));
   }
 
   @Override
   public void sendActionbar(@NotNull Component component) {
+    if (!ServerUtils.isPaper) {
+      return;
+    }
+
     player.sendActionBar(component);
   }
 
@@ -42,7 +53,10 @@ public class PaperPlayerWrapper implements PlayerWrapper {
 
   @Override
   public void teleport(@NotNull PlayerWrapper to) {
-    player.teleportAsync(((PaperPlayerWrapper) to).getPlayer().getLocation());
+    if (ServerUtils.isPaper)
+      player.teleportAsync(((PaperPlayerWrapper) to).getPlayer().getLocation());
+    else
+      player.teleport(((PaperPlayerWrapper) to).getPlayer().getLocation());
   }
 
   @Override
@@ -61,8 +75,13 @@ public class PaperPlayerWrapper implements PlayerWrapper {
   }
 
   @Override
+  @SuppressWarnings("deprecation")
   public @NotNull Component getDisplayName() {
-    return player.displayName();
+    if (ServerUtils.isPaper) {
+      return player.displayName();
+    }
+
+    return Component.text(player.getDisplayName());
   }
 
   @Override

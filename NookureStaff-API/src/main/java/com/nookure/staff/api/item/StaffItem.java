@@ -1,8 +1,10 @@
 package com.nookure.staff.api.item;
 
 import com.nookure.staff.api.config.bukkit.partials.ItemPartial;
+import com.nookure.staff.api.util.ServerUtils;
 import com.nookure.staff.api.util.TextUtils;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -24,13 +26,25 @@ public abstract class StaffItem {
   private final ItemStack itemStack;
   private final int slot;
 
+  @SuppressWarnings("deprecation")
   public StaffItem(ItemPartial itemConfig) {
     this.itemConfig = itemConfig;
     ItemStack itemStack = new ItemStack(itemConfig.getMaterial());
     ItemMeta meta = itemStack.getItemMeta();
 
-    meta.displayName(TextUtils.toComponent(itemConfig.getName()));
-    meta.lore(itemConfig.lore());
+    if (ServerUtils.isPaper) {
+      meta.displayName(TextUtils.toComponent(itemConfig.getName()));
+      meta.lore(itemConfig.lore());
+    } else {
+      meta.setDisplayName(
+          LegacyComponentSerializer.legacySection().serialize(TextUtils.toComponent(itemConfig.getName()))
+      );
+      meta.setLore(
+          itemConfig.lore().stream()
+              .map(cmp -> LegacyComponentSerializer.legacySection().serialize(cmp)).toList()
+      );
+    }
+
     meta.getPersistentDataContainer().set(key, PersistentDataType.INTEGER, itemConfig.getSlot());
 
     slot = itemConfig.getSlot();

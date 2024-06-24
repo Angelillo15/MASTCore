@@ -1,4 +1,4 @@
-package com.nookure.staff.waterfall.listener;
+package com.nookure.staff.bungeecord.listener;
 
 import com.nookure.staff.api.event.NookSubscribe;
 import com.nookure.staff.api.event.server.ExecuteCommandAsProxy;

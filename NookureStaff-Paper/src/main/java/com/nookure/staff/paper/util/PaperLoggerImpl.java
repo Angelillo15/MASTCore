@@ -6,7 +6,7 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Bukkit;
 
-public final class PaperLoggerImpl implements Logger {
+public class PaperLoggerImpl implements Logger {
   private final StaffBootstrapper boot;
 
   public PaperLoggerImpl(StaffBootstrapper boot) {
@@ -34,7 +34,7 @@ public final class PaperLoggerImpl implements Logger {
       Bukkit.getConsoleSender().sendMessage(getDefaultStyle(component, NamedTextColor.GRAY, "DEBUG"));
   }
 
-  private Component getDefaultStyle(Component component, NamedTextColor color, String mode) {
+  protected Component getDefaultStyle(Component component, NamedTextColor color, String mode) {
     return Component
         .text("NookureStaff")
         .color(NamedTextColor.LIGHT_PURPLE)

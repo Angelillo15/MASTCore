@@ -1,4 +1,4 @@
-package com.nookure.staff.waterfall;
+package com.nookure.staff.bungeecord;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
@@ -6,9 +6,9 @@ import com.nookure.staff.api.Logger;
 import com.nookure.staff.api.NookureStaffPlatform;
 import com.nookure.staff.api.event.EventManager;
 import com.nookure.staff.api.messaging.Channels;
-import com.nookure.staff.waterfall.messaging.PluginMessageRouter;
-import com.nookure.staff.waterfall.module.WaterfallLogger;
-import com.nookure.staff.waterfall.module.WaterfallPluginModule;
+import com.nookure.staff.bungeecord.messaging.PluginMessageRouter;
+import com.nookure.staff.bungeecord.module.BungeeCordLogger;
+import com.nookure.staff.bungeecord.module.BungeeCordPluginModule;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.plugin.Plugin;
 
@@ -20,8 +20,8 @@ public class NookureStaff extends Plugin implements NookureStaffPlatform<Plugin>
   private Logger logger;
 
   public void onEnable() {
-    logger = new WaterfallLogger(this);
-    this.injector = Guice.createInjector(new WaterfallPluginModule(this));
+    logger = new BungeeCordLogger(this);
+    this.injector = Guice.createInjector(new BungeeCordPluginModule(this));
     injector.injectMembers(this);
 
     EventManager eventManager = injector.getInstance(EventManager.class);
