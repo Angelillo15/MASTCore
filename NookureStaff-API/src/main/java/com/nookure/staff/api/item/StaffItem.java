@@ -36,7 +36,9 @@ public abstract class StaffItem {
       meta.displayName(TextUtils.toComponent(itemConfig.getName()));
       meta.lore(itemConfig.lore());
     } else {
-      meta.setDisplayName(itemConfig.getName());
+      meta.setDisplayName(
+          LegacyComponentSerializer.legacySection().serialize(TextUtils.toComponent(itemConfig.getName()))
+      );
       meta.setLore(
           itemConfig.lore().stream()
               .map(cmp -> LegacyComponentSerializer.legacySection().serialize(cmp)).toList()
