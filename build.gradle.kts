@@ -24,7 +24,6 @@ dependencies {
   implementation(libs.liblyBukkit)
   implementation(libs.libbyPaper)
   implementation(libs.libbyVelocity)
-  implementation(libs.guice)
   implementation(libs.configurateYaml)
 }
 

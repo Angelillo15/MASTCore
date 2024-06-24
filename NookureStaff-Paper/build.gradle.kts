@@ -16,6 +16,8 @@ dependencies {
   compileOnly(libs.jedis)
   compileOnly(libs.placeholderApi)
   compileOnly(libs.bundles.invAPI)
+  bukkitLibrary(libs.guice)
+  paperLibrary(libs.guice)
 }
 
 bukkit {
