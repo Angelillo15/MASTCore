@@ -34,6 +34,23 @@ public final class Permissions {
   public static final String STAFF_ADMIN_PERMISSION = "nookure.staff.admin";
 
   /**
+   * Permission to use the helpop command.
+   * This permission is required to use the helpop command.
+   * The helpop command is used to request help from staff members.
+   * The staff members with the permission {@link #HELPOP_RECEIVE_PERMISSION}
+   */
+  public static final String HELPOP_COMMAND_PERMISSION = "nookure.staff.helpop";
+
+  /**
+   * Permission to receive helpop requests.
+   * This permission is required to receive helpop requests.
+   * The helpop requests are sent by players with the permission {@link #HELPOP_COMMAND_PERMISSION}.
+   */
+  public static final String HELPOP_RECEIVE_PERMISSION = "nookure.staff.helpop.receive";
+
+  public static final String ACTION_BAR_PERMISSION = "nookure.staff.actionbar";
+
+  /**
    * Permission to build in staff mode.
    * This permission is required to build in staff mode.
    */
