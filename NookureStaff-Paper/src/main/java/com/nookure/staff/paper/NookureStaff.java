@@ -50,6 +50,7 @@ import com.nookure.staff.paper.note.command.ParentNoteCommand;
 import com.nookure.staff.paper.note.listener.OnPlayerNoteJoin;
 import com.nookure.staff.paper.task.FreezeSpamMessage;
 import com.nookure.staff.paper.task.FreezeTimerTask;
+import com.nookure.staff.paper.task.StaffModeActionbar;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.HandlerList;
@@ -249,6 +250,10 @@ public class NookureStaff {
 
     if (config.get().modules.isFreeze()) {
       Bukkit.getScheduler().runTaskTimerAsynchronously(plugin, injector.getInstance(FreezeSpamMessage.class), 0, 20 * 5);
+    }
+
+    if (config.get().staffMode.actionBar()) {
+      Bukkit.getScheduler().runTaskTimerAsynchronously(plugin, injector.getInstance(StaffModeActionbar.class), 0, 20);
     }
   }
 
