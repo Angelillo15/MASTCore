@@ -22,6 +22,7 @@ import com.nookure.staff.api.messaging.EventMessenger;
 import com.nookure.staff.api.model.StaffDataModel;
 import com.nookure.staff.api.util.Scheduler;
 import com.nookure.staff.paper.data.StaffModeData;
+import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -223,7 +224,10 @@ public class StaffPaperPlayerWrapper extends PaperPlayerWrapper implements Staff
   }
 
   public void disablePlayerPerks() {
-    player.setAllowFlight(false);
+    if (player.getGameMode() != GameMode.CREATIVE) {
+      player.setAllowFlight(false);
+    }
+
     player.setFlying(false);
     player.setInvulnerable(false);
     unloadPotionEffects();
@@ -459,6 +463,25 @@ public class StaffPaperPlayerWrapper extends PaperPlayerWrapper implements Staff
         player.removePotionEffect(potionEffectType);
       });
     }
+  }
+
+  public void addActionBar() {
+    if (!staffMode) return;
+    if (!config.get().staffMode.actionBar()) return;
+    if (!hasPermission(Permissions.ACTION_BAR_PERMISSION)) return;
+
+    String vanished = vanish ? messages.get().placeholder.placeholderTrue() : messages.get().placeholder.placeholderFalse();
+    String staffChat = staffChatAsDefault ? messages.get().placeholder.placeholderTrue() : messages.get().placeholder.placeholderFalse();
+    String tps = String.valueOf(Bukkit.getTPS()[0]);
+    tps = tps.substring(0, Math.min(tps.length(), 5));
+
+    sendActionbar(MiniMessage.miniMessage().deserialize(
+            messages.get().staffMode.actionBar()
+                .replace("{vanished}", vanished)
+                .replace("{staffChat}", staffChat)
+                .replace("{tps}", tps)
+        )
+    );
   }
 
   @Override
