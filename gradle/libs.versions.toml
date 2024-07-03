@@ -89,3 +89,4 @@ grgit = { id = "org.ajoberstar.grgit", version = "5.2.1" }
 grgitPublish = { id = "org.ajoberstar.git-publish", version = "4.2.1" }
 ebean = { id = "io.ebean", version.ref = "ebean" }
 libby = { id = "xyz.kyngs.libby.plugin", version = "1.0.0" }
+runPaper = { id = "xyz.jpenilla.run-paper", version = "2.3.0" }
