@@ -46,7 +46,7 @@ public class StaffModePartial {
   @Comment("""
       Action bar format for the staff mode.
       """)
-  private String actionBar = "<red>Vanished <gray>(</gray> {vanished} <gray>)</gray> <red>StaffChat <gray>(</gray> {staffChat} <gray>)</gray> TPS: <red>{tps}";
+  private String actionBar = "<red>Vanished <gray>(</gray> {vanished} <gray>)</gray> <red>StaffChat <gray>(</gray> {staffChat} <gray>)</gray> <red>TPS: <red>{tps}";
 
   public String toggledOn() {
     return toggledOn;

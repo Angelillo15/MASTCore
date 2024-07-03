@@ -60,6 +60,13 @@ public class StaffModePartial {
       """)
   private boolean disableVanishOnStaffDisable = true;
 
+  @Setting
+  @Comment("""
+      Enable or disable the action bar for the people who are in staff mode and
+      they have the nookure.staff.actionbar permission.
+      """)
+  private boolean actionBar = true;
+
   public boolean silentChestOpen() {
     return silentChestOpen;
   }
@@ -86,5 +93,9 @@ public class StaffModePartial {
 
   public boolean disableVanishOnStaffDisable() {
     return disableVanishOnStaffDisable;
+  }
+
+  public boolean actionBar() {
+    return actionBar;
   }
 }
