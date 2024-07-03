@@ -51,8 +51,10 @@ public final class LocationWrapper implements Serializable {
   }
 
   @Nullable
-  public static org.bukkit.Location toLocation(@NotNull LocationWrapper locationWrapper) {
-    Objects.requireNonNull(locationWrapper, "LocationWrapper cannot be null.");
+  public static org.bukkit.Location toLocation(@Nullable LocationWrapper locationWrapper) {
+    if (locationWrapper == null) {
+      return null;
+    }
 
     org.bukkit.World world = org.bukkit.Bukkit.getWorld(locationWrapper.getWorld());
 
