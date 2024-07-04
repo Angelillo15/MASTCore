@@ -12,11 +12,13 @@ import com.nookure.staff.api.config.bukkit.BukkitConfig;
 import com.nookure.staff.api.config.bukkit.BukkitMessages;
 import com.nookure.staff.api.config.bukkit.ItemsConfig;
 import com.nookure.staff.api.config.bukkit.partials.StaffModeBlockedCommands;
+import com.nookure.staff.api.config.bukkit.partials.VanishType;
 import com.nookure.staff.api.config.bukkit.partials.messages.note.NoteMessages;
 import com.nookure.staff.api.config.messaging.MessengerConfig;
 import com.nookure.staff.api.database.AbstractPluginConnection;
 import com.nookure.staff.api.event.EventManager;
 import com.nookure.staff.api.extension.StaffPlayerExtensionManager;
+import com.nookure.staff.api.extension.VanishExtension;
 import com.nookure.staff.api.manager.PlayerWrapperManager;
 import com.nookure.staff.api.messaging.Channels;
 import com.nookure.staff.api.messaging.EventMessenger;
@@ -25,6 +27,8 @@ import com.nookure.staff.paper.bootstrap.StaffBootstrapper;
 import com.nookure.staff.paper.command.*;
 import com.nookure.staff.paper.command.main.NookureStaffCommand;
 import com.nookure.staff.paper.extension.FreezePlayerExtension;
+import com.nookure.staff.paper.extension.vanish.InternalVanishExtension;
+import com.nookure.staff.paper.extension.vanish.SuperVanishExtension;
 import com.nookure.staff.paper.listener.OnPlayerJoin;
 import com.nookure.staff.paper.listener.OnPlayerLeave;
 import com.nookure.staff.paper.listener.freeze.OnFreezePlayerInteract;
@@ -273,7 +277,7 @@ public class NookureStaff {
       commandManager.registerCommand(injector.getInstance(StaffChatCommand.class));
     }
 
-    if (config.get().modules.isVanish()) {
+    if (config.get().modules.isVanish() && config.get().staffMode.vanishType() == VanishType.INTERNAL_VANISH) {
       commandManager.registerCommand(injector.getInstance(VanishCommand.class));
     }
 
@@ -285,6 +289,17 @@ public class NookureStaff {
   private void loadExtensions() {
     if (config.get().modules.isFreeze())
       extensionManager.registerExtension(FreezePlayerExtension.class);
+
+    if (config.get().staffMode.vanishType() == VanishType.INTERNAL_VANISH) {
+      extensionManager.registerExtension(InternalVanishExtension.class, VanishExtension.class);
+    } else {
+      logger.debug("Loading VanishType %s", config.get().staffMode.vanishType());
+      if (config.get().staffMode.vanishType() == VanishType.PREMIUM_VANISH ||
+          config.get().staffMode.vanishType() == VanishType.SUPER_VANISH
+      ) {
+        extensionManager.registerExtension(SuperVanishExtension.class, VanishExtension.class);
+      }
+    }
   }
 
   public void onDisable() {
