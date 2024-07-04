@@ -26,6 +26,7 @@ apacheCommons = "3.14.0"
 ebean = "15.1.0"
 flyway = "10.12.0"
 protoc = "4.27.1"
+super-vanish = "6.2.18-3"
 
 [libraries]
 hikariCP = { group = "com.zaxxer", name = "HikariCP", version.ref = "hikariCP" }
@@ -75,6 +76,7 @@ ebean = { group = "io.ebean", name = "ebean", version.ref = "ebean" }
 ebean-ddl-generator = { group = "io.ebean", name = "ebean-ddl-generator", version.ref = "ebean" }
 ebean-migration = { group = "io.ebean", name = "ebean-migration", version = "14.0.0" }
 protocol-buffers-lite = { group = "com.google.protobuf", name = "protobuf-javalite", version.ref = "protoc" }
+superVanish = { group = "com.github.LeonMangler", name = "SuperVanish", version.ref = "super-vanish" }
 
 [bundles]
 invAPI = ["invCore", "invAdvancedSlots", "invPagination", "configurableGui"]
