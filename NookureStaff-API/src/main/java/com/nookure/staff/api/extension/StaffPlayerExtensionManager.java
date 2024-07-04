@@ -7,13 +7,20 @@ import java.util.stream.Stream;
 
 @Singleton
 public class StaffPlayerExtensionManager {
-  private final ArrayList<Class<? extends StaffPlayerExtension>> extensions = new ArrayList<>();
-
-  public void registerExtension(Class<? extends StaffPlayerExtension> extension) {
-    extensions.add(extension);
+  public record Extension(Class<? extends StaffPlayerExtension> extension, Class<? extends StaffPlayerExtension> base) {
   }
 
-  public Stream<Class<? extends StaffPlayerExtension>> getExtensionsStream() {
+  private final ArrayList<Extension> extensions = new ArrayList<>();
+
+  public void registerExtension(Class<? extends StaffPlayerExtension> extension, Class<? extends StaffPlayerExtension> base) {
+    extensions.add(new Extension(extension, base));
+  }
+
+  public void registerExtension(Class<? extends StaffPlayerExtension> extension) {
+    extensions.add(new Extension(extension, extension));
+  }
+
+  public Stream<Extension> getExtensionsStream() {
     return extensions.stream();
   }
 
