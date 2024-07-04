@@ -11,6 +11,7 @@ dependencies {
   implementation(project(":NookureStaff-API"))
   implementation(project(":NookureStaff-Common"))
   compileOnly(libs.paperApi)
+  compileOnly(libs.superVanish)
   compileOnly(libs.libbyPaper)
   compileOnly(libs.configurateYaml)
   compileOnly(libs.jedis)
@@ -42,6 +43,14 @@ paper {
   main = "com.nookure.staff.paper.bootstrap.StaffBootstrapper"
   serverDependencies {
     register("PlaceholderAPI") {
+      required = false
+      load = PaperPluginDescription.RelativeLoadOrder.BEFORE
+    }
+    register("SuperVanish") {
+      required = false
+      load = PaperPluginDescription.RelativeLoadOrder.BEFORE
+    }
+    register("PremiumVanish") {
       required = false
       load = PaperPluginDescription.RelativeLoadOrder.BEFORE
     }
