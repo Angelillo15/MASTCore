@@ -67,6 +67,14 @@ public class StaffModePartial {
       """)
   private boolean actionBar = true;
 
+  @Setting
+  @Comment("""
+      The type of vanish to use when the player enters the staff mode.
+      Available options:
+      ----> INTERNAL_VANISH, SUPER_VANISH, PREMIUM_VANISH
+      """)
+  private VanishType vanishType = VanishType.INTERNAL_VANISH;
+
   public boolean silentChestOpen() {
     return silentChestOpen;
   }
@@ -97,5 +105,9 @@ public class StaffModePartial {
 
   public boolean actionBar() {
     return actionBar;
+  }
+
+  public VanishType vanishType() {
+    return vanishType;
   }
 }
