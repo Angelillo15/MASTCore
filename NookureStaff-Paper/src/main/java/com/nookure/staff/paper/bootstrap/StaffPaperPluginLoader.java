@@ -1,5 +1,6 @@
 package com.nookure.staff.paper.bootstrap;
 
+import com.nookure.staff.Constants;
 import io.papermc.paper.plugin.loader.PluginClasspathBuilder;
 import io.papermc.paper.plugin.loader.PluginLoader;
 import io.papermc.paper.plugin.loader.library.impl.MavenLibraryResolver;
@@ -17,8 +18,10 @@ public class StaffPaperPluginLoader implements PluginLoader {
     resolver.addDependency(new Dependency(new DefaultArtifact("io.ebean:ebean-migration:14.0.0"), null));
     resolver.addDependency(new Dependency(new DefaultArtifact("io.ebean:ebean-ddl-generator:15.1.0"), null));
     resolver.addDependency(new Dependency(new DefaultArtifact("com.google.inject:guice:7.0.0"), null));
+    resolver.addDependency(new Dependency(new DefaultArtifact("com.nookure.core:NookCore-Inventory:" + Constants.NOOKURE_INVENTORY_VERSION), null));
 
     resolver.addRepository(new RemoteRepository.Builder("paper", "default", "https://repo.papermc.io/repository/maven-public/").build());
+    resolver.addRepository(new RemoteRepository.Builder("nookure", "default", "https://maven.nookure.com/").build());
 
     classpathBuilder.addLibrary(resolver);
   }
