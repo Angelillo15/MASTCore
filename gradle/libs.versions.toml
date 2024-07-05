@@ -27,6 +27,7 @@ ebean = "15.1.0"
 flyway = "10.12.0"
 protoc = "4.27.1"
 super-vanish = "6.2.18-3"
+inventory = "1.0.0-2bc2d5c"
 
 [libraries]
 hikariCP = { group = "com.zaxxer", name = "HikariCP", version.ref = "hikariCP" }
@@ -77,6 +78,7 @@ ebean-ddl-generator = { group = "io.ebean", name = "ebean-ddl-generator", versio
 ebean-migration = { group = "io.ebean", name = "ebean-migration", version = "14.0.0" }
 protocol-buffers-lite = { group = "com.google.protobuf", name = "protobuf-javalite", version.ref = "protoc" }
 superVanish = { group = "com.github.LeonMangler", name = "SuperVanish", version.ref = "super-vanish" }
+nookure-core-inventory = { group = "com.nookure.core", name = "NookCore-Inventory", version.ref = "inventory" }
 
 [bundles]
 invAPI = ["invCore", "invAdvancedSlots", "invPagination", "configurableGui"]
