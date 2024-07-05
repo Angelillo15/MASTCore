@@ -1,13 +1,13 @@
 package com.nookure.staff.lib;
 
 import com.alessiodp.libby.Library;
+import com.nookure.staff.Constants;
 
 import java.util.ArrayList;
 import java.util.stream.Stream;
 
 public class DefaultLibRepo {
   private static final DefaultLibRepo INSTANCE = new DefaultLibRepo();
-
   private final ArrayList<Library> libraries = new ArrayList<>();
 
   private DefaultLibRepo() {
@@ -121,10 +121,24 @@ public class DefaultLibRepo {
         .resolveTransitiveDependencies(true)
         .build();
 
+    Library nookureInventory = Library.builder()
+        .groupId("com{}nookure{}core")
+        .artifactId("NookCore-Inventory")
+        .version(Constants.NOOKURE_INVENTORY_VERSION)
+        .isolatedLoad(false)
+        .resolveTransitiveDependencies(true)
+        .build();
+
     try {
       Class.forName("org.sqlite.JDBC");
     } catch (ClassNotFoundException e) {
       libraries.add(sqlite);
+    }
+
+    try {
+      Class.forName("com.nookure.core.inv.NookureInventoryEngine");
+    } catch (ClassNotFoundException e) {
+      libraries.add(nookureInventory);
     }
 
     Stream.of(hikariCP, storm, caffeine, jedis, commons, commonsPool2, json, obliviateInventoriesPagination, obliviateInventories, protobuf).forEach(libraries::add);
