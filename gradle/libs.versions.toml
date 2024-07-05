@@ -7,7 +7,7 @@ libly = "2.0.0-SNAPSHOT"
 reflections = "0.10.2"
 paperLib = "1.0.7"
 caffeine = "3.1.8"
-paper = "1.20.4-R0.1-SNAPSHOT"
+paper = "1.21-R0.1-SNAPSHOT"
 vault = "1.7.1"
 placeholderApi = "2.11.2"
 bungeecord = "1.21-R0.1-SNAPSHOT"
@@ -19,7 +19,7 @@ velocity = "3.1.1"
 guice = "7.0.0"
 configurate = "4.2.0-YAML-COMMENTED-SNAPSHOT"
 scoreboard = "2.0.1"
-shadowJar = "8.1.1"
+shadowJar = "8.1.8"
 pluginYml = "0.6.0"
 guava = "33.0.0-jre"
 apacheCommons = "3.14.0"
@@ -83,7 +83,7 @@ invAPI = ["invCore", "invAdvancedSlots", "invPagination", "configurableGui"]
 scoreboard = ["scoreboard", "scoreboard-implementation", "scoreboard-modern", "scoreboard-packetevents", "scoreboard-8"]
 
 [plugins]
-shadowJar = { id = "com.github.johnrengelman.shadow", version.ref = "shadowJar" }
+shadowJar = { id = "io.github.goooler.shadow", version.ref = "shadowJar" }
 pluginYmlBukkit = { id = "net.minecrell.plugin-yml.bukkit", version.ref = "pluginYml" }
 pluginYmlBungee = { id = "net.minecrell.plugin-yml.bungee", version.ref = "pluginYml" }
 pluginYmlPaper = { id = "net.minecrell.plugin-yml.paper", version.ref = "pluginYml" }

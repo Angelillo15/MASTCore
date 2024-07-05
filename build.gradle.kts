@@ -39,7 +39,7 @@ tasks.shadowJar {
 
 allprojects {
   apply<JavaPlugin>()
-  apply(plugin = "com.github.johnrengelman.shadow")
+  apply(plugin = rootProject.libs.plugins.shadowJar.get().pluginId)
 
   repositories {
     mavenCentral()
@@ -74,21 +74,22 @@ allprojects {
   }
 
   java {
-    sourceCompatibility = JavaVersion.VERSION_17
-    targetCompatibility = JavaVersion.VERSION_17
+    sourceCompatibility = JavaVersion.VERSION_21
+    targetCompatibility = JavaVersion.VERSION_21
+    toolchain.languageVersion.set(JavaLanguageVersion.of(21))
   }
 }
 
 tasks.withType(xyz.jpenilla.runtask.task.AbstractRun::class) {
   javaLauncher = javaToolchains.launcherFor {
     vendor = JvmVendorSpec.JETBRAINS
-    languageVersion = JavaLanguageVersion.of(17)
+    languageVersion = JavaLanguageVersion.of(21)
   }
   jvmArgs("-XX:+AllowEnhancedClassRedefinition", "-XX:+AllowRedefinitionToAddDeleteMethods")
 }
 
 tasks {
   runServer {
-    minecraftVersion("1.20.4")
+    minecraftVersion("1.21")
   }
 }
