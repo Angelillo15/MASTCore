@@ -17,6 +17,7 @@ dependencies {
   compileOnly(libs.jedis)
   compileOnly(libs.placeholderApi)
   compileOnly(libs.bundles.invAPI)
+  compileOnly(libs.nookure.core.inventory)
   bukkitLibrary(libs.guice)
   paperLibrary(libs.guice)
 }
