@@ -122,6 +122,7 @@ public class StaffBootstrapper extends JavaPlugin implements NookureStaffPlatfor
 
     manager.addMavenCentral();
     manager.addJitPack();
+    manager.addRepository("https://maven.nookure.com");
 
     DefaultLibRepo.getInstance().getLibraries().forEach(manager::loadLibrary);
   }
