@@ -464,8 +464,17 @@ public class StaffPaperPlayerWrapper extends PaperPlayerWrapper implements Staff
 
     String vanished = isInVanish() ? messages.get().placeholder.placeholderTrue() : messages.get().placeholder.placeholderFalse();
     String staffChat = staffChatAsDefault ? messages.get().placeholder.placeholderTrue() : messages.get().placeholder.placeholderFalse();
-    String tps = String.valueOf(Bukkit.getTPS()[0]);
+    double tpsCount = Bukkit.getTPS()[0];
+    String tps = String.valueOf(tpsCount);
     tps = tps.substring(0, Math.min(tps.length(), 5));
+
+    if (tpsCount > 18) {
+      tps = "<green>" + tps;
+    } else if (tpsCount > 15) {
+      tps = "<yellow>" + tps;
+    } else {
+      tps = "<red>" + tps;
+    }
 
     sendActionbar(MiniMessage.miniMessage().deserialize(
             messages.get().staffMode.actionBar()
