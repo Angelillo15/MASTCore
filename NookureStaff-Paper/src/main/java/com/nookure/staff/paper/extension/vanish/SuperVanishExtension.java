@@ -7,6 +7,7 @@ import de.myzelyam.api.vanish.VanishAPI;
 
 public class SuperVanishExtension extends VanishExtension {
   private final StaffPaperPlayerWrapper player;
+
   public SuperVanishExtension(StaffPlayerWrapper player) {
     super(player);
     this.player = (StaffPaperPlayerWrapper) player;
@@ -14,12 +15,14 @@ public class SuperVanishExtension extends VanishExtension {
 
   @Override
   public void enableVanish(boolean silent) {
-    VanishAPI.hidePlayer(player.getPlayer());
+    if (!isVanished())
+      VanishAPI.hidePlayer(player.getPlayer());
   }
 
   @Override
   public void disableVanish(boolean silent) {
-    VanishAPI.showPlayer(player.getPlayer());
+    if (isVanished())
+      VanishAPI.showPlayer(player.getPlayer());
   }
 
   @Override
