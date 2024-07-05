@@ -26,6 +26,7 @@ import com.nookure.staff.api.util.AbstractLoader;
 import com.nookure.staff.paper.bootstrap.StaffBootstrapper;
 import com.nookure.staff.paper.command.*;
 import com.nookure.staff.paper.command.main.NookureStaffCommand;
+import com.nookure.staff.paper.command.staff.StaffCommandParent;
 import com.nookure.staff.paper.extension.FreezePlayerExtension;
 import com.nookure.staff.paper.extension.vanish.InternalVanishExtension;
 import com.nookure.staff.paper.extension.vanish.SuperVanishExtension;
@@ -47,6 +48,7 @@ import com.nookure.staff.paper.listener.staff.state.*;
 import com.nookure.staff.paper.listener.staff.vanish.PlayerVanishListener;
 import com.nookure.staff.paper.listener.staff.vanish.StaffVanishListener;
 import com.nookure.staff.paper.loader.AddonsLoader;
+import com.nookure.staff.paper.loader.InventoryLoader;
 import com.nookure.staff.paper.loader.ItemsLoader;
 import com.nookure.staff.paper.loader.PlaceholderApiLoader;
 import com.nookure.staff.paper.messaging.BackendMessageMessenger;
@@ -243,7 +245,8 @@ public class NookureStaff {
     Stream.of(
         injector.getInstance(ItemsLoader.class),
         injector.getInstance(PlaceholderApiLoader.class),
-        injector.getInstance(AddonsLoader.class)
+        injector.getInstance(AddonsLoader.class),
+        injector.getInstance(InventoryLoader.class)
     ).forEach(AbstractLoader::load);
   }
 
@@ -265,7 +268,7 @@ public class NookureStaff {
     commandManager.registerCommand(injector.getInstance(NookureStaffCommand.class));
 
     if (config.get().modules.isStaffMode()) {
-      commandManager.registerCommand(injector.getInstance(StaffModeCommand.class));
+      commandManager.registerCommand(injector.getInstance(StaffCommandParent.class));
     }
 
     if (config.get().modules.isFreeze()) {
