@@ -31,4 +31,10 @@ public class InventoryLoader implements AbstractLoader {
       throw new RuntimeException(e);
     }
   }
+
+  @Override
+  public void reload() {
+    engine.set(null);
+    load();
+  }
 }
