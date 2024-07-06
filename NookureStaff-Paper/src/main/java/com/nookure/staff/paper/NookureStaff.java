@@ -64,11 +64,24 @@ import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Stream;
 
 @Singleton
 public class NookureStaff {
   private final ArrayList<Listener> listeners = new ArrayList<>();
+  private final List<Class<? extends AbstractLoader>> loadersClass;
+  private final List<AbstractLoader> loaders = new ArrayList<>();
+
+  {
+    loadersClass = List.of(
+        AddonsLoader.class,
+        InventoryLoader.class,
+        ItemsLoader.class,
+        PlaceholderApiLoader.class
+    );
+  }
+
   @Inject
   private AbstractPluginConnection connection;
   @Inject
@@ -242,12 +255,12 @@ public class NookureStaff {
   }
 
   private void loadLoaders() {
-    Stream.of(
-        injector.getInstance(ItemsLoader.class),
-        injector.getInstance(PlaceholderApiLoader.class),
-        injector.getInstance(AddonsLoader.class),
-        injector.getInstance(InventoryLoader.class)
-    ).forEach(AbstractLoader::load);
+    loadersClass.forEach(clazz -> {
+      AbstractLoader loader = injector.getInstance(clazz);
+      loaders.add(loader);
+    });
+
+    loaders.forEach(AbstractLoader::load);
   }
 
   private void loadTasks() {
@@ -314,6 +327,7 @@ public class NookureStaff {
 
     addonManager.disableAllAddons();
     connection.close();
+    loaders.forEach(AbstractLoader::unload);
   }
 
   public void reload() {
@@ -329,6 +343,7 @@ public class NookureStaff {
     unregisterListeners();
     connection.reload(config.get().database, plugin.getClass().getClassLoader());
     loadListeners();
+    loaders.forEach(AbstractLoader::reload);
 
     addonManager.reloadAllAddons();
   }
