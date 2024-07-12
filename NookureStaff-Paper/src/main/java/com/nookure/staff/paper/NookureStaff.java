@@ -300,6 +300,8 @@ public class NookureStaff {
     if (config.get().modules.isPlayerData() && config.get().modules.isUserNotes()) {
       commandManager.registerCommand(injector.getInstance(ParentNoteCommand.class));
     }
+
+    commandManager.registerCommand(injector.getInstance(PlayerListCommand.class));
   }
 
   private void loadExtensions() {
@@ -341,7 +343,6 @@ public class NookureStaff {
     ).forEach(c -> c.reload().join());
 
     unregisterListeners();
-    connection.reload(config.get().database, plugin.getClass().getClassLoader());
     loadListeners();
     loaders.forEach(AbstractLoader::reload);
 
