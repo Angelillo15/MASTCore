@@ -5,7 +5,9 @@ import com.google.inject.Injector;
 import com.nookure.staff.api.Logger;
 import com.nookure.staff.api.NookureStaff;
 import com.nookure.staff.api.PlayerWrapper;
+import com.nookure.staff.api.model.PlayerModel;
 import com.nookure.staff.api.util.ServerUtils;
+import io.ebean.Database;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.bukkit.entity.Player;
@@ -15,6 +17,7 @@ import org.spongepowered.configurate.objectmapping.meta.Comment;
 
 import java.util.Set;
 import java.util.UUID;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class PaperPlayerWrapper implements PlayerWrapper {
   @Comment("Package protected value")
@@ -25,6 +28,8 @@ public class PaperPlayerWrapper implements PlayerWrapper {
   private NookureStaff nookPlugin;
   @Inject
   private Logger logger;
+  @Inject
+  private AtomicReference<Database> db;
 
   @Override
   public void sendMessage(@NotNull Component component) {
@@ -136,5 +141,25 @@ public class PaperPlayerWrapper implements PlayerWrapper {
 
       return playerWrapper;
     }
+  }
+
+  @Override
+  public PlayerModel getPlayerModel() {
+    PlayerModel model = null;
+
+    try {
+      model = db.get().find(PlayerModel.class).where().eq("uuid", player.getUniqueId()).findOne();
+      if (model == null) {
+        throw new IllegalStateException("Player model not found");
+      }
+
+      return model;
+    } catch (Exception e) {
+      logger.severe("An error occurred while getting the player model");
+      logger.severe("Is the player model feature enabled?");
+      logger.severe(e);
+    }
+
+    return model;
   }
 }

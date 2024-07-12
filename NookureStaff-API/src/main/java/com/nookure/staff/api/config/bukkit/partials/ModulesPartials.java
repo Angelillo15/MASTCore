@@ -61,6 +61,14 @@ public class ModulesPartials {
       """)
   private boolean userNotes = true;
 
+  @Setting
+  @Comment("""
+      Enable or disble the player-list module.
+      This will allow you to list all the players on the server
+      and perform actions on them.
+      """)
+  private boolean playerList = true;
+
   public boolean isStaffMode() {
     return staffMode;
   }
@@ -87,5 +95,9 @@ public class ModulesPartials {
 
   public boolean isUserNotes() {
     return userNotes;
+  }
+
+  public boolean isPlayerList() {
+    return playerList;
   }
 }

@@ -1,0 +1,54 @@
+{# @pebvariable name="page" type="java.lang.Integer" #}
+{# @pebvariable name="pagination" type="com.nookure.core.inv.template.extension.PaginationItemExtension.PaginationData" #}
+{# @pebvariable name="canNext" type="java.lang.Boolean" #}
+{# @pebvariable name="canPrevious" type="java.lang.Boolean" #}
+{% macro paginationFooter(previousSlot=48, nextSlot=50, page=1, pagination) %}
+{% set canNext = page < pagination.lastPage %}
+{% set canPrevious = page > 1 %}
+<Item
+        {% if canPrevious %}
+        material="PAPER"
+        {% else %}
+        material="BARRIER"
+        {% endif %}
+        slot="48"
+>
+    <Name>
+    {% if canPrevious %}
+        [red]Previous Page[/red]
+    {% else %}
+        [red]🚫[/red]
+    {% endif %}
+    </Name>
+    {% if canPrevious %}
+    <Actions>
+        <Action
+          type="PREVIOUS_PAGE"
+        />
+    </Actions>
+    {% endif %}
+</Item>
+<Item
+        {% if canNext %}
+        material="PAPER"
+        {% else %}
+        material="BARRIER"
+        {% endif %}
+        slot="50"
+>
+    <Name>
+        {% if canNext %}
+        [red]Next Page[/red]
+        {% else %}
+        [red]🚫[/red]
+        {% endif %}
+    </Name>
+    {% if canNext %}
+    <Actions>
+        <Action
+          type="NEXT_PAGE"
+        />
+    </Actions>
+    {% endif %}
+</Item>
+{% endmacro %}

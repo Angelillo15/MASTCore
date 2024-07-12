@@ -4,6 +4,7 @@ import com.nookure.staff.api.command.CommandSender;
 import com.nookure.staff.api.model.NoteModel;
 import com.nookure.staff.api.model.PlayerModel;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * This service is used to manage the user notes.
@@ -74,4 +75,12 @@ public interface UserNoteService {
    * @param id    the id of the note to toggle
    */
   void toggleShowOnJoin(@NotNull CommandSender staff, @NotNull Long id);
+
+  /**
+   * Get a player by username.
+   *
+   * @param targetUsername the username of the player
+   */
+  @Nullable
+  PlayerModel getByUsername(String targetUsername);
 }

@@ -109,4 +109,12 @@ public abstract class CommandParent extends Command {
       parent.sendHelp(sender, label);
     }
   }
+
+  public Map<String, Command> getSubCommands() {
+    return subCommands;
+  }
+
+  public Map<String, CommandData> getSubCommandData() {
+    return subCommandData;
+  }
 }

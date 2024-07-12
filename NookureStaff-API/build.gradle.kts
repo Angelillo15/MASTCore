@@ -108,6 +108,7 @@ sourceSets {
         property("branch", grgit.branch.current().name)
         property("commit", grgit.head().abbreviatedId)
         property("time", System.currentTimeMillis().toString())
+        property("nookureInventoryVersion", rootProject.libs.nookure.core.inventory.get().version)
       }
     }
   }

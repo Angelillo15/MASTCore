@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE GuiLayout SYSTEM "https://nookure.com/xsd/inv/v1/GuiLayout.xsd">
+    {# @pebvariable name="page" type="java.lang.Integer" #}
+    {# @pebvariable name="pagination" type="com.nookure.core.inv.template.extension.PaginationItemExtension.PaginationData" #}
+    {# @pebvariable name="notes" type="java.util.List" #}
+    {# @pebvariable name="player" type="com.nookure.staff.api.PlayerWrapper" #}
+    {# @pebvariable name="note" type="com.nookure.staff.api.model.NoteModel" #}
+    {% import "/common/pagination-common.peb" %}
+<GuiLayout>
+    <Head>
+        <title>Notes for: {{ player.name }}</title>
+        <rows>6</rows>
+    </Head>
+    <Items>
+        {% set pag = pagination(9, 5, page, notes.size) %}
+        {% for i in range(pag.start, pag.end, 1) %}
+            {% set note = notes[i] %}
+            {% set slot = i - pag.start %}
+            <Item
+                    slot="{{ slot }}"
+                    material="PAPER"
+            >
+                <Name>#{{ note.id }}</Name>
+                <Lore>
+                    <LoreLine>
+                        [gray]Active: {{ note.active ? "[green]✔" : "[red]❌"}}
+                    </LoreLine>
+                    <LoreLine>
+                        [gray]Show on join: {{ note.showOnJoin ? "[green]✔" : "[red]❌"}}
+                    </LoreLine>
+                    {% if player.hasPermission("nookure.staff.notes.admin") %}
+                        <LoreLine>
+                            [gray]Show only to admin: {{ note.showOnlyToAdministrators ? "[green]✔" : "[red]❌"}}
+                        </LoreLine>
+                    {% endif %}
+                    <LoreLine>
+                        [gray]Note: [white]{{ note.note | abbreviate(40)}}
+                    </LoreLine>
+                </Lore>
+            </Item>
+        {% endfor %}
+        <Item slot="49" material="redstone">
+            <Name>[red]Back ↩</Name>
+            <Actions>
+                <Action type="RUN_COMMAND_AS_PLAYER" value="player-list {{ player.uniqueId }}"/>
+            </Actions>
+        </Item>
+        {{ paginationFooter(48, 50, page, pag) }}
+    </Items>
+</GuiLayout>

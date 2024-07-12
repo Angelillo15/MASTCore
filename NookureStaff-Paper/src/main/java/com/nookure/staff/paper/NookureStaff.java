@@ -26,6 +26,7 @@ import com.nookure.staff.api.util.AbstractLoader;
 import com.nookure.staff.paper.bootstrap.StaffBootstrapper;
 import com.nookure.staff.paper.command.*;
 import com.nookure.staff.paper.command.main.NookureStaffCommand;
+import com.nookure.staff.paper.command.staff.StaffCommandParent;
 import com.nookure.staff.paper.extension.FreezePlayerExtension;
 import com.nookure.staff.paper.extension.vanish.InternalVanishExtension;
 import com.nookure.staff.paper.extension.vanish.SuperVanishExtension;
@@ -47,6 +48,7 @@ import com.nookure.staff.paper.listener.staff.state.*;
 import com.nookure.staff.paper.listener.staff.vanish.PlayerVanishListener;
 import com.nookure.staff.paper.listener.staff.vanish.StaffVanishListener;
 import com.nookure.staff.paper.loader.AddonsLoader;
+import com.nookure.staff.paper.loader.InventoryLoader;
 import com.nookure.staff.paper.loader.ItemsLoader;
 import com.nookure.staff.paper.loader.PlaceholderApiLoader;
 import com.nookure.staff.paper.messaging.BackendMessageMessenger;
@@ -62,11 +64,24 @@ import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Stream;
 
 @Singleton
 public class NookureStaff {
   private final ArrayList<Listener> listeners = new ArrayList<>();
+  private final List<Class<? extends AbstractLoader>> loadersClass;
+  private final List<AbstractLoader> loaders = new ArrayList<>();
+
+  {
+    loadersClass = List.of(
+        AddonsLoader.class,
+        InventoryLoader.class,
+        ItemsLoader.class,
+        PlaceholderApiLoader.class
+    );
+  }
+
   @Inject
   private AbstractPluginConnection connection;
   @Inject
@@ -240,11 +255,12 @@ public class NookureStaff {
   }
 
   private void loadLoaders() {
-    Stream.of(
-        injector.getInstance(ItemsLoader.class),
-        injector.getInstance(PlaceholderApiLoader.class),
-        injector.getInstance(AddonsLoader.class)
-    ).forEach(AbstractLoader::load);
+    loadersClass.forEach(clazz -> {
+      AbstractLoader loader = injector.getInstance(clazz);
+      loaders.add(loader);
+    });
+
+    loaders.forEach(AbstractLoader::load);
   }
 
   private void loadTasks() {
@@ -265,7 +281,7 @@ public class NookureStaff {
     commandManager.registerCommand(injector.getInstance(NookureStaffCommand.class));
 
     if (config.get().modules.isStaffMode()) {
-      commandManager.registerCommand(injector.getInstance(StaffModeCommand.class));
+      commandManager.registerCommand(injector.getInstance(StaffCommandParent.class));
     }
 
     if (config.get().modules.isFreeze()) {
@@ -283,6 +299,18 @@ public class NookureStaff {
 
     if (config.get().modules.isPlayerData() && config.get().modules.isUserNotes()) {
       commandManager.registerCommand(injector.getInstance(ParentNoteCommand.class));
+    }
+
+    if (config.get().modules.isPlayerList()) {
+      if (!config.get().modules.isPlayerData()) {
+        logger.severe("PlayerList module requires PlayerData module to be enabled, disabling PlayerList module");
+      } else {
+        if (!config.get().modules.isUserNotes()) {
+          logger.warning("PlayerList module requires UserNotes module to be enabled, some features may not work");
+        }
+
+        commandManager.registerCommand(injector.getInstance(PlayerListCommand.class));;
+      }
     }
   }
 
@@ -311,6 +339,7 @@ public class NookureStaff {
 
     addonManager.disableAllAddons();
     connection.close();
+    loaders.forEach(AbstractLoader::unload);
   }
 
   public void reload() {
@@ -324,8 +353,8 @@ public class NookureStaff {
     ).forEach(c -> c.reload().join());
 
     unregisterListeners();
-    connection.reload(config.get().database, plugin.getClass().getClassLoader());
     loadListeners();
+    loaders.forEach(AbstractLoader::reload);
 
     addonManager.reloadAllAddons();
   }
