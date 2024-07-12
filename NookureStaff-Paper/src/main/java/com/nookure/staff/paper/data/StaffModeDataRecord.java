@@ -22,13 +22,13 @@ public class StaffModeDataRecord implements Serializable {
       ItemStack[] playerInventoryArmor,
       ItemStack[] staffVault,
       boolean staffMode,
-      Location enabledLocationWrapper
+      LocationWrapper enabledLocationWrapper
   ) {
     this.playerInventory = playerInventory;
     this.playerInventoryArmor = playerInventoryArmor;
     this.staffVault = staffVault;
     this.staffMode = staffMode;
-    this.enabledLocationWrapper = new LocationWrapper(enabledLocationWrapper);
+    this.enabledLocationWrapper = enabledLocationWrapper;
   }
 
   public ItemStack[] playerInventory() {

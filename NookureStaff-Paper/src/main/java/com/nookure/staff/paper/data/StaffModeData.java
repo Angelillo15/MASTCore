@@ -3,6 +3,7 @@ package com.nookure.staff.paper.data;
 import com.nookure.staff.api.Logger;
 import com.nookure.staff.api.NookureStaff;
 import com.nookure.staff.api.PlayerWrapper;
+import com.nookure.staff.api.util.LocationWrapper;
 import com.nookure.staff.paper.PaperPlayerWrapper;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -69,7 +70,7 @@ public class StaffModeData {
           bukkitPlayer.getInventory().getArmorContents(),
           new ItemStack[0],
           false,
-          ((PaperPlayerWrapper) player).getPlayer().getLocation()
+          new LocationWrapper(((PaperPlayerWrapper) player).getPlayer().getLocation())
       ), player);
     }
 
