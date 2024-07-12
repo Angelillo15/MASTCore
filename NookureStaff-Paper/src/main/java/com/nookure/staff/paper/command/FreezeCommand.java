@@ -5,6 +5,7 @@ import com.nookure.staff.api.Permissions;
 import com.nookure.staff.api.PlayerWrapper;
 import com.nookure.staff.api.StaffPlayerWrapper;
 import com.nookure.staff.api.command.CommandData;
+import com.nookure.staff.api.command.CommandSender;
 import com.nookure.staff.api.command.StaffCommand;
 import com.nookure.staff.api.config.ConfigurationContainer;
 import com.nookure.staff.api.config.bukkit.BukkitConfig;
@@ -124,5 +125,10 @@ public class FreezeCommand extends StaffCommand {
     } else {
       freezeExtension.freezePlayer(target);
     }
+  }
+
+  @Override
+  public @NotNull List<String> onTabComplete(@NotNull CommandSender sender, @NotNull String label, @NotNull List<String> args) {
+    return getSuggestionFilter(Bukkit.getOnlinePlayers().stream().map(Player::getName).toList(), args.getFirst());
   }
 }
