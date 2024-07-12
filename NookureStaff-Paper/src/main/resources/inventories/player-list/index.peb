@@ -6,7 +6,7 @@
     {# @pebvariable name="staff" type="com.nookure.staff.paper.StaffPaperPlayerWrapper" #}
     {# @pebvariable name="player" type="com.nookure.staff.api.PlayerWrapper" #}
     {% import "/common/pagination-common.peb" %}
-    {% import "/staff/partials/player-lore.peb" %}
+    {% import "/player-list/partials/player-lore.peb" %}
 <GuiLayout>
     <Head>
         <title>Player List</title>
