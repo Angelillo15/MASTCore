@@ -5,6 +5,7 @@ import com.nookure.staff.api.Permissions;
 import com.nookure.staff.api.command.Command;
 import com.nookure.staff.api.command.CommandData;
 import com.nookure.staff.api.command.CommandSender;
+import com.nookure.staff.api.config.ConfigurationContainer;
 import com.nookure.staff.api.config.bukkit.partials.messages.note.NoteMessages;
 import com.nookure.staff.api.service.UserNoteService;
 import org.bukkit.Bukkit;
@@ -22,15 +23,15 @@ public class AddNoteCommand extends Command {
   @Inject
   private UserNoteService userNoteService;
   @Inject
-  private NoteMessages noteMessages;
+  private ConfigurationContainer<NoteMessages> noteMessages;
 
   @Override
   public void onCommand(@NotNull CommandSender sender, @NotNull String label, @NotNull List<String> args) {
     if (args.size() < 3) {
-      sender.sendMiniMessage(noteMessages.commands.getAddNoteUsage());
+      sender.sendMiniMessage(noteMessages.get().commands.getAddNoteUsage());
     }
 
-    String target = args.get(0);
+    String target = args.getFirst();
     boolean showOnJoin;
     boolean showOnlyToAdmins = false;
     String note;
@@ -42,8 +43,8 @@ public class AddNoteCommand extends Command {
       return;
     }
 
-    if (args.get(args.size() - 1).equalsIgnoreCase("true") || args.get(args.size() - 1).equalsIgnoreCase("false")) {
-      showOnlyToAdmins = Boolean.parseBoolean(args.get(args.size() - 1));
+    if (args.getLast().equalsIgnoreCase("true") || args.getLast().equalsIgnoreCase("false")) {
+      showOnlyToAdmins = Boolean.parseBoolean(args.getLast());
       note = String.join(" ", args.subList(2, args.size() - 1));
     } else {
       note = String.join(" ", args.subList(2, args.size()));
@@ -57,15 +58,15 @@ public class AddNoteCommand extends Command {
     return switch (args.size()) {
       case 1 -> Bukkit.getOnlinePlayers().stream()
           .map(Player::getName)
-          .filter(name -> name.startsWith(args.get(0) == null ? "" : args.get(0)))
+          .filter(name -> name.startsWith(args.getFirst() == null ? "" : args.getFirst()))
           .toList();
       case 2 -> getSuggestionFilter(List.of("<show on join>", "true", "false"), args.get(1));
       case 3 -> getSuggestionFilter(List.of("<note>"), args.get(2));
       default -> {
         if (sender.hasPermission(Permissions.STAFF_NOTES_ADMIN)) {
-          yield getSuggestionFilter(List.of("<note> | <show only to admins>", "true", "false"), args.get(args.size() - 1));
+          yield getSuggestionFilter(List.of("<note> | <show only to admins>", "true", "false"), args.getLast());
         } else {
-          yield getSuggestionFilter(List.of("<note>"), args.get(args.size() - 1));
+          yield getSuggestionFilter(List.of("<note>"), args.getLast());
         }
       }
     };
