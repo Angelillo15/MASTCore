@@ -1,0 +1,11 @@
+{# @pebvariable name="player" type="com.nookure.staff.api.PlayerWrapper" #}
+{% macro playerLore(player) %}
+<Lore>
+    <LoreLine>
+        [gray]Staff: {{ player.hasPermission("nookure.staff") ? "[green]✔" : "[red]❌" }}
+    </LoreLine>
+    <LoreLine>
+        [gray]Ping: [green]{{ player.ping }}
+    </LoreLine>
+</Lore>
+{% endmacro %}
