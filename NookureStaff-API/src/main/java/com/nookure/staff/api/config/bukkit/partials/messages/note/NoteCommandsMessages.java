@@ -22,6 +22,10 @@ public class NoteCommandsMessages {
   @Comment("The command usage message for the /note toggle-show command.")
   private String toggleShowUsage = "{prefix} <red>Usage: /note toggle-show <note id>";
 
+  @Setting
+  @Comment("The command usage message for the /note inventory command.")
+  private String inventoryUsage = "{prefix} <red>Usage: /note inventory <player>";
+
   public String getAddNoteUsage() {
     return addNoteUsage;
   }
@@ -36,5 +40,9 @@ public class NoteCommandsMessages {
 
   public String getToggleShowUsage() {
     return toggleShowUsage;
+  }
+
+  public String getInventoryUsage() {
+    return inventoryUsage;
   }
 }
