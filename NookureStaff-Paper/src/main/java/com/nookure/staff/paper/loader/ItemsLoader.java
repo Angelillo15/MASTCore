@@ -26,6 +26,8 @@ public class ItemsLoader implements AbstractLoader {
 
     itemConfig.get().staffItems.getItems().forEach((name, item) -> {
       logger.debug("Loading %s item class", name);
+      if (!item.isEnabled()) return;
+
       switch (Items.valueOf(name.toUpperCase())) {
         case VANISH -> manager.addItem(name, injector.getInstance(VanishItem.class));
         case ENDER_CHEST -> manager.addItem(name, injector.getInstance(EnderchestItem.class));
