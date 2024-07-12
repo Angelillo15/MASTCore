@@ -28,9 +28,10 @@ public class AddNoteCommand extends Command {
   public void onCommand(@NotNull CommandSender sender, @NotNull String label, @NotNull List<String> args) {
     if (args.size() < 3) {
       sender.sendMiniMessage(noteMessages.commands.getAddNoteUsage());
+      return;
     }
 
-    String target = args.get(0);
+    String target = args.getFirst();
     boolean showOnJoin;
     boolean showOnlyToAdmins = false;
     String note;
@@ -42,8 +43,8 @@ public class AddNoteCommand extends Command {
       return;
     }
 
-    if (args.get(args.size() - 1).equalsIgnoreCase("true") || args.get(args.size() - 1).equalsIgnoreCase("false")) {
-      showOnlyToAdmins = Boolean.parseBoolean(args.get(args.size() - 1));
+    if (args.getLast().equalsIgnoreCase("true") || args.getLast().equalsIgnoreCase("false")) {
+      showOnlyToAdmins = Boolean.parseBoolean(args.getLast());
       note = String.join(" ", args.subList(2, args.size() - 1));
     } else {
       note = String.join(" ", args.subList(2, args.size()));
