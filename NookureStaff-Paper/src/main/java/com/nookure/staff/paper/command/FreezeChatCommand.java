@@ -4,6 +4,7 @@ import com.google.inject.Inject;
 import com.nookure.staff.api.Permissions;
 import com.nookure.staff.api.StaffPlayerWrapper;
 import com.nookure.staff.api.command.CommandData;
+import com.nookure.staff.api.command.CommandSender;
 import com.nookure.staff.api.command.StaffCommand;
 import com.nookure.staff.api.config.ConfigurationContainer;
 import com.nookure.staff.api.config.bukkit.BukkitMessages;
@@ -39,7 +40,7 @@ public class FreezeChatCommand extends StaffCommand {
       return;
     }
 
-    String playerName = args.get(0);
+    String playerName = args.getFirst();
     String messageArg = String.join(" ", args.subList(1, args.size()));
 
     Player player = Bukkit.getPlayer(playerName);
@@ -69,5 +70,13 @@ public class FreezeChatCommand extends StaffCommand {
     });
 
     serverUtils.broadcast(message, Permissions.STAFF_FREEZE);
+  }
+
+  @Override
+  public @NotNull List<String> onTabComplete(@NotNull CommandSender sender, @NotNull String label, @NotNull List<String> args) {
+    return getSuggestionFilter(Bukkit.getOnlinePlayers().stream()
+        .filter(player -> freezeManager.isFrozen(player.getUniqueId()))
+        .map(Player::getName).toList(), args.getFirst()
+    );
   }
 }
