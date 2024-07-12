@@ -301,7 +301,17 @@ public class NookureStaff {
       commandManager.registerCommand(injector.getInstance(ParentNoteCommand.class));
     }
 
-    commandManager.registerCommand(injector.getInstance(PlayerListCommand.class));
+    if (config.get().modules.isPlayerList()) {
+      if (!config.get().modules.isPlayerData()) {
+        logger.severe("PlayerList module requires PlayerData module to be enabled, disabling PlayerList module");
+      } else {
+        if (!config.get().modules.isUserNotes()) {
+          logger.warning("PlayerList module requires UserNotes module to be enabled, some features may not work");
+        }
+
+        commandManager.registerCommand(injector.getInstance(PlayerListCommand.class));;
+      }
+    }
   }
 
   private void loadExtensions() {
