@@ -4,6 +4,8 @@
     {# @pebvariable name="nookurePlayer" type="com.nookure.staff.api.PlayerWrapper" #}
     {# @pebvariable name="uuid" type="java.lang.String" #}
     {# @pebvariable name="model" type="com.nookure.staff.api.model.PlayerModel" #}
+    {# @pebvariable name="canBeFrozen" type="java.lang.Boolean" #}
+    {# @pebvariable name="hasNote" type="java.lang.Boolean" #}
 <GuiLayout>
     {% set player = nookurePlayer(uuid) %}
     {% set model = player.playerModel %}
@@ -14,19 +16,28 @@
     <Items>
         {% for i in range(0, 44) %}
             <Item slot="{{ i }}" material="BLACK_STAINED_GLASS_PANE">
-                <Name> </Name>
+                <Name></Name>
             </Item>
         {% endfor %}
+        {% set hasNote = model.getNotes().size() > 0 %}
         <Item slot="10" material="paper">
             <Name>[light_purple]Player Notes</Name>
             <Lore>
-                <LoreLine>
-                    [gray]Click here to view this player's notes.
-                </LoreLine>
-                <LoreLine>
-                    [red]This player doesn't have any note!
-                </LoreLine>
+                    {% if hasNote %}
+                    <LoreLine>
+                        [gray]Click here to view this player's notes.
+                    </LoreLine>
+                    {% else %}
+                    <LoreLine>
+                        [red]This player doesn't have any note!
+                    </LoreLine>
+                    {% endif %}
             </Lore>
+            {% if hasNote %}
+                <Actions>
+                    <Action type="RUN_COMMAND_AS_PLAYER" value="note inventory {{ player.name }}"/>
+                </Actions>
+            {% endif %}
         </Item>
         <Item slot="16" material="ender_eye">
             <Name>[light_purple]Teleport to Player</Name>
@@ -35,6 +46,10 @@
                     [gray]Click here to teleport to this player.
                 </LoreLine>
             </Lore>
+            <Actions>
+                <Action type="RUN_COMMAND_AS_PLAYER" value="tp {{ player.name }}"/>
+                <Action type="CLOSE_INVENTORY"/>
+            </Actions>
         </Item>
         <Item slot="21" material="chest">
             <Name>[light_purple]Open Player Inventory</Name>
@@ -64,12 +79,25 @@
             </Lore>
         </Item>
         <Item slot="28" material="blue_ice">
+            {% set canBeFrozen = not player.hasPermission("nookure.staff.freeze.bypass") %}
             <Name>[light_purple]Freeze Player</Name>
             <Lore>
-                <LoreLine>
-                    [gray]Click here to freeze this player.
-                </LoreLine>
+                    {% if canBeFrozen %}
+                    <LoreLine>
+                        [gray]Click here to freeze this player.
+                    </LoreLine>
+                    {% else %}
+                    <LoreLine>
+                        [red]You can't freeze this player.
+                    </LoreLine>
+                    {% endif %}
             </Lore>
+            {% if canBeFrozen %}
+                <Actions>
+                    <Action type="RUN_COMMAND_AS_PLAYER" value="freeze {{ player.name }}"/>
+                    <Action type="CLOSE_INVENTORY"/>
+                </Actions>
+            {% endif %}
         </Item>
         <Item slot="34" material="blaze_rod">
             <Name>[light_purple]Kick Player</Name>
@@ -81,6 +109,10 @@
                     [gray]from the server.
                 </LoreLine>
             </Lore>
+            <Actions>
+                <Action type="RUN_COMMAND_AS_PLAYER" value="kick {{ player.name }}"/>
+                <Action type="CLOSE_INVENTORY"/>
+            </Actions>
         </Item>
     </Items>
 </GuiLayout>
