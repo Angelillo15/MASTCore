@@ -86,6 +86,7 @@ tasks.withType(xyz.jpenilla.runtask.task.AbstractRun::class) {
     languageVersion = JavaLanguageVersion.of(21)
   }
   jvmArgs("-XX:+AllowEnhancedClassRedefinition", "-XX:+AllowRedefinitionToAddDeleteMethods")
+  systemProperties["nkstaff.inventory.replace"] = "true"
 }
 
 tasks {
