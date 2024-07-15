@@ -55,10 +55,10 @@ public class StaffBootstrapper extends JavaPlugin implements NookureStaffPlatfor
         Component.text("NookureStaff v" + Constants.VERSION + " by Angelillo15").color(NamedTextColor.LIGHT_PURPLE)
     );
 
+    loadLogger();
     loadDependencies();
     checkMAStaff();
 
-    loadLogger();
     loadInjector();
     loadPlugin();
     new Metrics(this, 16548);
@@ -112,8 +112,9 @@ public class StaffBootstrapper extends JavaPlugin implements NookureStaffPlatfor
         logger.warning("------------------------------------------------------------------");
         logger.warning("DONT IGNORE THIS MESSAGE, IT'S IMPORTANT!");
         logger.warning("There was several issues while trying to load some paper-plugin related stuff.");
-        logger.warning("If you are using Paper >= 1.8 <= 1.19.4, you might experience some issues.");
-        logger.warning("Please, report this in the discord server.");
+        logger.warning("This isn't an error exactly");
+        logger.warning("Please consider using the latest paper version");
+        logger.warning("If you are using the latest paper version, please report this issue to the plugin developer");
         logger.warning("------------------------------------------------------------------");
       }
     } catch (ClassNotFoundException e) {
