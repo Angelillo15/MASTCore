@@ -11,7 +11,7 @@ import com.nookure.staff.api.config.ConfigurationContainer;
 import com.nookure.staff.api.config.bukkit.BukkitConfig;
 import com.nookure.staff.api.config.bukkit.BukkitMessages;
 import com.nookure.staff.api.config.bukkit.ItemsConfig;
-import com.nookure.staff.api.config.bukkit.partials.StaffModeBlockedCommands;
+import com.nookure.staff.api.config.bukkit.StaffModeBlockedCommands;
 import com.nookure.staff.api.config.bukkit.partials.VanishType;
 import com.nookure.staff.api.config.bukkit.partials.messages.note.NoteMessages;
 import com.nookure.staff.api.config.messaging.MessengerConfig;
@@ -39,6 +39,7 @@ import com.nookure.staff.paper.listener.freeze.OnPlayerChatFreeze;
 import com.nookure.staff.paper.listener.player.OnPlayerDataJoin;
 import com.nookure.staff.paper.listener.server.OnServerBroadcast;
 import com.nookure.staff.paper.listener.staff.OnPlayerInStaffChatTalk;
+import com.nookure.staff.paper.listener.staff.OnShiftAndRightClick;
 import com.nookure.staff.paper.listener.staff.OnStaffLeave;
 import com.nookure.staff.paper.listener.staff.command.OnStaffPlayerCommand;
 import com.nookure.staff.paper.listener.staff.items.OnInventoryClick;
@@ -205,6 +206,14 @@ public class NookureStaff {
 
     if (config.get().modules.isPlayerData() && config.get().modules.isUserNotes()) {
       registerListener(OnPlayerNoteJoin.class);
+    }
+
+    if (config.get().playerActions.shiftAndRightClickToInspect()) {
+      if (config.get().modules.isPlayerList() && config.get().modules.isPlayerData() && config.get().modules.isUserNotes()) {
+        registerListener(OnShiftAndRightClick.class);
+      } else {
+        logger.warning("PlayerActions module requires PlayerList, PlayerData and UserNotes modules to be enabled, disabling PlayerActions module");
+      }
     }
   }
 
