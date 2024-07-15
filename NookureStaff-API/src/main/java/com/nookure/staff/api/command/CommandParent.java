@@ -82,10 +82,10 @@ public abstract class CommandParent extends Command {
   @Override
   public @NotNull List<String> onTabComplete(@NotNull CommandSender sender, @NotNull String label, @NotNull List<String> args) {
     if (args.size() == 1) {
-      return subCommandNames;
+      return getSuggestionFilter(subCommandNames, args.getFirst());
     }
 
-    Optional<Command> optionalCommand = Optional.ofNullable(subCommands.get(args.get(0)));
+    Optional<Command> optionalCommand = Optional.ofNullable(subCommands.get(args.getFirst()));
     return optionalCommand.map(command -> command.onTabComplete(sender, label, args.subList(1, args.size()))).orElseGet(List::of);
   }
 
