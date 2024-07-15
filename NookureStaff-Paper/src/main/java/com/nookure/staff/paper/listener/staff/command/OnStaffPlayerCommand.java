@@ -4,7 +4,7 @@ import com.google.inject.Inject;
 import com.nookure.staff.api.Permissions;
 import com.nookure.staff.api.StaffPlayerWrapper;
 import com.nookure.staff.api.config.ConfigurationContainer;
-import com.nookure.staff.api.config.bukkit.partials.StaffModeBlockedCommands;
+import com.nookure.staff.api.config.bukkit.StaffModeBlockedCommands;
 import com.nookure.staff.api.manager.PlayerWrapperManager;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
