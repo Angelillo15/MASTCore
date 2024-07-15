@@ -74,6 +74,20 @@ public final class Permissions {
   public static final String STAFF_FREEZE = "nookure.staff.freeze";
 
   /**
+   * Permission to see the inventory of a player.
+   */
+  public static final String STAFF_INVSEE = "nookure.staff.invsee";
+
+  /**
+   * Permission to see the enderchest of a player.
+   */
+  public static final String STAFF_ENDERCHEST = "nookure.staff.enderchest";
+  /**
+   * Permission to modify the inventory of a player.
+   */
+  public static final String STAFF_INVSEE_MODIFY = "nookure.staff.invsee.modify";
+
+  /**
    * Permission to bypass the freeze.
    */
   public static final String STAFF_FREEZE_BYPASS = "nookure.staff.freeze.bypass";
