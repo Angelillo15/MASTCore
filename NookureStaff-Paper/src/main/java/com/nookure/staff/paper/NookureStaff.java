@@ -363,6 +363,9 @@ public class NookureStaff {
         noteMessages
     ).forEach(c -> c.reload().join());
 
+    unregisterListeners();
+    loadBukkitListeners();
+
     loaders.forEach(AbstractLoader::reload);
     addonManager.reloadAllAddons();
   }
