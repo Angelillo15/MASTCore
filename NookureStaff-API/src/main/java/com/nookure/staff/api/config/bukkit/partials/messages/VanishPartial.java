@@ -28,6 +28,10 @@ public class VanishPartial {
       """)
   private String vanishDisabledBroadcast = "<yellow>{player} has joined the game.";
 
+  @Setting
+  @Comment("Message sent to the player when he/she joins the server and is still in vanish mode.")
+  private String youAreStillInVanish = "<green>You are still in vanish mode.";
+
   public String vanishEnabled() {
     return vanishEnabled;
   }
@@ -42,5 +46,9 @@ public class VanishPartial {
 
   public String vanishDisabledBroadcast() {
     return vanishDisabledBroadcast;
+  }
+
+  public String youAreStillInVanish() {
+    return youAreStillInVanish;
   }
 }
