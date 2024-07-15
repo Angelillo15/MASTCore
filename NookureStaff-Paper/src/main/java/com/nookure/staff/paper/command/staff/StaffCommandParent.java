@@ -75,6 +75,7 @@ public class StaffCommandParent extends CommandParent {
 
       @Override
       public Class<? extends Command>[] subCommands() {
+        //noinspection unchecked
         return new Class[0];
       }
     });
