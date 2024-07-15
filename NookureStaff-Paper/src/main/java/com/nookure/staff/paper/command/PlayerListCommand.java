@@ -36,7 +36,12 @@ public class PlayerListCommand extends Command {
   public void onCommand(@NotNull CommandSender sender, @NotNull String label, @NotNull List<String> args) {
     if (sender instanceof PaperPlayerWrapper player) {
       if (args.isEmpty()) {
-        engine.get().openAsync(player.getPlayer(), InventoryList.PLAYER_LIST, "players", wrapper.stream().toList(), "page", 1);
+        engine.get().openAsync(player.getPlayer(), InventoryList.PLAYER_LIST, "players", wrapper.stream().toList(), "page", 1, "staff", player);
+        return;
+      }
+
+      if (!sender.hasPermission(Permissions.PLAYER_ACTIONS_PERMISSION)) {
+        sender.sendMiniMessage(messages.get().noPermission());
         return;
       }
 
