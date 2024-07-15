@@ -177,7 +177,7 @@ public class NookureStaff {
       registerListener(OnOpenChest.class);
     }
 
-    if (config.get().modules.isVanish()) {
+    if (config.get().modules.isVanish() && config.get().staffMode.vanishType() == VanishType.INTERNAL_VANISH) {
       Stream.of(
           PlayerVanishListener.class,
           StaffVanishListener.class
