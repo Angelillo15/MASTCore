@@ -2,6 +2,8 @@ package com.nookure.staff.paper.listener.staff.vanish;
 
 import com.google.inject.Inject;
 import com.nookure.staff.api.StaffPlayerWrapper;
+import com.nookure.staff.api.config.ConfigurationContainer;
+import com.nookure.staff.api.config.bukkit.BukkitMessages;
 import com.nookure.staff.api.manager.PlayerWrapperManager;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -15,6 +17,8 @@ import java.util.Optional;
 public class StaffVanishListener implements Listener {
   @Inject
   private PlayerWrapperManager<Player> playerWrapperManager;
+  @Inject
+  private ConfigurationContainer<BukkitMessages> messages;
 
   @EventHandler(
       priority = EventPriority.HIGH
@@ -26,6 +30,7 @@ public class StaffVanishListener implements Listener {
 
     if (playerWrapper.get().isInVanish()) {
       event.joinMessage(null);
+      playerWrapper.get().sendMiniMessage(messages.get().vanish.youAreStillInVanish());
     }
   }
 
