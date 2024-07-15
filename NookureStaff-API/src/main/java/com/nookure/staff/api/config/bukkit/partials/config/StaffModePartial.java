@@ -1,5 +1,6 @@
-package com.nookure.staff.api.config.bukkit.partials;
+package com.nookure.staff.api.config.bukkit.partials.config;
 
+import com.nookure.staff.api.config.bukkit.partials.VanishType;
 import org.spongepowered.configurate.objectmapping.ConfigSerializable;
 import org.spongepowered.configurate.objectmapping.meta.Comment;
 import org.spongepowered.configurate.objectmapping.meta.Setting;
