@@ -1,0 +1,14 @@
+{# @pebvariable name="staff" type="com.nookure.staff.paper.StaffPaperPlayerWrapper" #}
+{% macro staffLore(staff) %}
+<Lore>
+    <LoreLine>
+        [gray]Vanished: {{ staff.inVanish ? "[green]✔" : "[red]❌" }}
+    </LoreLine>
+    <LoreLine>
+        [gray]InStaffMode: {{ staff.inStaffMode ? "[green]✔" : "[red]❌" }}
+    </LoreLine>
+    <LoreLine>
+        [gray]Ping: [green]{{ staff.ping }}
+    </LoreLine>
+</Lore>
+{% endmacro %}

@@ -1,5 +1,6 @@
-package com.nookure.staff.api.config.bukkit.partials;
+package com.nookure.staff.api.config.bukkit.partials.config;
 
+import com.nookure.staff.api.config.bukkit.partials.VanishType;
 import org.spongepowered.configurate.objectmapping.ConfigSerializable;
 import org.spongepowered.configurate.objectmapping.meta.Comment;
 import org.spongepowered.configurate.objectmapping.meta.Setting;
@@ -60,6 +61,21 @@ public class StaffModePartial {
       """)
   private boolean disableVanishOnStaffDisable = true;
 
+  @Setting
+  @Comment("""
+      Enable or disable the action bar for the people who are in staff mode and
+      they have the nookure.staff.actionbar permission.
+      """)
+  private boolean actionBar = true;
+
+  @Setting
+  @Comment("""
+      The type of vanish to use when the player enters the staff mode.
+      Available options:
+      ----> INTERNAL_VANISH, SUPER_VANISH, PREMIUM_VANISH
+      """)
+  private VanishType vanishType = VanishType.INTERNAL_VANISH;
+
   public boolean silentChestOpen() {
     return silentChestOpen;
   }
@@ -86,5 +102,13 @@ public class StaffModePartial {
 
   public boolean disableVanishOnStaffDisable() {
     return disableVanishOnStaffDisable;
+  }
+
+  public boolean actionBar() {
+    return actionBar;
+  }
+
+  public VanishType vanishType() {
+    return vanishType;
   }
 }

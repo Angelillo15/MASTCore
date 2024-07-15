@@ -41,8 +41,6 @@ public class PluginConnection extends AbstractPluginConnection {
   private NookureStaff plugin;
   @Inject
   private AtomicReference<Database> databaseReference;
-  @Inject
-  private MigrationService migrationService;
   private Storm storm;
   private ClassLoader classLoader;
   private Connection connection;

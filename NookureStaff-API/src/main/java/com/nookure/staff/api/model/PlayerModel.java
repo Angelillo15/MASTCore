@@ -7,6 +7,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 
 import java.time.Instant;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -77,6 +78,13 @@ public class PlayerModel extends BaseDomain implements Object2Text {
   public PlayerModel setFirstIp(String firstIp) {
     this.firstIp = firstIp;
     return this;
+  }
+
+  public List<NoteModel> getNotes() {
+    return db().find(NoteModel.class)
+        .where()
+        .eq("player", this)
+        .findList();
   }
 
   @Override

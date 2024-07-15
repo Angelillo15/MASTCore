@@ -34,6 +34,35 @@ public final class Permissions {
   public static final String STAFF_ADMIN_PERMISSION = "nookure.staff.admin";
 
   /**
+   * Permission to use the player list command.
+   * This permission is required to use the player list command.
+   */
+  public static final String PLAYER_LIST_PERMISSION = "nookure.staff.player-list";
+
+  /**
+   * Permission to use the player actions command.
+   * This permission is required to use the player actions command.
+   */
+  public static final String PLAYER_ACTIONS_PERMISSION = "nookure.staff.players.actions";
+
+  /**
+   * Permission to use the helpop command.
+   * This permission is required to use the helpop command.
+   * The helpop command is used to request help from staff members.
+   * The staff members with the permission {@link #HELPOP_RECEIVE_PERMISSION}
+   */
+  public static final String HELPOP_COMMAND_PERMISSION = "nookure.staff.helpop";
+
+  /**
+   * Permission to receive helpop requests.
+   * This permission is required to receive helpop requests.
+   * The helpop requests are sent by players with the permission {@link #HELPOP_COMMAND_PERMISSION}.
+   */
+  public static final String HELPOP_RECEIVE_PERMISSION = "nookure.staff.helpop.receive";
+
+  public static final String ACTION_BAR_PERMISSION = "nookure.staff.actionbar";
+
+  /**
    * Permission to build in staff mode.
    * This permission is required to build in staff mode.
    */
@@ -53,6 +82,22 @@ public final class Permissions {
    * Permission to freeze a player.
    */
   public static final String STAFF_FREEZE = "nookure.staff.freeze";
+
+  /**
+   * Permission to see the inventory of a player.
+   */
+  public static final String STAFF_INVSEE = "nookure.staff.invsee";
+
+  /**
+   * Permission to see the enderchest of a player.
+   */
+  public static final String STAFF_ENDERCHEST = "nookure.staff.enderchest";
+  /**
+   * Permission to modify the inventory of a player.
+   */
+  public static final String STAFF_INVSEE_MODIFY = "nookure.staff.invsee.modify";
+
+  public static final String STAFF_ENDERCHEST_MODIFY = "nookure.staff.enderchest.modify";
 
   /**
    * Permission to bypass the freeze.

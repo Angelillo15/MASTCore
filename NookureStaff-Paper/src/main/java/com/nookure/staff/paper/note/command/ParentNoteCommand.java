@@ -13,7 +13,8 @@ import com.nookure.staff.api.command.CommandParent;
         AddNoteCommand.class,
         RemoveNoteCommand.class,
         ListNoteCommand.class,
-        ToggleShowCommand.class
+        ToggleShowCommand.class,
+        InventoryCommand.class
     }
 )
 public class ParentNoteCommand extends CommandParent {

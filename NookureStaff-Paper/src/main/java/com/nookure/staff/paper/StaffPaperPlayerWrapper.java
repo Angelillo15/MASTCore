@@ -15,6 +15,7 @@ import com.nookure.staff.api.event.staff.StaffModeDisabledEvent;
 import com.nookure.staff.api.event.staff.StaffModeEnabledEvent;
 import com.nookure.staff.api.extension.StaffPlayerExtension;
 import com.nookure.staff.api.extension.StaffPlayerExtensionManager;
+import com.nookure.staff.api.extension.VanishExtension;
 import com.nookure.staff.api.item.StaffItem;
 import com.nookure.staff.api.manager.PlayerWrapperManager;
 import com.nookure.staff.api.manager.StaffItemsManager;
@@ -22,6 +23,7 @@ import com.nookure.staff.api.messaging.EventMessenger;
 import com.nookure.staff.api.model.StaffDataModel;
 import com.nookure.staff.api.util.Scheduler;
 import com.nookure.staff.paper.data.StaffModeData;
+import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -64,9 +66,9 @@ public class StaffPaperPlayerWrapper extends PaperPlayerWrapper implements Staff
   private PlayerWrapperManager<Player> playerWrapperManager;
   private StaffDataModel staffDataModel;
   private boolean staffMode = false;
-  private boolean vanish = false;
   private boolean staffChatAsDefault = false;
   private StaffModeData staffModeData;
+  private VanishExtension vanishExtension;
 
   @Override
   public void toggleStaffMode(boolean silentJoin) {
@@ -85,54 +87,37 @@ public class StaffPaperPlayerWrapper extends PaperPlayerWrapper implements Staff
       player.performCommand("vanish");
     }
 
-    writeVanishState(!vanish);
+    writeVanishState(isInVanish());
 
-    if (vanish) enableVanish(false);
-    else disableVanish(false);
+    if (isInVanish()) disableVanish(false);
+    else enableVanish(false);
   }
 
   @Override
   public void enableVanish(boolean silent) {
-    if (!vanish) return;
+    logger.debug("Enabling vanish for %s with previous state %s", player.getName(), isInVanish());
+    if (isInVanish()) return;
 
-    logger.debug("Enabling vanish for %s", player.getName());
-
-    if (!silent) {
-      sendMiniMessage(messages.get().vanish.vanishEnabled());
-
-      playerWrapperManager.stream()
-          .forEach(p ->
-              p.sendMiniMessage(messages.get().vanish.vanishEnabledBroadcast(), "player", player.getName())
-          );
+    if (vanishExtension != null) {
+      vanishExtension.enableVanish(silent);
     }
-
-    Bukkit.getOnlinePlayers().stream()
-        .filter(p -> !p.hasPermission(Permissions.STAFF_VANISH_SEE))
-        .forEach(p -> p.hidePlayer(javaPlugin, player));
   }
 
   @Override
   public void disableVanish(boolean silent) {
-    if (vanish) return;
+    if (!isInVanish()) return;
 
     logger.debug("Disabling vanish for %s", player.getName());
-
-    if (!silent) {
-      sendMiniMessage(messages.get().vanish.vanishDisabled());
-
-      playerWrapperManager.stream()
-          .forEach(p ->
-              p.sendMiniMessage(messages.get().vanish.vanishDisabledBroadcast(), "player", player.getName())
-          );
-    }
-
-    Bukkit.getOnlinePlayers()
-        .forEach(p -> p.showPlayer(javaPlugin, player));
+    vanishExtension.disableVanish(silent);
   }
 
   @Override
   public boolean isInVanish() {
-    return vanish;
+    if (vanishExtension == null) {
+      return false;
+    }
+
+    return vanishExtension.isVanished();
   }
 
   @Override
@@ -168,8 +153,8 @@ public class StaffPaperPlayerWrapper extends PaperPlayerWrapper implements Staff
     writeStaffModeState(true);
 
     if (config.get().staffMode.enableVanishOnStaffEnable()) {
+      enableVanish(silentJoin);
       writeVanishState(true);
-      enableVanish(true);
     }
 
     eventMessenger.publish(this, new StaffModeEnabledEvent(getUniqueId()));
@@ -196,8 +181,8 @@ public class StaffPaperPlayerWrapper extends PaperPlayerWrapper implements Staff
     writeStaffModeState(false);
 
     if (config.get().staffMode.disableVanishOnStaffDisable()) {
+      disableVanish(false);
       writeVanishState(false);
-      disableVanish(true);
     }
 
     eventMessenger.publish(this, new StaffModeDisabledEvent(getUniqueId()));
@@ -223,7 +208,10 @@ public class StaffPaperPlayerWrapper extends PaperPlayerWrapper implements Staff
   }
 
   public void disablePlayerPerks() {
-    player.setAllowFlight(false);
+    if (player.getGameMode() != GameMode.CREATIVE) {
+      player.setAllowFlight(false);
+    }
+
     player.setFlying(false);
     player.setInvulnerable(false);
     unloadPotionEffects();
@@ -275,7 +263,9 @@ public class StaffPaperPlayerWrapper extends PaperPlayerWrapper implements Staff
       logger.debug("Vanish state for %s has been set to %s on the database", player.getName(), state);
     });
 
-    vanish = state;
+    if (vanishExtension != null) {
+      vanishExtension.setVanished(state);
+    }
   }
 
   private void writeStaffModeState(boolean state) {
@@ -379,6 +369,7 @@ public class StaffPaperPlayerWrapper extends PaperPlayerWrapper implements Staff
 
   public void checkVanishState() {
     if (!config.get().modules.isVanish()) return;
+    if (!vanishExtension.restoreFromDatabase()) return;
 
     StaffDataModel staffDataModel = StaffDataModel.getFromUUID(connection.getStorm(), player.getUniqueId());
 
@@ -388,21 +379,27 @@ public class StaffPaperPlayerWrapper extends PaperPlayerWrapper implements Staff
       disableVanish(true);
     }
 
-    vanish = staffDataModel.isVanished();
+    vanishExtension.setVanished(staffDataModel.isVanished());
     enableVanish(true);
   }
 
   public void addExtensions() {
     extensionManager.getExtensionsStream().forEach(extension -> {
       try {
-        StaffPlayerExtension instance = extension.getConstructor(StaffPlayerWrapper.class).newInstance(this);
+        StaffPlayerExtension instance = extension.extension().getConstructor(StaffPlayerWrapper.class).newInstance(this);
         injector.injectMembers(instance);
 
-        extensionMap.put(extension, instance);
+        extensionMap.put(extension.extension(), instance);
+
+        if (extension.base() != extension.extension()) {
+          extensionMap.put(extension.base(), instance);
+        }
       } catch (Exception e) {
-        logger.severe("An error occurred while adding extension %s for %s: %s", extension.getName(), player.getName(), e.getMessage());
+        logger.severe("An error occurred while adding extension %s for %s: %s", extension.base().getName(), player.getName(), e.getMessage());
       }
     });
+
+    vanishExtension = getExtension(VanishExtension.class).orElse(null);
   }
 
   public void loadPotionEffects() {
@@ -461,6 +458,34 @@ public class StaffPaperPlayerWrapper extends PaperPlayerWrapper implements Staff
     }
   }
 
+  public void addActionBar() {
+    if (!staffMode) return;
+    if (!config.get().staffMode.actionBar()) return;
+    if (!hasPermission(Permissions.ACTION_BAR_PERMISSION)) return;
+
+    String vanished = isInVanish() ? messages.get().placeholder.placeholderTrue() : messages.get().placeholder.placeholderFalse();
+    String staffChat = staffChatAsDefault ? messages.get().placeholder.placeholderTrue() : messages.get().placeholder.placeholderFalse();
+    double tpsCount = Bukkit.getTPS()[0];
+    String tps = String.valueOf(tpsCount);
+    tps = tps.substring(0, Math.min(tps.length(), 5));
+
+    if (tpsCount > 18) {
+      tps = "<green>" + tps;
+    } else if (tpsCount > 15) {
+      tps = "<yellow>" + tps;
+    } else {
+      tps = "<red>" + tps;
+    }
+
+    sendActionbar(MiniMessage.miniMessage().deserialize(
+            messages.get().staffMode.actionBar()
+                .replace("{vanished}", vanished)
+                .replace("{staffChat}", staffChat)
+                .replace("{tps}", tps)
+        )
+    );
+  }
+
   @Override
   @SuppressWarnings("unchecked")
   public <T extends StaffPlayerExtension> Optional<T> getExtension(Class<T> extension) {
@@ -492,9 +517,9 @@ public class StaffPaperPlayerWrapper extends PaperPlayerWrapper implements Staff
         throw new IllegalStateException("Player cannot be null");
       }
 
+      playerWrapper.addExtensions();
       playerWrapper.checkStaffModeState();
       playerWrapper.checkVanishState();
-      playerWrapper.addExtensions();
 
       return playerWrapper;
     }

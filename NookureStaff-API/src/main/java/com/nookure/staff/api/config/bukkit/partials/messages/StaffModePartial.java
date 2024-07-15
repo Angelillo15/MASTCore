@@ -42,6 +42,24 @@ public class StaffModePartial {
   )
   private String teleportingTo = "{prefix} <gray>Teleporting to <red>{player}</red>.";
 
+  @Setting
+  @Comment("""
+      Action bar format for the staff mode.
+      """)
+  private String actionBar = "<red>Vanished <gray>(</gray> {vanished} <gray>)</gray> <red>StaffChat <gray>(</gray> {staffChat} <gray>)</gray> <red>TPS: <red>{tps}";
+
+  @Setting
+  @Comment(
+      "Message sent to the player when the invsee command is used incorrectly."
+  )
+  private String invseeCommandUsage = "{prefix} <gray>Usage: <red>/staff invsee <player>";
+
+  @Setting
+  @Comment(
+      "Message sent to the player when the invsee enderchest command is used incorrectly."
+  )
+  private String invseeEnderchestCommandUsage = "{prefix} <gray>Usage: <red>/staff enderchest <player>";
+
   public String toggledOn() {
     return toggledOn;
   }
@@ -64,5 +82,17 @@ public class StaffModePartial {
 
   public String toggledOffOthers() {
     return toggledOffOthers;
+  }
+
+  public String actionBar() {
+    return actionBar;
+  }
+
+  public String invseeCommandUsage() {
+    return invseeCommandUsage;
+  }
+
+  public String invseeEnderchestCommandUsage() {
+    return invseeEnderchestCommandUsage;
   }
 }

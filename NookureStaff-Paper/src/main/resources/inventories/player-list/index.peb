@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE GuiLayout SYSTEM "https://nookure.com/xsd/inv/v1/GuiLayout.xsd">
+    {# @pebvariable name="page" type="java.lang.Integer" #}
+    {# @pebvariable name="pagination" type="com.nookure.core.inv.template.extension.PaginationItemExtension.PaginationData" #}
+    {# @pebvariable name="players" type="java.util.List" #}
+    {# @pebvariable name="staff" type="com.nookure.staff.paper.StaffPaperPlayerWrapper" #}
+    {# @pebvariable name="player" type="com.nookure.staff.api.PlayerWrapper" #}
+    {# @pebvariable name="inventoryProps" type="java.util.Map" #}
+    {# @pebvariable name="canPerformActions" type="java.lang.Boolean" #}
+
+    {% import "/common/pagination-common.peb" %}
+    {% import "/player-list/partials/player-lore.peb" %}
+<GuiLayout>
+    <Head>
+        <title>Player List</title>
+        <rows>6</rows>
+    </Head>
+    <Items>
+        {% set pag = pagination(9, 5, page, players.size) %}
+        {% set canPerformActions = staff.hasPermission("nookure.staff.players.actions") %}
+        {% for i in range(pag.start, pag.end, 1) %}
+        {% set player = players[i] %}
+        {% set slot = i - pag.start %}
+            <Item
+                    slot="{{ slot }}"
+                    head="{{ player.uniqueId }}"
+                    headType="PLAYER_UUID"
+            >
+                <Name>{{ player.name }}</Name>
+                {{ playerLore(player) }}
+                {% if canPerformActions %}
+                    <Actions>
+                        <Action type="OPEN_INVENTORY" value="{{ inventoryProps("/player-list/actions.peb", {"uuid" : player.uniqueId.toString() }) }}"/>
+                    </Actions>
+                {% endif %}
+            </Item>
+        {% endfor %}
+        {{ paginationFooter(48, 50, page, pag) }}
+    </Items>
+</GuiLayout>

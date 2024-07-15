@@ -1,4 +1,4 @@
-package com.nookure.staff.api.config.bukkit.partials;
+package com.nookure.staff.api.config.bukkit;
 
 import org.spongepowered.configurate.objectmapping.ConfigSerializable;
 import org.spongepowered.configurate.objectmapping.meta.Comment;

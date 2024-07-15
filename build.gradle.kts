@@ -2,6 +2,7 @@ plugins {
   id("java")
   alias(libs.plugins.shadowJar)
   alias(libs.plugins.grgit)
+  alias(libs.plugins.runPaper)
 }
 
 val major: String by project
@@ -24,7 +25,6 @@ dependencies {
   implementation(libs.liblyBukkit)
   implementation(libs.libbyPaper)
   implementation(libs.libbyVelocity)
-  implementation(libs.guice)
   implementation(libs.configurateYaml)
 }
 
@@ -39,7 +39,7 @@ tasks.shadowJar {
 
 allprojects {
   apply<JavaPlugin>()
-  apply(plugin = "com.github.johnrengelman.shadow")
+  apply(plugin = rootProject.libs.plugins.shadowJar.get().pluginId)
 
   repositories {
     mavenCentral()
@@ -74,7 +74,23 @@ allprojects {
   }
 
   java {
-    sourceCompatibility = JavaVersion.VERSION_17
-    targetCompatibility = JavaVersion.VERSION_17
+    sourceCompatibility = JavaVersion.VERSION_21
+    targetCompatibility = JavaVersion.VERSION_21
+    toolchain.languageVersion.set(JavaLanguageVersion.of(21))
+  }
+}
+
+tasks.withType(xyz.jpenilla.runtask.task.AbstractRun::class) {
+  javaLauncher = javaToolchains.launcherFor {
+    vendor = JvmVendorSpec.JETBRAINS
+    languageVersion = JavaLanguageVersion.of(21)
+  }
+  jvmArgs("-XX:+AllowEnhancedClassRedefinition", "-XX:+AllowRedefinitionToAddDeleteMethods")
+  systemProperties["nkstaff.inventory.replace"] = "true"
+}
+
+tasks {
+  runServer {
+    minecraftVersion("1.21")
   }
 }

@@ -2,6 +2,7 @@ package com.nookure.staff.service;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
+import com.nookure.staff.api.Logger;
 import com.nookure.staff.api.Permissions;
 import com.nookure.staff.api.command.CommandSender;
 import com.nookure.staff.api.config.ConfigurationContainer;
@@ -13,9 +14,14 @@ import com.nookure.staff.api.service.UserNoteService;
 import com.nookure.staff.api.util.Object2Text;
 import io.ebean.Database;
 import io.ebean.PagedList;
+import jakarta.persistence.NonUniqueResultException;
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 
 import static java.util.Objects.requireNonNull;
@@ -28,6 +34,8 @@ public class UserNoteServiceImpl implements UserNoteService {
   private ConfigurationContainer<NoteMessages> noteMessages;
   @Inject
   private ConfigurationContainer<BukkitMessages> messages;
+  @Inject
+  private Logger logger;
 
   private static final int PER_PAGE = 1;
 
@@ -193,8 +201,60 @@ public class UserNoteServiceImpl implements UserNoteService {
   }
 
   @Nullable
-  private PlayerModel getByUsername(@NotNull String username) {
+  @Override
+  public PlayerModel getByUsername(@NotNull String username) {
     requireNonNull(username, "The username cannot be null");
-    return db.get().find(PlayerModel.class).where().eq("name", username).findOne();
+    try {
+      return db.get().find(PlayerModel.class).where().eq("name", username).findOne();
+    } catch (NonUniqueResultException e) {
+      logger.severe("There are multiple players with the same username: " + username);
+      logger.severe("Maybe you have change your server from offline to online mode?");
+      logger.severe("Please, check your database and remove the duplicated entries.");
+      logger.severe("We are going to try to check if there is a player with the same username and UUID.");
+      logger.severe("and fix the issue automatically.");
+      Player player = Bukkit.getPlayer(username);
+
+      if (player == null) {
+        logger.severe("The player is not online, so we cannot fix the issue automatically.");
+        logger.severe("Please, check your database and remove the duplicated entries.");
+        return null;
+      }
+
+      if (fixDuplicateEntries(player)) {
+        return db.get().find(PlayerModel.class).where().eq("name", username).findOne();
+      } else {
+        logger.severe("The issue was not fixed automatically.");
+        logger.severe("Please, check your database and remove the duplicated entries.");
+        return null;
+      }
+    }
+  }
+
+  private boolean fixDuplicateEntries(@NotNull Player player) {
+    requireNonNull(player, "Player cannot be null");
+
+    ArrayList<PlayerModel> playersToRemoves = new ArrayList<>();
+    List<PlayerModel> players = db.get().find(PlayerModel.class).where().eq("name", player.getName()).findList();
+
+    if (players.size() == 1) {
+      logger.info("The issue was fixed automatically.");
+      return true;
+    }
+
+    for (PlayerModel playerModel : players) {
+      if (!playerModel.getUuid().equals(player.getUniqueId())) {
+        playersToRemoves.add(playerModel);
+      }
+    }
+
+    if (playersToRemoves.size() == players.size()) {
+      logger.severe("The issue was not fixed automatically.");
+      logger.severe("Please check your database and remove the duplicated entries.");
+      return false;
+    }
+
+    playersToRemoves.forEach(PlayerModel::delete);
+    logger.info("The issue was fixed automatically.");
+    return true;
   }
 }

@@ -57,7 +57,7 @@ public abstract class Command {
     Objects.requireNonNull(message, "message can't be null");
 
     return args.stream()
-        .filter(arg -> arg.startsWith(message))
+        .filter(arg -> arg.toLowerCase().startsWith(message.toLowerCase()))
         .toList();
   }
 

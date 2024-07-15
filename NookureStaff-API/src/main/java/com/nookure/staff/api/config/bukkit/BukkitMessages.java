@@ -35,6 +35,12 @@ public class BukkitMessages {
   )
   private String playerNotFound = "{prefix} <red>Could not find the player {player}.";
 
+  @Setting
+  @Comment("""
+      The message when you don't have a permission
+      """)
+  private String noPermission = "{prefix} <red>You don't have permission to do that.";
+
   public String prefix() {
     return prefix;
   }
@@ -45,5 +51,9 @@ public class BukkitMessages {
 
   public String playerNotFound() {
     return playerNotFound;
+  }
+
+  public String noPermission() {
+    return noPermission;
   }
 }

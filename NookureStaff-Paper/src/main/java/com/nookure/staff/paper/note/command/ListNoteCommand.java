@@ -5,6 +5,7 @@ import com.nookure.staff.api.Permissions;
 import com.nookure.staff.api.command.Command;
 import com.nookure.staff.api.command.CommandData;
 import com.nookure.staff.api.command.CommandSender;
+import com.nookure.staff.api.config.ConfigurationContainer;
 import com.nookure.staff.api.config.bukkit.partials.messages.note.NoteMessages;
 import com.nookure.staff.api.service.UserNoteService;
 import org.bukkit.Bukkit;
@@ -22,12 +23,12 @@ public class ListNoteCommand extends Command {
   @Inject
   private UserNoteService userNoteService;
   @Inject
-  private NoteMessages noteMessages;
+  private ConfigurationContainer<NoteMessages> noteMessages;
 
   @Override
   public void onCommand(@NotNull CommandSender sender, @NotNull String label, @NotNull List<String> args) {
     if (args.isEmpty()) {
-      sender.sendMiniMessage(noteMessages.commands.getListNoteUsage());
+      sender.sendMiniMessage(noteMessages.get().commands.getListNoteUsage());
       return;
     }
 
@@ -49,6 +50,6 @@ public class ListNoteCommand extends Command {
 
   @Override
   public @NotNull List<String> onTabComplete(@NotNull CommandSender sender, @NotNull String label, @NotNull List<String> args) {
-    return getSuggestionFilter(Bukkit.getOnlinePlayers().stream().map(Player::getName).toList(), args.get(0));
+    return getSuggestionFilter(Bukkit.getOnlinePlayers().stream().map(Player::getName).toList(), args.getFirst());
   }
 }

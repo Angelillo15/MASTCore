@@ -11,4 +11,16 @@ public interface AbstractLoader {
    * load the instance.
    */
   void load();
+
+  /**
+   * Reloads the feature
+   */
+  default void reload() {
+  }
+
+  /**
+   * Unloads the feature
+   */
+  default void unload() {
+  }
 }

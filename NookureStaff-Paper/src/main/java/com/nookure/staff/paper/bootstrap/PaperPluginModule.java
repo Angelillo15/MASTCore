@@ -1,6 +1,7 @@
 package com.nookure.staff.paper.bootstrap;
 
 import com.google.inject.TypeLiteral;
+import com.nookure.core.inv.paper.PaperNookureInventoryEngine;
 import com.nookure.staff.api.Logger;
 import com.nookure.staff.api.NookureStaff;
 import com.nookure.staff.api.addons.AddonManager;
@@ -12,7 +13,7 @@ import com.nookure.staff.api.config.ConfigurationContainer;
 import com.nookure.staff.api.config.bukkit.BukkitConfig;
 import com.nookure.staff.api.config.bukkit.BukkitMessages;
 import com.nookure.staff.api.config.bukkit.ItemsConfig;
-import com.nookure.staff.api.config.bukkit.partials.StaffModeBlockedCommands;
+import com.nookure.staff.api.config.bukkit.StaffModeBlockedCommands;
 import com.nookure.staff.api.config.bukkit.partials.messages.note.NoteMessages;
 import com.nookure.staff.api.config.common.CommandConfig;
 import com.nookure.staff.api.config.messaging.MessengerConfig;
@@ -110,6 +111,8 @@ public class PaperPluginModule extends PluginModule {
        * AtomicReference related area
        */
       bind(new TypeLiteral<AtomicReference<Database>>() {
+      }).toInstance(new AtomicReference<>(null));
+      bind(new TypeLiteral<AtomicReference<PaperNookureInventoryEngine>>() {
       }).toInstance(new AtomicReference<>(null));
     } catch (IOException e) {
       boot.getPLogger().severe("Could not load config");

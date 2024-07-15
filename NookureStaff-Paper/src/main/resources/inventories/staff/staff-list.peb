@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE GuiLayout SYSTEM "https://nookure.com/xsd/inv/v1/GuiLayout.xsd">
+{# @pebvariable name="page" type="java.lang.Integer" #}
+{# @pebvariable name="pagination" type="com.nookure.core.inv.template.extension.PaginationItemExtension.PaginationData" #}
+{# @pebvariable name="players" type="java.util.List" #}
+{# @pebvariable name="staff" type="com.nookure.staff.paper.StaffPaperPlayerWrapper" #}
+{# @pebvariable name="player" type="com.nookure.staff.paper.StaffPaperPlayerWrapper" #}
+{% import "/common/pagination-common.peb" %}
+{% import "/staff/partials/staff-lore.peb" %}
+<GuiLayout>
+    <Head>
+        <title>[gray]Staff List</title>
+        <rows>6</rows>
+    </Head>
+    <Items>
+        {% set pag = pagination(9, 5, page, players.size) %}
+        {% for i in range(pag.start, pag.end, 1) %}
+        {% set staff = players[i] %}
+        {% set slot = i - pag.start %}
+        <Item
+                slot="{{ slot }}"
+                head="{{ staff.uniqueId }}"
+                headType="PLAYER_UUID"
+        >
+            <Name>{{ staff.name }}</Name>
+            {{ staffLore(staff) }}
+        </Item>
+        {% endfor %}
+        {{ paginationFooter(48, 50, page, pag) }}
+    </Items>
+</GuiLayout>
