@@ -87,6 +87,8 @@ public final class Permissions {
    */
   public static final String STAFF_INVSEE_MODIFY = "nookure.staff.invsee.modify";
 
+  public static final String STAFF_ENDERCHEST_MODIFY = "nookure.staff.enderchest.modify";
+
   /**
    * Permission to bypass the freeze.
    */
