@@ -33,4 +33,9 @@ public class SuperVanishExtension extends VanishExtension {
   @Override
   public void setVanished(boolean vanished) {
   }
+
+  @Override
+  public boolean restoreFromDatabase() {
+    return false;
+  }
 }

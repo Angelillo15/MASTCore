@@ -45,4 +45,14 @@ public abstract class VanishExtension extends StaffPlayerExtension {
    * @param vanished true if the player should be vanished
    */
   public abstract void setVanished(boolean vanished);
+
+  /**
+   * Whether the player state should be restored from the Nookure Staff
+   * database
+   *
+   * @return true if the player state should be restored from the database
+   */
+  public boolean restoreFromDatabase() {
+    return true;
+  }
 }

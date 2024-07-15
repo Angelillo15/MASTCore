@@ -369,6 +369,7 @@ public class StaffPaperPlayerWrapper extends PaperPlayerWrapper implements Staff
 
   public void checkVanishState() {
     if (!config.get().modules.isVanish()) return;
+    if (!vanishExtension.restoreFromDatabase()) return;
 
     StaffDataModel staffDataModel = StaffDataModel.getFromUUID(connection.getStorm(), player.getUniqueId());
 
