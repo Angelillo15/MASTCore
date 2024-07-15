@@ -44,6 +44,7 @@ import com.nookure.staff.paper.listener.staff.command.OnStaffPlayerCommand;
 import com.nookure.staff.paper.listener.staff.items.OnInventoryClick;
 import com.nookure.staff.paper.listener.staff.items.OnPlayerEntityInteract;
 import com.nookure.staff.paper.listener.staff.items.OnPlayerInteract;
+import com.nookure.staff.paper.listener.staff.items.OnPlayerInventoryClick;
 import com.nookure.staff.paper.listener.staff.state.*;
 import com.nookure.staff.paper.listener.staff.vanish.PlayerVanishListener;
 import com.nookure.staff.paper.listener.staff.vanish.StaffVanishListener;
@@ -149,7 +150,8 @@ public class NookureStaff {
   private void loadBukkitListeners() {
     Stream.of(
         OnPlayerJoin.class,
-        OnPlayerLeave.class
+        OnPlayerLeave.class,
+        OnPlayerInventoryClick.class
     ).forEach(this::registerListener);
 
     if (config.get().modules.isStaffMode()) {
