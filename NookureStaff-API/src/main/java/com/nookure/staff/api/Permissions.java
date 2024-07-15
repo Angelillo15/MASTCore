@@ -33,7 +33,17 @@ public final class Permissions {
    */
   public static final String STAFF_ADMIN_PERMISSION = "nookure.staff.admin";
 
+  /**
+   * Permission to use the player list command.
+   * This permission is required to use the player list command.
+   */
   public static final String PLAYER_LIST_PERMISSION = "nookure.staff.player-list";
+
+  /**
+   * Permission to use the player actions command.
+   * This permission is required to use the player actions command.
+   */
+  public static final String PLAYER_ACTIONS_PERMISSION = "nookure.staff.players.actions";
 
   /**
    * Permission to use the helpop command.
