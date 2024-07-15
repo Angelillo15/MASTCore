@@ -7,6 +7,7 @@ import com.nookure.core.inv.template.extension.OpenInventoryExtension;
 import com.nookure.core.inv.template.extension.PaginationItemExtension;
 import com.nookure.staff.api.util.AbstractLoader;
 import com.nookure.staff.api.util.JarUtil;
+import com.nookure.staff.paper.inventory.extenion.DataFormatExtension;
 import com.nookure.staff.paper.inventory.extenion.NookurePlayerExtension;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -37,7 +38,12 @@ public class InventoryLoader implements AbstractLoader {
     PaperNookureInventoryEngine.Builder builder = new PaperNookureInventoryEngine.Builder()
         .plugin(plugin)
         .templateFolder("inventories")
-        .extensions(new PaginationItemExtension(), new OpenInventoryExtension(), injector.getInstance(NookurePlayerExtension.class));
+        .extensions(
+            new PaginationItemExtension(),
+            new OpenInventoryExtension(),
+            injector.getInstance(NookurePlayerExtension.class),
+            injector.getInstance(DataFormatExtension.class)
+        );
 
     engine.set(builder.build());
 
