@@ -77,7 +77,7 @@ public class JarUtil {
   }
 
   public enum CopyOption {
-    COPY_IF_NOT_EXIST, REPLACE_IF_EXIST;
+    COPY_IF_NOT_EXIST, REPLACE_IF_EXIST
   }
 
   @FunctionalInterface

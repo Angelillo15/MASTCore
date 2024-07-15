@@ -17,7 +17,7 @@ public class ItemsConfig {
   @ConfigSerializable
   public static class StaffItems {
     @Setting
-    private Map<String, ItemPartial> items = new HashMap<>();
+    private final Map<String, ItemPartial> items = new HashMap<>();
 
     public StaffItems() {
       items.put(Items.RANDOM_PLAYER_TELEPORT.toString(), new ItemPartial(

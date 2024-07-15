@@ -46,14 +46,14 @@ public class BukkitConfig {
       This will print out more information to the console.
       It's recommended to find bugs.
       """)
-  private boolean debug = false;
+  private final boolean debug = false;
 
   @Setting
   @Comment("""
       The name of the server.
       This will be used in the messages or identifiers.
       """)
-  private String serverName = "Server 1";
+  private final String serverName = "Server 1";
 
   public boolean isDebug() {
     return debug;

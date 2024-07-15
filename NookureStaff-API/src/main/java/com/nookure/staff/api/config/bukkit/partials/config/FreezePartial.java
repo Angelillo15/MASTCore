@@ -15,14 +15,14 @@ public class FreezePartial {
         Execute a command when the player is frozen and he or she
         exits of the servers.
       """)
-  private boolean executeCommandOnExit = true;
+  private final boolean executeCommandOnExit = true;
 
   @Setting
   @Comment("""
         Ask the player to execute a command when he or she exits
         of the server.
       """)
-  private boolean askToExecuteCommandOnExit = true;
+  private final boolean askToExecuteCommandOnExit = true;
 
   @Setting
   @Comment("""
@@ -30,15 +30,15 @@ public class FreezePartial {
       This will prevent the player from sending messages in the chat
       and he will be able to chat with the staff members only.
       """)
-  private boolean freezeChat = true;
+  private final boolean freezeChat = true;
 
   @Setting
   @Comment("""
       The value is with the following format: 1h 1m 1s
       Set "false" to disable the freeze timer.
       If the timer gets to 0, the player will be banned.
-          """)
-  private String freezeTimer = "5m";
+      """)
+  private final String freezeTimer = "5m";
 
   @Setting
   @Comment("""
@@ -48,7 +48,7 @@ public class FreezePartial {
       ↳ {staff} - Staff member name
       Use the proxy: prefix to execute a command in the proxy.
        """)
-  private List<String> commands = List.of("ban {player} <red>You have been baned for ss evading");
+  private final List<String> commands = List.of("ban {player} <red>You have been baned for ss evading");
 
   public boolean executeCommandOnExit() {
     return executeCommandOnExit;

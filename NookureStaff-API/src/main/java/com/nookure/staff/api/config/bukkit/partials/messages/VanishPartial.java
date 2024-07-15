@@ -8,29 +8,29 @@ import org.spongepowered.configurate.objectmapping.meta.Setting;
 public class VanishPartial {
   @Setting
   @Comment("Message sent to the player when the vanish is toggled on.")
-  private String vanishEnabled = "{prefix} <gray>Vanish has been toggled <green>on</green>.";
+  private final String vanishEnabled = "{prefix} <gray>Vanish has been toggled <green>on</green>.";
 
   @Setting
   @Comment("""
       Message to broadcast to online players when a staff member enable vanish.
       Change it to "" to disable the broadcast.
       """)
-  private String vanishEnabledBroadcast = "<yellow>{player} has left the game.";
+  private final String vanishEnabledBroadcast = "<yellow>{player} has left the game.";
 
   @Setting
   @Comment("Message sent to the player when the vanish is toggled off.")
-  private String vanishDisabled = "{prefix} <gray>Vanish has been toggled <red>off</red>.";
+  private final String vanishDisabled = "{prefix} <gray>Vanish has been toggled <red>off</red>.";
 
   @Setting
   @Comment("""
       Message to broadcast to online players when a staff member disable vanish.
       Change it to "" to disable the broadcast.
       """)
-  private String vanishDisabledBroadcast = "<yellow>{player} has joined the game.";
+  private final String vanishDisabledBroadcast = "<yellow>{player} has joined the game.";
 
   @Setting
   @Comment("Message sent to the player when he/she joins the server and is still in vanish mode.")
-  private String youAreStillInVanish = "<green>You are still in vanish mode.";
+  private final String youAreStillInVanish = "<green>You are still in vanish mode.";
 
   public String vanishEnabled() {
     return vanishEnabled;
