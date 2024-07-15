@@ -16,7 +16,7 @@
     <Items>
         {% for i in range(0, 44) %}
             <Item slot="{{ i }}" material="BLACK_STAINED_GLASS_PANE">
-                <Name></Name>
+                <Name> </Name>
             </Item>
         {% endfor %}
         {% set hasNote = model.getNotes().size() > 0 %}
@@ -58,15 +58,18 @@
                     [gray]Click to open this player's inventory.
                 </LoreLine>
             </Lore>
+            <Actions>
+                <Action type="RUN_COMMAND_AS_PLAYER" value="staff invsee {{ player.name }}"/>
+            </Actions>
         </Item>
         <Item slot="22" material="clock">
             <Name>[light_purple]Player Info</Name>
             <Lore>
                 <LoreLine>
-                    [gray]First joined: [white]{{ model.firstLogin.toString() }}
+                    [gray]First joined: [white]{{ dataFormat(model.firstLogin) }}
                 </LoreLine>
                 <LoreLine>
-                    [gray]Last seen: [white]{{ model.lastLogin.toString() }}
+                    [gray]Last seen: [white]{{ dataFormat(model.lastLogin) }}
                 </LoreLine>
             </Lore>
         </Item>
@@ -77,6 +80,9 @@
                     [gray]Click to open this player's enderchest.
                 </LoreLine>
             </Lore>
+            <Actions>
+                <Action type="RUN_COMMAND_AS_PLAYER" value="staff enderchest {{ player.name }}"/>
+            </Actions>
         </Item>
         <Item slot="28" material="blue_ice">
             {% set canBeFrozen = not player.hasPermission("nookure.staff.freeze.bypass") %}
