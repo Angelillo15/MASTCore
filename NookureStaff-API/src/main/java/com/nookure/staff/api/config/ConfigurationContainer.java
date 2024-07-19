@@ -17,20 +17,17 @@ public class ConfigurationContainer<C> {
   private final YamlConfigurationLoader loader;
   private final Class<C> clazz;
   private final String fileName;
-  private final CommentedConfigurationNode node;
 
   private ConfigurationContainer(
       final C config,
       final Class<C> clazz,
       final YamlConfigurationLoader loader,
-      final String fileName,
-      final CommentedConfigurationNode node
+      final String fileName
   ) {
     this.config = new AtomicReference<>(config);
     this.loader = loader;
     this.clazz = clazz;
     this.fileName = fileName;
-    this.node = node;
   }
 
   public static <C> ConfigurationContainer<C> load(Path path, Class<C> clazz) throws IOException {
@@ -69,7 +66,7 @@ public class ConfigurationContainer<C> {
       loader.save(node);
     }
 
-    ConfigurationContainer<C> container = new ConfigurationContainer<>(config, clazz, loader, fileName, node);
+    ConfigurationContainer<C> container = new ConfigurationContainer<>(config, clazz, loader, fileName);
     container.save().join();
 
     return container;
@@ -100,9 +97,5 @@ public class ConfigurationContainer<C> {
         throw new CompletionException("Could not save " + fileName + " file", exception);
       }
     });
-  }
-
-  public CommentedConfigurationNode getNode() {
-    return node;
   }
 }
