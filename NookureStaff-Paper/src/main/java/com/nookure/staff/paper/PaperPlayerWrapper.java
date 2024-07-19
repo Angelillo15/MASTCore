@@ -6,15 +6,21 @@ import com.nookure.staff.api.Logger;
 import com.nookure.staff.api.NookureStaff;
 import com.nookure.staff.api.PlayerWrapper;
 import com.nookure.staff.api.model.PlayerModel;
+import com.nookure.staff.api.state.PlayerState;
+import com.nookure.staff.api.state.WrapperState;
+import com.nookure.staff.api.util.DefaultFontInfo;
 import com.nookure.staff.api.util.ServerUtils;
 import io.ebean.Database;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 import org.spongepowered.configurate.objectmapping.meta.Comment;
 
+import java.lang.reflect.InvocationTargetException;
+import java.util.HashMap;
 import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicReference;
@@ -30,6 +36,7 @@ public class PaperPlayerWrapper implements PlayerWrapper {
   private Logger logger;
   @Inject
   private AtomicReference<Database> db;
+  private final WrapperState state = new WrapperState();
 
   @Override
   public void sendMessage(@NotNull Component component) {
@@ -66,7 +73,20 @@ public class PaperPlayerWrapper implements PlayerWrapper {
 
   @Override
   public void sendMiniMessage(@NotNull String message, String... placeholders) {
-    PlayerWrapper.super.sendMiniMessage(message.replace("{prefix}", nookPlugin.getPrefix()), placeholders);
+    if (message.isBlank()) return;
+
+    if (placeholders.length % 2 != 0) {
+      throw new IllegalArgumentException("Placeholders must be in pairs");
+    }
+
+    for (int i = 0; i < placeholders.length; i += 2) {
+      message = message.replace("{" + placeholders[i] + "}", placeholders[i + 1]);
+    }
+
+    message = message.replace("{prefix}", nookPlugin.getPrefix());
+    message = DefaultFontInfo.centerIfContains(message);
+
+    sendMessage(MiniMessage.miniMessage().deserialize(message));
   }
 
   @Override
@@ -120,6 +140,7 @@ public class PaperPlayerWrapper implements PlayerWrapper {
 
   public static class Builder {
     private final PaperPlayerWrapper playerWrapper;
+    private final HashMap<Class<? extends PlayerState>, PlayerState> states = new HashMap<>();
 
     private Builder(PaperPlayerWrapper playerWrapper) {
       this.playerWrapper = playerWrapper;
@@ -134,10 +155,24 @@ public class PaperPlayerWrapper implements PlayerWrapper {
       return this;
     }
 
+    public Builder addState(Class<? extends PlayerState> state) {
+      PlayerState playerState;
+      try {
+         playerState = state.getConstructor(PlayerWrapper.class).newInstance(playerWrapper);
+      } catch (Exception e) {
+        throw new IllegalStateException("An error occurred while adding the state");
+      }
+
+      states.put(state, playerState);
+      return this;
+    }
+
     public PaperPlayerWrapper build() {
       if (playerWrapper.player == null) {
         throw new IllegalStateException("Player cannot be null");
       }
+
+      states.forEach((k, v) -> playerWrapper.state.setState(v));
 
       return playerWrapper;
     }
@@ -161,5 +196,25 @@ public class PaperPlayerWrapper implements PlayerWrapper {
     }
 
     return model;
+  }
+
+  @Override
+  public void kick(@NotNull String reason) {
+    kick(MiniMessage.miniMessage().deserialize(reason));
+  }
+
+  @Override
+  public void kick(@NotNull Component reason) {
+    if (ServerUtils.isPaper) {
+      player.kick(reason);
+    } else {
+      //noinspection deprecation (for legacy servers)
+      player.kickPlayer(LegacyComponentSerializer.legacySection().serialize(reason));
+    }
+  }
+
+  @Override
+  public @NotNull WrapperState getState() {
+    return state;
   }
 }
