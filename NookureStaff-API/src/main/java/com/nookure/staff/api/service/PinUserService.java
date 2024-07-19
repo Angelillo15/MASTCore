@@ -42,4 +42,6 @@ public interface PinUserService {
    * @return true if the player has a pin set, false otherwise
    */
   boolean isPinSet(@NotNull PlayerModel player);
+
+  void updateIp(@NotNull PlayerModel player);
 }
