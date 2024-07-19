@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<migration xmlns="http://ebean-orm.github.io/xml/ns/dbmigration">
+    <changeSet type="apply">
+        <createTable name="nookure_staff_pin" pkName="pk_nookure_staff_pin">
+            <column name="id" type="bigint" primaryKey="true"/>
+            <column name="player_id" type="bigint" uniqueOneToOne="uq_nookure_staff_pin_player_id" references="nookure_staff_players.id" foreignKeyName="fk_nookure_staff_pin_player_id"/>
+            <column name="pin" type="varchar(64)" notnull="true"/>
+            <column name="last_login" type="timestamp" notnull="true"/>
+            <column name="ip" type="varchar(15)" notnull="true"/>
+        </createTable>
+    </changeSet>
+</migration>
