@@ -123,6 +123,11 @@ public final class Permissions {
 
   public static final String STAFF_NOTES_EDIT = "nookure.staff.notes.edit";
 
+  /**
+   * Permission to use set pin command
+   */
+  public static final String SET_PIN_PERMISSION = "nookure.staff.setpin";
+
   private Permissions() {
     throw new UnsupportedOperationException("This class cannot be instantiated");
   }
