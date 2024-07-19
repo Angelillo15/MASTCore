@@ -16,7 +16,7 @@ public class StaffModePartial {
           """
   )
   @Setting
-  private final boolean silentChestOpen = true;
+  private boolean silentChestOpen = true;
 
   @Comment(
       """
@@ -26,25 +26,25 @@ public class StaffModePartial {
           """
   )
   @Setting
-  private final boolean teleportToPreviousLocation = true;
+  private boolean teleportToPreviousLocation = true;
   @Setting
   @Comment("""
       Enable or disable night vision when the player enters the staff mode.
       """)
-  private final boolean nightVision = true;
+  private boolean nightVision = true;
 
   @Setting
   @Comment("""
       Enable or disable custom potion effects when the player enters the staff mode.
       """)
-  private final boolean customPotionEffects = false;
+  private boolean customPotionEffects = false;
 
   @Setting
   @Comment("""
       Potion effects to add when the player enters the staff mode.
       Format: "effect:level:duration"
-      """)
-  private final List<String> potionEffects = List.of(
+       """)
+  private List<String> potionEffects = List.of(
       "speed:1:999999",
       "jump:1:999999"
   );
@@ -53,20 +53,20 @@ public class StaffModePartial {
   @Comment("""
       Enable the vanish when the staff member enables the staff mode.
       """)
-  private final boolean enableVanishOnStaffEnable = true;
+  private boolean enableVanishOnStaffEnable = true;
 
   @Setting
   @Comment("""
       Disable the vanish when the staff member disables the staff mode.
       """)
-  private final boolean disableVanishOnStaffDisable = true;
+  private boolean disableVanishOnStaffDisable = true;
 
   @Setting
   @Comment("""
       Enable or disable the action bar for the people who are in staff mode and
       they have the nookure.staff.actionbar permission.
       """)
-  private final boolean actionBar = true;
+  private boolean actionBar = true;
 
   @Setting
   @Comment("""
@@ -74,7 +74,7 @@ public class StaffModePartial {
       Available options:
       ----> INTERNAL_VANISH, SUPER_VANISH, PREMIUM_VANISH
       """)
-  private final VanishType vanishType = VanishType.INTERNAL_VANISH;
+  private VanishType vanishType = VanishType.INTERNAL_VANISH;
 
   public boolean silentChestOpen() {
     return silentChestOpen;

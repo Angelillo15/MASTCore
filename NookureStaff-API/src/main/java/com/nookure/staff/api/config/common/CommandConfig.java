@@ -25,7 +25,7 @@ public class CommandConfig {
   }
 
   @Setting
-  private final HashMap<String, CommandPartial> commands = new HashMap<>(DEFAULT);
+  private HashMap<String, CommandPartial> commands = new HashMap<>(DEFAULT);
 
   public HashMap<String, CommandPartial> getCommands() {
     return commands;

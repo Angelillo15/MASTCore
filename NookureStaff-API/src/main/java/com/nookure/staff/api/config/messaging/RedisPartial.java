@@ -12,36 +12,36 @@ public class RedisPartial {
           The address of the Redis server.
           This should be in the format of `host`.
           For example, `localhost`.
-          """
+              """
   )
-  private final String address = "localhost";
+  private String address = "localhost";
 
   @Setting
   @Comment(
       """
           The port of the Redis server.
           This should be a number between 1 and 65535.
-          """
+              """
   )
-  private final int port = 6379;
+  private int port = 6379;
 
   @Setting
   @Comment(
       """
           The password to use when connecting to the Redis server.
           If the server does not require a password, leave this empty.
-          """
+              """
   )
-  private final String password = "";
+  private String password = "";
 
   @Setting
   @Comment(
       """
           The database to use when connecting to the Redis server.
           This should be a number between 0 and 15.
-          """
+              """
   )
-  private final int database = 0;
+  private int database = 0;
 
   @Setting
   @Comment(
@@ -49,7 +49,7 @@ public class RedisPartial {
           The pool size to use when connecting to the Redis server.
           """
   )
-  private final int poolSize = 10;
+  private int poolSize = 10;
 
   @Setting
   @Comment(
@@ -57,7 +57,7 @@ public class RedisPartial {
           The timeout to use when connecting to the Redis server.
           """
   )
-  private final int timeout = 2000;
+  private int timeout = 2000;
 
   public String getAddress() {
     return address;

@@ -10,17 +10,17 @@ public class PlaceholderPartial {
   @Comment(
       """
           The result to display when a placeholder displays an affirmative value.
-          """
+              """
   )
-  private final String placeholderTrue = "<green>✔";
+  private String placeholderTrue = "<green>✔";
 
   @Setting
   @Comment(
       """
           The result to display when a placeholder displays a negative value.
-          """
+              """
   )
-  private final String placeholderFalse = "<red>✘";
+  private String placeholderFalse = "<red>✘";
 
   public String placeholderTrue() {
     return placeholderTrue;
