@@ -7,11 +7,11 @@ import org.spongepowered.configurate.objectmapping.meta.Setting;
 
 @ConfigSerializable
 public class BukkitMessages {
-  public final StaffModePartial staffMode = new StaffModePartial();
-  public final VanishPartial vanish = new VanishPartial();
-  public final FreezeMessagePartial freeze = new FreezeMessagePartial();
-  public final StaffChatPartial staffChat = new StaffChatPartial();
-  public final PlaceholderPartial placeholder = new PlaceholderPartial();
+  public StaffModePartial staffMode = new StaffModePartial();
+  public VanishPartial vanish = new VanishPartial();
+  public FreezeMessagePartial freeze = new FreezeMessagePartial();
+  public StaffChatPartial staffChat = new StaffChatPartial();
+  public PlaceholderPartial placeholder = new PlaceholderPartial();
   @Setting
   @Comment(
       """
