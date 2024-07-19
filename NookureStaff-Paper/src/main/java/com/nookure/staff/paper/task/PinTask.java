@@ -8,11 +8,13 @@ import com.nookure.staff.api.config.ConfigurationContainer;
 import com.nookure.staff.api.config.bukkit.BukkitConfig;
 import com.nookure.staff.api.config.bukkit.BukkitMessages;
 import com.nookure.staff.api.manager.PlayerWrapperManager;
+import com.nookure.staff.api.model.PinModel;
 import com.nookure.staff.api.state.PinState;
 import com.nookure.staff.api.util.NumberUtils;
 import com.nookure.staff.api.util.TextUtils;
 import com.nookure.staff.paper.PaperPlayerWrapper;
 import com.nookure.staff.paper.inventory.InventoryList;
+import io.ebean.Database;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -31,6 +33,8 @@ public class PinTask implements Runnable {
   private ConfigurationContainer<BukkitMessages> messages;
   @Inject
   private JavaPlugin plugin;
+  @Inject
+  private AtomicReference<Database> database;
 
   @Override
   public void run() {
@@ -49,6 +53,18 @@ public class PinTask implements Runnable {
     Player player = ((PaperPlayerWrapper) wrapper).getPlayer();
     if (pinState.isLogin()) return;
     if (pinState.isPinInventoryOpen()) return;
+
+    PinModel model = database.get().find(PinModel.class)
+        .where()
+        .eq("player", wrapper.getPlayerModel())
+        .findOne();
+
+    if (model != null) {
+      if (model.ip().equals(wrapper.getPlayerModel().getLastIp())) {
+        pinState.setLogin(true);
+        return;
+      }
+    }
 
     if (pinState.isPinSet()) {
       engine.get().openAsync(player, InventoryList.ENTER_PIN, "player", player, "pinSize", pinState.getPin().length());
