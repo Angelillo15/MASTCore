@@ -12,6 +12,7 @@ import java.sql.Connection;
  * Use {@link #connect(DatabaseConfig, ClassLoader)} to connect to the database.
  */
 public abstract class AbstractPluginConnection {
+  public static final String DATABASE_NAME = "nkstaff";
   /**
    * Connects to the database.
    * <p>
