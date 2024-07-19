@@ -5,6 +5,7 @@ import com.google.inject.Injector;
 import com.nookure.staff.api.Logger;
 import com.nookure.staff.api.Permissions;
 import com.nookure.staff.api.manager.PlayerWrapperManager;
+import com.nookure.staff.api.state.PinState;
 import com.nookure.staff.paper.PaperPlayerWrapper;
 import com.nookure.staff.paper.StaffPaperPlayerWrapper;
 import org.bukkit.entity.Player;
@@ -27,10 +28,12 @@ public class OnPlayerJoin implements Listener {
   public void onPlayerJoin(PlayerJoinEvent event) {
     logger.debug("Player %s has joined the server", event.getPlayer().getName());
     logger.debug("Creating player wrapper for %s", event.getPlayer().getName());
+
     if (event.getPlayer().hasPermission(Permissions.STAFF_PERMISSION)) {
       StaffPaperPlayerWrapper playerWrapper = StaffPaperPlayerWrapper.Builder
           .create(injector)
           .setPlayer(event.getPlayer())
+          .addState(PinState.class)
           .build();
 
       playerWrapperManager.addPlayerWrapper(event.getPlayer(), playerWrapper, true);
