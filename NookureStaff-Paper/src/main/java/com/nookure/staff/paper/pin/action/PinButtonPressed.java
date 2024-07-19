@@ -49,7 +49,12 @@ public class PinButtonPressed extends CustomPaperAction {
     }
 
     char digit = value.charAt(0);
-    logger.info(digit + " was pressed by " + player.getName());
+
+    if (digit == '-') {
+      pinState.removePinDigit();
+      engine.get().openAsync(player, InventoryList.ENTER_PIN, "player", player, "pinSize", pinState.getPin().length());
+      return;
+    }
 
     if (pinState.addPinDigit(digit)) {
       engine.get().openAsync(player, InventoryList.ENTER_PIN, "player", player, "pinSize", pinState.getPin().length());
@@ -57,7 +62,6 @@ public class PinButtonPressed extends CustomPaperAction {
     }
 
     String pin = pinState.getPin();
-    logger.info("Pin: " + pin);
     pinState.setPinInventoryOpen(false);
     player.closeInventory();
     pinState.deletePin();
@@ -76,6 +80,7 @@ public class PinButtonPressed extends CustomPaperAction {
       playerWrapper.sendMiniMessage(messages.get().pin.correctPin);
       pinState.setLogin(true);
       pinState.setTimeToCreateAPin(-1);
+      service.updateIp(playerWrapper.getPlayerModel());
     } else {
       playerWrapper.kick(messages.get().pin.thePinIsIncorrect);
     }
