@@ -56,7 +56,6 @@ public class ConfigurationContainer<C> {
 
                 Remember to join my Discord server if you need help:
                 https://discord.nookure.com/
-                 
                 """)
         )
         .path(path)

@@ -17,7 +17,7 @@ public class DatabaseConfig {
       - If you have only 1 server, but you want
       to be able to scale, use MYSQL.
       """)
-  private DataProvider type = DataProvider.SQLITE;
+  private final DataProvider type = DataProvider.SQLITE;
   @Setting
   @Comment("""
       The host of the database.
@@ -27,31 +27,31 @@ public class DatabaseConfig {
       ┃docker bridge IP address, smth like 172.x.x.x       ┃
       ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
       """)
-  private String host = "localhost";
+  private final String host = "localhost";
   @Setting
   @Comment("""
       The port of the database.
       This is usually 3306 for MySQL
       """)
-  private int port = 3306;
+  private final int port = 3306;
 
   @Setting
   @Comment("""
       The username of the database.
       """)
-  private String username = "nookure";
+  private final String username = "nookure";
 
   @Setting
   @Comment("""
       The password of the database.
       """)
-  private String password = "yourSecurePassword";
+  private final String password = "yourSecurePassword";
 
   @Setting
   @Comment("""
       The name of the database.
       """)
-  private String database = "database";
+  private final String database = "database";
 
   public DataProvider getType() {
     return type;

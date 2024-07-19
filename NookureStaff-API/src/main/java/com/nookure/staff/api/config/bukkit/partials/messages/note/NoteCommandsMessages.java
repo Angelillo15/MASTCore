@@ -8,23 +8,23 @@ import org.spongepowered.configurate.objectmapping.meta.Setting;
 public class NoteCommandsMessages {
   @Setting
   @Comment("The command usage message for the /note add.")
-  private String addNoteUsage = "{prefix} <red>Usage: /note add <player> <show on join> <note> [show only to admins]";
+  private final String addNoteUsage = "{prefix} <red>Usage: /note add <player> <show on join> <note> [show only to admins]";
 
   @Setting
   @Comment("The command usage message for the /note remove.")
-  private String removeNoteUsage = "{prefix} <red>Usage: /note remove <note id>";
+  private final String removeNoteUsage = "{prefix} <red>Usage: /note remove <note id>";
 
   @Setting
   @Comment("The command usage message for the /note list.")
-  private String listNoteUsage = "{prefix} <red>Usage: /note list <player> [page]";
+  private final String listNoteUsage = "{prefix} <red>Usage: /note list <player> [page]";
 
   @Setting
   @Comment("The command usage message for the /note toggle-show command.")
-  private String toggleShowUsage = "{prefix} <red>Usage: /note toggle-show <note id>";
+  private final String toggleShowUsage = "{prefix} <red>Usage: /note toggle-show <note id>";
 
   @Setting
   @Comment("The command usage message for the /note inventory command.")
-  private String inventoryUsage = "{prefix} <red>Usage: /note inventory <player>";
+  private final String inventoryUsage = "{prefix} <red>Usage: /note inventory <player>";
 
   public String getAddNoteUsage() {
     return addNoteUsage;

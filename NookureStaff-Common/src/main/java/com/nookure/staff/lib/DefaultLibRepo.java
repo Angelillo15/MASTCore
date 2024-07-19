@@ -96,23 +96,6 @@ public class DefaultLibRepo {
         .isolatedLoad(false)
         .build();
 
-
-    Library obliviateInventories = Library.builder()
-        .groupId("com{}github{}hamza-cskn{}obliviate-invs")
-        .artifactId("core")
-        .version("4.3.0")
-        .isolatedLoad(false)
-        .resolveTransitiveDependencies(true)
-        .build();
-
-    Library obliviateInventoriesPagination = Library.builder()
-        .groupId("com{}github{}hamza-cskn{}obliviate-invs")
-        .artifactId("pagination")
-        .version("4.3.0")
-        .isolatedLoad(false)
-        .resolveTransitiveDependencies(true)
-        .build();
-
     Library protobuf = Library.builder()
         .groupId("com{}google{}protobuf")
         .artifactId("protobuf-javalite")
@@ -141,7 +124,7 @@ public class DefaultLibRepo {
       libraries.add(nookureInventory);
     }
 
-    Stream.of(hikariCP, storm, caffeine, jedis, commons, commonsPool2, json, obliviateInventoriesPagination, obliviateInventories, protobuf).forEach(libraries::add);
+    Stream.of(hikariCP, storm, caffeine, jedis, commons, commonsPool2, json, protobuf).forEach(libraries::add);
 
     try {
       Class.forName("io.ebean.Database");

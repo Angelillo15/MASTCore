@@ -226,9 +226,7 @@ public class NookureStaff {
   }
 
   public void unregisterListeners() {
-    HandlerList.getHandlerLists().forEach(listener -> {
-      listeners.forEach(listener::unregister);
-    });
+    HandlerList.getHandlerLists().forEach(listener -> listeners.forEach(listener::unregister));
 
     listeners.clear();
   }
@@ -320,7 +318,7 @@ public class NookureStaff {
           logger.warning("PlayerList module requires UserNotes module to be enabled, some features may not work");
         }
 
-        commandManager.registerCommand(injector.getInstance(PlayerListCommand.class));;
+        commandManager.registerCommand(injector.getInstance(PlayerListCommand.class));
       }
     }
   }

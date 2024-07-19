@@ -1,24 +1,25 @@
 package com.nookure.staff.paper.listener.staff.items;
 
-import com.github.benmanes.caffeine.cache.Cache;
-import com.github.benmanes.caffeine.cache.Caffeine;
 import com.nookure.staff.api.StaffPlayerWrapper;
 import com.nookure.staff.api.item.StaffItem;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
+import org.jetbrains.annotations.NotNull;
 
-import java.time.Duration;
-import java.time.temporal.ChronoUnit;
+import java.util.HashMap;
 import java.util.Optional;
 import java.util.UUID;
 
-public abstract class CommonPlayerInteraction {
-  private static final Cache<UUID, Long> itemsCache = Caffeine.newBuilder()
-      .expireAfterAccess(Duration.of(500, ChronoUnit.MILLIS))
-      .build();
+import static java.util.Objects.requireNonNull;
 
-  public Optional<StaffItem> getItem(ItemStack item, StaffPlayerWrapper player) {
+public abstract class CommonPlayerInteraction {
+  private final HashMap<UUID, Long> lastClick = new HashMap<>();
+
+  public Optional<StaffItem> getItem(@NotNull ItemStack item, @NotNull StaffPlayerWrapper player) {
+    requireNonNull(item, "Item cannot be null");
+    requireNonNull(player, "Player cannot be null");
+
     if (!item.hasItemMeta()) {
       return Optional.empty();
     }
@@ -32,17 +33,26 @@ public abstract class CommonPlayerInteraction {
     return Optional.empty();
   }
 
-  public boolean canUseItem(StaffPlayerWrapper player, StaffItem item) {
-    if (!player.hasPermission(item.getPermission())) {
-      return false;
+  public synchronized boolean canUseItem(@NotNull StaffPlayerWrapper wrapper) {
+    requireNonNull(wrapper, "Wrapper cannot be null");
+    return canUseItem(wrapper.getUniqueId());
+  }
+
+  public synchronized boolean canUseItem(@NotNull UUID uuid) {
+    requireNonNull(uuid, "UUID cannot be null");
+    if (lastClick.containsKey(uuid)) {
+      if (System.currentTimeMillis() - lastClick.get(uuid) < 500) {
+        removeOldClicks();
+        return false;
+      }
     }
 
-    if (itemsCache.getIfPresent(player.getUniqueId()) != null) {
-      return false;
-    }
-
-    itemsCache.put(player.getUniqueId(), System.currentTimeMillis());
-
+    lastClick.put(uuid, System.currentTimeMillis());
+    removeOldClicks();
     return true;
+  }
+
+  private void removeOldClicks() {
+    lastClick.entrySet().removeIf(entry -> System.currentTimeMillis() - entry.getValue() > 500);
   }
 }
