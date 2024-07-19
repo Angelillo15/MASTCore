@@ -12,6 +12,7 @@ public class BukkitMessages {
   public final FreezeMessagePartial freeze = new FreezeMessagePartial();
   public final StaffChatPartial staffChat = new StaffChatPartial();
   public final PlaceholderPartial placeholder = new PlaceholderPartial();
+  public final PinMessagePartial pin = new PinMessagePartial();
   @Setting
   @Comment("""
        The prefix for all staff messages.
