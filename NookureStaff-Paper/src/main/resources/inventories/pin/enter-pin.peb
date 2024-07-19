@@ -14,7 +14,7 @@
         {% endfor %}
         {% if pinSize > 0 %}
             {% for i in range(0, pinSize - 1) %}
-                <Item slot="{{ 10 + (i * 9) }}" material="WHITE_STAINED_GLASS_PANE">
+                <Item slot="{{ 10 + (i * 9) }}" material="GREEN_STAINED_GLASS_PANE">
                     <Name> </Name>
                 </Item>
             {% endfor %}
@@ -88,6 +88,12 @@
             <Name>[light_purple]0</Name>
             <Actions>
                 <Action type="pin_button" value="0"/>
+            </Actions>
+        </Item>
+        <Item slot="41" material="RED_STAINED_GLASS_PANE">
+            <Name>[red]-</Name>
+            <Actions>
+                <Action type="pin_button" value="-"/>
             </Actions>
         </Item>
     </Items>
