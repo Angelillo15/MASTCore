@@ -12,7 +12,7 @@ public class VelocityConfig {
       This will print out more information to the console.
       It's recommended to find bugs.
       """)
-  private final boolean debug = false;
+  private boolean debug = false;
 
   public boolean isDebug() {
     return debug;
