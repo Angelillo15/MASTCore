@@ -20,6 +20,7 @@ dependencies {
   bukkitLibrary(libs.guice)
   paperLibrary(libs.guice)
 
+  /* Start of MockBukkit stuff */
   testImplementation(libs.mockBukkit)
   testImplementation(libs.guice)
   testImplementation(libs.libbyPaper)
@@ -38,6 +39,7 @@ dependencies {
   testImplementation("org.xerial:sqlite-jdbc:3.46.0.0")
   testImplementation(platform("org.junit:junit-bom:5.9.1"))
   testImplementation("org.junit.jupiter:junit-jupiter")
+  /* End of MockBukkit stuff */
 }
 
 bukkit {
