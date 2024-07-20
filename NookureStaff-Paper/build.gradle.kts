@@ -16,10 +16,28 @@ dependencies {
   compileOnly(libs.configurateYaml)
   compileOnly(libs.jedis)
   compileOnly(libs.placeholderApi)
-  compileOnly(libs.bundles.invAPI)
   compileOnly(libs.nookure.core.inventory)
   bukkitLibrary(libs.guice)
   paperLibrary(libs.guice)
+
+  testImplementation(libs.mockBukkit)
+  testImplementation(libs.guice)
+  testImplementation(libs.libbyPaper)
+  testImplementation(libs.configurateYaml)
+  testImplementation(libs.nookure.core.inventory)
+  testImplementation(libs.jedis)
+  testImplementation(libs.libbyPaper)
+  testImplementation(libs.liblyBukkit)
+  testImplementation(libs.adventureApi)
+  testImplementation(libs.miniMessage)
+  testImplementation(libs.adventureBukkit)
+  testImplementation(libs.ebean)
+  testImplementation(libs.storm)
+  testImplementation(libs.hikariCP)
+
+  testImplementation("org.xerial:sqlite-jdbc:3.46.0.0")
+  testImplementation(platform("org.junit:junit-bom:5.9.1"))
+  testImplementation("org.junit.jupiter:junit-jupiter")
 }
 
 bukkit {
@@ -56,4 +74,8 @@ paper {
       load = PaperPluginDescription.RelativeLoadOrder.BEFORE
     }
   }
+}
+
+tasks.test {
+  useJUnitPlatform()
 }
