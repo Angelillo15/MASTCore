@@ -13,13 +13,12 @@ import org.bukkit.entity.Player;
 import org.junit.jupiter.api.*;
 
 public class PluginTest {
-  private ServerMock server;
   private StaffBootstrapper plugin;
   private Injector injector;
 
   @BeforeEach
   public void setUp() {
-    server = MockBukkit.mock();
+    ServerMock server = MockBukkit.mock();
     plugin = MockBukkit.load(StaffBootstrapper.class);
     injector = plugin.getInjector();
   }

@@ -19,13 +19,12 @@ import java.util.Optional;
 
 public class PlayerWrapperTest {
   private ServerMock server;
-  private StaffBootstrapper plugin;
   private Injector injector;
 
   @BeforeEach
   public void setUp() {
     server = MockBukkit.mock();
-    plugin = MockBukkit.load(StaffBootstrapper.class);
+    StaffBootstrapper plugin = MockBukkit.load(StaffBootstrapper.class);
     injector = plugin.getInjector();
   }
 
@@ -48,17 +47,17 @@ public class PlayerWrapperTest {
 
   @Test
   @DisplayName("Create one player and check leave")
-    public void createOnePlayerAndCheckLeave() {
-        PlayerMock player = server.addPlayer();
-        PlayerWrapperManager<Player> playerWrapperManager = injector.getInstance(Key.get(new TypeLiteral<>() {
-        }));
+  public void createOnePlayerAndCheckLeave() {
+    PlayerMock player = server.addPlayer();
+    PlayerWrapperManager<Player> playerWrapperManager = injector.getInstance(Key.get(new TypeLiteral<>() {
+    }));
 
-        Optional<PlayerWrapper> playerWrapper = playerWrapperManager.getPlayerWrapper(player);
+    Optional<PlayerWrapper> playerWrapper = playerWrapperManager.getPlayerWrapper(player);
 
-        assert playerWrapper.isPresent();
+    assert playerWrapper.isPresent();
 
-        player.disconnect();
+    player.disconnect();
 
-        assert playerWrapperManager.getPlayerCount() == 0;
-    }
+    assert playerWrapperManager.getPlayerCount() == 0;
+  }
 }
