@@ -1,8 +1,11 @@
+import com.adarshr.gradle.testlogger.theme.ThemeType
+
 plugins {
   id("java")
   alias(libs.plugins.shadowJar)
   alias(libs.plugins.grgit)
   alias(libs.plugins.runPaper)
+  alias(libs.plugins.testLogger)
 }
 
 val major: String by project
@@ -40,6 +43,7 @@ tasks.shadowJar {
 allprojects {
   apply<JavaPlugin>()
   apply(plugin = rootProject.libs.plugins.shadowJar.get().pluginId)
+  apply(plugin = rootProject.libs.plugins.testLogger.get().pluginId)
 
   repositories {
     mavenCentral()
@@ -77,6 +81,10 @@ allprojects {
     sourceCompatibility = JavaVersion.VERSION_21
     targetCompatibility = JavaVersion.VERSION_21
     toolchain.languageVersion.set(JavaLanguageVersion.of(21))
+  }
+
+  testlogger {
+    theme = ThemeType.MOCHA
   }
 }
 
