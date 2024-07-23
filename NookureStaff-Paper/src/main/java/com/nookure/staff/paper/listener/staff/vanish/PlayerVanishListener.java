@@ -38,7 +38,7 @@ public class PlayerVanishListener implements Listener {
   @EventHandler
   public void onPlayerLeave(PlayerQuitEvent event) {
     playerWrapperManager.stream().forEach(player -> {
-      StaffPaperPlayerWrapper staffPlayer = (StaffPaperPlayerWrapper) player;
+      if (!(player instanceof StaffPaperPlayerWrapper staffPlayer)) return;
 
       event.getPlayer().showPlayer(javaPlugin, staffPlayer.getPlayer());
     });
