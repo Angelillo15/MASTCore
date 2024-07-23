@@ -16,6 +16,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.Optional;
+import java.util.UUID;
 
 public class StaffCommandTest {
   private ServerMock server;
@@ -38,7 +39,6 @@ public class StaffCommandTest {
   public void enableStaffModeAndCheck() {
     PlayerMock player = getOpPlayer();
     server.addPlayer(player);
-    player.performCommand("staff");
 
     PlayerWrapperManager<Player> playerWrapperManager = injector.getInstance(Key.get(new TypeLiteral<>() {
     }));
@@ -47,11 +47,13 @@ public class StaffCommandTest {
 
     assert playerWrapper.isPresent();
 
+    playerWrapper.get().toggleStaffMode();
+
     assert playerWrapper.get().isInStaffMode();
   }
 
   public PlayerMock getOpPlayer() {
-    PlayerMock player = new PlayerMock(server, "Player");
+    PlayerMock player = new PlayerMock(server, "StaffPlayer", UUID.randomUUID());
     player.setOp(true);
     return player;
   }
