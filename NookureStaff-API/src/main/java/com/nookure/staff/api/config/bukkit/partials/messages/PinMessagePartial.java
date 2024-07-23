@@ -6,13 +6,22 @@ import org.spongepowered.configurate.objectmapping.meta.Setting;
 @ConfigSerializable
 public class PinMessagePartial {
   @Setting
-  public final String thePinIsIncorrect = "<red>The PIN is incorrect.";
+  public String thePinIsIncorrect = "<red>The PIN is incorrect.";
   @Setting
-  public final String correctPin = "<green>The PIN is correct.";
+  public String correctPin = "<green>The PIN is correct.";
   @Setting
-  public final String pinSet = "<green>Your PIN has been set to {pin}.";
+  public String pinSet = "<green>Your PIN has been set to {pin}.";
   @Setting
-  public final String youMustHaveToSetAPin = """
+  public String alreadyLoggedIn = "<red>You are already logged in.";
+  @Setting
+  public String doesntAllowedToDoThatUntilLoggedIn = "<red>You don't have permission to do that until you enter your PIN.";
+  @Setting
+  public String changePinCommandUsage = "<red>Usage: /changepin <new pin> <-- Must be 4 digits.";
+  @Setting
+  public String pinChanged = "<green>Your PIN has been changed to {pin}.";
+  @Setting
+  public String pinNotSet = "<red>You don't have a PIN set.";
+  public String youMustHaveToSetAPin = """
       {center}<bold>◆ <red>Nookure <white>Network</white> ◆</bold>
       
       {center}<gray>You <red>must</red> have to set a <red>PIN</red> before you can play on this server.

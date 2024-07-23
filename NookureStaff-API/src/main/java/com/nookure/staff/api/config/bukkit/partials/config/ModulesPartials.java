@@ -68,7 +68,7 @@ public class ModulesPartials {
       This will allow you to set a pin code to the staff's accounts
       and use it to login.
       """)
-  private final boolean pinCode = false;
+  private boolean pinCode = false;
 
   public boolean isStaffMode() {
     return staffMode;
