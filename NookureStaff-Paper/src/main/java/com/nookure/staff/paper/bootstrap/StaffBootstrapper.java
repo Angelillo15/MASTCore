@@ -26,9 +26,21 @@ import java.io.InputStream;
 
 public class StaffBootstrapper extends JavaPlugin implements NookureStaffPlatform<JavaPlugin> {
   public static final boolean isPaper;
+  public static final boolean isMock;
 
   static {
     isPaper = ServerUtils.isPaper;
+  }
+
+  static {
+    boolean isMockTemp;
+    try {
+      isMockTemp = Bukkit.getName().equalsIgnoreCase("servermock");
+    } catch (Exception e) {
+      isMockTemp = false;
+    }
+
+    isMock = isMockTemp;
   }
 
   private boolean debug = false;
@@ -80,6 +92,8 @@ public class StaffBootstrapper extends JavaPlugin implements NookureStaffPlatfor
       return;
     }
 
+    if (isMock) return;
+
     getLogger().severe("------------------------------------------------------------------");
     getLogger().severe("DONT IGNORE THIS MESSAGE, IT'S IMPORTANT!");
     getLogger().severe("You are using Spigot, which is not recommended for NookureStaff.");
@@ -100,6 +114,8 @@ public class StaffBootstrapper extends JavaPlugin implements NookureStaffPlatfor
   }
 
   private void loadDependencies() {
+    if (isMock) return;
+
     LibraryManager manager;
 
     try {
