@@ -12,6 +12,7 @@ import com.nookure.staff.api.config.partials.DatabaseConfig;
 import com.nookure.staff.api.database.AbstractPluginConnection;
 import com.nookure.staff.api.database.DataProvider;
 import com.nookure.staff.api.model.NoteModel;
+import com.nookure.staff.api.model.PinModel;
 import com.nookure.staff.api.model.PlayerModel;
 import com.nookure.staff.api.model.StaffDataModel;
 import com.nookure.staff.database.driver.SqliteFileDriver;
@@ -130,7 +131,7 @@ public class PluginConnection extends AbstractPluginConnection {
       dataSourceConfig.setPassword(hikariDataSource.getPassword());
     }
 
-    dataSourceConfig.setName("nkstaff");
+    dataSourceConfig.setName(DATABASE_NAME);
 
     io.ebean.config.DatabaseConfig ebeanConfig = new io.ebean.config.DatabaseConfig();
 
@@ -145,7 +146,8 @@ public class PluginConnection extends AbstractPluginConnection {
     ebeanConfig.setRunMigration(true);
     ebeanConfig.setClasses(List.of(
         PlayerModel.class,
-        NoteModel.class
+        NoteModel.class,
+        PinModel.class
     ));
     ebeanConfig.setDataSource(hikariDataSource);
     ebeanConfig.setDefaultServer(true);

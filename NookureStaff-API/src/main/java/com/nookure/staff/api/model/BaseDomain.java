@@ -9,6 +9,8 @@ import jakarta.persistence.Version;
 
 import java.time.Instant;
 
+import static com.nookure.staff.api.database.AbstractPluginConnection.DATABASE_NAME;
+
 @MappedSuperclass
 public class BaseDomain extends Model {
   @Id
@@ -21,7 +23,7 @@ public class BaseDomain extends Model {
   Instant whenModified;
 
   public BaseDomain() {
-    super("nkstaff");
+    super(DATABASE_NAME);
   }
 
   public Long getId() {

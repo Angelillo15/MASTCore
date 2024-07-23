@@ -3,12 +3,17 @@ package com.nookure.staff.paper.loader;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
 import com.nookure.core.inv.paper.PaperNookureInventoryEngine;
+import com.nookure.core.inv.paper.service.CustomActionRegistry;
 import com.nookure.core.inv.template.extension.OpenInventoryExtension;
 import com.nookure.core.inv.template.extension.PaginationItemExtension;
+import com.nookure.staff.api.config.ConfigurationContainer;
+import com.nookure.staff.api.config.bukkit.BukkitConfig;
 import com.nookure.staff.api.util.AbstractLoader;
 import com.nookure.staff.api.util.JarUtil;
 import com.nookure.staff.paper.inventory.extenion.DataFormatExtension;
 import com.nookure.staff.paper.inventory.extenion.NookurePlayerExtension;
+import com.nookure.staff.paper.pin.action.PinButtonPressed;
+import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.IOException;
@@ -21,6 +26,9 @@ public class InventoryLoader implements AbstractLoader {
   private AtomicReference<PaperNookureInventoryEngine> engine;
   @Inject
   private Injector injector;
+  @Inject
+  private ConfigurationContainer<BukkitConfig> config;
+
   private static final boolean replaceFolder;
 
   static {
@@ -55,6 +63,16 @@ public class InventoryLoader implements AbstractLoader {
       JarUtil.copyFolderFromJar("inventories", plugin.getDataFolder(), option);
     } catch (IOException e) {
       throw new RuntimeException(e);
+    }
+
+    CustomActionRegistry registry = Bukkit.getServicesManager().load(CustomActionRegistry.class);
+
+    if (registry == null) {
+      throw new RuntimeException("CustomActionRegistry service not found");
+    }
+
+    if (config.get().modules.isPinCode()) {
+      registry.registerAction(injector.getInstance(PinButtonPressed.class));
     }
   }
 

@@ -56,8 +56,11 @@ import com.nookure.staff.paper.loader.PlaceholderApiLoader;
 import com.nookure.staff.paper.messaging.BackendMessageMessenger;
 import com.nookure.staff.paper.note.command.ParentNoteCommand;
 import com.nookure.staff.paper.note.listener.OnPlayerNoteJoin;
+import com.nookure.staff.paper.pin.SetPinCommand;
+import com.nookure.staff.paper.pin.listener.OnInventoryClose;
 import com.nookure.staff.paper.task.FreezeSpamMessage;
 import com.nookure.staff.paper.task.FreezeTimerTask;
+import com.nookure.staff.paper.task.PinTask;
 import com.nookure.staff.paper.task.StaffModeActionbar;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -215,6 +218,10 @@ public class NookureStaff {
         logger.warning("PlayerActions module requires PlayerList, PlayerData and UserNotes modules to be enabled, disabling PlayerActions module");
       }
     }
+
+    if (config.get().modules.isPinCode()) {
+      registerListener(OnInventoryClose.class);
+    }
   }
 
   public void registerListener(Class<? extends Listener> listener) {
@@ -284,6 +291,10 @@ public class NookureStaff {
     if (config.get().staffMode.actionBar()) {
       Bukkit.getScheduler().runTaskTimerAsynchronously(plugin, injector.getInstance(StaffModeActionbar.class), 0, 20);
     }
+
+    if (config.get().modules.isPinCode()) {
+      Bukkit.getScheduler().runTaskTimerAsynchronously(plugin, injector.getInstance(PinTask.class), 0, 20 * 2);
+    }
   }
 
   private void loadCommands() {
@@ -320,6 +331,10 @@ public class NookureStaff {
 
         commandManager.registerCommand(injector.getInstance(PlayerListCommand.class));
       }
+    }
+
+    if (config.get().modules.isPinCode()) {
+      commandManager.registerCommand(injector.getInstance(SetPinCommand.class));
     }
   }
 

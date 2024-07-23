@@ -31,13 +31,6 @@ public class ModulesPartials {
 
   @Setting
   @Comment("""
-      Enable or disable the invsee module.
-      This include /invsee command
-      """)
-  private boolean invsee = true;
-
-  @Setting
-  @Comment("""
       Enable or disable the StaffChat module.
       This include /staffchat command and
       the staff chat prefix.
@@ -69,6 +62,14 @@ public class ModulesPartials {
       """)
   private boolean playerList = true;
 
+  @Setting
+  @Comment("""
+      Enable or disable the pin code module.
+      This will allow you to set a pin code to the staff's accounts
+      and use it to login.
+      """)
+  private final boolean pinCode = false;
+
   public boolean isStaffMode() {
     return staffMode;
   }
@@ -79,10 +80,6 @@ public class ModulesPartials {
 
   public boolean isVanish() {
     return vanish;
-  }
-
-  public boolean isInvsee() {
-    return invsee;
   }
 
   public boolean isStaffChat() {
@@ -99,5 +96,9 @@ public class ModulesPartials {
 
   public boolean isPlayerList() {
     return playerList;
+  }
+
+  public boolean isPinCode() {
+    return pinCode;
   }
 }

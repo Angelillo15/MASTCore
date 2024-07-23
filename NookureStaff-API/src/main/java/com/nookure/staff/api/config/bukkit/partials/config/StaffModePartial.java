@@ -76,6 +76,12 @@ public class StaffModePartial {
       """)
   private VanishType vanishType = VanishType.INTERNAL_VANISH;
 
+  @Setting
+  @Comment("""
+      Time to create a PIN code, before the player is kick
+      """)
+  private final String pinTime = "60s";
+
   public boolean silentChestOpen() {
     return silentChestOpen;
   }
@@ -110,5 +116,9 @@ public class StaffModePartial {
 
   public VanishType vanishType() {
     return vanishType;
+  }
+
+  public String pinTime() {
+    return pinTime;
   }
 }

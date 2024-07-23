@@ -12,6 +12,8 @@ public class BukkitMessages {
   public FreezeMessagePartial freeze = new FreezeMessagePartial();
   public StaffChatPartial staffChat = new StaffChatPartial();
   public PlaceholderPartial placeholder = new PlaceholderPartial();
+  public PinMessagePartial pin = new PinMessagePartial();
+
   @Setting
   @Comment(
       """
