@@ -36,6 +36,7 @@ import com.nookure.staff.messaging.RedisMessenger;
 import com.nookure.staff.paper.addon.ServerAddonManager;
 import com.nookure.staff.paper.command.PaperCommandManager;
 import com.nookure.staff.paper.messaging.BackendMessageMessenger;
+import com.nookure.staff.paper.util.MockScheduler;
 import com.nookure.staff.paper.util.PaperScheduler;
 import com.nookure.staff.paper.util.PaperServerUtils;
 import com.nookure.staff.service.UserNoteServiceImpl;
@@ -72,7 +73,11 @@ public class PaperPluginModule extends PluginModule {
     bind(StaffItemsManager.class).asEagerSingleton();
     bind(ConsoleCommandSender.class).asEagerSingleton();
     bind(CommandManager.class).to(PaperCommandManager.class).asEagerSingleton();
-    bind(Scheduler.class).to(PaperScheduler.class).asEagerSingleton();
+    if (StaffBootstrapper.isMock) {
+      bind(Scheduler.class).to(MockScheduler.class).asEagerSingleton();
+    } else {
+      bind(Scheduler.class).to(PaperScheduler.class).asEagerSingleton();
+    }
     bind(ServerUtils.class).to(PaperServerUtils.class).asEagerSingleton();
     bind(StaffPlayerExtensionManager.class).asEagerSingleton();
     bind(FreezeManager.class).asEagerSingleton();
