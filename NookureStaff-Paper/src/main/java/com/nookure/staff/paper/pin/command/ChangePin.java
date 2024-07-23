@@ -49,6 +49,7 @@ public class ChangePin extends StaffCommand {
     }
 
     service.setPin(sender.getPlayerModel(), newPin);
+    sender.sendMiniMessage(messages.get().pin.pinChanged, "pin", newPin);
   }
 
   @Override
