@@ -56,7 +56,8 @@ import com.nookure.staff.paper.loader.PlaceholderApiLoader;
 import com.nookure.staff.paper.messaging.BackendMessageMessenger;
 import com.nookure.staff.paper.note.command.ParentNoteCommand;
 import com.nookure.staff.paper.note.listener.OnPlayerNoteJoin;
-import com.nookure.staff.paper.pin.SetPinCommand;
+import com.nookure.staff.paper.pin.command.ChangePin;
+import com.nookure.staff.paper.pin.command.SetPinCommand;
 import com.nookure.staff.paper.pin.listener.OnInventoryClose;
 import com.nookure.staff.paper.task.FreezeSpamMessage;
 import com.nookure.staff.paper.task.FreezeTimerTask;
@@ -335,6 +336,7 @@ public class NookureStaff {
 
     if (config.get().modules.isPinCode()) {
       commandManager.registerCommand(injector.getInstance(SetPinCommand.class));
+      commandManager.registerCommand(injector.getInstance(ChangePin.class));
     }
   }
 

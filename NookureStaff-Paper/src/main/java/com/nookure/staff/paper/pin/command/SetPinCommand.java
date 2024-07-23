@@ -1,13 +1,17 @@
-package com.nookure.staff.paper.pin;
+package com.nookure.staff.paper.pin.command;
 
 import com.google.inject.Inject;
 import com.nookure.core.inv.paper.PaperNookureInventoryEngine;
 import com.nookure.staff.api.Permissions;
+import com.nookure.staff.api.StaffPlayerWrapper;
 import com.nookure.staff.api.command.Command;
 import com.nookure.staff.api.command.CommandData;
 import com.nookure.staff.api.command.CommandSender;
+import com.nookure.staff.api.command.StaffCommand;
+import com.nookure.staff.api.config.ConfigurationContainer;
+import com.nookure.staff.api.config.bukkit.BukkitMessages;
 import com.nookure.staff.api.state.PinState;
-import com.nookure.staff.paper.PaperPlayerWrapper;
+import com.nookure.staff.paper.StaffPaperPlayerWrapper;
 import com.nookure.staff.paper.inventory.InventoryList;
 import org.jetbrains.annotations.NotNull;
 
@@ -19,16 +23,23 @@ import java.util.concurrent.atomic.AtomicReference;
     permission = Permissions.SET_PIN_PERMISSION,
     description = "Set your pin"
 )
-public class SetPinCommand extends Command {
+public class SetPinCommand extends StaffCommand {
   @Inject
   private AtomicReference<PaperNookureInventoryEngine> engine;
+  @Inject
+  private ConfigurationContainer<BukkitMessages> messages;
 
   @Override
-  public void onCommand(@NotNull CommandSender sender, @NotNull String label, @NotNull List<String> args) {
-    if (sender instanceof PaperPlayerWrapper player) {
+  protected void onStaffCommand(@NotNull StaffPlayerWrapper sender, @NotNull String label, @NotNull List<String> args) {
+    if (sender instanceof StaffPaperPlayerWrapper player) {
       PinState pinState = player.getState().getState(PinState.class);
 
       if (pinState == null) {
+        return;
+      }
+
+      if (pinState.isLogin()) {
+        sender.sendMiniMessage(messages.get().pin.alreadyLoggedIn);
         return;
       }
 
