@@ -26,6 +26,7 @@ import com.nookure.staff.paper.data.StaffModeData;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -87,10 +88,10 @@ public class StaffPaperPlayerWrapper extends PaperPlayerWrapper implements Staff
       player.performCommand("vanish");
     }
 
-    writeVanishState(isInVanish());
-
     if (isInVanish()) disableVanish(false);
     else enableVanish(false);
+
+    writeVanishState(isInVanish());
   }
 
   @Override
@@ -292,7 +293,7 @@ public class StaffPaperPlayerWrapper extends PaperPlayerWrapper implements Staff
   @Override
   public void clearInventory() {
     player.getInventory().clear();
-    player.getInventory().setArmorContents(null);
+    player.getInventory().setArmorContents(new ItemStack[0]);
   }
 
   @Override
@@ -370,7 +371,6 @@ public class StaffPaperPlayerWrapper extends PaperPlayerWrapper implements Staff
   public void checkVanishState() {
     if (!config.get().modules.isVanish()) return;
     if (!vanishExtension.restoreFromDatabase()) return;
-
     StaffDataModel staffDataModel = StaffDataModel.getFromUUID(connection.getStorm(), player.getUniqueId());
 
     if (staffDataModel.isVanished()) {
@@ -380,7 +380,6 @@ public class StaffPaperPlayerWrapper extends PaperPlayerWrapper implements Staff
     }
 
     vanishExtension.setVanished(staffDataModel.isVanished());
-    enableVanish(true);
   }
 
   public void addExtensions() {
