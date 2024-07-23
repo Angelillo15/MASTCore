@@ -10,6 +10,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 
 public class OnPlayerEntityInteract extends CommonPlayerInteraction implements Listener {
@@ -42,10 +43,10 @@ public class OnPlayerEntityInteract extends CommonPlayerInteraction implements L
       return;
     }
 
+    if (event.getHand() != EquipmentSlot.HAND) return;
+    if (!canUseItem(playerWrapper)) return;
 
     getItem(currentItem, playerWrapper).ifPresent(item -> {
-      if (!canUseItem(playerWrapper, item)) return;
-
       if (item instanceof PlayerInteractItem executableItem) {
         if (!(event.getRightClicked() instanceof Player target)) return;
 

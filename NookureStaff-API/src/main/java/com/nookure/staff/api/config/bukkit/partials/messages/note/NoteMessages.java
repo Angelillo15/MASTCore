@@ -10,19 +10,19 @@ public class NoteMessages {
   @Comment("""
       The message to send to the player when a note is successfully created.
       """)
-  private final String successfullyCreated = "{prefix} <green>Successfully created a note for <red>{player.name}!</red>";
+  private String successfullyCreated = "{prefix} <green>Successfully created a note for <red>{player.name}!</red>";
   @Setting
   @Comment("Message indicating that data is being saved.")
-  private final String savingData = "{prefix} <gray>Saving data, please wait ⌚...";
+  private String savingData = "{prefix} <gray>Saving data, please wait ⌚...";
   @Setting
   @Comment("Message indicating that a note is being deleted.")
-  private final String deletingNote = "{prefix} <gray>Deleting note, please wait ⌚...";
+  private String deletingNote = "{prefix} <gray>Deleting note, please wait ⌚...";
   @Setting
   @Comment("Message confirming that a note has been successfully deleted.")
-  private final String noteDeleted = "{prefix} <green>Successfully deleted the note with the id {note.id}.";
+  private String noteDeleted = "{prefix} <green>Successfully deleted the note with the id {note.id}.";
   @Setting
   @Comment("Message indicating that data is being loaded.")
-  private final String loadingData = "{prefix} <gray>Loading data, please wait ⌚...";
+  private String loadingData = "{prefix} <gray>Loading data, please wait ⌚...";
   @Setting
   @Comment("""
         The header of the note display message.
@@ -30,7 +30,7 @@ public class NoteMessages {
         You can also access to the player fields using the {player.$field} placeholder.
         Review the placeholders in the documentation.
       """)
-  private final String noteDisplayHeader = """
+  private String noteDisplayHeader = """
       🗡 User Note <red><u>#{note.id}</u></red> for <hover:show_text:'<red>Name:</red> {player.name}
       <red>UUID:</red> {player.uuid}
       '><red><u>{player.name}</u></red></hover>
@@ -43,7 +43,7 @@ public class NoteMessages {
       You can also access the player fields using the {player.$field} placeholder.
       Review the placeholders in the documentation.
       """)
-  private final String noteDisplayBody = """
+  private String noteDisplayBody = """
       ⛏ <red>Active:</red> {note.active}
       ⛏ <red>Note:</red> {note.note}
       ⛏ <red>Show On Join:</red> {note.showOnJoin}
@@ -58,7 +58,7 @@ public class NoteMessages {
       You can also access the player fields using the {player.$field} placeholder.
       Review the placeholders in the documentation.
       """)
-  private final String noteDisplayBodyAdmin = """
+  private String noteDisplayBodyAdmin = """
       ⛏ <red>Active:</red> {note.active}
       ⛏ <red>Note:</red> {note.note}
       ⛏ <red>Show On Join:</red> {note.showOnJoin}
@@ -73,59 +73,59 @@ public class NoteMessages {
       Review the placeholders in the documentation.
       Includes commands for deleting the note and toggling the show on join status.
       """)
-  private final String noteDisplayFooter = """
+  private String noteDisplayFooter = """
       <b>⚡</b> <click:suggest_command:'/note remove {note.id}'><hover:show_text:'<red>Delete'><u><red>🗑</red></u></hover></click> <b>│</b> <click:run_command:'/note toggle-show {note.id}'><hover:show_text:'<yellow>Toggle Show on Join'><u><yellow>👁</yellow></u></hover></click>
       """;
 
   @Setting
   @Comment("Message indicating that a note was not found.")
-  private final String noteNotFound = "{prefix} <red>Could not find the note with the id {note.id}.";
+  private String noteNotFound = "{prefix} <red>Could not find the note with the id {note.id}.";
 
   @Setting
   @Comment("Message indicating that the user does not have any notes.")
-  private final String userWithoutNotes = "{prefix} <red>{player.name} does not have any notes.";
+  private String userWithoutNotes = "{prefix} <red>{player.name} does not have any notes.";
 
   @Setting
   @Comment("""
       Pagination control for previous page.
       Includes a clickable element to navigate to the previous page of notes.
       """)
-  private final String paginationPrevious = "<click:run_command:/note list {player.name} {prev_page}><hover:show_text:'<red>Previous Page'><red>«</red></hover></click> ";
+  private String paginationPrevious = "<click:run_command:/note list {player.name} {prev_page}><hover:show_text:'<red>Previous Page'><red>«</red></hover></click> ";
 
   @Setting
   @Comment("""
       Pagination control for next page.
       Includes a clickable element to navigate to the next page of notes.
       """)
-  private final String paginationNext = " <click:run_command:/note list {player.name} {next_page}><hover:show_text:'<red>Next Page'><red>»</red></hover></click>";
+  private String paginationNext = " <click:run_command:/note list {player.name} {next_page}><hover:show_text:'<red>Next Page'><red>»</red></hover></click>";
 
   @Setting
   @Comment("""
       Header for pagination display.
       Includes player name, current page number, and total number of pages.
       """)
-  private final String paginationHeader = "<gray>Notes for <red>{player.name}</red> <gray>Page <red>{page}</red> <gray>of <red>{total_pages}</red>.";
+  private String paginationHeader = "<gray>Notes for <red>{player.name}</red> <gray>Page <red>{page}</red> <gray>of <red>{total_pages}</red>.";
 
   @Setting
   @Comment("""
       Pagination control for specific page number.
       Includes a clickable element to navigate to a specific page of notes.
       """)
-  private final String paginationFooterNumber = "<click:run_command:/note list {player.name} {page}><hover:show_text:'<red>Go to Page {page}'><red>{page}</red></hover></click>";
+  private String paginationFooterNumber = "<click:run_command:/note list {player.name} {page}><hover:show_text:'<red>Go to Page {page}'><red>{page}</red></hover></click>";
 
   @Setting
   @Comment("Current page number in the pagination footer, underlined for emphasis.")
-  private final String currentPaginationNumber = "<u><red>{page}</red></u>";
+  private String currentPaginationNumber = "<u><red>{page}</red></u>";
   @Setting
   @Comment("Separator used in various parts of the note messages.")
-  private final String separator = "<gray> │ </gray>";
+  private String separator = "<gray> │ </gray>";
 
   @Setting
   @Comment("Message indicating that the show on join status of a note has been toggled on.")
-  private final String setShowOnJoinOn = "{prefix} <green>Successfully toggled on the show on join status for the note with the id {note.id}.";
+  private String setShowOnJoinOn = "{prefix} <green>Successfully toggled on the show on join status for the note with the id {note.id}.";
   @Setting
   @Comment("Message indicating that the show on join status of a note has been toggled off.")
-  private final String setShowOnJoinOff = "{prefix} <green>Successfully toggled off the show on join status for the note with the id {note.id}.";
+  private String setShowOnJoinOff = "{prefix} <green>Successfully toggled off the show on join status for the note with the id {note.id}.";
 
   public final NoteCommandsMessages commands = new NoteCommandsMessages();
 

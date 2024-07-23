@@ -10,7 +10,7 @@ public class MessengerConfig {
   @Comment(
       """
           The configuration for the Redis messenger.
-          """
+              """
   )
   public final RedisPartial redis = new RedisPartial();
   @Setting
@@ -24,9 +24,9 @@ public class MessengerConfig {
           in the proxy is installed the bridge plugin.
           - NONE: Disable the sync, useful when you don't have a network
           and you only have 1 server.
-          """
+              """
   )
-  private final MessengerType type = MessengerType.NONE;
+  private MessengerType type = MessengerType.NONE;
 
   public MessengerType getType() {
     return type;

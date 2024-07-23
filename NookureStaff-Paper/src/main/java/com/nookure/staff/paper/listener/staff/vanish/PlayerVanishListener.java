@@ -1,6 +1,7 @@
 package com.nookure.staff.paper.listener.staff.vanish;
 
 import com.google.inject.Inject;
+import com.nookure.staff.api.Permissions;
 import com.nookure.staff.api.StaffPlayerWrapper;
 import com.nookure.staff.api.manager.PlayerWrapperManager;
 import com.nookure.staff.paper.StaffPaperPlayerWrapper;
@@ -19,6 +20,8 @@ public class PlayerVanishListener implements Listener {
 
   @EventHandler
   public void onPlayerJoin(PlayerJoinEvent event) {
+    if (event.getPlayer().hasPermission(Permissions.STAFF_VANISH_SEE)) return;
+
     playerWrapperManager.stream()
         .filter(player -> {
           if (player instanceof StaffPlayerWrapper staffPlayer) {
@@ -28,24 +31,16 @@ public class PlayerVanishListener implements Listener {
           return false;
         }).forEach(player -> {
           StaffPaperPlayerWrapper staffPlayer = (StaffPaperPlayerWrapper) player;
-
           event.getPlayer().hidePlayer(javaPlugin, staffPlayer.getPlayer());
         });
   }
 
   @EventHandler
   public void onPlayerLeave(PlayerQuitEvent event) {
-    playerWrapperManager.stream()
-        .filter(player -> {
-          if (player instanceof StaffPlayerWrapper staffPlayer) {
-            return staffPlayer.isInVanish();
-          }
+    playerWrapperManager.stream().forEach(player -> {
+      if (!(player instanceof StaffPaperPlayerWrapper staffPlayer)) return;
 
-          return false;
-        }).forEach(player -> {
-          StaffPaperPlayerWrapper staffPlayer = (StaffPaperPlayerWrapper) player;
-
-          event.getPlayer().showPlayer(javaPlugin, staffPlayer.getPlayer());
-        });
+      event.getPlayer().showPlayer(javaPlugin, staffPlayer.getPlayer());
+    });
   }
 }

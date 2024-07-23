@@ -28,6 +28,7 @@ flyway = "10.12.0"
 protoc = "4.27.1"
 super-vanish = "6.2.18-3"
 inventory = "1.0.0-ee06bf8"
+mock-bukkit = "3.9.0"
 
 [libraries]
 hikariCP = { group = "com.zaxxer", name = "HikariCP", version.ref = "hikariCP" }
@@ -79,6 +80,7 @@ ebean-migration = { group = "io.ebean", name = "ebean-migration", version = "14.
 protocol-buffers-lite = { group = "com.google.protobuf", name = "protobuf-javalite", version.ref = "protoc" }
 superVanish = { group = "com.github.LeonMangler", name = "SuperVanish", version.ref = "super-vanish" }
 nookure-core-inventory = { group = "com.nookure.core", name = "NookCore-Inventory", version.ref = "inventory" }
+mockBukkit = { group = "com.github.seeseemelk", name = "MockBukkit-v1.20", version.ref = "mock-bukkit" }
 
 [bundles]
 invAPI = ["invCore", "invAdvancedSlots", "invPagination", "configurableGui"]
@@ -94,3 +96,4 @@ grgitPublish = { id = "org.ajoberstar.git-publish", version = "4.2.1" }
 ebean = { id = "io.ebean", version.ref = "ebean" }
 libby = { id = "xyz.kyngs.libby.plugin", version = "1.0.0" }
 runPaper = { id = "xyz.jpenilla.run-paper", version = "2.3.0" }
+testLogger = { id = "com.adarshr.test-logger", version = "4.0.0"}

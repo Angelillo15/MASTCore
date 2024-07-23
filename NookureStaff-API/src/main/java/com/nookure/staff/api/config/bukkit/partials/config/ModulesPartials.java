@@ -12,14 +12,14 @@ public class ModulesPartials {
       This include /staff command and the staff
       vault.
       """)
-  private final boolean staffMode = true;
+  private boolean staffMode = true;
 
   @Setting
   @Comment("""
       Enable or disable the freeze module.
       This include /freeze command
       """)
-  private final boolean freeze = true;
+  private boolean freeze = true;
 
   @Setting
   @Comment("""
@@ -27,7 +27,7 @@ public class ModulesPartials {
       This include /vanish command and the plugin vanish
       on StaffMode.
       """)
-  private final boolean vanish = true;
+  private boolean vanish = true;
 
   @Setting
   @Comment("""
@@ -35,7 +35,7 @@ public class ModulesPartials {
       This include /staffchat command and
       the staff chat prefix.
       """)
-  private final boolean staffChat = true;
+  private boolean staffChat = true;
 
   @Setting
   @Comment("""
@@ -44,7 +44,7 @@ public class ModulesPartials {
       player data like user notes
       """
   )
-  private final boolean playerData = true;
+  private boolean playerData = true;
 
   @Setting
   @Comment("""
@@ -52,7 +52,7 @@ public class ModulesPartials {
       This include /note command and the user notes
       vault.
       """)
-  private final boolean userNotes = true;
+  private boolean userNotes = true;
 
   @Setting
   @Comment("""
@@ -60,7 +60,7 @@ public class ModulesPartials {
       This will allow you to list all the players on the server
       and perform actions on them.
       """)
-  private final boolean playerList = true;
+  private boolean playerList = true;
 
   @Setting
   @Comment("""

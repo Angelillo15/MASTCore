@@ -11,6 +11,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.EquipmentSlot;
 
 public class OnPlayerInteract extends CommonPlayerInteraction implements Listener {
   @Inject
@@ -37,12 +38,14 @@ public class OnPlayerInteract extends CommonPlayerInteraction implements Listene
       event.setCancelled(false);
     }
 
+    if (event.getHand() != EquipmentSlot.HAND) return;
+
     if (event.getItem() == null) return;
     if (!event.getItem().hasItemMeta()) return;
 
-    getItem(event.getItem(), playerWrapper).ifPresent(item -> {
-      if (!canUseItem(playerWrapper, item)) return;
+    if (!canUseItem(playerWrapper)) return;
 
+    getItem(event.getItem(), playerWrapper).ifPresent(item -> {
       if (item instanceof ExecutableItem executableItem) executableItem.click(playerWrapper);
 
       if (item instanceof ExecutableLocationItem executableIcon) {

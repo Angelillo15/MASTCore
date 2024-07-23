@@ -10,23 +10,23 @@ import static com.nookure.staff.api.Permissions.STAFF_FREEZE_BYPASS;
 public class FreezeMessagePartial {
   @Setting
   @Comment("The message to send to the player when he or she is frozen.")
-  private final String frozenMessage = "<bold><dark_aqua>Freeze <dark_gray>»</bold> <gray>You have been <green>frozen</green>.</gray>";
+  private String frozenMessage = "<bold><dark_aqua>Freeze <dark_gray>»</bold> <gray>You have been <green>frozen</green>.</gray>";
 
   @Setting
   @Comment("The message to send to the player when he or she is unfrozen.")
-  private final String unfrozenMessage = "<bold><dark_aqua>Freeze <dark_gray>»</bold> <gray>You have been <green>unfrozen</green>.</gray>";
+  private String unfrozenMessage = "<bold><dark_aqua>Freeze <dark_gray>»</bold> <gray>You have been <green>unfrozen</green>.</gray>";
 
   @Setting
   @Comment("The message to send to the staff member when the player is frozen.")
-  private final String staffFrozenMessage = "<bold><dark_aqua>Freeze <dark_gray>»</bold> <gray>{player} has been <green>frozen</green> by <green>{staff}</green>.</gray>";
+  private String staffFrozenMessage = "<bold><dark_aqua>Freeze <dark_gray>»</bold> <gray>{player} has been <green>frozen</green> by <green>{staff}</green>.</gray>";
 
   @Setting
   @Comment("The message to send to the staff member when the player is unfrozen.")
-  private final String staffUnfrozenMessage = "<bold><dark_aqua>Freeze <dark_gray>»</bold> <gray>{player} has been <green>unfrozen</green> by <green>{staff}</green>.</gray>";
+  private String staffUnfrozenMessage = "<bold><dark_aqua>Freeze <dark_gray>»</bold> <gray>{player} has been <green>unfrozen</green> by <green>{staff}</green>.</gray>";
 
   @Setting
   @Comment("The message to repeat in the chat when the player is frozen.")
-  private final String chatFrozenMessage = """
+  private String chatFrozenMessage = """
           &7████&c█&7████
           &7███&c█&6█&c█&7███
           &7██&c█&6█&0█&6█&c█&7██
@@ -41,46 +41,46 @@ public class FreezeMessagePartial {
   @Comment("""
       This message will be sent to the staff when the player who he froze leaves the server.
       """)
-  private final String confirmPunishMessage = """
+  private String confirmPunishMessage = """
       <gray>The <green>player</green> <red>{player}</red> has left the server while he was freezed
       Do you want to execute the commands specified when a player leaves ? <hover:show_text:'Forgive the player'><red><click:run_command:'/freeze /remove {player}'>[x]</click></red></hover> <click:run_command:/freeze /exec {player}><green><hover:show_text:'Punish that player'>[✔]</hover></green> </click>
       """;
 
   @Setting
   @Comment("Message sent when a staff tries to freeze a player with " + STAFF_FREEZE_BYPASS + " permission.")
-  private final String freezeBypassMessage = "<bold><dark_aqua>Freeze <dark_gray>»</bold> <gray>You can't freeze that player.</gray>";
+  private String freezeBypassMessage = "<bold><dark_aqua>Freeze <dark_gray>»</bold> <gray>You can't freeze that player.</gray>";
 
   @Setting
   @Comment("The usage message for the /freeze command.")
-  private final String freezeCommandUsage = "<bold><dark_aqua>Freeze <dark_gray>»</bold> <red>You must use /freeze {player} to freeze a player.</red>";
+  private String freezeCommandUsage = "<bold><dark_aqua>Freeze <dark_gray>»</bold> <red>You must use /freeze {player} to freeze a player.</red>";
 
   @Setting
   @Comment("The format of the chat message when the player is frozen.")
-  private final String freezeChatFormat = "{player} <dark_gray>(frozen)</dark_gray> » <gray>{message}</gray>";
+  private String freezeChatFormat = "{player} <dark_gray>(frozen)</dark_gray> » <gray>{message}</gray>";
 
   @Setting
   @Comment("Chat format for staff members that are talking to frozen players.")
-  private final String freezeStaffChatFormat = "{player} <dark_gray>(staff)</dark_gray> -> {target} <dark_gray>(frozen)</dark_gray> » <gray>{message}</gray>";
+  private String freezeStaffChatFormat = "{player} <dark_gray>(staff)</dark_gray> -> {target} <dark_gray>(frozen)</dark_gray> » <gray>{message}</gray>";
 
   @Setting
   @Comment("FreezeChat command usage message.")
-  private final String freezeChatUsage = "<bold><dark_aqua>Freeze <dark_gray>»</bold> <red>You must use /freezechat {player} <message> to chat with a frozen player.</red>";
+  private String freezeChatUsage = "<bold><dark_aqua>Freeze <dark_gray>»</bold> <red>You must use /freezechat {player} <message> to chat with a frozen player.</red>";
 
   @Setting
   @Comment("Freeze Chat when a player isn't frozen and you try to use it.")
-  private final String notFrozenChat = "<bold><dark_aqua>Freeze <dark_gray>»</bold> <red>You can't use the freeze chat if the player isn't frozen.</red>";
+  private String notFrozenChat = "<bold><dark_aqua>Freeze <dark_gray>»</bold> <red>You can't use the freeze chat if the player isn't frozen.</red>";
 
   @Setting
   @Comment("Freeze Chat when a player isn't online and you try to use it.")
-  private final String playerNotOnline = "<bold><dark_aqua>Freeze <dark_gray>»</bold> <red>That player is not online.</red>";
+  private String playerNotOnline = "<bold><dark_aqua>Freeze <dark_gray>»</bold> <red>That player is not online.</red>";
 
   @Setting
   @Comment("Message sent when a player is forgiven")
-  private final String forgiveMessage = "<bold><dark_aqua>Freeze <dark_gray>»</bold> <gray>You have forgiven {player}.</gray>";
+  private String forgiveMessage = "<bold><dark_aqua>Freeze <dark_gray>»</bold> <gray>You have forgiven {player}.</gray>";
 
   @Setting
   @Comment("Message sent when a player is punished")
-  private final String punishMessage = "<bold><dark_aqua>Freeze <dark_gray>»</bold> <gray>You have punished {player}.</gray>";
+  private String punishMessage = "<bold><dark_aqua>Freeze <dark_gray>»</bold> <gray>You have punished {player}.</gray>";
 
   public String frozenMessage() {
     return frozenMessage;
