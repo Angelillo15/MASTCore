@@ -2,7 +2,9 @@ package com.nookure.staff.api;
 
 import com.nookure.staff.api.command.CommandSender;
 import com.nookure.staff.api.model.PlayerModel;
-import org.jetbrains.annotations.Contract;
+import com.nookure.staff.api.state.PlayerState;
+import com.nookure.staff.api.state.WrapperState;
+import net.kyori.adventure.text.Component;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.Serializable;
@@ -34,10 +36,41 @@ public interface PlayerWrapper extends Serializable, CommandSender {
   void teleport(@NotNull PlayerWrapper to);
 
   /**
+   * Kick the player from the server.
+   *
+   * @param reason the reason for the kick
+   */
+  void kick(@NotNull String reason);
+
+  /**
+   * Kick the player from the server.
+   *
+   * @param reason the reason for the kick
+   */
+  void kick(@NotNull Component reason);
+
+  /**
    * Get the player's model.
    *
-   * @throws IllegalStateException if the player's model feature is disabled
    * @return the player's model
+   * @throws IllegalStateException if the player's model feature is disabled
    */
   PlayerModel getPlayerModel();
+
+  /**
+   * Get the player's state.
+   *
+   * @return the player's state
+   */
+  @NotNull
+  WrapperState getState();
+
+  /**
+   * Check if the player has a state.
+   *
+   * @param clazz the class of the state
+   */
+  default boolean hasState(Class<? extends PlayerState> clazz) {
+    return getState().hasState(clazz);
+  }
 }

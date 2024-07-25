@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE GuiLayout SYSTEM "https://nookure.com/xsd/inv/v1/GuiLayout.xsd">
+    {# @pebvariable name="pinSize" type="java.lang.Integer" #}
+<GuiLayout>
+    <Head>
+        <title>Enter your pin code</title>
+        <rows>6</rows>
+    </Head>
+    <Items>
+        {% for i in range(0, 53) %}
+            <Item slot="{{ i }}" material="BLACK_STAINED_GLASS_PANE">
+                <Name> </Name>
+            </Item>
+        {% endfor %}
+        {% if pinSize > 0 %}
+            {% for i in range(0, pinSize - 1) %}
+                <Item slot="{{ 10 + (i * 9) }}" material="GREEN_STAINED_GLASS_PANE">
+                    <Name> </Name>
+                </Item>
+            {% endfor %}
+        {% endif %}
+
+        <Item slot="12" headType="BASE64"
+              head="eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYTg0MzJhNTc1NmEwNGViZjA2MmQ3MmE2ZjMxYmQ2MmU4ZjRkODJhOTIxMjAzMzZhZTE5NzJmZTE4ZDM4NzBiYSJ9fX0=">
+            <Name>[light_purple]1</Name>
+            <Actions>
+                <Action type="pin_button" value="1"/>
+            </Actions>
+        </Item>
+        <Item slot="13" headType="BASE64"
+              head="eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvN2U1MGM3MDk3OTk0MzEzZDk0MzIxNDJkYTc2NTFkYzZkZDYzMzU4N2UyZTFkZDlhNTYyYWJiYzc4NzhlZmI2NSJ9fX0=">
+            <Name>[light_purple]2</Name>
+            <Actions>
+                <Action type="pin_button" value="2"/>
+            </Actions>
+        </Item>
+        <Item slot="14" headType="BASE64"
+              head="eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNWRkMjJkYjhjNmUyMzhmYjhjYzA4MTlkMDJhNjU0MDMyOTdkNjNiNjdjNmM3Y2U2YjQzYmM4MjkxODk4MzdmNCJ9fX0=">
+            <Name>[light_purple]3</Name>
+            <Actions>
+                <Action type="pin_button" value="3"/>
+            </Actions>
+        </Item>
+        <Item slot="21" headType="BASE64"
+              head="eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvODU0YzFkZWQ5MjMxOWJkODM1NzNmMGYwMDQxZTczMDMzOGViN2JiNzk5N2ViNzFmZjU4M2MyOTA4MzIzODg4ZSJ9fX0=">
+            <Name>[light_purple]4</Name>
+            <Actions>
+                <Action type="pin_button" value="4"/>
+            </Actions>
+        </Item>
+        <Item slot="22" headType="BASE64"
+              head="eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNTRkYWM3Y2YyMDE3YTJhZWZjZGYyOWRjMzgzMmQ0MDdjYmQ5YzhiNmJhMGU1MWEwYTMxNjlmNmZmYjYyYzAxNSJ9fX0=">
+            <Name>[light_purple]5</Name>
+            <Actions>
+                <Action type="pin_button" value="5"/>
+            </Actions>
+        </Item>
+        <Item slot="23" headType="BASE64"
+              head="eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZGVkOWJlZGNjMWQxYzQ4Y2FlZTU3MjhlMWVmOWIwMDhkNWE1ZDMwZDJlMTRjMWM3Yjg0OWU4ZDg1NTNiNTI1NyJ9fX0=">
+            <Name>[light_purple]6</Name>
+            <Actions>
+                <Action type="pin_button" value="6"/>
+            </Actions>
+        </Item>
+        <Item slot="30" headType="BASE64"
+              head="eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOTBiYmE4ZDU2YmI2YjkwNjY4M2IxOGZiYTQ4MWQ1OGZhMGJiN2QzYjNiMThjNjQ1MmU5MjU3ZGY1NDJmNTNhYSJ9fX0=">
+            <Name>[light_purple]7</Name>
+            <Actions>
+                <Action type="pin_button" value="7"/>
+            </Actions>
+        </Item>
+        <Item slot="31" headType="BASE64"
+              head="eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvODY5Y2Q3NGMwYThhMmYwMTA1NTg4NmY4MTVmOGUxZWQ2ZDdkZTZlNzg4YWFlOWY4NmJkMzdlMmQ0ZTQ2MjFjNiJ9fX0=">
+            <Name>[light_purple]8</Name>
+            <Actions>
+                <Action type="pin_button" value="8"/>
+            </Actions>
+        </Item>
+        <Item slot="32" headType="BASE64"
+              head="eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOTljZDcyNjlhMzE0MDQ4YmM3Zjc5Mjk0NDhhYWJmNGJiYzlkNjk4MTdhOTJmZjUwNTZiMDY1YWRkOTQwODU4OSJ9fX0=">
+            <Name>[light_purple]9</Name>
+            <Actions>
+                <Action type="pin_button" value="9"/>
+            </Actions>
+        </Item>
+        <Item slot="40" headType="BASE64"
+              head="eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZTBjZjRlNGMzNDVmZTYxNmIwYTljMDRjZGQyZmVlZjYxZGI0YjFjYjE0YjAwMzVhMjgwMjBkZmU3M2MyZDVkMSJ9fX0=">
+            <Name>[light_purple]0</Name>
+            <Actions>
+                <Action type="pin_button" value="0"/>
+            </Actions>
+        </Item>
+        <Item slot="41" material="RED_STAINED_GLASS_PANE">
+            <Name>[red]-</Name>
+            <Actions>
+                <Action type="pin_button" value="-"/>
+            </Actions>
+        </Item>
+    </Items>
+</GuiLayout>

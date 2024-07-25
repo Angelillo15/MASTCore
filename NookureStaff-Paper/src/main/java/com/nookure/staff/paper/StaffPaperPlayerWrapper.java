@@ -2,10 +2,8 @@ package com.nookure.staff.paper;
 
 import com.google.inject.Inject;
 import com.google.inject.Injector;
-import com.nookure.staff.api.Logger;
+import com.nookure.staff.api.*;
 import com.nookure.staff.api.NookureStaff;
-import com.nookure.staff.api.Permissions;
-import com.nookure.staff.api.StaffPlayerWrapper;
 import com.nookure.staff.api.config.ConfigurationContainer;
 import com.nookure.staff.api.config.bukkit.BukkitConfig;
 import com.nookure.staff.api.config.bukkit.BukkitMessages;
@@ -21,11 +19,13 @@ import com.nookure.staff.api.manager.PlayerWrapperManager;
 import com.nookure.staff.api.manager.StaffItemsManager;
 import com.nookure.staff.api.messaging.EventMessenger;
 import com.nookure.staff.api.model.StaffDataModel;
+import com.nookure.staff.api.state.PlayerState;
 import com.nookure.staff.api.util.Scheduler;
 import com.nookure.staff.paper.data.StaffModeData;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -40,6 +40,7 @@ import java.util.Optional;
 public class StaffPaperPlayerWrapper extends PaperPlayerWrapper implements StaffPlayerWrapper {
   private final Map<Class<? extends StaffPlayerExtension>, StaffPlayerExtension> extensionMap = new HashMap<>();
   private final Map<Integer, StaffItem> items = new HashMap<>();
+
   @Inject
   private NookureStaff plugin;
   @Inject
@@ -87,10 +88,10 @@ public class StaffPaperPlayerWrapper extends PaperPlayerWrapper implements Staff
       player.performCommand("vanish");
     }
 
-    writeVanishState(isInVanish());
-
     if (isInVanish()) disableVanish(false);
     else enableVanish(false);
+
+    writeVanishState(isInVanish());
   }
 
   @Override
@@ -292,7 +293,7 @@ public class StaffPaperPlayerWrapper extends PaperPlayerWrapper implements Staff
   @Override
   public void clearInventory() {
     player.getInventory().clear();
-    player.getInventory().setArmorContents(null);
+    player.getInventory().setArmorContents(new ItemStack[0]);
   }
 
   @Override
@@ -370,7 +371,6 @@ public class StaffPaperPlayerWrapper extends PaperPlayerWrapper implements Staff
   public void checkVanishState() {
     if (!config.get().modules.isVanish()) return;
     if (!vanishExtension.restoreFromDatabase()) return;
-
     StaffDataModel staffDataModel = StaffDataModel.getFromUUID(connection.getStorm(), player.getUniqueId());
 
     if (staffDataModel.isVanished()) {
@@ -380,7 +380,6 @@ public class StaffPaperPlayerWrapper extends PaperPlayerWrapper implements Staff
     }
 
     vanishExtension.setVanished(staffDataModel.isVanished());
-    enableVanish(true);
   }
 
   public void addExtensions() {
@@ -498,6 +497,7 @@ public class StaffPaperPlayerWrapper extends PaperPlayerWrapper implements Staff
 
   public static class Builder {
     private final StaffPaperPlayerWrapper playerWrapper;
+    private final HashMap<Class<? extends PlayerState>, PlayerState> states = new HashMap<>();
 
     private Builder(StaffPaperPlayerWrapper playerWrapper) {
       this.playerWrapper = playerWrapper;
@@ -512,10 +512,24 @@ public class StaffPaperPlayerWrapper extends PaperPlayerWrapper implements Staff
       return this;
     }
 
+    public StaffPaperPlayerWrapper.Builder addState(Class<? extends PlayerState> state) {
+      PlayerState playerState;
+      try {
+        playerState = state.getConstructor(PlayerWrapper.class).newInstance(playerWrapper);
+      } catch (Exception e) {
+        throw new IllegalStateException("An error occurred while adding the state");
+      }
+
+      states.put(state, playerState);
+      return this;
+    }
+
     public StaffPaperPlayerWrapper build() {
       if (playerWrapper.player == null) {
         throw new IllegalStateException("Player cannot be null");
       }
+
+      states.forEach((k, v) -> playerWrapper.getState().setState(v));
 
       playerWrapper.addExtensions();
       playerWrapper.checkStaffModeState();

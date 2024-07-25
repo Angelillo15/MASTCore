@@ -25,6 +25,7 @@ import com.nookure.staff.api.manager.PlayerWrapperManager;
 import com.nookure.staff.api.manager.StaffItemsManager;
 import com.nookure.staff.api.messaging.EventMessenger;
 import com.nookure.staff.api.placeholder.PlaceholderManager;
+import com.nookure.staff.api.service.PinUserService;
 import com.nookure.staff.api.service.UserNoteService;
 import com.nookure.staff.api.util.PluginModule;
 import com.nookure.staff.api.util.Scheduler;
@@ -36,8 +37,10 @@ import com.nookure.staff.messaging.RedisMessenger;
 import com.nookure.staff.paper.addon.ServerAddonManager;
 import com.nookure.staff.paper.command.PaperCommandManager;
 import com.nookure.staff.paper.messaging.BackendMessageMessenger;
+import com.nookure.staff.paper.util.MockScheduler;
 import com.nookure.staff.paper.util.PaperScheduler;
 import com.nookure.staff.paper.util.PaperServerUtils;
+import com.nookure.staff.service.PinUserServiceImpl;
 import com.nookure.staff.service.UserNoteServiceImpl;
 import io.ebean.Database;
 import org.bukkit.Bukkit;
@@ -72,13 +75,18 @@ public class PaperPluginModule extends PluginModule {
     bind(StaffItemsManager.class).asEagerSingleton();
     bind(ConsoleCommandSender.class).asEagerSingleton();
     bind(CommandManager.class).to(PaperCommandManager.class).asEagerSingleton();
-    bind(Scheduler.class).to(PaperScheduler.class).asEagerSingleton();
+    if (StaffBootstrapper.isMock) {
+      bind(Scheduler.class).to(MockScheduler.class).asEagerSingleton();
+    } else {
+      bind(Scheduler.class).to(PaperScheduler.class).asEagerSingleton();
+    }
     bind(ServerUtils.class).to(PaperServerUtils.class).asEagerSingleton();
     bind(StaffPlayerExtensionManager.class).asEagerSingleton();
     bind(FreezeManager.class).asEagerSingleton();
     bind(PlaceholderManager.class).asEagerSingleton();
     bind(AddonManager.class).to(ServerAddonManager.class).asEagerSingleton();
-    bind(UserNoteService.class).to(UserNoteServiceImpl.class);
+    bind(UserNoteService.class).to(UserNoteServiceImpl.class).asEagerSingleton();
+    bind(PinUserService.class).to(PinUserServiceImpl.class).asEagerSingleton();
 
     try {
       /*

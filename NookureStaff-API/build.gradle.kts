@@ -21,8 +21,8 @@ java {
 }
 
 dependencies {
-  testImplementation(platform("org.junit:junit-bom:5.9.1"))
-  testImplementation("org.junit.jupiter:junit-jupiter")
+  testImplementation("org.junit.jupiter:junit-jupiter:5.9.2")
+  testRuntimeOnly("org.junit.platform:junit-platform-launcher")
   implementation(libs.configurateYaml)
   compileOnly(libs.protocol.buffers.lite)
   compileOnlyApi(libs.paperApi)
@@ -115,5 +115,5 @@ sourceSets {
 }
 
 ebean {
-  debugLevel = 1
+  debugLevel = 2
 }
