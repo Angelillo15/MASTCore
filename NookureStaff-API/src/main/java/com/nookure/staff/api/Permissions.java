@@ -127,6 +127,8 @@ public final class Permissions {
    * Permission to use set pin command
    */
   public static final String SET_PIN_PERMISSION = "nookure.staff.setpin";
+  public static final String CHANGE_PIN_PERMISSION = "nookure.staff.changepin";
+  public static final String DELETE_PIN_PERMISSION = "nookure.staff.deletepin";
 
   private Permissions() {
     throw new UnsupportedOperationException("This class cannot be instantiated");
