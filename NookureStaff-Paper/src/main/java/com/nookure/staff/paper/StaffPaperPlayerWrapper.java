@@ -514,10 +514,11 @@ public class StaffPaperPlayerWrapper extends PaperPlayerWrapper implements Staff
 
     public StaffPaperPlayerWrapper.Builder addState(Class<? extends PlayerState> state) {
       PlayerState playerState;
+
       try {
         playerState = state.getConstructor(PlayerWrapper.class).newInstance(playerWrapper);
       } catch (Exception e) {
-        throw new IllegalStateException("An error occurred while adding the state");
+        throw new IllegalStateException("An error occurred while adding the state", e);
       }
 
       states.put(state, playerState);
