@@ -36,7 +36,6 @@ import com.nookure.staff.paper.listener.freeze.OnFreezePlayerInteract;
 import com.nookure.staff.paper.listener.freeze.OnFreezePlayerMove;
 import com.nookure.staff.paper.listener.freeze.OnFreezePlayerQuit;
 import com.nookure.staff.paper.listener.freeze.OnPlayerChatFreeze;
-import com.nookure.staff.paper.listener.player.OnPlayerDataJoin;
 import com.nookure.staff.paper.listener.server.OnServerBroadcast;
 import com.nookure.staff.paper.listener.staff.OnPlayerInStaffChatTalk;
 import com.nookure.staff.paper.listener.staff.OnShiftAndRightClick;
@@ -203,10 +202,6 @@ public class NookureStaff {
 
     if (config.get().modules.isStaffChat() && StaffBootstrapper.isPaper) {
       registerListener(OnPlayerInStaffChatTalk.class);
-    }
-
-    if (config.get().modules.isPlayerData()) {
-      registerListener(OnPlayerDataJoin.class);
     }
 
     if (config.get().modules.isPlayerData() && config.get().modules.isUserNotes()) {
