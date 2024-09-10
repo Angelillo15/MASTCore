@@ -18,6 +18,7 @@ import com.nookure.staff.api.item.StaffItem;
 import com.nookure.staff.api.manager.PlayerWrapperManager;
 import com.nookure.staff.api.manager.StaffItemsManager;
 import com.nookure.staff.api.messaging.EventMessenger;
+import com.nookure.staff.api.model.PlayerModel;
 import com.nookure.staff.api.model.StaffDataModel;
 import com.nookure.staff.api.state.PlayerState;
 import com.nookure.staff.api.util.Scheduler;
@@ -352,7 +353,7 @@ public class StaffPaperPlayerWrapper extends PaperPlayerWrapper implements Staff
     if (staffDataModel.isStaffMode()) {
       saveInventory();
       saveLocation();
-      enableStaffMode(true);
+      scheduler.async(() -> enableStaffMode(true));
     }
 
     staffChatAsDefault = staffDataModel.isStaffChatEnabled();
@@ -365,7 +366,7 @@ public class StaffPaperPlayerWrapper extends PaperPlayerWrapper implements Staff
       return;
     }
 
-    player.addPotionEffect(new PotionEffect(PotionEffectType.NIGHT_VISION, Integer.MAX_VALUE, 0, true, false));
+    scheduler.sync(() -> player.addPotionEffect(new PotionEffect(PotionEffectType.NIGHT_VISION, Integer.MAX_VALUE, 0, true, false)));
   }
 
   public void checkVanishState() {
@@ -508,19 +509,29 @@ public class StaffPaperPlayerWrapper extends PaperPlayerWrapper implements Staff
     }
 
     public StaffPaperPlayerWrapper.Builder setPlayer(Player player) {
+      if (player == null) {
+        return this;
+      }
+
       playerWrapper.player = player;
       return this;
     }
 
     public StaffPaperPlayerWrapper.Builder addState(Class<? extends PlayerState> state) {
       PlayerState playerState;
+
       try {
         playerState = state.getConstructor(PlayerWrapper.class).newInstance(playerWrapper);
       } catch (Exception e) {
-        throw new IllegalStateException("An error occurred while adding the state");
+        throw new IllegalStateException("An error occurred while adding the state", e);
       }
 
       states.put(state, playerState);
+      return this;
+    }
+
+    public StaffPaperPlayerWrapper.Builder setModel(PlayerModel model) {
+      playerWrapper.playerModel = model;
       return this;
     }
 
@@ -529,9 +540,14 @@ public class StaffPaperPlayerWrapper extends PaperPlayerWrapper implements Staff
         throw new IllegalStateException("Player cannot be null");
       }
 
+      if (playerWrapper.playerModel == null) {
+        playerWrapper.playerModel = playerWrapper.getPlayerModel();
+      }
+
       states.forEach((k, v) -> playerWrapper.getState().setState(v));
 
-      playerWrapper.addExtensions();
+      playerWrapper.scheduler.sync(playerWrapper::addExtensions);
+
       playerWrapper.checkStaffModeState();
       playerWrapper.checkVanishState();
 

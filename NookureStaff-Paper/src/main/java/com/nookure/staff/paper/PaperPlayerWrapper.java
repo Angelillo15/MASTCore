@@ -17,16 +17,13 @@ import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
-import org.spongepowered.configurate.objectmapping.meta.Comment;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class PaperPlayerWrapper implements PlayerWrapper {
-  @Comment("Package protected value")
   Player player;
   @Inject
   private JavaPlugin plugin;
@@ -36,6 +33,7 @@ public class PaperPlayerWrapper implements PlayerWrapper {
   private Logger logger;
   @Inject
   private AtomicReference<Database> db;
+  protected PlayerModel playerModel;
   private final WrapperState state = new WrapperState();
 
   @Override
@@ -158,7 +156,7 @@ public class PaperPlayerWrapper implements PlayerWrapper {
     public Builder addState(Class<? extends PlayerState> state) {
       PlayerState playerState;
       try {
-         playerState = state.getConstructor(PlayerWrapper.class).newInstance(playerWrapper);
+        playerState = state.getConstructor(PlayerWrapper.class).newInstance(playerWrapper);
       } catch (Exception e) {
         throw new IllegalStateException("An error occurred while adding the state");
       }
@@ -167,9 +165,22 @@ public class PaperPlayerWrapper implements PlayerWrapper {
       return this;
     }
 
+    public Builder setModel(PlayerModel model) {
+      if (model == null) {
+        return this;
+      }
+
+      playerWrapper.playerModel = model;
+      return this;
+    }
+
     public PaperPlayerWrapper build() {
       if (playerWrapper.player == null) {
         throw new IllegalStateException("Player cannot be null");
+      }
+
+      if (playerWrapper.playerModel == null) {
+        playerWrapper.playerModel = playerWrapper.getPlayerModel();
       }
 
       states.forEach((k, v) -> playerWrapper.state.setState(v));
@@ -180,22 +191,11 @@ public class PaperPlayerWrapper implements PlayerWrapper {
 
   @Override
   public PlayerModel getPlayerModel() {
-    PlayerModel model = null;
-
-    try {
-      model = db.get().find(PlayerModel.class).where().eq("uuid", player.getUniqueId()).findOne();
-      if (model == null) {
-        throw new IllegalStateException("Player model not found");
-      }
-
-      return model;
-    } catch (Exception e) {
-      logger.severe("An error occurred while getting the player model");
-      logger.severe("Is the player model feature enabled?");
-      logger.severe(e);
+    if (playerModel == null) {
+      throw new IllegalStateException("Player model module is disabled");
     }
 
-    return model;
+    return playerModel;
   }
 
   @Override

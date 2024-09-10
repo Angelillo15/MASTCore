@@ -36,7 +36,6 @@ import com.nookure.staff.paper.listener.freeze.OnFreezePlayerInteract;
 import com.nookure.staff.paper.listener.freeze.OnFreezePlayerMove;
 import com.nookure.staff.paper.listener.freeze.OnFreezePlayerQuit;
 import com.nookure.staff.paper.listener.freeze.OnPlayerChatFreeze;
-import com.nookure.staff.paper.listener.player.OnPlayerDataJoin;
 import com.nookure.staff.paper.listener.server.OnServerBroadcast;
 import com.nookure.staff.paper.listener.staff.OnPlayerInStaffChatTalk;
 import com.nookure.staff.paper.listener.staff.OnShiftAndRightClick;
@@ -57,6 +56,7 @@ import com.nookure.staff.paper.messaging.BackendMessageMessenger;
 import com.nookure.staff.paper.note.command.ParentNoteCommand;
 import com.nookure.staff.paper.note.listener.OnPlayerNoteJoin;
 import com.nookure.staff.paper.pin.command.ChangePin;
+import com.nookure.staff.paper.pin.command.DeletePinCommand;
 import com.nookure.staff.paper.pin.command.SetPinCommand;
 import com.nookure.staff.paper.pin.listener.OnInventoryClose;
 import com.nookure.staff.paper.task.FreezeSpamMessage;
@@ -204,10 +204,6 @@ public class NookureStaff {
       registerListener(OnPlayerInStaffChatTalk.class);
     }
 
-    if (config.get().modules.isPlayerData()) {
-      registerListener(OnPlayerDataJoin.class);
-    }
-
     if (config.get().modules.isPlayerData() && config.get().modules.isUserNotes()) {
       registerListener(OnPlayerNoteJoin.class);
     }
@@ -337,6 +333,7 @@ public class NookureStaff {
     if (config.get().modules.isPinCode()) {
       commandManager.registerCommand(injector.getInstance(SetPinCommand.class));
       commandManager.registerCommand(injector.getInstance(ChangePin.class));
+      commandManager.registerCommand(injector.getInstance(DeletePinCommand.class));
     }
   }
 

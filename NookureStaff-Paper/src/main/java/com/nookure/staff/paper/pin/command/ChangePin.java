@@ -1,6 +1,7 @@
 package com.nookure.staff.paper.pin.command;
 
 import com.google.inject.Inject;
+import com.nookure.staff.api.Permissions;
 import com.nookure.staff.api.StaffPlayerWrapper;
 import com.nookure.staff.api.command.CommandData;
 import com.nookure.staff.api.command.CommandSender;
@@ -9,22 +10,18 @@ import com.nookure.staff.api.config.ConfigurationContainer;
 import com.nookure.staff.api.config.bukkit.BukkitMessages;
 import com.nookure.staff.api.service.PinUserService;
 import com.nookure.staff.api.state.PinState;
-import io.ebean.Database;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
-import java.util.concurrent.atomic.AtomicReference;
 
 @CommandData(
     name = "changepin",
-    permission = "nookure.staff.pin.changepin",
+    permission = Permissions.CHANGE_PIN_PERMISSION,
     description = "Change your pin"
 )
 public class ChangePin extends StaffCommand {
   @Inject
   private ConfigurationContainer<BukkitMessages> messages;
-  @Inject
-  private AtomicReference<Database> database;
   @Inject
   private PinUserService service;
 
