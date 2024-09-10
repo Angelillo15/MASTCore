@@ -49,8 +49,8 @@ public class OnPlayerJoin implements Listener {
         StaffPaperPlayerWrapper playerWrapper = StaffPaperPlayerWrapper.Builder
             .create(injector)
             .setPlayer(event.getPlayer())
-            .addState(PinState.class)
             .setModel(getPlayerModel(event.getPlayer()))
+            .addState(PinState.class)
             .build();
 
         playerWrapperManager.addPlayerWrapper(event.getPlayer(), playerWrapper, true);
@@ -72,7 +72,7 @@ public class OnPlayerJoin implements Listener {
   }
 
   private PlayerModel getPlayerModel(Player p) {
-    if (config.get().modules.isPlayerData()) return null;
+    if (!config.get().modules.isPlayerData()) return null;
 
     Optional<PlayerModel> optional = db.get().find(PlayerModel.class).where().eq("uuid", p.getUniqueId())
         .findOneOrEmpty();
