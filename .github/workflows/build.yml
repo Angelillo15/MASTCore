@@ -25,7 +25,7 @@ jobs:
           distribution: 'temurin'
           java-version: 21
       - name: Setup Gradle
-        uses: gradle/actions/setup-gradle@v3
+        uses: gradle/actions/setup-gradle@v4
 
       - name: Execute Gradle build
         run: |
@@ -33,7 +33,7 @@ jobs:
           ./gradlew shadowJar
           mkdir staging && cp build/libs/*.jar staging
       - name: Upload the jar
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: NookureStaff
           path: staging
