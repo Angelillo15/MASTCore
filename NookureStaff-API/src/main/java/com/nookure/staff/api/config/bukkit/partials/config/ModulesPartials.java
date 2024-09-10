@@ -67,6 +67,8 @@ public class ModulesPartials {
       Enable or disable the pin code module.
       This will allow you to set a pin code to the staff's accounts
       and use it to login.
+      
+      WARNING: STILL IN BETA
       """)
   private boolean pinCode = false;
 
