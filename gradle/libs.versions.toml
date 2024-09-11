@@ -58,6 +58,7 @@ textPlainSerializer = { group = "net.kyori", name = "adventure-text-serializer-p
 textLegacySerializer = { group = "net.kyori", name = "adventure-text-serializer-legacy", version.ref = "adventure" }
 velocity = { group = "com.velocitypowered", name = "velocity-api", version.ref = "velocity" }
 guice = { group = "com.google.inject", name = "guice", version.ref = "guice" }
+google-guice-assistedinject = { group = "com.google.inject.extensions", name = "guice-assistedinject", version.ref = "guice" }
 guava = { group = "com.google.guava", name = "guava", version.ref = "guava" }
 configurateGson = { group = "org.spongepowered", name = "configurate-gson", version.ref = "configurate" }
 configurateHocon = { group = "org.spongepowered", name = "configurate-hocon", version.ref = "configurate" }
