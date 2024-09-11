@@ -18,11 +18,13 @@ dependencies {
   compileOnly(libs.placeholderApi)
   compileOnly(libs.nookure.core.inventory)
   bukkitLibrary(libs.guice)
+  bukkitLibrary(libs.google.guice.assistedinject)
   paperLibrary(libs.guice)
 
   /* Start of MockBukkit stuff */
   testImplementation(libs.mockBukkit)
   testImplementation(libs.guice)
+  testImplementation(libs.google.guice.assistedinject)
   testImplementation(libs.libbyPaper)
   testImplementation(libs.configurateYaml)
   testImplementation(libs.nookure.core.inventory)
