@@ -1,6 +1,7 @@
 package com.nookure.staff.paper.bootstrap;
 
 import com.google.inject.TypeLiteral;
+import com.google.inject.assistedinject.FactoryModuleBuilder;
 import com.nookure.core.inv.paper.PaperNookureInventoryEngine;
 import com.nookure.staff.api.Logger;
 import com.nookure.staff.api.NookureStaff;
@@ -34,8 +35,12 @@ import com.nookure.staff.command.sender.ConsoleCommandSender;
 import com.nookure.staff.database.PluginConnection;
 import com.nookure.staff.messaging.NoneEventManager;
 import com.nookure.staff.messaging.RedisMessenger;
+import com.nookure.staff.paper.PaperPlayerWrapper;
+import com.nookure.staff.paper.StaffPaperPlayerWrapper;
 import com.nookure.staff.paper.addon.ServerAddonManager;
 import com.nookure.staff.paper.command.PaperCommandManager;
+import com.nookure.staff.paper.factory.PaperPlayerWrapperFactory;
+import com.nookure.staff.paper.factory.StaffPaperPlayerWrapperFactory;
 import com.nookure.staff.paper.messaging.BackendMessageMessenger;
 import com.nookure.staff.paper.util.MockScheduler;
 import com.nookure.staff.paper.util.PaperScheduler;
@@ -43,6 +48,7 @@ import com.nookure.staff.paper.util.PaperServerUtils;
 import com.nookure.staff.service.PinUserServiceImpl;
 import com.nookure.staff.service.UserNoteServiceImpl;
 import io.ebean.Database;
+import io.ebeaninternal.server.persist.dmlbind.FactoryAssocOnes;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandMap;
 import org.bukkit.entity.Player;
@@ -87,6 +93,16 @@ public class PaperPluginModule extends PluginModule {
     bind(AddonManager.class).to(ServerAddonManager.class).asEagerSingleton();
     bind(UserNoteService.class).to(UserNoteServiceImpl.class).asEagerSingleton();
     bind(PinUserService.class).to(PinUserServiceImpl.class).asEagerSingleton();
+
+    install(new FactoryModuleBuilder()
+        .implement(PaperPlayerWrapper.class, PaperPlayerWrapper.class)
+        .build(PaperPlayerWrapperFactory.class)
+    );
+
+    install(new FactoryModuleBuilder()
+        .implement(StaffPaperPlayerWrapper.class, StaffPaperPlayerWrapper.class)
+        .build(StaffPaperPlayerWrapperFactory.class)
+    );
 
     try {
       /*

@@ -1,14 +1,17 @@
 package com.nookure.staff.paper;
 
 import com.google.inject.Inject;
-import com.google.inject.Injector;
+import com.google.inject.assistedinject.Assisted;
 import com.nookure.staff.api.Logger;
 import com.nookure.staff.api.NookureStaff;
 import com.nookure.staff.api.PlayerWrapper;
+import com.nookure.staff.api.config.ConfigurationContainer;
+import com.nookure.staff.api.config.bukkit.BukkitConfig;
 import com.nookure.staff.api.model.PlayerModel;
 import com.nookure.staff.api.state.PlayerState;
 import com.nookure.staff.api.state.WrapperState;
 import com.nookure.staff.api.util.DefaultFontInfo;
+import com.nookure.staff.api.util.Scheduler;
 import com.nookure.staff.api.util.ServerUtils;
 import io.ebean.Database;
 import net.kyori.adventure.text.Component;
@@ -18,24 +21,110 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.HashMap;
-import java.util.Set;
-import java.util.UUID;
+import java.time.Instant;
+import java.util.*;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class PaperPlayerWrapper implements PlayerWrapper {
-  Player player;
-  @Inject
-  private JavaPlugin plugin;
-  @Inject
-  private NookureStaff nookPlugin;
-  @Inject
-  private Logger logger;
-  @Inject
-  private AtomicReference<Database> db;
+  protected final JavaPlugin plugin;
+  protected final NookureStaff nookPlugin;
+  protected final ConfigurationContainer<BukkitConfig> config;
+  protected final AtomicReference<Database> db;
+  protected final Logger logger;
+  protected final Player player;
+  protected final Scheduler scheduler;
+  protected final WrapperState state = new WrapperState();
   protected PlayerModel playerModel;
-  private final WrapperState state = new WrapperState();
 
+  @Inject
+  public PaperPlayerWrapper(
+      @NotNull final JavaPlugin plugin,
+      @NotNull final NookureStaff nookPlugin,
+      @NotNull final Logger logger,
+      @NotNull final ConfigurationContainer<BukkitConfig> config,
+      @NotNull final Scheduler scheduler,
+      @NotNull final AtomicReference<Database> db,
+      @NotNull @Assisted final Player player,
+      @NotNull @Assisted final List<Class<? extends PlayerState>> states
+  ) {
+    this.plugin = plugin;
+    this.nookPlugin = nookPlugin;
+    this.logger = logger;
+    this.player = player;
+    this.config = config;
+    this.scheduler = scheduler;
+    this.db = db;
+
+    getPlayerModelAsync(player)
+        .thenAccept(model -> this.playerModel = model)
+        .thenRun(() -> scheduler.sync(() -> addStates(states)));
+  }
+
+  //<editor-fold desc="Player Model">
+  private CompletableFuture<PlayerModel> getPlayerModelAsync(Player player) {
+    return CompletableFuture.supplyAsync(() -> getPlayerModel(player));
+  }
+
+  private PlayerModel getPlayerModel(Player p) {
+    if (!config.get().modules.isPlayerData()) return null;
+
+    Optional<PlayerModel> optional = db.get().find(PlayerModel.class).where().eq("uuid", p.getUniqueId())
+        .findOneOrEmpty();
+
+    if (optional.isPresent()) {
+      PlayerModel m = updatePlayer(optional.get(), p);
+      m.update();
+
+      return m;
+    }
+
+    PlayerModel player = updatePlayer(new PlayerModel(), p);
+    player.setUuid(p.getUniqueId());
+    player.setFirstLogin(Instant.now());
+
+    try {
+      player.setFirstIp(Objects.requireNonNull(p.getAddress()).getAddress().getHostAddress());
+    } catch (NullPointerException e) {
+      player.setFirstIp("0.0.0.0");
+    }
+
+    player.save();
+
+    return player;
+  }
+
+  private PlayerModel updatePlayer(PlayerModel player, Player bukkitPlayer) {
+    player.setName(bukkitPlayer.getName());
+
+    try {
+      player.setLastIp(Objects.requireNonNull(bukkitPlayer.getAddress()).getAddress().getHostAddress());
+    } catch (NullPointerException e) {
+      player.setLastIp("0.0.0.0");
+    }
+
+    player.setLastLogin(Instant.now());
+    return player;
+  }
+  //</editor-fold>
+
+  //<editor-fold desc="Constructor parameters parsing">
+  private void addStates(List<Class<? extends PlayerState>> states) {
+    for (Class<? extends PlayerState> state : states) {
+      PlayerState playerState;
+
+      try {
+        playerState = state.getConstructor(PlayerWrapper.class).newInstance(this);
+      } catch (Exception e) {
+        throw new IllegalStateException("An error occurred while adding the state");
+      }
+
+      this.state.setState(playerState);
+    }
+  }
+  //</editor-fold>
+
+  //<editor-fold desc="PaperPlayer and CommandSender impl">
   @Override
   public void sendMessage(@NotNull Component component) {
     if (ServerUtils.isPaper) {
@@ -129,64 +218,7 @@ public class PaperPlayerWrapper implements PlayerWrapper {
 
   @NotNull
   public Player getPlayer() {
-    if (player == null) {
-      throw new IllegalStateException("Player cannot be null");
-    }
-
     return player;
-  }
-
-  public static class Builder {
-    private final PaperPlayerWrapper playerWrapper;
-    private final HashMap<Class<? extends PlayerState>, PlayerState> states = new HashMap<>();
-
-    private Builder(PaperPlayerWrapper playerWrapper) {
-      this.playerWrapper = playerWrapper;
-    }
-
-    public static Builder create(Injector injector) {
-      return new Builder(injector.getInstance(PaperPlayerWrapper.class));
-    }
-
-    public Builder setPlayer(Player player) {
-      playerWrapper.player = player;
-      return this;
-    }
-
-    public Builder addState(Class<? extends PlayerState> state) {
-      PlayerState playerState;
-      try {
-        playerState = state.getConstructor(PlayerWrapper.class).newInstance(playerWrapper);
-      } catch (Exception e) {
-        throw new IllegalStateException("An error occurred while adding the state");
-      }
-
-      states.put(state, playerState);
-      return this;
-    }
-
-    public Builder setModel(PlayerModel model) {
-      if (model == null) {
-        return this;
-      }
-
-      playerWrapper.playerModel = model;
-      return this;
-    }
-
-    public PaperPlayerWrapper build() {
-      if (playerWrapper.player == null) {
-        throw new IllegalStateException("Player cannot be null");
-      }
-
-      if (playerWrapper.playerModel == null) {
-        playerWrapper.playerModel = playerWrapper.getPlayerModel();
-      }
-
-      states.forEach((k, v) -> playerWrapper.state.setState(v));
-
-      return playerWrapper;
-    }
   }
 
   @Override
@@ -217,4 +249,5 @@ public class PaperPlayerWrapper implements PlayerWrapper {
   public @NotNull WrapperState getState() {
     return state;
   }
+  //</editor-fold>
 }

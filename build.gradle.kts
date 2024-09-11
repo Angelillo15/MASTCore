@@ -59,6 +59,7 @@ allprojects {
 
   dependencies {
     compileOnly(rootProject.libs.guice)
+    compileOnly(rootProject.libs.google.guice.assistedinject)
     compileOnly(rootProject.libs.storm)
     compileOnly(rootProject.libs.adventureApi)
     compileOnly(rootProject.libs.miniMessage)
@@ -99,6 +100,6 @@ tasks.withType(xyz.jpenilla.runtask.task.AbstractRun::class) {
 
 tasks {
   runServer {
-    minecraftVersion("1.21")
+    minecraftVersion("1.21.1")
   }
 }
