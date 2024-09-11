@@ -127,8 +127,6 @@ public class NookureStaff {
     loadCommands();
     loadExtensions();
     loadTasks();
-
-    registeringOnlinePlayers();
   }
 
   private void loadDatabase() {
@@ -233,38 +231,6 @@ public class NookureStaff {
     HandlerList.getHandlerLists().forEach(listener -> listeners.forEach(listener::unregister));
 
     listeners.clear();
-  }
-
-  /**
-   * Why this ?
-   * Because if you do a reload of the server, and you have online players,
-   * the players will not be registered in the player wrapper manager.
-   */
-  public void registeringOnlinePlayers() {
-    Bukkit.getOnlinePlayers().forEach(player -> {
-      logger.debug("Creating player wrapper for %s", player.getName());
-
-      if (player.hasPermission(Permissions.STAFF_PERMISSION)) {
-        StaffPaperPlayerWrapper playerWrapper = StaffPaperPlayerWrapper.Builder
-            .create(injector)
-            .setPlayer(player)
-            .build();
-
-        playerWrapperManager.addPlayerWrapper(player, playerWrapper, true);
-
-        logger.debug("Player %s has staff permission, adding staff player wrapper", player.getName());
-        return;
-      }
-
-      PaperPlayerWrapper playerWrapper = PaperPlayerWrapper.Builder
-          .create(injector)
-          .setPlayer(player)
-          .build();
-
-      playerWrapperManager.addPlayerWrapper(player, playerWrapper);
-
-      logger.debug("Player %s does not have staff permission, adding player wrapper", player.getName());
-    });
   }
 
   private void loadLoaders() {
