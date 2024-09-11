@@ -89,12 +89,12 @@ tasks {
     o.source = "17"
 
     o.links(
-        "https://guava.dev/releases/${libs.guava.get().version}/api/docs/",
-        "https://google.github.io/guice/api-docs/${libs.guice.get().version}/javadoc/",
-        "https://docs.oracle.com/en/java/javase/17/docs/api/",
-        "https://jd.advntr.dev/api/${libs.adventureApi.get().version}/",
-        "https://javadoc.io/doc/com.github.ben-manes.caffeine/caffeine",
-        "https://jd.papermc.io/paper/1.20.6/"
+      "https://guava.dev/releases/${libs.guava.get().version}/api/docs/",
+      "https://docs.oracle.com/en/java/javase/21/docs/api/",
+      "https://google.github.io/guice/api-docs/${libs.guice.get().version}/javadoc/",
+      "https://jd.advntr.dev/api/${libs.adventureApi.get().version}/",
+      "https://javadoc.io/doc/com.github.ben-manes.caffeine/caffeine",
+      "https://jd.papermc.io/paper/1.20.6/"
     )
   }
 }
