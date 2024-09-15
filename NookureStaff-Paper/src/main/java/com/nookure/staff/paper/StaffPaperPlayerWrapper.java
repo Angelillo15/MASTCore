@@ -18,7 +18,6 @@ import com.nookure.staff.api.extension.VanishExtension;
 import com.nookure.staff.api.item.StaffItem;
 import com.nookure.staff.api.manager.StaffItemsManager;
 import com.nookure.staff.api.messaging.EventMessenger;
-import com.nookure.staff.api.model.PlayerModel;
 import com.nookure.staff.api.model.StaffDataModel;
 import com.nookure.staff.api.state.PlayerState;
 import com.nookure.staff.api.util.Scheduler;
@@ -244,7 +243,7 @@ public class StaffPaperPlayerWrapper extends PaperPlayerWrapper implements Staff
     if (staffDataModel.isStaffMode()) {
       saveInventory();
       saveLocation();
-      scheduler.async(() -> enableStaffMode(true));
+      enableStaffMode(true);
     }
 
     staffChatAsDefault = staffDataModel.isStaffChatEnabled();
