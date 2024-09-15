@@ -14,7 +14,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerLoginEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
@@ -33,7 +34,7 @@ public class OnPlayerJoin implements Listener {
   @EventHandler(
       priority = EventPriority.LOWEST
   )
-  public void onPlayerJoin(PlayerLoginEvent event) {
+  public void onPlayerJoin(@NotNull final PlayerJoinEvent event) {
     logger.debug("Player %s has joined the server", event.getPlayer().getName());
     logger.debug("Creating player wrapper for %s", event.getPlayer().getName());
 
