@@ -13,7 +13,7 @@ public abstract class ServerUtils {
         hasClass("io.papermc.paper.configuration.Configuration");
   }
 
-  private static boolean hasClass(String className) {
+  public static boolean hasClass(String className) {
     try {
       Class.forName(className);
       return true;
