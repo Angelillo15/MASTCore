@@ -24,16 +24,14 @@ public class OnOpenChest implements Listener {
       return;
     }
 
-    StaffPlayerWrapper playerWrapper = playerWrapperManager.getStaffPlayer(player.getUniqueId()).get();
+    StaffPlayerWrapper playerWrapper = playerWrapperManager.getStaffPlayer(player.getUniqueId()).orElseThrow();
 
     if (!playerWrapper.isInStaffMode()) {
       return;
     }
 
     if (
-        event.getClickedBlock() == null ||
-            event.getClickedBlock().getType().name().contains("CHEST") ||
-            !(event.getClickedBlock().getState() instanceof Container container)
+        event.getClickedBlock() == null || !(event.getClickedBlock().getState() instanceof Container container)
     ) {
       return;
     }
