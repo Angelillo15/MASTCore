@@ -2,11 +2,15 @@ package com.nookure.staff.api.util;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.nookure.staff.api.util.ServerUtils.hasClass;
+
 public abstract class TextUtils {
+  private static final boolean IS_PAPI_INSTALLED = hasClass("me.clip.placeholderapi.PlaceholderAPI");
   private static final long SECOND = 1000;
   private static final long MINUTE = 60 * SECOND;
   private static final long HOUR = 60 * MINUTE;
@@ -116,5 +120,11 @@ public abstract class TextUtils {
       time = time % SECOND;
     }
     return buf.toString();
+  }
+
+  public static String parsePlaceholdersWithPAPI(@NotNull final org.bukkit.entity.Player player, @NotNull final String message) {
+    if (!IS_PAPI_INSTALLED) return message;
+
+    return me.clip.placeholderapi.PlaceholderAPI.setPlaceholders(player, message);
   }
 }

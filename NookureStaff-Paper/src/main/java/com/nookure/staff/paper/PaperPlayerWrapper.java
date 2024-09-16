@@ -13,6 +13,7 @@ import com.nookure.staff.api.state.WrapperState;
 import com.nookure.staff.api.util.DefaultFontInfo;
 import com.nookure.staff.api.util.Scheduler;
 import com.nookure.staff.api.util.ServerUtils;
+import com.nookure.staff.api.util.TextUtils;
 import io.ebean.Database;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
@@ -172,6 +173,7 @@ public class PaperPlayerWrapper implements PlayerWrapper {
 
     message = message.replace("{prefix}", nookPlugin.getPrefix());
     message = DefaultFontInfo.centerIfContains(message);
+    message = TextUtils.parsePlaceholdersWithPAPI(player, message);
 
     sendMessage(MiniMessage.miniMessage().deserialize(message));
   }
