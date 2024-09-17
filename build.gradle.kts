@@ -29,11 +29,16 @@ dependencies {
   implementation(libs.libbyPaper)
   implementation(libs.libbyVelocity)
   implementation(libs.configurateYaml)
+  implementation(libs.lucko.commodore)
 }
 
 tasks.shadowJar {
   archiveFileName.set("NookureStaff-${rootProject.version}.jar")
+  dependencies {
+    exclude(dependency(libs.mojang.brigadier))
+  }
   relocate("com.zaxxer", "com.nookure.staff.libs")
+  relocate("me.lucko.commodore", "com.nookure.staff.libs.commodore")
   relocate("com.craftmend.storm", "com.nookure.staff.libs.storm")
   relocate("com.github.benmanes.caffeine", "com.nookure.staff.libs.caffeine")
   relocate("org.spongepowered.configurate", "com.nookure.staff.libs.configurate")

@@ -29,6 +29,8 @@ protoc = "4.27.1"
 super-vanish = "6.2.18-3"
 inventory = "1.0.0-ee06bf8"
 mock-bukkit = "3.9.0"
+brigadier = "1.0.18"
+commodore = "2.2"
 
 [libraries]
 hikariCP = { group = "com.zaxxer", name = "HikariCP", version.ref = "hikariCP" }
@@ -82,6 +84,8 @@ protocol-buffers-lite = { group = "com.google.protobuf", name = "protobuf-javali
 superVanish = { group = "com.github.LeonMangler", name = "SuperVanish", version.ref = "super-vanish" }
 nookure-core-inventory = { group = "com.nookure.core", name = "NookCore-Inventory", version.ref = "inventory" }
 mockBukkit = { group = "com.github.seeseemelk", name = "MockBukkit-v1.20", version.ref = "mock-bukkit" }
+mojang-brigadier = { group = "com.mojang", name = "brigadier", version.ref = "brigadier" }
+lucko-commodore = { group = "me.lucko", name = "commodore", version.ref = "commodore" }
 
 [bundles]
 invAPI = ["invCore", "invAdvancedSlots", "invPagination", "configurableGui"]
