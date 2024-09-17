@@ -68,6 +68,19 @@ public class FreezePlayerExtension extends StaffPlayerExtension {
     config.get().freeze.commands().forEach(command -> execute(target, command, name));
   }
 
+  public void pauseFreeze(@NotNull final PlayerWrapper target, @NotNull final PlayerWrapper staff) {
+    freezeManager.getFreezeContainer(target.getUniqueId()).ifPresentOrElse(container -> {
+      container.setTimeLeft(-1);
+      target.sendMiniMessage(messages.get().freeze.theStaffHasPausedTheTimer());
+
+      eventMessenger.publish(staff, new BroadcastMessage(messages.get().freeze.theTimerHasBeenPausedFor()
+          .replace("{player}", target.getName())
+          .replace("{staff}", staff.getName()),
+          Permissions.STAFF_FREEZE)
+      );
+    }, () -> target.sendMiniMessage(messages.get().freeze.playerNotOnline()));
+  }
+
   public void execute(@NotNull PlayerWrapper player, @NotNull String command, @NotNull String name) {
     requireNonNull(player, "Player cannot be null");
     requireNonNull(command, "Command cannot be null");

@@ -82,6 +82,22 @@ public class FreezeMessagePartial {
   @Comment("Message sent when a player is punished")
   private String punishMessage = "<bold><dark_aqua>Freeze <dark_gray>»</bold> <gray>You have punished {player}.</gray>";
 
+  @Setting
+  @Comment("Message sent when the timer has been paused for a player")
+  private String theTimerHasBeenPausedFor = "<bold><dark_aqua>Freeze <dark_gray>»</bold> <gray>The timer has been paused for {player}.</gray>";
+
+  @Setting
+  @Comment("Message sent when the staff has paused the timer for a player")
+  private String theStaffHasPausedTheTimer = "<bold><dark_aqua>Freeze <dark_gray>»</bold> <gray>The staff has paused the timer for you</gray>";
+
+  @Setting
+  @Comment("Message sent when a player is not frozen.")
+  private String playerNotFrozen = "<bold><dark_aqua>Freeze <dark_gray>»</bold> <red>That player is not frozen.</red>";
+
+  public String playerNotFrozen() {
+    return playerNotFrozen;
+  }
+
   public String frozenMessage() {
     return frozenMessage;
   }
@@ -140,5 +156,13 @@ public class FreezeMessagePartial {
 
   public String punishMessage() {
     return punishMessage;
+  }
+
+  public String theTimerHasBeenPausedFor() {
+    return theTimerHasBeenPausedFor;
+  }
+
+  public String theStaffHasPausedTheTimer() {
+    return theStaffHasPausedTheTimer;
   }
 }
