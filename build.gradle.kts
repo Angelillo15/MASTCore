@@ -35,7 +35,7 @@ dependencies {
 tasks.shadowJar {
   archiveFileName.set("NookureStaff-${rootProject.version}.jar")
   dependencies {
-    exclude(dependency(libs.mojang.brigadier))
+    exclude("com/mojang")
   }
   relocate("com.zaxxer", "com.nookure.staff.libs")
   relocate("me.lucko.commodore", "com.nookure.staff.libs.commodore")
