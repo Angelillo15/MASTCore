@@ -7,6 +7,7 @@ import com.nookure.staff.api.PlayerWrapper;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Iterator;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Stream;
@@ -123,6 +124,10 @@ public final class FreezeManager {
    */
   public Stream<FreezeContainer> stream() {
     return freezeContainers.values().stream();
+  }
+
+  public Iterator<FreezeContainer> iterator() {
+    return freezeContainers.values().iterator();
   }
 
   public static final class FreezeContainer {
