@@ -8,6 +8,8 @@ import com.nookure.staff.api.manager.PlayerWrapperManager;
 import com.nookure.staff.api.util.TextUtils;
 import org.bukkit.entity.Player;
 
+import java.util.Iterator;
+
 public class FreezeSpamMessage implements Runnable {
   @Inject
   private FreezeManager freezeManager;
@@ -18,8 +20,11 @@ public class FreezeSpamMessage implements Runnable {
 
   @Override
   public void run() {
-    freezeManager.stream().forEach(container -> {
-      if (container.hasTalked()) return;
+    Iterator<FreezeManager.FreezeContainer> iterator = freezeManager.iterator();
+
+    while (iterator.hasNext()) {
+      FreezeManager.FreezeContainer container = iterator.next();
+      if (container.hasTalked()) continue;
 
       playerWrapperManager.getPlayerWrapper(container.target()).ifPresent(player -> {
         player.sendMiniMessage(TextUtils.toMM(messages.get().freeze.chatFrozenMessage()
@@ -27,6 +32,6 @@ public class FreezeSpamMessage implements Runnable {
                 container.timeLeft() == -1 ? "∞" : TextUtils.formatTime(container.timeLeft() - System.currentTimeMillis()))
         ));
       });
-    });
+    }
   }
 }
