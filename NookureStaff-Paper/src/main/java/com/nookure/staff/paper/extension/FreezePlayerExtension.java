@@ -38,7 +38,13 @@ public class FreezePlayerExtension extends StaffPlayerExtension {
   }
 
   public void freezePlayer(PlayerWrapper target) {
-    freezeManager.freeze(target, player, System.currentTimeMillis() + config.get().freeze.freezeTimer());
+    final long configTime = config.get().freeze.freezeTimer();
+
+    if (configTime == -1) {
+      freezeManager.freeze(target, player, -1);
+    } else {
+      freezeManager.freeze(target, player, System.currentTimeMillis() + config.get().freeze.freezeTimer());
+    }
 
     target.sendMiniMessage(messages.get().freeze.frozenMessage());
 
