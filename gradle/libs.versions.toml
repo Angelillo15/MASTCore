@@ -9,7 +9,7 @@ paperLib = "1.0.7"
 caffeine = "3.1.8"
 paper = "1.21-R0.1-SNAPSHOT"
 vault = "1.7.1"
-placeholderApi = "2.11.2"
+placeholderApi = "2.11.6"
 bungeecord = "1.21-R0.1-SNAPSHOT"
 jedis = "4.4.0-m2"
 storm = "e1f961b"
@@ -19,7 +19,7 @@ velocity = "3.1.1"
 guice = "7.0.0"
 configurate = "4.2.0-YAML-COMMENTED-SNAPSHOT"
 scoreboard = "2.0.1"
-shadowJar = "8.1.8"
+shadowJar = "8.3.3"
 pluginYml = "0.6.0"
 guava = "33.0.0-jre"
 apacheCommons = "3.14.0"
@@ -29,6 +29,8 @@ protoc = "4.27.1"
 super-vanish = "6.2.18-3"
 inventory = "1.0.0-ee06bf8"
 mock-bukkit = "3.9.0"
+brigadier = "1.0.18"
+commodore = "2.2"
 
 [libraries]
 hikariCP = { group = "com.zaxxer", name = "HikariCP", version.ref = "hikariCP" }
@@ -82,13 +84,15 @@ protocol-buffers-lite = { group = "com.google.protobuf", name = "protobuf-javali
 superVanish = { group = "com.github.LeonMangler", name = "SuperVanish", version.ref = "super-vanish" }
 nookure-core-inventory = { group = "com.nookure.core", name = "NookCore-Inventory", version.ref = "inventory" }
 mockBukkit = { group = "com.github.seeseemelk", name = "MockBukkit-v1.20", version.ref = "mock-bukkit" }
+mojang-brigadier = { group = "com.mojang", name = "brigadier", version.ref = "brigadier" }
+lucko-commodore = { group = "me.lucko", name = "commodore", version.ref = "commodore" }
 
 [bundles]
 invAPI = ["invCore", "invAdvancedSlots", "invPagination", "configurableGui"]
 scoreboard = ["scoreboard", "scoreboard-implementation", "scoreboard-modern", "scoreboard-packetevents", "scoreboard-8"]
 
 [plugins]
-shadowJar = { id = "io.github.goooler.shadow", version.ref = "shadowJar" }
+shadowJar = { id = "com.gradleup.shadow", version.ref = "shadowJar" }
 pluginYmlBukkit = { id = "net.minecrell.plugin-yml.bukkit", version.ref = "pluginYml" }
 pluginYmlBungee = { id = "net.minecrell.plugin-yml.bungee", version.ref = "pluginYml" }
 pluginYmlPaper = { id = "net.minecrell.plugin-yml.paper", version.ref = "pluginYml" }

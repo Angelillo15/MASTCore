@@ -21,6 +21,7 @@ import com.nookure.staff.api.messaging.EventMessenger;
 import com.nookure.staff.api.model.StaffDataModel;
 import com.nookure.staff.api.state.PlayerState;
 import com.nookure.staff.api.util.Scheduler;
+import com.nookure.staff.api.util.ServerUtils;
 import com.nookure.staff.paper.data.StaffModeData;
 import io.ebean.Database;
 import net.kyori.adventure.text.minimessage.MiniMessage;
@@ -402,6 +403,8 @@ public class StaffPaperPlayerWrapper extends PaperPlayerWrapper implements Staff
 
   //<editor-fold desc="Potion effects">
   public void loadPotionEffects() {
+    if (ServerUtils.MINECRAFT_VERSION.isBefore(1, 20)) return;
+
     if (config.get().staffMode.nightVision()) {
       if (!player.hasPotionEffect(PotionEffectType.NIGHT_VISION)) toggleNightVision();
     }

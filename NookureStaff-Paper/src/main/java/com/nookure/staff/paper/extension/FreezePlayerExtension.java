@@ -38,7 +38,13 @@ public class FreezePlayerExtension extends StaffPlayerExtension {
   }
 
   public void freezePlayer(PlayerWrapper target) {
-    freezeManager.freeze(target, player, System.currentTimeMillis() + config.get().freeze.freezeTimer());
+    final long configTime = config.get().freeze.freezeTimer();
+
+    if (configTime == -1) {
+      freezeManager.freeze(target, player, -1);
+    } else {
+      freezeManager.freeze(target, player, System.currentTimeMillis() + config.get().freeze.freezeTimer());
+    }
 
     target.sendMiniMessage(messages.get().freeze.frozenMessage());
 
@@ -66,6 +72,19 @@ public class FreezePlayerExtension extends StaffPlayerExtension {
     requireNonNull(name, "Name cannot be null");
 
     config.get().freeze.commands().forEach(command -> execute(target, command, name));
+  }
+
+  public void pauseFreeze(@NotNull final PlayerWrapper target, @NotNull final PlayerWrapper staff) {
+    freezeManager.getFreezeContainer(target.getUniqueId()).ifPresentOrElse(container -> {
+      container.setTimeLeft(-1);
+      target.sendMiniMessage(messages.get().freeze.theStaffHasPausedTheTimer());
+
+      eventMessenger.publish(staff, new BroadcastMessage(messages.get().freeze.theTimerHasBeenPausedFor()
+          .replace("{player}", target.getName())
+          .replace("{staff}", staff.getName()),
+          Permissions.STAFF_FREEZE)
+      );
+    }, () -> target.sendMiniMessage(messages.get().freeze.playerNotOnline()));
   }
 
   public void execute(@NotNull PlayerWrapper player, @NotNull String command, @NotNull String name) {

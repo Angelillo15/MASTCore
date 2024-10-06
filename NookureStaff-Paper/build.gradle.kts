@@ -16,6 +16,7 @@ dependencies {
   compileOnly(libs.configurateYaml)
   compileOnly(libs.jedis)
   compileOnly(libs.placeholderApi)
+  compileOnly(libs.lucko.commodore)
   compileOnly(libs.nookure.core.inventory)
   bukkitLibrary(libs.guice)
   bukkitLibrary(libs.google.guice.assistedinject)

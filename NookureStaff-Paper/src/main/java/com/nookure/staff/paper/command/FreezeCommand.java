@@ -120,6 +120,11 @@ public class FreezeCommand extends StaffCommand {
 
     PlayerWrapper target = optionalTarget.get();
 
+    if (args.size() >= 2 && args.get(1).equalsIgnoreCase("pause")) {
+      freezeExtension.pauseFreeze(target, sender);
+      return;
+    }
+
     if (freezeManager.isFrozen(target.getUniqueId())) {
       freezeExtension.unfreezePlayer(target);
     } else {
@@ -129,6 +134,15 @@ public class FreezeCommand extends StaffCommand {
 
   @Override
   public @NotNull List<String> onTabComplete(@NotNull CommandSender sender, @NotNull String label, @NotNull List<String> args) {
-    return getSuggestionFilter(Bukkit.getOnlinePlayers().stream().map(Player::getName).toList(), args.getFirst());
+    switch (args.size()) {
+      case 1 -> {
+        return getSuggestionFilter(Bukkit.getOnlinePlayers().stream().map(Player::getName).toList(), args.getFirst());
+      }
+      case 2 -> {
+        return List.of("pause");
+      }
+    }
+
+    return super.onTabComplete(sender, label, args);
   }
 }

@@ -37,6 +37,7 @@ dependencies {
   compileOnlyApi(rootProject.libs.miniMessage)
   compileOnlyApi(rootProject.libs.caffeine)
   compileOnlyApi(rootProject.libs.ebean)
+  compileOnlyApi(rootProject.libs.placeholderApi)
   annotationProcessor(rootProject.libs.ebean)
 
   compileOnly(libs.auto.service.annotations)
