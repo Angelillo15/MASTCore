@@ -189,9 +189,12 @@ public class PaperPluginModule extends PluginModule {
 
   private Jedis getJedis() {
     try (Jedis jedis = new Jedis(redisPartial.getAddress(), redisPartial.getPort(), redisPartial.getTimeout(), redisPartial.getPoolSize())) {
-
       if (!redisPartial.getPassword().isEmpty()) {
-        jedis.auth(redisPartial.getPassword());
+        if (redisPartial.getUsername().isEmpty()) {
+          jedis.auth(redisPartial.getPassword());
+        } else {
+          jedis.auth(redisPartial.getUsername(), redisPartial.getPassword());
+        }
       }
 
       jedis.select(redisPartial.getDatabase());
