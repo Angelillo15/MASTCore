@@ -6,6 +6,7 @@ import com.craftmend.storm.api.enums.Where;
 import com.craftmend.storm.api.markers.Column;
 import com.craftmend.storm.api.markers.Table;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Iterator;
 import java.util.Objects;
@@ -25,6 +26,14 @@ public class StaffDataModel extends StormModel {
   @Column
   private Boolean staffChatEnabled = false;
 
+  /**
+   * Get the staff data model from the UUID
+   *
+   * @param storm the storm instance
+   * @param uuid  the uuid
+   * @return the staff data model or null if not found
+   */
+  @Nullable
   public static StaffDataModel getFromUUID(@NotNull Storm storm, @NotNull UUID uuid) {
     Objects.requireNonNull(storm, "storm is null");
     Objects.requireNonNull(uuid, "uuid is null");
@@ -40,14 +49,7 @@ public class StaffDataModel extends StormModel {
       if (iterator.hasNext()) {
         return iterator.next();
       } else {
-        StaffDataModel staffDataModel = new StaffDataModel();
-        staffDataModel.setUUID(uuid);
-        staffDataModel.setStaffMode(false);
-        staffDataModel.setVanished(false);
-
-        storm.save(staffDataModel);
-
-        return staffDataModel;
+        return null;
       }
     } catch (Exception e) {
       throw new RuntimeException(e);
@@ -84,5 +86,15 @@ public class StaffDataModel extends StormModel {
 
   public void setStaffChatEnabled(boolean staffChatEnabled) {
     this.staffChatEnabled = staffChatEnabled;
+  }
+
+  @Override
+  public String toString() {
+    return "StaffDataModel{" +
+        "UUID='" + UUID + '\'' +
+        ", staffMode=" + staffMode +
+        ", vanished=" + vanished +
+        ", staffChatEnabled=" + staffChatEnabled +
+        '}';
   }
 }
