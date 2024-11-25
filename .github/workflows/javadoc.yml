@@ -49,7 +49,7 @@ jobs:
           cp -r NookureStaff/NookureStaff-API/build/docs/javadoc javadocs/javadocs/NookureStaff/
           ls javadocs/javadocs/NookureStaff
           cd javadocs
-          git config --global user.email angelrizosrubios@gmail.com
+          git config --global user.email contact@angelillo15.es
           git config --global user.name Angelillo15
           git add .
           git commit -m "Update javadocs"
