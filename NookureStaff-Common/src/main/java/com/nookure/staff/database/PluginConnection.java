@@ -183,7 +183,7 @@ public class PluginConnection extends AbstractPluginConnection {
 
     hikariConfig.setMaximumPoolSize(20);
     hikariConfig.setConnectionTimeout(30000);
-    hikariConfig.setAutoCommit(false);
+    hikariConfig.setAutoCommit(true);
     hikariConfig.setLeakDetectionThreshold(0);
     return hikariConfig;
   }
