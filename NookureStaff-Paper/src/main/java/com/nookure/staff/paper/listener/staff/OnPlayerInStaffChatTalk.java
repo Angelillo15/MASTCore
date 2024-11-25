@@ -47,7 +47,7 @@ public class OnPlayerInStaffChatTalk implements Listener {
         .replace("{server}", config.get().getServerName())
         .replace("{message}", PlainTextComponentSerializer.plainText().serialize(event.message()));
 
-    serverUtils.broadcast(message, Permissions.STAFF_CHAT);
+    serverUtils.broadcast(message, Permissions.STAFF_CHAT, config.get().staffChat.logStaffChatInConsole);
 
     event.setCancelled(true);
   }

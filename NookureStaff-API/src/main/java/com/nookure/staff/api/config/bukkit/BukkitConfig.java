@@ -1,9 +1,6 @@
 package com.nookure.staff.api.config.bukkit;
 
-import com.nookure.staff.api.config.bukkit.partials.config.FreezePartial;
-import com.nookure.staff.api.config.bukkit.partials.config.ModulesPartials;
-import com.nookure.staff.api.config.bukkit.partials.config.PlayerActions;
-import com.nookure.staff.api.config.bukkit.partials.config.StaffModePartial;
+import com.nookure.staff.api.config.bukkit.partials.config.*;
 import com.nookure.staff.api.config.partials.DatabaseConfig;
 import org.spongepowered.configurate.objectmapping.ConfigSerializable;
 import org.spongepowered.configurate.objectmapping.meta.Comment;
@@ -12,7 +9,7 @@ import org.spongepowered.configurate.objectmapping.meta.Setting;
 @ConfigSerializable
 public class BukkitConfig {
   @Setting
-  public final DatabaseConfig database = new DatabaseConfig();
+  public DatabaseConfig database = new DatabaseConfig();
 
   @Setting
   @Comment("""
@@ -20,25 +17,28 @@ public class BukkitConfig {
       If you disable a module, the commands and the features
       of that module will be disabled.
       """)
-  public final ModulesPartials modules = new ModulesPartials();
+  public ModulesPartials modules = new ModulesPartials();
 
   @Setting
   @Comment("""
       Here you can configure some settings for the staffmode
       """)
-  public final StaffModePartial staffMode = new StaffModePartial();
+  public StaffModePartial staffMode = new StaffModePartial();
 
   @Setting
   @Comment("""
       Here you can configure some settings for the freeze module
       """)
-  public final FreezePartial freeze = new FreezePartial();
+  public FreezePartial freeze = new FreezePartial();
 
   @Setting
   @Comment("""
       Here you can configure some settings for the player actions
       """)
-  public final PlayerActions playerActions = new PlayerActions();
+  public PlayerActions playerActions = new PlayerActions();
+
+  @Setting
+  public StaffChatPartial staffChat = new StaffChatPartial();
 
   @Setting
   @Comment("""
