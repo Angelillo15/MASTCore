@@ -26,15 +26,6 @@ public class DefaultLibRepo {
         .isolatedLoad(false)
         .build();
 
-    Library storm = Library.builder()
-        .groupId("com{}github{}Mindgamesnl")
-        .artifactId("storm")
-        .version("e1f961b")
-        .isolatedLoad(false)
-        .relocate("com{}craftmend{}storm", "com{}nookure{}staff{}libs{}storm")
-        .relocate("com{}zaxxer", "com{}nookure{}staff{}libs")
-        .build();
-
     Library caffeine = Library.builder()
         .groupId("com{}github{}ben-manes{}caffeine")
         .artifactId("caffeine")
@@ -124,7 +115,7 @@ public class DefaultLibRepo {
       libraries.add(nookureInventory);
     }
 
-    Stream.of(hikariCP, storm, caffeine, jedis, commons, commonsPool2, json, protobuf).forEach(libraries::add);
+    Stream.of(hikariCP, caffeine, jedis, commons, commonsPool2, json, protobuf).forEach(libraries::add);
 
     try {
       Class.forName("io.ebean.Database");
