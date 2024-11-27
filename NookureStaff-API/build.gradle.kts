@@ -42,8 +42,9 @@ dependencies {
 
   compileOnly(libs.auto.service.annotations)
   compileOnly(rootProject.libs.liblyBukkit)
-  compileOnly(rootProject.libs.storm)
   annotationProcessor(libs.auto.service)
+  annotationProcessor(libs.google.auto.value.processor)
+  implementation(libs.google.auto.value.annotations)
 }
 
 publishing {

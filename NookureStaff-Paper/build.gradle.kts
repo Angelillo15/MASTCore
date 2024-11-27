@@ -36,7 +36,6 @@ dependencies {
   testImplementation(libs.miniMessage)
   testImplementation(libs.adventureBukkit)
   testImplementation(libs.ebean)
-  testImplementation(libs.storm)
   testImplementation(libs.hikariCP)
 
   testImplementation("org.xerial:sqlite-jdbc:3.46.0.0")
