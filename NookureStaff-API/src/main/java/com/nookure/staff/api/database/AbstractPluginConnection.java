@@ -1,6 +1,5 @@
 package com.nookure.staff.api.database;
 
-import com.craftmend.storm.Storm;
 import com.nookure.staff.api.config.partials.DatabaseConfig;
 import io.ebean.Database;
 import org.jetbrains.annotations.NotNull;
@@ -13,6 +12,7 @@ import java.sql.Connection;
  */
 public abstract class AbstractPluginConnection {
   public static final String DATABASE_NAME = "nkstaff";
+
   /**
    * Connects to the database.
    * <p>
@@ -39,18 +39,6 @@ public abstract class AbstractPluginConnection {
    * </p>
    */
   public abstract void close();
-
-  /**
-   * Returns the Storm instance.
-   * This should be called after {@link #connect(DatabaseConfig, ClassLoader)}.
-   * <p>
-   * If the connection is not established, this method should throw an exception.
-   * If the connection is established, this method should return the Storm instance.
-   * </p>
-   *
-   * @return the Storm instance
-   */
-  public abstract @NotNull Storm getStorm();
 
   /**
    * Returns the connection to the database.

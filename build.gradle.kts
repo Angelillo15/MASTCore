@@ -39,7 +39,6 @@ tasks.shadowJar {
   }
   relocate("com.zaxxer", "com.nookure.staff.libs")
   relocate("me.lucko.commodore", "com.nookure.staff.libs.commodore")
-  relocate("com.craftmend.storm", "com.nookure.staff.libs.storm")
   relocate("com.github.benmanes.caffeine", "com.nookure.staff.libs.caffeine")
   relocate("org.spongepowered.configurate", "com.nookure.staff.libs.configurate")
   relocate("com.alessiodp.libby", "com.nookure.staff.libs.libby")
@@ -65,7 +64,6 @@ allprojects {
   dependencies {
     compileOnly(rootProject.libs.guice)
     compileOnly(rootProject.libs.google.guice.assistedinject)
-    compileOnly(rootProject.libs.storm)
     compileOnly(rootProject.libs.adventureApi)
     compileOnly(rootProject.libs.miniMessage)
     compileOnly(rootProject.libs.caffeine)
