@@ -1,14 +1,17 @@
 package com.nookure.staff.paper.extension.vanish;
 
+import com.google.inject.Inject;
 import com.nookure.staff.api.StaffPlayerWrapper;
 import com.nookure.staff.api.extension.VanishExtension;
 import com.nookure.staff.paper.StaffPaperPlayerWrapper;
 import de.myzelyam.api.vanish.VanishAPI;
+import org.jetbrains.annotations.NotNull;
 
 public class SuperVanishExtension extends VanishExtension {
   private final StaffPaperPlayerWrapper player;
 
-  public SuperVanishExtension(StaffPlayerWrapper player) {
+  @Inject
+  public SuperVanishExtension(@NotNull final StaffPlayerWrapper player) {
     super(player);
     this.player = (StaffPaperPlayerWrapper) player;
   }
