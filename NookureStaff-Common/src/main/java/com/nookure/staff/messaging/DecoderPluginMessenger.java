@@ -4,7 +4,7 @@ import com.nookure.staff.api.PlayerWrapper;
 import com.nookure.staff.api.messaging.EventMessenger;
 import org.jetbrains.annotations.NotNull;
 
-public abstract class DecoderPluginMessenger extends EventMessenger {
+public final class DecoderPluginMessenger extends EventMessenger {
   @Override
   public void prepare() {
     // Nothing to do here

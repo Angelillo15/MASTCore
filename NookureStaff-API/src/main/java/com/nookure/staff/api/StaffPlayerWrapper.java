@@ -56,8 +56,19 @@ public interface StaffPlayerWrapper extends PlayerWrapper {
    * Set the player's staff chat mode.
    *
    * @param staffChatAsDefault if true, the player will be in staff chat mode
+   *                           by default
+   * @param saveInDB           if true, the player's staff chat mode will be saved
    */
-  void setStaffChatAsDefault(boolean staffChatAsDefault);
+  void setStaffChatAsDefault(boolean staffChatAsDefault, boolean saveInDB);
+
+  /**
+   * Set the player's staff chat mode.
+   *
+   * @param staffChatAsDefault if true, the player will be in staff chat mode
+   */
+  default void setStaffChatAsDefault(boolean staffChatAsDefault) {
+    setStaffChatAsDefault(staffChatAsDefault, true);
+  }
 
   /**
    * Reload/load the player's items.
@@ -138,4 +149,6 @@ public interface StaffPlayerWrapper extends PlayerWrapper {
    * @return the player's items
    */
   @NotNull Map<Integer, StaffItem> getItems();
+
+  @NotNull Map<Class<? extends StaffPlayerExtension>, StaffPlayerExtension> getExtensions();
 }

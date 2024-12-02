@@ -5,4 +5,4 @@
     `vanished` TINYINT(1) NOT NULL DEFAULT 0,
     `staff_chat_enabled` TINYINT(1) NOT NULL DEFAULT 0,
     PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLTE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
