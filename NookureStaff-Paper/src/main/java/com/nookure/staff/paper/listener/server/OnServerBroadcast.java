@@ -22,8 +22,10 @@ public class OnServerBroadcast {
     playerWrapperManager.stream()
         .filter(player -> player.hasPermission(event.permission()))
         .forEach(player -> player.sendMiniMessage(event.message()));
-
-    Bukkit.getConsoleSender().sendMessage(TextUtils.toComponent(event.message().replace("{prefix}", messages.get().prefix())));
+     if (event.showInConsole())
+      Bukkit.getConsoleSender().sendMessage(
+          TextUtils.toComponent(event.message().replace("{prefix}", messages.get().prefix()))
+      );
   }
 
   @NookSubscribe

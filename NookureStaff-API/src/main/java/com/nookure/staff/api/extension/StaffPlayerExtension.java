@@ -1,9 +1,12 @@
 package com.nookure.staff.api.extension;
 
+import com.google.inject.Inject;
 import com.nookure.staff.api.StaffPlayerWrapper;
+import org.jetbrains.annotations.NotNull;
 
 public abstract class StaffPlayerExtension {
-  public StaffPlayerExtension(StaffPlayerWrapper player) {
+  @Inject
+  public StaffPlayerExtension(@NotNull final StaffPlayerWrapper player) {
   }
 
   /**

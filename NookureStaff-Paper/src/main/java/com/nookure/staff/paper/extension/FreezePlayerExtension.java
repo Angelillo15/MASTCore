@@ -20,21 +20,28 @@ import static java.util.Objects.requireNonNull;
 
 public class FreezePlayerExtension extends StaffPlayerExtension {
   private final StaffPlayerWrapper player;
-  @Inject
-  private FreezeManager freezeManager;
-  @Inject
-  private ConfigurationContainer<BukkitConfig> config;
-  @Inject
-  private ConfigurationContainer<BukkitMessages> messages;
-  @Inject
-  private EventMessenger eventMessenger;
-  @Inject
-  @PluginMessageMessenger
-  private EventMessenger pluginMessageManager;
+  private final FreezeManager freezeManager;
+  private final ConfigurationContainer<BukkitConfig> config;
+  private final ConfigurationContainer<BukkitMessages> messages;
+  private final EventMessenger eventMessenger;
+  private final EventMessenger pluginMessageManager;
 
-  public FreezePlayerExtension(StaffPlayerWrapper player) {
+  @Inject
+  public FreezePlayerExtension(
+      @NotNull final StaffPlayerWrapper player,
+      @NotNull final FreezeManager freezeManager,
+      @NotNull final ConfigurationContainer<BukkitConfig> config,
+      @NotNull final ConfigurationContainer<BukkitMessages> messages,
+      @NotNull final EventMessenger eventMessenger,
+      @NotNull @PluginMessageMessenger final EventMessenger pluginMessageManager
+  ) {
     super(player);
     this.player = player;
+    this.freezeManager = freezeManager;
+    this.config = config;
+    this.messages = messages;
+    this.eventMessenger = eventMessenger;
+    this.pluginMessageManager = pluginMessageManager;
   }
 
   public void freezePlayer(PlayerWrapper target) {

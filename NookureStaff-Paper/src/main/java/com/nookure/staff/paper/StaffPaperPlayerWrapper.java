@@ -8,52 +8,45 @@ import com.nookure.staff.api.NookureStaff;
 import com.nookure.staff.api.config.ConfigurationContainer;
 import com.nookure.staff.api.config.bukkit.BukkitConfig;
 import com.nookure.staff.api.config.bukkit.BukkitMessages;
-import com.nookure.staff.api.database.AbstractPluginConnection;
-import com.nookure.staff.api.event.server.BroadcastMessageExcept;
-import com.nookure.staff.api.event.staff.StaffModeDisabledEvent;
-import com.nookure.staff.api.event.staff.StaffModeEnabledEvent;
+import com.nookure.staff.api.database.model.StaffStateModel;
+import com.nookure.staff.api.database.repository.StaffStateRepository;
 import com.nookure.staff.api.extension.StaffPlayerExtension;
 import com.nookure.staff.api.extension.StaffPlayerExtensionManager;
 import com.nookure.staff.api.extension.VanishExtension;
+import com.nookure.staff.api.extension.staff.StaffModeExtension;
 import com.nookure.staff.api.item.StaffItem;
-import com.nookure.staff.api.manager.StaffItemsManager;
-import com.nookure.staff.api.messaging.EventMessenger;
-import com.nookure.staff.api.model.StaffDataModel;
 import com.nookure.staff.api.state.PlayerState;
 import com.nookure.staff.api.util.Scheduler;
 import com.nookure.staff.api.util.ServerUtils;
-import com.nookure.staff.paper.data.StaffModeData;
+import com.nookure.staff.paper.bootstrap.StaffPaperPlayerWrapperModule;
+import com.nookure.staff.paper.data.ServerStaffModeData;
 import io.ebean.Database;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.sql.SQLException;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class StaffPaperPlayerWrapper extends PaperPlayerWrapper implements StaffPlayerWrapper {
   private final Map<Class<? extends StaffPlayerExtension>, StaffPlayerExtension> extensionMap = new HashMap<>();
-  private final Map<Integer, StaffItem> items = new HashMap<>();
   private final ConfigurationContainer<BukkitMessages> messages;
   private final ConfigurationContainer<BukkitConfig> config;
-  private final StaffItemsManager itemsManager;
-  private final AbstractPluginConnection connection;
   private final Scheduler scheduler;
-  private final EventMessenger eventMessenger;
   private final StaffPlayerExtensionManager extensionManager;
+  private final StaffStateRepository staffStateRepository;
   private final Injector injector;
-  private StaffDataModel staffDataModel;
-  private boolean staffMode = false;
-  private boolean staffChatAsDefault = false;
-  private StaffModeData staffModeData;
+  private final AtomicReference<StaffStateModel> staffDataModel = new AtomicReference<>();
+  private final AtomicBoolean staffMode = new AtomicBoolean(false);
+  private final AtomicBoolean staffChatAsDefault = new AtomicBoolean(false);
   private VanishExtension vanishExtension;
+  private StaffModeExtension staffModeExtension;
 
   @Inject
   public StaffPaperPlayerWrapper(
@@ -63,24 +56,31 @@ public class StaffPaperPlayerWrapper extends PaperPlayerWrapper implements Staff
       @NotNull final ConfigurationContainer<BukkitMessages> messages,
       @NotNull final ConfigurationContainer<BukkitConfig> config,
       @NotNull final AtomicReference<Database> db,
-      @NotNull final StaffItemsManager itemsManager,
-      @NotNull final AbstractPluginConnection connection,
       @NotNull final Scheduler scheduler,
-      @NotNull final EventMessenger eventMessenger,
       @NotNull final StaffPlayerExtensionManager extensionManager,
+      @NotNull final StaffStateRepository staffStateRepository,
       @NotNull @Assisted final Player player,
       @NotNull @Assisted final List<Class<? extends PlayerState>> states
   ) {
     super(plugin, nookPlugin, logger, config, scheduler, db, player, states);
     this.messages = messages;
     this.config = config;
-    this.itemsManager = itemsManager;
-    this.connection = connection;
     this.scheduler = scheduler;
-    this.eventMessenger = eventMessenger;
     this.extensionManager = extensionManager;
-    this.injector = nookPlugin.getInjector();
+    this.staffStateRepository = staffStateRepository;
 
+    AtomicReference<ServerStaffModeData> serverStaffModeData = new AtomicReference<>();
+    this.injector = nookPlugin.getInjector().createChildInjector(
+        new StaffPaperPlayerWrapperModule(
+            this,
+            serverStaffModeData,
+            staffDataModel,
+            staffMode,
+            staffChatAsDefault
+        )
+    );
+
+    this.loadDBState();
     this.addExtensions();
     this.checkStaffModeState();
     this.checkVanishState();
@@ -129,31 +129,52 @@ public class StaffPaperPlayerWrapper extends PaperPlayerWrapper implements Staff
   public void checkVanishState() {
     if (!config.get().modules.isVanish()) return;
     if (!vanishExtension.restoreFromDatabase()) return;
-    StaffDataModel staffDataModel = StaffDataModel.getFromUUID(connection.getStorm(), player.getUniqueId());
 
-    if (staffDataModel.isVanished()) {
-      enableVanish(staffMode);
+    logger.debug("Checking vanish state for %s", player.getName());
+    StaffStateModel staffDataModel = staffStateRepository.fromUUID(getUniqueId());
+
+    if (staffDataModel == null) {
+      logger.debug("Staff data model for %s is null", player.getName());
+      return;
+    }
+
+    logger.debug("Vanish state for %s is %s", player.getName(), staffDataModel.vanished());
+    logger.debug("StaffDataModel state: %s", staffDataModel);
+
+    if (staffDataModel.vanished()) {
+      enableVanish(staffMode.get());
     } else {
       disableVanish(true);
     }
 
-    vanishExtension.setVanished(staffDataModel.isVanished());
+    vanishExtension.setVanished(staffDataModel.vanished());
   }
 
-  private void writeVanishState(boolean state) {
-    scheduler.async(() -> {
-      StaffDataModel staffDataModel = StaffDataModel.getFromUUID(connection.getStorm(), player.getUniqueId());
+  public void loadDBState() {
+    if (staffDataModel.get() == null) {
+      staffDataModel.set(staffStateRepository.fromUUID(player.getUniqueId()));
 
-      staffDataModel.setVanished(state);
+      if (staffDataModel.get() == null) {
+        staffDataModel.set(StaffStateModel
+            .builder()
+            .uuid(player.getUniqueId())
+            .staffMode(false)
+            .vanished(false)
+            .staffChatEnabled(false)
+            .build());
 
-      try {
-        connection.getStorm().save(staffDataModel);
-      } catch (SQLException e) {
-        logger.severe("An error occurred while saving vanish state for %s: %s", player.getName(), e.getMessage());
+        staffStateRepository.savePlayerModel(staffDataModel.get());
       }
+    }
+  }
 
-      logger.debug("Vanish state for %s has been set to %s on the database", player.getName(), state);
-    });
+  public void writeVanishState(boolean state) {
+    staffDataModel.set(StaffStateModel.builder(staffDataModel.get())
+        .vanished(state)
+        .build());
+
+    staffStateRepository.saveOrUpdateModelAsync(staffDataModel.get())
+        .thenRun(() -> logger.debug("Vanish state for %s has been set to %s on the database", player.getName(), state));
 
     if (vanishExtension != null) {
       vanishExtension.setVanished(state);
@@ -163,143 +184,42 @@ public class StaffPaperPlayerWrapper extends PaperPlayerWrapper implements Staff
 
   //<editor-fold desc="StaffMode">
   private void enableStaffMode(boolean silentJoin) {
-    long time = System.currentTimeMillis();
-
-    enablePlayerPerks();
-
-    if (!silentJoin) {
-      saveLocation();
-      saveInventory();
-    }
-
-    setItems();
-    sendMiniMessage(messages.get().staffMode.toggledOn());
-    writeStaffModeState(true);
-
-    if (config.get().staffMode.enableVanishOnStaffEnable()) {
-      enableVanish(silentJoin);
-      writeVanishState(true);
-    }
-
-    eventMessenger.publish(this, new StaffModeEnabledEvent(getUniqueId()));
-    eventMessenger.publish(this, new BroadcastMessageExcept(messages.get().staffMode.toggledOnOthers()
-        .replace("{player}", player.getName()),
-        getUniqueId())
-    );
-
-    try {
-      extensionMap.values().forEach(StaffPlayerExtension::onStaffModeEnabled);
-    } catch (Exception e) {
-      logger.severe("An error occurred while enabling staff mode for %s: %s", player.getName(), e.getMessage());
-    }
-
-    logger.debug("Staff mode enabled for %s in %dms", player.getName(), System.currentTimeMillis() - time);
+    if (staffModeExtension != null) staffModeExtension.enableStaffMode(silentJoin);
   }
 
   private void disableStaffMode() {
-    long time = System.currentTimeMillis();
-    disablePlayerPerks();
-    restoreInventory();
-    if (config.get().staffMode.teleportToPreviousLocation()) loadPreviousLocation();
-    sendMiniMessage(messages.get().staffMode.toggledOff());
-    writeStaffModeState(false);
-
-    if (config.get().staffMode.disableVanishOnStaffDisable()) {
-      disableVanish(false);
-      writeVanishState(false);
-    }
-
-    eventMessenger.publish(this, new StaffModeDisabledEvent(getUniqueId()));
-    eventMessenger.publish(this, new BroadcastMessageExcept(messages.get().staffMode.toggledOffOthers()
-        .replace("{player}", player.getName()),
-        getUniqueId())
-    );
-
-    try {
-      extensionMap.values().forEach(StaffPlayerExtension::onStaffModeDisabled);
-    } catch (Exception e) {
-      logger.severe("An error occurred while enabling staff mode for %s: %s", player.getName(), e.getMessage());
-    }
-
-    logger.debug("Staff mode disabled for %s in %dms", player.getName(), System.currentTimeMillis() - time);
+    if (staffModeExtension != null) staffModeExtension.disableStaffMode();
   }
 
   private void checkStaffModeState() {
-    if (staffModeData == null) {
-      staffModeData = StaffModeData.read(nookPlugin, this);
-    }
-
-    assert staffModeData != null;
-
-    if (staffModeData.record().staffMode()) {
-      clearInventory();
-      enableStaffMode(true);
-      return;
-    }
-
-    if (staffDataModel == null) {
-      staffDataModel = StaffDataModel.getFromUUID(connection.getStorm(), player.getUniqueId());
-    }
-
-    if (staffDataModel.isStaffMode()) {
-      saveInventory();
-      saveLocation();
-      enableStaffMode(true);
-    }
-
-    staffChatAsDefault = staffDataModel.isStaffChatEnabled();
+    if (staffModeExtension != null) staffModeExtension.checkStaffMode();
   }
 
   private void writeStaffModeState(boolean state) {
-    scheduler.async(() -> {
-      StaffDataModel staffDataModel = StaffDataModel.getFromUUID(connection.getStorm(), player.getUniqueId());
-
-      staffDataModel.setStaffMode(state);
-
-      try {
-        connection.getStorm().save(staffDataModel);
-      } catch (SQLException e) {
-        logger.severe("An error occurred while saving staff mode state for %s: %s", player.getName(), e.getMessage());
-      }
-
-      logger.debug("Staff mode state for %s has been set to %s on the database", player.getName(), state);
-    });
-
-    staffModeData.record().staffMode(state);
-    staffModeData.write();
-
-    staffMode = state;
+    if (staffModeExtension != null) staffModeExtension.writeStaffModeState(state);
   }
 
   @Override
   public void toggleStaffMode(boolean silentJoin) {
-    if (!staffMode) enableStaffMode(silentJoin);
-    else disableStaffMode();
+    if (staffModeExtension != null) staffModeExtension.toggleStaffMode(silentJoin);
   }
 
   @Override
   public boolean isInStaffMode() {
-    return staffMode;
+    return staffMode.get();
   }
   //</editor-fold>
 
   //<editor-fold desc="Items">
   @Override
   public void setItems() {
-    if (items.isEmpty()) {
-      itemsManager.getItems().forEach((identifier, item) -> {
-        if (item.getPermission() != null && !player.hasPermission(item.getPermission())) return;
-
-        items.put(item.getSlot(), item);
-      });
-    }
-
-    items.forEach((identifier, item) -> item.setItem(player));
+    if (staffModeExtension != null) staffModeExtension.setItems();
   }
 
   @Override
   public @NotNull Map<Integer, StaffItem> getItems() {
-    return items;
+    if (staffModeExtension != null) return staffModeExtension.getItems();
+    return Map.of();
   }
   //</editor-fold>
 
@@ -329,75 +249,50 @@ public class StaffPaperPlayerWrapper extends PaperPlayerWrapper implements Staff
   //<editor-fold desc="Inventory">
   @Override
   public void saveInventory() {
-    if (staffModeData == null) {
-      staffModeData = StaffModeData.read(nookPlugin, this);
-    }
-
-    assert staffModeData != null;
-
-    staffModeData.record().playerInventory(player.getInventory().getContents());
-    staffModeData.record().playerInventoryArmor(player.getInventory().getArmorContents());
-
-    staffModeData.write();
-
-    clearInventory();
+    if (staffModeExtension != null) staffModeExtension.saveInventory();
   }
 
   @Override
   public void clearInventory() {
-    player.getInventory().clear();
-    player.getInventory().setArmorContents(new ItemStack[0]);
+    if (staffModeExtension != null) staffModeExtension.clearInventory();
   }
 
   @Override
   public void restoreInventory() {
-    if (staffModeData == null) {
-      staffModeData = StaffModeData.read(nookPlugin, this);
-    }
-
-    assert staffModeData != null;
-
-    player.getInventory().setContents(staffModeData.record().playerInventory());
-    player.getInventory().setArmorContents(staffModeData.record().playerInventoryArmor());
-
-    staffModeData.write();
+    if (staffModeExtension != null) staffModeExtension.restoreInventory();
   }
   //</editor-fold>
 
   //<editor-fold desc="Location">
   public void saveLocation() {
-    staffModeData.record().enabledLocation(player.getLocation());
-    staffModeData.write();
+    if (staffModeExtension != null) staffModeExtension.saveLocation();
   }
 
   public void loadPreviousLocation() {
-    Location location = staffModeData.record().enabledLocation();
-    if (location == null) return;
-    player.teleport(location);
+    if (staffModeExtension != null) staffModeExtension.restoreLocation();
   }
   //</editor-fold>
 
   //<editor-fold desc="StaffChat">
   @Override
   public boolean isStaffChatAsDefault() {
-    return staffChatAsDefault;
+    return staffChatAsDefault.get();
   }
 
   @Override
-  public void setStaffChatAsDefault(boolean staffChatAsDefault) {
-    this.staffChatAsDefault = staffChatAsDefault;
+  public void setStaffChatAsDefault(boolean staffChatAsDefault, boolean saveInDB) {
+    this.staffChatAsDefault.set(staffChatAsDefault);
 
-    StaffDataModel staffDataModel = StaffDataModel.getFromUUID(connection.getStorm(), player.getUniqueId());
+    if (!saveInDB) {
+      return;
+    }
 
-    staffDataModel.setStaffChatEnabled(staffChatAsDefault);
+    staffDataModel.set(StaffStateModel.builder(staffDataModel.get())
+        .staffChatEnabled(staffChatAsDefault)
+        .build());
 
-    scheduler.async(() -> {
-      try {
-        connection.getStorm().save(staffDataModel);
-      } catch (SQLException e) {
-        logger.severe("An error occurred while saving staff chat state for %s: %s", player.getName(), e.getMessage());
-      }
-    });
+    staffStateRepository.saveOrUpdateModelAsync(staffDataModel.get())
+        .thenRun(() -> logger.debug("Staff chat state for %s has been set to %s on the database", player.getName(), staffChatAsDefault));
   }
   //</editor-fold>
 
@@ -473,12 +368,12 @@ public class StaffPaperPlayerWrapper extends PaperPlayerWrapper implements Staff
 
   //<editor-fold desc="ActionBar">
   public void addActionBar() {
-    if (!staffMode) return;
+    if (!staffMode.get()) return;
     if (!config.get().staffMode.actionBar()) return;
     if (!hasPermission(Permissions.ACTION_BAR_PERMISSION)) return;
 
     String vanished = isInVanish() ? messages.get().placeholder.placeholderTrue() : messages.get().placeholder.placeholderFalse();
-    String staffChat = staffChatAsDefault ? messages.get().placeholder.placeholderTrue() : messages.get().placeholder.placeholderFalse();
+    String staffChat = staffChatAsDefault.get() ? messages.get().placeholder.placeholderTrue() : messages.get().placeholder.placeholderFalse();
     double tpsCount = Bukkit.getTPS()[0];
     String tps = String.valueOf(tpsCount);
     tps = tps.substring(0, Math.min(tps.length(), 5));
@@ -515,8 +410,7 @@ public class StaffPaperPlayerWrapper extends PaperPlayerWrapper implements Staff
   public void addExtensions() {
     extensionManager.getExtensionsStream().forEach(extension -> {
       try {
-        StaffPlayerExtension instance = extension.extension().getConstructor(StaffPlayerWrapper.class).newInstance(this);
-        injector.injectMembers(instance);
+        StaffPlayerExtension instance = injector.getInstance(extension.extension());
 
         extensionMap.put(extension.extension(), instance);
 
@@ -529,6 +423,12 @@ public class StaffPaperPlayerWrapper extends PaperPlayerWrapper implements Staff
     });
 
     vanishExtension = getExtension(VanishExtension.class).orElse(null);
+    staffModeExtension = getExtension(StaffModeExtension.class).orElse(null);
   }
   //</editor-fold>
+
+  @Override
+  public @NotNull Map<Class<? extends StaffPlayerExtension>, StaffPlayerExtension> getExtensions() {
+    return extensionMap;
+  }
 }

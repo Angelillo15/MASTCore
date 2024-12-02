@@ -1,6 +1,8 @@
 package com.nookure.staff.api.extension;
 
+import com.google.inject.Inject;
 import com.nookure.staff.api.StaffPlayerWrapper;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * This class represents an extension for the vanish feature
@@ -12,7 +14,8 @@ public abstract class VanishExtension extends StaffPlayerExtension {
    *
    * @param player the player
    */
-  public VanishExtension(StaffPlayerWrapper player) {
+  @Inject
+  public VanishExtension(@NotNull final StaffPlayerWrapper player) {
     super(player);
   }
 

@@ -12,23 +12,30 @@ import com.nookure.staff.paper.StaffPaperPlayerWrapper;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.jetbrains.annotations.NotNull;
 
 public class InternalVanishExtension extends VanishExtension {
   private final StaffPaperPlayerWrapper player;
-  @Inject
-  private Logger logger;
-  @Inject
-  private ConfigurationContainer<BukkitMessages> messages;
-  @Inject
-  private PlayerWrapperManager<Player> playerWrapperManager;
-  @Inject
-  private JavaPlugin javaPlugin;
-
+  private final Logger logger;
+  private final ConfigurationContainer<BukkitMessages> messages;
+  private final PlayerWrapperManager<Player> playerWrapperManager;
+  private final JavaPlugin javaPlugin;
   private boolean vanished = false;
 
-  public InternalVanishExtension(StaffPlayerWrapper player) {
+  @Inject
+  public InternalVanishExtension(
+      @NotNull final StaffPlayerWrapper player,
+      @NotNull final Logger logger,
+      @NotNull final ConfigurationContainer<BukkitMessages> messages,
+      @NotNull final PlayerWrapperManager<Player> playerWrapperManager,
+      @NotNull final JavaPlugin javaPlugin
+  ) {
     super(player);
     this.player = (StaffPaperPlayerWrapper) player;
+    this.logger = logger;
+    this.messages = messages;
+    this.playerWrapperManager = playerWrapperManager;
+    this.javaPlugin = javaPlugin;
   }
 
   @Override

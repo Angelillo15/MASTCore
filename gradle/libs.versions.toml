@@ -12,14 +12,13 @@ vault = "1.7.1"
 placeholderApi = "2.11.6"
 bungeecord = "1.21-R0.1-SNAPSHOT"
 jedis = "4.4.0-m2"
-storm = "e1f961b"
 adventure = "4.16.0"
 adventurePlatform = "4.3.0"
 velocity = "3.1.1"
 guice = "7.0.0"
 configurate = "4.2.0-YAML-COMMENTED-SNAPSHOT"
 scoreboard = "2.0.1"
-shadowJar = "8.3.3"
+shadowJar = "8.3.5"
 pluginYml = "0.6.0"
 guava = "33.0.0-jre"
 apacheCommons = "3.14.0"
@@ -31,6 +30,8 @@ inventory = "1.0.0-ee06bf8"
 mock-bukkit = "3.9.0"
 brigadier = "1.0.18"
 commodore = "2.2"
+google-auto-value = "1.11.0"
+google-auto-service = "1.1.1"
 
 [libraries]
 hikariCP = { group = "com.zaxxer", name = "HikariCP", version.ref = "hikariCP" }
@@ -51,7 +52,6 @@ vault = { group = "com.github.MilkBowl", name = "VaultAPI", version.ref = "vault
 placeholderApi = { group = "me.clip", name = "placeholderapi", version.ref = "placeholderApi" }
 bungeecord = { group = "net.md-5", name = "bungeecord-api", version.ref = "bungeecord" }
 jedis = { group = "redis.clients", name = "jedis", version.ref = "jedis" }
-storm = { group = "com.github.Mindgamesnl", name = "storm", version.ref = "storm" }
 miniMessage = { group = "net.kyori", name = "adventure-text-minimessage", version.ref = "adventure" }
 adventureApi = { group = "net.kyori", name = "adventure-api", version.ref = "adventure" }
 adventureBukkit = { group = "net.kyori", name = "adventure-platform-bukkit", version.ref = "adventurePlatform" }
@@ -77,6 +77,8 @@ scoreboard-8 = { group = "com.github.megavexnetwork.scoreboard-library", name = 
 # Auto service
 auto-service = "com.google.auto.service:auto-service:1.0.1"
 auto-service-annotations = "com.google.auto.service:auto-service-annotations:1.0.1"
+google-auto-value-processor = { module = "com.google.auto.value:auto-value", version.ref = "google-auto-value" }
+google-auto-value-annotations = { module = "com.google.auto.value:auto-value-annotations", version.ref = "google-auto-value" }
 ebean = { group = "io.ebean", name = "ebean", version.ref = "ebean" }
 ebean-ddl-generator = { group = "io.ebean", name = "ebean-ddl-generator", version.ref = "ebean" }
 ebean-migration = { group = "io.ebean", name = "ebean-migration", version = "14.0.0" }

@@ -1,9 +1,5 @@
 package com.nookure.staff.database;
 
-import com.craftmend.storm.Storm;
-import com.craftmend.storm.StormOptions;
-import com.craftmend.storm.connection.hikaricp.HikariDriver;
-import com.craftmend.storm.logger.StormLogger;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.nookure.staff.api.Logger;
@@ -11,11 +7,10 @@ import com.nookure.staff.api.NookureStaff;
 import com.nookure.staff.api.config.partials.DatabaseConfig;
 import com.nookure.staff.api.database.AbstractPluginConnection;
 import com.nookure.staff.api.database.DataProvider;
+import com.nookure.staff.api.database.repository.StaffStateRepository;
 import com.nookure.staff.api.model.NoteModel;
 import com.nookure.staff.api.model.PinModel;
 import com.nookure.staff.api.model.PlayerModel;
-import com.nookure.staff.api.model.StaffDataModel;
-import com.nookure.staff.database.driver.SqliteFileDriver;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import io.ebean.Database;
@@ -26,6 +21,7 @@ import io.ebean.platform.mysql.MySqlPlatform;
 import io.ebean.platform.sqlite.SQLitePlatform;
 import org.jetbrains.annotations.NotNull;
 
+import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -42,30 +38,14 @@ public class PluginConnection extends AbstractPluginConnection {
   private NookureStaff plugin;
   @Inject
   private AtomicReference<Database> databaseReference;
-  private Storm storm;
+  @Inject
+  private AtomicReference<DataSource> dataSource;
+  @Inject
+  private StaffStateRepository staffStateRepository;
   private ClassLoader classLoader;
   private Connection connection;
   private HikariDataSource hikariDataSource;
   private Database database;
-
-  @NotNull
-  private static StormOptions getStormOptions(Logger logger) {
-    StormOptions options = new StormOptions();
-
-    options.setLogger(new StormLogger() {
-      @Override
-      public void warning(String s) {
-        logger.warning(s);
-      }
-
-      @Override
-      public void info(String s) {
-        logger.info(s);
-      }
-    });
-
-    return options;
-  }
 
   @Override
   public void connect(@NotNull DatabaseConfig config, ClassLoader classLoader) {
@@ -85,14 +65,9 @@ public class PluginConnection extends AbstractPluginConnection {
     else
       loadSqlite(config);
 
-    try {
-      storm.registerModel(new StaffDataModel());
-      storm.runMigrations();
-    } catch (SQLException e) {
-      throw new RuntimeException(e);
-    }
-
     databaseReference.set(database);
+    dataSource.set(hikariDataSource);
+    staffStateRepository.migrate();
     logger.info("<green>Successfully connected to the database!");
   }
 
@@ -104,8 +79,6 @@ public class PluginConnection extends AbstractPluginConnection {
     try {
       hikariDataSource = new HikariDataSource(hikariConfig);
       connection = hikariDataSource.getConnection();
-      storm = new Storm(getStormOptions(logger), new HikariDriver(hikariDataSource));
-
       loadEbean(config);
     } catch (Exception e) {
       logger.severe("An error occurred while connecting to the database");
@@ -205,9 +178,7 @@ public class PluginConnection extends AbstractPluginConnection {
     try {
       String url = "jdbc:sqlite:" + plugin.getPluginDataFolder() + "/database.db";
       connection = DriverManager.getConnection(url);
-      storm = new Storm(getStormOptions(logger), new SqliteFileDriver(connection));
       hikariDataSource = new HikariDataSource(getHikariConfig(config));
-
       loadEbean(config);
     } catch (SQLException e) {
       throw new RuntimeException(e);
@@ -237,15 +208,6 @@ public class PluginConnection extends AbstractPluginConnection {
     if (database != null) {
       database.shutdown(true, false);
     }
-  }
-
-  @Override
-  public @NotNull Storm getStorm() {
-    if (storm == null) {
-      throw new IllegalStateException("The connection is not established");
-    }
-
-    return storm;
   }
 
   @Override

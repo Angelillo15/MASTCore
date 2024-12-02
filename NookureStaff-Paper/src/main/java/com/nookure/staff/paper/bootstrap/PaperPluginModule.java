@@ -20,6 +20,7 @@ import com.nookure.staff.api.config.common.CommandConfig;
 import com.nookure.staff.api.config.messaging.MessengerConfig;
 import com.nookure.staff.api.config.messaging.RedisPartial;
 import com.nookure.staff.api.database.AbstractPluginConnection;
+import com.nookure.staff.api.database.repository.StaffStateRepository;
 import com.nookure.staff.api.extension.StaffPlayerExtensionManager;
 import com.nookure.staff.api.manager.FreezeManager;
 import com.nookure.staff.api.manager.PlayerWrapperManager;
@@ -33,6 +34,7 @@ import com.nookure.staff.api.util.Scheduler;
 import com.nookure.staff.api.util.ServerUtils;
 import com.nookure.staff.command.sender.ConsoleCommandSender;
 import com.nookure.staff.database.PluginConnection;
+import com.nookure.staff.database.repository.SQLStaffStateRepository;
 import com.nookure.staff.messaging.NoneEventManager;
 import com.nookure.staff.messaging.RedisMessenger;
 import com.nookure.staff.paper.PaperPlayerWrapper;
@@ -55,6 +57,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import redis.clients.jedis.Jedis;
 
+import javax.sql.DataSource;
 import java.io.IOException;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -90,9 +93,22 @@ public class PaperPluginModule extends PluginModule {
     bind(StaffPlayerExtensionManager.class).asEagerSingleton();
     bind(FreezeManager.class).asEagerSingleton();
     bind(PlaceholderManager.class).asEagerSingleton();
-    bind(AddonManager.class).to(ServerAddonManager.class).asEagerSingleton();
-    bind(UserNoteService.class).to(UserNoteServiceImpl.class).asEagerSingleton();
-    bind(PinUserService.class).to(PinUserServiceImpl.class).asEagerSingleton();
+
+    bind(AddonManager.class)
+        .to(ServerAddonManager.class)
+        .asEagerSingleton();
+
+    bind(UserNoteService.class)
+        .to(UserNoteServiceImpl.class)
+        .asEagerSingleton();
+
+    bind(PinUserService.class)
+        .to(PinUserServiceImpl.class)
+        .asEagerSingleton();
+
+    bind(StaffStateRepository.class)
+        .to(SQLStaffStateRepository.class)
+        .asEagerSingleton();
 
     install(new FactoryModuleBuilder()
         .implement(PaperPlayerWrapper.class, PaperPlayerWrapper.class)
@@ -135,6 +151,8 @@ public class PaperPluginModule extends PluginModule {
        * AtomicReference related area
        */
       bind(new TypeLiteral<AtomicReference<Database>>() {
+      }).toInstance(new AtomicReference<>(null));
+      bind(new TypeLiteral<AtomicReference<DataSource>>() {
       }).toInstance(new AtomicReference<>(null));
       bind(new TypeLiteral<AtomicReference<PaperNookureInventoryEngine>>() {
       }).toInstance(new AtomicReference<>(null));
@@ -189,9 +207,12 @@ public class PaperPluginModule extends PluginModule {
 
   private Jedis getJedis() {
     try (Jedis jedis = new Jedis(redisPartial.getAddress(), redisPartial.getPort(), redisPartial.getTimeout(), redisPartial.getPoolSize())) {
-
       if (!redisPartial.getPassword().isEmpty()) {
-        jedis.auth(redisPartial.getPassword());
+        if (redisPartial.getUsername().isEmpty()) {
+          jedis.auth(redisPartial.getPassword());
+        } else {
+          jedis.auth(redisPartial.getUsername(), redisPartial.getPassword());
+        }
       }
 
       jedis.select(redisPartial.getDatabase());

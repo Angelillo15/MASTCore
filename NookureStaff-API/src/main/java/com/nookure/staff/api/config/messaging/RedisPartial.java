@@ -28,6 +28,15 @@ public class RedisPartial {
   @Setting
   @Comment(
       """
+          The username to use when connecting to the Redis server.
+          If the server does not require a username, leave this empty.
+              """
+  )
+  private String username = "";
+
+  @Setting
+  @Comment(
+      """
           The password to use when connecting to the Redis server.
           If the server does not require a password, leave this empty.
               """
@@ -81,5 +90,9 @@ public class RedisPartial {
 
   public int getDatabase() {
     return database;
+  }
+
+  public String getUsername() {
+    return username;
   }
 }

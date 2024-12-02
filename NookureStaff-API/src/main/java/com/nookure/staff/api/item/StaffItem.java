@@ -4,6 +4,7 @@ import com.nookure.staff.api.config.bukkit.partials.ItemPartial;
 import com.nookure.staff.api.util.ServerUtils;
 import com.nookure.staff.api.util.TextUtils;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.TextDecoration;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
@@ -33,7 +34,10 @@ public abstract class StaffItem {
     ItemMeta meta = itemStack.getItemMeta();
 
     if (ServerUtils.isPaper) {
-      meta.displayName(TextUtils.toComponent(itemConfig.getName()));
+      Component displayName = TextUtils.toComponent(itemConfig.getName());
+      displayName = displayName.decoration(TextDecoration.ITALIC, TextDecoration.State.FALSE);
+      meta.displayName(displayName);
+
       meta.lore(itemConfig.lore());
     } else {
       meta.setDisplayName(

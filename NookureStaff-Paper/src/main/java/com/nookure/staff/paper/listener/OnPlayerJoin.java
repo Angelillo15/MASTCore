@@ -3,9 +3,11 @@ package com.nookure.staff.paper.listener;
 import com.google.inject.Inject;
 import com.nookure.staff.api.Logger;
 import com.nookure.staff.api.Permissions;
+import com.nookure.staff.api.config.ConfigurationContainer;
+import com.nookure.staff.api.config.bukkit.BukkitConfig;
 import com.nookure.staff.api.manager.PlayerWrapperManager;
 import com.nookure.staff.api.state.PinState;
-import com.nookure.staff.api.util.Scheduler;
+import com.nookure.staff.api.state.PlayerState;
 import com.nookure.staff.paper.PaperPlayerWrapper;
 import com.nookure.staff.paper.StaffPaperPlayerWrapper;
 import com.nookure.staff.paper.factory.PaperPlayerWrapperFactory;
@@ -17,19 +19,33 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class OnPlayerJoin implements Listener {
+  private final PlayerWrapperManager<Player> playerWrapperManager;
+  private final Logger logger;
+  private final PaperPlayerWrapperFactory playerWrapperFactory;
+  private final StaffPaperPlayerWrapperFactory staffPaperPlayerWrapperFactory;
+  private final List<Class<? extends PlayerState>> states = new ArrayList<>();
+
   @Inject
-  private PlayerWrapperManager<Player> playerWrapperManager;
-  @Inject
-  private Logger logger;
-  @Inject
-  private Scheduler scheduler;
-  @Inject
-  private PaperPlayerWrapperFactory playerWrapperFactory;
-  @Inject
-  private StaffPaperPlayerWrapperFactory staffPaperPlayerWrapperFactory;
+  public OnPlayerJoin(
+      @NotNull final PlayerWrapperManager<Player> playerWrapperManager,
+      @NotNull final Logger logger,
+      @NotNull final PaperPlayerWrapperFactory playerWrapperFactory,
+      @NotNull final StaffPaperPlayerWrapperFactory staffPaperPlayerWrapperFactory,
+      @NotNull final ConfigurationContainer<BukkitConfig> config
+  ) {
+    this.playerWrapperManager = playerWrapperManager;
+    this.logger = logger;
+    this.playerWrapperFactory = playerWrapperFactory;
+    this.staffPaperPlayerWrapperFactory = staffPaperPlayerWrapperFactory;
+
+    if (config.get().modules.isPinCode()) {
+      states.add(PinState.class);
+    }
+  }
 
   @EventHandler(
       priority = EventPriority.LOWEST
@@ -41,7 +57,7 @@ public class OnPlayerJoin implements Listener {
     if (event.getPlayer().hasPermission(Permissions.STAFF_PERMISSION)) {
       StaffPaperPlayerWrapper playerWrapper = staffPaperPlayerWrapperFactory.create(
           event.getPlayer(),
-          List.of(PinState.class)
+          states
       );
 
       playerWrapperManager.addPlayerWrapper(event.getPlayer(), playerWrapper, true);

@@ -117,7 +117,13 @@ public class PaperPlayerWrapper implements PlayerWrapper {
       try {
         playerState = state.getConstructor(PlayerWrapper.class).newInstance(this);
       } catch (Exception e) {
-        throw new IllegalStateException("An error occurred while adding the state");
+        throw new IllegalStateException(String.format("""
+                An error occurred while adding the state
+                Class-name: %s
+                Package: %s
+                Error: %s
+                """,
+            state.getSimpleName(), state.getPackage(), e.getMessage()), e);
       }
 
       this.state.setState(playerState);
