@@ -18,6 +18,7 @@ import com.nookure.staff.api.database.AbstractPluginConnection;
 import com.nookure.staff.api.event.EventManager;
 import com.nookure.staff.api.extension.StaffPlayerExtensionManager;
 import com.nookure.staff.api.extension.VanishExtension;
+import com.nookure.staff.api.extension.staff.StaffModeExtension;
 import com.nookure.staff.api.manager.PlayerWrapperManager;
 import com.nookure.staff.api.messaging.Channels;
 import com.nookure.staff.api.messaging.EventMessenger;
@@ -27,6 +28,7 @@ import com.nookure.staff.paper.command.*;
 import com.nookure.staff.paper.command.main.NookureStaffCommand;
 import com.nookure.staff.paper.command.staff.StaffCommandParent;
 import com.nookure.staff.paper.extension.FreezePlayerExtension;
+import com.nookure.staff.paper.extension.staff.PaperStaffModeExtension;
 import com.nookure.staff.paper.extension.vanish.InternalVanishExtension;
 import com.nookure.staff.paper.extension.vanish.SuperVanishExtension;
 import com.nookure.staff.paper.listener.OnPlayerJoin;
@@ -315,6 +317,10 @@ public class NookureStaff {
       ) {
         extensionManager.registerExtension(SuperVanishExtension.class, VanishExtension.class);
       }
+    }
+
+    if (config.get().modules.isStaffMode()) {
+      extensionManager.registerExtension(PaperStaffModeExtension.class, StaffModeExtension.class);
     }
   }
 
