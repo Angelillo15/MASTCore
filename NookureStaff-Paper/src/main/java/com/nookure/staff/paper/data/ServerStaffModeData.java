@@ -16,7 +16,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 
-public class StaffModeData {
+public class ServerStaffModeData { //TODO: Pending recode
   private final NookureStaff plugin;
   private final StaffModeDataRecord record;
   private final PlayerWrapper player;
@@ -37,7 +37,7 @@ public class StaffModeData {
    * @param record the staff mode user record
    * @param player the player
    */
-  private StaffModeData(NookureStaff plugin, StaffModeDataRecord record, PlayerWrapper player) {
+  private ServerStaffModeData(NookureStaff plugin, StaffModeDataRecord record, PlayerWrapper player) {
     this.plugin = plugin;
     this.logger = plugin.getPLogger();
     this.record = record;
@@ -51,7 +51,7 @@ public class StaffModeData {
    * @param player the player
    * @return the staff mode user data container
    */
-  public static StaffModeData read(NookureStaff plugin, PlayerWrapper player) {
+  public static ServerStaffModeData read(NookureStaff plugin, PlayerWrapper player) {
     Logger logger = plugin.getPLogger();
 
     logger.debug("Reading staff mode user record for player %s from database", player.getName());
@@ -65,7 +65,7 @@ public class StaffModeData {
       if (!(player instanceof PaperPlayerWrapper playerWrapper)) return null;
       Player bukkitPlayer = playerWrapper.getPlayer();
 
-      return new StaffModeData(plugin, new StaffModeDataRecord(
+      return new ServerStaffModeData(plugin, new StaffModeDataRecord(
           bukkitPlayer.getInventory().getContents(),
           bukkitPlayer.getInventory().getArmorContents(),
           new ItemStack[0],
@@ -89,7 +89,7 @@ public class StaffModeData {
 
     logger.debug("Read staff mode user record for player %s from database in %dms", player.getName(), System.currentTimeMillis() - start);
 
-    return new StaffModeData(plugin, record, player);
+    return new ServerStaffModeData(plugin, record, player);
   }
 
   public void write() {
