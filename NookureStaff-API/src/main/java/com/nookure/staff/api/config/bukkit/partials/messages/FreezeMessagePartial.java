@@ -43,7 +43,7 @@ public class FreezeMessagePartial {
       """)
   private String confirmPunishMessage = """
       <gray>The <green>player</green> <red>{player}</red> has left the server while he was freezed
-      Do you want to execute the commands specified when a player leaves ? <hover:show_text:'Forgive the player'><red><click:run_command:'/freeze /remove {player}'>[x]</click></red></hover> <click:run_command:/freeze /exec {player}><green><hover:show_text:'Punish that player'>[✔]</hover></green> </click>
+      Do you want to execute the commands specified when a player leaves ? <hover:show_text:'Forgive the player'><red><click:run_command:'/freeze /remove {uuid}'>[x]</click></red></hover> <click:run_command:/freeze /exec {uuid}><green><hover:show_text:'Punish that player'>[✔]</hover></green> </click>
       """;
 
   @Setting

@@ -1,6 +1,7 @@
 package com.nookure.staff.paper.command;
 
 import com.google.inject.Inject;
+import com.nookure.staff.api.Logger;
 import com.nookure.staff.api.Permissions;
 import com.nookure.staff.api.PlayerWrapper;
 import com.nookure.staff.api.StaffPlayerWrapper;
@@ -21,6 +22,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.UUID;
 
 @CommandData(
     name = "freeze",
@@ -35,6 +37,8 @@ public class FreezeCommand extends StaffCommand {
   private FreezeManager freezeManager;
   @Inject
   private ConfigurationContainer<BukkitConfig> config;
+  @Inject
+  private Logger logger;
 
   @Override
   protected void onStaffCommand(@NotNull StaffPlayerWrapper sender, @NotNull String label, @NotNull List<String> args) {
@@ -52,15 +56,24 @@ public class FreezeCommand extends StaffCommand {
     if (Objects.equals(args.get(0), "/exec") && args.size() > 1) {
       if (!config.get().freeze.askToExecuteCommandOnExit()) return;
 
-      OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(args.get(1));
+      OfflinePlayer offlinePlayer;
+
+      try {
+        UUID uuid = UUID.fromString(args.get(1));
+        offlinePlayer = Bukkit.getOfflinePlayer(uuid);
+      } catch (IllegalArgumentException e) {
+        offlinePlayer = Bukkit.getOfflinePlayer(args.get(1));
+      }
 
       if (!freezeManager.isFrozen(offlinePlayer.getUniqueId())) {
+        logger.debug("Trying to execute commands on exit for a player that is not frozen.");
         return;
       }
 
       Optional<FreezeManager.FreezeContainer> container = freezeManager.getFreezeContainer(offlinePlayer.getUniqueId());
 
       if (container.isEmpty()) {
+        logger.debug("Trying to execute commands on exit for a player that is not frozen.");
         return;
       }
 
@@ -72,12 +85,19 @@ public class FreezeCommand extends StaffCommand {
 
       freezeExtension.executeFreezeCommands(sender, args.get(1));
       freezeManager.removeFreezeContainer(offlinePlayer.getUniqueId());
-      sender.sendMiniMessage(messages.get().freeze.punishMessage(), "player", args.get(1));
+      sender.sendMiniMessage(messages.get().freeze.punishMessage(), "player", offlinePlayer.getName());
       return;
     }
 
     if (Objects.equals(args.get(0), "/remove") && args.size() > 1) {
-      OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(args.get(1));
+      OfflinePlayer offlinePlayer;
+
+      try {
+        UUID uuid = UUID.fromString(args.get(1));
+        offlinePlayer = Bukkit.getOfflinePlayer(uuid);
+      } catch (IllegalArgumentException e) {
+        offlinePlayer = Bukkit.getOfflinePlayer(args.get(1));
+      }
 
       if (!freezeManager.isFrozen(offlinePlayer.getUniqueId())) {
         return;
@@ -86,6 +106,7 @@ public class FreezeCommand extends StaffCommand {
       Optional<FreezeManager.FreezeContainer> container = freezeManager.getFreezeContainer(offlinePlayer.getUniqueId());
 
       if (container.isEmpty()) {
+        logger.debug("Trying to remove a freeze for a player that is not frozen.");
         return;
       }
 
@@ -96,7 +117,7 @@ public class FreezeCommand extends StaffCommand {
       }
 
       freezeManager.removeFreezeContainer(offlinePlayer.getUniqueId());
-      sender.sendMiniMessage(messages.get().freeze.forgiveMessage(), "player", args.get(1));
+      sender.sendMiniMessage(messages.get().freeze.forgiveMessage(), "player", offlinePlayer.getName());
       return;
     }
 

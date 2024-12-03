@@ -60,6 +60,7 @@ public class OnFreezePlayerQuit implements Listener {
 
     staff.sendMiniMessage(messages.get().freeze.confirmPunishMessage()
         .replace("{player}", event.getPlayer().getName())
+        .replace("{uuid}", event.getPlayer().getUniqueId().toString())
     );
   }
 }
