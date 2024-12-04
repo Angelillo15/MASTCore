@@ -142,7 +142,7 @@ public class StaffPaperPlayerWrapper extends PaperPlayerWrapper implements Staff
     logger.debug("StaffDataModel state: %s", staffDataModel);
 
     if (staffDataModel.vanished()) {
-      enableVanish(staffMode.get());
+      enableVanish(true);
     } else {
       disableVanish(true);
     }
