@@ -14,7 +14,7 @@ public class DefaultLibRepo {
     Library hikariCP = Library.builder()
         .groupId("com{}zaxxer")
         .artifactId("HikariCP")
-        .version("4.0.3")
+        .version("6.2.1")
         .relocate("com{}zaxxer", "com{}nookure{}staff{}libs")
         .isolatedLoad(false)
         .build();
@@ -22,7 +22,7 @@ public class DefaultLibRepo {
     Library jedis = Library.builder()
         .groupId("redis{}clients")
         .artifactId("jedis")
-        .version("4.4.0-m2")
+        .version("5.2.0")
         .isolatedLoad(false)
         .build();
 
