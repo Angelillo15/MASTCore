@@ -7,8 +7,6 @@ import com.nookure.staff.api.Logger;
 import com.nookure.staff.api.NookureStaff;
 import com.nookure.staff.api.addons.AddonManager;
 import com.nookure.staff.api.annotation.PluginMessageMessenger;
-import com.nookure.staff.api.annotation.RedisPublish;
-import com.nookure.staff.api.annotation.RedisSubscribe;
 import com.nookure.staff.api.command.CommandManager;
 import com.nookure.staff.api.config.ConfigurationContainer;
 import com.nookure.staff.api.config.bukkit.BukkitConfig;
@@ -50,12 +48,13 @@ import com.nookure.staff.paper.util.PaperServerUtils;
 import com.nookure.staff.service.PinUserServiceImpl;
 import com.nookure.staff.service.UserNoteServiceImpl;
 import io.ebean.Database;
-import io.ebeaninternal.server.persist.dmlbind.FactoryAssocOnes;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandMap;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
-import redis.clients.jedis.Jedis;
+import org.jetbrains.annotations.NotNull;
+import redis.clients.jedis.JedisPool;
+import redis.clients.jedis.JedisPoolConfig;
 
 import javax.sql.DataSource;
 import java.io.IOException;
@@ -164,8 +163,7 @@ public class PaperPluginModule extends PluginModule {
     switch (messengerType) {
       case PM -> bind(EventMessenger.class).to(BackendMessageMessenger.class).asEagerSingleton();
       case REDIS -> {
-        bind(Jedis.class).annotatedWith(RedisPublish.class).toInstance(getJedis());
-        bind(Jedis.class).annotatedWith(RedisSubscribe.class).toInstance(getJedis());
+        bind(JedisPool.class).toInstance(getJedisPool());
         boot.getPLogger().info("<green>Successfully connected to Redis");
         bind(EventMessenger.class).to(RedisMessenger.class).asEagerSingleton();
       }
@@ -205,22 +203,36 @@ public class PaperPluginModule extends PluginModule {
     return ConfigurationContainer.load(boot.getDataFolder().toPath(), CommandConfig.class, "commands.yml");
   }
 
-  private Jedis getJedis() {
-    try (Jedis jedis = new Jedis(redisPartial.getAddress(), redisPartial.getPort(), redisPartial.getTimeout(), redisPartial.getPoolSize())) {
-      if (!redisPartial.getPassword().isEmpty()) {
-        if (redisPartial.getUsername().isEmpty()) {
-          jedis.auth(redisPartial.getPassword());
-        } else {
-          jedis.auth(redisPartial.getUsername(), redisPartial.getPassword());
-        }
-      }
+  private JedisPool getJedisPool() {
+    return getJedisPool(
+        redisPartial.getAddress(),
+        redisPartial.getPort(),
+        redisPartial.getTimeout(),
+        redisPartial.getPoolSize(),
+        redisPartial.getDatabase(),
+        redisPartial.getUsername(),
+        redisPartial.getPassword()
+    );
+  }
 
-      jedis.select(redisPartial.getDatabase());
+  private JedisPool getJedisPool(
+      @NotNull final String address,
+      final int port,
+      final int timeout,
+      final int poolSize,
+      final int database,
+      @NotNull final String username,
+      @NotNull final String password
+  ) {
+    JedisPoolConfig poolConfig = new JedisPoolConfig();
+    poolConfig.setMaxTotal(poolSize);
 
-      return jedis;
-    } catch (Exception e) {
-      boot.getPLogger().severe("Could not connect to Redis");
-      throw new RuntimeException(e);
+    if (username.isEmpty() && password.isEmpty()) {
+      return new JedisPool(poolConfig, address, port, timeout, null, database);
+    } else if (username.isEmpty()) {
+      return new JedisPool(poolConfig, address, port, timeout, password, database);
+    } else {
+      return new JedisPool(poolConfig, address, port, timeout, username, password, database);
     }
   }
 

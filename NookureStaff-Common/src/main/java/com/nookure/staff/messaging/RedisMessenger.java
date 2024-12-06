@@ -5,14 +5,13 @@ import com.google.inject.Injector;
 import com.google.inject.Singleton;
 import com.nookure.staff.api.Logger;
 import com.nookure.staff.api.PlayerWrapper;
-import com.nookure.staff.api.annotation.RedisPublish;
-import com.nookure.staff.api.annotation.RedisSubscribe;
 import com.nookure.staff.api.event.EventManager;
 import com.nookure.staff.api.messaging.EventMessenger;
 import com.nookure.staff.api.util.Scheduler;
 import org.jetbrains.annotations.NotNull;
 import redis.clients.jedis.BinaryJedisPubSub;
 import redis.clients.jedis.Jedis;
+import redis.clients.jedis.JedisPool;
 
 import java.util.Arrays;
 
@@ -20,11 +19,7 @@ import java.util.Arrays;
 public class RedisMessenger extends EventMessenger {
   private static final byte[] CHANNEL = "nkstaff_events".getBytes();
   @Inject
-  @RedisPublish
-  private Jedis jedisPublish;
-  @Inject
-  @RedisSubscribe
-  private Jedis jedisSubscribe;
+  private JedisPool jedisPool;
   @Inject
   private Injector injector;
   @Inject
@@ -36,27 +31,26 @@ public class RedisMessenger extends EventMessenger {
 
   @Override
   public void prepare() {
-    if (!jedisPublish.isConnected()) {
-      logger.debug("Connecting to redis publish...");
-      jedisPublish.connect();
-    }
-
-    if (!jedisSubscribe.isConnected()) {
-      logger.debug("Connecting to redis subscribe...");
-      jedisSubscribe.connect();
-    }
-
     logger.debug("Subscribing to redis channel " + Arrays.toString(CHANNEL));
     messenger = injector.getInstance(RedisEventMessenger.class);
-    subscribeTaskID = scheduler.async(() -> jedisSubscribe.subscribe(messenger, CHANNEL));
+    subscribeTaskID = scheduler.async(() -> {
+      try (Jedis jedis = jedisPool.getResource()) {
+        jedis.subscribe(messenger, CHANNEL);
+      } catch (Exception e) {
+        logger.severe("Failed to subscribe to redis channel " + Arrays.toString(CHANNEL));
+        throw new RuntimeException(e);
+      }
+    });
   }
 
   @Override
-  @SuppressWarnings("SynchronizeOnNonFinalField")
   public void publish(@NotNull PlayerWrapper sender, byte @NotNull [] data) {
-    synchronized (jedisPublish) {
+    try (Jedis jedis = jedisPool.getResource()) {
       logger.debug("Publishing event to redis");
-      jedisPublish.publish(CHANNEL, data);
+      jedis.publish(CHANNEL, data);
+    } catch (Exception e) {
+      logger.severe("Failed to publish event to redis");
+      throw new RuntimeException(e);
     }
   }
 
@@ -64,9 +58,7 @@ public class RedisMessenger extends EventMessenger {
   public void close() throws Exception {
     messenger.unsubscribe();
     scheduler.cancel(subscribeTaskID);
-
-    jedisSubscribe.close();
-    jedisPublish.close();
+    jedisPool.close();
   }
 
   private static class RedisEventMessenger extends BinaryJedisPubSub {
