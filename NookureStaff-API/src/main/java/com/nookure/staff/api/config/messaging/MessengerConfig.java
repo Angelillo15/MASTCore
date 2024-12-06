@@ -12,7 +12,7 @@ public class MessengerConfig {
           The configuration for the Redis messenger.
               """
   )
-  public final RedisPartial redis = new RedisPartial();
+  public RedisPartial redis = new RedisPartial();
   @Setting
   @Comment(
       """
