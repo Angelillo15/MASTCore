@@ -33,7 +33,14 @@ dependencies {
 }
 
 tasks.shadowJar {
-  archiveFileName.set("NookureStaff-${rootProject.version}.jar")
+  val dev = System.getenv("NOOKURE_STAFF_DEV") == "true"
+
+  if (dev) {
+    archiveFileName.set("NookureStaff-dev.jar")
+  } else {
+    archiveFileName.set("NookureStaff-${rootProject.version}.jar")
+  }
+
   dependencies {
     exclude("com/mojang")
   }
@@ -99,6 +106,7 @@ tasks.withType(xyz.jpenilla.runtask.task.AbstractRun::class) {
   }
   jvmArgs("-XX:+AllowEnhancedClassRedefinition", "-XX:+AllowRedefinitionToAddDeleteMethods")
   systemProperties["nkstaff.inventory.replace"] = "true"
+  systemProperties["file.encoding"] = "UTF-8"
 }
 
 tasks {
