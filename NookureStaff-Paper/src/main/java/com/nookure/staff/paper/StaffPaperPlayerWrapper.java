@@ -183,11 +183,11 @@ public class StaffPaperPlayerWrapper extends PaperPlayerWrapper implements Staff
   //</editor-fold>
 
   //<editor-fold desc="StaffMode">
-  private void enableStaffMode(boolean silentJoin) {
+  public void enableStaffMode(boolean silentJoin) {
     if (staffModeExtension != null) staffModeExtension.enableStaffMode(silentJoin);
   }
 
-  private void disableStaffMode() {
+  public void disableStaffMode() {
     if (staffModeExtension != null) staffModeExtension.disableStaffMode();
   }
 
