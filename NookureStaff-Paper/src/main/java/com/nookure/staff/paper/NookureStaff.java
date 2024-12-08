@@ -56,6 +56,7 @@ import com.nookure.staff.paper.loader.PlaceholderApiLoader;
 import com.nookure.staff.paper.messaging.BackendMessageMessenger;
 import com.nookure.staff.paper.note.command.ParentNoteCommand;
 import com.nookure.staff.paper.note.listener.OnPlayerNoteJoin;
+import com.nookure.staff.paper.permission.LuckPermsPermissionInterceptor;
 import com.nookure.staff.paper.pin.command.ChangePin;
 import com.nookure.staff.paper.pin.command.DeletePinCommand;
 import com.nookure.staff.paper.pin.command.SetPinCommand;
@@ -70,6 +71,7 @@ import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.io.Closeable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
@@ -77,6 +79,8 @@ import java.util.stream.Stream;
 @Singleton
 public class NookureStaff {
   private final ArrayList<Listener> listeners = new ArrayList<>();
+  private final ArrayList<Closeable> closeablesListeners = new ArrayList<>();
+
   private final List<Class<? extends AbstractLoader>> loadersClass;
   private final List<AbstractLoader> loaders = new ArrayList<>();
 
@@ -218,6 +222,15 @@ public class NookureStaff {
     if (config.get().modules.isPinCode()) {
       registerListener(OnInventoryClose.class);
     }
+
+    if (config.get().permission.watchLuckPermsPermissions) {
+      try {
+        Class.forName("net.luckperms.api.LuckPerms");
+        closeablesListeners.add(injector.getInstance(LuckPermsPermissionInterceptor.class));
+      } catch (ClassNotFoundException e) {
+        logger.warning("LuckPerms is not installed on the server, disabling LuckPerms permission interceptor");
+      }
+    }
   }
 
   public void registerListener(Class<? extends Listener> listener) {
@@ -229,9 +242,22 @@ public class NookureStaff {
   }
 
   public void unregisterListeners() {
+    logger.debug("Unregistering Bukkit listeners...");
     HandlerList.getHandlerLists().forEach(listener -> listeners.forEach(listener::unregister));
-
     listeners.clear();
+
+    logger.debug("Closing closeables listeners...");
+    closeablesListeners.forEach(closeable -> {
+      try {
+        closeable.close();
+      } catch (Exception e) {
+        logger.severe("An error occurred while closing listener %s, %s", closeable.getClass().getName(), e);
+      }
+    });
+
+    closeablesListeners.clear();
+
+    logger.debug("Listeners unregistered");
   }
 
   private void loadLoaders() {
