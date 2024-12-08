@@ -5,7 +5,10 @@ import com.nookure.core.inv.paper.PaperNookureInventoryEngine;
 import com.nookure.staff.api.StaffPlayerWrapper;
 import com.nookure.staff.api.command.CommandData;
 import com.nookure.staff.api.command.StaffCommand;
+import com.nookure.staff.api.config.ConfigurationContainer;
+import com.nookure.staff.api.config.bukkit.BukkitMessages;
 import com.nookure.staff.api.manager.PlayerWrapperManager;
+import com.nookure.staff.api.util.PlayerTransformer;
 import com.nookure.staff.paper.StaffPaperPlayerWrapper;
 import com.nookure.staff.paper.inventory.InventoryList;
 import org.bukkit.entity.Player;
@@ -20,10 +23,20 @@ import java.util.concurrent.atomic.AtomicReference;
     permission = "nookurestaff.staff.list"
 )
 public class StaffListCommand extends StaffCommand {
+  private final AtomicReference<PaperNookureInventoryEngine> engine;
+  private final PlayerWrapperManager<Player> playerWrapperManager;
+
   @Inject
-  private AtomicReference<PaperNookureInventoryEngine> engine;
-  @Inject
-  private PlayerWrapperManager<Player> playerWrapperManager;
+  public StaffListCommand(
+      @NotNull final PlayerTransformer transformer,
+      @NotNull final ConfigurationContainer<BukkitMessages> messages,
+      @NotNull final AtomicReference<PaperNookureInventoryEngine> engine,
+      @NotNull final PlayerWrapperManager<Player> playerWrapperManager
+  ) {
+    super(transformer, messages);
+    this.engine = engine;
+    this.playerWrapperManager = playerWrapperManager;
+  }
 
   @Override
   protected void onStaffCommand(@NotNull StaffPlayerWrapper sender, @NotNull String label, @NotNull List<String> args) {

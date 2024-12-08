@@ -7,6 +7,7 @@ import com.nookure.staff.api.command.CommandData;
 import com.nookure.staff.api.command.StaffCommand;
 import com.nookure.staff.api.config.ConfigurationContainer;
 import com.nookure.staff.api.config.bukkit.BukkitMessages;
+import com.nookure.staff.api.util.PlayerTransformer;
 import com.nookure.staff.paper.StaffPaperPlayerWrapper;
 import com.nookure.staff.paper.inventory.player.PlayerEnderchestInventory;
 import org.bukkit.Bukkit;
@@ -21,8 +22,16 @@ import java.util.List;
     permission = Permissions.STAFF_ENDERCHEST
 )
 public class StaffEnderchestSee extends StaffCommand {
+  private final ConfigurationContainer<BukkitMessages> messages;
+
   @Inject
-  private ConfigurationContainer<BukkitMessages> messages;
+  public StaffEnderchestSee(
+      @NotNull final PlayerTransformer transformer,
+      @NotNull final ConfigurationContainer<BukkitMessages> messages
+  ) {
+    super(transformer, messages);
+    this.messages = messages;
+  }
 
   @Override
   protected void onStaffCommand(@NotNull StaffPlayerWrapper sender, @NotNull String label, @NotNull List<String> args) {

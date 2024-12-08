@@ -1,6 +1,7 @@
 package com.nookure.staff.paper.listener;
 
 import com.google.inject.Inject;
+import com.google.inject.Singleton;
 import com.nookure.staff.api.Logger;
 import com.nookure.staff.api.Permissions;
 import com.nookure.staff.api.config.ConfigurationContainer;
@@ -19,7 +20,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class OnPlayerJoin implements Listener {
@@ -27,12 +27,13 @@ public class OnPlayerJoin implements Listener {
   private final Logger logger;
   private final PaperPlayerWrapperFactory playerWrapperFactory;
   private final StaffPaperPlayerWrapperFactory staffPaperPlayerWrapperFactory;
-  private final List<Class<? extends PlayerState>> states = new ArrayList<>();
+  private final List<Class<? extends PlayerState>> states;
 
   @Inject
   public OnPlayerJoin(
       @NotNull final PlayerWrapperManager<Player> playerWrapperManager,
       @NotNull final Logger logger,
+      @NotNull final List<Class<? extends PlayerState>> states,
       @NotNull final PaperPlayerWrapperFactory playerWrapperFactory,
       @NotNull final StaffPaperPlayerWrapperFactory staffPaperPlayerWrapperFactory,
       @NotNull final ConfigurationContainer<BukkitConfig> config
@@ -41,6 +42,7 @@ public class OnPlayerJoin implements Listener {
     this.logger = logger;
     this.playerWrapperFactory = playerWrapperFactory;
     this.staffPaperPlayerWrapperFactory = staffPaperPlayerWrapperFactory;
+    this.states = states;
 
     if (config.get().modules.isPinCode()) {
       states.add(PinState.class);

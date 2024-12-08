@@ -31,6 +31,7 @@ brigadier = "1.0.18"
 commodore = "2.2"
 google-auto-value = "1.11.0"
 google-auto-service = "1.1.1"
+luckperms = "5.4"
 
 [libraries]
 hikariCP = { group = "com.zaxxer", name = "HikariCP", version.ref = "hikariCP" }
@@ -87,6 +88,7 @@ nookure-core-inventory = { group = "com.nookure.core", name = "NookCore-Inventor
 mockBukkit = { group = "com.github.seeseemelk", name = "MockBukkit-v1.20", version.ref = "mock-bukkit" }
 mojang-brigadier = { group = "com.mojang", name = "brigadier", version.ref = "brigadier" }
 lucko-commodore = { group = "me.lucko", name = "commodore", version.ref = "commodore" }
+lucko-luckperms = { group = "net.luckperms", name = "api", version.ref = "luckperms" }
 
 [bundles]
 invAPI = ["invCore", "invAdvancedSlots", "invPagination", "configurableGui"]

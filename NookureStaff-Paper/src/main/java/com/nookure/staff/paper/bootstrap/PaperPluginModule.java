@@ -27,6 +27,8 @@ import com.nookure.staff.api.messaging.EventMessenger;
 import com.nookure.staff.api.placeholder.PlaceholderManager;
 import com.nookure.staff.api.service.PinUserService;
 import com.nookure.staff.api.service.UserNoteService;
+import com.nookure.staff.api.state.PlayerState;
+import com.nookure.staff.api.util.PlayerTransformer;
 import com.nookure.staff.api.util.PluginModule;
 import com.nookure.staff.api.util.Scheduler;
 import com.nookure.staff.api.util.ServerUtils;
@@ -43,6 +45,7 @@ import com.nookure.staff.paper.factory.PaperPlayerWrapperFactory;
 import com.nookure.staff.paper.factory.StaffPaperPlayerWrapperFactory;
 import com.nookure.staff.paper.messaging.BackendMessageMessenger;
 import com.nookure.staff.paper.util.MockScheduler;
+import com.nookure.staff.paper.util.PaperPlayerTransformer;
 import com.nookure.staff.paper.util.PaperScheduler;
 import com.nookure.staff.paper.util.PaperServerUtils;
 import com.nookure.staff.service.PinUserServiceImpl;
@@ -58,6 +61,8 @@ import redis.clients.jedis.JedisPoolConfig;
 
 import javax.sql.DataSource;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class PaperPluginModule extends PluginModule {
@@ -92,6 +97,7 @@ public class PaperPluginModule extends PluginModule {
     bind(StaffPlayerExtensionManager.class).asEagerSingleton();
     bind(FreezeManager.class).asEagerSingleton();
     bind(PlaceholderManager.class).asEagerSingleton();
+    bind(PlayerTransformer.class).to(PaperPlayerTransformer.class).asEagerSingleton();
 
     bind(AddonManager.class)
         .to(ServerAddonManager.class)
@@ -145,6 +151,8 @@ public class PaperPluginModule extends PluginModule {
       }).toInstance(playerWrapperManager);
       bind(new TypeLiteral<PlayerWrapperManager<?>>() {
       }).toInstance(playerWrapperManager);
+      bind(new TypeLiteral<List<Class<? extends PlayerState>>>() {
+      }).toInstance(new ArrayList<>());
 
       /*
        * AtomicReference related area

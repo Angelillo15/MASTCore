@@ -1,5 +1,6 @@
 package com.nookure.staff.api.config.bukkit;
 
+import com.nookure.staff.api.config.bukkit.partials.PermissionConfigPartial;
 import com.nookure.staff.api.config.bukkit.partials.config.*;
 import com.nookure.staff.api.config.partials.DatabaseConfig;
 import org.spongepowered.configurate.objectmapping.ConfigSerializable;
@@ -24,6 +25,9 @@ public class BukkitConfig {
       Here you can configure some settings for the staffmode
       """)
   public StaffModePartial staffMode = new StaffModePartial();
+
+  @Setting
+  public PermissionConfigPartial permission = new PermissionConfigPartial();
 
   @Setting
   @Comment("""
