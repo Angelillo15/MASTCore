@@ -13,6 +13,7 @@ import com.nookure.staff.api.config.bukkit.BukkitConfig;
 import com.nookure.staff.api.config.bukkit.BukkitMessages;
 import com.nookure.staff.api.manager.FreezeManager;
 import com.nookure.staff.api.manager.PlayerWrapperManager;
+import com.nookure.staff.api.util.PlayerTransformer;
 import com.nookure.staff.paper.extension.FreezePlayerExtension;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
@@ -29,16 +30,28 @@ import java.util.UUID;
     permission = Permissions.STAFF_FREEZE
 )
 public class FreezeCommand extends StaffCommand {
+  private final PlayerWrapperManager<Player> playerWrapperManager;
+  private final ConfigurationContainer<BukkitMessages> messages;
+  private final FreezeManager freezeManager;
+  private final ConfigurationContainer<BukkitConfig> config;
+  private final Logger logger;
+
   @Inject
-  private PlayerWrapperManager<Player> playerWrapperManager;
-  @Inject
-  private ConfigurationContainer<BukkitMessages> messages;
-  @Inject
-  private FreezeManager freezeManager;
-  @Inject
-  private ConfigurationContainer<BukkitConfig> config;
-  @Inject
-  private Logger logger;
+  public FreezeCommand(
+      @NotNull final PlayerTransformer transformer,
+      @NotNull final ConfigurationContainer<BukkitMessages> messages,
+      @NotNull final PlayerWrapperManager<Player> playerWrapperManager,
+      @NotNull final FreezeManager freezeManager,
+      @NotNull final ConfigurationContainer<BukkitConfig> config,
+      @NotNull final Logger logger
+  ) {
+    super(transformer, messages);
+    this.playerWrapperManager = playerWrapperManager;
+    this.messages = messages;
+    this.freezeManager = freezeManager;
+    this.config = config;
+    this.logger = logger;
+  }
 
   @Override
   protected void onStaffCommand(@NotNull StaffPlayerWrapper sender, @NotNull String label, @NotNull List<String> args) {
