@@ -8,6 +8,7 @@ import com.nookure.staff.api.Logger;
 import com.nookure.staff.api.PlayerWrapper;
 import com.nookure.staff.api.StaffPlayerWrapper;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 import java.util.stream.Stream;
@@ -58,6 +59,18 @@ public final class PlayerWrapperManager<T> {
   public Optional<PlayerWrapper> getPlayerWrapper(@NotNull UUID uuid) {
     Objects.requireNonNull(uuid, "UUID cannot be null");
     return Optional.ofNullable(playerWrappersByUUID.get(uuid));
+  }
+
+  /**
+   * Gets a player wrapper by its unique id.
+   *
+   * @param uuid the unique id of the player wrapper
+   * @return the player wrapper if it exists, otherwise null
+   */
+  @Nullable
+  public PlayerWrapper getPlayerWrapperOrNull(@NotNull UUID uuid) {
+    Objects.requireNonNull(uuid, "UUID cannot be null");
+    return playerWrappersByUUID.get(uuid);
   }
 
   /**

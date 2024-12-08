@@ -19,7 +19,7 @@ public class BukkitMessages {
       """
           The prefix for all staff messages.
           If you want to use the prefix in a message, use {prefix}.
-              """
+          """
   )
   private String prefix = "<b><red>Staff</red> <gray>»</gray></b>";
   @Setting
@@ -43,6 +43,18 @@ public class BukkitMessages {
       """)
   private String noPermission = "{prefix} <red>You don't have permission to do that.";
 
+  @Setting
+  @Comment("The message when a player has been registered as a staff member during the command execution.")
+  private String youAreNowAnStaffDuringCommandExecution = "{prefix} <green>You have been just registered as a staff member, please redo the command in order to use it.";
+
+  @Setting
+  @Comment("The message when a player has been registered as a staff member during the permission interceptor.")
+  private String youAreNowAnStaffDuringPermissionInterceptor = "{prefix} <green>Congratulations!, welcome to the Staff members.";
+
+  @Setting
+  @Comment("The message when only staff members can execute a command.")
+  private String onlyStaffMembersCanExecuteThisCommand = "{prefix} <red>Only staff members can execute this command.";
+
   public String prefix() {
     return prefix;
   }
@@ -57,5 +69,17 @@ public class BukkitMessages {
 
   public String noPermission() {
     return noPermission;
+  }
+
+  public String youAreNowAnStaff() {
+    return youAreNowAnStaffDuringCommandExecution;
+  }
+
+  public String youAreNowAnStaffDuringPermissionInterceptor() {
+    return youAreNowAnStaffDuringPermissionInterceptor;
+  }
+
+  public String onlyStaffMembersCanExecuteThisCommand() {
+    return onlyStaffMembersCanExecuteThisCommand;
   }
 }
