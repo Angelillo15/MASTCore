@@ -13,7 +13,7 @@ import com.nookure.staff.api.config.bukkit.BukkitConfig;
 import com.nookure.staff.api.config.bukkit.BukkitMessages;
 import com.nookure.staff.api.manager.FreezeManager;
 import com.nookure.staff.api.manager.PlayerWrapperManager;
-import com.nookure.staff.api.util.PlayerTransformer;
+import com.nookure.staff.api.util.transformer.PlayerTransformer;
 import com.nookure.staff.paper.extension.FreezePlayerExtension;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;

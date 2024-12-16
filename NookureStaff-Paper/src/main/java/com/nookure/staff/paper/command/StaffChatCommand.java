@@ -8,7 +8,7 @@ import com.nookure.staff.api.command.StaffCommand;
 import com.nookure.staff.api.config.ConfigurationContainer;
 import com.nookure.staff.api.config.bukkit.BukkitConfig;
 import com.nookure.staff.api.config.bukkit.BukkitMessages;
-import com.nookure.staff.api.util.PlayerTransformer;
+import com.nookure.staff.api.util.transformer.PlayerTransformer;
 import com.nookure.staff.api.util.ServerUtils;
 import org.jetbrains.annotations.NotNull;
 

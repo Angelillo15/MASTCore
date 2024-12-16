@@ -7,7 +7,7 @@ import com.nookure.staff.api.command.CommandData;
 import com.nookure.staff.api.command.StaffCommand;
 import com.nookure.staff.api.config.ConfigurationContainer;
 import com.nookure.staff.api.config.bukkit.BukkitMessages;
-import com.nookure.staff.api.util.PlayerTransformer;
+import com.nookure.staff.api.util.transformer.PlayerTransformer;
 import com.nookure.staff.paper.StaffPaperPlayerWrapper;
 import com.nookure.staff.paper.inventory.player.PlayerInventory;
 import org.bukkit.Bukkit;

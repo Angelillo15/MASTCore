@@ -10,7 +10,7 @@ import com.nookure.staff.api.command.CommandParent;
 import com.nookure.staff.api.command.CommandSender;
 import com.nookure.staff.api.config.ConfigurationContainer;
 import com.nookure.staff.api.config.bukkit.BukkitMessages;
-import com.nookure.staff.api.util.PlayerTransformer;
+import com.nookure.staff.api.util.transformer.PlayerTransformer;
 import org.jetbrains.annotations.NotNull;
 
 import java.lang.annotation.Annotation;

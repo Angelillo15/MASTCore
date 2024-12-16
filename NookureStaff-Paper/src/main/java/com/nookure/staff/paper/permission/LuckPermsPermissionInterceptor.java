@@ -2,7 +2,7 @@ package com.nookure.staff.paper.permission;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
-import com.nookure.staff.api.util.PlayerTransformer;
+import com.nookure.staff.api.util.transformer.PlayerTransformer;
 import com.nookure.staff.paper.bootstrap.StaffBootstrapper;
 import net.luckperms.api.LuckPerms;
 import net.luckperms.api.event.EventSubscription;

@@ -1,4 +1,4 @@
-package com.nookure.staff.paper.util;
+package com.nookure.staff.paper.util.transoformer;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
@@ -10,7 +10,7 @@ import com.nookure.staff.api.config.bukkit.BukkitMessages;
 import com.nookure.staff.api.manager.FreezeManager;
 import com.nookure.staff.api.manager.PlayerWrapperManager;
 import com.nookure.staff.api.state.PlayerState;
-import com.nookure.staff.api.util.PlayerTransformer;
+import com.nookure.staff.api.util.transformer.PlayerTransformer;
 import com.nookure.staff.paper.PaperPlayerWrapper;
 import com.nookure.staff.paper.StaffPaperPlayerWrapper;
 import com.nookure.staff.paper.extension.FreezePlayerExtension;

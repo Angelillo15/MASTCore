@@ -6,7 +6,7 @@ import com.nookure.staff.api.PlayerWrapper;
 import com.nookure.staff.api.StaffPlayerWrapper;
 import com.nookure.staff.api.config.ConfigurationContainer;
 import com.nookure.staff.api.config.bukkit.BukkitMessages;
-import com.nookure.staff.api.util.PlayerTransformer;
+import com.nookure.staff.api.util.transformer.PlayerTransformer;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;

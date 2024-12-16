@@ -9,7 +9,7 @@ import com.nookure.staff.api.config.ConfigurationContainer;
 import com.nookure.staff.api.config.bukkit.BukkitMessages;
 import com.nookure.staff.api.model.PinModel;
 import com.nookure.staff.api.model.PlayerModel;
-import com.nookure.staff.api.util.PlayerTransformer;
+import com.nookure.staff.api.util.transformer.PlayerTransformer;
 import io.ebean.Database;
 import org.jetbrains.annotations.NotNull;
 

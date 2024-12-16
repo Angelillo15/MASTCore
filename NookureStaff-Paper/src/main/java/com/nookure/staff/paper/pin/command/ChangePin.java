@@ -10,7 +10,7 @@ import com.nookure.staff.api.config.ConfigurationContainer;
 import com.nookure.staff.api.config.bukkit.BukkitMessages;
 import com.nookure.staff.api.service.PinUserService;
 import com.nookure.staff.api.state.PinState;
-import com.nookure.staff.api.util.PlayerTransformer;
+import com.nookure.staff.api.util.transformer.PlayerTransformer;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;

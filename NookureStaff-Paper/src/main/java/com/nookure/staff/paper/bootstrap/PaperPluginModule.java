@@ -28,7 +28,8 @@ import com.nookure.staff.api.placeholder.PlaceholderManager;
 import com.nookure.staff.api.service.PinUserService;
 import com.nookure.staff.api.service.UserNoteService;
 import com.nookure.staff.api.state.PlayerState;
-import com.nookure.staff.api.util.PlayerTransformer;
+import com.nookure.staff.api.util.transformer.NameTagTransformer;
+import com.nookure.staff.api.util.transformer.PlayerTransformer;
 import com.nookure.staff.api.util.PluginModule;
 import com.nookure.staff.api.util.Scheduler;
 import com.nookure.staff.api.util.ServerUtils;
@@ -45,9 +46,11 @@ import com.nookure.staff.paper.factory.PaperPlayerWrapperFactory;
 import com.nookure.staff.paper.factory.StaffPaperPlayerWrapperFactory;
 import com.nookure.staff.paper.messaging.BackendMessageMessenger;
 import com.nookure.staff.paper.util.MockScheduler;
-import com.nookure.staff.paper.util.PaperPlayerTransformer;
+import com.nookure.staff.paper.util.transoformer.PaperPlayerTransformer;
 import com.nookure.staff.paper.util.PaperScheduler;
 import com.nookure.staff.paper.util.PaperServerUtils;
+import com.nookure.staff.paper.util.transoformer.nametag.DummyNameTagTransformer;
+import com.nookure.staff.paper.util.transoformer.nametag.TabNameTagTransformer;
 import com.nookure.staff.service.PinUserServiceImpl;
 import com.nookure.staff.service.UserNoteServiceImpl;
 import io.ebean.Database;
@@ -69,6 +72,7 @@ public class PaperPluginModule extends PluginModule {
   private final StaffBootstrapper boot;
   private MessengerConfig.MessengerType messengerType;
   private RedisPartial redisPartial;
+  private ConfigurationContainer<BukkitConfig> config;
 
   public PaperPluginModule(StaffBootstrapper boot) {
     this.boot = boot;
@@ -183,6 +187,8 @@ public class PaperPluginModule extends PluginModule {
       bind(EventMessenger.class).annotatedWith(PluginMessageMessenger.class).to(BackendMessageMessenger.class).asEagerSingleton();
     else
       bind(EventMessenger.class).annotatedWith(PluginMessageMessenger.class).to(NoneEventManager.class).asEagerSingleton();
+
+    loadNameTagTransformer();
   }
 
   private CommandMap getCommandMap() {
@@ -196,6 +202,7 @@ public class PaperPluginModule extends PluginModule {
   private ConfigurationContainer<BukkitConfig> loadBukkitConfig() throws IOException {
     ConfigurationContainer<BukkitConfig> config = ConfigurationContainer.load(boot.getDataFolder().toPath(), BukkitConfig.class);
     boot.setDebug(config.get().isDebug());
+    this.config = config;
     return config;
   }
 
@@ -241,6 +248,20 @@ public class PaperPluginModule extends PluginModule {
       return new JedisPool(poolConfig, address, port, timeout, password, database);
     } else {
       return new JedisPool(poolConfig, address, port, timeout, username, password, database);
+    }
+  }
+
+  private void loadNameTagTransformer() {
+    if (!config.get().glow.tabIntegration) {
+      bind(NameTagTransformer.class).to(DummyNameTagTransformer.class).asEagerSingleton();
+      return;
+    }
+
+    try {
+      Class.forName("me.neznamy.tab.api.TabAPI");
+      bind(NameTagTransformer.class).to(TabNameTagTransformer.class).asEagerSingleton();
+    } catch (ClassNotFoundException e) {
+      bind(NameTagTransformer.class).to(DummyNameTagTransformer.class).asEagerSingleton();
     }
   }
 
