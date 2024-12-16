@@ -32,6 +32,7 @@ commodore = "2.2"
 google-auto-value = "1.11.0"
 google-auto-service = "1.1.1"
 luckperms = "5.4"
+neznamy-tab-api = "5.0.3"
 
 [libraries]
 hikariCP = { group = "com.zaxxer", name = "HikariCP", version.ref = "hikariCP" }
@@ -89,6 +90,7 @@ mockBukkit = { group = "com.github.seeseemelk", name = "MockBukkit-v1.20", versi
 mojang-brigadier = { group = "com.mojang", name = "brigadier", version.ref = "brigadier" }
 lucko-commodore = { group = "me.lucko", name = "commodore", version.ref = "commodore" }
 lucko-luckperms = { group = "net.luckperms", name = "api", version.ref = "luckperms" }
+neznamy-tab-api = { group = "com.github.NEZNAMY", name = "TAB-API", version.ref = "neznamy-tab-api" }
 
 [bundles]
 invAPI = ["invCore", "invAdvancedSlots", "invPagination", "configurableGui"]
