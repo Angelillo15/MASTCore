@@ -9,10 +9,7 @@ import com.nookure.staff.api.addons.AddonManager;
 import com.nookure.staff.api.annotation.PluginMessageMessenger;
 import com.nookure.staff.api.command.CommandManager;
 import com.nookure.staff.api.config.ConfigurationContainer;
-import com.nookure.staff.api.config.bukkit.BukkitConfig;
-import com.nookure.staff.api.config.bukkit.BukkitMessages;
-import com.nookure.staff.api.config.bukkit.ItemsConfig;
-import com.nookure.staff.api.config.bukkit.StaffModeBlockedCommands;
+import com.nookure.staff.api.config.bukkit.*;
 import com.nookure.staff.api.config.bukkit.partials.messages.note.NoteMessages;
 import com.nookure.staff.api.config.common.CommandConfig;
 import com.nookure.staff.api.config.messaging.MessengerConfig;
@@ -20,6 +17,7 @@ import com.nookure.staff.api.config.messaging.RedisPartial;
 import com.nookure.staff.api.database.AbstractPluginConnection;
 import com.nookure.staff.api.database.repository.StaffStateRepository;
 import com.nookure.staff.api.extension.StaffPlayerExtensionManager;
+import com.nookure.staff.api.hook.PermissionHook;
 import com.nookure.staff.api.manager.FreezeManager;
 import com.nookure.staff.api.manager.PlayerWrapperManager;
 import com.nookure.staff.api.manager.StaffItemsManager;
@@ -44,6 +42,8 @@ import com.nookure.staff.paper.addon.ServerAddonManager;
 import com.nookure.staff.paper.command.PaperCommandManager;
 import com.nookure.staff.paper.factory.PaperPlayerWrapperFactory;
 import com.nookure.staff.paper.factory.StaffPaperPlayerWrapperFactory;
+import com.nookure.staff.paper.hook.permission.DummyPermissionHook;
+import com.nookure.staff.paper.hook.permission.LuckPermsPermissionHook;
 import com.nookure.staff.paper.messaging.BackendMessageMessenger;
 import com.nookure.staff.paper.util.MockScheduler;
 import com.nookure.staff.paper.util.transoformer.PaperPlayerTransformer;
@@ -72,7 +72,7 @@ public class PaperPluginModule extends PluginModule {
   private final StaffBootstrapper boot;
   private MessengerConfig.MessengerType messengerType;
   private RedisPartial redisPartial;
-  private ConfigurationContainer<BukkitConfig> config;
+  private ConfigurationContainer<GlowConfig> glowConfig;
 
   public PaperPluginModule(StaffBootstrapper boot) {
     this.boot = boot;
@@ -147,6 +147,8 @@ public class PaperPluginModule extends PluginModule {
       }).toInstance(loadNoteMessages());
       bind(new TypeLiteral<ConfigurationContainer<StaffModeBlockedCommands>>() {
       }).toInstance(loadStaffModeBlockedCommands());
+      bind(new TypeLiteral<ConfigurationContainer<GlowConfig>>() {
+      }).toInstance(loadGlowConfig());
 
       /*
        * PlayerWrapperManager related area
@@ -189,6 +191,13 @@ public class PaperPluginModule extends PluginModule {
       bind(EventMessenger.class).annotatedWith(PluginMessageMessenger.class).to(NoneEventManager.class).asEagerSingleton();
 
     loadNameTagTransformer();
+
+    try {
+      Class.forName("net.luckperms.api.LuckPerms");
+      bind(PermissionHook.class).to(LuckPermsPermissionHook.class).asEagerSingleton();
+    } catch (ClassNotFoundException e) {
+      bind(PermissionHook.class).to(DummyPermissionHook.class).asEagerSingleton();
+    }
   }
 
   private CommandMap getCommandMap() {
@@ -202,7 +211,6 @@ public class PaperPluginModule extends PluginModule {
   private ConfigurationContainer<BukkitConfig> loadBukkitConfig() throws IOException {
     ConfigurationContainer<BukkitConfig> config = ConfigurationContainer.load(boot.getDataFolder().toPath(), BukkitConfig.class);
     boot.setDebug(config.get().isDebug());
-    this.config = config;
     return config;
   }
 
@@ -216,6 +224,12 @@ public class PaperPluginModule extends PluginModule {
 
   private ConfigurationContainer<CommandConfig> loadCommands() throws IOException {
     return ConfigurationContainer.load(boot.getDataFolder().toPath(), CommandConfig.class, "commands.yml");
+  }
+
+  private ConfigurationContainer<GlowConfig> loadGlowConfig() throws IOException {
+    final var config = ConfigurationContainer.load(boot.getDataFolder().toPath(), GlowConfig.class, "glow.yml");
+    this.glowConfig = config;
+    return config;
   }
 
   private JedisPool getJedisPool() {
@@ -252,7 +266,7 @@ public class PaperPluginModule extends PluginModule {
   }
 
   private void loadNameTagTransformer() {
-    if (!config.get().glow.tabIntegration) {
+    if (!glowConfig.get().tabIntegration) {
       bind(NameTagTransformer.class).to(DummyNameTagTransformer.class).asEagerSingleton();
       return;
     }
