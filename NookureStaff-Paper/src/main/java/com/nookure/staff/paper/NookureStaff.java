@@ -7,10 +7,7 @@ import com.nookure.staff.api.Logger;
 import com.nookure.staff.api.addons.AddonManager;
 import com.nookure.staff.api.command.Command;
 import com.nookure.staff.api.config.ConfigurationContainer;
-import com.nookure.staff.api.config.bukkit.BukkitConfig;
-import com.nookure.staff.api.config.bukkit.BukkitMessages;
-import com.nookure.staff.api.config.bukkit.ItemsConfig;
-import com.nookure.staff.api.config.bukkit.StaffModeBlockedCommands;
+import com.nookure.staff.api.config.bukkit.*;
 import com.nookure.staff.api.config.bukkit.partials.VanishType;
 import com.nookure.staff.api.config.bukkit.partials.messages.note.NoteMessages;
 import com.nookure.staff.api.config.messaging.MessengerConfig;
@@ -18,6 +15,7 @@ import com.nookure.staff.api.database.AbstractPluginConnection;
 import com.nookure.staff.api.event.EventManager;
 import com.nookure.staff.api.extension.StaffPlayerExtensionManager;
 import com.nookure.staff.api.extension.VanishExtension;
+import com.nookure.staff.api.extension.staff.GlowPlayerExtension;
 import com.nookure.staff.api.extension.staff.StaffModeExtension;
 import com.nookure.staff.api.manager.PlayerWrapperManager;
 import com.nookure.staff.api.messaging.Channels;
@@ -28,6 +26,7 @@ import com.nookure.staff.paper.command.*;
 import com.nookure.staff.paper.command.main.NookureStaffCommand;
 import com.nookure.staff.paper.command.staff.StaffCommandParent;
 import com.nookure.staff.paper.extension.FreezePlayerExtension;
+import com.nookure.staff.paper.extension.staff.PaperGlowPlayerExtension;
 import com.nookure.staff.paper.extension.staff.PaperStaffModeExtension;
 import com.nookure.staff.paper.extension.vanish.InternalVanishExtension;
 import com.nookure.staff.paper.extension.vanish.SuperVanishExtension;
@@ -107,6 +106,8 @@ public class NookureStaff {
   private ConfigurationContainer<StaffModeBlockedCommands> staffModeBlockedCommands;
   @Inject
   private ConfigurationContainer<NoteMessages> noteMessages;
+  @Inject
+  private ConfigurationContainer<GlowConfig> glowConfig;
   @Inject
   private JavaPlugin plugin;
   @Inject
@@ -348,6 +349,10 @@ public class NookureStaff {
     if (config.get().modules.isStaffMode()) {
       extensionManager.registerExtension(PaperStaffModeExtension.class, StaffModeExtension.class);
     }
+
+    if (glowConfig.get().enabled) {
+      extensionManager.registerExtension(PaperGlowPlayerExtension.class, GlowPlayerExtension.class);
+    }
   }
 
   public void onDisable() {
@@ -369,7 +374,8 @@ public class NookureStaff {
         messagesConfig,
         itemsConfig,
         staffModeBlockedCommands,
-        noteMessages
+        noteMessages,
+        glowConfig
     ).forEach(c -> c.reload().join());
 
     unregisterListeners();
