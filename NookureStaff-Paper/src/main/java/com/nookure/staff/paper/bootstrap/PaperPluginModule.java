@@ -36,6 +36,7 @@ import com.nookure.staff.database.PluginConnection;
 import com.nookure.staff.database.repository.SQLStaffStateRepository;
 import com.nookure.staff.messaging.NoneEventManager;
 import com.nookure.staff.messaging.RedisMessenger;
+import com.nookure.staff.messaging.sql.SQLMessenger;
 import com.nookure.staff.paper.PaperPlayerWrapper;
 import com.nookure.staff.paper.StaffPaperPlayerWrapper;
 import com.nookure.staff.paper.addon.ServerAddonManager;
@@ -181,6 +182,7 @@ public class PaperPluginModule extends PluginModule {
         boot.getPLogger().info("<green>Successfully connected to Redis");
         bind(EventMessenger.class).to(RedisMessenger.class).asEagerSingleton();
       }
+      case MYSQL -> bind(EventMessenger.class).to(SQLMessenger.class).asEagerSingleton();
       case NONE -> bind(EventMessenger.class).to(NoneEventManager.class).asEagerSingleton();
       default -> throw new RuntimeException("Unknown messenger type");
     }

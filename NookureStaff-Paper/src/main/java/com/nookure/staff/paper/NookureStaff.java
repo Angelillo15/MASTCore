@@ -12,6 +12,7 @@ import com.nookure.staff.api.config.bukkit.partials.VanishType;
 import com.nookure.staff.api.config.bukkit.partials.messages.note.NoteMessages;
 import com.nookure.staff.api.config.messaging.MessengerConfig;
 import com.nookure.staff.api.database.AbstractPluginConnection;
+import com.nookure.staff.api.database.DataProvider;
 import com.nookure.staff.api.event.EventManager;
 import com.nookure.staff.api.extension.StaffPlayerExtensionManager;
 import com.nookure.staff.api.extension.VanishExtension;
@@ -48,10 +49,7 @@ import com.nookure.staff.paper.listener.staff.items.OnPlayerInventoryClick;
 import com.nookure.staff.paper.listener.staff.state.*;
 import com.nookure.staff.paper.listener.staff.vanish.PlayerVanishListener;
 import com.nookure.staff.paper.listener.staff.vanish.StaffVanishListener;
-import com.nookure.staff.paper.loader.AddonsLoader;
-import com.nookure.staff.paper.loader.InventoryLoader;
-import com.nookure.staff.paper.loader.ItemsLoader;
-import com.nookure.staff.paper.loader.PlaceholderApiLoader;
+import com.nookure.staff.paper.loader.*;
 import com.nookure.staff.paper.messaging.BackendMessageMessenger;
 import com.nookure.staff.paper.note.command.ParentNoteCommand;
 import com.nookure.staff.paper.note.listener.OnPlayerNoteJoin;
@@ -78,7 +76,7 @@ import java.util.stream.Stream;
 @Singleton
 public class NookureStaff {
   private final ArrayList<Listener> listeners = new ArrayList<>();
-  private final ArrayList<Closeable> closeablesListeners = new ArrayList<>();
+  private final ArrayList<Closeable> closeableListeners = new ArrayList<>();
 
   private final List<Class<? extends AbstractLoader>> loadersClass;
   private final List<AbstractLoader> loaders = new ArrayList<>();
@@ -145,6 +143,11 @@ public class NookureStaff {
         logger.debug("Registering Redis messenger...");
         injector.getInstance(EventMessenger.class).prepare();
         logger.debug("Redis messenger registered");
+      }
+      case MYSQL -> {
+        logger.debug("Registering MySQL messenger...");
+        injector.getInstance(EventMessenger.class).prepare();
+        logger.debug("MySQL messenger registered");
       }
       case NONE -> logger.debug("No messenger type was found, events will not be sent");
     }
@@ -227,10 +230,19 @@ public class NookureStaff {
     if (config.get().permission.watchLuckPermsPermissions) {
       try {
         Class.forName("net.luckperms.api.LuckPerms");
-        closeablesListeners.add(injector.getInstance(LuckPermsPermissionInterceptor.class));
+        closeableListeners.add(injector.getInstance(LuckPermsPermissionInterceptor.class));
       } catch (ClassNotFoundException e) {
         logger.warning("LuckPerms is not installed on the server, disabling LuckPerms permission interceptor");
       }
+    }
+
+    if (messengerConfig.get().getType() == MessengerConfig.MessengerType.MYSQL) {
+      if (config.get().database.getType() != DataProvider.MYSQL) {
+        logger.severe("MySQL messenger requires MySQL database, disabling plugin");
+        Bukkit.getPluginManager().disablePlugin(plugin);
+      }
+
+      closeableListeners.add(injector.getInstance(SQLPollTaskLoader.class));
     }
   }
 
@@ -248,7 +260,7 @@ public class NookureStaff {
     listeners.clear();
 
     logger.debug("Closing closeables listeners...");
-    closeablesListeners.forEach(closeable -> {
+    closeableListeners.forEach(closeable -> {
       try {
         closeable.close();
       } catch (Exception e) {
@@ -256,7 +268,7 @@ public class NookureStaff {
       }
     });
 
-    closeablesListeners.clear();
+    closeableListeners.clear();
 
     logger.debug("Listeners unregistered");
   }
