@@ -132,8 +132,9 @@ modrinth {
   } else {
     System.getenv("MODRINTH_VERSION_TYPE") ?: "release"
   }
-
-  changelog.set(getChangeLog())
+  val changeLog = getChangeLog();
+  System.out.println(changeLog)
+  changelog.set(changeLog)
   uploadFile.set(tasks.shadowJar.get().archiveFile)
   gameVersions.addAll("1.19.4", "1.20.6", "1.21", "1.21.1", "1.21.2", "1.21.3", "1.21.4")
   loaders.addAll("paper", "purpur", "velocity")
