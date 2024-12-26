@@ -18,15 +18,24 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - name: Checkout main branch from GitHub
         uses: actions/checkout@v4
+
+      # Setup Docker, necessary for TestContainers
+      - name: Setup Docker
+        uses: docker-practice/actions-setup-docker@master
+        timeout-minutes: 12
+
       # Runs a single command using the runners shell
       - name: Setting up JDK 21
         uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
           java-version: 21
+
+      # Setup Gradle
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v4
 
+      # Run Gradle test
       - name: Execute Gradle test
         run: |
           chmod +x gradlew
