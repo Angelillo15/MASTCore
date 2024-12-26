@@ -143,7 +143,7 @@ modrinth {
 }
 
 fun getChangeLog(): String {
-  return "${grgit.commit().shortMessage} - ${grgit.commit().author.name} (${grgit.commit().abbreviatedId})"
+  return "${grgit.head().shortMessage} - ${grgit.head().author.name} (${grgit.head().abbreviatedId})"
 }
 
 tasks.modrinth {
