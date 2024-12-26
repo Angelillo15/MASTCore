@@ -33,6 +33,7 @@ google-auto-value = "1.11.0"
 google-auto-service = "1.1.1"
 luckperms = "5.4"
 neznamy-tab-api = "5.0.3"
+test-containers = "1.20.4"
 
 [libraries]
 hikariCP = { group = "com.zaxxer", name = "HikariCP", version.ref = "hikariCP" }
@@ -91,7 +92,8 @@ mojang-brigadier = { group = "com.mojang", name = "brigadier", version.ref = "br
 lucko-commodore = { group = "me.lucko", name = "commodore", version.ref = "commodore" }
 lucko-luckperms = { group = "net.luckperms", name = "api", version.ref = "luckperms" }
 neznamy-tab-api = { group = "com.github.NEZNAMY", name = "TAB-API", version.ref = "neznamy-tab-api" }
-
+test-containers = { group = "org.testcontainers", name = "testcontainers", version.ref = "test-containers" }
+test-containers-junit-jupiter = { group = "org.testcontainers", name = "junit-jupiter", version.ref = "test-containers" }
 [bundles]
 invAPI = ["invCore", "invAdvancedSlots", "invPagination", "configurableGui"]
 scoreboard = ["scoreboard", "scoreboard-implementation", "scoreboard-modern", "scoreboard-packetevents", "scoreboard-8"]
