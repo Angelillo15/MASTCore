@@ -6,6 +6,7 @@ import com.nookure.staff.api.NookureStaff;
 import com.nookure.staff.api.PlayerWrapper;
 import com.nookure.staff.api.event.Event;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.io.*;
 import java.util.Objects;
@@ -28,10 +29,9 @@ public abstract class EventMessenger implements AutoCloseable {
    * @param sender The sender of the event
    * @param data   The event data
    */
-  public abstract void publish(@NotNull PlayerWrapper sender, byte @NotNull [] data);
+  public abstract void publish(@Nullable PlayerWrapper sender, byte @NotNull [] data);
 
-  public void publish(@NotNull PlayerWrapper sender, @NotNull Event event) {
-    Objects.requireNonNull(sender);
+  public void publish(@Nullable PlayerWrapper sender, @NotNull Event event) {
     Objects.requireNonNull(event);
 
     try {

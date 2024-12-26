@@ -9,6 +9,7 @@ import com.nookure.staff.api.messaging.EventMessenger;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.messaging.PluginMessageListener;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public class BackendMessageMessenger extends EventMessenger implements PluginMessageListener {
   @Inject
@@ -22,7 +23,12 @@ public class BackendMessageMessenger extends EventMessenger implements PluginMes
   }
 
   @Override
-  public void publish(@NotNull PlayerWrapper sender, byte @NotNull [] data) {
+  public void publish(@Nullable PlayerWrapper sender, byte @NotNull [] data) {
+    if (sender == null) {
+      logger.warning("Attempted to use a null sender to send an event on PluginMessage messenger");
+      return;
+    }
+
     sender.sendPluginMessage(Channels.EVENTS, data);
   }
 
