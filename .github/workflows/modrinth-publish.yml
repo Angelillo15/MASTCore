@@ -16,52 +16,6 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - name: Checkout main branch from GitHub
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - name: Restore last workflow commit from cache
-        id: cache-last-commit
-        uses: actions/cache@v4
-        with:
-          path: .last_workflow_commit
-          key: last-workflow-commit
-
-      - name: Get last workflow run commit
-        id: last_run
-        run: |
-          if [ -f .last_workflow_commit ]; then
-            LAST_COMMIT=$(cat .last_workflow_commit)
-          else
-            LAST_COMMIT=$(git rev-list --max-parents=0 HEAD)
-          fi
-          echo "LAST_COMMIT=$LAST_COMMIT" >> $GITHUB_ENV
-
-      - name: Count commits since last run
-        id: count_commits
-        run: |
-          COMMITS=$(git rev-list $LAST_COMMIT..HEAD --count)
-          echo "commits_count=$COMMITS" >> $GITHUB_ENV
-          echo "Number of commits since last run: $COMMITS"
-
-      - name: Use environment variables
-        run: |
-          echo "Last commit: $LAST_COMMIT"
-          echo "Number of commits: $commits_count"
-
-      - name: Store current commit for next run
-        run: |
-          git rev-parse HEAD > .last_workflow_commit
-          echo "Storing current commit: $(cat .last_workflow_commit)"
-
-      # Runs a single command using the runners shell
-      - name: Setting up JDK 21
-        uses: actions/setup-java@v4
-        with:
-          distribution: 'temurin'
-          java-version: 21
-
-      - name: Setup Gradle
-        uses: gradle/actions/setup-gradle@v4
 
       - name: Execute Gradle build & publish
         env:
@@ -69,9 +23,3 @@ jobs:
         run: |
           chmod +x gradlew
           ./gradlew :modrinth
-
-      - name: Store current commit for next run
-        uses: actions/cache@v4
-        with:
-          path: .last_workflow_commit
-          key: last-workflow-commit
