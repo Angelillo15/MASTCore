@@ -6,6 +6,7 @@ import com.nookure.staff.api.event.Event;
 import com.nookure.staff.api.event.EventManager;
 import com.nookure.staff.api.messaging.EventMessenger;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public class NoneEventManager extends EventMessenger {
   @Inject
@@ -17,12 +18,12 @@ public class NoneEventManager extends EventMessenger {
   }
 
   @Override
-  public void publish(@NotNull PlayerWrapper sender, @NotNull Event event) {
+  public void publish(@Nullable PlayerWrapper sender, @NotNull Event event) {
     eventManager.fireEvent(event);
   }
 
   @Override
-  public void publish(@NotNull PlayerWrapper sender, byte @NotNull [] data) {
+  public void publish(@Nullable PlayerWrapper sender, byte @NotNull [] data) {
 
   }
 }
