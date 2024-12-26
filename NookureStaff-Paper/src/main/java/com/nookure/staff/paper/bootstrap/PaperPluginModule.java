@@ -10,6 +10,7 @@ import com.nookure.staff.api.annotation.PluginMessageMessenger;
 import com.nookure.staff.api.command.CommandManager;
 import com.nookure.staff.api.config.ConfigurationContainer;
 import com.nookure.staff.api.config.bukkit.*;
+import com.nookure.staff.api.config.bukkit.partials.CustomItemPartial;
 import com.nookure.staff.api.config.bukkit.partials.messages.note.NoteMessages;
 import com.nookure.staff.api.config.common.CommandConfig;
 import com.nookure.staff.api.config.messaging.MessengerConfig;
@@ -41,10 +42,12 @@ import com.nookure.staff.paper.PaperPlayerWrapper;
 import com.nookure.staff.paper.StaffPaperPlayerWrapper;
 import com.nookure.staff.paper.addon.ServerAddonManager;
 import com.nookure.staff.paper.command.PaperCommandManager;
+import com.nookure.staff.paper.factory.CustomCommandItemFactory;
 import com.nookure.staff.paper.factory.PaperPlayerWrapperFactory;
 import com.nookure.staff.paper.factory.StaffPaperPlayerWrapperFactory;
 import com.nookure.staff.paper.hook.permission.DummyPermissionHook;
 import com.nookure.staff.paper.hook.permission.LuckPermsPermissionHook;
+import com.nookure.staff.paper.item.CustomCommandItem;
 import com.nookure.staff.paper.messaging.BackendMessageMessenger;
 import com.nookure.staff.paper.util.MockScheduler;
 import com.nookure.staff.paper.util.transoformer.PaperPlayerTransformer;
@@ -128,6 +131,11 @@ public class PaperPluginModule extends PluginModule {
     install(new FactoryModuleBuilder()
         .implement(StaffPaperPlayerWrapper.class, StaffPaperPlayerWrapper.class)
         .build(StaffPaperPlayerWrapperFactory.class)
+    );
+
+    install(new FactoryModuleBuilder()
+        .implement(CustomCommandItem.class, CustomCommandItem.class)
+        .build(CustomCommandItemFactory.class)
     );
 
     try {
