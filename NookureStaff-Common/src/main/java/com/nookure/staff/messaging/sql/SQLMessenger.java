@@ -9,6 +9,7 @@ import com.nookure.staff.api.database.util.MigrationUtil;
 import com.nookure.staff.api.event.EventManager;
 import com.nookure.staff.api.messaging.EventMessenger;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import javax.sql.DataSource;
 import java.util.concurrent.CompletableFuture;
@@ -50,7 +51,7 @@ public final class SQLMessenger extends EventMessenger {
   }
 
   @Override
-  public void publish(@NotNull PlayerWrapper sender, byte @NotNull [] data) {
+  public void publish(@Nullable PlayerWrapper sender, byte @NotNull [] data) {
     CompletableFuture.runAsync(() -> this.insert(data))
         .thenRun(() -> logger.debug("Published event to SQLMessenger"));
 
