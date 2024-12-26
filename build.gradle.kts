@@ -133,6 +133,7 @@ modrinth {
     System.getenv("MODRINTH_VERSION_TYPE") ?: "release"
   }
 
+  changelog.set(getChangeLog())
   uploadFile.set(tasks.shadowJar.get().archiveFile)
   gameVersions.addAll("1.19.4", "1.20.6", "1.21", "1.21.1", "1.21.2", "1.21.3", "1.21.4")
   loaders.addAll("paper", "purpur", "velocity")
@@ -140,6 +141,26 @@ modrinth {
   syncBodyFrom = rootProject.file("README.md").readText()
 }
 
+fun getChangeLog(): String {
+  val currentBranch = grgit.branch.current().name
+  val remoteBranch = "origin/$currentBranch"
+
+  val lastRemoteCommit = grgit.log {
+    range(remoteBranch, currentBranch)
+  }.lastOrNull()?.id ?: return "No se encontraron cambios desde el remoto."
+
+  val changeLog = grgit.log {
+    range(lastRemoteCommit, currentBranch)
+  }
+
+  return if (changeLog.isNotEmpty()) {
+    changeLog.joinToString("\n") { commit ->
+      "- ${commit.shortMessage} (${commit.id})"
+    }
+  } else {
+    "No changes found."
+  }
+}
 tasks.modrinth {
   dependsOn(tasks.shadowJar)
   dependsOn(tasks.modrinthSyncBody)
