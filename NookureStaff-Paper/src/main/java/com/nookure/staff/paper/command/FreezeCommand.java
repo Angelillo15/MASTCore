@@ -113,6 +113,7 @@ public class FreezeCommand extends StaffCommand {
       }
 
       if (!freezeManager.isFrozen(offlinePlayer.getUniqueId())) {
+        sender.sendMiniMessage(messages.get().freeze.playerNotFrozen());
         return;
       }
 
