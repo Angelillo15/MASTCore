@@ -1,0 +1,25 @@
+# This workflow will build a Java project with Maven
+# For more information see: https://help.github.com/actions/language-and-framework-guides/building-and-testing-java-with-maven
+
+name: NookureStaff Modrinth Publish
+
+on:
+  push:
+    branches: [ release/*, dev, feature/*, fix/* ]
+jobs:
+  build-on-ubuntu:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - name: Checkout main branch from GitHub
+        uses: actions/checkout@v4
+
+      - name: Execute Gradle build & publish
+        env:
+          MODRINTH_TOKEN: ${{ secrets.MODRINTH_TOKEN }}
+        run: |
+          chmod +x gradlew
+          ./gradlew :modrinth

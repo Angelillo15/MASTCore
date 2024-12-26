@@ -9,6 +9,7 @@ import com.nookure.staff.api.config.ConfigurationContainer;
 import com.nookure.staff.api.config.bukkit.BukkitMessages;
 import com.nookure.staff.api.model.PinModel;
 import com.nookure.staff.api.model.PlayerModel;
+import com.nookure.staff.api.util.transformer.PlayerTransformer;
 import io.ebean.Database;
 import org.jetbrains.annotations.NotNull;
 
@@ -21,10 +22,19 @@ import java.util.concurrent.atomic.AtomicReference;
     description = "Delete your pin"
 )
 public class DeletePinCommand extends StaffCommand {
+  private final AtomicReference<Database> database;
+  private final ConfigurationContainer<BukkitMessages> messages;
+
   @Inject
-  private AtomicReference<Database> database;
-  @Inject
-  private ConfigurationContainer<BukkitMessages> messages;
+  public DeletePinCommand(
+      @NotNull final PlayerTransformer transformer,
+      @NotNull final ConfigurationContainer<BukkitMessages> messages,
+      @NotNull final AtomicReference<Database> database
+  ) {
+    super(transformer, messages);
+    this.database = database;
+    this.messages = messages;
+  }
 
   @Override
   protected void onStaffCommand(@NotNull StaffPlayerWrapper sender, @NotNull String label, @NotNull List<String> args) {

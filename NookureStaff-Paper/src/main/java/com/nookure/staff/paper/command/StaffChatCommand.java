@@ -8,6 +8,7 @@ import com.nookure.staff.api.command.StaffCommand;
 import com.nookure.staff.api.config.ConfigurationContainer;
 import com.nookure.staff.api.config.bukkit.BukkitConfig;
 import com.nookure.staff.api.config.bukkit.BukkitMessages;
+import com.nookure.staff.api.util.transformer.PlayerTransformer;
 import com.nookure.staff.api.util.ServerUtils;
 import org.jetbrains.annotations.NotNull;
 
@@ -21,12 +22,22 @@ import java.util.List;
     description = "Send a message to all staff members"
 )
 public class StaffChatCommand extends StaffCommand {
+  private final ServerUtils serverUtils;
+  private final ConfigurationContainer<BukkitMessages> messages;
+  private final ConfigurationContainer<BukkitConfig> config;
+
   @Inject
-  private ServerUtils serverUtils;
-  @Inject
-  private ConfigurationContainer<BukkitMessages> messages;
-  @Inject
-  private ConfigurationContainer<BukkitConfig> config;
+  public StaffChatCommand(
+      @NotNull final PlayerTransformer transformer,
+      @NotNull final ConfigurationContainer<BukkitMessages> messages,
+      @NotNull final ServerUtils serverUtils,
+      @NotNull final ConfigurationContainer<BukkitConfig> config
+  ) {
+    super(transformer, messages);
+    this.serverUtils = serverUtils;
+    this.messages = messages;
+    this.config = config;
+  }
 
   @Override
   protected void onStaffCommand(@NotNull StaffPlayerWrapper sender, @NotNull String label, @NotNull List<String> args) {

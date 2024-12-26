@@ -1,5 +1,7 @@
 package com.nookure.staff.api.config.bukkit;
 
+import com.nookure.staff.api.config.bukkit.partials.CustomItemPartial;
+import com.nookure.staff.api.config.bukkit.partials.CustomItemType;
 import com.nookure.staff.api.config.bukkit.partials.ItemPartial;
 import com.nookure.staff.api.item.Items;
 import org.bukkit.Material;
@@ -18,6 +20,9 @@ public class ItemsConfig {
   public static class StaffItems {
     @Setting
     private Map<String, ItemPartial> items = new HashMap<>();
+
+    @Setting
+    private Map<String, CustomItemPartial> customItems = new HashMap<>();
 
     public StaffItems() {
       items.put(Items.RANDOM_PLAYER_TELEPORT.toString(), new ItemPartial(
@@ -82,10 +87,36 @@ public class ItemsConfig {
           List.of("<gray>Click to teleport through", "<gray>The block you are looking at"),
           "nookurestaff.item.thru"
       ));
+
+      customItems.put("custom_item", new CustomItemPartial(
+          false,
+          "<blue>Custom Item",
+          Material.DIAMOND,
+          2,
+          List.of("<gray>Click to send hello world to the player that you are looking at"),
+          "nookurestaff.item.custom",
+          CustomItemType.COMMAND_TARGET_AS_PLAYER,
+          "msg {target} Hello, world!"
+      ));
+
+      customItems.put("custom_item_2", new CustomItemPartial(
+          false,
+          "<blue>Custom Item 2",
+          Material.REDSTONE_BLOCK,
+          6,
+          List.of("<gray>Click to kick the player that you are looking at"),
+          "nookurestaff.item.custom2",
+          CustomItemType.COMMAND_TARGET_AS_CONSOLE,
+          "kick {target} Hello, world!"
+      ));
     }
 
     public Map<String, ItemPartial> getItems() {
       return items;
+    }
+
+    public Map<String, CustomItemPartial> getCustomItems() {
+      return customItems;
     }
   }
 }

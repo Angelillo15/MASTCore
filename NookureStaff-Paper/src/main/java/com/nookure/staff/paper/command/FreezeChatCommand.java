@@ -10,6 +10,7 @@ import com.nookure.staff.api.config.ConfigurationContainer;
 import com.nookure.staff.api.config.bukkit.BukkitMessages;
 import com.nookure.staff.api.manager.FreezeManager;
 import com.nookure.staff.api.manager.PlayerWrapperManager;
+import com.nookure.staff.api.util.transformer.PlayerTransformer;
 import com.nookure.staff.api.util.ServerUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -24,14 +25,25 @@ import java.util.Optional;
     usage = "/freezechat <player>"
 )
 public class FreezeChatCommand extends StaffCommand {
+  private final ConfigurationContainer<BukkitMessages> messages;
+  private final PlayerWrapperManager<Player> playerWrapperManager;
+  private final FreezeManager freezeManager;
+  private final ServerUtils serverUtils;
+
   @Inject
-  private ConfigurationContainer<BukkitMessages> messages;
-  @Inject
-  private PlayerWrapperManager<Player> playerWrapperManager;
-  @Inject
-  private FreezeManager freezeManager;
-  @Inject
-  private ServerUtils serverUtils;
+  public FreezeChatCommand(
+      @NotNull final PlayerTransformer transformer,
+      @NotNull final ConfigurationContainer<BukkitMessages> messages,
+      @NotNull final PlayerWrapperManager<Player> playerWrapperManager,
+      @NotNull final FreezeManager freezeManager,
+      @NotNull final ServerUtils serverUtils
+  ) {
+    super(transformer, messages);
+    this.playerWrapperManager = playerWrapperManager;
+    this.freezeManager = freezeManager;
+    this.serverUtils = serverUtils;
+    this.messages = messages;
+  }
 
   @Override
   protected void onStaffCommand(@NotNull StaffPlayerWrapper sender, @NotNull String label, @NotNull List<String> args) {

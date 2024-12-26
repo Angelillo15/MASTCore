@@ -7,14 +7,10 @@ import com.nookure.staff.api.Logger;
 import com.nookure.staff.api.NookureStaff;
 import com.nookure.staff.api.addons.AddonManager;
 import com.nookure.staff.api.annotation.PluginMessageMessenger;
-import com.nookure.staff.api.annotation.RedisPublish;
-import com.nookure.staff.api.annotation.RedisSubscribe;
 import com.nookure.staff.api.command.CommandManager;
 import com.nookure.staff.api.config.ConfigurationContainer;
-import com.nookure.staff.api.config.bukkit.BukkitConfig;
-import com.nookure.staff.api.config.bukkit.BukkitMessages;
-import com.nookure.staff.api.config.bukkit.ItemsConfig;
-import com.nookure.staff.api.config.bukkit.StaffModeBlockedCommands;
+import com.nookure.staff.api.config.bukkit.*;
+import com.nookure.staff.api.config.bukkit.partials.CustomItemPartial;
 import com.nookure.staff.api.config.bukkit.partials.messages.note.NoteMessages;
 import com.nookure.staff.api.config.common.CommandConfig;
 import com.nookure.staff.api.config.messaging.MessengerConfig;
@@ -22,6 +18,7 @@ import com.nookure.staff.api.config.messaging.RedisPartial;
 import com.nookure.staff.api.database.AbstractPluginConnection;
 import com.nookure.staff.api.database.repository.StaffStateRepository;
 import com.nookure.staff.api.extension.StaffPlayerExtensionManager;
+import com.nookure.staff.api.hook.PermissionHook;
 import com.nookure.staff.api.manager.FreezeManager;
 import com.nookure.staff.api.manager.PlayerWrapperManager;
 import com.nookure.staff.api.manager.StaffItemsManager;
@@ -29,6 +26,9 @@ import com.nookure.staff.api.messaging.EventMessenger;
 import com.nookure.staff.api.placeholder.PlaceholderManager;
 import com.nookure.staff.api.service.PinUserService;
 import com.nookure.staff.api.service.UserNoteService;
+import com.nookure.staff.api.state.PlayerState;
+import com.nookure.staff.api.util.transformer.NameTagTransformer;
+import com.nookure.staff.api.util.transformer.PlayerTransformer;
 import com.nookure.staff.api.util.PluginModule;
 import com.nookure.staff.api.util.Scheduler;
 import com.nookure.staff.api.util.ServerUtils;
@@ -37,34 +37,46 @@ import com.nookure.staff.database.PluginConnection;
 import com.nookure.staff.database.repository.SQLStaffStateRepository;
 import com.nookure.staff.messaging.NoneEventManager;
 import com.nookure.staff.messaging.RedisMessenger;
+import com.nookure.staff.messaging.sql.SQLMessenger;
 import com.nookure.staff.paper.PaperPlayerWrapper;
 import com.nookure.staff.paper.StaffPaperPlayerWrapper;
 import com.nookure.staff.paper.addon.ServerAddonManager;
 import com.nookure.staff.paper.command.PaperCommandManager;
+import com.nookure.staff.paper.factory.CustomCommandItemFactory;
 import com.nookure.staff.paper.factory.PaperPlayerWrapperFactory;
 import com.nookure.staff.paper.factory.StaffPaperPlayerWrapperFactory;
+import com.nookure.staff.paper.hook.permission.DummyPermissionHook;
+import com.nookure.staff.paper.hook.permission.LuckPermsPermissionHook;
+import com.nookure.staff.paper.item.CustomCommandItem;
 import com.nookure.staff.paper.messaging.BackendMessageMessenger;
 import com.nookure.staff.paper.util.MockScheduler;
+import com.nookure.staff.paper.util.transoformer.PaperPlayerTransformer;
 import com.nookure.staff.paper.util.PaperScheduler;
 import com.nookure.staff.paper.util.PaperServerUtils;
+import com.nookure.staff.paper.util.transoformer.nametag.DummyNameTagTransformer;
+import com.nookure.staff.paper.util.transoformer.nametag.TabNameTagTransformer;
 import com.nookure.staff.service.PinUserServiceImpl;
 import com.nookure.staff.service.UserNoteServiceImpl;
 import io.ebean.Database;
-import io.ebeaninternal.server.persist.dmlbind.FactoryAssocOnes;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandMap;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
-import redis.clients.jedis.Jedis;
+import org.jetbrains.annotations.NotNull;
+import redis.clients.jedis.JedisPool;
+import redis.clients.jedis.JedisPoolConfig;
 
 import javax.sql.DataSource;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class PaperPluginModule extends PluginModule {
   private final StaffBootstrapper boot;
   private MessengerConfig.MessengerType messengerType;
   private RedisPartial redisPartial;
+  private ConfigurationContainer<GlowConfig> glowConfig;
 
   public PaperPluginModule(StaffBootstrapper boot) {
     this.boot = boot;
@@ -93,6 +105,7 @@ public class PaperPluginModule extends PluginModule {
     bind(StaffPlayerExtensionManager.class).asEagerSingleton();
     bind(FreezeManager.class).asEagerSingleton();
     bind(PlaceholderManager.class).asEagerSingleton();
+    bind(PlayerTransformer.class).to(PaperPlayerTransformer.class).asEagerSingleton();
 
     bind(AddonManager.class)
         .to(ServerAddonManager.class)
@@ -120,6 +133,11 @@ public class PaperPluginModule extends PluginModule {
         .build(StaffPaperPlayerWrapperFactory.class)
     );
 
+    install(new FactoryModuleBuilder()
+        .implement(CustomCommandItem.class, CustomCommandItem.class)
+        .build(CustomCommandItemFactory.class)
+    );
+
     try {
       /*
        * Configuration related area
@@ -138,6 +156,8 @@ public class PaperPluginModule extends PluginModule {
       }).toInstance(loadNoteMessages());
       bind(new TypeLiteral<ConfigurationContainer<StaffModeBlockedCommands>>() {
       }).toInstance(loadStaffModeBlockedCommands());
+      bind(new TypeLiteral<ConfigurationContainer<GlowConfig>>() {
+      }).toInstance(loadGlowConfig());
 
       /*
        * PlayerWrapperManager related area
@@ -146,6 +166,8 @@ public class PaperPluginModule extends PluginModule {
       }).toInstance(playerWrapperManager);
       bind(new TypeLiteral<PlayerWrapperManager<?>>() {
       }).toInstance(playerWrapperManager);
+      bind(new TypeLiteral<List<Class<? extends PlayerState>>>() {
+      }).toInstance(new ArrayList<>());
 
       /*
        * AtomicReference related area
@@ -164,11 +186,11 @@ public class PaperPluginModule extends PluginModule {
     switch (messengerType) {
       case PM -> bind(EventMessenger.class).to(BackendMessageMessenger.class).asEagerSingleton();
       case REDIS -> {
-        bind(Jedis.class).annotatedWith(RedisPublish.class).toInstance(getJedis());
-        bind(Jedis.class).annotatedWith(RedisSubscribe.class).toInstance(getJedis());
+        bind(JedisPool.class).toInstance(getJedisPool());
         boot.getPLogger().info("<green>Successfully connected to Redis");
         bind(EventMessenger.class).to(RedisMessenger.class).asEagerSingleton();
       }
+      case MYSQL -> bind(EventMessenger.class).to(SQLMessenger.class).asEagerSingleton();
       case NONE -> bind(EventMessenger.class).to(NoneEventManager.class).asEagerSingleton();
       default -> throw new RuntimeException("Unknown messenger type");
     }
@@ -177,6 +199,15 @@ public class PaperPluginModule extends PluginModule {
       bind(EventMessenger.class).annotatedWith(PluginMessageMessenger.class).to(BackendMessageMessenger.class).asEagerSingleton();
     else
       bind(EventMessenger.class).annotatedWith(PluginMessageMessenger.class).to(NoneEventManager.class).asEagerSingleton();
+
+    loadNameTagTransformer();
+
+    try {
+      Class.forName("net.luckperms.api.LuckPerms");
+      bind(PermissionHook.class).to(LuckPermsPermissionHook.class).asEagerSingleton();
+    } catch (ClassNotFoundException e) {
+      bind(PermissionHook.class).to(DummyPermissionHook.class).asEagerSingleton();
+    }
   }
 
   private CommandMap getCommandMap() {
@@ -205,22 +236,56 @@ public class PaperPluginModule extends PluginModule {
     return ConfigurationContainer.load(boot.getDataFolder().toPath(), CommandConfig.class, "commands.yml");
   }
 
-  private Jedis getJedis() {
-    try (Jedis jedis = new Jedis(redisPartial.getAddress(), redisPartial.getPort(), redisPartial.getTimeout(), redisPartial.getPoolSize())) {
-      if (!redisPartial.getPassword().isEmpty()) {
-        if (redisPartial.getUsername().isEmpty()) {
-          jedis.auth(redisPartial.getPassword());
-        } else {
-          jedis.auth(redisPartial.getUsername(), redisPartial.getPassword());
-        }
-      }
+  private ConfigurationContainer<GlowConfig> loadGlowConfig() throws IOException {
+    final var config = ConfigurationContainer.load(boot.getDataFolder().toPath(), GlowConfig.class, "glow.yml");
+    this.glowConfig = config;
+    return config;
+  }
 
-      jedis.select(redisPartial.getDatabase());
+  private JedisPool getJedisPool() {
+    return getJedisPool(
+        redisPartial.getAddress(),
+        redisPartial.getPort(),
+        redisPartial.getTimeout(),
+        redisPartial.getPoolSize(),
+        redisPartial.getDatabase(),
+        redisPartial.getUsername(),
+        redisPartial.getPassword()
+    );
+  }
 
-      return jedis;
-    } catch (Exception e) {
-      boot.getPLogger().severe("Could not connect to Redis");
-      throw new RuntimeException(e);
+  private JedisPool getJedisPool(
+      @NotNull final String address,
+      final int port,
+      final int timeout,
+      final int poolSize,
+      final int database,
+      @NotNull final String username,
+      @NotNull final String password
+  ) {
+    JedisPoolConfig poolConfig = new JedisPoolConfig();
+    poolConfig.setMaxTotal(poolSize);
+
+    if (username.isEmpty() && password.isEmpty()) {
+      return new JedisPool(poolConfig, address, port, timeout, null, database);
+    } else if (username.isEmpty()) {
+      return new JedisPool(poolConfig, address, port, timeout, password, database);
+    } else {
+      return new JedisPool(poolConfig, address, port, timeout, username, password, database);
+    }
+  }
+
+  private void loadNameTagTransformer() {
+    if (!glowConfig.get().tabIntegration) {
+      bind(NameTagTransformer.class).to(DummyNameTagTransformer.class).asEagerSingleton();
+      return;
+    }
+
+    try {
+      Class.forName("me.neznamy.tab.api.TabAPI");
+      bind(NameTagTransformer.class).to(TabNameTagTransformer.class).asEagerSingleton();
+    } catch (ClassNotFoundException e) {
+      bind(NameTagTransformer.class).to(DummyNameTagTransformer.class).asEagerSingleton();
     }
   }
 

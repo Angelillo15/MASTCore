@@ -10,6 +10,7 @@ import com.nookure.staff.api.config.ConfigurationContainer;
 import com.nookure.staff.api.config.bukkit.BukkitMessages;
 import com.nookure.staff.api.service.PinUserService;
 import com.nookure.staff.api.state.PinState;
+import com.nookure.staff.api.util.transformer.PlayerTransformer;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
@@ -20,10 +21,19 @@ import java.util.List;
     description = "Change your pin"
 )
 public class ChangePin extends StaffCommand {
+  private final ConfigurationContainer<BukkitMessages> messages;
+  private final PinUserService service;
+
   @Inject
-  private ConfigurationContainer<BukkitMessages> messages;
-  @Inject
-  private PinUserService service;
+  public ChangePin(
+      @NotNull final PlayerTransformer transformer,
+      @NotNull final ConfigurationContainer<BukkitMessages> messages,
+      @NotNull final PinUserService service
+  ) {
+    super(transformer, messages);
+    this.messages = messages;
+    this.service = service;
+  }
 
   @Override
   protected void onStaffCommand(@NotNull StaffPlayerWrapper sender, @NotNull String label, @NotNull List<String> args) {

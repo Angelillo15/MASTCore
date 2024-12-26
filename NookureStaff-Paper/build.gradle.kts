@@ -18,6 +18,8 @@ dependencies {
   compileOnly(libs.placeholderApi)
   compileOnly(libs.lucko.commodore)
   compileOnly(libs.nookure.core.inventory)
+  compileOnly(libs.lucko.luckperms)
+  compileOnly(libs.neznamy.tab.api)
   bukkitLibrary(libs.guice)
   bukkitLibrary(libs.google.guice.assistedinject)
   paperLibrary(libs.guice)
@@ -52,7 +54,7 @@ bukkit {
   website = "https://angelillo15.es/"
   authors = listOf("Angelillo15")
   main = "com.nookure.staff.paper.bootstrap.StaffBootstrapper"
-  softDepend = listOf("PlaceholderAPI")
+  softDepend = listOf("PlaceholderAPI", "LuckPerms", "SuperVanish", "PremiumVanish", "TAB")
 }
 
 paper {
@@ -68,14 +70,27 @@ paper {
     register("PlaceholderAPI") {
       required = false
       load = PaperPluginDescription.RelativeLoadOrder.BEFORE
+      joinClasspath = true
     }
     register("SuperVanish") {
       required = false
       load = PaperPluginDescription.RelativeLoadOrder.BEFORE
+      joinClasspath = true
     }
     register("PremiumVanish") {
       required = false
       load = PaperPluginDescription.RelativeLoadOrder.BEFORE
+      joinClasspath = true
+    }
+    register("LuckPerms") {
+      required = false
+      load = PaperPluginDescription.RelativeLoadOrder.BEFORE
+      joinClasspath = true
+    }
+    register("TAB") {
+      required = false
+      load = PaperPluginDescription.RelativeLoadOrder.BEFORE
+      joinClasspath = true
     }
   }
 }

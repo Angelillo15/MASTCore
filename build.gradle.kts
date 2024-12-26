@@ -6,6 +6,7 @@ plugins {
   alias(libs.plugins.grgit)
   alias(libs.plugins.runPaper)
   alias(libs.plugins.testLogger)
+  alias(libs.plugins.minotaur)
 }
 
 val major: String by project
@@ -17,6 +18,8 @@ group = "com.nookure.staff"
 val versionCode = "${major}.${minor}.${patch}"
 
 version = "${versionCode}-${grgit.head().abbreviatedId}"
+
+val branch = grgit.branch.current().name
 
 if (System.getenv("nookure_staff_version") != null) {
   version = "${versionCode}-${System.getenv("nookure_staff_version")}"
@@ -33,7 +36,14 @@ dependencies {
 }
 
 tasks.shadowJar {
-  archiveFileName.set("NookureStaff-${rootProject.version}.jar")
+  val dev = System.getenv("NOOKURE_STAFF_DEV") == "true"
+
+  if (dev) {
+    archiveFileName.set("NookureStaff-dev.jar")
+  } else {
+    archiveFileName.set("NookureStaff-${rootProject.version}.jar")
+  }
+
   dependencies {
     exclude("com/mojang")
   }
@@ -99,10 +109,44 @@ tasks.withType(xyz.jpenilla.runtask.task.AbstractRun::class) {
   }
   jvmArgs("-XX:+AllowEnhancedClassRedefinition", "-XX:+AllowRedefinitionToAddDeleteMethods")
   systemProperties["nkstaff.inventory.replace"] = "true"
+  systemProperties["file.encoding"] = "UTF-8"
 }
 
 tasks {
   runServer {
-    minecraftVersion("1.21.3")
+    minecraftVersion("1.21.4")
   }
+}
+
+modrinth {
+  token = System.getenv("MODRINTH_TOKEN")
+  projectId = "staff"
+  versionNumber.set(rootProject.version.toString())
+
+  versionType = if (branch.startsWith("release/")) {
+    "release"
+  } else if (branch.startsWith("dev")) {
+    "beta"
+  } else if (branch.startsWith("feature/") || branch.startsWith("fix/")) {
+    "alpha"
+  } else {
+    System.getenv("MODRINTH_VERSION_TYPE") ?: "release"
+  }
+  val changeLog = getChangeLog();
+  System.out.println(changeLog)
+  changelog.set(changeLog)
+  uploadFile.set(tasks.shadowJar.get().archiveFile)
+  gameVersions.addAll("1.19.4", "1.20.6", "1.21", "1.21.1", "1.21.2", "1.21.3", "1.21.4")
+  loaders.addAll("paper", "purpur", "velocity")
+
+  syncBodyFrom = rootProject.file("README.md").readText()
+}
+
+fun getChangeLog(): String {
+  return "${grgit.head().shortMessage} - ${grgit.head().author.name} (${grgit.head().abbreviatedId})"
+}
+
+tasks.modrinth {
+  dependsOn(tasks.shadowJar)
+  dependsOn(tasks.modrinthSyncBody)
 }

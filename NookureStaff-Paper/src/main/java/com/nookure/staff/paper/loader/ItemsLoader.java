@@ -8,6 +8,7 @@ import com.nookure.staff.api.config.bukkit.ItemsConfig;
 import com.nookure.staff.api.item.Items;
 import com.nookure.staff.api.manager.StaffItemsManager;
 import com.nookure.staff.api.util.AbstractLoader;
+import com.nookure.staff.paper.factory.CustomCommandItemFactory;
 import com.nookure.staff.paper.item.*;
 
 public class ItemsLoader implements AbstractLoader {
@@ -19,6 +20,8 @@ public class ItemsLoader implements AbstractLoader {
   private Injector injector;
   @Inject
   private Logger logger;
+  @Inject
+  private CustomCommandItemFactory customCommandItemFactory;
 
   @Override
   public void load() {
@@ -39,5 +42,25 @@ public class ItemsLoader implements AbstractLoader {
         default -> logger.severe("Could not find %s item class", name);
       }
     });
+
+    itemConfig.get().staffItems.getCustomItems().forEach((name, item) -> {
+      if (!item.isEnabled()) return;
+      if (item.getCommand() == null) {
+        logger.severe("Could not find %s item command", name);
+        return;
+      }
+
+      if (item.getType() == null) {
+        logger.severe("Could not find %s item type", name);
+        return;
+      }
+
+      manager.addItem(name, customCommandItemFactory.create(item));
+    });
+  }
+
+  @Override
+  public void reload() {
+    load();
   }
 }

@@ -7,17 +7,16 @@ import com.nookure.staff.api.Logger;
 import com.nookure.staff.api.addons.AddonManager;
 import com.nookure.staff.api.command.Command;
 import com.nookure.staff.api.config.ConfigurationContainer;
-import com.nookure.staff.api.config.bukkit.BukkitConfig;
-import com.nookure.staff.api.config.bukkit.BukkitMessages;
-import com.nookure.staff.api.config.bukkit.ItemsConfig;
-import com.nookure.staff.api.config.bukkit.StaffModeBlockedCommands;
+import com.nookure.staff.api.config.bukkit.*;
 import com.nookure.staff.api.config.bukkit.partials.VanishType;
 import com.nookure.staff.api.config.bukkit.partials.messages.note.NoteMessages;
 import com.nookure.staff.api.config.messaging.MessengerConfig;
 import com.nookure.staff.api.database.AbstractPluginConnection;
+import com.nookure.staff.api.database.DataProvider;
 import com.nookure.staff.api.event.EventManager;
 import com.nookure.staff.api.extension.StaffPlayerExtensionManager;
 import com.nookure.staff.api.extension.VanishExtension;
+import com.nookure.staff.api.extension.staff.GlowPlayerExtension;
 import com.nookure.staff.api.extension.staff.StaffModeExtension;
 import com.nookure.staff.api.manager.PlayerWrapperManager;
 import com.nookure.staff.api.messaging.Channels;
@@ -28,6 +27,7 @@ import com.nookure.staff.paper.command.*;
 import com.nookure.staff.paper.command.main.NookureStaffCommand;
 import com.nookure.staff.paper.command.staff.StaffCommandParent;
 import com.nookure.staff.paper.extension.FreezePlayerExtension;
+import com.nookure.staff.paper.extension.staff.PaperGlowPlayerExtension;
 import com.nookure.staff.paper.extension.staff.PaperStaffModeExtension;
 import com.nookure.staff.paper.extension.vanish.InternalVanishExtension;
 import com.nookure.staff.paper.extension.vanish.SuperVanishExtension;
@@ -49,13 +49,11 @@ import com.nookure.staff.paper.listener.staff.items.OnPlayerInventoryClick;
 import com.nookure.staff.paper.listener.staff.state.*;
 import com.nookure.staff.paper.listener.staff.vanish.PlayerVanishListener;
 import com.nookure.staff.paper.listener.staff.vanish.StaffVanishListener;
-import com.nookure.staff.paper.loader.AddonsLoader;
-import com.nookure.staff.paper.loader.InventoryLoader;
-import com.nookure.staff.paper.loader.ItemsLoader;
-import com.nookure.staff.paper.loader.PlaceholderApiLoader;
+import com.nookure.staff.paper.loader.*;
 import com.nookure.staff.paper.messaging.BackendMessageMessenger;
 import com.nookure.staff.paper.note.command.ParentNoteCommand;
 import com.nookure.staff.paper.note.listener.OnPlayerNoteJoin;
+import com.nookure.staff.paper.permission.LuckPermsPermissionInterceptor;
 import com.nookure.staff.paper.pin.command.ChangePin;
 import com.nookure.staff.paper.pin.command.DeletePinCommand;
 import com.nookure.staff.paper.pin.command.SetPinCommand;
@@ -70,6 +68,7 @@ import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.io.Closeable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
@@ -77,6 +76,8 @@ import java.util.stream.Stream;
 @Singleton
 public class NookureStaff {
   private final ArrayList<Listener> listeners = new ArrayList<>();
+  private final ArrayList<Closeable> closeableListeners = new ArrayList<>();
+
   private final List<Class<? extends AbstractLoader>> loadersClass;
   private final List<AbstractLoader> loaders = new ArrayList<>();
 
@@ -103,6 +104,8 @@ public class NookureStaff {
   private ConfigurationContainer<StaffModeBlockedCommands> staffModeBlockedCommands;
   @Inject
   private ConfigurationContainer<NoteMessages> noteMessages;
+  @Inject
+  private ConfigurationContainer<GlowConfig> glowConfig;
   @Inject
   private JavaPlugin plugin;
   @Inject
@@ -140,6 +143,11 @@ public class NookureStaff {
         logger.debug("Registering Redis messenger...");
         injector.getInstance(EventMessenger.class).prepare();
         logger.debug("Redis messenger registered");
+      }
+      case MYSQL -> {
+        logger.debug("Registering MySQL messenger...");
+        injector.getInstance(EventMessenger.class).prepare();
+        logger.debug("MySQL messenger registered");
       }
       case NONE -> logger.debug("No messenger type was found, events will not be sent");
     }
@@ -218,6 +226,24 @@ public class NookureStaff {
     if (config.get().modules.isPinCode()) {
       registerListener(OnInventoryClose.class);
     }
+
+    if (config.get().permission.watchLuckPermsPermissions) {
+      try {
+        Class.forName("net.luckperms.api.LuckPerms");
+        closeableListeners.add(injector.getInstance(LuckPermsPermissionInterceptor.class));
+      } catch (ClassNotFoundException e) {
+        logger.warning("LuckPerms is not installed on the server, disabling LuckPerms permission interceptor");
+      }
+    }
+
+    if (messengerConfig.get().getType() == MessengerConfig.MessengerType.MYSQL) {
+      if (config.get().database.getType() != DataProvider.MYSQL) {
+        logger.severe("MySQL messenger requires MySQL database, disabling plugin");
+        Bukkit.getPluginManager().disablePlugin(plugin);
+      }
+
+      closeableListeners.add(injector.getInstance(SQLPollTaskLoader.class));
+    }
   }
 
   public void registerListener(Class<? extends Listener> listener) {
@@ -229,9 +255,22 @@ public class NookureStaff {
   }
 
   public void unregisterListeners() {
+    logger.debug("Unregistering Bukkit listeners...");
     HandlerList.getHandlerLists().forEach(listener -> listeners.forEach(listener::unregister));
-
     listeners.clear();
+
+    logger.debug("Closing closeables listeners...");
+    closeableListeners.forEach(closeable -> {
+      try {
+        closeable.close();
+      } catch (Exception e) {
+        logger.severe("An error occurred while closing listener %s, %s", closeable.getClass().getName(), e);
+      }
+    });
+
+    closeableListeners.clear();
+
+    logger.debug("Listeners unregistered");
   }
 
   private void loadLoaders() {
@@ -322,6 +361,10 @@ public class NookureStaff {
     if (config.get().modules.isStaffMode()) {
       extensionManager.registerExtension(PaperStaffModeExtension.class, StaffModeExtension.class);
     }
+
+    if (glowConfig.get().enabled) {
+      extensionManager.registerExtension(PaperGlowPlayerExtension.class, GlowPlayerExtension.class);
+    }
   }
 
   public void onDisable() {
@@ -343,7 +386,8 @@ public class NookureStaff {
         messagesConfig,
         itemsConfig,
         staffModeBlockedCommands,
-        noteMessages
+        noteMessages,
+        glowConfig
     ).forEach(c -> c.reload().join());
 
     unregisterListeners();
