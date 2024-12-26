@@ -142,15 +142,16 @@ modrinth {
 }
 
 fun getChangeLog(): String {
-  val currentBranch = grgit.branch.current().name
-  val remoteBranch = "origin/$currentBranch"
+  val lastCommitEnv = System.getenv("LAST_COMMIT")
+    ?: return "The environment variable \$LAST_COMMIT is not defined."
 
-  val lastRemoteCommit = grgit.log {
-    range(remoteBranch, currentBranch)
-  }.lastOrNull()?.id ?: return "No se encontraron cambios desde el remoto."
+  val commitExists = grgit.log().any { it.id == lastCommitEnv }
+  if (!commitExists) {
+    return "The commit specified in \$LAST_COMMIT does not exist in this repository."
+  }
 
   val changeLog = grgit.log {
-    range(lastRemoteCommit, currentBranch)
+    range(lastCommitEnv, "HEAD")
   }
 
   return if (changeLog.isNotEmpty()) {
@@ -158,9 +159,10 @@ fun getChangeLog(): String {
       "- ${commit.shortMessage} (${commit.id})"
     }
   } else {
-    "No changes found."
+    "There are no changes since the commit specified in \$LAST_COMMIT."
   }
 }
+
 tasks.modrinth {
   dependsOn(tasks.shadowJar)
   dependsOn(tasks.modrinthSyncBody)
