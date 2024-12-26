@@ -143,25 +143,7 @@ modrinth {
 }
 
 fun getChangeLog(): String {
-  val lastCommitEnv = System.getenv("LAST_COMMIT")
-    ?: return "The environment variable \$LAST_COMMIT is not defined."
-
-  val commitExists = grgit.log().any { it.id == lastCommitEnv }
-  if (!commitExists) {
-    return "The commit specified in \$LAST_COMMIT does not exist in this repository."
-  }
-
-  val changeLog = grgit.log {
-    range(lastCommitEnv, "HEAD")
-  }
-
-  return if (changeLog.isNotEmpty()) {
-    changeLog.joinToString("\n") { commit ->
-      "- ${commit.shortMessage} (${commit.id})"
-    }
-  } else {
-    "There are no changes since the commit specified in \$LAST_COMMIT."
-  }
+  return "${grgit.commit().shortMessage} - ${grgit.commit().author.name} (${grgit.commit().abbreviatedId})"
 }
 
 tasks.modrinth {
