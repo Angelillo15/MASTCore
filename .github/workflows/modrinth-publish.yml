@@ -26,6 +26,8 @@ jobs:
         uses: gradle/actions/setup-gradle@v4
 
       - name: Execute Gradle build & publish
+        env:
+          MODRINTH_TOKEN: ${{ secrets.MODRINTH_TOKEN }}
         run: |
           chmod +x gradlew
           ./gradlew :modrinth
