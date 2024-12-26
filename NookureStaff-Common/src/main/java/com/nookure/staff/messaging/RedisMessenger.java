@@ -9,6 +9,7 @@ import com.nookure.staff.api.event.EventManager;
 import com.nookure.staff.api.messaging.EventMessenger;
 import com.nookure.staff.api.util.Scheduler;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import redis.clients.jedis.BinaryJedisPubSub;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
@@ -44,7 +45,7 @@ public class RedisMessenger extends EventMessenger {
   }
 
   @Override
-  public void publish(@NotNull PlayerWrapper sender, byte @NotNull [] data) {
+  public void publish(@Nullable PlayerWrapper sender, byte @NotNull [] data) {
     try (Jedis jedis = jedisPool.getResource()) {
       logger.debug("Publishing event to redis");
       jedis.publish(CHANNEL, data);
