@@ -257,6 +257,10 @@ public class PaperPluginModule extends PluginModule {
   ) {
     JedisPoolConfig poolConfig = new JedisPoolConfig();
     poolConfig.setMaxTotal(poolSize);
+    poolConfig.setMaxIdle(poolSize);
+    poolConfig.setMinIdle(3);
+    poolConfig.setTestOnBorrow(true);
+    poolConfig.setTestOnReturn(true);
 
     if (username.isEmpty() && password.isEmpty()) {
       return new JedisPool(poolConfig, address, port, timeout, null, database);
