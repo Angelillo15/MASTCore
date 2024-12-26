@@ -26,8 +26,6 @@ dependencies {
 
   /* Start of MockBukkit stuff */
   testImplementation(libs.mockBukkit)
-  testImplementation(libs.guice)
-  testImplementation(libs.google.guice.assistedinject)
   testImplementation(libs.libbyPaper)
   testImplementation(libs.configurateYaml)
   testImplementation(libs.nookure.core.inventory)
@@ -41,8 +39,6 @@ dependencies {
   testImplementation(libs.hikariCP)
 
   testImplementation("org.xerial:sqlite-jdbc:3.46.0.0")
-  testImplementation("org.junit.jupiter:junit-jupiter:5.9.2")
-  testRuntimeOnly("org.junit.platform:junit-platform-launcher")
   /* End of MockBukkit stuff */
 }
 

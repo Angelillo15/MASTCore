@@ -76,6 +76,14 @@ allprojects {
     compileOnly(rootProject.libs.caffeine)
     compileOnly(rootProject.libs.liblyBukkit)
     compileOnly(rootProject.libs.ebean)
+
+    testImplementation("org.junit.jupiter:junit-jupiter:5.11.4")
+    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+    testImplementation(rootProject.libs.test.containers)
+    testImplementation(rootProject.libs.test.containers.junit.jupiter)
+    testImplementation(rootProject.libs.google.guice.assistedinject)
+    testImplementation(rootProject.libs.guice)
+
   }
 
   tasks {
@@ -96,6 +104,10 @@ allprojects {
 
   testlogger {
     theme = ThemeType.MOCHA
+  }
+
+  tasks.test {
+    useJUnitPlatform()
   }
 }
 
