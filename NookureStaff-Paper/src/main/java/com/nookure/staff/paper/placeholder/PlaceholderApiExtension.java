@@ -40,7 +40,8 @@ public class PlaceholderApiExtension extends PlaceholderExpansion {
         ServerCountPlaceholder.class,
         StaffCountPlaceholder.class,
         StaffModePlaceholder.class,
-        VanishPlaceholder.class
+        VanishPlaceholder.class,
+        StaffGlowPlaceholder.class
     ).forEach(p -> placeholderManager.registerPlaceholder(in.getInstance(p)));
 
     return super.register();
