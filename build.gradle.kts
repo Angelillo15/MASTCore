@@ -79,6 +79,11 @@ allprojects {
     compileOnly(rootProject.libs.caffeine)
     compileOnly(rootProject.libs.liblyBukkit)
     compileOnly(rootProject.libs.ebean)
+    compileOnly(rootProject.libs.auto.service.annotations)
+    annotationProcessor(rootProject.libs.auto.service)
+
+    testImplementation("org.junit.jupiter:junit-jupiter:5.9.2")
+    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
   }
 
   tasks {
@@ -89,6 +94,10 @@ allprojects {
     withType<Javadoc> {
       options.encoding = "UTF-8"
     }
+  }
+
+  tasks.test {
+    useJUnitPlatform()
   }
 
   java {
@@ -132,8 +141,9 @@ modrinth {
   } else {
     System.getenv("MODRINTH_VERSION_TYPE") ?: "release"
   }
+
   val changeLog = getChangeLog();
-  System.out.println(changeLog)
+
   changelog.set(changeLog)
   uploadFile.set(tasks.shadowJar.get().archiveFile)
   gameVersions.addAll("1.19.4", "1.20.6", "1.21", "1.21.1", "1.21.2", "1.21.3", "1.21.4")

@@ -7,12 +7,13 @@ import com.nookure.staff.api.Logger;
 import com.nookure.staff.api.NookureStaff;
 import com.nookure.staff.api.addons.AddonManager;
 import com.nookure.staff.api.annotation.PluginMessageMessenger;
+import com.nookure.staff.api.annotation.PluginMessageSecretKey;
 import com.nookure.staff.api.command.CommandManager;
 import com.nookure.staff.api.config.ConfigurationContainer;
 import com.nookure.staff.api.config.bukkit.*;
-import com.nookure.staff.api.config.bukkit.partials.CustomItemPartial;
 import com.nookure.staff.api.config.bukkit.partials.messages.note.NoteMessages;
 import com.nookure.staff.api.config.common.CommandConfig;
+import com.nookure.staff.api.config.common.PluginMessageConfig;
 import com.nookure.staff.api.config.messaging.MessengerConfig;
 import com.nookure.staff.api.config.messaging.RedisPartial;
 import com.nookure.staff.api.database.AbstractPluginConnection;
@@ -24,6 +25,7 @@ import com.nookure.staff.api.manager.PlayerWrapperManager;
 import com.nookure.staff.api.manager.StaffItemsManager;
 import com.nookure.staff.api.messaging.EventMessenger;
 import com.nookure.staff.api.placeholder.PlaceholderManager;
+import com.nookure.staff.api.service.EncryptService;
 import com.nookure.staff.api.service.PinUserService;
 import com.nookure.staff.api.service.UserNoteService;
 import com.nookure.staff.api.state.PlayerState;
@@ -55,6 +57,7 @@ import com.nookure.staff.paper.util.PaperScheduler;
 import com.nookure.staff.paper.util.PaperServerUtils;
 import com.nookure.staff.paper.util.transoformer.nametag.DummyNameTagTransformer;
 import com.nookure.staff.paper.util.transoformer.nametag.TabNameTagTransformer;
+import com.nookure.staff.service.AESGCMEncryptService;
 import com.nookure.staff.service.PinUserServiceImpl;
 import com.nookure.staff.service.UserNoteServiceImpl;
 import io.ebean.Database;
@@ -66,6 +69,7 @@ import org.jetbrains.annotations.NotNull;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
 
+import javax.crypto.SecretKey;
 import javax.sql.DataSource;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -106,6 +110,7 @@ public class PaperPluginModule extends PluginModule {
     bind(FreezeManager.class).asEagerSingleton();
     bind(PlaceholderManager.class).asEagerSingleton();
     bind(PlayerTransformer.class).to(PaperPlayerTransformer.class).asEagerSingleton();
+    bind(EncryptService.class).to(AESGCMEncryptService.class).asEagerSingleton();
 
     bind(AddonManager.class)
         .to(ServerAddonManager.class)
@@ -145,19 +150,21 @@ public class PaperPluginModule extends PluginModule {
       bind(new TypeLiteral<ConfigurationContainer<BukkitConfig>>() {
       }).toInstance(loadBukkitConfig());
       bind(new TypeLiteral<ConfigurationContainer<ItemsConfig>>() {
-      }).toInstance(loadItemConfig());
+      }).toInstance(loadConfig(ItemsConfig.class, "items.yml"));
       bind(new TypeLiteral<ConfigurationContainer<BukkitMessages>>() {
-      }).toInstance(loadMessages());
+      }).toInstance(loadConfig(BukkitMessages.class, "messages.yml"));
       bind(new TypeLiteral<ConfigurationContainer<MessengerConfig>>() {
       }).toInstance(loadMessenger());
       bind(new TypeLiteral<ConfigurationContainer<CommandConfig>>() {
-      }).toInstance(loadCommands());
+      }).toInstance(loadConfig(CommandConfig.class, "commands.yml"));
       bind(new TypeLiteral<ConfigurationContainer<NoteMessages>>() {
-      }).toInstance(loadNoteMessages());
+      }).toInstance(loadConfig(NoteMessages.class, "partial/note-messages.yml"));
       bind(new TypeLiteral<ConfigurationContainer<StaffModeBlockedCommands>>() {
-      }).toInstance(loadStaffModeBlockedCommands());
+      }).toInstance(loadConfig(StaffModeBlockedCommands.class, "staff-mode-blocked-commands.yml"));
       bind(new TypeLiteral<ConfigurationContainer<GlowConfig>>() {
       }).toInstance(loadGlowConfig());
+      bind(new TypeLiteral<ConfigurationContainer<PluginMessageConfig>>() {
+      }).toInstance(loadConfig(PluginMessageConfig.class, "plugin-message.yml"));
 
       /*
        * PlayerWrapperManager related area
@@ -178,6 +185,9 @@ public class PaperPluginModule extends PluginModule {
       }).toInstance(new AtomicReference<>(null));
       bind(new TypeLiteral<AtomicReference<PaperNookureInventoryEngine>>() {
       }).toInstance(new AtomicReference<>(null));
+      bind(new TypeLiteral<AtomicReference<SecretKey>>() {
+      }).annotatedWith(PluginMessageSecretKey.class)
+          .toInstance(new AtomicReference<>(null));
     } catch (IOException e) {
       boot.getPLogger().severe("Could not load config");
       throw new RuntimeException(e);
@@ -222,18 +232,6 @@ public class PaperPluginModule extends PluginModule {
     ConfigurationContainer<BukkitConfig> config = ConfigurationContainer.load(boot.getDataFolder().toPath(), BukkitConfig.class);
     boot.setDebug(config.get().isDebug());
     return config;
-  }
-
-  private ConfigurationContainer<ItemsConfig> loadItemConfig() throws IOException {
-    return ConfigurationContainer.load(boot.getDataFolder().toPath(), ItemsConfig.class, "items.yml");
-  }
-
-  private ConfigurationContainer<BukkitMessages> loadMessages() throws IOException {
-    return ConfigurationContainer.load(boot.getDataFolder().toPath(), BukkitMessages.class, "messages.yml");
-  }
-
-  private ConfigurationContainer<CommandConfig> loadCommands() throws IOException {
-    return ConfigurationContainer.load(boot.getDataFolder().toPath(), CommandConfig.class, "commands.yml");
   }
 
   private ConfigurationContainer<GlowConfig> loadGlowConfig() throws IOException {
@@ -296,11 +294,7 @@ public class PaperPluginModule extends PluginModule {
     return config;
   }
 
-  private ConfigurationContainer<NoteMessages> loadNoteMessages() throws IOException {
-    return ConfigurationContainer.load(boot.getDataFolder().toPath(), NoteMessages.class, "partial/note-messages.yml");
-  }
-
-  private ConfigurationContainer<StaffModeBlockedCommands> loadStaffModeBlockedCommands() throws IOException {
-    return ConfigurationContainer.load(boot.getDataFolder().toPath(), StaffModeBlockedCommands.class, "staff-mode-blocked-commands.yml");
+  <T> ConfigurationContainer<T> loadConfig(@NotNull final Class<T> clazz, @NotNull final String fileName) throws IOException {
+    return ConfigurationContainer.load(boot.getDataFolder().toPath(), clazz, fileName);
   }
 }
