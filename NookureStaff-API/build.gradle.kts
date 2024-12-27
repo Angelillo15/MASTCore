@@ -109,6 +109,9 @@ sourceSets {
         property("commit", grgit.head().abbreviatedId)
         property("time", System.currentTimeMillis().toString())
         property("nookureInventoryVersion", rootProject.libs.nookure.core.inventory.get().version)
+        property("jenkinsBuildNumber", System.getenv("BUILD_NUMBER") ?: "-1")
+        property("jenkinsBuildId", System.getenv("BUILD_ID") ?: "-1")
+        property("jenkinsBuildUrl", System.getenv("BUILD_URL") ?: "https://ci.nookure.com")
       }
     }
   }
