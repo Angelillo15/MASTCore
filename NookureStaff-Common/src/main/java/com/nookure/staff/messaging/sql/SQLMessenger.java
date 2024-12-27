@@ -2,6 +2,7 @@ package com.nookure.staff.messaging.sql;
 
 import com.google.inject.Inject;
 import com.nookure.staff.api.Logger;
+import com.nookure.staff.api.NookureStaff;
 import com.nookure.staff.api.PlayerWrapper;
 import com.nookure.staff.api.config.ConfigurationContainer;
 import com.nookure.staff.api.config.messaging.MessengerConfig;
@@ -27,8 +28,10 @@ public final class SQLMessenger extends EventMessenger {
       @NotNull final AtomicReference<DataSource> dataSource,
       @NotNull final Logger logger,
       @NotNull final ConfigurationContainer<MessengerConfig> config,
-      @NotNull final EventManager eventManager
+      @NotNull final EventManager eventManager,
+      @NotNull final NookureStaff plugin
   ) {
+    super(logger, plugin);
     this.dataSource = dataSource;
     this.logger = logger;
     this.config = config;

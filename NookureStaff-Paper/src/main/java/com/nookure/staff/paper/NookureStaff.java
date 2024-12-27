@@ -5,11 +5,13 @@ import com.google.inject.Injector;
 import com.google.inject.Singleton;
 import com.nookure.staff.api.Logger;
 import com.nookure.staff.api.addons.AddonManager;
+import com.nookure.staff.api.annotation.PluginMessageSecretKey;
 import com.nookure.staff.api.command.Command;
 import com.nookure.staff.api.config.ConfigurationContainer;
 import com.nookure.staff.api.config.bukkit.*;
 import com.nookure.staff.api.config.bukkit.partials.VanishType;
 import com.nookure.staff.api.config.bukkit.partials.messages.note.NoteMessages;
+import com.nookure.staff.api.config.common.PluginMessageConfig;
 import com.nookure.staff.api.config.messaging.MessengerConfig;
 import com.nookure.staff.api.database.AbstractPluginConnection;
 import com.nookure.staff.api.database.DataProvider;
@@ -18,7 +20,6 @@ import com.nookure.staff.api.extension.StaffPlayerExtensionManager;
 import com.nookure.staff.api.extension.VanishExtension;
 import com.nookure.staff.api.extension.staff.GlowPlayerExtension;
 import com.nookure.staff.api.extension.staff.StaffModeExtension;
-import com.nookure.staff.api.manager.PlayerWrapperManager;
 import com.nookure.staff.api.messaging.Channels;
 import com.nookure.staff.api.messaging.EventMessenger;
 import com.nookure.staff.api.util.AbstractLoader;
@@ -68,9 +69,11 @@ import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import javax.crypto.SecretKey;
 import java.io.Closeable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Stream;
 
 @Singleton
@@ -86,7 +89,8 @@ public class NookureStaff {
         AddonsLoader.class,
         InventoryLoader.class,
         ItemsLoader.class,
-        PlaceholderApiLoader.class
+        PlaceholderApiLoader.class,
+        SecretKeyLoader.class
     );
   }
 
@@ -107,13 +111,16 @@ public class NookureStaff {
   @Inject
   private ConfigurationContainer<GlowConfig> glowConfig;
   @Inject
+  private ConfigurationContainer<PluginMessageConfig> pluginMessageConfig;
+  @Inject
   private JavaPlugin plugin;
   @Inject
   private Injector injector;
   @Inject
   private Logger logger;
   @Inject
-  private PlayerWrapperManager<Player> playerWrapperManager;
+  @PluginMessageSecretKey
+  private AtomicReference<SecretKey> pluginMessageSecretKey;
   @Inject
   private PaperCommandManager commandManager;
   @Inject
@@ -154,6 +161,7 @@ public class NookureStaff {
 
     Bukkit.getMessenger().registerIncomingPluginChannel(plugin, Channels.EVENTS, injector.getInstance(BackendMessageMessenger.class));
     Bukkit.getMessenger().registerOutgoingPluginChannel(plugin, Channels.EVENTS);
+    Bukkit.getMessenger().registerOutgoingPluginChannel(plugin, Channels.COMMANDS);
 
     logger.debug("Registering PM");
     eventManager.registerListener(injector.getInstance(OnServerBroadcast.class));
@@ -387,7 +395,8 @@ public class NookureStaff {
         itemsConfig,
         staffModeBlockedCommands,
         noteMessages,
-        glowConfig
+        glowConfig,
+        pluginMessageConfig
     ).forEach(c -> c.reload().join());
 
     unregisterListeners();

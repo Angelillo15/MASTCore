@@ -8,6 +8,7 @@ Our plugin has an extensive list of features that can be chosen to be toggled on
 
 ## Player Actions
 You can do shift + click on a player and you will have a full GUI with a lot of actions for the current player, you can add whatever you want to this inventory!, the only limit is your imagination! You can also open this inventory by performing the following command: /player-list
+
 ![https://i.imgur.com/cyAiY6w.gif](https://i.imgur.com/cyAiY6w.gif)
 
 ## Staff Mode
@@ -49,19 +50,16 @@ The plugin name in bstats appear as MAStaff (the old plugin name)
 ## Frequently Asked Questions
 
 **Q**: Do I need to have more than one server to use this plugin?
-**A: **No, this plugin can run on standalone servers or multiple servers at once, depending on your needs.
+**A:** No, this plugin can run on standalone servers or multiple servers at once, depending on your needs.
 
-**Q: **Do I need a license to use this plugin?
+**Q:** Do I need a license to use this plugin?
 **A:** No. You only have to download the plugin from the website and drag it to your plugins folder on your server.
 
-**Q: **Does this plugin support proxies?
-**A:** Yes, the plugin supports both BungeeCord (and forks) and Velocity. We recommend Velocity for a better experience, as it is better in every aspect.
+**Q:** Does this plugin support proxies?
+**A:** Yes, the plugin only supports Velocity, the plugin is only required to execute commands on the proxy and the pm messenger, the rest of the features are executed on the backend server.
 
-**Q: **How can I setup the plugin on my server?
+**Q:** How can I setup the plugin on my server?
 **A:** You can check our [documentation]('https://docs.nookure.com/nkstaff/messenger.html') to learn how the plugin works and configure each aspect. If you find any difficulties during the process, you can join [our Discord server]('https://discord.nookure.com') and open a ticket, where we will help you fix your issue.
 
 **Q:** I can't find a feature that I would like. How can I suggest that to be implemented?
-**A: **You can join [our Discord server]('https://discord.nookure.com') and open a ticket explaining in detail what would you like to be implemented in next updates. We are always listening for feedback and trying to make NookureStaff better!
-
-## Important information
-When buying NookureStaff, you will be able to ask for a copy of the source code on [our Discord server]('https://discord.nookure.com'). Open a ticket providing your proof of payment and your GitHub account email address, and you'll get access. For help setting up the plugin, you can check our official documentation. Here you will find everything you need to learn how to setup the plugin. If you want to report any issue, please contact us on [our Discord server]('https://discord.nookure.com') opening a ticket. We are also open to new suggestions and feature ideas, so feel free to give us your opinion about the plugin. To help other users on the website, we would appreciate you if you could leave a positive rating on the resource in case it's working well for you. Otherwise, we would like to help you, so we would appreciate if you could open a ticket on [our Discord server]('https://discord.nookure.com') in order to be able to help you.
+**A:** You can join [our Discord server]('https://discord.nookure.com') and open a ticket explaining in detail what would you like to be implemented in next updates. We are always listening for feedback and trying to make NookureStaff better!

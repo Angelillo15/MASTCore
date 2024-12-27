@@ -10,6 +10,8 @@ dependencies {
   // Ebean migration generation dependencies
   compileOnly("com.sun.xml.bind:jaxb-impl:4.0.5")
   compileOnly("org.slf4j:slf4j-simple:2.0.13")
+
+  testImplementation(project(":NookureStaff-API"))
 }
 
 tasks.register<JavaExec>("generateMigration") {

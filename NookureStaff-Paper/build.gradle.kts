@@ -94,7 +94,3 @@ paper {
     }
   }
 }
-
-tasks.test {
-  useJUnitPlatform()
-}

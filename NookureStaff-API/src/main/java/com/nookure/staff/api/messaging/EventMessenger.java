@@ -12,10 +12,17 @@ import java.util.Objects;
 import java.util.Optional;
 
 public abstract class EventMessenger implements AutoCloseable {
+  private final Logger logger;
+  private final NookureStaff plugin;
+
   @Inject
-  private Logger logger;
-  @Inject
-  private NookureStaff plugin;
+  public EventMessenger(
+      @NotNull final Logger logger,
+      @NotNull final NookureStaff plugin
+  ) {
+    this.logger = logger;
+    this.plugin = plugin;
+  }
 
   /**
    * Prepares the event transport for use.
