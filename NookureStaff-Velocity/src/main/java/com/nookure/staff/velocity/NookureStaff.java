@@ -6,7 +6,6 @@ import com.nookure.staff.Constants;
 import com.nookure.staff.api.Logger;
 import com.nookure.staff.api.NookureStaffPlatform;
 import com.nookure.staff.api.event.EventManager;
-import com.nookure.staff.velocity.listener.BackendCommandListener;
 import com.nookure.staff.velocity.messaging.PluginMessageRouter;
 import com.nookure.staff.velocity.module.VelocityLogger;
 import com.nookure.staff.velocity.module.VelocityPluginModule;
@@ -45,12 +44,9 @@ public class NookureStaff implements NookureStaffPlatform<ProxyServer> {
     this.logger = new VelocityLogger(server, this);
     this.injector = injector.createChildInjector(new VelocityPluginModule(this));
 
-    EventManager eventManager = injector.getInstance(EventManager.class);
-
     server.getChannelRegistrar().register(PluginMessageRouter.EVENTS);
+    server.getChannelRegistrar().register(PluginMessageRouter.COMMANDS);
     server.getEventManager().register(this, injector.getInstance(PluginMessageRouter.class));
-
-    eventManager.registerListener(injector.getInstance(BackendCommandListener.class));
 
     logger.info("NookureStaff velocity bridge has been enabled!.");
     logger.debug("Debug mode is enabled.");
