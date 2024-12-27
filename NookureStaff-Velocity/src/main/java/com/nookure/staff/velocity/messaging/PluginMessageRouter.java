@@ -7,6 +7,7 @@ import com.nookure.staff.api.messaging.EventMessenger;
 import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.connection.PluginMessageEvent;
 import com.velocitypowered.api.proxy.ProxyServer;
+import com.velocitypowered.api.proxy.ServerConnection;
 import com.velocitypowered.api.proxy.messages.MinecraftChannelIdentifier;
 
 public class PluginMessageRouter {
@@ -25,6 +26,13 @@ public class PluginMessageRouter {
     }
 
     event.setResult(PluginMessageEvent.ForwardResult.handled());
+
+    if (!(event.getSource() instanceof ServerConnection)) {
+      logger.warning("Received plugin message from non-server connection source.");
+      logger.warning("Source: %s", event.getSource());
+      logger.warning("Be aware that this is a potential player trying to attack your server.");
+      return;
+    }
 
     logger.debug("Routing plugin message to all servers.");
 
