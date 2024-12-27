@@ -58,7 +58,7 @@ The plugin name in bstats appear as MAStaff (the old plugin name)
 **Q:** Does this plugin support proxies?
 **A:** Yes, the plugin only supports Velocity, the plugin is only required to execute commands on the proxy and the pm messenger, the rest of the features are executed on the backend server.
 
-**Q:** How can I setup the plugin on my server?
+**Q:** How can I set up the plugin on my server?
 **A:** You can check our [documentation]('https://docs.nookure.com/nkstaff/messenger.html') to learn how the plugin works and configure each aspect. If you find any difficulties during the process, you can join [our Discord server]('https://discord.nookure.com') and open a ticket, where we will help you fix your issue.
 
 **Q:** I can't find a feature that I would like. How can I suggest that to be implemented?
