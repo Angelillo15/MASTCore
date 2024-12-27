@@ -24,6 +24,8 @@ public class PluginMessageRouter {
       return;
     }
 
+    event.setResult(PluginMessageEvent.ForwardResult.handled());
+
     logger.debug("Routing plugin message to all servers.");
 
     messenger.decodeEvent(event.getData());
