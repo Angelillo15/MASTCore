@@ -4,6 +4,7 @@ import com.google.inject.Inject;
 import com.google.inject.Injector;
 import com.google.inject.Singleton;
 import com.nookure.staff.api.Logger;
+import com.nookure.staff.api.NookureStaff;
 import com.nookure.staff.api.PlayerWrapper;
 import com.nookure.staff.api.event.EventManager;
 import com.nookure.staff.api.messaging.EventMessenger;
@@ -18,16 +19,27 @@ import java.util.Arrays;
 @Singleton
 public class RedisMessenger extends EventMessenger {
   private static final byte[] CHANNEL = "nkstaff_events".getBytes();
-  @Inject
-  private JedisPool jedisPool;
-  @Inject
-  private Injector injector;
-  @Inject
-  private Logger logger;
-  @Inject
-  private Scheduler scheduler;
+  private final JedisPool jedisPool;
+  private final Injector injector;
+  private final Logger logger;
+  private final Scheduler scheduler;
   private BinaryJedisPubSub messenger;
   private int subscribeTaskID;
+
+  @Inject
+  public RedisMessenger(
+      @NotNull Logger logger,
+      @NotNull NookureStaff plugin,
+      @NotNull JedisPool jedisPool,
+      @NotNull Injector injector,
+      @NotNull Scheduler scheduler
+  ) {
+    super(logger, plugin);
+    this.logger = logger;
+    this.jedisPool = jedisPool;
+    this.injector = injector;
+    this.scheduler = scheduler;
+  }
 
   @Override
   public void prepare() {
