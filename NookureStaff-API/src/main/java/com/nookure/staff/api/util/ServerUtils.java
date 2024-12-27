@@ -1,6 +1,7 @@
 package com.nookure.staff.api.util;
 
 import com.nookure.staff.api.Permissions;
+import com.nookure.staff.api.PlayerWrapper;
 import org.bukkit.Bukkit;
 import org.jetbrains.annotations.NotNull;
 
@@ -54,6 +55,14 @@ public abstract class ServerUtils {
   public void broadcastStaffMessage(@NotNull String message) {
     broadcast(message, Permissions.STAFF_PERMISSION);
   }
+
+  /**
+   * Send a command to the proxy server console
+   *
+   * @param command The command to send
+   * @param sender  The sender of the command
+   */
+  abstract public void sendCommandToProxy(@NotNull String command, @NotNull PlayerWrapper sender);
 
   static {
     isPaper = hasClass("com.destroystokyo.paper.PaperConfig") ||

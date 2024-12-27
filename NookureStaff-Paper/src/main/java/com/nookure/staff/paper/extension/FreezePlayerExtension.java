@@ -9,10 +9,10 @@ import com.nookure.staff.api.config.ConfigurationContainer;
 import com.nookure.staff.api.config.bukkit.BukkitConfig;
 import com.nookure.staff.api.config.bukkit.BukkitMessages;
 import com.nookure.staff.api.event.server.BroadcastMessage;
-import com.nookure.staff.api.event.server.ExecuteCommandAsProxy;
 import com.nookure.staff.api.extension.StaffPlayerExtension;
 import com.nookure.staff.api.manager.FreezeManager;
 import com.nookure.staff.api.messaging.EventMessenger;
+import com.nookure.staff.api.util.ServerUtils;
 import org.bukkit.Bukkit;
 import org.jetbrains.annotations.NotNull;
 
@@ -24,7 +24,7 @@ public class FreezePlayerExtension extends StaffPlayerExtension {
   private final ConfigurationContainer<BukkitConfig> config;
   private final ConfigurationContainer<BukkitMessages> messages;
   private final EventMessenger eventMessenger;
-  private final EventMessenger pluginMessageManager;
+  private final ServerUtils serverUtils;
 
   @Inject
   public FreezePlayerExtension(
@@ -33,7 +33,7 @@ public class FreezePlayerExtension extends StaffPlayerExtension {
       @NotNull final ConfigurationContainer<BukkitConfig> config,
       @NotNull final ConfigurationContainer<BukkitMessages> messages,
       @NotNull final EventMessenger eventMessenger,
-      @NotNull @PluginMessageMessenger final EventMessenger pluginMessageManager
+      @NotNull final ServerUtils serverUtils
   ) {
     super(player);
     this.player = player;
@@ -41,7 +41,7 @@ public class FreezePlayerExtension extends StaffPlayerExtension {
     this.config = config;
     this.messages = messages;
     this.eventMessenger = eventMessenger;
-    this.pluginMessageManager = pluginMessageManager;
+    this.serverUtils = serverUtils;
   }
 
   public void freezePlayer(PlayerWrapper target) {
@@ -111,8 +111,7 @@ public class FreezePlayerExtension extends StaffPlayerExtension {
       command = command.substring(6);
 
       if (command.startsWith(" ")) command = command.substring(1);
-
-      pluginMessageManager.publish(player, new ExecuteCommandAsProxy(command));
+      serverUtils.sendCommandToProxy(command, player);
     }
 
     Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command);
