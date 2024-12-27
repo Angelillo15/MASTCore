@@ -8,5 +8,10 @@ public final class Constants {
 	public static final String BUILD_TIME = "{{ time }}";
 	public static final String NOOKURE_INVENTORY_VERSION = "{{ nookureInventoryVersion }}";
 
+  // Jenkins related constants
+  public static final int JENKINS_BUILD_NUMBER = Integer.parseInt("{{ jenkinsBuildNumber }}");
+  public static final String JENKINS_BUILD_ID = "{{ jenkinsBuildId }}";
+  public static final String JENKINS_BUILD_URL = "{{ jenkinsBuildUrl }}";
+
 	private Constants() {}
 }
