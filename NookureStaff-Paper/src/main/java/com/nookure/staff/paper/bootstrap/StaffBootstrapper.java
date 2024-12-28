@@ -9,6 +9,7 @@ import com.nookure.staff.Constants;
 import com.nookure.staff.api.Logger;
 import com.nookure.staff.api.NookureStaffPlatform;
 import com.nookure.staff.api.command.Command;
+import com.nookure.staff.api.jenkins.JenkinsBaseClient;
 import com.nookure.staff.api.util.ServerUtils;
 import com.nookure.staff.lib.DefaultLibRepo;
 import com.nookure.staff.paper.NookureStaff;
@@ -27,6 +28,7 @@ import java.io.InputStream;
 public class StaffBootstrapper extends JavaPlugin implements NookureStaffPlatform<JavaPlugin> {
   public static final boolean isPaper;
   public static final boolean isMock;
+  public static final String JENKINS_URL;
 
   static {
     isPaper = ServerUtils.isPaper;
@@ -41,6 +43,8 @@ public class StaffBootstrapper extends JavaPlugin implements NookureStaffPlatfor
     }
 
     isMock = isMockTemp;
+
+    JENKINS_URL = System.getProperty("nkStaffJenkinsHost") != null ? System.getProperty("nkStaffJenkinsHost") : "https://ci.nookure.com";
   }
 
   private boolean debug = false;
@@ -70,12 +74,42 @@ public class StaffBootstrapper extends JavaPlugin implements NookureStaffPlatfor
     loadLogger();
     loadDependencies();
     checkMAStaff();
+    checkVersion();
 
     loadInjector();
     loadPlugin();
     new Metrics(this, 16548);
 
     plugin.onEnable();
+  }
+
+  public void checkVersion() {
+    if (Constants.JENKINS_BUILD_NUMBER == -1) {
+      getLogger().warning("You are using a development build. Please, consider this before reporting any issue.");
+      return;
+    }
+
+    JenkinsBaseClient jenkinsBaseClient = new JenkinsBaseClient(JENKINS_URL);
+
+    jenkinsBaseClient.getJob("NookureStaff").thenAccept(jenkinsJob -> {
+      if (jenkinsJob == null) {
+        getLogger().warning("Couldn't get the latest version from Jenkins.");
+        return;
+      }
+
+      if (jenkinsJob.lastCompletedBuild() == null) {
+        getLogger().warning("Couldn't get the latest version from Jenkins.");
+        return;
+      }
+
+      if (jenkinsJob.lastCompletedBuild().number() > Constants.JENKINS_BUILD_NUMBER) {
+        getLogger().warning("There is a new version available! Please update to the latest version.");
+        getLogger().warning("You can download it from here: " + jenkinsJob.lastCompletedBuild().url());
+      }
+    }).exceptionally(throwable -> {
+      getLogger().warning("Couldn't get the latest version from Jenkins.");
+      return null;
+    });
   }
 
   public void checkMAStaff() {
