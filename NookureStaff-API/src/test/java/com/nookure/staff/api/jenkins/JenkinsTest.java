@@ -1,5 +1,6 @@
 package com.nookure.staff.api.jenkins;
 
+import com.nookure.staff.Constants;
 import com.nookure.staff.api.jenkins.json.JenkinsJob;
 import com.nookure.staff.api.jenkins.json.JenkinsRun;
 import org.junit.jupiter.api.Test;
@@ -19,8 +20,8 @@ public class JenkinsTest {
   @Test
   @EnabledIf("canRun")
   public void testGetRun() {
-    final JenkinsJob jenkinsJob = jenkinsBaseClient.getJob("NookureStaff").join();
-    final JenkinsRun jenkinsRun = jenkinsBaseClient.getRun("NookureStaff", jenkinsJob.lastCompletedBuild().number()).join();
+    final JenkinsJob jenkinsJob = jenkinsBaseClient.getJob(Constants.JENKINS_JOB_NAME).join();
+    final JenkinsRun jenkinsRun = jenkinsBaseClient.getRun(jenkinsJob, jenkinsJob.lastCompletedBuild().number()).join();
 
     assert jenkinsRun != null;
   }

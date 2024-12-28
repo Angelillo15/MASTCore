@@ -91,7 +91,7 @@ public class StaffBootstrapper extends JavaPlugin implements NookureStaffPlatfor
 
     JenkinsBaseClient jenkinsBaseClient = new JenkinsBaseClient(JENKINS_URL);
 
-    jenkinsBaseClient.getJob("NookureStaff").thenAccept(jenkinsJob -> {
+    jenkinsBaseClient.getJob(Constants.JENKINS_JOB_NAME).thenAccept(jenkinsJob -> {
       if (jenkinsJob == null) {
         getLogger().warning("Couldn't get the latest version from Jenkins.");
         return;
