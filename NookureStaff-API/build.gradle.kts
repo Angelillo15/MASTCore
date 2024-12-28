@@ -43,6 +43,9 @@ dependencies {
   annotationProcessor(libs.auto.service)
   annotationProcessor(libs.google.auto.value.processor)
   implementation(libs.google.auto.value.annotations)
+
+  testImplementation(libs.guice)
+  testImplementation(libs.gson)
 }
 
 publishing {
