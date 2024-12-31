@@ -57,7 +57,7 @@ public class StaffBootstrapper extends JavaPlugin implements NookureStaffPlatfor
     checkSpigot();
 
     Component cmp = Component.text("""
-
+        
          ▐ ▄             ▄ •▄ ▄• ▄▌▄▄▄  ▄▄▄ .    .▄▄ · ▄▄▄▄▄ ▄▄▄· ·▄▄▄·▄▄▄
         •█▌▐█▪     ▪     █▌▄▌▪█▪██▌▀▄ █·▀▄.▀·    ▐█ ▀. •██  ▐█ ▀█ ▐▄▄·▐▄▄·
         ▐█▐▐▌ ▄█▀▄  ▄█▀▄ ▐▀▀▄·█▌▐█▌▐▀▀▄ ▐▀▀▪▄    ▄▀▀▀█▄ ▐█.▪▄█▀▀█ ██▪ ██▪
@@ -103,7 +103,7 @@ public class StaffBootstrapper extends JavaPlugin implements NookureStaffPlatfor
       }
 
       if (jenkinsJob.lastCompletedBuild().number() > Constants.JENKINS_BUILD_NUMBER) {
-        getLogger().warning("There is a new version available! Please update to the latest version.");
+        getLogger().warning("There is a new version available! You are %n versions behind.".replace("%n", String.valueOf(jenkinsJob.lastCompletedBuild().number() - Constants.JENKINS_BUILD_NUMBER)));
         getLogger().warning("You can download it from here: " + jenkinsJob.lastCompletedBuild().url());
       }
     }).exceptionally(throwable -> {
