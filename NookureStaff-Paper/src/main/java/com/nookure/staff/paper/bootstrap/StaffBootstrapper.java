@@ -105,6 +105,7 @@ public class StaffBootstrapper extends JavaPlugin implements NookureStaffPlatfor
       if (jenkinsJob.lastCompletedBuild().number() > Constants.JENKINS_BUILD_NUMBER) {
         getLogger().warning("There is a new version available! You are %n versions behind.".replace("%n", String.valueOf(jenkinsJob.lastCompletedBuild().number() - Constants.JENKINS_BUILD_NUMBER)));
         getLogger().warning("You can download it from here: " + jenkinsJob.lastCompletedBuild().url());
+        getLogger().warning("Or you can download it from here: https://modrinth.com/plugin/staff");
       }
     }).exceptionally(throwable -> {
       getLogger().warning("Couldn't get the latest version from Jenkins.");
