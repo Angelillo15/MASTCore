@@ -14,11 +14,9 @@ import static java.util.Objects.requireNonNull;
 
 @Singleton
 public final class TabNameTagTransformer implements NameTagTransformer {
-  private final NameTagManager nameTagManager = TabAPI.getInstance().getNameTagManager();
-
   @Inject
   public TabNameTagTransformer(@NotNull final Logger logger) {
-    if (nameTagManager == null) {
+    if (getNameTagManager() == null) {
       logger.severe("TabAPI is not loaded, disabling TabNametagTransformer.");
     }
   }
@@ -27,6 +25,7 @@ public final class TabNameTagTransformer implements NameTagTransformer {
   public void setPrefix(@NotNull PlayerWrapper player, @NotNull String prefix) {
     requireNonNull(player, "Player cannot be null.");
     requireNonNull(prefix, "Prefix cannot be null.");
+    final var nameTagManager = getNameTagManager();
 
     if (nameTagManager == null) return;
     nameTagManager.setPrefix(getTabPlayer(player), prefix);
@@ -35,6 +34,7 @@ public final class TabNameTagTransformer implements NameTagTransformer {
   @Override
   public void removePrefix(@NotNull PlayerWrapper player) {
     requireNonNull(player, "Player cannot be null.");
+    final var nameTagManager = getNameTagManager();
 
     if (nameTagManager == null) return;
     nameTagManager.setPrefix(getTabPlayer(player), null);
@@ -43,6 +43,7 @@ public final class TabNameTagTransformer implements NameTagTransformer {
   @Override
   public void setSuffix(@NotNull PlayerWrapper player, @NotNull String suffix) {
     requireNonNull(player, "Player cannot be null.");
+    final var nameTagManager = getNameTagManager();
 
     if (nameTagManager == null) return;
     nameTagManager.setSuffix(getTabPlayer(player), suffix);
@@ -51,6 +52,7 @@ public final class TabNameTagTransformer implements NameTagTransformer {
   @Override
   public void removeSuffix(@NotNull PlayerWrapper player) {
     requireNonNull(player, "Player cannot be null.");
+    final var nameTagManager = getNameTagManager();
 
     if (nameTagManager == null) return;
     nameTagManager.setSuffix(getTabPlayer(player), null);
@@ -58,5 +60,9 @@ public final class TabNameTagTransformer implements NameTagTransformer {
 
   private TabPlayer getTabPlayer(PlayerWrapper player) {
     return TabAPI.getInstance().getPlayer(player.getUniqueId());
+  }
+
+  private NameTagManager getNameTagManager() {
+    return TabAPI.getInstance().getNameTagManager();
   }
 }
