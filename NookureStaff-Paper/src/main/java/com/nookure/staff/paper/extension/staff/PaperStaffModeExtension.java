@@ -115,7 +115,7 @@ public class PaperStaffModeExtension extends StaffModeExtension {
     long time = System.currentTimeMillis();
     player.disablePlayerPerks();
     restoreInventory();
-    if (config.get().staffMode.teleportToPreviousLocation()) restoreInventory();
+    if (config.get().staffMode.teleportToPreviousLocation()) restoreLocation();
     player.sendMiniMessage(messages.get().staffMode.toggledOff());
     writeStaffModeState(false);
 
