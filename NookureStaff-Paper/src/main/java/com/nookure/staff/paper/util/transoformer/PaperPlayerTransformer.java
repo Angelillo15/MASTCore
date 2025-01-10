@@ -16,7 +16,9 @@ import com.nookure.staff.paper.StaffPaperPlayerWrapper;
 import com.nookure.staff.paper.extension.FreezePlayerExtension;
 import com.nookure.staff.paper.factory.PaperPlayerWrapperFactory;
 import com.nookure.staff.paper.factory.StaffPaperPlayerWrapperFactory;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
@@ -31,6 +33,7 @@ public final class PaperPlayerTransformer implements PlayerTransformer {
   private final ConfigurationContainer<BukkitMessages> messages;
   private final FreezeManager freezeManager;
   private final List<Class<? extends PlayerState>> states;
+  private JavaPlugin plugin;
 
   @Inject
   public PaperPlayerTransformer(
@@ -40,7 +43,8 @@ public final class PaperPlayerTransformer implements PlayerTransformer {
       @NotNull final Logger logger,
       @NotNull final ConfigurationContainer<BukkitMessages> messages,
       @NotNull final FreezeManager freezeManager,
-      @NotNull final List<Class<? extends PlayerState>> states
+      @NotNull final List<Class<? extends PlayerState>> states,
+      @NotNull final JavaPlugin plugin
   ) {
     this.playerWrapperManager = playerWrapperManager;
     this.paperPlayerWrapperFactory = paperPlayerWrapperFactory;
@@ -49,6 +53,7 @@ public final class PaperPlayerTransformer implements PlayerTransformer {
     this.logger = logger;
     this.messages = messages;
     this.states = states;
+    this.plugin = plugin;
   }
 
   @Override
@@ -58,16 +63,20 @@ public final class PaperPlayerTransformer implements PlayerTransformer {
 
     if (player instanceof StaffPlayerWrapper) {
       logger.debug("Player %s is already a staff member.", player.getName());
+      return;
     }
 
     if (!(player instanceof PaperPlayerWrapper paperPlayerWrapper)) return;
 
     playerWrapperManager.removePlayerWrapper(paperPlayerWrapper.getPlayer());
-    final StaffPaperPlayerWrapper staffPlayerWrapper = staffPaperPlayerWrapperFactory
-        .create(paperPlayerWrapper.getPlayer(), states);
 
-    playerWrapperManager.addPlayerWrapper(staffPlayerWrapper.getPlayer(), staffPlayerWrapper);
-    staffPlayerWrapper.sendMiniMessage(messages.get().youAreNowAnStaffDuringPermissionInterceptor());
+    Bukkit.getScheduler().runTask(plugin, () -> {
+      final StaffPaperPlayerWrapper staffPlayerWrapper = staffPaperPlayerWrapperFactory
+          .create(paperPlayerWrapper.getPlayer(), states);
+
+      playerWrapperManager.addPlayerWrapper(staffPlayerWrapper.getPlayer(), staffPlayerWrapper);
+      staffPlayerWrapper.sendMiniMessage(messages.get().youAreNowAnStaffDuringPermissionInterceptor());
+    });
   }
 
   @Override
